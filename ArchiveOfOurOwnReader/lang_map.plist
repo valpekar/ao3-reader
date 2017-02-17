@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>All languages</key>
+	<string>0</string>
+	<key>العربية</key>
+	<string>34</string>
+	<key>беларуская</key>
+	<string>28</string>
+	<key>Български език</key>
+	<string>29</string>
+	<key>Català</key>
+	<string>4</string>
+	<key>Čeština</key>
+	<string>5</string>
+	<key>Cymraeg</key>
+	<string>43</string>
+	<key>Dansk</key>
+	<string>6</string>
+	<key>Deutsch</key>
+	<string>7</string>
+	<key>Ελληνικά</key>
+	<string>27</string>
+	<key>English</key>
+	<string>1</string>
+	<key>Esperanto</key>
+	<string>45</string>
+	<key>Español</key>
+	<string>9</string>
+	<key>eesti keel</key>
+	<string>51</string>
+	<key>فارسی</key>
+	<string>2</string>
+	<key>Suomi</key>
+	<string>23</string>
+	<key>Wikang Filipino</key>
+	<string>26</string>
+	<key>Français</key>
+	<string>8</string>
+	<key>Gaeilge</key>
+	<string>10</string>
+	<key>Gàidhlig</key>
+	<string>42</string>
+	<key>עִבְרִית</key>
+	<string>33</string>
+	<key>हिन्दी</key>
+	<string>37</string>
+	<key>Hrvatski</key>
+	<string>11</string>
+	<key>Magyar</key>
+	<string>16</string>
+	<key>Bahasa Indonesia</key>
+	<string>38</string>
+</dict>
+</plist>

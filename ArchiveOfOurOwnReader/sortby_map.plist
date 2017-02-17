@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Best Match</key>
+	<string></string>
+	<key>Author</key>
+	<string>authors_to_sort_on</string>
+	<key>Title</key>
+	<string>title_to_sort_on</string>
+	<key>Date Posted</key>
+	<string>created_at</string>
+	<key>Date Updated</key>
+	<string>revised_at</string>
+	<key>Word Count</key>
+	<string>word_count</string>
+	<key>Hits</key>
+	<string>hits</string>
+	<key>Kudos</key>
+	<string>kudos_count</string>
+	<key>Comments</key>
+	<string>comments_count</string>
+	<key>Bookmarks</key>
+	<string>bookmarks_count</string>
+</dict>
+</plist>

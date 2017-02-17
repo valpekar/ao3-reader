@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Any rating</key>
+	<string></string>
+	<key>Not Rated</key>
+	<string>9</string>
+	<key>General Audiences</key>
+	<string>10</string>
+	<key>Teen And Up Audiences</key>
+	<string>11</string>
+	<key>Mature</key>
+	<string>12</string>
+	<key>Explicit</key>
+	<string>13</string>
+</dict>
+</plist>
