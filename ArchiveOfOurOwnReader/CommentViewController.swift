@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import TSMessages
 
 class CommentViewController: LoadingViewController, UITableViewDelegate, UITableViewDataSource, UIWebViewDelegate {
     
@@ -93,7 +94,7 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
                     self.hideLoadingView()
                 } else {
                     self.hideLoadingView()
-                    self.view.makeToast(message: "Check your Internet connection", duration: 2.0, position: "center" as AnyObject)
+                    TSMessage.showNotification(in: self, title: "Error", subtitle: "Check your Internet connection", type: .error)
                 }
             })
         
@@ -273,7 +274,7 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
                         
                     } else {
                         self.hideLoadingView()
-                        self.view.makeToast(message: "Check your Internet connection", duration: 2.0, position: "center" as AnyObject)
+                        TSMessage.showNotification(in: self, title: "Error", subtitle: "Check your Internet connection", type: .error)
                     }
                 })
         }

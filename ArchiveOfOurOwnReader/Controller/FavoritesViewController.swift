@@ -16,6 +16,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
     var downloadedWorkds: [NSManagedObject] = []
     var filtereddownloadedWorkds: [NSManagedObject] = []
     var purchased = false
+    var donated = false
     
     var resultSearchController = UISearchController()
     
@@ -28,7 +29,11 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
             purchased = pp
         }
         
-        if (!purchased) {
+        if let dd = UserDefaults.standard.value(forKey: "donated") as? Bool {
+            donated = dd
+        }
+        
+        if (!purchased || !donated) {
             loadAdMobInterstitial()
         }
         
@@ -150,8 +155,6 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         } catch {
             print("cannot fetch.")
         }
-        
-        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -207,7 +210,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
     }
     
     override func controllerDidClosed() {
-        if (!purchased) {
+        if (!purchased || !donated) {
             showAdMobInterstitial()
         }
     }

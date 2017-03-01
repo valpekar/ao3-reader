@@ -18,7 +18,7 @@ protocol SearchControllerDelegate {
     func searchApplied(_ searchQuery:SearchQuery)
 }
 
-class FeedViewController: LoadingViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, SearchControllerDelegate, UIWebViewDelegate, SKPaymentTransactionObserver {
+class FeedViewController: LoadingViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, SearchControllerDelegate, UIWebViewDelegate {
 
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var tableView:UITableView!
@@ -27,27 +27,20 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
     
     //var placer: MPTableViewAdPlacer!
     
-    @IBOutlet weak var removeAdsItem: UIBarButtonItem!
-    
     var query: SearchQuery = SearchQuery()
     var foundItems = "0 Found"
     
     var pages : [PageItem] = [PageItem]()
     var works : [NewsFeedItem] = [NewsFeedItem]()
     
-    // This list of available in-app purchases
-    var products: Array <SKProduct> = [SKProduct]()
-    
     var purchased = false
+    var donated = false
     
     var i = 0 //counts page transitions, display ads every 3rd time
     var flag = true
    
     //@IBOutlet weak var webView: UIWebView!
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
+
     
     // MARK: - UIViewController Lifecycle
     override func viewDidLoad() {
@@ -72,9 +65,6 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
             searchApplied(self.query)
         }
         
-        reload(false)
-        NotificationCenter.default.addObserver(self, selector: #selector(FeedViewController.productPurchased(_:)), name: NSNotification.Name(rawValue: IAPHelperProductPurchasedNotification), object: nil)
-        
         if ( !DefaultsManager.getString(DefaultsManager.LASTWRKID).isEmpty) {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let vc: UINavigationController = storyboard.instantiateViewController(withIdentifier: "navWorkDetailViewController") as! UINavigationController
@@ -82,7 +72,7 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
             item.workId = DefaultsManager.getString(DefaultsManager.LASTWRKID)
             (vc.viewControllers[0] as! WorkDetailViewController).workItem = item
             (vc.viewControllers[0] as! WorkDetailViewController).modalDelegate = self
-
+            
             self.present(vc, animated: true, completion: nil)
         }
         
@@ -98,12 +88,9 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
         if let pp = UserDefaults.standard.value(forKey: "pro") as? Bool {
             purchased = pp
         }
-        
-        /*if (!purchased) {
-            webView.loadRequest(NSURLRequest(URL: NSURL(string: "http://api-tests.indiefics.com/test.html")!))
-        }*/
-        
-        //webView.loadHTMLString("<!DOCTYPE html><html><head><script type=\"text/javascript\">  (function(B, i, L, l, y) {l = B.createElement(i); y = B.getElementsByTagName(i)[0]; l.src = L + '3942008c0c46c155e9' + '?&' + ((1 * new Date()) + Math.random()) + '&' + 'nw=false&cm=true&fp=true'; y.parentNode.insertBefore(l, y)})(document, 'script', '//c.billypub.com/b/');</script></head><body><h1>Hi</h1></body></html>", baseURL: nil)
+        if let dd = UserDefaults.standard.value(forKey: "donated") as? Bool {
+            donated = dd
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -123,21 +110,20 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
         
         //
         
-        if (!purchased) {
+        if (!purchased || !donated) {
             print("not purchased")
             //self.setupAdPlacer()
             if (flag == true) {
                 loadAdMobInterstitial()
                 flag = false
             }
-        } else {
-            removeAdsItem.isEnabled = false
-            removeAdsItem.title = ""
         }
         
+        if (Reachability.isConnectedToNetwork()) {
         if (!DefaultsManager.getString(DefaultsManager.PSEUD_ID).isEmpty &&  ((UIApplication.shared.delegate as! AppDelegate).cookies.count == 0 || (UIApplication.shared.delegate as! AppDelegate).token.isEmpty)) {
             
             openLoginController()
+        }
         }
     }
     
@@ -163,21 +149,6 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
         context.setObject(ccasted, forKeyedSubscript: "adClosed" as (NSCopying & NSObjectProtocol)!)
     }
     
-    func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
-        
-        if let url = request.url?.absoluteURL {
-            
-            if (!url.absoluteString.contains("indiefics")) {
-                UIApplication.shared.openURL(url)
-                webView.isHidden = true
-                
-                return false
-            }
-        }
-        
-        return true
-    }
-    
     @IBAction func tryAgainTouched(_ sender: AnyObject) {
         if (purchased && (UIApplication.shared.delegate as! AppDelegate).cookies.count == 0) {
             openLoginController()
@@ -189,11 +160,7 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
     
     func showFeed() {
         
-        if (!purchased) {
-            tableView.reloadData()
-        } else {
-            tableView.reloadData()
-        }
+        tableView.reloadData()
         
         collectionView.reloadData() // reloadData()
         
@@ -612,10 +579,19 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
     
     //MARK: - SAVE WORK TO DB
     
+    
     @IBAction func downloadButtonTouched(_ sender: UIButton) {
         
        if (sender.tag >= works.count) {
             return
+        }
+        
+        if (!purchased && !donated) {
+            if (countWroksFromDB() > 5) {
+                TSMessage.showNotification(in: self, title: "Error", subtitle: "You can only download 5 stories. Please, upgrade to download more.", type: .error, duration: 2.0)
+
+                return
+            }
         }
         
         let curWork:NewsFeedItem = works[sender.tag]
@@ -654,7 +630,7 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
       //      webView.hidden = false
      //   }
         
-        if (i % 3 == 0 && !purchased) {
+        if (i % 3 == 0 && (!purchased || !donated)) {
             showAdMobInterstitial()
             flag = true
         }
@@ -673,181 +649,6 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
         
     }
     
-    // MARK: - InApp
-    
-    @IBAction func removeAdsTouched(_ sender: AnyObject) {
-        if (products.count > 0) {
-            var product = products[0]
-            for p in products {
-                if (p.productIdentifier == "prosub") {
-                    product = p
-                }
-            }
-            showBuyAlert(product)
-            
-        } else {
-            showErrorAlert()
-        }
-    }
-    
-    func showErrorAlert() {
-        let refreshAlert = UIAlertController(title: "Error", message: "Cannot get product list. Please check your Internet connection", preferredStyle: UIAlertControllerStyle.alert)
-        refreshAlert.addAction(UIAlertAction(title: "Try again", style: .default, handler: { (action: UIAlertAction!) in
-            self.reload(true)
-        }))
-        
-        refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
-        }))
-        
-        present(refreshAlert, animated: true, completion: nil)
-    }
-    
-    // Fetch the products from iTunes connect, redisplay the table on successful completion
-    func reload(_ tryToBuy: Bool) {
-        products = []
-        //tableView.reloadData()
-        ReaderProducts.store.requestProductsWithCompletionHandler { success, products in
-            if success {
-                self.products = products
-                self.reloadUI()
-                
-                if (tryToBuy && products.count > 0) {
-                    var product = products[products.startIndex]
-                    for p in products {
-                        if (p.productIdentifier == "prosub") {
-                            product = p
-                        }
-                    }
-                    self.showBuyAlert(product)
-                }
-            } else {
-                if (tryToBuy) {
-                    self.showErrorAlert()
-                }
-            }
-        }
-    }
-    
-    
-    // Restore purchases to this device.
-    func restoreTapped(_ sender: AnyObject) {
-        SKPaymentQueue.default().remove(self)
-        SKPaymentQueue.default().add(self)
-        ReaderProducts.store.restoreCompletedTransactions { error in
-            if let err = error {
-                self.view.makeToast(message: err.localizedDescription, duration: 1, position: "center" as AnyObject, title: "Error")
-            } else {
-                self.view.makeToast(message: "Finished", duration: 1, position: "center" as AnyObject, title: "Restore process")
-            }
-        }
-    }
-    
-    /// Initiates purchase of a product.
-    func purchaseProduct(_ product: SKProduct) {
-        self.view.makeToast(message: "You will ned to restart the app for changes with native ads to take effect!", duration: 1, position: "center" as AnyObject, title: "Attention!")
-        print("Buying \(product.productIdentifier)...")
-        let payment = SKPayment(product: product)
-        SKPaymentQueue.default().add(payment)
-    }
-
-    
-    var isPurchased = false
-    
-    func reloadUI() {
-        if (products.count > 0) {
-            var product = products[0]
-        
-            isPurchased = ReaderProducts.store.isProductPurchased(product.productIdentifier)
-            UserDefaults.standard.set(isPurchased, forKey: "pro")
-            UserDefaults.standard.synchronize()
-            
-            if (!isPurchased && products.count > 1) {
-                product = products[1]
-                
-                isPurchased = ReaderProducts.store.isProductPurchased(product.productIdentifier)
-                UserDefaults.standard.set(isPurchased, forKey: "pro")
-                UserDefaults.standard.synchronize()
-            }
-        
-            purchased = isPurchased
-            
-            if (purchased) {
-                DefaultsManager.putObject(true as AnyObject, key: DefaultsManager.ADULT)
-            }
-        
-        } else {
-            purchased = false
-            isPurchased = false
-        }
-        
-        if (isPurchased) {
-            removeAdsItem.isEnabled = false
-            removeAdsItem.title = ""
-            
-            showFeed()
-        } else {
-            removeAdsItem.isEnabled = true
-            removeAdsItem.title = "Upgrade"
-        }
-    }
-    
-    func showBuyAlert(_ product: SKProduct) {
-        let alertController = UIAlertController(title: product.localizedTitle, message:
-            product.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
-        alertController.addAction(UIAlertAction(title: "Buy", style: UIAlertActionStyle.default, handler: { (action: UIAlertAction!) in
-            self.purchaseProduct(product)
-        } ))
-        alertController.addAction(UIAlertAction(title: "Restore", style: UIAlertActionStyle.default, handler: { (action: UIAlertAction!) in
-            self.restoreTapped(self)
-        } ))
-        alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
-        
-        self.present(alertController, animated: true, completion: nil)
-    }
-    
-    // When a product is purchased, this notification fires, redraw the correct row
-    func productPurchased(_ notification: Notification) {
-        let productIdentifier = notification.object as! String
-        for (_, product) in products.enumerated() {
-            if product.productIdentifier == productIdentifier {
-                reload(false)
-                break
-            }
-        }
-    }
-    
-
-    //MARK: - MoPub
-
-  /*  func setupAdPlacer() {
-        let targeting: MPNativeAdRequestTargeting! = MPNativeAdRequestTargeting()
-        // TODO: Use the device's location
-        //targeting.location = CLLocation(latitude: 37.7793, longitude: -122.4175)
-        targeting.keywords = "m_age:20,m_gender:f,m_marital:single"
-        targeting.desiredAssets = Set([kAdIconImageKey, kAdMainImageKey, kAdCTATextKey, kAdTextKey, kAdTitleKey])
-        
-        let settings = MPStaticNativeAdRendererSettings()
-        // TODO: Create your own UIView subclass that implements MPNativeAdRendering
-        settings.renderingViewClass = MPStaticNativeAdView.self
-        // TODO: Calculate the size of your ad cell given a maximum width
-        let screenSize: CGRect = UIScreen.mainScreen().bounds
-        settings.viewSizeHandler = {(maxWidth: CGFloat) -> CGSize in
-            return CGSizeMake(screenSize.width, 80.0)
-        };
-        
-        let config = MPStaticNativeAdRenderer.rendererConfigurationWithRendererSettings(settings)
-        
-        // TODO: Create your own UITableViewCell subclass that implements MPNativeAdRendering
-        self.placer = MPTableViewAdPlacer(tableView: self.tableView, viewController: self, rendererConfigurations: [config])
-        
-        // We have configured the test ad unit ID to place ads at fixed
-        // cell positions 2 and 10 and show an ad every 10 cells after
-        // that.
-        //
-        // TODO: Replace this test id with your personal ad unit id
-        self.placer.loadAdsForAdUnitID("7a2cde53c3b94ce9a81ae61a21e9da7a", targeting: targeting)
-    } */
-    
     func showContestAlert() {
         let refreshAlert = UIAlertController(title: "Contest Announcement!", message: "Hi! I want to share great news! If you post your fanfics to http://indiefics.com from Jun 1 till June 30, you can take part in fanfics contest! The best chosen fanfic will be shown in this app as the first item on the main screen! For more details please check http://indiefics.com !", preferredStyle: UIAlertControllerStyle.alert)
         
@@ -863,31 +664,6 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
         }))
         
         //presentViewController(refreshAlert, animated: true, completion: nil)
-    }
-    
-    
-    //restore protocol
-    
-    func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
-            print("Received Payment Transaction Response from Apple");
-            for transaction:AnyObject in transactions {
-                if let trans:SKPaymentTransaction = transaction as? SKPaymentTransaction{
-                    switch trans.transactionState {
-                    case .purchased, .restored:
-                        print("Purchased purchase/restored")
-                        SKPaymentQueue.default().finishTransaction(transaction as! SKPaymentTransaction)
-                        break
-                    case .failed:
-                        print("Purchased Failed")
-                        SKPaymentQueue.default().finishTransaction(transaction as! SKPaymentTransaction)
-                        break
-                    default:
-                        print("default")
-                        break
-                    }
-                }
-            
-        }
     }
 
 }

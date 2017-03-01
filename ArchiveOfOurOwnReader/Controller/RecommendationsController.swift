@@ -42,6 +42,10 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
         if let pp = UserDefaults.standard.value(forKey: "pro") as? Bool {
             if (pp) {
                 generateRecommendations()
+            } else if let dd = UserDefaults.standard.value(forKey: "donated") as? Bool {
+                if (dd) {
+                    generateRecommendations()
+                }
             } else {
                 TSMessage.showNotification(in: self, title: "Error", subtitle: "Sorry, you have not purchased the Pro Version!", type: .error)
             }

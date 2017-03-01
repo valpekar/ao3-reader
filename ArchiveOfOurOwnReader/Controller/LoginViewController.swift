@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import TSMessages
 
 fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
@@ -119,7 +120,7 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
         
         guard let login = loginTextField.text,
             let pass = passTextField.text else {
-                self.view.makeToast(message: "Please fill user name and password", duration: 1.0, position: "center" as AnyObject, title: "Cannot login")
+                TSMessage.showNotification(in: self, title: "Cannot login", subtitle: "Please fill user name and password", type: .error)
                 return
         }
         
@@ -154,7 +155,7 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
                         
                     } else {
                         self.hideLoadingView()
-                        self.view.makeToast(message: "Check your Internet connection", duration: 2.0, position: "center" as AnyObject)
+                        TSMessage.showNotification(in: self, title: "Error", subtitle: "Check your Internet connection", type: .error)
                     }
                 }
             })
@@ -186,7 +187,8 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
                     self.hideLoadingView()
                 } else {
                     self.hideLoadingView()
-                    self.view.makeToast(message: "Check your Internet connection", duration: 2.0, position: "center" as AnyObject)
+                    
+                    TSMessage.showNotification(in: self, title: "Error", subtitle: "Check your Internet connection", type: .error)
                 }
             })
     }
@@ -214,7 +216,7 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
         if (flashnoticediv.count > 0) {
             let noticeTxt = flashnoticediv[0].content as String
             if (noticeTxt == "Successfully logged in.") {
-                self.view.makeToast(message: "Successfully", duration: 1.5, position: "center" as AnyObject, title: "Logged in")
+                TSMessage.showNotification(in: self, title: "Log In", subtitle: "Successfully logged in!", type: .success)
                 let delayTime = DispatchTime.now() + Double(Int64(1.500 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
                 DispatchQueue.main.asyncAfter(deadline: delayTime) {
                 self.dismiss(animated: true, completion: {
@@ -228,7 +230,8 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
     }
     
     func showError() {
-        self.view.makeToast(message: "Error", duration: 1.0, position: "center" as AnyObject, title: "Cannot log in")
+        TSMessage.showNotification(in: self, title: "Error", subtitle: "Cannot log in", type: .error)
+        
         self.dismiss(animated: true, completion: {
             self.controllerDelegate.controllerDidClosed()
         })

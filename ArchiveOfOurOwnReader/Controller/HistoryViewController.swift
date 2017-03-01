@@ -8,6 +8,7 @@
 
 import Foundation
 import Alamofire
+import TSMessages
 
 fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
@@ -107,7 +108,8 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
                     self.showHistory()
                 } else {
                     self.hideLoadingView()
-                    self.view.makeToast(message: "Check your Internet connection", duration: 2.0, position: "center" as AnyObject)
+                    TSMessage.showNotification(in: self, title: "Error", subtitle: "Check your Internet connection", type: .error)
+
                 }
                 
             })
@@ -410,7 +412,7 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
                     self.showHistory()
                 } else {
                     self.hideLoadingView()
-                    self.view.makeToast(message: "Check your Internet connection", duration: 2.0, position: "center" as AnyObject)
+                    TSMessage.showNotification(in: self, title: "Error", subtitle: "Check your Internet connection", type: .error)
                 }
             })
             
@@ -491,7 +493,7 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
                     self.downloadWork(d, curWork: curWork)
                 } else {
                     self.hideLoadingView()
-                    self.view.makeToast(message: "Check your Internet connection", duration: 2.0, position: "center" as AnyObject)
+                    TSMessage.showNotification(in: self, title: "Error", subtitle: "Check your Internet connection", type: .error)
                 }
             })
         
@@ -558,7 +560,7 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
                     self.hideLoadingView()
                 } else {
                     self.hideLoadingView()
-                    self.view.makeToast(message: "Check your Internet connection", duration: 2.0, position: "center" as AnyObject)
+                    TSMessage.showNotification(in: self, title: "Error", subtitle: "Check your Internet connection", type: .error)
                 }
             })
     }

@@ -29,11 +29,10 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     
     @IBOutlet weak var tableView: UITableView!
     
-   // @IBOutlet weak var adBanner: ADBannerView!
-   // @IBOutlet weak var adBannerView: UIView!
      @IBOutlet weak var bannerView: GADBannerView!
 
     var purchased = false
+    var donated = false
     
     var downloadedWorkItem: NSManagedObject! = nil
     var downloadedFandoms: [DBFandom]! = nil
@@ -66,8 +65,15 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         if let pp = UserDefaults.standard.value(forKey: "pro") as? Bool {
             purchased = pp
         }
+        if let dd = UserDefaults.standard.value(forKey: "donated") as? Bool {
+            donated = dd
+        }
         
-        if (!purchased) {
+        if ((purchased || donated) && DefaultsManager.getBool(DefaultsManager.ADULT) == nil) {
+            DefaultsManager.putBool(true, key: DefaultsManager.ADULT)
+        }
+        
+        if (!purchased && !donated) {
             //loadAdMobInterstitial()
             bannerView.adUnitID = "ca-app-pub-8760316520462117/1990583589"
             bannerView.rootViewController = self
@@ -100,15 +106,9 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-//        if (showInterstitial == true && !purchased) {
-//            showAdMobInterstitial()
-//        }
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
+        
+        super.viewWillAppear(animated)
         
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
@@ -185,9 +185,12 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         if let pp = UserDefaults.standard.value(forKey: "pro") as? Bool {
             purchased = pp
         }
+        if let dd = UserDefaults.standard.value(forKey: "donated") as? Bool {
+            donated = dd
+        }
         
-        if let isAdult = DefaultsManager.getObject(DefaultsManager.ADULT) as? Bool {
-            if (isAdult == true && purchased == true) {
+        if let isAdult = DefaultsManager.getBool(DefaultsManager.ADULT)  {
+            if (isAdult == true && (purchased == true || donated == true)) {
                 
                 params["view_adult"] = "true" as AnyObject?
             }
@@ -391,7 +394,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         }
         
         if let isAdult = DefaultsManager.getObject(DefaultsManager.ADULT) as? Bool {
-            if (isAdult == true && purchased == true) {
+            if (isAdult == true && (purchased == true || donated == true)) {
                 
                 params["view_adult"] = "true" as AnyObject?
             }
@@ -980,7 +983,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                         
                     } else {
                         self.hideLoadingView()
-                        self.view.makeToast(message: "Check your Internet connection", duration: 2.0, position: "center" as AnyObject)
+                        TSMessage.showNotification(in: self, title: "Error", subtitle: "Check your Internet connection", type: .error)
                     }
                 })
             }
@@ -1029,7 +1032,8 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                     self.hideLoadingView()
                 } else {
                     self.hideLoadingView()
-                    self.view.makeToast(message: "Check your Internet connection", duration: 2.0, position: "center" as AnyObject)
+                    TSMessage.showNotification(in: self, title: "Error", subtitle: "Check your Internet connection", type: .error)
+
                 }
             })
     }
@@ -1042,11 +1046,13 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             bookmarked = false
             changedSmth = true
             self.view.makeToast(message: noticediv[0].content, duration: 3.0, position: "center" as AnyObject, title: "Delete from Bookmarks")
+            
         } else {
             var sorrydiv = doc.search(withXPathQuery: "//div[@class='flash error']")
             
             if(sorrydiv != nil && (sorrydiv?.count)!>0 && (sorrydiv?[0] as! TFHppleElement).text().range(of: "Sorry") != nil) {
-                self.view.makeToast(message: (sorrydiv![0] as AnyObject).content, duration: 3.0, position: "center" as AnyObject, title: "Delete from Bookmarks")
+                TSMessage.showNotification(in: self, title: "Delete from Bookmarks", subtitle: (sorrydiv![0] as AnyObject).content, type: .error)
+
                 return
             }
         }
@@ -1055,6 +1061,15 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     //MARK: - settings menu actions
     
     func downloadWorkAction() {
+        
+        if (!purchased && !donated) {
+            if (countWroksFromDB() > 5) {
+                TSMessage.showNotification(in: self, title: "Error", subtitle: "You can only download 5 stories. Please, upgrade to download more.", type: .error, duration: 2.0)
+                
+                return
+            }
+        }
+        
         showLoadingView()
         
         if let del = UIApplication.shared.delegate as? AppDelegate {
@@ -1074,7 +1089,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         }
         
         if let isAdult = DefaultsManager.getObject(DefaultsManager.ADULT) as? Bool {
-            if (isAdult == true && purchased == true) {
+            if (isAdult == true && (purchased == true || donated == true)) {
                 
                 params["view_adult"] = "true" as AnyObject?
             }

@@ -128,7 +128,7 @@ class FavoritesSiteController : LoadingViewController, UITableViewDataSource, UI
                     self.showBookmarks()
                 } else {
                     self.hideLoadingView()
-                    self.view.makeToast(message: "Check your Internet connection", duration: 2.0, position: "center" as AnyObject)
+                    TSMessage.showNotification(in: self, title: "Error", subtitle: "Check your Internet connection", type: .error)
                 }
                 self.refreshControl.endRefreshing()
             })
@@ -433,7 +433,7 @@ class FavoritesSiteController : LoadingViewController, UITableViewDataSource, UI
                     self.showBookmarks()
                 } else {
                     self.hideLoadingView()
-                    self.view.makeToast(message: "Check your Internet connection", duration: 2.0, position: "center" as AnyObject)
+                    TSMessage.showNotification(in: self, title: "Error", subtitle: "Check your Internet connection", type: .error)
                 }
             })
         }
@@ -515,7 +515,7 @@ class FavoritesSiteController : LoadingViewController, UITableViewDataSource, UI
                     //self.saveWork()
                 } else {
                     self.hideLoadingView()
-                    self.view.makeToast(message: "Check your Internet connection", duration: 2.0, position: "center" as AnyObject)
+                    TSMessage.showNotification(in: self, title: "Error", subtitle: "Check your Internet connection", type: .error)
                 }
             })
     }
@@ -580,7 +580,7 @@ class FavoritesSiteController : LoadingViewController, UITableViewDataSource, UI
                     self.hideLoadingView()
                 } else {
                     self.hideLoadingView()
-                    self.view.makeToast(message: "Check your Internet connection", duration: 2.0, position: "center" as AnyObject)
+                    TSMessage.showNotification(in: self, title: "Error", subtitle: "Check your Internet connection", type: .error)
                 }
             })
     }

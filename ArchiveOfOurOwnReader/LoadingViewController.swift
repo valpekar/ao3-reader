@@ -430,6 +430,10 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
         
         print("save chapters begin")
         
+        if (curworkItem == nil) {
+            return
+        }
+        
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let managedContext = appDelegate.managedObjectContext!
         
@@ -696,6 +700,22 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
     }
     
     func doneButtonAction() {
+    }
+    
+    func countWroksFromDB() -> Int {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let managedContext = appDelegate.managedObjectContext!
+        let fetchRequest: NSFetchRequest <NSFetchRequestResult> = NSFetchRequest(entityName:"DBWorkItem")
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "dateAdded", ascending: false)]
+        
+        do {
+            let count = try managedContext.count(for: fetchRequest)
+            
+            return count
+        } catch let error as NSError {
+            print("Error: \(error.localizedDescription)")
+            return 0
+        }
     }
     
 }

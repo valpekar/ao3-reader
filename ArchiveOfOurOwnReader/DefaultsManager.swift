@@ -76,6 +76,12 @@ class DefaultsManager {
         return res
     }
     
+    class func getBool(_ key:String) -> Bool? {
+        getDefaults().synchronize()
+        let res : Bool? = getDefaults().object(forKey: key) as? Bool
+        return res
+    }
+    
     class func putString(_ text:String, key:String) {
         let defaults : UserDefaults = getDefaults()
         defaults.set(text, forKey: key)
@@ -84,6 +90,13 @@ class DefaultsManager {
     }
     
     class func putInt(_ obj:Int, key:String) {
+        let defaults : UserDefaults = getDefaults()
+        defaults.set(obj, forKey: key)
+        defaults.synchronize()
+        
+    }
+    
+    class func putBool(_ obj:Bool, key:String) {
         let defaults : UserDefaults = getDefaults()
         defaults.set(obj, forKey: key)
         defaults.synchronize()
