@@ -38,7 +38,7 @@ class SearchQuery : NSObject, NSCoding {
     var warnings = [String]()
     var categories = [String]()
     
-    func formQuery1() -> String {
+  /*  func formQuery1() -> String {
         
         var result:String = String()
         
@@ -91,6 +91,92 @@ class SearchQuery : NSObject, NSCoding {
         result += "&commit=Search"
         
         return result
+    } */
+    
+    func isEmpty() -> Bool {
+        var res = true
+        
+        if !single_chapter.isEmpty && single_chapter != "0"  {
+            res = false
+        }
+        
+        if !complete.isEmpty && complete != "0" {
+            res = false
+        }
+        
+        if(!language_id.isEmpty &&  language_id != "0") {
+            res = false
+        }
+        
+        if (!exclude_tags.isEmpty) {
+            res = false
+        }
+        
+        if (!include_tags.isEmpty) {
+            res = false
+        }
+        
+        if (!creator.isEmpty) {
+            res = false
+        }
+        
+        if (!title.isEmpty) {
+            res = false
+        }
+        
+        if (!revised_at.isEmpty) {
+            res = false
+        }
+        
+        if (!word_count.isEmpty) {
+            res = false
+        }
+        
+        if (!fandom_names.isEmpty) {
+            res = false
+        }
+        
+        if (!rating_ids.isEmpty) {
+            res = false
+        }
+        
+        if (!warnings.isEmpty) {
+            res = false
+        }
+        
+        if (!categories.isEmpty) {
+            res = false
+        }
+        
+        if (!character_names.isEmpty) {
+            res = false
+        }
+        
+        if (!relationship_names.isEmpty) {
+            res = false
+        }
+        
+        if (!freeform_names.isEmpty) {
+            res = false
+        }
+        
+        if (!hits.isEmpty) {
+            res = false
+        }
+        
+        if (!kudos_count.isEmpty) {
+            res = false
+        }
+        
+        if (!comments_count.isEmpty) {
+            res = false
+        }
+        
+        if (!bookmarks_count.isEmpty) {
+            res = false
+        }
+        
+        return res
     }
     
     func formQuery() -> [String:AnyObject]{
@@ -161,7 +247,7 @@ class SearchQuery : NSObject, NSCoding {
         return params as [String : AnyObject]
     }
     
-    func formQuery2() -> [String:AnyObject]{
+    /*func formQuery2() -> [String:AnyObject]{
         var params:[String:AnyObject] = [String:AnyObject]()
         
         params["utf8"] = "✓" as AnyObject?
@@ -189,7 +275,7 @@ class SearchQuery : NSObject, NSCoding {
         params["commit"] = "Search" as AnyObject?
         
         return params
-    }
+    }*/
     
     //http://archiveofourown.org/works/search?utf8=%E2%9C%93&work_search[query]=cheese&work_search[title]=&work_search[creator]=&work_search[revised_at]=&work_search[complete]=0&work_search[single_chapter]=0&work_search[word_count]=&work_search[language_id]=&work_search[fandom_names]=&work_search[rating_ids]=&work_search[warning_ids][]=14&work_search[warning_ids][]=18&work_search[warning_ids][]=19&work_search[character_names]=&work_search[relationship_names]=&work_search[freeform_names]=&work_search[hits]=&work_search[kudos_count]=&work_search[comments_count]=&work_search[bookmarks_count]=&work_search[sort_column]=&work_search[sort_direction]=&commit=Search
    

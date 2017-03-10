@@ -537,6 +537,11 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
         
         pages = [PageItem]()
         works = [NewsFeedItem]()
+
+        if (searchQuery.isEmpty()) {
+            searchQuery.include_tags = "popular"
+            DefaultsManager.putObject(searchQuery, key: DefaultsManager.SEARCH_Q)
+        }
        
         query = searchQuery
         
@@ -586,9 +591,11 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
             return
         }
         
-        if (!purchased && !donated) {
-            if (countWroksFromDB() > 5) {
-                TSMessage.showNotification(in: self, title: "Error", subtitle: "You can only download 5 stories. Please, upgrade to download more.", type: .error, duration: 2.0)
+        if (purchased || donated) {
+            print("premium")
+        } else {
+            if (countWroksFromDB() > 9) {
+                TSMessage.showNotification(in: self, title: "Error", subtitle: "You can only download 10 stories. Please, upgrade to download more.", type: .error, duration: 2.0)
 
                 return
             }
@@ -630,7 +637,7 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
       //      webView.hidden = false
      //   }
         
-        if (i % 3 == 0 && (!purchased || !donated)) {
+        if (i % 5 == 0 && (!purchased || !donated)) {
             showAdMobInterstitial()
             flag = true
         }

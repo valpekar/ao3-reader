@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 import Alamofire
+import TSMessages
 
 class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UIWebViewDelegate, UIPopoverPresentationControllerDelegate {
     
@@ -34,6 +35,8 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
     var work: String = ""
     var fontSize: Int = 100
     
+    var onlineChapters = [Int:ChapterOnline]()
+    
     override func viewDidLoad() {
         
 //        webView.scrollView.contentInset = UIEdgeInsetsMake(4, 0, 0, 0)
@@ -47,7 +50,9 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
         webView.delegate = self
         
         if (workItem != nil) {
-            contentsButton.isHidden = true
+            if (onlineChapters.count == 0) {
+                contentsButton.isHidden = true
+            }
             
             if (!workItem.nextChapter.isEmpty) {
                 nextChapter = workItem.nextChapter;
@@ -268,6 +273,78 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
         }
     }
     
+    
+    func turnOnlineChapter(_ chapterId: String) {
+        
+        showLoadingView()
+        
+        if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
+            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
+        }
+        
+        var params:[String:AnyObject] = [String:AnyObject]()
+        
+        if let isAdult = DefaultsManager.getObject(DefaultsManager.ADULT) as? Bool {
+            if (isAdult == true ) {
+                
+                params["view_adult"] = "true" as AnyObject?
+            }
+        }
+        
+        Alamofire.request("http://archiveofourown.org/works/" + workItem.workId + "/chapters/" + chapterId, method: .get, parameters: params)
+            .response(completionHandler: { response in
+                print(response.request ?? "")
+                
+                print(response.error ?? "")
+                
+                if let d = response.data {
+                    self.parseCookies(response)
+                    self.work = self.parseChapter(d)
+                    self.hideLoadingView()
+                    self.showWork()
+                    
+                } else {
+                    self.hideLoadingView()
+                    TSMessage.showNotification(in: self, title: "Error", subtitle: "Check your Internet connection", type: .error)
+                }
+            })
+    }
+    
+    func parseChapter(_ data: Data) -> String {
+        //
+        let doc : TFHpple = TFHpple(htmlData: data)
+        
+        var workContentEl = doc.search(withXPathQuery: "//div[@id='chapters']") as! [TFHppleElement]
+        var workContentStr = workContentEl[0].raw
+        
+        //var error:NSErrorPointer = NSErrorPointer()
+        let regex:NSRegularExpression = try! NSRegularExpression(pattern: "<a href=\"[^\"]+\">([^<]+)</a>", options: NSRegularExpression.Options.caseInsensitive)
+        workContentStr = regex.stringByReplacingMatches(in: workContentStr!, options: NSRegularExpression.MatchingOptions.withoutAnchoringBounds, range: NSRange(location: 0, length: (workContentStr?.characters.count)!), withTemplate: "$1")
+        
+        var navigationEl: [TFHppleElement] = doc.search(withXPathQuery: "//ul[@class='work navigation actions']") as! [TFHppleElement]
+        
+        if (navigationEl.count > 0) {
+            
+            var chapterNextEl: [TFHppleElement] = navigationEl[0].search(withXPathQuery: "//li[@class='chapter next']") as! [TFHppleElement]
+            if (chapterNextEl.count > 0) {
+                let attributes : NSDictionary = (chapterNextEl[0].search(withXPathQuery: "//a")[0] as AnyObject).attributes as NSDictionary
+                nextChapter = (attributes["href"] as! String)
+            } else {
+                nextChapter = ""
+            }
+            
+            var chapterPrevEl: [TFHppleElement] = navigationEl[0].search(withXPathQuery: "//li[@class='chapter previous']") as! [TFHppleElement]
+            if(chapterPrevEl.count > 0) {
+                let attributesp : NSDictionary = (chapterPrevEl[0].search(withXPathQuery: "//a")[0] as AnyObject).attributes as NSDictionary
+                prevChapter = (attributesp["href"] as! String)
+            } else {
+                prevChapter = ""
+            }
+        }
+        
+        return workContentStr ?? ""
+    }
+    
     func saveWorkChanged() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
@@ -398,7 +475,9 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
             prevButton.isHidden = false
         }
         
-        contentsButton.isHidden = true
+        if (onlineChapters.count == 0) {
+            contentsButton.isHidden = true
+        }
         
         hideLoadingView()
         if ((!nextChapter.isEmpty || !prevChapter.isEmpty) && layoutView != nil) {
@@ -518,17 +597,31 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
     }
     
     @IBAction func contentsClicked(_ sender: UIButton) {
-        if (downloadedChapters != nil) {
+        if (downloadedChapters != nil || onlineChapters != nil) {
             let storyboard : UIStoryboard = UIStoryboard(
                 name: "Main",
                 bundle: nil)
             let contentsViewController: ContentsViewController = storyboard.instantiateViewController(withIdentifier: "contentsController") as! ContentsViewController
         
-            contentsViewController.downloadedChapters = downloadedChapters
+            if (workItem != nil) {
+                contentsViewController.onlineChapters = onlineChapters
+                contentsViewController.downloadedChapters = nil
+            } else {
+                contentsViewController.onlineChapters = nil
+                contentsViewController.downloadedChapters = downloadedChapters
+            }
             contentsViewController.modalDelegate = self
             contentsViewController.modalPresentationStyle = .popover
             let screenSize: CGRect = UIScreen.main.bounds
-            contentsViewController.preferredContentSize = CGSize(width: screenSize.width * 0.6, height: CGFloat(downloadedChapters.count) * 44.0)
+            
+            var chptNum = 0
+            if (downloadedChapters != nil) {
+                chptNum = downloadedChapters.count
+            } else {
+                chptNum = onlineChapters.count
+            }
+            
+            contentsViewController.preferredContentSize = CGSize(width: screenSize.width * 0.6, height: CGFloat(chptNum) * 44.0)
         
         let popoverMenuViewController = contentsViewController.popoverPresentationController
         popoverMenuViewController?.permittedArrowDirections = .up
@@ -556,7 +649,11 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
     
     func controllerDidClosedWithChapter(_ chapter: Int) {
         currentChapterIndex = chapter
-        self.turnOnChapter(currentChapterIndex)
+        if (downloadedChapters != nil) {
+            self.turnOnChapter(currentChapterIndex)
+        } else {
+            turnOnlineChapter((onlineChapters[chapter]?.chapterId)!)
+        }
     }
     
 }

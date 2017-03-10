@@ -51,12 +51,16 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     var bookmarkId = ""
     var changedSmth = false
     
+    var onlineChapters = [Int:ChapterOnline]()
+    
     var NEXT_CHAPTER_EXIST = 1
     var NEXT_CHAPTER_NOT_EXIST = -1
     
     var commentsUrl = ""
+    var tagUrl = ""
     
     var triedTo = -1
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -190,7 +194,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         }
         
         if let isAdult = DefaultsManager.getBool(DefaultsManager.ADULT)  {
-            if (isAdult == true && (purchased == true || donated == true)) {
+            if (isAdult == true) {
                 
                 params["view_adult"] = "true" as AnyObject?
             }
@@ -218,6 +222,8 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
         //let dta = NSString(data: data, encoding: NSUTF8StringEncoding)
         //print("the string is: \(dta)")
+        
+        onlineChapters.removeAll()
         
         let doc : TFHpple = TFHpple(htmlData: data)
         
@@ -376,6 +382,18 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             }
         }
         
+        let chaptersEl = doc.search(withXPathQuery: "//ul[@id='chapter_index']") as! [TFHppleElement]
+        if (chaptersEl.count > 0) {
+            var optionsEl: [TFHppleElement] = chaptersEl[0].search(withXPathQuery: "//select/option")  as! [TFHppleElement]
+            for i in 0..<optionsEl.count {
+                let chptOnline: ChapterOnline = ChapterOnline()
+                chptOnline.url = optionsEl[i].text()
+                chptOnline.chapterId = optionsEl[i].attributes["value"] as? String ?? ""
+                
+                onlineChapters[i] = chptOnline
+            }
+        }
+        
         saveToAnalytics(workItem.author, category: workItem.category, mainFandom: firstFandom, mainRelationship: firstRelationship)
         
     }
@@ -394,7 +412,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         }
         
         if let isAdult = DefaultsManager.getObject(DefaultsManager.ADULT) as? Bool {
-            if (isAdult == true && (purchased == true || donated == true)) {
+            if (isAdult == true) {
                 
                 params["view_adult"] = "true" as AnyObject?
             }
@@ -518,6 +536,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             
             if (workItem != nil) {
                 workController.workItem = workItem
+                workController.onlineChapters = onlineChapters
             } else if (downloadedWorkItem != nil) {
                 workController.downloadedWorkItem = downloadedWorkItem
             }
@@ -532,6 +551,11 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             }
             
             cController.workId = workId
+            
+        }  else if (segue.identifier == "listSegue") {
+            let cController: WorkListController = segue.destination as! WorkListController
+            
+            cController.tagUrl = tagUrl
         }
         
     }
@@ -571,7 +595,6 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 
                 cell!.label.font = UIFont.systemFont(ofSize: 13)
                 
-                selector = #selector(WorkDetailViewController.fandomlinkTapped(_:))
                 
             } else if (downloadedFandoms != nil && downloadedFandoms.count > (indexPath as NSIndexPath).row) {
                 cell!.label.text = downloadedFandoms[(indexPath as NSIndexPath).row].value(forKey: "fandomName") as? String
@@ -579,7 +602,6 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 
                 cell!.label.font = UIFont.systemFont(ofSize: 13)
                 
-                selector = #selector(WorkDetailViewController.fandomlinkTapped(_:))
                 
             } else {
                 indexesToHide.append(1)
@@ -592,14 +614,12 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 
                 cell!.label.font = UIFont.systemFont(ofSize: 13)
                 
-                selector = #selector(WorkDetailViewController.relationshiplinkTapped(_:))
             } else if (downloadedRelationships != nil && downloadedRelationships.count > (indexPath as NSIndexPath).row) {
                 cell!.label.text = downloadedRelationships[(indexPath as NSIndexPath).row].value(forKey: "relationshipName") as? String
                 cell!.imgView.image = UIImage(named: "heart")
                 
                 cell!.label.font = UIFont.systemFont(ofSize: 13)
                 
-                selector = #selector(WorkDetailViewController.relationshiplinkTapped(_:))
             } else {
                 indexesToHide.append(2)
                 cell!.imgView.image = nil
@@ -754,6 +774,48 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         return res
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        let pos = indexPath.row
+        tagUrl = ""
+        
+        switch indexPath.section {
+        case 1:
+                if (workItem != nil && fandoms != nil && fandoms.count > pos) {
+                    tagUrl = fandoms[pos].fandomUrl
+                } else if (downloadedFandoms != nil && downloadedFandoms.count > pos) {
+                    tagUrl = (downloadedFandoms[pos].value(forKey: "fandomUrl") as? String)!
+                }
+                NSLog("link Tapped = " + tagUrl)
+                
+                performSegue(withIdentifier: "listSegue", sender: self)
+            
+        case 2:
+            if (workItem != nil && relationships != nil && relationships.count > pos) {
+                tagUrl = relationships[pos].relationshipUrl
+            } else if (downloadedRelationships != nil && downloadedRelationships.count > pos) {
+                tagUrl = (downloadedRelationships[pos].value(forKey: "relationshipUrl") as? String)!
+            }
+            NSLog("link Tapped = " + tagUrl)
+            
+            performSegue(withIdentifier: "listSegue", sender: self)
+            
+        case 3:
+            if (workItem != nil && characters != nil && characters.count > pos) {
+                tagUrl = characters[pos].characterUrl
+            } else if (downloadedCharacters != nil && downloadedCharacters.count > pos) {
+                tagUrl = (downloadedCharacters[pos].value(forKey: "characterUrl") as? String)!
+            }
+            NSLog("link Tapped = " + tagUrl)
+            
+            performSegue(withIdentifier: "listSegue", sender: self)
+            
+        default:
+            break
+        }
+    }
+    
     func addOneLabel(_ text:String, imageName:String, cell:UITableViewCell ) {
         let label = UILabel(frame: CGRect(x: 21, y: 0, width: authorLabel.frame.width, height: 21))
         label.textAlignment = NSTextAlignment.left
@@ -831,34 +893,6 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             
             // Update the horizontal position for the next word:
             wordLocation.x += label.frame.size.width;
-        }
-    }
-    
-    func fandomlinkTapped(_ tapGesture:UITapGestureRecognizer) {
-        if (tapGesture.state == UIGestureRecognizerState.ended)
-        {
-            let pos = tapGesture.view!.tag
-            var url = ""
-            if (workItem != nil && fandoms != nil && fandoms.count > pos) {
-                url = fandoms[pos].fandomUrl
-            } else if (downloadedFandoms != nil && downloadedFandoms.count > pos) {
-                url = (downloadedFandoms[pos].value(forKey: "fandomUrl") as? String)!
-            }
-            NSLog("link Tapped = " + url)
-        }
-    }
-    
-    func relationshiplinkTapped(_ tapGesture:UITapGestureRecognizer) {
-        if (tapGesture.state == UIGestureRecognizerState.ended)
-        {
-            let pos = tapGesture.view!.tag
-            var url = ""
-            if (workItem != nil && relationships != nil && relationships.count > pos) {
-                url = relationships[pos].relationshipUrl
-            } else if (downloadedRelationships != nil && downloadedRelationships.count > pos) {
-                url = (downloadedRelationships[pos].value(forKey: "relationshipUrl") as? String)!
-            }
-            NSLog("link Tapped = " + url)
         }
     }
     
@@ -1062,9 +1096,11 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     
     func downloadWorkAction() {
         
-        if (!purchased && !donated) {
-            if (countWroksFromDB() > 5) {
-                TSMessage.showNotification(in: self, title: "Error", subtitle: "You can only download 5 stories. Please, upgrade to download more.", type: .error, duration: 2.0)
+        if (purchased || donated) {
+         print("premium")
+        } else {
+            if (countWroksFromDB() > 9) {
+                TSMessage.showNotification(in: self, title: "Error", subtitle: "You can only download 10 stories. Please, upgrade to download more.", type: .error, duration: 2.0)
                 
                 return
             }
@@ -1089,7 +1125,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         }
         
         if let isAdult = DefaultsManager.getObject(DefaultsManager.ADULT) as? Bool {
-            if (isAdult == true && (purchased == true || donated == true)) {
+            if (isAdult == true) {
                 
                 params["view_adult"] = "true" as AnyObject?
             }

@@ -11,10 +11,15 @@ import UIKit
 class ContentsViewController: UIViewController, UIPopoverPresentationControllerDelegate, UITableViewDataSource, UITableViewDelegate {
     
     var downloadedChapters: [DBChapter]! = nil
+    var onlineChapters: [Int:ChapterOnline]! = nil
     var modalDelegate: ModalControllerDelegate! = nil
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return downloadedChapters.count;
+        if (onlineChapters != nil) {
+            return onlineChapters.count
+        } else {
+            return downloadedChapters.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -26,8 +31,15 @@ class ContentsViewController: UIViewController, UIPopoverPresentationControllerD
             cell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: cellIdentifier)
         }
         
-        let chapterNum = downloadedChapters[(indexPath as NSIndexPath).row].chapterIndex.int32Value + 1
-        cell?.textLabel?.text = "Chapter " + String(chapterNum)
+        if (onlineChapters != nil) {
+            
+            let chapterNum = onlineChapters[(indexPath as NSIndexPath).row]
+            cell?.textLabel?.text = chapterNum?.url
+        } else {
+            
+            let chapterNum = downloadedChapters[(indexPath as NSIndexPath).row].chapterIndex.int32Value + 1
+            cell?.textLabel?.text = "Chapter " + String(chapterNum)
+        }
         
         return cell!
     }

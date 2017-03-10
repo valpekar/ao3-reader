@@ -88,8 +88,12 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
     
     func hideLoadingView() {
         print("hide loading view")
-        activityView.stopAnimating()
-        loadingView.removeFromSuperview()
+        if (activityView.isAnimating) {
+            activityView.stopAnimating()
+        }
+        if (loadingView.superview != nil) {
+            loadingView.removeFromSuperview()
+        }
     }
     
     //MARK: - tapfortap

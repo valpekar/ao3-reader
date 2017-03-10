@@ -54,7 +54,6 @@
 		28B6DC541B4E47E700F34529 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28B6DC531B4E47E700F34529 /* FeedViewController.swift */; };
 		28B6DC561B4E47FC00F34529 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28B6DC551B4E47FC00F34529 /* SearchViewController.swift */; };
 		28B6DC581B4E480F00F34529 /* ArticleDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28B6DC571B4E480F00F34529 /* ArticleDetailsViewController.swift */; };
-		28B6DC5A1B4E483F00F34529 /* ReadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28B6DC591B4E483F00F34529 /* ReadingViewController.swift */; };
 		28B6DC601B4E4B3C00F34529 /* PageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28B6DC5F1B4E4B3C00F34529 /* PageCollectionViewCell.swift */; };
 		28E1C7131B8D9246001E2E5A /* WorkDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28E1C7121B8D9246001E2E5A /* WorkDetailViewController.swift */; };
 		28E1C7151B8D9257001E2E5A /* WorkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28E1C7141B8D9257001E2E5A /* WorkViewController.swift */; };
@@ -80,10 +79,12 @@
 		3C16125C1C720B4600FB0670 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C16125B1C720B4600FB0670 /* libsqlite3.tbd */; };
 		3C16125E1C720B5700FB0670 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C16125D1C720B5700FB0670 /* libxml2.tbd */; };
 		3C1612601C720B6000FB0670 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C16125F1C720B6000FB0670 /* libz.tbd */; };
+		3C2548D11E71872D00B872A3 /* WorkListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C2548D01E71872D00B872A3 /* WorkListController.swift */; };
 		3C274CC31CE4CCBA00F3AC68 /* FlurryEmpty.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C274CBF1CE4CCBA00F3AC68 /* FlurryEmpty.m */; };
 		3C274CC41CE4CCBA00F3AC68 /* libFlurry_7.6.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C274CC11CE4CCBA00F3AC68 /* libFlurry_7.6.0.a */; };
 		3C3105481C7F3D260065256E /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C3105471C7F3D260065256E /* LoginViewController.swift */; };
 		3C31054A1C7F57020065256E /* FavoritesSiteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C3105491C7F57020065256E /* FavoritesSiteController.swift */; };
+		3C3EF71C1E6D55DA000CAA1F /* ChapterOnline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C3EF71B1E6D55DA000CAA1F /* ChapterOnline.swift */; };
 		3C5813CF1C6E00DB00C3FC12 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C5813CE1C6E00DB00C3FC12 /* AdSupport.framework */; };
 		3C5813D11C6E00E300C3FC12 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C5813D01C6E00E300C3FC12 /* EventKit.framework */; };
 		3C5813D31C6E00E800C3FC12 /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C5813D21C6E00E800C3FC12 /* EventKitUI.framework */; };
@@ -198,7 +199,6 @@
 		28B6DC531B4E47E700F34529 /* FeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FeedViewController.swift; path = Controller/FeedViewController.swift; sourceTree = "<group>"; };
 		28B6DC551B4E47FC00F34529 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchViewController.swift; path = Controller/SearchViewController.swift; sourceTree = "<group>"; };
 		28B6DC571B4E480F00F34529 /* ArticleDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArticleDetailsViewController.swift; path = Controller/ArticleDetailsViewController.swift; sourceTree = "<group>"; };
-		28B6DC591B4E483F00F34529 /* ReadingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReadingViewController.swift; path = Controller/ReadingViewController.swift; sourceTree = "<group>"; };
 		28B6DC5F1B4E4B3C00F34529 /* PageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PageCollectionViewCell.swift; path = View/Custom/Cells/PageCollectionViewCell.swift; sourceTree = "<group>"; };
 		28E1C7121B8D9246001E2E5A /* WorkDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WorkDetailViewController.swift; path = Controller/WorkDetailViewController.swift; sourceTree = "<group>"; };
 		28E1C7141B8D9257001E2E5A /* WorkViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WorkViewController.swift; path = Controller/WorkViewController.swift; sourceTree = "<group>"; };
@@ -226,12 +226,14 @@
 		3C16125B1C720B4600FB0670 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		3C16125D1C720B5700FB0670 /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
 		3C16125F1C720B6000FB0670 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		3C2548D01E71872D00B872A3 /* WorkListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkListController.swift; sourceTree = "<group>"; };
 		3C274CBE1CE4CCBA00F3AC68 /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
 		3C274CBF1CE4CCBA00F3AC68 /* FlurryEmpty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlurryEmpty.m; sourceTree = "<group>"; };
 		3C274CC01CE4CCBA00F3AC68 /* FlurryWatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlurryWatch.h; sourceTree = "<group>"; };
 		3C274CC11CE4CCBA00F3AC68 /* libFlurry_7.6.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry_7.6.0.a; sourceTree = "<group>"; };
 		3C3105471C7F3D260065256E /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginViewController.swift; path = Controller/LoginViewController.swift; sourceTree = "<group>"; };
 		3C3105491C7F57020065256E /* FavoritesSiteController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FavoritesSiteController.swift; path = Controller/FavoritesSiteController.swift; sourceTree = "<group>"; };
+		3C3EF71B1E6D55DA000CAA1F /* ChapterOnline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChapterOnline.swift; path = Object/ChapterOnline.swift; sourceTree = "<group>"; };
 		3C5813CE1C6E00DB00C3FC12 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		3C5813D01C6E00E300C3FC12 /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
 		3C5813D21C6E00E800C3FC12 /* EventKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKitUI.framework; path = System/Library/Frameworks/EventKitUI.framework; sourceTree = SDKROOT; };
@@ -344,6 +346,7 @@
 				1D1C2FE81B8DA3050076D10C /* WorkRelationship.swift */,
 				1D1C2FEA1B8DA3E70076D10C /* WorkCharacter.swift */,
 				1D1C2FEC1B8DA46D0076D10C /* WorkFandom.swift */,
+				3C3EF71B1E6D55DA000CAA1F /* ChapterOnline.swift */,
 			);
 			name = Object;
 			sourceTree = "<group>";
@@ -485,7 +488,6 @@
 				28B6DC531B4E47E700F34529 /* FeedViewController.swift */,
 				28B6DC551B4E47FC00F34529 /* SearchViewController.swift */,
 				28B6DC571B4E480F00F34529 /* ArticleDetailsViewController.swift */,
-				28B6DC591B4E483F00F34529 /* ReadingViewController.swift */,
 				28E1C7121B8D9246001E2E5A /* WorkDetailViewController.swift */,
 				28E1C7141B8D9257001E2E5A /* WorkViewController.swift */,
 				1D3F4BA81BBABF5100279C27 /* LoadingViewController.swift */,
@@ -500,6 +502,7 @@
 				3C9C87B91CE3557D00C10410 /* RecommendationsController.swift */,
 				3CB992C01CF470D5004772AF /* PublishWorkController.swift */,
 				3CF215BE1D4233DC008D6585 /* InterstitialController.swift */,
+				3C2548D01E71872D00B872A3 /* WorkListController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -819,6 +822,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3C2548D11E71872D00B872A3 /* WorkListController.swift in Sources */,
 				3C0A80931C85D14200BBCF2B /* MeViewController.swift in Sources */,
 				1D7BDD371B5E755F0017C346 /* TFHppleElement.m in Sources */,
 				28B6DC561B4E47FC00F34529 /* SearchViewController.swift in Sources */,
@@ -845,6 +849,7 @@
 				1D2832101BBD6A7200FFC887 /* CharacterItem.swift in Sources */,
 				3CF1D00E1C87182300D219B2 /* HistoryViewController.swift in Sources */,
 				28B6DC2D1B4E3F5900F34529 /* ArchiveOfOurOwnReader.xcdatamodeld in Sources */,
+				3C3EF71C1E6D55DA000CAA1F /* ChapterOnline.swift in Sources */,
 				28B6DC601B4E4B3C00F34529 /* PageCollectionViewCell.swift in Sources */,
 				1D7929A61BBEE2860080BDE3 /* DBCharacterItem.swift in Sources */,
 				28B6DC541B4E47E700F34529 /* FeedViewController.swift in Sources */,
@@ -862,7 +867,6 @@
 				1D2832121BBD6A7200FFC887 /* Relationship.swift in Sources */,
 				1D3476651BAC4381006AAF1A /* SearchSwitchesCell.swift in Sources */,
 				1D1AAF161B98793700927CE1 /* WorkDetailCell.swift in Sources */,
-				28B6DC5A1B4E483F00F34529 /* ReadingViewController.swift in Sources */,
 				1D3F4BA91BBABF5100279C27 /* LoadingViewController.swift in Sources */,
 				3C31054A1C7F57020065256E /* FavoritesSiteController.swift in Sources */,
 				1D2CFFFF1B8C7F7F0065EB2B /* PageItem.swift in Sources */,
