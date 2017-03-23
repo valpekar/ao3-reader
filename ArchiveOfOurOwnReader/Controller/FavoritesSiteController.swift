@@ -116,7 +116,9 @@ class FavoritesSiteController : LoadingViewController, UITableViewDataSource, UI
             }
         }
         
-        let urlStr = "http://archiveofourown.org/users/" + pseuds[currentPseud]! + "/bookmarks"
+        let login = DefaultsManager.getString(DefaultsManager.LOGIN)
+        
+        let urlStr = "http://archiveofourown.org/users/\(login)/pseuds/\(pseuds[currentPseud]!)/bookmarks" // + pseuds[currentPseud]! + "/bookmarks"
         
         Alamofire.request(urlStr) //default is get
             .response(completionHandler: { response in
@@ -480,7 +482,8 @@ class FavoritesSiteController : LoadingViewController, UITableViewDataSource, UI
             currentWorkItem.complete = newsItem.complete
             currentWorkItem.workId = newsItem.workId
             
-            currentWorkItem.id = Int64(Int(newsItem.workId)!)
+            let workIdStr = newsItem.workId.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()
+            currentWorkItem.id = Int64(Int(workIdStr)!)
             
             (workDetail.viewControllers[0] as! WorkDetailViewController).workItem = currentWorkItem
             (workDetail.viewControllers[0] as! WorkDetailViewController).modalDelegate = self

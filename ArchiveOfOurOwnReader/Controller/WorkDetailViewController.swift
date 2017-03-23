@@ -20,7 +20,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     @IBOutlet weak var downloadTrashButton: UIButton!
     
     @IBOutlet weak var bgImage: UIImageView!
-    @IBOutlet weak var authorLabel: UILabel!
+    @IBOutlet weak var authorLabel: UIButton!
     @IBOutlet weak var titleLabel: UILabel!
     
     @IBOutlet weak var audienceLabel: UILabel!
@@ -133,7 +133,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
         let underlineAttribute = [NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue]
         let underlineAttributedString = NSAttributedString(string: (downloadedWorkItem.value(forKey: "author") as! String), attributes: underlineAttribute)
-        authorLabel.attributedText = underlineAttributedString
+        authorLabel.setAttributedTitle(underlineAttributedString, for: .normal) // = underlineAttributedString
         
         let trimmedTitle = (downloadedWorkItem.value(forKey: "workTitle") as? String)!.trimmingCharacters(
             in: CharacterSet.whitespacesAndNewlines
@@ -241,7 +241,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
         if (caution != nil && (caution?.count)!>0 && (caution?[0] as! TFHppleElement).text().range(of: "adult content") != nil) {
             workItem.setValue("Sorry!", forKey: "author")
-            workItem.setValue("This work contains adult conetnt. To view it you need to login and confirm that you are at least 18.", forKey: "workTitle")
+            workItem.setValue("This work contains adult content. To view it you need to login and confirm that you are at least 18.", forKey: "workTitle")
             workItem.setValue("", forKey: "complete")
             
             return
@@ -491,7 +491,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
         let underlineAttribute = [NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue]
         let underlineAttributedString = NSAttributedString(string: workItem.author, attributes: underlineAttribute)
-        authorLabel.attributedText = underlineAttributedString
+        authorLabel.setAttributedTitle(underlineAttributedString, for: .normal) // = underlineAttributedString
         
         titleLabel.text = workItem.workTitle
         
@@ -565,8 +565,6 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell: WorkDetailCell? = tableView.dequeueReusableCell(withIdentifier: "cell") as? WorkDetailCell
         
-        var selector: Selector!
-        
         if(cell == nil) {
             cell = WorkDetailCell(style: UITableViewCellStyle.default, reuseIdentifier: "cell")
         }
@@ -579,6 +577,16 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
         switch ((indexPath as NSIndexPath).section) {
         case 0:
+        
+            if (workItem != nil) {
+                cell!.label.text = workItem.topicPreview
+            } else {
+                cell!.label.text = downloadedWorkItem.value(forKey: "topicPreview") as? String
+            }
+            cell!.label.font = UIFont.systemFont(ofSize: 13)
+            cell!.imgView.image = UIImage(named: "preview")
+            
+        case 1:
             if (warnings != nil && warnings.count > (indexPath as NSIndexPath).row) {
                 cell!.label.text = warnings[(indexPath as NSIndexPath).row]
                 cell!.imgView.image = UIImage(named: "warning")
@@ -588,7 +596,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 indexesToHide.append(0)
                 cell!.imgView.image = nil
             }
-        case 1:
+        case 2:
             if (fandoms != nil && fandoms.count > (indexPath as NSIndexPath).row) {
                 cell!.label.text = fandoms[(indexPath as NSIndexPath).row].fandomName
                 cell!.imgView.image = UIImage(named: "fandom")
@@ -607,7 +615,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 indexesToHide.append(1)
                 cell!.imgView.image = nil
             }
-        case 2:
+        case 3:
             if (relationships != nil && relationships.count > (indexPath as NSIndexPath).row) {
                 cell!.label.text = relationships[(indexPath as NSIndexPath).row].relationshipName
                 cell!.imgView.image = UIImage(named: "heart")
@@ -624,7 +632,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 indexesToHide.append(2)
                 cell!.imgView.image = nil
             }
-        case 3:
+        case 4:
             if (characters != nil && characters.count > (indexPath as NSIndexPath).row) {
                 cell!.label.text = characters[(indexPath as NSIndexPath).row].characterName
                 cell!.imgView.image = UIImage(named: "characters")
@@ -640,7 +648,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 indexesToHide.append(3)
                 cell!.imgView.image = nil
             }
-        case 4:
+        case 5:
             if (workItem != nil) {
                 cell!.label.text = workItem.language
             } else {
@@ -649,7 +657,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             cell!.imgView.image = UIImage(named: "lang")
                 
             cell!.label.font = UIFont.systemFont(ofSize: 13)
-        case 5:
+        case 6:
             if (workItem != nil) {
                 cell!.label.text = workItem.stats
             } else {
@@ -657,14 +665,11 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             }
             cell!.label.font = UIFont.italicSystemFont(ofSize: 13)
             cell!.imgView.image = UIImage(named: "info")
+            
+            
         default:
             cell!.label.font = UIFont.systemFont(ofSize: 13)
             break
-        }
-        
-        if (cell!.label.text != nil && selector != nil) {
-            let tapGesture = UITapGestureRecognizer(target: self, action: selector)
-            cell!.label.addGestureRecognizer(tapGesture)
         }
         
         return cell!
@@ -692,7 +697,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         
-        if (section == 5) {
+        if (section == 6) {
             return 1.0
         }
         
@@ -711,26 +716,24 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         var res:CGFloat = 1.0
         
         switch (section) {
-        case 0:
+        case 0, 5, 6:
+            res = 2.0
+        case 1:
             if (warnings != nil && warnings.count > 0) {
                 res = 2.0
             }
-        case 1:
+        case 2:
             if ((fandoms != nil && fandoms.count > 0) || (downloadedFandoms != nil && downloadedFandoms.count > 0)) {
                 res = 2.0
             }
-        case 2:
+        case 3:
             if ((relationships != nil && relationships.count > 0) || (downloadedRelationships != nil && downloadedRelationships.count > 0)) {
                 res = 2.0
             }
-        case 3:
+        case 4:
             if ((characters != nil && characters.count > 0) || (downloadedCharacters != nil && downloadedCharacters.count > 0)) {
                 res = 2.0
             }
-        case 4:
-            res = 2.0
-        case 5:
-            res = 2.0
         default:
             break
         }
@@ -739,7 +742,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 6
+        return 7
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -747,7 +750,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         var res:Int = 1
         
         switch (section) {
-        case 1:
+        case 2:
             if (workItem != nil) {
                 if (fandoms != nil) {
                     res = fandoms.count
@@ -755,13 +758,13 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             } else if (downloadedFandoms != nil) {
                 return downloadedFandoms.count
             }
-        case 2:
+        case 23:
             if (workItem != nil && relationships != nil) {
                 res = relationships.count
             } else if (downloadedRelationships != nil) {
                 return downloadedRelationships.count
             }
-        case 3:
+        case 4:
             if (workItem != nil && characters != nil) {
                 res = characters.count
             } else if (downloadedCharacters != nil) {
@@ -781,7 +784,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         tagUrl = ""
         
         switch indexPath.section {
-        case 1:
+        case 2:
                 if (workItem != nil && fandoms != nil && fandoms.count > pos) {
                     tagUrl = fandoms[pos].fandomUrl
                 } else if (downloadedFandoms != nil && downloadedFandoms.count > pos) {
@@ -791,7 +794,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 
                 performSegue(withIdentifier: "listSegue", sender: self)
             
-        case 2:
+        case 3:
             if (workItem != nil && relationships != nil && relationships.count > pos) {
                 tagUrl = relationships[pos].relationshipUrl
             } else if (downloadedRelationships != nil && downloadedRelationships.count > pos) {
@@ -801,7 +804,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             
             performSegue(withIdentifier: "listSegue", sender: self)
             
-        case 3:
+        case 4:
             if (workItem != nil && characters != nil && characters.count > pos) {
                 tagUrl = characters[pos].characterUrl
             } else if (downloadedCharacters != nil && downloadedCharacters.count > pos) {
@@ -814,6 +817,19 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         default:
             break
         }
+    }
+    
+    @IBAction func authorTouched(_sender: AnyObject) {
+        var authorName = ""
+        
+        if(workItem != nil) {
+            authorName = workItem.author
+        } else if (downloadedWorkItem != nil) {
+            authorName = downloadedWorkItem.value(forKey: "author") as? String ?? ""
+        }
+        
+        tagUrl = "http://archiveofourown.org/users/\(authorName)/works"
+        performSegue(withIdentifier: "listSegue", sender: self)
     }
     
     func addOneLabel(_ text:String, imageName:String, cell:UITableViewCell ) {
@@ -1203,6 +1219,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     
     @IBAction func settingsButtonTouched(_ sender: AnyObject) {
         let optionMenu = UIAlertController(title: nil, message: "Work Options", preferredStyle: .actionSheet)
+        optionMenu.view.tintColor = AppDelegate.redColor
         
         if (downloadedWorkItem != nil) {
             let deleteAction = UIAlertAction(title: "Delete Work", style: .default, handler: {

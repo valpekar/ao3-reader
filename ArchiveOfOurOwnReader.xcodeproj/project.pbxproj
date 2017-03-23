@@ -108,6 +108,7 @@
 		3CCBC0E61CB534F9000207CF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CCBC0E51CB534F9000207CF /* UIKit.framework */; };
 		3CCBC0E81CB5366F000207CF /* MPNativeAdView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CCBC0E71CB5366F000207CF /* MPNativeAdView.swift */; };
 		3CD808541D804F310099F778 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3CD808531D804F310099F778 /* GoogleService-Info.plist */; };
+		3CDC4A2C1E825F5100D9438E /* AboutSubscriptionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CDC4A2B1E825F5100D9438E /* AboutSubscriptionController.swift */; };
 		3CF1D00E1C87182300D219B2 /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF1D00D1C87182300D219B2 /* HistoryViewController.swift */; };
 		3CF215BF1D4233DC008D6585 /* InterstitialController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF215BE1D4233DC008D6585 /* InterstitialController.swift */; };
 		3CF215C11D425651008D6585 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CF215C01D425651008D6585 /* JavaScriptCore.framework */; };
@@ -259,6 +260,7 @@
 		3CCBC0E71CB5366F000207CF /* MPNativeAdView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MPNativeAdView.swift; sourceTree = "<group>"; };
 		3CD808531D804F310099F778 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3CD8F8CE1CE4808F00C3D5BB /* ArchiveOfOurOwnReader 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ArchiveOfOurOwnReader 3.xcdatamodel"; sourceTree = "<group>"; };
+		3CDC4A2B1E825F5100D9438E /* AboutSubscriptionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AboutSubscriptionController.swift; path = Controller/AboutSubscriptionController.swift; sourceTree = "<group>"; };
 		3CF1D00D1C87182300D219B2 /* HistoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HistoryViewController.swift; path = Controller/HistoryViewController.swift; sourceTree = "<group>"; };
 		3CF215BE1D4233DC008D6585 /* InterstitialController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InterstitialController.swift; path = Controller/InterstitialController.swift; sourceTree = "<group>"; };
 		3CF215C01D425651008D6585 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -503,6 +505,7 @@
 				3CB992C01CF470D5004772AF /* PublishWorkController.swift */,
 				3CF215BE1D4233DC008D6585 /* InterstitialController.swift */,
 				3C2548D01E71872D00B872A3 /* WorkListController.swift */,
+				3CDC4A2B1E825F5100D9438E /* AboutSubscriptionController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -822,6 +825,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3CDC4A2C1E825F5100D9438E /* AboutSubscriptionController.swift in Sources */,
 				3C2548D11E71872D00B872A3 /* WorkListController.swift in Sources */,
 				3C0A80931C85D14200BBCF2B /* MeViewController.swift in Sources */,
 				1D7BDD371B5E755F0017C346 /* TFHppleElement.m in Sources */,

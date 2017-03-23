@@ -191,7 +191,6 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
             DefaultsManager.putBool(false, key: DefaultsManager.ADULT)
         }
     }
-    
    
     
     //Mark: - TableView

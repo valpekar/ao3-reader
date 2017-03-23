@@ -120,10 +120,12 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
             cell?.topicPreviewLabel.text = ""
         }
         
+        let chaptersCountStr = (curWork.value(forKey: "chaptersCount") as? String) ?? ""
+        
         cell?.datetimeLabel.text = curWork.value(forKey: "datetime") as? String
         cell?.languageLabel.text = curWork.value(forKey: "language") as? String
         cell?.wordsLabel.text = curWork.value(forKey: "words") as? String
-        cell?.chaptersLabel.text = "Chapters: " + (curWork.value(forKey: "chaptersCount") as? String)!
+        cell?.chaptersLabel.text = "Chapters: \(chaptersCountStr)"
         cell?.commentsLabel.text = curWork.value(forKey: "comments") as? String
         cell?.kudosLabel.text = curWork.value(forKey: "kudos") as? String
         cell?.bookmarksLabel.text = curWork.value(forKey: "bookmarks") as? String

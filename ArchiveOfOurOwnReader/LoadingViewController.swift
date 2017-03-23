@@ -443,6 +443,15 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
         
         var err: NSError?
         
+        let workChapters = curworkItem.value(forKeyPath: "chapters") as! NSMutableSet
+        workChapters.removeAllObjects()
+        do {
+            try managedContext.save()
+        } catch let error as NSError {
+            err = error
+            print("Could not save \(err), \(err?.userInfo)")
+        }
+        
         for i in 0..<chapters.count {
             
             if let wid = curworkItem.value(forKey: "id") as? Int {
@@ -455,7 +464,6 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
                 chapter.setValue(curworkItem, forKey: "workItem")
                 chapter.setValue(chapters[i], forKey: "chapterContent")
             
-                let workChapters = curworkItem.value(forKeyPath: "chapters") as! NSMutableSet
                 workChapters.add(chapter)
             
                 do {
@@ -506,7 +514,9 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
                                         
                                         print(response.request ?? "")
                                         print(response.error ?? "")
-                                        self.parseNxtChapter(response.data!, curworkItem: curworkItem)
+                                        if let d = response.data {
+                                            self.parseNxtChapter(d, curworkItem: curworkItem)
+                                        }
                                     })
                                 
                             }

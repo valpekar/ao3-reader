@@ -24,6 +24,7 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
     @IBOutlet weak var tableView:UITableView!
     
     @IBOutlet weak var tryAgainButton:UIButton!
+    @IBOutlet weak var checkStatusButton:UIButton!
     
     //var placer: MPTableViewAdPlacer!
     
@@ -38,6 +39,7 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
     
     var i = 0 //counts page transitions, display ads every 3rd time
     var flag = true
+    var triedToLogin = 0
    
     //@IBOutlet weak var webView: UIWebView!
 
@@ -75,6 +77,14 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
             
             self.present(vc, animated: true, completion: nil)
         }
+        
+        tryAgainButton.layer.borderWidth = 1.0
+        tryAgainButton.layer.borderColor = AppDelegate.redColor.cgColor
+        tryAgainButton.layer.cornerRadius = 5.0
+        
+        checkStatusButton.layer.borderWidth = 1.0
+        checkStatusButton.layer.borderColor = AppDelegate.redColor.cgColor
+        checkStatusButton.layer.cornerRadius = 5.0
         
        /* if (DefaultsManager.getObject(DefaultsManager.DONTSHOW_CONTEST) == nil || DefaultsManager.getObject(DefaultsManager.DONTSHOW_CONTEST) as! Bool == false) {
             showContestAlert()
@@ -122,7 +132,10 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
         if (Reachability.isConnectedToNetwork()) {
         if (!DefaultsManager.getString(DefaultsManager.PSEUD_ID).isEmpty &&  ((UIApplication.shared.delegate as! AppDelegate).cookies.count == 0 || (UIApplication.shared.delegate as! AppDelegate).token.isEmpty)) {
             
-            openLoginController()
+            if (triedToLogin < 2) {
+                openLoginController()
+                triedToLogin += 1
+            }
         }
         }
     }
@@ -150,12 +163,16 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
     }
     
     @IBAction func tryAgainTouched(_ sender: AnyObject) {
-        if (purchased && (UIApplication.shared.delegate as! AppDelegate).cookies.count == 0) {
+        if ((purchased || donated) && (UIApplication.shared.delegate as! AppDelegate).cookies.count == 0) {
             openLoginController()
         } else {
             
             searchApplied(self.query)
         }
+    }
+    
+    @IBAction func checkStatusTouched(_ sender: AnyObject) {
+        UIApplication.shared.openURL(URL(string: "https://twitter.com/ao3_status")!)
     }
     
     func showFeed() {
@@ -173,8 +190,10 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
         
         if (works.count == 0) {
             tryAgainButton.isHidden = false
+            checkStatusButton.isHidden = false
         } else {
             tryAgainButton.isHidden = true
+            checkStatusButton.isHidden = true
         }
     }
     
