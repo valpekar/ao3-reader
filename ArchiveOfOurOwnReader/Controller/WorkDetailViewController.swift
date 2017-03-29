@@ -11,6 +11,7 @@ import CoreData
 import GoogleMobileAds
 import TSMessages
 import Alamofire
+import Crashlytics
 
 class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -61,6 +62,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     
     var triedTo = -1
     
+    var downloadUrls: [String:String] = [:]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -132,7 +134,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     func showDownloadedWork() {
         
         let underlineAttribute = [NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue]
-        let underlineAttributedString = NSAttributedString(string: (downloadedWorkItem.value(forKey: "author") as! String), attributes: underlineAttribute)
+        let underlineAttributedString = NSAttributedString(string: (downloadedWorkItem.value(forKey: "author") as? String ?? ""), attributes: underlineAttribute)
         authorLabel.setAttributedTitle(underlineAttributedString, for: .normal) // = underlineAttributedString
         
         let trimmedTitle = (downloadedWorkItem.value(forKey: "workTitle") as? String)!.trimmingCharacters(
@@ -193,16 +195,18 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             donated = dd
         }
         
+        var vadult = ""
         if let isAdult = DefaultsManager.getBool(DefaultsManager.ADULT)  {
             if (isAdult == true) {
                 
                 params["view_adult"] = "true" as AnyObject?
+                vadult = "?view_adult=true"
             }
         }
         
         showLoadingView()
         
-        Alamofire.request("http://archiveofourown.org/works/" + workItem.workId, method: .get, parameters: params)
+        Alamofire.request("http://archiveofourown.org/works/" + workItem.workId + vadult, method: .get, parameters: params)
             .response(completionHandler: { response in
                 // print(response.request)
                 if let d = response.data {
@@ -411,13 +415,15 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             purchased = pp
         }
         
-        if let isAdult = DefaultsManager.getObject(DefaultsManager.ADULT) as? Bool {
+        var vadult = ""
+        if let isAdult = DefaultsManager.getBool(DefaultsManager.ADULT)  {
             if (isAdult == true) {
                 
                 params["view_adult"] = "true" as AnyObject?
+                vadult = "?view_adult=true"
             }
         }
-        
+
         var wid = ""
         if (workItem != nil) {
             wid = workItem.workId
@@ -425,7 +431,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             wid = downloadedWorkItem.value(forKey: "workId") as? String ?? ""
         }
         
-        Alamofire.request("http://archiveofourown.org/works/" + wid + "#bookmark-form", method: .get, parameters: params)
+        Alamofire.request("http://archiveofourown.org/works/" + wid + vadult + "#bookmark-form", method: .get, parameters: params)
             .response(completionHandler: { response in
                 // print(response.request)
                 if let d = response.data {
@@ -440,6 +446,8 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     }
     
     func parseCheckBookmark(_ data: Data) {
+        downloadUrls.removeAll()
+        
         let doc : TFHpple = TFHpple(htmlData: data)
         
         if let bookmarkIdEls = doc.search(withXPathQuery: "//div[@id='bookmark-form']") as? [TFHppleElement] {
@@ -462,6 +470,22 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 }
             }
         }
+        }
+        
+        if let downloadEl = doc.search(withXPathQuery: "//li[@class='download']") as? [TFHppleElement] {
+            if (downloadEl.count > 0) {
+                if let downloadUl: [TFHppleElement] = downloadEl.first?.search(withXPathQuery: "//li") as! [TFHppleElement]? {
+                    for i in 0..<downloadUl.count {
+                        let attributes : NSDictionary = (downloadUl[i].search(withXPathQuery: "//a")[0] as AnyObject).attributes as NSDictionary
+                        let key: String = downloadUl[i].content ?? ""
+                        let val: String = attributes["href"] as? String ?? ""
+                        
+                        if (!val.contains("#") && !val.isEmpty) {
+                            downloadUrls[key] = val
+                        }
+                    }
+                }
+            }
         }
         
     }
@@ -1055,7 +1079,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         }
         
         //let username = DefaultsManager.getString(DefaultsManager.LOGIN)
-        let pseuds = DefaultsManager.getObject(DefaultsManager.PSEUD_IDS) as! [String:String]
+        /*let pseuds = DefaultsManager.getObject(DefaultsManager.PSEUD_IDS) as! [String:String]
         var currentPseud = DefaultsManager.getString(DefaultsManager.PSEUD_ID)
         
         if (currentPseud.isEmpty) {
@@ -1063,7 +1087,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             if (keys.count > 0) {
                 currentPseud = keys[0]
             }
-        }
+        }*/
         
         var params:[String:AnyObject] = [String:AnyObject]()
         params["utf8"] = "✓" as AnyObject?
@@ -1140,15 +1164,18 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             purchased = pp
         }
         
-        if let isAdult = DefaultsManager.getObject(DefaultsManager.ADULT) as? Bool {
+        var vadult = ""
+        if let isAdult = DefaultsManager.getBool(DefaultsManager.ADULT)  {
             if (isAdult == true) {
                 
                 params["view_adult"] = "true" as AnyObject?
+                vadult = "?view_adult=true"
             }
         }
+
         
         if (workItem != nil) {
-            Alamofire.request("http://archiveofourown.org/works/" + workItem.workId, method: .get, parameters: params)
+            Alamofire.request("http://archiveofourown.org/works/" + workItem.workId + vadult, method: .get, parameters: params)
                 .response(completionHandler: { response in
                     print(response.request ?? "")
                     
@@ -1269,6 +1296,13 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             optionMenu.addAction(bookmarkAction)
         }
         
+        if (downloadUrls.count > 0) {
+        let downloadAction = UIAlertAction(title: "Download DPF/EPUB/HTML/MOBI", style: .default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            self.showDownloadDialog()
+        })
+        optionMenu.addAction(downloadAction)
+        }
         
         //
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: {
@@ -1280,6 +1314,33 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         optionMenu.popoverPresentationController?.sourceView = self.view
         optionMenu.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.size.width / 2.0, y: self.view.bounds.size.height / 2.0, width: 1.0, height: 1.0)
     
+        self.present(optionMenu, animated: true, completion: nil)
+    }
+    
+    func showDownloadDialog() {
+        
+        let keys: [String] = Array(downloadUrls.keys)
+        
+        let optionMenu = UIAlertController(title: nil, message: "Work Options", preferredStyle: .actionSheet)
+        optionMenu.view.tintColor = AppDelegate.redColor
+        
+        for key in keys {
+            let downloadAction = UIAlertAction(title: key, style: .default, handler: {
+                (alert: UIAlertAction!) -> Void in
+                self.downloadFile(downloadUrl: self.downloadUrls[key] ?? "")
+            })
+            optionMenu.addAction(downloadAction)
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: {
+            (alert: UIAlertAction!) -> Void in
+            print("Cancelled")
+        })
+        optionMenu.addAction(cancelAction)
+        
+        optionMenu.popoverPresentationController?.sourceView = self.view
+        optionMenu.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.size.width / 2.0, y: self.view.bounds.size.height / 2.0, width: 1.0, height: 1.0)
+        
         self.present(optionMenu, animated: true, completion: nil)
     }
     
@@ -1451,5 +1512,51 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         triedTo = -1
     }
     
+    func downloadFile(downloadUrl: String) {
+        let finalPath = "http://archiveofourown.org" + downloadUrl
+        print("download"+downloadUrl)
+        
+        Answers.logCustomEvent(withName: "Download_work",
+                                       customAttributes: [
+                                        "url": downloadUrl])
+        
+        if let url = URL(string: finalPath) {
+            UIApplication.shared.openURL(url)
+        }
+        
+        //http://stackoverflow.com/questions/27959023/swift-how-to-open-local-pdf-from-my-app-to-ibooks
+        
+//        Alamofire.download(.GET, downloadUrl, { (temporaryURL, response) in
+//            
+//            if let directoryURL = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0] as? NSURL {
+//                
+//                fileName = response.suggestedFilename!
+//                finalPath = directoryURL.URLByAppendingPathComponent(fileName!)
+//                return finalPath!
+//            }
+//            
+//            return temporaryURL
+//        })
+//            .response { (request, response, data, error) in
+//                
+//                if error != nil {
+//                    println("REQUEST: \(request)")
+//                    println("RESPONSE: \(response)")
+//                } 
+//                
+//                if finalPath != nil {
+//                    doSomethingWithTheFile(finalPath!, fileName: fileName!)
+//                    var docController: UIDocumentInteractionController?
+//                    docController = UIDocumentInteractionController(URL: finalPath)
+//                    let url = NSURL(string:"itms-books:");
+//                    if UIApplication.sharedApplication().canOpenURL(url!) {
+//                        docController!.presentOpenInMenuFromRect(CGRectZero, inView: self.view, animated: true)
+//                        println("iBooks is installed")
+//                    }else{
+//                        println("iBooks is not installed")
+//                    }
+//                }
+//        }
+    }
    
 }

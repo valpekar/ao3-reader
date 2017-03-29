@@ -45,10 +45,6 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
         }
     }
     
-    func showWvInterstitial() {
-        self.performSegue(withIdentifier: "interstitialSegue", sender: self)
-    }
-    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -56,6 +52,11 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
     }
         
     func showLoadingView() {
+        
+        if (loadingView != nil) {
+            hideLoadingView()
+        }
+        
         let screenSize: CGRect = UIScreen.main.bounds
         let screenWidth = screenSize.width
         let screenHeight = screenSize.height
@@ -91,8 +92,9 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
         if (activityView.isAnimating) {
             activityView.stopAnimating()
         }
-        if (loadingView.superview != nil) {
+        if (loadingView != nil && loadingView.superview != nil) {
             loadingView.removeFromSuperview()
+            loadingView = nil
         }
     }
     
@@ -248,27 +250,29 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
             return
         }
         
-       // var landmark = doc.searchWithXPathQuery("//h6[@class='landmark heading']")
-        
-        var workmeta: [TFHppleElement] = doc.search(withXPathQuery: "//dl[@class='work meta group']") as! [TFHppleElement]
+        // var landmark = doc.searchWithXPathQuery("//h6[@class='landmark heading']")
         
         var firstFandom: String = ""
         var firstRelationship: String = ""
         
+        if let workmeta: [TFHppleElement] = doc.search(withXPathQuery: "//dl[@class='work meta group']") as? [TFHppleElement] {
+        
         if(workmeta.count > 0) {
-            var ratings: [TFHppleElement] = workmeta[0].search(withXPathQuery: "//dd[@class='rating tags']/ul[@class='*']/li") as! [TFHppleElement]
+            if let ratings: [TFHppleElement] = workmeta[0].search(withXPathQuery: "//dd[@class='rating tags']/ul[@class='*']/li") as? [TFHppleElement] {
             if (ratings.count > 0) {
                 workItem.setValue(ratings[0].content, forKey: "ratingTags")
             }
+            }
             
-            var archiveWarnings: [TFHppleElement] = workmeta[0].search(withXPathQuery: "//dd[@class='warning tags']/ul[@class='commas']/li") as! [TFHppleElement]
+            if let archiveWarnings: [TFHppleElement] = workmeta[0].search(withXPathQuery: "//dd[@class='warning tags']/ul[@class='commas']/li") as? [TFHppleElement] {
             var warnings = [String]()
             for i in 0..<archiveWarnings.count {
                 warnings.append(archiveWarnings[i].content)
                 //workItem.archiveWarnings = archiveWarnings[0].content
             }
+            }
             
-            var fandomsLiArr: [TFHppleElement] = workmeta[0].search(withXPathQuery: "//dd[@class='fandom tags']/ul[@class='commas']/li") as! [TFHppleElement]
+            if let fandomsLiArr: [TFHppleElement] = workmeta[0].search(withXPathQuery: "//dd[@class='fandom tags']/ul[@class='commas']/li") as? [TFHppleElement] {
             
             for i in 0..<fandomsLiArr.count {
                 let entityf =  NSEntityDescription.entity(forEntityName: "DBFandom",  in: managedContext)
@@ -284,6 +288,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
                 let works = f.value(forKeyPath: "workItems") as! NSMutableSet
                 works.add(workItem)
             }
+            }
             
             //   var categoryLiArr: [TFHppleElement] = workmeta[0].searchWithXPathQuery("//dd[@class='category tags']/ul[@class=*]/li") as! [TFHppleElement]
             //
@@ -294,7 +299,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
             //  }
             // workItem.setValue(categoryStr, forKey: "category")
             
-            var relationshipsLiArr: [TFHppleElement] = workmeta[0].search(withXPathQuery: "//dd[@class='relationship tags']/ul[@class='commas']/li") as! [TFHppleElement]
+            if let relationshipsLiArr: [TFHppleElement] = workmeta[0].search(withXPathQuery: "//dd[@class='relationship tags']/ul[@class='commas']/li") as? [TFHppleElement] {
             
             for i in 0..<relationshipsLiArr.count {
                 let entityr =  NSEntityDescription.entity(forEntityName: "DBRelationship",  in: managedContext)
@@ -310,8 +315,9 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
                 let works = r.value(forKeyPath: "workItems") as! NSMutableSet
                 works.add(workItem)
             }
+            }
             
-            var charactersLiArr: [TFHppleElement] = workmeta[0].search(withXPathQuery: "//dd[@class='character tags']/ul[@class='commas']/li") as! [TFHppleElement]
+            if let charactersLiArr: [TFHppleElement] = workmeta[0].search(withXPathQuery: "//dd[@class='character tags']/ul[@class='commas']/li") as? [TFHppleElement] {
             
             for i in 0..<charactersLiArr.count {
                 let entityc =  NSEntityDescription.entity(forEntityName: "DBCharacterItem",  in: managedContext)
@@ -326,17 +332,19 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
                 let works = c.value(forKeyPath: "workItems") as! NSMutableSet
                 works.add(workItem)
             }
+            }
             
-            var languageEl: [TFHppleElement] = workmeta[0].search(withXPathQuery: "//dd[@class='language']") as! [TFHppleElement]
+            if let languageEl: [TFHppleElement] = workmeta[0].search(withXPathQuery: "//dd[@class='language']") as? [TFHppleElement] {
             if(languageEl.count > 0) {
                 let language = languageEl[0].text().replacingOccurrences(of: "\n", with:"")
                     .replacingOccurrences(of: "\\s+", with: " ", options: NSString.CompareOptions.regularExpression, range: nil)
                 
                 workItem.setValue(language, forKey: "language")
             }
+            }
             
-            var statsElDt: [TFHppleElement] = workmeta[0].search(withXPathQuery: "//dd[@class='stats']/dl[@class='stats']/dt") as! [TFHppleElement]
-            var statsElDd: [TFHppleElement] = workmeta[0].search(withXPathQuery: "//dd[@class='stats']/dl[@class='stats']/dd") as! [TFHppleElement]
+            if let statsElDt: [TFHppleElement] = workmeta[0].search(withXPathQuery: "//dd[@class='stats']/dl[@class='stats']/dt") as? [TFHppleElement],
+                let statsElDd: [TFHppleElement] = workmeta[0].search(withXPathQuery: "//dd[@class='stats']/dl[@class='stats']/dd") as? [TFHppleElement] {
             if(statsElDt.count > 0 && statsElDd.count > 0) {
                 
                 var statsStr = ""
@@ -348,17 +356,20 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
                 }
                 workItem.setValue(statsStr, forKey: "stats")
             }
+            }
+        }
         }
         
-        var h2El = doc.search(withXPathQuery: "//h2[@class='title heading']")as! [TFHppleElement]
+        if let h2El = doc.search(withXPathQuery: "//h2[@class='title heading']") as? [TFHppleElement] {
         if (h2El.count > 0) {
             let workTitleStr = h2El[0].text().replacingOccurrences(of: "\n", with:"")
                 .replacingOccurrences(of: "\\s+", with: " ", options: NSString.CompareOptions.regularExpression, range: nil)
             
             workItem.setValue(workTitleStr, forKey: "workTitle")
         }
+        }
         
-        var bylineHeadingEl = doc.search(withXPathQuery: "//div[@id='workskin']/div[@class='preface group']/h3[@class='byline heading']")as! [TFHppleElement]
+        if let bylineHeadingEl = doc.search(withXPathQuery: "//div[@id='workskin']/div[@class='preface group']/h3[@class='byline heading']") as? [TFHppleElement] {
         if (bylineHeadingEl.count > 0) {
             let authorStr = bylineHeadingEl[0].content.replacingOccurrences(of: "\n", with:"")
                 .trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
@@ -366,27 +377,23 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
             
             workItem.setValue(authorStr, forKey: "author")
         }
-        
-        var workContentEl = doc.search(withXPathQuery: "//div[@id='chapters']") as! [TFHppleElement]
-        
-        if (workContentEl.count == 0) {
-            return
         }
         
-        var workContentStr = workContentEl[0].raw
+        if let workContentEl = doc.search(withXPathQuery: "//div[@id='chapters']") as? [TFHppleElement] {
+            var workContentStr = workContentEl[0].raw ?? ""
+            
+            //var error:NSErrorPointer = NSErrorPointer()
+            let regex:NSRegularExpression = try! NSRegularExpression(pattern: "<a href=\"[^\"]+\">([^<]+)</a>", options: NSRegularExpression.Options.caseInsensitive)
+            workContentStr = regex.stringByReplacingMatches(in: workContentStr, options: NSRegularExpression.MatchingOptions.withoutAnchoringBounds, range: NSRange(location: 0, length: workContentStr.characters.count), withTemplate: "$1")
+            
+            workItem.setValue(workContentStr, forKey: "workContent")
+            chapters.append(workContentStr)
+        }
         
-       // var error:NSErrorPointer = NSErrorPointer()
-        let regex:NSRegularExpression = try! NSRegularExpression(pattern: "<a href=\"[^\"]+\">([^<]+)</a>", options: NSRegularExpression.Options.caseInsensitive)
-        workContentStr = regex.stringByReplacingMatches(in: workContentStr!, options: NSRegularExpression.MatchingOptions.withoutAnchoringBounds, range: NSRange(location: 0, length: (workContentStr?.characters.count)!), withTemplate: "$1")
-        
-        workItem.setValue(workContentStr, forKey: "workContent")
-        chapters.append(workContentStr!)
-        
-        var navigationEl: [TFHppleElement] = doc.search(withXPathQuery: "//ul[@class='work navigation actions']") as! [TFHppleElement]
-        if (navigationEl.count > 0) {
-            var nxt : [TFHppleElement] = navigationEl[0].search(withXPathQuery: "//li[@class='chapter next']") as! [TFHppleElement]
-            if (nxt.count > 0) {
-                guard let aEl: TFHppleElement = nxt[0].search(withXPathQuery: "//a")[0] as? TFHppleElement else {
+        let navigationEl: [TFHppleElement]? = doc.search(withXPathQuery: "//ul[@class='work navigation actions']") as? [TFHppleElement]
+        if let nxt: [TFHppleElement] = navigationEl?.first?.search(withXPathQuery: "//li[@class='chapter next']") as? [TFHppleElement],
+            let nxtFirst = nxt.first {
+                guard let aEl: TFHppleElement = nxtFirst.search(withXPathQuery: "//a")[0] as? TFHppleElement else {
                    return
                 }
                 let attributes : NSDictionary = aEl.attributes as NSDictionary
@@ -414,7 +421,6 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
                 saveChapters(workItem)
                 hideLoadingView()
             }
-        }
         
         //save to DB
         do {
@@ -426,17 +432,12 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
             hideLoadingView()
         }
         
-        
         saveToAnalytics(workItem.value(forKey: "author") as! String, category: workItem.value(forKey: "category") as! String, mainFandom: firstFandom, mainRelationship: firstRelationship)
     }
     
     func saveChapters(_ curworkItem: NSManagedObject) {
         
         print("save chapters begin")
-        
-        if (curworkItem == nil) {
-            return
-        }
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let managedContext = appDelegate.managedObjectContext!
@@ -483,52 +484,48 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
         //let dta = NSString(data: data, encoding: NSUTF8StringEncoding)
         let doc : TFHpple = TFHpple(htmlData: data)
         
-        var workContentEl = doc.search(withXPathQuery: "//div[@id='chapters']") as! [TFHppleElement]
-        var workContentStr = workContentEl[0].raw
+        if let workContentEl = doc.search(withXPathQuery: "//div[@id='chapters']") as? [TFHppleElement] {
+            var workContentStr = workContentEl[0].raw ?? ""
         
-        //var error:NSErrorPointer = NSErrorPointer()
-        let regex:NSRegularExpression = try! NSRegularExpression(pattern: "<a href=\"[^\"]+\">([^<]+)</a>", options: NSRegularExpression.Options.caseInsensitive)
-        workContentStr = regex.stringByReplacingMatches(in: workContentStr!, options: NSRegularExpression.MatchingOptions.withoutAnchoringBounds, range: NSRange(location: 0, length: (workContentStr?.characters.count)!), withTemplate: "$1")
+            //var error:NSErrorPointer = NSErrorPointer()
+            let regex:NSRegularExpression = try! NSRegularExpression(pattern: "<a href=\"[^\"]+\">([^<]+)</a>", options: NSRegularExpression.Options.caseInsensitive)
+            workContentStr = regex.stringByReplacingMatches(in: workContentStr, options: NSRegularExpression.MatchingOptions.withoutAnchoringBounds, range: NSRange(location: 0, length: workContentStr.characters.count), withTemplate: "$1")
         
-        chapters.append(workContentStr!)
+            chapters.append(workContentStr)
+        }
         
         let navigationEl: [TFHppleElement]? = doc.search(withXPathQuery: "//ul[@class='work navigation actions']") as? [TFHppleElement]
-        if let navigationEl = navigationEl {
-            if (navigationEl.count > 0) {
-                if let nxt : [TFHppleElement] = navigationEl[0].search(withXPathQuery: "//li[@class='chapter next']") as? [TFHppleElement] {
-                    if (nxt.count > 0) {
-                        
-                        let atrs = nxt[0].search(withXPathQuery: "//a")
-                        if ((atrs?.count)! > 0) {
-                            let attributes : NSDictionary = (atrs![0] as AnyObject).attributes as NSDictionary
+        if let nxt: [TFHppleElement] = navigationEl?.first?.search(withXPathQuery: "//li[@class='chapter next']") as? [TFHppleElement],
+            let nxtFirst = nxt.first {
+                    
+                    if let atrs = nxtFirst.search(withXPathQuery: "//a") ,
+                        let firstAttribute = atrs.first {
+                            let attributes : NSDictionary = (firstAttribute as AnyObject).attributes as NSDictionary
                             if let next : String = (attributes["href"] as? String) {
                             
-                            if (!next.isEmpty) {
-                                var params:[String:AnyObject] = [String:AnyObject]()
-                                params["view_adult"] = "true" as AnyObject?
+                                if (!next.isEmpty) {
+                                    var params:[String:AnyObject] = [String:AnyObject]()
+                                    params["view_adult"] = "true" as AnyObject?
                                 
-                                let urlStr: String = "http://archiveofourown.org" + next
+                                    let urlStr: String = "http://archiveofourown.org" + next
                                 
-                                Alamofire.request(urlStr, parameters: params)
-                                    .response(completionHandler: { response in
+                                    Alamofire.request(urlStr, parameters: params)
+                                        .response(completionHandler: { response in
                                         
-                                        print(response.request ?? "")
-                                        print(response.error ?? "")
-                                        if let d = response.data {
-                                            self.parseNxtChapter(d, curworkItem: curworkItem)
-                                        }
-                                    })
-                                
+                                            print(response.request ?? "")
+                                            print(response.error ?? "")
+                                            if let d = response.data {
+                                                self.parseNxtChapter(d, curworkItem: curworkItem)
+                                            }
+                                        })
+                                }
+                                }
                             }
-                            }
-                        }
+                        
                     } else {
                         saveChapters(curworkItem)
                         hideLoadingView()
                     }
-                }
-            }
-        }
     }
     
     func saveToAnalytics(_ author: String, category: String, mainFandom: String, mainRelationship: String) {

@@ -313,36 +313,40 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
     func parseChapter(_ data: Data) -> String {
         //
         let doc : TFHpple = TFHpple(htmlData: data)
+        var workContentStr = ""
         
-        var workContentEl = doc.search(withXPathQuery: "//div[@id='chapters']") as! [TFHppleElement]
-        var workContentStr = workContentEl[0].raw
+        if let workContentEl = doc.search(withXPathQuery: "//div[@id='chapters']") as? [TFHppleElement] {
+            workContentStr = workContentEl[0].raw ?? ""
+            
+            //var error:NSErrorPointer = NSErrorPointer()
+            let regex:NSRegularExpression = try! NSRegularExpression(pattern: "<a href=\"[^\"]+\">([^<]+)</a>", options: NSRegularExpression.Options.caseInsensitive)
+            workContentStr = regex.stringByReplacingMatches(in: workContentStr, options: NSRegularExpression.MatchingOptions.withoutAnchoringBounds, range: NSRange(location: 0, length: workContentStr.characters.count), withTemplate: "$1")
+            
+        }
         
-        //var error:NSErrorPointer = NSErrorPointer()
-        let regex:NSRegularExpression = try! NSRegularExpression(pattern: "<a href=\"[^\"]+\">([^<]+)</a>", options: NSRegularExpression.Options.caseInsensitive)
-        workContentStr = regex.stringByReplacingMatches(in: workContentStr!, options: NSRegularExpression.MatchingOptions.withoutAnchoringBounds, range: NSRange(location: 0, length: (workContentStr?.characters.count)!), withTemplate: "$1")
-        
-        var navigationEl: [TFHppleElement] = doc.search(withXPathQuery: "//ul[@class='work navigation actions']") as! [TFHppleElement]
+        if let navigationEl: [TFHppleElement] = doc.search(withXPathQuery: "//ul[@class='work navigation actions']") as? [TFHppleElement] {
         
         if (navigationEl.count > 0) {
             
-            var chapterNextEl: [TFHppleElement] = navigationEl[0].search(withXPathQuery: "//li[@class='chapter next']") as! [TFHppleElement]
-            if (chapterNextEl.count > 0) {
-                let attributes : NSDictionary = (chapterNextEl[0].search(withXPathQuery: "//a")[0] as AnyObject).attributes as NSDictionary
+            let chapterNextEl: [TFHppleElement]? = navigationEl[0].search(withXPathQuery: "//li[@class='chapter next']") as? [TFHppleElement]
+            if (chapterNextEl?.count ?? 0 > 0) {
+                let attributes : NSDictionary = (chapterNextEl?[0].search(withXPathQuery: "//a")[0] as AnyObject).attributes as NSDictionary
                 nextChapter = (attributes["href"] as! String)
             } else {
                 nextChapter = ""
             }
             
-            var chapterPrevEl: [TFHppleElement] = navigationEl[0].search(withXPathQuery: "//li[@class='chapter previous']") as! [TFHppleElement]
-            if(chapterPrevEl.count > 0) {
-                let attributesp : NSDictionary = (chapterPrevEl[0].search(withXPathQuery: "//a")[0] as AnyObject).attributes as NSDictionary
+            let chapterPrevEl: [TFHppleElement]? = navigationEl[0].search(withXPathQuery: "//li[@class='chapter previous']") as? [TFHppleElement]
+            if(chapterPrevEl?.count ?? 0 > 0) {
+                let attributesp : NSDictionary = (chapterPrevEl?[0].search(withXPathQuery: "//a")[0] as AnyObject).attributes as NSDictionary
                 prevChapter = (attributesp["href"] as! String)
             } else {
                 prevChapter = ""
             }
+            }
         }
         
-        return workContentStr ?? ""
+        return workContentStr
     }
     
     func saveWorkChanged() {
@@ -461,7 +465,8 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
     }
     
     func showWork() {
-        webView.loadHTMLString(work, baseURL: nil)
+        //webView.loadHTMLString(work, baseURL: nil)
+        loadCurrentTheme()
         
         if (nextChapter.isEmpty) {
             nextButton.isHidden = true

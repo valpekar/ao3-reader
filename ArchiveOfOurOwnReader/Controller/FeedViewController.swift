@@ -140,28 +140,6 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
         }
     }
     
-    func webViewDidFinishLoad(_ webView: UIWebView) {
-        let context: JSContext =  webView.value(forKeyPath: "documentView.webView.mainFrame.javaScriptContext") as! JSContext
-        
-        //context["adLoaded"] = { (Void) in
-        //     print("loaded")
-        // };
-        
-        let codeClosure: @convention(block) ()->() = { ()->() in
-            webView.isHidden = false
-        }
-        
-        let casted: AnyObject = unsafeBitCast(codeClosure, to: AnyObject.self) as AnyObject
-        context.setObject(casted, forKeyedSubscript: "adLoaded" as (NSCopying & NSObjectProtocol)!)
-        
-        let ccodeClosure: @convention(block) ()->() = { ()->() in
-            webView.isHidden = true
-        }
-        
-        let ccasted: AnyObject = unsafeBitCast(ccodeClosure, to: AnyObject.self) as AnyObject
-        context.setObject(ccasted, forKeyedSubscript: "adClosed" as (NSCopying & NSObjectProtocol)!)
-    }
-    
     @IBAction func tryAgainTouched(_ sender: AnyObject) {
         if ((purchased || donated) && (UIApplication.shared.delegate as! AppDelegate).cookies.count == 0) {
             openLoginController()
@@ -178,8 +156,7 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
     func showFeed() {
         
         tableView.reloadData()
-        
-        collectionView.reloadData() // reloadData()
+        collectionView.reloadData()
         
         if (loadingView != nil) {
             hideLoadingView()
@@ -187,6 +164,7 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
         self.title = foundItems
         
         tableView.setContentOffset(CGPoint.zero, animated:true)
+        collectionView.flashScrollIndicators()
         
         if (works.count == 0) {
             tryAgainButton.isHidden = false
@@ -200,21 +178,22 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
     func getFeed(_ data: Data) {
         
         works.removeAll(keepingCapacity: false)
-        pages.removeAll(keepingCapacity: false)
+        pages.removeAll()
         
-        let dta = NSString(data: data, encoding: String.Encoding.utf8.rawValue)
-        print(dta ?? "")
-        let doc : TFHpple = TFHpple(htmlData: data)
+        guard let dta = NSString(data: data, encoding: String.Encoding.utf8.rawValue) else {
+            return
+        }
+        print(dta)
+        guard let doc : TFHpple = TFHpple(htmlData: data) else {
+            return
+        }
         
-        let workGroup : [TFHppleElement]? = doc.search(withXPathQuery: "//ol[@class='work index group']") as? [TFHppleElement]
-        
-        if let workGroup = workGroup {
+        if let workGroup : [TFHppleElement] = doc.search(withXPathQuery: "//ol[@class='work index group']") as? [TFHppleElement] {
             
             if (workGroup.count > 0) {
                 
-                let worksList : [TFHppleElement]? = workGroup[0].search(withXPathQuery: "//li[@class='work blurb group']") as? [TFHppleElement]
+                if let worksList : [TFHppleElement] = workGroup[0].search(withXPathQuery: "//li[@class='work blurb group']") as? [TFHppleElement] {
         
-                if let worksList = worksList {
                     let itemsElement : TFHppleElement = doc.search(withXPathQuery: "//h3[@class='heading']")[0] as! TFHppleElement
                     foundItems = itemsElement.text().replacingOccurrences(of: "?", with: "")
         //NSLog(foundItems)
@@ -226,134 +205,134 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
                         let topic : TFHppleElement = header.search(withXPathQuery: "//h4[@class='heading']")[0] as! TFHppleElement
                         let stats : TFHppleElement = workListItem.search(withXPathQuery: "//dl[@class='stats']")[0] as! TFHppleElement
             
-            let item : NewsFeedItem = NewsFeedItem()
-            item.topic = topic.content.replacingOccurrences(of: "\n", with:"").trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
-                .replacingOccurrences(of: "\\s+", with: " ", options: NSString.CompareOptions.regularExpression, range: nil)
+                        let item : NewsFeedItem = NewsFeedItem()
+                        item.topic = topic.content.replacingOccurrences(of: "\n", with:"").trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+                            .replacingOccurrences(of: "\\s+", with: " ", options: NSString.CompareOptions.regularExpression, range: nil)
             
-            var userstuffArr = workListItem.search(withXPathQuery: "//blockquote[@class='userstuff summary']/p");
-            if((userstuffArr?.count)! > 0) {
-                let userstuff : TFHppleElement = userstuffArr![0] as! TFHppleElement
-                item.topicPreview = userstuff.content
-            }
+                        var userstuffArr = workListItem.search(withXPathQuery: "//blockquote[@class='userstuff summary']/p");
+                        if((userstuffArr?.count)! > 0) {
+                            let userstuff : TFHppleElement = userstuffArr![0] as! TFHppleElement
+                            item.topicPreview = userstuff.content
+                        }
             
-            var fandomsArr = workListItem.search(withXPathQuery: "//h5[@class='fandoms heading']");
-            if((fandomsArr?.count)! > 0) {
-                let fandoms  = fandomsArr?[0] as! TFHppleElement
-                item.fandoms = fandoms.content.replacingOccurrences(of: "\n", with:"").trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
-                    .replacingOccurrences(of: "\\s+", with: " ", options: NSString.CompareOptions.regularExpression, range: nil)
-                item.fandoms = item.fandoms.replacingOccurrences(of: "Fandoms:", with: "")
-            }
+                        var fandomsArr = workListItem.search(withXPathQuery: "//h5[@class='fandoms heading']");
+                        if((fandomsArr?.count)! > 0) {
+                            let fandoms  = fandomsArr?[0] as! TFHppleElement
+                            item.fandoms = fandoms.content.replacingOccurrences(of: "\n", with:"").trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+                                .replacingOccurrences(of: "\\s+", with: " ", options: NSString.CompareOptions.regularExpression, range: nil)
+                            item.fandoms = item.fandoms.replacingOccurrences(of: "Fandoms:", with: "")
+                        }
             
-            let tagsUl : [TFHppleElement] = workListItem.search(withXPathQuery: "//ul[@class='tags commas']/li") as! [TFHppleElement]
-            for tagUl in tagsUl {
-                item.tags.append(tagUl.content);
-            }
+                        let tagsUl : [TFHppleElement] = workListItem.search(withXPathQuery: "//ul[@class='tags commas']/li") as! [TFHppleElement]
+                        for tagUl in tagsUl {
+                            item.tags.append(tagUl.content);
+                        }
             
-            var dateTimeVar = workListItem.search(withXPathQuery: "//p[@class='datetime']")
-            if((dateTimeVar?.count)! > 0) {
-                item.dateTime = (dateTimeVar?[0] as! TFHppleElement).text()
-            }
+                        var dateTimeVar = workListItem.search(withXPathQuery: "//p[@class='datetime']")
+                        if((dateTimeVar?.count)! > 0) {
+                            item.dateTime = (dateTimeVar?[0] as! TFHppleElement).text()
+                        }
            
-            //parse stats
-            var langVar = stats.search(withXPathQuery: "//dd[@class='language']")
-            if((langVar?.count)! > 0) {
-                item.language = (langVar?[0] as! TFHppleElement).text()
-            }
+                        //parse stats
+                        var langVar = stats.search(withXPathQuery: "//dd[@class='language']")
+                        if((langVar?.count)! > 0) {
+                            item.language = (langVar?[0] as! TFHppleElement).text()
+                        }
             
-            var wordsVar = stats.search(withXPathQuery: "//dd[@class='words']")
-            if((wordsVar?.count)! > 0) {
-                if let wordsNum: TFHppleElement = wordsVar?[0] as? TFHppleElement {
-                    if (wordsNum.text() != nil) {
-                        item.words = wordsNum.text()
-                    }
-                }
-            }
+                        var wordsVar = stats.search(withXPathQuery: "//dd[@class='words']")
+                        if((wordsVar?.count)! > 0) {
+                            if let wordsNum: TFHppleElement = wordsVar?[0] as? TFHppleElement {
+                                if (wordsNum.text() != nil) {
+                                    item.words = wordsNum.text()
+                                }
+                            }
+                        }
             
-            var chaptersVar = stats.search(withXPathQuery: "//dd[@class='chapters']")
-            if((chaptersVar?.count)! > 0) {
-                item.chapters = (chaptersVar?[0] as! TFHppleElement).text()
-            }
+                        var chaptersVar = stats.search(withXPathQuery: "//dd[@class='chapters']")
+                        if((chaptersVar?.count)! > 0) {
+                            item.chapters = (chaptersVar?[0] as! TFHppleElement).text()
+                        }
             
-            var commentsVar = stats.search(withXPathQuery: "//dd[@class='comments']")
-            if((commentsVar?.count)! > 0) {
-                item.comments = ((commentsVar?[0] as! TFHppleElement).search(withXPathQuery: "//a")[0] as! TFHppleElement).text()
-            }
+                        var commentsVar = stats.search(withXPathQuery: "//dd[@class='comments']")
+                        if((commentsVar?.count)! > 0) {
+                            item.comments = ((commentsVar?[0] as! TFHppleElement).search(withXPathQuery: "//a")[0] as! TFHppleElement).text()
+                        }
             
-            var kudosVar = stats.search(withXPathQuery: "//dd[@class='kudos']")
-            if((kudosVar?.count)! > 0) {
-                item.kudos = ((kudosVar?[0] as! TFHppleElement).search(withXPathQuery: "//a")[0] as! TFHppleElement).text()
-            }
+                        var kudosVar = stats.search(withXPathQuery: "//dd[@class='kudos']")
+                        if((kudosVar?.count)! > 0) {
+                            item.kudos = ((kudosVar?[0] as! TFHppleElement).search(withXPathQuery: "//a")[0] as! TFHppleElement).text()
+                        }
             
-            var bookmarksVar = stats.search(withXPathQuery: "//dd[@class='bookmarks']")
-            if((bookmarksVar?.count)! > 0) {
-                item.bookmarks = ((bookmarksVar?[0] as! TFHppleElement).search(withXPathQuery: "//a")[0] as! TFHppleElement).text()
-            }
+                        var bookmarksVar = stats.search(withXPathQuery: "//dd[@class='bookmarks']")
+                        if((bookmarksVar?.count)! > 0) {
+                            item.bookmarks = ((bookmarksVar?[0] as! TFHppleElement).search(withXPathQuery: "//a")[0] as! TFHppleElement).text()
+                        }
             
-            var hitsVar = stats.search(withXPathQuery: "//dd[@class='hits']")
-            if((hitsVar?.count)! > 0) {
-                item.hits = (hitsVar?[0] as! TFHppleElement).text()
-            }
+                        var hitsVar = stats.search(withXPathQuery: "//dd[@class='hits']")
+                        if((hitsVar?.count)! > 0) {
+                            item.hits = (hitsVar?[0] as! TFHppleElement).text()
+                        }
             
-            //parse tags
-            var requiredTagsList = workListItem.search(withXPathQuery: "//ul[@class='required-tags']") as! [TFHppleElement]
-            if(requiredTagsList.count > 0) {
-                if let requiredTags: [TFHppleElement] = (requiredTagsList[0] ).search(withXPathQuery: "//li") as? [TFHppleElement] {
+                        //parse tags
+                        var requiredTagsList = workListItem.search(withXPathQuery: "//ul[@class='required-tags']") as! [TFHppleElement]
+                        if(requiredTagsList.count > 0) {
+                            if let requiredTags: [TFHppleElement] = (requiredTagsList[0] ).search(withXPathQuery: "//li") as? [TFHppleElement] {
                
-                for i in 0..<requiredTags.count {
-                    switch (i) {
-                    case 0:
-                        item.rating = requiredTags[i].content
-                    case 1:
-                        item.warning = requiredTags[i].content
-                    case 2:
-                        item.category = requiredTags[i].content
-                    case 3:
-                        item.complete = requiredTags[i].content
-                        default:
-                        break
+                                for i in 0..<requiredTags.count {
+                                    switch (i) {
+                                    case 0:
+                                        item.rating = requiredTags[i].content
+                                    case 1:
+                                        item.warning = requiredTags[i].content
+                                    case 2:
+                                        item.category = requiredTags[i].content
+                                    case 3:
+                                        item.complete = requiredTags[i].content
+                                    default:
+                                        break
+                                    }
+                                }
+                            }
+                        }
+            
+                        //parse work ID
+                        let attributes : NSDictionary = workListItem.attributes as NSDictionary
+                        item.workId = (attributes["id"] as! String).replacingOccurrences(of: "work_", with: "")
+            
+                        works.append(item)
                     }
-                }
-            }
-            }
-            
-            //parse work ID
-            let attributes : NSDictionary = workListItem.attributes as NSDictionary
-            item.workId = (attributes["id"] as! String).replacingOccurrences(of: "work_", with: "")
-            
-            works.append(item)
-            
-            //parse pages
-                        var paginationActions: [TFHppleElement] = doc.search(withXPathQuery: "//ol[@class='pagination actions']") as! [TFHppleElement]
-            if((paginationActions.count) > 0) {
-                guard let paginationArr = (paginationActions[0] as AnyObject).search(withXPathQuery: "//li") else {
-                    return
-                }
-                
-                for i in 0..<paginationArr.count {
-                    let page: TFHppleElement = paginationArr[i] as! TFHppleElement
-                    let pageItem = PageItem()
                     
-                    pageItem.name = page.content
-                    
-                    var attrs = page.search(withXPathQuery: "//a") as! [TFHppleElement]
-                    
-                    if (attrs.count > 0) {
-                    
-                    let attributesh : NSDictionary? = attrs[0].attributes as NSDictionary
-                    if (attributesh != nil) {
-                        pageItem.url = attributesh!["href"] as! String
+                    //parse pages
+                    var paginationActions: [TFHppleElement] = doc.search(withXPathQuery: "//ol[@class='pagination actions']") as! [TFHppleElement]
+                    if((paginationActions.count) > 0) {
+                        guard let paginationArr = (paginationActions[0] as AnyObject).search(withXPathQuery: "//li") else {
+                            return
+                        }
+                        
+                        for i in 0..<paginationArr.count {
+                            let page: TFHppleElement = paginationArr[i] as! TFHppleElement
+                            let pageItem = PageItem()
+                            
+                            pageItem.name = page.content
+                            
+                            var attrs = page.search(withXPathQuery: "//a") as! [TFHppleElement]
+                            
+                            if (attrs.count > 0) {
+                                
+                                let attributesh : NSDictionary? = attrs[0].attributes as NSDictionary
+                                if (attributesh != nil) {
+                                    pageItem.url = attributesh!["href"] as! String
+                                }
+                            }
+                            
+                            let current: [TFHppleElement] = page.search(withXPathQuery: "//span") as! [TFHppleElement]
+                            if (current.count > 0) {
+                                pageItem.isCurrent = true
+                            }
+                            
+                            pages.append(pageItem)
                         }
                     }
-                    
-                    let current: [TFHppleElement] = page.search(withXPathQuery: "//span") as! [TFHppleElement]
-                    if (current.count > 0) {
-                        pageItem.isCurrent = true
-                    }
-                    
-                    pages.append(pageItem)
-                }
-            }
-            }
                 }
             }
         } else {
@@ -489,7 +468,7 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         switch ((indexPath as NSIndexPath).row) {
         case 0, self.collectionView(collectionView, numberOfItemsInSection: (indexPath as NSIndexPath).section) - 1:
-            return CGSize(width: 100, height: 28)
+            return CGSize(width: 120, height: 28)
         default:
             return CGSize(width: 50, height: 28)
         }

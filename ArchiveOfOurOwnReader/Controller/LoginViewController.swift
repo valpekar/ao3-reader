@@ -10,25 +10,25 @@ import UIKit
 import Alamofire
 import TSMessages
 
-fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l < r
-  case (nil, _?):
-    return true
-  default:
-    return false
-  }
-}
-
-fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l > r
-  default:
-    return rhs < lhs
-  }
-}
+//fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+//  switch (lhs, rhs) {
+//  case let (l?, r?):
+//    return l < r
+//  case (nil, _?):
+//    return true
+//  default:
+//    return false
+//  }
+//}
+//
+//fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+//  switch (lhs, rhs) {
+//  case let (l?, r?):
+//    return l > r
+//  default:
+//    return rhs < lhs
+//  }
+//}
 
 
 class LoginViewController : LoadingViewController, UITextFieldDelegate {
@@ -97,7 +97,7 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
                 print(response.error ?? "")
                 self.parseParams(response.data!)
                 self.tryLogin() //Uncomment!
-                self.hideLoadingView()
+               // self.hideLoadingView()
             })
     }
     
@@ -130,7 +130,7 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
         params["user_session"] = ["login": login,
             "password": pass]
         
-        showLoadingView()
+     //   showLoadingView()
         
         Alamofire.request("http://archiveofourown.org/user_sessions/", method: .post, parameters: params)
             .response(completionHandler: { response in
@@ -196,9 +196,9 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
     func parseParams(_ data: Data) {
         let doc : TFHpple = TFHpple(htmlData: data)
         let logindiv : [TFHppleElement]? = doc.search(withXPathQuery: "//div[@id='login']") as? [TFHppleElement]
-        if (logindiv?.count > 0) {
+        if (logindiv?.count ?? 0 > 0) {
             let authtoken: [TFHppleElement]? = (logindiv![0] as TFHppleElement).search(withXPathQuery: "//input[@name='authenticity_token']") as? [TFHppleElement]
-            if (authtoken?.count > 0) {
+            if (authtoken?.count ?? 0 > 0) {
                 let loginEl: TFHppleElement = authtoken![0]
                 token = loginEl.attributes["value"] as! String
                 (UIApplication.shared.delegate as! AppDelegate).token = token
