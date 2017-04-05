@@ -213,6 +213,15 @@ class SearchQuery : NSObject, NSCoding {
             }
         }
         
+        /*var fandomStr: String = ""
+        var fandomTags: [String] = fandom_names.characters.split {$0 == ","}.map { String($0) }
+        for i in 0..<fandomTags.count {
+            fandomStr += fandomTags[i].trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+            if (i < includeTags.count - 1) {
+                fandomStr += " && "
+            }
+        }*/
+        
         if (tagStr.characters.count > 0) {
             tagStr += " "
         }

@@ -96,7 +96,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
         self.tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, -1.0, 0.0)
         self.tableView.rowHeight = UITableViewAutomaticDimension
-        self.tableView.estimatedRowHeight = 44
+        self.tableView.estimatedRowHeight = 48
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
             Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
@@ -343,10 +343,12 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             }
         }
         
-        var h2El = doc.search(withXPathQuery: "//h2[@class='title heading']")as! [TFHppleElement]
+        let h2El = doc.search(withXPathQuery: "//h2[@class='title heading']")as! [TFHppleElement]
         if (h2El.count > 0) {
-            workItem.workTitle = h2El[0].text().replacingOccurrences(of: "\n", with:"")
-                .replacingOccurrences(of: "\\s+", with: " ", options: NSString.CompareOptions.regularExpression, range: nil)
+            let title = h2El.first?.raw.replacingOccurrences(of: "\n", with:"")
+                .replacingOccurrences(of: "\\s+", with: " ", options: NSString.CompareOptions.regularExpression, range: nil) ?? ""
+            workItem.workTitle = title.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
+
         }
         
         var bylineHeadingEl = doc.search(withXPathQuery: "//div[@id='workskin']/div[@class='preface group']/h3[@class='byline heading']")as! [TFHppleElement]
@@ -607,71 +609,66 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             } else {
                 cell!.label.text = downloadedWorkItem.value(forKey: "topicPreview") as? String
             }
-            cell!.label.font = UIFont.systemFont(ofSize: 13)
+            //cell!.label.font = UIFont.systemFont(ofSize: 13)
             cell!.imgView.image = UIImage(named: "preview")
             
         case 1:
             if (warnings != nil && warnings.count > (indexPath as NSIndexPath).row) {
                 cell!.label.text = warnings[(indexPath as NSIndexPath).row]
-                cell!.imgView.image = UIImage(named: "warning")
                 
-                cell!.label.font = UIFont.systemFont(ofSize: 13)
+               // cell!.label.font = UIFont.systemFont(ofSize: 13)
             } else {
                 indexesToHide.append(0)
-                cell!.imgView.image = nil
+                cell!.label.text = "None"
             }
+            cell!.imgView.image = UIImage(named: "warning")
         case 2:
             if (fandoms != nil && fandoms.count > (indexPath as NSIndexPath).row) {
                 cell!.label.text = fandoms[(indexPath as NSIndexPath).row].fandomName
-                cell!.imgView.image = UIImage(named: "fandom")
                 
-                cell!.label.font = UIFont.systemFont(ofSize: 13)
-                
+                //cell!.label.font = UIFont.systemFont(ofSize: 13)
                 
             } else if (downloadedFandoms != nil && downloadedFandoms.count > (indexPath as NSIndexPath).row) {
                 cell!.label.text = downloadedFandoms[(indexPath as NSIndexPath).row].value(forKey: "fandomName") as? String
-                cell!.imgView.image = UIImage(named: "fandom")
                 
-                cell!.label.font = UIFont.systemFont(ofSize: 13)
-                
+                //cell!.label.font = UIFont.systemFont(ofSize: 13)
                 
             } else {
                 indexesToHide.append(1)
-                cell!.imgView.image = nil
+                cell!.label.text = "None"
             }
+            cell!.imgView.image = UIImage(named: "fandom")
         case 3:
             if (relationships != nil && relationships.count > (indexPath as NSIndexPath).row) {
                 cell!.label.text = relationships[(indexPath as NSIndexPath).row].relationshipName
-                cell!.imgView.image = UIImage(named: "heart")
                 
-                cell!.label.font = UIFont.systemFont(ofSize: 13)
+                //cell!.label.font = UIFont.systemFont(ofSize: 13)
                 
             } else if (downloadedRelationships != nil && downloadedRelationships.count > (indexPath as NSIndexPath).row) {
                 cell!.label.text = downloadedRelationships[(indexPath as NSIndexPath).row].value(forKey: "relationshipName") as? String
-                cell!.imgView.image = UIImage(named: "heart")
                 
-                cell!.label.font = UIFont.systemFont(ofSize: 13)
+                //cell!.label.font = UIFont.systemFont(ofSize: 13)
                 
             } else {
                 indexesToHide.append(2)
-                cell!.imgView.image = nil
+                cell!.label.text = "None"
             }
+            cell!.imgView.image = UIImage(named: "heart")
         case 4:
             if (characters != nil && characters.count > (indexPath as NSIndexPath).row) {
                 cell!.label.text = characters[(indexPath as NSIndexPath).row].characterName
-                cell!.imgView.image = UIImage(named: "characters")
                 
-                cell!.label.font = UIFont.systemFont(ofSize: 13)
+                //cell!.label.font = UIFont.systemFont(ofSize: 13)
                 
             } else if (downloadedCharacters != nil && downloadedCharacters.count > (indexPath as NSIndexPath).row) {
                 cell!.label.text = downloadedCharacters[(indexPath as NSIndexPath).row].value(forKey: "characterName") as? String
-                cell!.imgView.image = UIImage(named: "characters")
                 
-                cell!.label.font = UIFont.systemFont(ofSize: 13)
+                //cell!.label.font = UIFont.systemFont(ofSize: 13)
             } else {
                 indexesToHide.append(3)
-                cell!.imgView.image = nil
+                cell!.label.text = "None"
             }
+            cell!.imgView.image = UIImage(named: "characters")
         case 5:
             if (workItem != nil) {
                 cell!.label.text = workItem.language
@@ -680,19 +677,19 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             }
             cell!.imgView.image = UIImage(named: "lang")
                 
-            cell!.label.font = UIFont.systemFont(ofSize: 13)
+            //cell!.label.font = UIFont.systemFont(ofSize: 13)
         case 6:
             if (workItem != nil) {
                 cell!.label.text = workItem.stats
             } else {
                 cell!.label.text = downloadedWorkItem.value(forKey: "stats") as? String
             }
-            cell!.label.font = UIFont.italicSystemFont(ofSize: 13)
+            //cell!.label.font = UIFont.italicSystemFont(ofSize: 13)
             cell!.imgView.image = UIImage(named: "info")
             
             
         default:
-            cell!.label.font = UIFont.systemFont(ofSize: 13)
+            //cell!.label.font = UIFont.systemFont(ofSize: 13)
             break
         }
         
@@ -718,52 +715,48 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
 //        return heightForRow
 //        
 //    }
-    
+//    
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         
-        if (section == 6) {
-            return 1.0
-        }
+        return 1.0
         
-        return heightForSection(section)
+        //return heightForSection(section)
     }
-    
+
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if (section == 0) {
-            return 4.0
-        }
+            return 1.0
         
-        return heightForSection(section)
+        //return heightForSection(section)
     }
-    
-    func heightForSection(_ section: Int) -> CGFloat {
-        var res:CGFloat = 1.0
-        
-        switch (section) {
-        case 0, 5, 6:
-            res = 2.0
-        case 1:
-            if (warnings != nil && warnings.count > 0) {
-                res = 2.0
-            }
-        case 2:
-            if ((fandoms != nil && fandoms.count > 0) || (downloadedFandoms != nil && downloadedFandoms.count > 0)) {
-                res = 2.0
-            }
-        case 3:
-            if ((relationships != nil && relationships.count > 0) || (downloadedRelationships != nil && downloadedRelationships.count > 0)) {
-                res = 2.0
-            }
-        case 4:
-            if ((characters != nil && characters.count > 0) || (downloadedCharacters != nil && downloadedCharacters.count > 0)) {
-                res = 2.0
-            }
-        default:
-            break
-        }
-        
-        return res
-    }
+//
+//    func heightForSection(_ section: Int) -> CGFloat {
+//        var res:CGFloat = 1.0
+//        
+//        switch (section) {
+//        case 0, 5, 6:
+//            res = 2.0
+//        case 1:
+//            if (warnings != nil && warnings.count > 0) {
+//                res = 2.0
+//            }
+//        case 2:
+//            if ((fandoms != nil && fandoms.count > 0) || (downloadedFandoms != nil && downloadedFandoms.count > 0)) {
+//                res = 2.0
+//            }
+//        case 3:
+//            if ((relationships != nil && relationships.count > 0) || (downloadedRelationships != nil && downloadedRelationships.count > 0)) {
+//                res = 2.0
+//            }
+//        case 4:
+//            if ((characters != nil && characters.count > 0) || (downloadedCharacters != nil && downloadedCharacters.count > 0)) {
+//                res = 2.0
+//            }
+//        default:
+//            break
+//        }
+//        
+//        return res
+//    }
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 7
@@ -1013,7 +1006,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             requestStr += bid + "/bookmarks"
             
             if (downloadedFandoms.count > 0 && downloadedRelationships.count > 0) {
-                saveToAnalytics(downloadedWorkItem.value(forKey: "author") as! String, category: downloadedWorkItem.value(forKey: "category") as! String, mainFandom: downloadedFandoms[0].fandomName, mainRelationship: downloadedRelationships[0].relationshipName)
+                saveToAnalytics(downloadedWorkItem.value(forKey: "author") as! String, category: downloadedWorkItem.value(forKey: "category") as! String, mainFandom: downloadedFandoms[0].fandomName ?? "", mainRelationship: downloadedRelationships[0].relationshipName ?? "")
             }
         }
         
@@ -1139,8 +1132,8 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         if (purchased || donated) {
          print("premium")
         } else {
-            if (countWroksFromDB() > 9) {
-                TSMessage.showNotification(in: self, title: "Error", subtitle: "You can only download 10 stories. Please, upgrade to download more.", type: .error, duration: 2.0)
+            if (countWroksFromDB() > 19) {
+                TSMessage.showNotification(in: self, title: "Error", subtitle: "You can only download 20 stories. Please, upgrade to download more.", type: .error, duration: 2.0)
                 
                 return
             }
@@ -1438,11 +1431,11 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 category = workItem.value(forKey: "category") as! String
                 
                 if (downloadedFandoms != nil && downloadedFandoms.count > 0) {
-                    fandom = downloadedFandoms[0].fandomName
+                    fandom = downloadedFandoms[0].fandomName ?? ""
                 }
                 
                 if (downloadedRelationships != nil && downloadedRelationships.count > 0) {
-                    relationship = downloadedRelationships[0].relationshipName
+                    relationship = downloadedRelationships[0].relationshipName ?? ""
                 }
             }
             

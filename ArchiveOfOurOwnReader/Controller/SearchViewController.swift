@@ -766,7 +766,7 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
     @IBAction func searchAndSaveBtnTouched(_ sender: AnyObject) {
         
         self.dismiss(animated: true, completion: {
-            self.delegate?.searchApplied(self.searchQuery)
+            self.delegate?.searchApplied(self.searchQuery, shouldAddKeyword: false)
             self.modalDelegate?.controllerDidClosed()
         })
     }

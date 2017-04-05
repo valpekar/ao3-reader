@@ -212,7 +212,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
     }
     
     override func controllerDidClosed() {
-        if (!purchased || !donated) {
+        if (!purchased && !donated) {
             showAdMobInterstitial()
         }
     }

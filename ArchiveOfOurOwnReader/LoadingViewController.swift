@@ -166,7 +166,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
     
     // MARK: - Downloading work
     
-    var chapters: [String] = [String]()
+    var chapters: [ChapterOnline] = [ChapterOnline]()
     
     func downloadWork(_ data: Data, curWork: NewsFeedItem? = nil, workItemOld: WorkItem? = nil, workItemToReload: NSManagedObject? = nil) {
         
@@ -183,7 +183,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
         
         var err: NSError?
         
-        chapters = [String]()
+        chapters = [ChapterOnline]()
         
         if (curWork != nil) {
             workItem.setValue(curWork!.warning, forKey: "ArchiveWarnings")
@@ -362,10 +362,10 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
         
         if let h2El = doc.search(withXPathQuery: "//h2[@class='title heading']") as? [TFHppleElement] {
         if (h2El.count > 0) {
-            let workTitleStr = h2El[0].text().replacingOccurrences(of: "\n", with:"")
-                .replacingOccurrences(of: "\\s+", with: " ", options: NSString.CompareOptions.regularExpression, range: nil)
-            
-            workItem.setValue(workTitleStr, forKey: "workTitle")
+            var title = h2El.first?.raw.replacingOccurrences(of: "\n", with:"")
+                .replacingOccurrences(of: "\\s+", with: " ", options: NSString.CompareOptions.regularExpression, range: nil) ?? ""
+            title = title.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
+            workItem.setValue(title, forKey: "workTitle")
         }
         }
         
@@ -387,7 +387,17 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
             workContentStr = regex.stringByReplacingMatches(in: workContentStr, options: NSRegularExpression.MatchingOptions.withoutAnchoringBounds, range: NSRange(location: 0, length: workContentStr.characters.count), withTemplate: "$1")
             
             workItem.setValue(workContentStr, forKey: "workContent")
-            chapters.append(workContentStr)
+            
+            var chptName = ""
+            if let chapterNameEl = doc.search(withXPathQuery: "//h3[@class='title']") as? [TFHppleElement] {
+                chptName = chapterNameEl.first?.text() ?? ""
+            }
+            
+            let chpt = ChapterOnline()
+            chpt.content = workContentStr
+            chpt.url = chptName
+            
+            chapters.append(chpt)
         }
         
         let navigationEl: [TFHppleElement]? = doc.search(withXPathQuery: "//ul[@class='work navigation actions']") as? [TFHppleElement]
@@ -463,7 +473,8 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
                 chapter.setValue(i, forKey: "chapterIndex")
                 chapter.setValue(wid * 10000 + i, forKey: "id")
                 chapter.setValue(curworkItem, forKey: "workItem")
-                chapter.setValue(chapters[i], forKey: "chapterContent")
+                chapter.setValue(chapters[i].content, forKey: "chapterContent")
+                chapter.setValue(chapters[i].url, forKey: "chapterName")
             
                 workChapters.add(chapter)
             
@@ -485,13 +496,23 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
         let doc : TFHpple = TFHpple(htmlData: data)
         
         if let workContentEl = doc.search(withXPathQuery: "//div[@id='chapters']") as? [TFHppleElement] {
-            var workContentStr = workContentEl[0].raw ?? ""
+            var workContentStr = workContentEl.first?.raw ?? ""
         
             //var error:NSErrorPointer = NSErrorPointer()
             let regex:NSRegularExpression = try! NSRegularExpression(pattern: "<a href=\"[^\"]+\">([^<]+)</a>", options: NSRegularExpression.Options.caseInsensitive)
             workContentStr = regex.stringByReplacingMatches(in: workContentStr, options: NSRegularExpression.MatchingOptions.withoutAnchoringBounds, range: NSRange(location: 0, length: workContentStr.characters.count), withTemplate: "$1")
         
-            chapters.append(workContentStr)
+            var chptName = ""
+            if let chapterNameEl = doc.search(withXPathQuery: "//h3[@class='title']") as? [TFHppleElement] {
+                chptName = chapterNameEl.first?.text() ?? ""
+            }
+            
+            let chpt = ChapterOnline()
+            chpt.content = workContentStr
+            chpt.url = chptName
+            
+            chapters.append(chpt)
+            
         }
         
         let navigationEl: [TFHppleElement]? = doc.search(withXPathQuery: "//ul[@class='work navigation actions']") as? [TFHppleElement]

@@ -15,10 +15,10 @@ import TSMessages
 import Alamofire
 
 protocol SearchControllerDelegate {
-    func searchApplied(_ searchQuery:SearchQuery)
+    func searchApplied(_ searchQuery:SearchQuery, shouldAddKeyword: Bool)
 }
 
-class FeedViewController: LoadingViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, SearchControllerDelegate, UIWebViewDelegate {
+class FeedViewController: LoadingViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, SearchControllerDelegate, UIWebViewDelegate, ChoosePrefProtocol {
 
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var tableView:UITableView!
@@ -60,12 +60,12 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
        // let pseud_id = DefaultsManager.getString(DefaultsManager.PSEUD_ID)
         print((UIApplication.shared.delegate as! AppDelegate).cookies)
         
-        if (purchased /*&& !pseud_id.isEmpty*/ && (UIApplication.shared.delegate as! AppDelegate).cookies.count == 0) {
+       /* if (purchased /*&& !pseud_id.isEmpty*/ && (UIApplication.shared.delegate as! AppDelegate).cookies.count == 0) {
             openLoginController()
         } else {
             
-            searchApplied(self.query)
-        }
+            searchApplied(self.query, shouldAddKeyword: true)
+        }*/
         
         if ( !DefaultsManager.getString(DefaultsManager.LASTWRKID).isEmpty) {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -89,6 +89,20 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
        /* if (DefaultsManager.getObject(DefaultsManager.DONTSHOW_CONTEST) == nil || DefaultsManager.getObject(DefaultsManager.DONTSHOW_CONTEST) as! Bool == false) {
             showContestAlert()
         }*/
+        
+        if (Reachability.isConnectedToNetwork()) {
+            if (!DefaultsManager.getString(DefaultsManager.PSEUD_ID).isEmpty &&  ((UIApplication.shared.delegate as! AppDelegate).cookies.count == 0 || (UIApplication.shared.delegate as! AppDelegate).token.isEmpty)) {
+                
+                if (triedToLogin < 2) {
+                    openLoginController()
+                    triedToLogin += 1
+                }
+            } else if (query.isEmpty()) {
+                self.performSegue(withIdentifier: "choosePref", sender: self)
+            } else {
+                searchApplied(self.query, shouldAddKeyword: true)
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -129,15 +143,7 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
             }
         }
         
-        if (Reachability.isConnectedToNetwork()) {
-        if (!DefaultsManager.getString(DefaultsManager.PSEUD_ID).isEmpty &&  ((UIApplication.shared.delegate as! AppDelegate).cookies.count == 0 || (UIApplication.shared.delegate as! AppDelegate).token.isEmpty)) {
-            
-            if (triedToLogin < 2) {
-                openLoginController()
-                triedToLogin += 1
-            }
-        }
-        }
+        
     }
     
     @IBAction func tryAgainTouched(_ sender: AnyObject) {
@@ -145,7 +151,7 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
             openLoginController()
         } else {
             
-            searchApplied(self.query)
+            searchApplied(self.query, shouldAddKeyword: true)
         }
     }
     
@@ -527,16 +533,19 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
             let searchController: SearchViewController = segue.destination as! SearchViewController
             searchController.delegate = self
             searchController.modalDelegate = self
+        } else if (segue.identifier == "choosePref") {
+            let choosePref: UINavigationController = segue.destination as! UINavigationController
+            (choosePref.topViewController as! ChoosePrefController).chosenDelegate = self
         }
     }
 
     
-    func searchApplied(_ searchQuery:SearchQuery) {
+    func searchApplied(_ searchQuery:SearchQuery, shouldAddKeyword: Bool) {
         
         pages = [PageItem]()
         works = [NewsFeedItem]()
 
-        if (searchQuery.isEmpty()) {
+        if (searchQuery.isEmpty() && shouldAddKeyword) {
             searchQuery.include_tags = "popular"
             DefaultsManager.putObject(searchQuery, key: DefaultsManager.SEARCH_Q)
         }
@@ -592,8 +601,8 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
         if (purchased || donated) {
             print("premium")
         } else {
-            if (countWroksFromDB() > 9) {
-                TSMessage.showNotification(in: self, title: "Error", subtitle: "You can only download 10 stories. Please, upgrade to download more.", type: .error, duration: 2.0)
+            if (countWroksFromDB() > 19) {
+                TSMessage.showNotification(in: self, title: "Error", subtitle: "You can only download 20 stories. Please, upgrade to download more.", type: .error, duration: 2.0)
 
                 return
             }
@@ -635,7 +644,7 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
       //      webView.hidden = false
      //   }
         
-        if (i % 5 == 0 && (!purchased || !donated)) {
+        if (i % 5 == 0 && (!purchased && !donated)) {
             showAdMobInterstitial()
             flag = true
         }
@@ -644,10 +653,10 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
     }
     
     func controllerDidClosedWithLogin() {
-        if (self.query.tag.isEmpty) {
+        if (self.query.isEmpty()) {
             loadQueryFromDefaults()
         }
-        self.searchApplied(self.query)
+        self.searchApplied(self.query, shouldAddKeyword: true)
     }
     
     func controllerDidClosedWithChange() {
@@ -670,5 +679,14 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
         
         //presentViewController(refreshAlert, animated: true, completion: nil)
     }
+    
+    //Mark: - ChoosePrefProtocol
+    func prefChosen(pref: String) {
+        query.fandom_names = pref
+        DefaultsManager.putObject(query, key: DefaultsManager.SEARCH_Q)
+        
+        self.searchApplied(self.query, shouldAddKeyword: false)
+    }
+    
 
 }

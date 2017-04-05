@@ -263,7 +263,7 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
         }
         
         if (downloadedWorkItem != nil && chapterIndex < downloadedChapters.count) {
-            work = downloadedChapters[chapterIndex].chapterContent
+            work = downloadedChapters[chapterIndex].chapterContent ?? ""
             loadCurrentTheme()
             downloadedWorkItem.setValue(NSNumber(value: chapterIndex as Int), forKey: "currentChapter")
             

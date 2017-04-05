@@ -218,6 +218,9 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
             if (noticeTxt == "Successfully logged in.") {
                 TSMessage.showNotification(in: self, title: "Log In", subtitle: "Successfully logged in!", type: .success)
                 let delayTime = DispatchTime.now() + Double(Int64(1.500 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+                
+                DefaultsManager.putBool(true, key: DefaultsManager.ADULT)
+                
                 DispatchQueue.main.asyncAfter(deadline: delayTime) {
                 self.dismiss(animated: true, completion: {
                     self.controllerDelegate.controllerDidClosedWithLogin!()

@@ -37,8 +37,9 @@ class ContentsViewController: UIViewController, UIPopoverPresentationControllerD
             cell?.textLabel?.text = chapterNum?.url
         } else {
             
-            let chapterNum = downloadedChapters[(indexPath as NSIndexPath).row].chapterIndex.int32Value + 1
-            cell?.textLabel?.text = "Chapter " + String(chapterNum)
+            //let chapterNum = downloadedChapters[(indexPath as NSIndexPath).row].chapterIndex.int32Value + 1
+            let chapterName = downloadedChapters[(indexPath as NSIndexPath).row].chapterName
+            cell?.textLabel?.text = chapterName
         }
         
         return cell!

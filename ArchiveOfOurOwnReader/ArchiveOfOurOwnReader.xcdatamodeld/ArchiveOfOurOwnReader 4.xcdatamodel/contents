@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11759" systemVersion="16D32" minimumToolsVersion="Xcode 7.3" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11759" systemVersion="16D32" minimumToolsVersion="Xcode 7.3" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="AnalyticsItem" representedClassName=".AnalyticsItem" syncable="YES">
         <attribute name="author" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="category" optional="YES" attributeType="String" syncable="YES"/>
@@ -13,6 +13,7 @@
     <entity name="DBChapter" representedClassName="ArchiveOfOurOwnReader.DBChapter" syncable="YES">
         <attribute name="chapterContent" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="chapterIndex" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="chapterName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
         <relationship name="workItem" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DBWorkItem" inverseName="chapters" inverseEntity="DBWorkItem" syncable="YES"/>
     </entity>
@@ -69,7 +70,7 @@
     </entity>
     <elements>
         <element name="AnalyticsItem" positionX="-99" positionY="243" width="128" height="30"/>
-        <element name="DBChapter" positionX="106" positionY="189" width="128" height="105"/>
+        <element name="DBChapter" positionX="106" positionY="189" width="128" height="120"/>
         <element name="DBCharacterItem" positionX="-315" positionY="198" width="128" height="105"/>
         <element name="DBFandom" positionX="-65" positionY="248" width="128" height="105"/>
         <element name="DBRelationship" positionX="162" positionY="507" width="128" height="30"/>
