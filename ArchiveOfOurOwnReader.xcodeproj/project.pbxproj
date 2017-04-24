@@ -89,10 +89,6 @@
 		3C662F081C9C40F700D1F917 /* SupportController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C662F071C9C40F700D1F917 /* SupportController.swift */; };
 		3C728C6A1E8CBA06006D7100 /* ChoosePrefController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C728C691E8CBA06006D7100 /* ChoosePrefController.swift */; };
 		3C88E52C1BD000FB000340A3 /* ContentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C88E52B1BD000FB000340A3 /* ContentsViewController.swift */; };
-		3C8995861E95169B00D511CD /* DBChapter+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C89957A1E95169B00D511CD /* DBChapter+CoreDataClass.swift */; };
-		3C8995871E95169B00D511CD /* DBChapter+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C89957B1E95169B00D511CD /* DBChapter+CoreDataProperties.swift */; };
-		3C8995881E95169B00D511CD /* AnalyticsItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C89957C1E95169B00D511CD /* AnalyticsItem+CoreDataClass.swift */; };
-		3C8995891E95169B00D511CD /* AnalyticsItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C89957D1E95169B00D511CD /* AnalyticsItem+CoreDataProperties.swift */; };
 		3C89958A1E95169B00D511CD /* DBFandom+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C89957E1E95169B00D511CD /* DBFandom+CoreDataClass.swift */; };
 		3C89958B1E95169B00D511CD /* DBFandom+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C89957F1E95169B00D511CD /* DBFandom+CoreDataProperties.swift */; };
 		3C89958C1E95169B00D511CD /* DBRelationship+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C8995801E95169B00D511CD /* DBRelationship+CoreDataClass.swift */; };
@@ -106,6 +102,10 @@
 		3CB773611C847D6100DC15C4 /* SidePanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB773601C847D6100DC15C4 /* SidePanelViewController.swift */; };
 		3CB773631C8480C300DC15C4 /* CenterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB773621C8480C300DC15C4 /* CenterViewController.swift */; };
 		3CB992C11CF470D5004772AF /* PublishWorkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB992C01CF470D5004772AF /* PublishWorkController.swift */; };
+		3CBDC9AB1E9E244500A97C24 /* DBChapter+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CBDC9A91E9E244500A97C24 /* DBChapter+CoreDataClass.swift */; };
+		3CBDC9AC1E9E244500A97C24 /* DBChapter+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CBDC9AA1E9E244500A97C24 /* DBChapter+CoreDataProperties.swift */; };
+		3CBDC9AF1E9E265B00A97C24 /* AnalyticsItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CBDC9AD1E9E265B00A97C24 /* AnalyticsItem+CoreDataClass.swift */; };
+		3CBDC9B01E9E265B00A97C24 /* AnalyticsItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CBDC9AE1E9E265B00A97C24 /* AnalyticsItem+CoreDataProperties.swift */; };
 		3CC6A2881E66800F005D1255 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CC6A2871E66800F005D1255 /* Reachability.swift */; };
 		3CCBC0DE1CB534A1000207CF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CCBC0DD1CB534A1000207CF /* CoreGraphics.framework */; };
 		3CCBC0E01CB534A7000207CF /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CCBC0DF1CB534A7000207CF /* CoreLocation.framework */; };
@@ -246,10 +246,6 @@
 		3C728C691E8CBA06006D7100 /* ChoosePrefController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChoosePrefController.swift; sourceTree = "<group>"; };
 		3C88E52B1BD000FB000340A3 /* ContentsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentsViewController.swift; sourceTree = "<group>"; };
 		3C89956F1E95135800D511CD /* ArchiveOfOurOwnReader 4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ArchiveOfOurOwnReader 4.xcdatamodel"; sourceTree = "<group>"; };
-		3C89957A1E95169B00D511CD /* DBChapter+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "DBChapter+CoreDataClass.swift"; path = "Model/DBChapter+CoreDataClass.swift"; sourceTree = "<group>"; };
-		3C89957B1E95169B00D511CD /* DBChapter+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "DBChapter+CoreDataProperties.swift"; path = "Model/DBChapter+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		3C89957C1E95169B00D511CD /* AnalyticsItem+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "AnalyticsItem+CoreDataClass.swift"; path = "Model/AnalyticsItem+CoreDataClass.swift"; sourceTree = "<group>"; };
-		3C89957D1E95169B00D511CD /* AnalyticsItem+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "AnalyticsItem+CoreDataProperties.swift"; path = "Model/AnalyticsItem+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3C89957E1E95169B00D511CD /* DBFandom+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "DBFandom+CoreDataClass.swift"; path = "Model/DBFandom+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3C89957F1E95169B00D511CD /* DBFandom+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "DBFandom+CoreDataProperties.swift"; path = "Model/DBFandom+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3C8995801E95169B00D511CD /* DBRelationship+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "DBRelationship+CoreDataClass.swift"; path = "Model/DBRelationship+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -264,6 +260,10 @@
 		3CB773601C847D6100DC15C4 /* SidePanelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SidePanelViewController.swift; sourceTree = "<group>"; };
 		3CB773621C8480C300DC15C4 /* CenterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CenterViewController.swift; sourceTree = "<group>"; };
 		3CB992C01CF470D5004772AF /* PublishWorkController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PublishWorkController.swift; path = Controller/PublishWorkController.swift; sourceTree = "<group>"; };
+		3CBDC9A91E9E244500A97C24 /* DBChapter+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "DBChapter+CoreDataClass.swift"; path = "Model/DBChapter+CoreDataClass.swift"; sourceTree = "<group>"; };
+		3CBDC9AA1E9E244500A97C24 /* DBChapter+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "DBChapter+CoreDataProperties.swift"; path = "Model/DBChapter+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		3CBDC9AD1E9E265B00A97C24 /* AnalyticsItem+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "AnalyticsItem+CoreDataClass.swift"; path = "Model/AnalyticsItem+CoreDataClass.swift"; sourceTree = "<group>"; };
+		3CBDC9AE1E9E265B00A97C24 /* AnalyticsItem+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "AnalyticsItem+CoreDataProperties.swift"; path = "Model/AnalyticsItem+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3CC6A2871E66800F005D1255 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Reachability.swift; path = Utils/Reachability.swift; sourceTree = "<group>"; };
 		3CCBC0DD1CB534A1000207CF /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		3CCBC0DF1CB534A7000207CF /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -470,10 +470,10 @@
 		28B6DC4C1B4E3F8900F34529 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				3C89957A1E95169B00D511CD /* DBChapter+CoreDataClass.swift */,
-				3C89957B1E95169B00D511CD /* DBChapter+CoreDataProperties.swift */,
-				3C89957C1E95169B00D511CD /* AnalyticsItem+CoreDataClass.swift */,
-				3C89957D1E95169B00D511CD /* AnalyticsItem+CoreDataProperties.swift */,
+				3CBDC9AD1E9E265B00A97C24 /* AnalyticsItem+CoreDataClass.swift */,
+				3CBDC9AE1E9E265B00A97C24 /* AnalyticsItem+CoreDataProperties.swift */,
+				3CBDC9A91E9E244500A97C24 /* DBChapter+CoreDataClass.swift */,
+				3CBDC9AA1E9E244500A97C24 /* DBChapter+CoreDataProperties.swift */,
 				3C89957E1E95169B00D511CD /* DBFandom+CoreDataClass.swift */,
 				3C89957F1E95169B00D511CD /* DBFandom+CoreDataProperties.swift */,
 				3C8995801E95169B00D511CD /* DBRelationship+CoreDataClass.swift */,
@@ -844,7 +844,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3C8995881E95169B00D511CD /* AnalyticsItem+CoreDataClass.swift in Sources */,
 				3CDC4A2C1E825F5100D9438E /* AboutSubscriptionController.swift in Sources */,
 				3C2548D11E71872D00B872A3 /* WorkListController.swift in Sources */,
 				3C0A80931C85D14200BBCF2B /* MeViewController.swift in Sources */,
@@ -854,6 +853,7 @@
 				3C274CC31CE4CCBA00F3AC68 /* FlurryEmpty.m in Sources */,
 				1D7BDD381B5E755F0017C346 /* XPathQuery.m in Sources */,
 				28B6DC521B4E429100F34529 /* FeedTableViewCell.swift in Sources */,
+				3CBDC9AF1E9E265B00A97C24 /* AnalyticsItem+CoreDataClass.swift in Sources */,
 				1D1C2FED1B8DA46D0076D10C /* WorkFandom.swift in Sources */,
 				3C89958E1E95169B00D511CD /* DBCharacterItem+CoreDataClass.swift in Sources */,
 				1D92E5FF1BAB17C500CAC9A5 /* SearchFromToCell.swift in Sources */,
@@ -863,7 +863,7 @@
 				3C0448F71C634209005DCE5F /* ReaderProducts.swift in Sources */,
 				1D8777941B99F5D000CEA738 /* SearchTagWithTextCell.swift in Sources */,
 				3CCBC0E81CB5366F000207CF /* MPNativeAdView.swift in Sources */,
-				3C8995891E95169B00D511CD /* AnalyticsItem+CoreDataProperties.swift in Sources */,
+				3CBDC9AB1E9E244500A97C24 /* DBChapter+CoreDataClass.swift in Sources */,
 				3C89958C1E95169B00D511CD /* DBRelationship+CoreDataClass.swift in Sources */,
 				28B6DC581B4E480F00F34529 /* ArticleDetailsViewController.swift in Sources */,
 				1D3476671BAC460E006AAF1A /* SearchSwitchCell.swift in Sources */,
@@ -874,13 +874,13 @@
 				3CF215BF1D4233DC008D6585 /* InterstitialController.swift in Sources */,
 				1D7BDD3E1B5E7B1D0017C346 /* SearchQuery.swift in Sources */,
 				1D2832101BBD6A7200FFC887 /* CharacterItem.swift in Sources */,
+				3CBDC9AC1E9E244500A97C24 /* DBChapter+CoreDataProperties.swift in Sources */,
 				3CF1D00E1C87182300D219B2 /* HistoryViewController.swift in Sources */,
 				28B6DC2D1B4E3F5900F34529 /* ArchiveOfOurOwnReader.xcdatamodeld in Sources */,
 				3C3EF71C1E6D55DA000CAA1F /* ChapterOnline.swift in Sources */,
 				3C8995911E95169B00D511CD /* DBWorkItem+CoreDataProperties.swift in Sources */,
 				28B6DC601B4E4B3C00F34529 /* PageCollectionViewCell.swift in Sources */,
 				28B6DC541B4E47E700F34529 /* FeedViewController.swift in Sources */,
-				3C8995861E95169B00D511CD /* DBChapter+CoreDataClass.swift in Sources */,
 				1D8777901B99D8DC00CEA738 /* SearchTagCell.swift in Sources */,
 				1D28320F1BBD6A7200FFC887 /* Chapter.swift in Sources */,
 				3C89958A1E95169B00D511CD /* DBFandom+CoreDataClass.swift in Sources */,
@@ -903,6 +903,7 @@
 				3C13D2CE1CCA1D0D008B023B /* CommentCell.swift in Sources */,
 				3C89958F1E95169B00D511CD /* DBCharacterItem+CoreDataProperties.swift in Sources */,
 				3C3105481C7F3D260065256E /* LoginViewController.swift in Sources */,
+				3CBDC9B01E9E265B00A97C24 /* AnalyticsItem+CoreDataProperties.swift in Sources */,
 				28E1C7151B8D9257001E2E5A /* WorkViewController.swift in Sources */,
 				1D1C2FEB1B8DA3E70076D10C /* WorkCharacter.swift in Sources */,
 				1D7BDD401B5E83AC0017C346 /* NewsFeedItem.swift in Sources */,
@@ -910,7 +911,6 @@
 				1D2832111BBD6A7200FFC887 /* Fandom.swift in Sources */,
 				1D2832281BBD6CDA00FFC887 /* FavoritesViewController.swift in Sources */,
 				3C8995901E95169B00D511CD /* DBWorkItem+CoreDataClass.swift in Sources */,
-				3C8995871E95169B00D511CD /* DBChapter+CoreDataProperties.swift in Sources */,
 				3C0448FA1C63745C005DCE5F /* HRToast+UIView.swift in Sources */,
 				28E1C7131B8D9246001E2E5A /* WorkDetailViewController.swift in Sources */,
 				1D8582D11BB4238E0005B05B /* ButtonCell.swift in Sources */,

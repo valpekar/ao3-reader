@@ -169,8 +169,7 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
         }
         self.title = foundItems
         
-        tableView.setContentOffset(CGPoint.zero, animated:true)
-        collectionView.flashScrollIndicators()
+        //tableView.setContentOffset(CGPoint(x: 0, y: 0 - tableView.contentInset.top), animated:true)
         
         if (works.count == 0) {
             tryAgainButton.isHidden = false
@@ -178,6 +177,9 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
         } else {
             tryAgainButton.isHidden = true
             checkStatusButton.isHidden = true
+            
+            tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+            collectionView.flashScrollIndicators()
         }
     }
     
@@ -436,20 +438,20 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         if (pages.count > indexPath.row) {
-            
             let page: PageItem = pages[indexPath.row]
+
+            if (!page.url.isEmpty) {
             
-        if (!page.url.isEmpty) {
-            
-            if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
+                if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
                 
-                guard let cStorage = Alamofire.SessionManager.default.session.configuration.httpCookieStorage else {
-                    return
+                    guard let cStorage = Alamofire.SessionManager.default.session.configuration.httpCookieStorage
+                        else {
+                            return
+                    }
+                    cStorage.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
                 }
-                cStorage.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
-            }
             
-            showLoadingView()
+                showLoadingView(msg: "Loading page \(indexPath.row)")
             
             let urlStr = "http://archiveofourown.org" + page.url
             
@@ -565,7 +567,7 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
             Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
         }
        
-        showLoadingView()
+        showLoadingView(msg: "Searching...")
         
         let mutableURLRequest = NSMutableURLRequest(url: URL( string: (encodedURLRequest?.url?.absoluteString)!)!)
         mutableURLRequest.httpMethod = "GET"
@@ -601,8 +603,8 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
         if (purchased || donated) {
             print("premium")
         } else {
-            if (countWroksFromDB() > 19) {
-                TSMessage.showNotification(in: self, title: "Error", subtitle: "You can only download 20 stories. Please, upgrade to download more.", type: .error, duration: 2.0)
+            if (countWroksFromDB() > 29) {
+                TSMessage.showNotification(in: self, title: "Error", subtitle: "You can only download 30 stories. Please, upgrade to download more.", type: .error, duration: 2.0)
 
                 return
             }
@@ -610,7 +612,7 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
         
         let curWork:NewsFeedItem = works[sender.tag]
         
-        showLoadingView()
+        showLoadingView(msg: "Downloading work \(curWork.title)")
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
             Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)

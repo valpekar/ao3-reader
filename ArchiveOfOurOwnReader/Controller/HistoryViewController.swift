@@ -87,7 +87,7 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
         
         let username = DefaultsManager.getString(DefaultsManager.LOGIN)
         
-        showLoadingView()
+        showLoadingView(msg: "Getting Hisory")
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
             Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
@@ -395,14 +395,14 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        let page: PageItem = pages[(indexPath as NSIndexPath).row]
+        let page: PageItem = pages[indexPath.row]
         if (!page.url.isEmpty) {
             
             if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
                 Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
             }
             
-            showLoadingView()
+            showLoadingView(msg: "Loading page \(indexPath.row)")
             
             Alamofire.request("http://archiveofourown.org" + page.url, method: .get).response(completionHandler: { response in
                 print(response.error ?? "")
@@ -473,7 +473,7 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
     @IBAction func downloadButtonTouched(_ sender: UIButton) {
         
         let curWork:NewsFeedItem = works[sender.tag]
-        showLoadingView()
+        showLoadingView(msg: "Downloading work \(curWork.title)")
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
             Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
@@ -523,7 +523,7 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
     }
     
     func deleteItemFromHistory(_ curWork: NewsFeedItem) {
-        showLoadingView()
+        showLoadingView(msg: "Deleting from History")
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
             Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)

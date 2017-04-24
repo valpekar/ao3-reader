@@ -2,13 +2,12 @@
 //  DBChapter+CoreDataProperties.swift
 //  ArchiveOfOurOwnReader
 //
-//  Created by Valeriya Pekar on 4/5/17.
+//  Created by Valeriya Pekar on 4/12/17.
 //  Copyright © 2017 Sergei Pekar. All rights reserved.
 //
 
 import Foundation
 import CoreData
-import ArchiveOfOurOwnReader
 
 extension DBChapter {
 
@@ -18,8 +17,8 @@ extension DBChapter {
 
     @NSManaged public var chapterContent: String?
     @NSManaged public var chapterIndex: NSNumber?
-    @NSManaged public var id: NSNumber?
     @NSManaged public var chapterName: String?
+    @NSManaged public var id: NSNumber?
     @NSManaged public var workItem: DBWorkItem?
 
 }

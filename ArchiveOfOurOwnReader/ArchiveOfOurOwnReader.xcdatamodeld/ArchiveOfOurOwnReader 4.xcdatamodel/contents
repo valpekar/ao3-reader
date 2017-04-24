@@ -69,7 +69,7 @@
         <relationship name="relationships" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DBRelationship" inverseName="workItems" inverseEntity="DBRelationship" syncable="YES"/>
     </entity>
     <elements>
-        <element name="AnalyticsItem" positionX="-99" positionY="243" width="128" height="30"/>
+        <element name="AnalyticsItem" positionX="-99" positionY="243" width="128" height="165"/>
         <element name="DBChapter" positionX="106" positionY="189" width="128" height="120"/>
         <element name="DBCharacterItem" positionX="-315" positionY="198" width="128" height="105"/>
         <element name="DBFandom" positionX="-65" positionY="248" width="128" height="105"/>

@@ -48,6 +48,8 @@ class DefaultsManager {
     static var LAST_DATE = "lastdt"
     static var NOTIFY = "notify"
     static var ADULT = "adlt"
+    static var TOKEN = "authtoken"
+    static var COOKIES = "cookies"
     static var LASTWRKID = "lwid"
     static var LASTWRKCHAPTER = "lwchp"
     static var LASTWRKSCROLL = "lwscrl"

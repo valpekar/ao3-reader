@@ -44,7 +44,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     var fandoms: [Fandom]!
     var relationships: [Relationship]!
     var characters: [CharacterItem]!
-    var warnings: [String]!
+    var warnings: [String] = [String]()
     
     var indexesToHide: [Int]!
     
@@ -75,6 +75,8 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             donated = dd
         }
         
+        donated = true
+        
         if ((purchased || donated) && DefaultsManager.getBool(DefaultsManager.ADULT) == nil) {
             DefaultsManager.putBool(true, key: DefaultsManager.ADULT)
         }
@@ -96,7 +98,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
         self.tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, -1.0, 0.0)
         self.tableView.rowHeight = UITableViewAutomaticDimension
-        self.tableView.estimatedRowHeight = 48
+        self.tableView.estimatedRowHeight = 44
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
             Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
@@ -149,6 +151,16 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
        // fitLabel(titleLabel, text: titleLabel.text!)
        // fitLabel(authorLabel, text: authorLabel.text!)
+        
+        
+        warnings = [String]()
+        if let warn = downloadedWorkItem.value(forKey: "ArchiveWarnings") as? String {
+            if (!warn.isEmpty) {
+                let str = warn.replacingOccurrences(of: "\n", with:"")
+                    .replacingOccurrences(of: "\\s+", with: " ", options: NSString.CompareOptions.regularExpression, range: nil)
+                warnings.append(str)
+            }
+        }
         
         if let dFandoms = downloadedWorkItem.mutableSetValue(forKey: "fandoms").allObjects as? [DBFandom] {
             downloadedFandoms = dFandoms
@@ -204,7 +216,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             }
         }
         
-        showLoadingView()
+        showLoadingView(msg: "Loading work")
         
         Alamofire.request("http://archiveofourown.org/works/" + workItem.workId + vadult, method: .get, parameters: params)
             .response(completionHandler: { response in
@@ -494,7 +506,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     
     func parseAddBookmarkResponse(_ data: Data) {
         let dta = NSString(data: data, encoding: String.Encoding.utf8.rawValue)
-        print("the string is: \(dta)")
+        print("the string is: \(String(describing: dta))")
         let doc : TFHpple = TFHpple(htmlData: data)
         
         var noticediv: [TFHppleElement] = doc.search(withXPathQuery: "//div[@class='flash notice']") as! [TFHppleElement]
@@ -614,7 +626,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             
         case 1:
             if (warnings != nil && warnings.count > (indexPath as NSIndexPath).row) {
-                cell!.label.text = warnings[(indexPath as NSIndexPath).row]
+                cell!.label.text = warnings.joined(separator: ", ")
                 
                // cell!.label.font = UIFont.systemFont(ofSize: 13)
             } else {
@@ -767,6 +779,8 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         var res:Int = 1
         
         switch (section) {
+        case 1:
+            return 1 //warnings.count
         case 2:
             if (workItem != nil) {
                 if (fandoms != nil) {
@@ -775,7 +789,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             } else if (downloadedFandoms != nil) {
                 return downloadedFandoms.count
             }
-        case 23:
+        case 3:
             if (workItem != nil && relationships != nil) {
                 res = relationships.count
             } else if (downloadedRelationships != nil) {
@@ -982,7 +996,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             return
         }
         
-        showLoadingView()
+        showLoadingView(msg: "Adding bookmark")
         
         var requestStr = "http://archiveofourown.org/works/"
         var bid = ""
@@ -1065,7 +1079,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             return
         }
         
-        showLoadingView()
+        showLoadingView(msg: "Deleting bookmark")
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
             Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
@@ -1132,14 +1146,14 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         if (purchased || donated) {
          print("premium")
         } else {
-            if (countWroksFromDB() > 19) {
-                TSMessage.showNotification(in: self, title: "Error", subtitle: "You can only download 20 stories. Please, upgrade to download more.", type: .error, duration: 2.0)
+            if (countWroksFromDB() > 29) {
+                TSMessage.showNotification(in: self, title: "Error", subtitle: "You can only download 30 stories. Please, upgrade to download more.", type: .error, duration: 2.0)
                 
                 return
             }
         }
         
-        showLoadingView()
+        showLoadingView(msg: "Downloading work")
         
         if let del = UIApplication.shared.delegate as? AppDelegate {
             if (del.cookies.count > 0) {
@@ -1345,7 +1359,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             return
         }
         
-        showLoadingView()
+        showLoadingView(msg: "Leaving kudos")
         
         var workId = ""
         
@@ -1427,8 +1441,8 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 }
             } else if (downloadedWorkItem != nil) {
                 
-                author = downloadedWorkItem.value(forKey: "author") as! String
-                category = workItem.value(forKey: "category") as! String
+                author = downloadedWorkItem.value(forKey: "author") as? String ?? ""
+                category = workItem.value(forKey: "category") as? String ?? ""
                 
                 if (downloadedFandoms != nil && downloadedFandoms.count > 0) {
                     fandom = downloadedFandoms[0].fandomName ?? ""

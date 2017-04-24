@@ -74,7 +74,7 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
         //http://archiveofourown.org/works/6107953?show_comments=true&view_full_work=true#comments
         let requestStr = "http://archiveofourown.org/works/" + workId + "?show_comments=true&view_full_work=true#comments"
         
-        showLoadingView()
+        showLoadingView(msg: "Getting comments")
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
             Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
@@ -236,7 +236,7 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
     }
     
     func sendComment() {
-        showLoadingView()
+        showLoadingView(msg: "Sending comment")
         
         let requestStr = "http://archiveofourown.org/works/" + workId + "/comments"
         let pseud_id = DefaultsManager.getString(DefaultsManager.PSEUD_ID)

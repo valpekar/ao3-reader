@@ -128,7 +128,7 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
                 
             }
             
-            showLoadingView()
+            showLoadingView(msg: "Getting works")
             
             let mutableURLRequest = NSMutableURLRequest(url: URL( string: (encodedURLRequest!.url?.absoluteString)!)!)
             mutableURLRequest.httpMethod = "GET"
@@ -234,7 +234,7 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
             Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
         }
         
-        showLoadingView()
+        showLoadingView(msg: "Getting works")
         
         let urlStr: String = (encodedURLRequest?.url?.absoluteString)!
         

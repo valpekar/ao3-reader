@@ -58,8 +58,16 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
 //        }
         
         //if (purchased) {
-            showLoadingView()
-            getLoginParams()
+        
+        if let login = loginTextField.text,
+            let pass = passTextField.text {
+            
+            if (!login.isEmpty && !pass.isEmpty) {
+                showLoadingView(msg: "Please wait")
+                getLoginParams()
+            }
+        }
+        
        /* } else {
             self.view.makeToast(message: "Login is a Premium feature!", duration: 1.0, position: "center" as AnyObject, title: "Cannot login")
             
@@ -104,11 +112,14 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
     func tryLogin() {
         guard let login = loginTextField.text,
             let pass = passTextField.text else {
+                hideLoadingView()
                 return
         }
         
         if (!login.isEmpty && !pass.isEmpty) {
             sendLoginRequest()
+        } else {
+            hideLoadingView()
         }
 
     }
@@ -128,7 +139,8 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
         DefaultsManager.putString(pass, key: DefaultsManager.PSWD)
         
         params["user_session"] = ["login": login,
-            "password": pass]
+            "password": pass,
+            "remember_me": "1"]
         
      //   showLoadingView()
         
@@ -171,7 +183,7 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
             return
         }
         
-        showLoadingView()
+        showLoadingView(msg: "Please wait")
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
             Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
@@ -194,17 +206,20 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
     }
     
     func parseParams(_ data: Data) {
+        let datastring = NSString(data: data, encoding: String.Encoding.utf8.rawValue)
+        print(datastring ?? "")
+
         let doc : TFHpple = TFHpple(htmlData: data)
-        let logindiv : [TFHppleElement]? = doc.search(withXPathQuery: "//div[@id='login']") as? [TFHppleElement]
-        if (logindiv?.count ?? 0 > 0) {
-            let authtoken: [TFHppleElement]? = (logindiv![0] as TFHppleElement).search(withXPathQuery: "//input[@name='authenticity_token']") as? [TFHppleElement]
+       // let logindiv : [TFHppleElement]? = doc.search(withXPathQuery: "//div[@id='login']") as? [TFHppleElement]
+       // if (logindiv?.count ?? 0 > 0) {
+            let authtoken: [TFHppleElement]? = doc.search(withXPathQuery: "//input[@name='authenticity_token']") as? [TFHppleElement]
             if (authtoken?.count ?? 0 > 0) {
                 let loginEl: TFHppleElement = authtoken![0]
                 token = loginEl.attributes["value"] as! String
                 (UIApplication.shared.delegate as! AppDelegate).token = token
             }
 
-        }
+        //}
     }
     
     func parseResponse(_ data: Data) {
@@ -220,12 +235,13 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
                 let delayTime = DispatchTime.now() + Double(Int64(1.500 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
                 
                 DefaultsManager.putBool(true, key: DefaultsManager.ADULT)
+                DefaultsManager.putString(token, key: DefaultsManager.TOKEN)
                 
-                DispatchQueue.main.asyncAfter(deadline: delayTime) {
-                self.dismiss(animated: true, completion: {
-                    self.controllerDelegate.controllerDidClosedWithLogin!()
-                })
-                }
+//                DispatchQueue.main.asyncAfter(deadline: delayTime) {
+//                self.dismiss(animated: true, completion: {
+//                    self.controllerDelegate.controllerDidClosedWithLogin!()
+//                })
+//                }
             }
         } else {
            showError()
@@ -275,11 +291,33 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
                 DefaultsManager.putObject(pseuds as AnyObject, key: DefaultsManager.PSEUD_IDS)
             }
             
+            let delayTime = DispatchTime.now() + Double(Int64(1.500 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+            DispatchQueue.main.asyncAfter(deadline: delayTime) {
+                self.dismiss(animated: true, completion: {
+                    self.controllerDelegate.controllerDidClosedWithLogin!()
+                })
+            }
+            
         }
     }
     
     @IBAction func loginTouched(_ sender: UIButton) {
-        sendLoginRequest()
+        
+        guard let login = loginTextField.text,
+            let pass = passTextField.text else {
+                TSMessage.showNotification(in: self, title: "Fields cannot be empty!", subtitle: "Please fill in login and password", type: .error)
+                return
+        }
+        
+        if (pass.isEmpty || login.isEmpty) {
+            TSMessage.showNotification(in: self, title: "Fields cannot be empty!", subtitle: "Please fill in login and password", type: .error)
+            return
+        }
+        
+        showLoadingView(msg: "Please wait")
+        getLoginParams()
+        
+        //sendLoginRequest()
     }
     
     @IBAction func cancelTouched(_ sender: AnyObject) {

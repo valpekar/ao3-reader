@@ -99,8 +99,8 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
             })
             if (downloadedChapters != nil && downloadedChapters.count > 0) {
                 contentsButton.isHidden = false
-                currentChapterIndex = downloadedWorkItem.value(forKey: "currentChapter") as! Int
-                work = downloadedChapters[currentChapterIndex].value(forKey: "chapterContent") as! String
+                currentChapterIndex = downloadedWorkItem.value(forKey: "currentChapter") as? Int ?? 0
+                work = downloadedChapters[currentChapterIndex].value(forKey: "chapterContent") as? String ?? ""
                 loadCurrentTheme()
                 
                 if (downloadedChapters.count == 1 || currentChapterIndex == downloadedChapters.count - 1) {
@@ -121,6 +121,10 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
         webView.addGestureRecognizer(tapRecognizer)
         
         NotificationCenter.default.addObserver(self, selector: #selector(WorkViewController.lockScreen), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -158,13 +162,13 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
     
-        /*if (downloadedWorkItem != nil) {
+        if (downloadedWorkItem != nil) {
             saveWorkChanged()
         } else if (workItem != nil) {
             DefaultsManager.putString(NSStringFromCGPoint(webView.scrollView.contentOffset), key: DefaultsManager.LASTWRKSCROLL)
             DefaultsManager.putString(workItem.workId, key: DefaultsManager.LASTWRKID)
             DefaultsManager.putString(currentOnlineChapter, key: DefaultsManager.LASTWRKCHAPTER)
-        }*/
+        }
     }
     
     func lockScreen() {
@@ -276,7 +280,7 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
     
     func turnOnlineChapter(_ chapterId: String) {
         
-        showLoadingView()
+        showLoadingView(msg: "Loading chapter")
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
             Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
@@ -382,7 +386,7 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
     @IBAction func nextButtonTouched(_ sender: AnyObject) {
         
         if (workItem != nil) {
-            showLoadingView()
+            showLoadingView(msg: "Loading next chapter")
             
             currentOnlineChapter = nextChapter
             
@@ -407,7 +411,7 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
     @IBAction func prevButtonTouched(_ sender: AnyObject) {
         
         if (workItem != nil) {
-            showLoadingView()
+            showLoadingView(msg: "Loading previous chapter")
             
             currentOnlineChapter = prevChapter
         
@@ -432,7 +436,7 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
         nextChapter = ""
         
         let dta = NSString(data: data, encoding: String.Encoding.utf8.rawValue)
-        print("the string is: \(dta)")
+        print("the string is: \(String(describing: dta))")
         let doc : TFHpple = TFHpple(htmlData: data)
         
         var chaptersEl: [TFHppleElement] = doc.search(withXPathQuery: "//div[@id='chapters']") as! [TFHppleElement]

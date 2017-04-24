@@ -51,7 +51,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
        // cycleInterstitial()
     }
         
-    func showLoadingView() {
+    func showLoadingView(msg: String) {
         
         if (loadingView != nil) {
             hideLoadingView()
@@ -80,7 +80,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
         loadingLabel.textColor = UIColor.white
         loadingLabel.adjustsFontSizeToFitWidth = true
         loadingLabel.textAlignment = .center
-        loadingLabel.text = "Loading..."
+        loadingLabel.text = msg
         loadingView.addSubview(loadingLabel)
         
         self.view.addSubview(loadingView)
@@ -89,7 +89,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
     
     func hideLoadingView() {
         print("hide loading view")
-        if (activityView.isAnimating) {
+        if (activityView != nil && activityView.isAnimating) {
             activityView.stopAnimating()
         }
         if (loadingView != nil && loadingView.superview != nil) {
@@ -185,24 +185,24 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
         
         chapters = [ChapterOnline]()
         
-        if (curWork != nil) {
-            workItem.setValue(curWork!.warning, forKey: "ArchiveWarnings")
-            workItem.setValue(curWork!.title, forKey: "workTitle")
-            workItem.setValue(curWork!.topic, forKey: "topic")
-            workItem.setValue(curWork!.topicPreview, forKey: "topicPreview")
-            workItem.setValue(curWork!.tags.joined(separator: ", "), forKey: "tags")
-            workItem.setValue(curWork!.dateTime, forKey: "datetime")
-            workItem.setValue(curWork!.language, forKey: "language")
-            workItem.setValue(curWork!.words, forKey: "words")
-            workItem.setValue(curWork!.comments, forKey: "comments")
-            workItem.setValue(curWork!.kudos, forKey: "kudos")
-            workItem.setValue(curWork!.chapters, forKey: "chaptersCount")
-            workItem.setValue(curWork!.bookmarks, forKey: "bookmarks")
-            workItem.setValue(curWork!.hits, forKey: "hits")
-            workItem.setValue(curWork!.rating, forKey: "ratingTags")
-            workItem.setValue(curWork!.category, forKey: "category")
-            workItem.setValue(curWork!.complete, forKey: "complete")
-            workItem.setValue(curWork!.workId, forKey: "workId")
+        if let curWork = curWork {
+            workItem.setValue(curWork.warning, forKey: "ArchiveWarnings")
+            workItem.setValue(curWork.title, forKey: "workTitle")
+            workItem.setValue(curWork.topic, forKey: "topic")
+            workItem.setValue(curWork.topicPreview, forKey: "topicPreview")
+            workItem.setValue(curWork.tags.joined(separator: ", "), forKey: "tags")
+            workItem.setValue(curWork.dateTime, forKey: "datetime")
+            workItem.setValue(curWork.language, forKey: "language")
+            workItem.setValue(curWork.words, forKey: "words")
+            workItem.setValue(curWork.comments, forKey: "comments")
+            workItem.setValue(curWork.kudos, forKey: "kudos")
+            workItem.setValue(curWork.chapters, forKey: "chaptersCount")
+            workItem.setValue(curWork.bookmarks, forKey: "bookmarks")
+            workItem.setValue(curWork.hits, forKey: "hits")
+            workItem.setValue(curWork.rating, forKey: "ratingTags")
+            workItem.setValue(curWork.category, forKey: "category")
+            workItem.setValue(curWork.complete, forKey: "complete")
+            workItem.setValue(curWork.workId, forKey: "workId")
             workItem.setValue(Date(), forKey: "dateAdded")
             
         } else if (workItemOld != nil) {
@@ -390,7 +390,12 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
             
             var chptName = ""
             if let chapterNameEl = doc.search(withXPathQuery: "//h3[@class='title']") as? [TFHppleElement] {
-                chptName = chapterNameEl.first?.text() ?? ""
+                var str: String = chapterNameEl.first?.raw ?? ""
+                str = str.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
+                str = str.replacingOccurrences(of: "\n", with:"")
+                    .replacingOccurrences(of: "\\s+", with: " ", options: NSString.CompareOptions.regularExpression, range: nil)
+
+                chptName = str
             }
             
             let chpt = ChapterOnline()
@@ -421,7 +426,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
                         print(response.request ?? "")
                         print(response.error ?? "")
                         if let data = response.data {
-                            self.showLoadingView()
+                            self.showLoadingView(msg: "Loading next chapter")
                             self.parseNxtChapter(data, curworkItem: workItem)
                         }
                         
@@ -438,7 +443,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
             hideLoadingView()
         } catch let error as NSError {
             err = error
-            print("Could not save \(err), \(err?.userInfo)")
+            print("Could not save \(String(describing: err?.userInfo))")
             hideLoadingView()
         }
         
@@ -454,13 +459,21 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
         
         var err: NSError?
         
-        let workChapters = curworkItem.value(forKeyPath: "chapters") as! NSMutableSet
-        workChapters.removeAllObjects()
+        var workChapters = NSMutableSet()
+        if let wc = curworkItem.value(forKeyPath: "chapters") as? NSMutableSet {
+            workChapters = wc
+        } else {
+            curworkItem.setValue(workChapters, forKey: "chapters")
+        }
+        
+        if (workChapters.count > 0) {
+            workChapters.removeAllObjects()
+        }
         do {
             try managedContext.save()
         } catch let error as NSError {
             err = error
-            print("Could not save \(err), \(err?.userInfo)")
+            print("Could not save \(String(describing: err?.userInfo))")
         }
         
         for i in 0..<chapters.count {
@@ -482,7 +495,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
                     try managedContext.save()
                 } catch let error as NSError {
                     err = error
-                    print("Could not save \(err), \(err?.userInfo)")
+                    print("Could not save \(String(describing: err?.userInfo))")
                 }
             }
         }
@@ -504,7 +517,12 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
         
             var chptName = ""
             if let chapterNameEl = doc.search(withXPathQuery: "//h3[@class='title']") as? [TFHppleElement] {
-                chptName = chapterNameEl.first?.text() ?? ""
+                var str: String = chapterNameEl.first?.raw ?? ""
+                str = str.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
+                str = str.replacingOccurrences(of: "\n", with:"")
+                    .replacingOccurrences(of: "\\s+", with: " ", options: NSString.CompareOptions.regularExpression, range: nil)
+                
+                chptName = str
             }
             
             let chpt = ChapterOnline()
@@ -555,8 +573,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
         let managedContext = appDelegate.managedObjectContext!
         
         let entity =  NSEntityDescription.entity(forEntityName: "AnalyticsItem",  in: managedContext)
-        let analyticsItem = NSManagedObject(entity: entity!, insertInto:managedContext)
-        
+        if let analyticsItem: AnalyticsItem = NSManagedObject(entity: entity!, insertInto:managedContext) as? AnalyticsItem {
         analyticsItem.setValue(author, forKey: "author")
         analyticsItem.setValue(category, forKey: "category")
         analyticsItem.setValue(mainFandom, forKey: "fandom")
@@ -569,7 +586,8 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
             try managedContext.save()
         } catch let error as NSError {
             err = error
-            print("Could not save \(err), \(err?.userInfo)")
+            print("Could not save \(String(describing: err)), \(String(describing: err?.userInfo))")
+        }
         }
     }
     
@@ -673,6 +691,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
             //let cookies = headers["Set-Cookie"]
         if (cookiesH.count > 0) {
             (UIApplication.shared.delegate as! AppDelegate).cookies = cookiesH
+            DefaultsManager.putObject(cookiesH as AnyObject, key: DefaultsManager.COOKIES)
         }
         
        // print(cookies)

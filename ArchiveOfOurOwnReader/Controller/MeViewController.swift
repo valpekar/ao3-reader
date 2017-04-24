@@ -77,6 +77,7 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
         DefaultsManager.putString("", key: DefaultsManager.LOGIN)
         DefaultsManager.putString("", key: DefaultsManager.PSWD)
         DefaultsManager.putString("", key: DefaultsManager.PSEUD_ID)
+        DefaultsManager.putString("", key: DefaultsManager.TOKEN)
         DefaultsManager.putObject(s as AnyObject, key: DefaultsManager.PSEUD_IDS)
         
         pseuds = s
@@ -232,7 +233,7 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
     
     @IBAction func removeAdsTouched(_ sender: AnyObject) {
         
-        showLoadingView()
+        showLoadingView(msg: "Requesting data")
         
         products = []
         
@@ -260,7 +261,7 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
     
     @IBAction func smallTipTouched(_ sender: AnyObject) {
         
-        showLoadingView()
+        showLoadingView(msg: "Please wait")
         
         products = []
         
@@ -288,7 +289,7 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
     
     @IBAction func mediumTipTouched(_ sender: AnyObject) {
         
-        showLoadingView()
+        showLoadingView(msg: "Please wait")
         
         products = []
         
@@ -315,7 +316,7 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
     }
     
     @IBAction func largeTipTouched(_ sender: AnyObject) {
-        showLoadingView()
+        showLoadingView(msg: "Please wait")
         
         products = []
         
