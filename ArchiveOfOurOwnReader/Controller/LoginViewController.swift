@@ -237,11 +237,11 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
                 DefaultsManager.putBool(true, key: DefaultsManager.ADULT)
                 DefaultsManager.putString(token, key: DefaultsManager.TOKEN)
                 
-//                DispatchQueue.main.asyncAfter(deadline: delayTime) {
-//                self.dismiss(animated: true, completion: {
-//                    self.controllerDelegate.controllerDidClosedWithLogin!()
-//                })
-//                }
+                DispatchQueue.main.asyncAfter(deadline: delayTime) {
+                self.dismiss(animated: true, completion: {
+                    self.controllerDelegate.controllerDidClosedWithLogin!()
+                })
+                }
             }
         } else {
            showError()

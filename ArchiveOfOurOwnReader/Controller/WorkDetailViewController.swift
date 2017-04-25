@@ -75,7 +75,8 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             donated = dd
         }
         
-       // donated = true
+        donated = false
+        purchased = false
         
         if ((purchased || donated) && DefaultsManager.getBool(DefaultsManager.ADULT) == nil) {
             DefaultsManager.putBool(true, key: DefaultsManager.ADULT)

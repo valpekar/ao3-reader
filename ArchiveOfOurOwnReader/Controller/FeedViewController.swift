@@ -630,8 +630,13 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
                 //  println(response)
                 print(response.error ?? "")
                 self.parseCookies(response)
-                self.downloadWork(response.data!, curWork: curWork)
-                self.hideLoadingView()
+                if let d = response.data {
+                    self.downloadWork(d, curWork: curWork)
+                    self.hideLoadingView()
+                } else {
+                    TSMessage.showNotification(in: self, title: "Error", subtitle: "Cannot download work!", type: .error, duration: 2.0)
+                    self.hideLoadingView()
+                }
         })
     }
     
