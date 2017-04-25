@@ -75,7 +75,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             donated = dd
         }
         
-        donated = true
+       // donated = true
         
         if ((purchased || donated) && DefaultsManager.getBool(DefaultsManager.ADULT) == nil) {
             DefaultsManager.putBool(true, key: DefaultsManager.ADULT)
@@ -1008,7 +1008,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             requestStr += bid + "/bookmarks"
             
             
-            if (fandoms.count > 0 && relationships.count > 0) {
+            if ( fandoms != nil && relationships != nil && fandoms.count > 0 && relationships.count > 0) {
                 saveToAnalytics(workItem.value(forKey: "author") as! String, category: workItem.value(forKey: "category") as! String, mainFandom: fandoms[0].fandomName, mainRelationship: relationships[0].relationshipName)
             }
             

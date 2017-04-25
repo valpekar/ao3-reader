@@ -10,7 +10,6 @@ import UIKit
 import CoreData
 import StoreKit
 import CoreLocation
-import JavaScriptCore
 import TSMessages
 import Alamofire
 
