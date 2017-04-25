@@ -116,8 +116,6 @@
 		3CD808541D804F310099F778 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3CD808531D804F310099F778 /* GoogleService-Info.plist */; };
 		3CDC4A2C1E825F5100D9438E /* AboutSubscriptionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CDC4A2B1E825F5100D9438E /* AboutSubscriptionController.swift */; };
 		3CF1D00E1C87182300D219B2 /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF1D00D1C87182300D219B2 /* HistoryViewController.swift */; };
-		3CF215BF1D4233DC008D6585 /* InterstitialController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF215BE1D4233DC008D6585 /* InterstitialController.swift */; };
-		3CF215C11D425651008D6585 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CF215C01D425651008D6585 /* JavaScriptCore.framework */; };
 		3CFD2A631CB55A0F0072FEC5 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CFD2A621CB55A0F0072FEC5 /* Twitter.framework */; };
 		3CFD2A651CB55A2F0072FEC5 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CFD2A641CB55A2F0072FEC5 /* MessageUI.framework */; };
 		B6277E5735632C3272D520D9 /* Pods_ArchiveOfOurOwnReaderTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 261FBF4E8A62D2F746F44908 /* Pods_ArchiveOfOurOwnReaderTests.framework */; };
@@ -275,8 +273,6 @@
 		3CD8F8CE1CE4808F00C3D5BB /* ArchiveOfOurOwnReader 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ArchiveOfOurOwnReader 3.xcdatamodel"; sourceTree = "<group>"; };
 		3CDC4A2B1E825F5100D9438E /* AboutSubscriptionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AboutSubscriptionController.swift; path = Controller/AboutSubscriptionController.swift; sourceTree = "<group>"; };
 		3CF1D00D1C87182300D219B2 /* HistoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HistoryViewController.swift; path = Controller/HistoryViewController.swift; sourceTree = "<group>"; };
-		3CF215BE1D4233DC008D6585 /* InterstitialController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InterstitialController.swift; path = Controller/InterstitialController.swift; sourceTree = "<group>"; };
-		3CF215C01D425651008D6585 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		3CFD2A621CB55A0F0072FEC5 /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
 		3CFD2A641CB55A2F0072FEC5 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		9E1D849EEED1E11AF03F02B0 /* Pods_ArchiveOfOurOwnReader.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ArchiveOfOurOwnReader.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -287,7 +283,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3CF215C11D425651008D6585 /* JavaScriptCore.framework in Frameworks */,
 				3CFD2A651CB55A2F0072FEC5 /* MessageUI.framework in Frameworks */,
 				3CFD2A631CB55A0F0072FEC5 /* Twitter.framework in Frameworks */,
 				3CCBC0E61CB534F9000207CF /* UIKit.framework in Frameworks */,
@@ -489,7 +484,6 @@
 				3C13D2CB1CCA149A008B023B /* CommentViewController.swift */,
 				3C9C87B91CE3557D00C10410 /* RecommendationsController.swift */,
 				3CB992C01CF470D5004772AF /* PublishWorkController.swift */,
-				3CF215BE1D4233DC008D6585 /* InterstitialController.swift */,
 				3C2548D01E71872D00B872A3 /* WorkListController.swift */,
 				3CDC4A2B1E825F5100D9438E /* AboutSubscriptionController.swift */,
 				3C728C691E8CBA06006D7100 /* ChoosePrefController.swift */,
@@ -577,7 +571,6 @@
 			children = (
 				3C274CBD1CE4CCBA00F3AC68 /* Flurry */,
 				1D7BDD391B5E75870017C346 /* libxml2.2.dylib */,
-				3CF215C01D425651008D6585 /* JavaScriptCore.framework */,
 				3CFD2A641CB55A2F0072FEC5 /* MessageUI.framework */,
 				3CFD2A621CB55A0F0072FEC5 /* Twitter.framework */,
 				3CCBC0E51CB534F9000207CF /* UIKit.framework */,
@@ -871,7 +864,6 @@
 				1D3476691BAC4D39006AAF1A /* SearchFandomsCell.swift in Sources */,
 				1D8777921B99EDF600CEA738 /* DefaultsManager.swift in Sources */,
 				3C00E9C31D9C05FA00B0BBDF /* CustomEncoding.swift in Sources */,
-				3CF215BF1D4233DC008D6585 /* InterstitialController.swift in Sources */,
 				1D7BDD3E1B5E7B1D0017C346 /* SearchQuery.swift in Sources */,
 				1D2832101BBD6A7200FFC887 /* CharacterItem.swift in Sources */,
 				3CBDC9AC1E9E244500A97C24 /* DBChapter+CoreDataProperties.swift in Sources */,

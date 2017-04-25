@@ -10,7 +10,6 @@ import UIKit
 import CoreData
 import StoreKit
 import CoreLocation
-import JavaScriptCore
 import TSMessages
 import Alamofire
 
@@ -144,6 +143,10 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
         }
         
         
+    }
+    
+    deinit {
+        print ("Work View Controller deinit")
     }
     
     @IBAction func tryAgainTouched(_ sender: AnyObject) {
