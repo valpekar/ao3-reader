@@ -133,6 +133,10 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
     }
     
+    deinit {
+        print ("Work Detail View Controller deinit")
+    }
+    
     func showDownloadedWork() {
         
         let underlineAttribute = [NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue]

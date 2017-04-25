@@ -124,6 +124,7 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
     }
     
     deinit {
+        print("Work view controller deinit")
         NotificationCenter.default.removeObserver(self)
     }
 

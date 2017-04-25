@@ -145,6 +145,10 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
         
     }
     
+    deinit {
+        print ("Work View Controller deinit")
+    }
+    
     @IBAction func tryAgainTouched(_ sender: AnyObject) {
         if ((purchased || donated) && (UIApplication.shared.delegate as! AppDelegate).cookies.count == 0) {
             openLoginController()
