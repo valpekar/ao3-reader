@@ -335,7 +335,7 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
             let chapterNextEl: [TFHppleElement]? = navigationEl[0].search(withXPathQuery: "//li[@class='chapter next']") as? [TFHppleElement]
             if (chapterNextEl?.count ?? 0 > 0) {
                 let attributes : NSDictionary = (chapterNextEl?[0].search(withXPathQuery: "//a")[0] as AnyObject).attributes as NSDictionary
-                nextChapter = (attributes["href"] as! String)
+                nextChapter = (attributes["href"] as? String) ?? ""
             } else {
                 nextChapter = ""
             }
