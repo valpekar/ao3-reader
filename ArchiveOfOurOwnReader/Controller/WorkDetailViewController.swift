@@ -127,8 +127,8 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
         if (workItem != nil) {
             self.title = workItem.workTitle
-        } else {
-            self.title = downloadedWorkItem.value(forKey: "workTitle") as? String
+        } else if (downloadedWorkItem != nil) {
+            self.title = downloadedWorkItem.value(forKey: "workTitle") as? String ?? ""
         }
         
     }
@@ -1442,7 +1442,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             } else if (downloadedWorkItem != nil) {
                 
                 author = downloadedWorkItem.value(forKey: "author") as? String ?? ""
-                category = workItem.value(forKey: "category") as? String ?? ""
+                category = downloadedWorkItem.value(forKey: "category") as? String ?? ""
                 
                 if (downloadedFandoms != nil && downloadedFandoms.count > 0) {
                     fandom = downloadedFandoms[0].fandomName ?? ""

@@ -437,6 +437,10 @@ class WorkListController: LoadingViewController, UITableViewDataSource, UITableV
         }
     }
     
+    func controllerDidClosedWithChange() {
+        
+    }
+    
     //MARK: - SAVE WORK TO DB
     
     @IBAction func downloadButtonTouched(_ sender: UIButton) {

@@ -483,7 +483,7 @@ class FavoritesSiteController : LoadingViewController, UITableViewDataSource, UI
             currentWorkItem.workId = newsItem.workId
             
             let workIdStr = newsItem.workId.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()
-            currentWorkItem.id = Int64(Int(workIdStr)!)
+            currentWorkItem.id = Int64(workIdStr) ?? 0
             
             (workDetail.viewControllers[0] as! WorkDetailViewController).workItem = currentWorkItem
             (workDetail.viewControllers[0] as! WorkDetailViewController).modalDelegate = self
