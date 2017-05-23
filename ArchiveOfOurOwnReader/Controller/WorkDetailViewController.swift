@@ -75,8 +75,8 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             donated = dd
         }
         
-        donated = false
-        purchased = false
+       // donated = false
+      //  purchased = false
         
         if ((purchased || donated) && DefaultsManager.getBool(DefaultsManager.ADULT) == nil) {
             DefaultsManager.putBool(true, key: DefaultsManager.ADULT)
@@ -623,7 +623,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
             if (workItem != nil) {
                 cell!.label.text = workItem.topicPreview
-            } else {
+            } else if (downloadedWorkItem != nil) {
                 cell!.label.text = downloadedWorkItem.value(forKey: "topicPreview") as? String
             }
             //cell!.label.font = UIFont.systemFont(ofSize: 13)

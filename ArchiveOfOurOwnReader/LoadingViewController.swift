@@ -171,12 +171,18 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
     func downloadWork(_ data: Data, curWork: NewsFeedItem? = nil, workItemOld: WorkItem? = nil, workItemToReload: NSManagedObject? = nil) {
         
         var workItem : NSManagedObject! = nil
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let managedContext = appDelegate.managedObjectContext!
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        guard let managedContext = appDelegate.managedObjectContext else {
+            return
+        }
         
         if (workItemToReload == nil) {
-            let entity =  NSEntityDescription.entity(forEntityName: "DBWorkItem",  in: managedContext)
-            workItem = NSManagedObject(entity: entity!, insertInto:managedContext)
+            guard let entity = NSEntityDescription.entity(forEntityName: "DBWorkItem",  in: managedContext) else {
+                return
+            }
+            workItem = NSManagedObject(entity: entity, insertInto:managedContext)
         } else {
             workItem = workItemToReload
         }
@@ -230,7 +236,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
         // println("the string is: \(dta)")
         let doc : TFHpple = TFHpple(htmlData: data)
         
-        var sorrydiv = doc.search(withXPathQuery: "//div[@class='flash error']")
+        let sorrydiv = doc.search(withXPathQuery: "//div[@class='flash error']")
         
         if(sorrydiv != nil && (sorrydiv?.count)!>0 && (sorrydiv?[0] as! TFHppleElement).text().range(of: "Sorry") != nil) {
             workItem.setValue("Sorry!", forKey: "author")

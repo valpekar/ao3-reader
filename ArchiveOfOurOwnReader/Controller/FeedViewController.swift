@@ -572,7 +572,10 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
        
         showLoadingView(msg: "Searching...")
         
-        let mutableURLRequest = NSMutableURLRequest(url: URL( string: (encodedURLRequest?.url?.absoluteString)!)!)
+        guard let url = URL( string: (encodedURLRequest?.url?.absoluteString)!) else {
+            return
+        }
+        let mutableURLRequest = NSMutableURLRequest(url: url)
         mutableURLRequest.httpMethod = "GET"
         
         request("http://archiveofourown.org/works/search", method: .get, parameters: queryResult, encoding: URLEncoding.queryString)
