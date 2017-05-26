@@ -624,7 +624,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             if (workItem != nil) {
                 cell!.label.text = workItem.topicPreview
             } else if (downloadedWorkItem != nil) {
-                cell!.label.text = downloadedWorkItem.value(forKey: "topicPreview") as? String
+                cell!.label.text = downloadedWorkItem.value(forKey: "topicPreview") as? String ?? ""
             }
             //cell!.label.font = UIFont.systemFont(ofSize: 13)
             cell!.imgView.image = UIImage(named: "preview")

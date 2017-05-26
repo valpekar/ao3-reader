@@ -238,12 +238,16 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
         
         let sorrydiv = doc.search(withXPathQuery: "//div[@class='flash error']")
         
-        if(sorrydiv != nil && (sorrydiv?.count)!>0 && (sorrydiv?[0] as! TFHppleElement).text().range(of: "Sorry") != nil) {
-            workItem.setValue("Sorry!", forKey: "author")
-            workItem.setValue("This work is only available to registered users of the Archive", forKey: "workTitle")
-            workItem.setValue("", forKey: "complete")
-            //   return NEXT_CHAPTER_NOT_EXIST;
-            return
+        if(sorrydiv != nil && (sorrydiv?.count)!>0) {
+            if let sorrydivFirst = sorrydiv?[0] as? TFHppleElement {
+                if (sorrydivFirst.text().range(of: "Sorry") != nil) {
+                    workItem.setValue("Sorry!", forKey: "author")
+                    workItem.setValue("This work is only available to registered users of the Archive", forKey: "workTitle")
+                    workItem.setValue("", forKey: "complete")
+                    //   return NEXT_CHAPTER_NOT_EXIST;
+                    return
+                }
+            }
         }
         
         var caution = doc.search(withXPathQuery: "//p[@class='caution']")
@@ -265,9 +269,9 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
         
         if(workmeta.count > 0) {
             if let ratings: [TFHppleElement] = workmeta[0].search(withXPathQuery: "//dd[@class='rating tags']/ul[@class='*']/li") as? [TFHppleElement] {
-            if (ratings.count > 0) {
-                workItem.setValue(ratings[0].content, forKey: "ratingTags")
-            }
+                if (ratings.count > 0) {
+                    workItem.setValue(ratings[0].content, forKey: "ratingTags")
+                }
             }
             
             if let archiveWarnings: [TFHppleElement] = workmeta[0].search(withXPathQuery: "//dd[@class='warning tags']/ul[@class='commas']/li") as? [TFHppleElement] {
@@ -286,7 +290,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
                 f.setValue(fandomsLiArr[i].content, forKey: "fandomName")
                 firstFandom = fandomsLiArr[i].content
                 let attributes : NSDictionary = (fandomsLiArr[i].search(withXPathQuery: "//a")[0] as AnyObject).attributes as NSDictionary
-                f.setValue((attributes["href"] as! String), forKey: "fandomUrl")
+                f.setValue((attributes["href"] as? String ?? ""), forKey: "fandomUrl")
                 
                 let workFandoms = workItem.value(forKeyPath: "fandoms") as! NSMutableSet
                 workFandoms.add(f)
@@ -313,7 +317,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
                 r.setValue(relationshipsLiArr[i].content, forKey: "relationshipName")
                 firstRelationship = relationshipsLiArr[i].content
                 let attributes : NSDictionary = (relationshipsLiArr[i].search(withXPathQuery: "//a")[0] as AnyObject).attributes as NSDictionary
-                r.setValue((attributes["href"] as! String), forKey: "relationshipUrl")
+                r.setValue((attributes["href"] as? String ?? ""), forKey: "relationshipUrl")
                 
                 let workRel = workItem.value(forKeyPath: "relationships") as! NSMutableSet
                 workRel.add(r)
@@ -330,7 +334,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
                 let c = NSManagedObject(entity: entityc!, insertInto:managedContext)
                 c.setValue(charactersLiArr[i].content, forKey: "characterName")
                 let attributes : NSDictionary = (charactersLiArr[i].search(withXPathQuery: "//a")[0] as AnyObject).attributes as NSDictionary
-                c.setValue((attributes["href"] as! String), forKey: "characterUrl")
+                c.setValue((attributes["href"] as? String ?? ""), forKey: "characterUrl")
                 
                 let workCharacters = workItem.value(forKeyPath: "characters") as! NSMutableSet
                 workCharacters.add(c)
@@ -453,60 +457,63 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
             hideLoadingView()
         }
         
-        saveToAnalytics(workItem.value(forKey: "author") as! String, category: workItem.value(forKey: "category") as! String, mainFandom: firstFandom, mainRelationship: firstRelationship)
+        saveToAnalytics(workItem.value(forKey: "author") as? String ?? "", category: workItem.value(forKey: "category") as? String ?? "", mainFandom: firstFandom, mainRelationship: firstRelationship)
     }
     
     func saveChapters(_ curworkItem: NSManagedObject) {
         
         print("save chapters begin")
         
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let managedContext = appDelegate.managedObjectContext!
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+            let managedContext = appDelegate.managedObjectContext!
         
-        var err: NSError?
+            var err: NSError?
         
-        var workChapters = NSMutableSet()
-        if let wc = curworkItem.value(forKeyPath: "chapters") as? NSMutableSet {
-            workChapters = wc
-        } else {
-            curworkItem.setValue(workChapters, forKey: "chapters")
-        }
+            var workChapters = NSMutableSet()
+            if let wc = curworkItem.value(forKeyPath: "chapters") as? NSMutableSet {
+                workChapters = wc
+            } else {
+                curworkItem.setValue(workChapters, forKey: "chapters")
+            }
         
-        if (workChapters.count > 0) {
-            workChapters.removeAllObjects()
-        }
-        do {
-            try managedContext.save()
-        } catch let error as NSError {
-            err = error
-            print("Could not save \(String(describing: err?.userInfo))")
-        }
+            if (workChapters.count > 0) {
+                workChapters.removeAllObjects()
+            }
+            do {
+                try managedContext.save()
+            } catch let error as NSError {
+                err = error
+                print("Could not save \(String(describing: err?.userInfo))")
+            }
         
-        for i in 0..<chapters.count {
+            for i in 0..<chapters.count {
             
-            if let wid = curworkItem.value(forKey: "id") as? Int {
+                if let wid = curworkItem.value(forKey: "id") as? Int {
                 
-                let entity =  NSEntityDescription.entity(forEntityName: "DBChapter",  in: managedContext)
-                let chapter = NSManagedObject(entity: entity!, insertInto:managedContext)
+                    let entity =  NSEntityDescription.entity(forEntityName: "DBChapter",  in: managedContext)
+                    let chapter = NSManagedObject(entity: entity!, insertInto:managedContext)
             
-                chapter.setValue(i, forKey: "chapterIndex")
-                chapter.setValue(wid * 10000 + i, forKey: "id")
-                chapter.setValue(curworkItem, forKey: "workItem")
-                chapter.setValue(chapters[i].content, forKey: "chapterContent")
-                chapter.setValue(chapters[i].url, forKey: "chapterName")
+                    chapter.setValue(i, forKey: "chapterIndex")
+                    chapter.setValue(wid * 10000 + i, forKey: "id")
+                    chapter.setValue(curworkItem, forKey: "workItem")
+                    chapter.setValue(chapters[i].content, forKey: "chapterContent")
+                    chapter.setValue(chapters[i].url, forKey: "chapterName")
             
-                workChapters.add(chapter)
+                    workChapters.add(chapter)
             
-                do {
-                    try managedContext.save()
-                } catch let error as NSError {
-                    err = error
-                    print("Could not save \(String(describing: err?.userInfo))")
+                    do {
+                        try managedContext.save()
+                    } catch let error as NSError {
+                        err = error
+                        print("Could not save \(String(describing: err?.userInfo))")
+                    }
                 }
             }
-        }
         
-        print("save chapters end")
+            print("save chapters end")
+        } else {
+            print("save chapters end with error")
+        }
     }
     
     func parseNxtChapter(_ data: Data, curworkItem: NSManagedObject) {
@@ -575,26 +582,30 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
     
     func saveToAnalytics(_ author: String, category: String, mainFandom: String, mainRelationship: String) {
        
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let managedContext = appDelegate.managedObjectContext!
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+            let managedContext = appDelegate.managedObjectContext!
         
-        let entity =  NSEntityDescription.entity(forEntityName: "AnalyticsItem",  in: managedContext)
-        if let analyticsItem: AnalyticsItem = NSManagedObject(entity: entity!, insertInto:managedContext) as? AnalyticsItem {
-        analyticsItem.setValue(author, forKey: "author")
-        analyticsItem.setValue(category, forKey: "category")
-        analyticsItem.setValue(mainFandom, forKey: "fandom")
-        analyticsItem.setValue(mainRelationship, forKey: "relationship")
-        analyticsItem.setValue(Date(), forKey: "date")
+            let entity =  NSEntityDescription.entity(forEntityName: "AnalyticsItem",  in: managedContext)
+            if let analyticsItem: AnalyticsItem = NSManagedObject(entity: entity!, insertInto:managedContext) as? AnalyticsItem {
+                analyticsItem.setValue(author, forKey: "author")
+                analyticsItem.setValue(category, forKey: "category")
+                analyticsItem.setValue(mainFandom, forKey: "fandom")
+                analyticsItem.setValue(mainRelationship, forKey: "relationship")
+                analyticsItem.setValue(Date(), forKey: "date")
         
         
-        var err: NSError?
-        do {
-            try managedContext.save()
-        } catch let error as NSError {
-            err = error
-            print("Could not save \(String(describing: err)), \(String(describing: err?.userInfo))")
-        }
-        }
+                var err: NSError?
+                do {
+                    try managedContext.save()
+                } catch let error as NSError {
+                    err = error
+                    print("Could not save \(String(describing: err)), \(String(describing: err?.userInfo))")
+                }
+            }
+            } else {
+                print("Could not save AppDel = nil")
+
+            }
     }
     
     

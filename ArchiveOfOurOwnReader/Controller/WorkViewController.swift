@@ -535,6 +535,8 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
                 break
         }
         
+        webView(wview: webView, enableGL: false)
+        
         webView.reload()
         webView.loadHTMLString(worktext, baseURL: nil)
     }
@@ -664,6 +666,67 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
         } else {
             turnOnlineChapter((onlineChapters[chapter]?.chapterId)!)
         }
+    }
+    
+    //typedef void (*CallFuc)(id, SEL, BOOL)
+    //typedef BOOL (*GetFuc)(id, SEL)
+    
+    func webView(wview: UIWebView, enableGL: Bool) -> Bool {
+        var bRet: Bool = false
+        repeat
+        {
+            guard let internalVar: Ivar = class_getInstanceVariable(UIWebView.self, "_internal") else {
+                print("enable GL _internal invalid!")
+                break
+            }
+    
+            let internalObj = object_getIvar(wview, internalVar)
+            guard let browserVar: Ivar = class_getInstanceVariable(object_getClass(internalObj), "browserView") else {
+                print("enable GL browserView invalid!")
+                break
+            }
+    
+            let webbrowser: Any = object_getIvar(internalObj, browserVar)
+            guard let webViewVar: Ivar = class_getInstanceVariable(object_getClass(webbrowser), "_webView") else {
+                print("enable GL _webView invalid!")
+                break
+            }
+    
+            guard let webView: Any = object_getIvar(webbrowser, webViewVar) else {
+                print("enable GL webView obj nil!")
+                break
+            }
+    
+            if(object_getClass(webView) != NSClassFromString("WebView"))
+            {
+                print("enable GL webView not WebView!")
+                break
+            }
+    
+            let selector: Selector = NSSelectorFromString("_setWebGLEnabled:")
+            
+            if let anyObj = webView as? AnyObject {
+                let impSet: IMP = anyObj.method(for: selector)
+                
+                typealias ClosureType = @convention(c) (AnyObject, Selector, Bool) -> Void
+                typealias ClosureTypeGet = @convention(c) (AnyObject, Selector) -> Bool
+                
+                let clo = unsafeBitCast(impSet, to: ClosureType.self)
+                clo(webView as AnyObject, selector, enableGL)
+                
+                let selectorGet: Selector = NSSelectorFromString("_webGLEnabled")
+                let impGet: IMP = anyObj.method(for: selectorGet)
+                
+                let cGet = unsafeBitCast(impGet, to: ClosureTypeGet.self)
+                let val = cGet(webView as AnyObject, selector)
+                
+                bRet = (val == enableGL)
+                
+            }
+    
+        } while(false)
+    
+        return bRet
     }
     
 }

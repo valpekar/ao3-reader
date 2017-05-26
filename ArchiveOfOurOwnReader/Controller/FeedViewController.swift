@@ -657,7 +657,7 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
       //      webView.hidden = false
      //   }
         
-        if (i % 5 == 0 && (!purchased && !donated)) {
+        if (i % 7 == 0 && (!purchased && !donated)) {
             showAdMobInterstitial()
             flag = true
         }
