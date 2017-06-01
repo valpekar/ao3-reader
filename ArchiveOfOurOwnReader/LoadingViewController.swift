@@ -236,10 +236,10 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
         // println("the string is: \(dta)")
         let doc : TFHpple = TFHpple(htmlData: data)
         
-        let sorrydiv = doc.search(withXPathQuery: "//div[@class='flash error']")
+        if let sorrydiv = doc.search(withXPathQuery: "//div[@class='flash error']") {
         
-        if(sorrydiv != nil && (sorrydiv?.count)!>0) {
-            if let sorrydivFirst = sorrydiv?[0] as? TFHppleElement {
+        if(sorrydiv.count>0) {
+            if let sorrydivFirst = sorrydiv[0] as? TFHppleElement {
                 if (sorrydivFirst.text().range(of: "Sorry") != nil) {
                     workItem.setValue("Sorry!", forKey: "author")
                     workItem.setValue("This work is only available to registered users of the Archive", forKey: "workTitle")
@@ -249,15 +249,17 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
                 }
             }
         }
+        }
         
-        var caution = doc.search(withXPathQuery: "//p[@class='caution']")
+        if let caution = doc.search(withXPathQuery: "//p[@class='caution']") {
         
-        if (caution != nil && (caution?.count)!>0 && (caution?[0] as! TFHppleElement).text().range(of: "adult content") != nil) {
+        if (caution.count>0 && (caution[0] as? TFHppleElement)?.text().range(of: "adult content") != nil) {
             workItem.setValue("Sorry!", forKey: "author")
             workItem.setValue("This work contains adult conetnt. To view it you need to login and confirm that you are at least 18.", forKey: "workTitle")
             workItem.setValue("", forKey: "complete")
             
             return
+        }
         }
         
         // var landmark = doc.searchWithXPathQuery("//h6[@class='landmark heading']")

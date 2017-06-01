@@ -104,32 +104,34 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
     func parseComments(_ data: Data) {
         let doc : TFHpple = TFHpple(htmlData: data)
         
-        var sorrydiv = doc.search(withXPathQuery: "//div[@class='flash error']")
+        if let sorrydiv = doc.search(withXPathQuery: "//div[@class='flash error']") {
         
-        if(sorrydiv != nil && (sorrydiv?.count)!>0 && (sorrydiv?[0] as! TFHppleElement).text().range(of: "Sorry") != nil) {
-            /*workItem.setValue("Sorry!", forKey: "author")
-            workItem.setValue("This work is only available to registered users of the Archive", forKey: "workTitle")
-            workItem.setValue("", forKey: "complete")*/
-            //   return NEXT_CHAPTER_NOT_EXIST;
-            return
+            if(sorrydiv.count > 0 && (sorrydiv[0] as! TFHppleElement).text().range(of: "Sorry") != nil) {
+                /*workItem.setValue("Sorry!", forKey: "author")
+                 workItem.setValue("This work is only available to registered users of the Archive", forKey: "workTitle")
+                 workItem.setValue("", forKey: "complete")*/
+                //   return NEXT_CHAPTER_NOT_EXIST;
+                return
+            }
         }
         
         htmlStr.append("<html><body><ol>")
         
-        let commentsSection: [TFHppleElement] = doc.search(withXPathQuery: "//div[@id='comments_placeholder']") as! [TFHppleElement]
-        for liEl in commentsSection {
+        if let commentsSection: [TFHppleElement] = doc.search(withXPathQuery: "//div[@id='comments_placeholder']") as? [TFHppleElement] {
+            for liEl in commentsSection {
             
-            do {
-            let regex = try NSRegularExpression(pattern: "href", options: .dotMatchesLineSeparators)
+                do {
+                    let regex = try NSRegularExpression(pattern: "href", options: .dotMatchesLineSeparators)
                 
-                let raw:String = liEl.raw
+                    let raw:String = liEl.raw
             
-            htmlStr.append(regex.stringByReplacingMatches(in: raw, options: .reportCompletion, range: NSRange(location: 0, length: raw.characters.count), withTemplate: ""))
-            } catch {
-                print("error")
-            }
+                    htmlStr.append(regex.stringByReplacingMatches(in: raw, options: .reportCompletion, range: NSRange(location: 0, length: raw.characters.count), withTemplate: ""))
+                } catch {
+                    print("commentsSection parse error")
+                }
             
             //htmlStr.appendContentsOf(liEl.raw.stringByReplacingOccurrencesOfString("<ul class='actions' role='menu' id='navigation_for_comment_[1-9]+'>(.|\n)*?</ul>", withString: "", options: NSStringCompareOptions.RegularExpressionSearch, range: nil))
+            }
         }
         
         htmlStr.append("</ol></body></html>")
@@ -282,7 +284,7 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
     
     func parseAddCommentResponse(_ data: Data) {
         let dta = NSString(data: data, encoding: String.Encoding.utf8.rawValue)
-        print("the string is: \(dta)")
+        print("parseAddCommentResponse is: \(dta ?? "")")
         let doc : TFHpple = TFHpple(htmlData: data)
         
         var noticediv: [TFHppleElement] = doc.search(withXPathQuery: "//div[@class='flash notice']") as! [TFHppleElement]

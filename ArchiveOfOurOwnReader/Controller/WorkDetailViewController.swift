@@ -248,42 +248,44 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
         let doc : TFHpple = TFHpple(htmlData: data)
         
-        var sorrydiv = doc.search(withXPathQuery: "//div[@class='flash error']")
+        if let sorrydiv = doc.search(withXPathQuery: "//div[@class='flash error']") {
         
-        if(sorrydiv != nil && (sorrydiv?.count)!>0 && (sorrydiv?[0] as! TFHppleElement).text().range(of: "Sorry") != nil) {
+        if(sorrydiv.count>0 && (sorrydiv[0] as! TFHppleElement).text().range(of: "Sorry") != nil) {
             workItem.author = "Sorry!";
             workItem.workTitle = "This work is only available to registered users of the Archive";
             workItem.complete = "";
          //   return NEXT_CHAPTER_NOT_EXIST;
             return
         }
+        }
         
         var caution = doc.search(withXPathQuery: "//p[@class='caution']")
         
         if (caution != nil && (caution?.count)!>0 && (caution?[0] as! TFHppleElement).text().range(of: "adult content") != nil) {
             workItem.setValue("Sorry!", forKey: "author")
-            workItem.setValue("This work contains adult content. To view it you need to login and confirm that you are at least 18.", forKey: "workTitle")
+            workItem.setValue("This work contains adult content. To view it you need to login and confirm that you are at least 18 (Me -> Login, its NOT a premium feature).", forKey: "workTitle")
             workItem.setValue("", forKey: "complete")
             
             return
         }
         
-         var errH = doc.search(withXPathQuery: "//h2[@class='heading']")
+        if let errH = doc.search(withXPathQuery: "//h2[@class='heading']") {
         
-        if (errH != nil && (errH?.count)!>0 && (errH?[0] as! TFHppleElement).text().range(of: "Error") != nil) {
+        if (errH.count>0 && (errH[0] as! TFHppleElement).text().range(of: "Error") != nil) {
             workItem.setValue("Sorry!", forKey: "author")
             workItem.setValue("AO3 has been notified about this issue and they will take a look at it shortly.", forKey: "workTitle")
             workItem.setValue("", forKey: "complete")
             
             return
         }
+        }
         
         //var landmark = doc.searchWithXPathQuery("//h6[@class='landmark heading']")
         
-        var workmeta: [TFHppleElement] = doc.search(withXPathQuery: "//dl[@class='work meta group']") as! [TFHppleElement]
-        
         var firstFandom = ""
         var firstRelationship = ""
+        
+        if let workmeta: [TFHppleElement] = doc.search(withXPathQuery: "//dl[@class='work meta group']") as? [TFHppleElement] {
         
         if(workmeta.count > 0) {
             var ratings: [TFHppleElement] = workmeta[0].search(withXPathQuery: "//dd[@class='rating tags']/ul[@class='*']/li") as! [TFHppleElement]
@@ -298,7 +300,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 //workItem.archiveWarnings = archiveWarnings[0].content
             }
             
-            var fandomsLiArr: [TFHppleElement] = workmeta[0].search(withXPathQuery: "//dd[@class='fandom tags']/ul[@class='commas']/li") as! [TFHppleElement]
+            if let fandomsLiArr: [TFHppleElement] = workmeta[0].search(withXPathQuery: "//dd[@class='fandom tags']/ul[@class='commas']/li") as? [TFHppleElement] {
             fandoms = [Fandom]()
             
             for i in 0..<fandomsLiArr.count {
@@ -306,8 +308,9 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 f.fandomName = fandomsLiArr[i].content
                 firstFandom = f.fandomName
                 let attributes : NSDictionary = (fandomsLiArr[i].search(withXPathQuery: "//a")[0] as AnyObject).attributes as NSDictionary
-                f.fandomUrl = (attributes["href"] as! String)
+                f.fandomUrl = (attributes["href"] as? String ?? "")
                 fandoms.append(f)
+            }
             }
             
             var categoryLiArr: [TFHppleElement] = workmeta[0].search(withXPathQuery: "//dd[@class='category tags']/ul[@class=*]/li") as! [TFHppleElement]
@@ -324,7 +327,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 r.relationshipName = relationshipsLiArr[i].content
                 firstRelationship = r.relationshipName
                 let attributes : NSDictionary = (relationshipsLiArr[i].search(withXPathQuery: "//a")[0] as AnyObject).attributes as NSDictionary
-                r.relationshipUrl = (attributes["href"] as! String)
+                r.relationshipUrl = (attributes["href"] as? String ?? "")
                 relationships.append(r)
             }
             
@@ -335,7 +338,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 let c : CharacterItem = CharacterItem()
                 c.characterName = charactersLiArr[i].content
                 let attributes : NSDictionary = (charactersLiArr[i].search(withXPathQuery: "//a")[0] as AnyObject).attributes as NSDictionary
-                c.characterUrl = (attributes["href"] as! String)
+                c.characterUrl = (attributes["href"] as? String ?? "")
                 characters.append(c)
             }
             
@@ -359,25 +362,28 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 }
             }
         }
+        }
         
-        let h2El = doc.search(withXPathQuery: "//h2[@class='title heading']")as! [TFHppleElement]
+        if let h2El = doc.search(withXPathQuery: "//h2[@class='title heading']") as? [TFHppleElement] {
         if (h2El.count > 0) {
             let title = h2El.first?.raw.replacingOccurrences(of: "\n", with:"")
                 .replacingOccurrences(of: "\\s+", with: " ", options: NSString.CompareOptions.regularExpression, range: nil) ?? ""
             workItem.workTitle = title.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
-
+            }
         }
         
-        var bylineHeadingEl = doc.search(withXPathQuery: "//div[@id='workskin']/div[@class='preface group']/h3[@class='byline heading']")as! [TFHppleElement]
+        if let bylineHeadingEl = doc.search(withXPathQuery: "//div[@id='workskin']/div[@class='preface group']/h3[@class='byline heading']") as? [TFHppleElement] {
         if (bylineHeadingEl.count > 0) {
             workItem.author = bylineHeadingEl[0].content.replacingOccurrences(of: "\n", with:"")
                 .trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
                 .replacingOccurrences(of: "\\s+", with: " ", options: NSString.CompareOptions.regularExpression, range: nil)
         }
-        
-        var workContentEl = doc.search(withXPathQuery: "//div[@id='chapters']") as! [TFHppleElement]
-        if (workContentEl.count > 0) {
-            workItem.workContent = workContentEl[0].raw
+        }
+            
+        if let workContentEl = doc.search(withXPathQuery: "//div[@id='chapters']") as? [TFHppleElement] {
+            if (workContentEl.count > 0) {
+                workItem.workContent = workContentEl[0].raw ?? ""
+            }
         }
         
         //var error:NSErrorPointer = NSErrorPointer()
@@ -388,14 +394,16 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         //workItem.workContent = workItem.workContent.stringByReplacingOccurrencesOfString("<a.*\"\\s*>", withString:"")
         //workItem.workContent = workItem.workContent.stringByReplacingOccurrencesOfString("</a>", withString:"");
         
-        var navigationEl: [TFHppleElement] = doc.search(withXPathQuery: "//ul[@class='work navigation actions']") as! [TFHppleElement]
-        if (navigationEl.count > 0) {
-            var nxt : [TFHppleElement] = navigationEl[0].search(withXPathQuery: "//li[@class='chapter next']") as! [TFHppleElement]
-            if (nxt.count > 0) {
-                let attributes : NSDictionary = (nxt[0].search(withXPathQuery: "//a")[0] as AnyObject).attributes as NSDictionary
-                workItem.nextChapter = (attributes["href"] as! String)
+        if let navigationEl: [TFHppleElement] = doc.search(withXPathQuery: "//ul[@class='work navigation actions']") as? [TFHppleElement] {
+            if (navigationEl.count > 0) {
+                if let nxt : [TFHppleElement] = navigationEl[0].search(withXPathQuery: "//li[@class='chapter next']") as? [TFHppleElement] {
+                    if (nxt.count > 0) {
+                        let attributes : NSDictionary = (nxt[0].search(withXPathQuery: "//a")[0] as AnyObject).attributes as NSDictionary
+                        workItem.nextChapter = (attributes["href"] as! String)
+                    }
+                    NSLog("%@", workItem.nextChapter)
+                }
             }
-            NSLog("%@", workItem.nextChapter)
         }
         
         let editBookmarkEl = doc.search(withXPathQuery: "//a[@class='bookmark_form_placement_open']") as! [TFHppleElement]
@@ -405,9 +413,9 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             }
         }
         
-        let chaptersEl = doc.search(withXPathQuery: "//ul[@id='chapter_index']") as! [TFHppleElement]
-        if (chaptersEl.count > 0) {
-            var optionsEl: [TFHppleElement] = chaptersEl[0].search(withXPathQuery: "//select/option")  as! [TFHppleElement]
+        var chaptersEl: [TFHppleElement]? = doc.search(withXPathQuery: "//ul[@id='chapter_index']") as? [TFHppleElement]
+        if (chaptersEl != nil && chaptersEl!.count > 0) {
+            if let optionsEl: [TFHppleElement] = chaptersEl?[0].search(withXPathQuery: "//select/option") as? [TFHppleElement] {
             for i in 0..<optionsEl.count {
                 let chptOnline: ChapterOnline = ChapterOnline()
                 chptOnline.url = optionsEl[i].text()
@@ -415,7 +423,10 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 
                 onlineChapters[i] = chptOnline
             }
+            }
         }
+        
+        chaptersEl = nil
         
         saveToAnalytics(workItem.author, category: workItem.category, mainFandom: firstFandom, mainRelationship: firstRelationship)
         
@@ -493,7 +504,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
         if let downloadEl = doc.search(withXPathQuery: "//li[@class='download']") as? [TFHppleElement] {
             if (downloadEl.count > 0) {
-                if let downloadUl: [TFHppleElement] = downloadEl.first?.search(withXPathQuery: "//li") as! [TFHppleElement]? {
+                if let downloadUl: [TFHppleElement] = downloadEl.first?.search(withXPathQuery: "//li") as? [TFHppleElement] {
                     for i in 0..<downloadUl.count {
                         let attributes : NSDictionary = (downloadUl[i].search(withXPathQuery: "//a")[0] as AnyObject).attributes as NSDictionary
                         let key: String = downloadUl[i].content ?? ""
@@ -514,16 +525,18 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         print("the string is: \(String(describing: dta))")
         let doc : TFHpple = TFHpple(htmlData: data)
         
-        var noticediv: [TFHppleElement] = doc.search(withXPathQuery: "//div[@class='flash notice']") as! [TFHppleElement]
-        if(noticediv.count > 0) {
-            TSMessage.showNotification(in: self, title: "Adding Bookmark", subtitle: noticediv[0].content, type: .success)
+        if let noticediv: [TFHppleElement] = doc.search(withXPathQuery: "//div[@class='flash notice']") as? [TFHppleElement] {
+            if(noticediv.count > 0) {
+                TSMessage.showNotification(in: self, title: "Adding Bookmark", subtitle: noticediv[0].content, type: .success)
             
-            changedSmth = true
-        } else {
-            var sorrydiv = doc.search(withXPathQuery: "//div[@class='flash error']")
+                changedSmth = true
+            }
+        }
+        
+        if let sorrydiv = doc.search(withXPathQuery: "//div[@class='flash error']") {
             
-            if(sorrydiv != nil && (sorrydiv?.count)!>0 && (sorrydiv?[0] as! TFHppleElement).text().range(of: "Sorry") != nil) {
-                TSMessage.showNotification(in: self, title: "Adding Bookmark", subtitle: (sorrydiv![0] as AnyObject).content, type: .error)
+            if(sorrydiv.count>0 && (sorrydiv[0] as! TFHppleElement).text().range(of: "Sorry") != nil) {
+                TSMessage.showNotification(in: self, title: "Adding Bookmark", subtitle: (sorrydiv[0] as AnyObject).content, type: .error)
                 return
             }
         }
@@ -590,15 +603,15 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             if (workItem != nil) {
                 workId = workItem.workId
             } else if (downloadedWorkItem != nil) {
-                workId = (downloadedWorkItem.value(forKey: "workId") as? String)!
+                workId = (downloadedWorkItem.value(forKey: "workId") as? String) ?? "0"
             }
             
             cController.workId = workId
             
         }  else if (segue.identifier == "listSegue") {
-            let cController: WorkListController = segue.destination as! WorkListController
-            
-            cController.tagUrl = tagUrl
+            if let cController: WorkListController = segue.destination as? WorkListController {
+                cController.tagUrl = tagUrl
+            }
         }
         
     }
@@ -630,7 +643,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             cell!.imgView.image = UIImage(named: "preview")
             
         case 1:
-            if (warnings != nil && warnings.count > (indexPath as NSIndexPath).row) {
+            if (warnings.count > (indexPath as NSIndexPath).row) {
                 cell!.label.text = warnings.joined(separator: ", ")
                 
                // cell!.label.font = UIFont.systemFont(ofSize: 13)
@@ -690,7 +703,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             if (workItem != nil) {
                 cell!.label.text = workItem.language
             } else {
-                cell!.label.text = downloadedWorkItem.value(forKey: "language") as? String
+                cell!.label.text = downloadedWorkItem.value(forKey: "language") as? String ?? ""
             }
             cell!.imgView.image = UIImage(named: "lang")
                 
@@ -699,7 +712,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             if (workItem != nil) {
                 cell!.label.text = workItem.stats
             } else {
-                cell!.label.text = downloadedWorkItem.value(forKey: "stats") as? String
+                cell!.label.text = downloadedWorkItem.value(forKey: "stats") as? String ?? ""
             }
             //cell!.label.font = UIFont.italicSystemFont(ofSize: 13)
             cell!.imgView.image = UIImage(named: "info")
@@ -1014,7 +1027,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             
             
             if ( fandoms != nil && relationships != nil && fandoms.count > 0 && relationships.count > 0) {
-                saveToAnalytics(workItem.value(forKey: "author") as! String, category: workItem.value(forKey: "category") as! String, mainFandom: fandoms[0].fandomName, mainRelationship: relationships[0].relationshipName)
+                saveToAnalytics(workItem.value(forKey: "author") as? String ?? "", category: workItem.value(forKey: "category") as? String ?? "", mainFandom: fandoms[0].fandomName, mainRelationship: relationships[0].relationshipName)
             }
             
         } else if (downloadedWorkItem != nil) {
@@ -1025,7 +1038,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             requestStr += bid + "/bookmarks"
             
             if (downloadedFandoms.count > 0 && downloadedRelationships.count > 0) {
-                saveToAnalytics(downloadedWorkItem.value(forKey: "author") as! String, category: downloadedWorkItem.value(forKey: "category") as! String, mainFandom: downloadedFandoms[0].fandomName ?? "", mainRelationship: downloadedRelationships[0].relationshipName ?? "")
+                saveToAnalytics(downloadedWorkItem.value(forKey: "author") as? String ?? "", category: downloadedWorkItem.value(forKey: "category") as? String ?? "", mainFandom: downloadedFandoms[0].fandomName ?? "", mainRelationship: downloadedRelationships[0].relationshipName ?? "")
             }
         }
         
@@ -1127,17 +1140,19 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     func parseDeleteResponse(_ data: Data) {
         let doc : TFHpple = TFHpple(htmlData: data)
         
-        var noticediv: [TFHppleElement] = doc.search(withXPathQuery: "//div[@class='flash notice']") as! [TFHppleElement]
-        if(noticediv.count > 0) {
-            bookmarked = false
-            changedSmth = true
-            self.view.makeToast(message: noticediv[0].content, duration: 3.0, position: "center" as AnyObject, title: "Delete from Bookmarks")
+        if let noticediv: [TFHppleElement] = doc.search(withXPathQuery: "//div[@class='flash notice']") as? [TFHppleElement] {
+            if(noticediv.count > 0) {
+                bookmarked = false
+                changedSmth = true
+                self.view.makeToast(message: noticediv[0].content, duration: 3.0, position: "center" as AnyObject, title: "Delete from Bookmarks")
             
-        } else {
-            var sorrydiv = doc.search(withXPathQuery: "//div[@class='flash error']")
+            }
+        }
+        
+        if let sorrydiv = doc.search(withXPathQuery: "//div[@class='flash error']") {
             
-            if(sorrydiv != nil && (sorrydiv?.count)!>0 && (sorrydiv?[0] as! TFHppleElement).text().range(of: "Sorry") != nil) {
-                TSMessage.showNotification(in: self, title: "Delete from Bookmarks", subtitle: (sorrydiv![0] as AnyObject).content, type: .error)
+            if(sorrydiv.count>0 && (sorrydiv[0] as! TFHppleElement).text().range(of: "Sorry") != nil) {
+                TSMessage.showNotification(in: self, title: "Delete from Bookmarks", subtitle: (sorrydiv[0] as AnyObject).content, type: .error)
 
                 return
             }
@@ -1203,7 +1218,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                     }
                 })
         } else if (downloadedWorkItem != nil) {
-            Alamofire.request("http://archiveofourown.org/works/" + (downloadedWorkItem.value(forKey: "workId") as! String), method: .get, parameters: params)
+            Alamofire.request("http://archiveofourown.org/works/" + (downloadedWorkItem.value(forKey: "workId") as? String ?? "0"), method: .get, parameters: params)
                 .response(completionHandler: { response in
                     print(response.request ?? "")
                     
@@ -1371,7 +1386,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         if (workItem != nil) {
             workId = workItem.workId
         } else if (downloadedWorkItem != nil) {
-            workId = downloadedWorkItem.value(forKey: "workId") as! String
+            workId = downloadedWorkItem.value(forKey: "workId") as? String ?? "0"
         }
         
         let requestStr = "http://archiveofourown.org/kudos.js"

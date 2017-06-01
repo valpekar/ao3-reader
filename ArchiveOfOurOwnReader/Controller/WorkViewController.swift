@@ -30,7 +30,7 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
     var workChapters: [Chapter] = [Chapter]()
     
     var downloadedWorkItem: NSManagedObject! = nil
-    var downloadedChapters: [DBChapter]! = nil
+    var downloadedChapters: [DBChapter]?
     
     var work: String = ""
     var fontSize: Int = 100
@@ -93,17 +93,17 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
             DefaultsManager.putString("", key: DefaultsManager.LASTWRKCHAPTER)
             
         } else if (downloadedWorkItem != nil) {
-            downloadedChapters = downloadedWorkItem.mutableSetValue(forKey: "chapters").allObjects as! [DBChapter]
-            downloadedChapters.sort(by: { (a:DBChapter, b: DBChapter) -> Bool in
+            downloadedChapters = downloadedWorkItem.mutableSetValue(forKey: "chapters").allObjects as? [DBChapter]
+            downloadedChapters?.sort(by: { (a:DBChapter, b: DBChapter) -> Bool in
                 return b.value(forKey: "chapterIndex") as! Int > a.value(forKey: "chapterIndex") as! Int
             })
-            if (downloadedChapters != nil && downloadedChapters.count > 0) {
+            if (downloadedChapters != nil && downloadedChapters!.count > 0) {
                 contentsButton.isHidden = false
                 currentChapterIndex = downloadedWorkItem.value(forKey: "currentChapter") as? Int ?? 0
-                work = downloadedChapters[currentChapterIndex].value(forKey: "chapterContent") as? String ?? ""
+                work = downloadedChapters?[currentChapterIndex].value(forKey: "chapterContent") as? String ?? ""
                 loadCurrentTheme()
                 
-                if (downloadedChapters.count == 1 || currentChapterIndex == downloadedChapters.count - 1) {
+                if (downloadedChapters!.count == 1 || currentChapterIndex == downloadedChapters!.count - 1) {
                     nextButton.isHidden = true
                     //contentsButton.hidden = true
                 }
@@ -215,7 +215,7 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
     func animateLayoutDown() {
         UIView.animate(withDuration: 0.4, delay: 0, options: UIViewAnimationOptions.curveEaseIn, animations: {
             
-            if (!self.prevChapter.isEmpty || !self.nextChapter.isEmpty || (self.downloadedChapters != nil && self.downloadedChapters.count > 0)) {
+            if (!self.prevChapter.isEmpty || !self.nextChapter.isEmpty || (self.downloadedChapters != nil && self.downloadedChapters!.count > 0)) {
                 
                 var basketTopFrame = self.layoutView.frame
                 basketTopFrame.origin.y = basketTopFrame.size.height - 44
@@ -249,7 +249,7 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
     }
     
     func turnOnChapter(_ chapterIndex: Int) {
-        if (downloadedChapters != nil && chapterIndex == downloadedChapters.count - 1) {
+        if (downloadedChapters != nil && chapterIndex == downloadedChapters!.count - 1) {
             nextButton.isHidden = true
         } else {
             nextButton.isHidden = false
@@ -261,14 +261,14 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
             prevButton.isHidden = true
         }
         
-        if (downloadedWorkItem != nil && downloadedChapters.count > 0) {
+        if (downloadedWorkItem != nil && downloadedChapters!.count > 0) {
             contentsButton.isHidden = false
         } else {
            // contentsButton.hidden = true
         }
         
-        if (downloadedWorkItem != nil && chapterIndex < downloadedChapters.count) {
-            work = downloadedChapters[chapterIndex].chapterContent ?? ""
+        if (downloadedWorkItem != nil && downloadedChapters != nil && chapterIndex < downloadedChapters!.count) {
+            work = downloadedChapters![chapterIndex].chapterContent ?? ""
             loadCurrentTheme()
             downloadedWorkItem.setValue(NSNumber(value: chapterIndex as Int), forKey: "currentChapter")
             
@@ -628,7 +628,7 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
             
             var chptNum = 0
             if (downloadedChapters != nil) {
-                chptNum = downloadedChapters.count
+                chptNum = downloadedChapters!.count
             } else {
                 chptNum = onlineChapters.count
             }
@@ -705,7 +705,7 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
     
             let selector: Selector = NSSelectorFromString("_setWebGLEnabled:")
             
-            if let anyObj = webView as? AnyObject {
+            if let anyObj: AnyObject = webView as? AnyObject {
                 let impSet: IMP = anyObj.method(for: selector)
                 
                 typealias ClosureType = @convention(c) (AnyObject, Selector, Bool) -> Void
