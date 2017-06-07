@@ -1,0 +1,75 @@
+/* 
+  Localizable.strings
+  ArchiveOfOurOwnReader
+
+  Created by Valeriya Pekar on 6/7/17.
+  Copyright © 2017 Sergei Pekar. All rights reserved.
+*/
+"0Found" = "0 Found";
+"LoadingPage" = "Loading page ";
+"Searching" = "Searching...";
+"Error" = "Error";
+"CheckInternet" = "Check your Internet connection";
+"Only30Stroies" = "You can only download 30 stories. Please, upgrade to download more.";
+"DwnloadingWrk" = "Downloading Work ";
+"CannotDwnldWrk" = "Cannot Download Work!";
+"Chapters_" = "Chapters: ";
+"AnyField" = "Any Field";
+"Title" = "Title";
+"Author" = "Author";
+"Language" = "Language";
+"Rating" = "Rating";
+"SortBy" = "Sort by";
+"SortDirection" = "Sort direction";
+"Fandoms" = "Fandoms";
+"Relationships" = "Relationships";
+"Characters" = "Characters";
+"Kudos" = "Kudos";
+"Hits" = "Hits";
+"Comments" = "Comments";
+"Bookmarks" = "Bookmarks";
+"Bookmark" = "Bookmark";
+"WordCount" = "Word Count";
+"ChooseNoWarn" = "Choose Not To Use Archive Warnings";
+"GraphicViolence" = "Graphic Depictions Of Violence";
+"MajorCharDeath" = "Major Character Death";
+"NoWarn" = "No Archive Warnings Apply";
+"RapeNonCon" = "Rape/Non-Con";
+"Underage" = "Underage";
+"SingleChpt" = "Single Chapter";
+"Complete" = "Complete";
+"From" = "From";
+"To" = "To";
+"IncludeTags" = "Include Tags";
+"ExcludeTags" = "Exclude Tags";
+"WorkInfo" = "Work Info";
+"Stats" = "Stats";
+"Category" = "Category";
+"Warnings" = "Warnings";
+"WorkTags" = "Work Tags";
+"Search" = "Search";
+"LoadingWrk" = "Loading work";
+"Sorry" = "Sorry!";
+"WrkAvailOnlyRegistered" = "This work is only available to registered users of the Archive";
+"ContainsAdultContent" = "This work contains adult content. To view it you need to login and confirm that you are at least 18 (Me -> Login, its NOT a premium feature).";
+"AO3Issue" = "AO3 has been notified about this issue and they will take a look at it shortly.";
+"AddingBmk" = "Adding Bookmark";
+"DeletingBmk" = "Deleting Bookmark";
+"DeleteFromBmk" = "Delete from Bookmarks";
+"AreYouSure" = "Are you sure?";
+"SureDeleteWrk" = "Are you sure you would like to delete this work?";
+"Cancel" = "Cancel";
+"Yes" = "Yes";
+"WrkOptions" = "Work Options";
+"DeleteWrk" = "Delete Work";
+"DownloadWrk" = "Download Work";
+"ReloadWrk" = "Reload Work";
+"ViewComments" = "View Comments";
+"LeaveKudos" = "Leave Kudos";
+"LeavingKudos" = "Leaving Kudos";
+"LeftKudosAlready" = "You have already left kudos here. :)";
+"KudosAdded" = "Kudos added! :)";
+"DeleteBmk" = "Delete Bookmark";
+"DownloadFile" = "Download DPF/EPUB/HTML/MOBI";
+
+

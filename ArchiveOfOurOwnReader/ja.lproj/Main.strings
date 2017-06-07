@@ -1,0 +1,513 @@
+
+/* Class = "UITabBarItem"; title = "History"; ObjectID = "07b-Ws-9Rb"; */
+"07b-Ws-9Rb.title" = "History";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "0NV-cj-fsp"; */
+"0NV-cj-fsp.text" = "Label";
+
+/* Class = "UIBarButtonItem"; title = "Save Draft"; ObjectID = "1GW-9b-0hk"; */
+"1GW-9b-0hk.title" = "Save Draft";
+
+/* Class = "UILabel"; text = "F/F"; ObjectID = "1R8-0L-DuC"; */
+"1R8-0L-DuC.text" = "F/F";
+
+/* Class = "UILabel"; text = "Further app improvements rely on your support! If you find app useful, pls consider supporting it by leaving a tip!"; ObjectID = "1uP-Y7-fEC"; */
+"1uP-Y7-fEC.text" = "Further app improvements rely on your support! If you find app useful, pls consider supporting it by leaving a tip!";
+
+/* Class = "UILabel"; text = "Fandoms: TorchWood"; ObjectID = "2kE-Of-Bc8"; */
+"2kE-Of-Bc8.text" = "Fandoms: TorchWood";
+
+/* Class = "UILabel"; text = "English"; ObjectID = "2n0-Ld-9Ht"; */
+"2n0-Ld-9Ht.text" = "English";
+
+/* Class = "UILabel"; text = "Sync with \nAO3"; ObjectID = "35J-U3-wfK"; */
+"35J-U3-wfK.text" = "Sync with \nAO3";
+
+/* Class = "UIViewController"; title = "Contents View Controller"; ObjectID = "4E5-kX-d7y"; */
+"4E5-kX-d7y.title" = "Contents View Controller";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "4S0-Mp-lXi"; */
+"4S0-Mp-lXi.text" = "Label";
+
+/* Class = "UILabel"; text = "Topic"; ObjectID = "4VT-L1-fAL"; */
+"4VT-L1-fAL.text" = "Topic";
+
+/* Class = "UIButton"; normalTitle = "Check AO3 Status"; ObjectID = "4h0-Cf-VHx"; */
+"4h0-Cf-VHx.normalTitle" = "Check AO3 Status";
+
+/* Class = "UILabel"; text = "0"; ObjectID = "4iA-ni-4qk"; */
+"4iA-ni-4qk.text" = "0";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "4x1-P4-Eyt"; */
+"4x1-P4-Eyt.text" = "Label";
+
+/* Class = "UITabBarItem"; title = "Recommendations"; ObjectID = "5VD-on-31r"; */
+"5VD-on-31r.title" = "Recommendations";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "5oW-a4-ug6"; */
+"5oW-a4-ug6.text" = "Label";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "68l-ue-rnj"; */
+"68l-ue-rnj.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "Sync with AO3"; ObjectID = "6HO-t4-687"; */
+"6HO-t4-687.normalTitle" = "Sync with AO3";
+
+/* Class = "UIButton"; normalTitle = "About Subscription"; ObjectID = "6IA-j4-WUw"; */
+"6IA-j4-WUw.normalTitle" = "About Subscription";
+
+/* Class = "UILabel"; text = "0"; ObjectID = "6WZ-X0-Dx0"; */
+"6WZ-X0-Dx0.text" = "0";
+
+/* Class = "UIBarButtonItem"; title = "Publish"; ObjectID = "75g-oS-n3L"; */
+"75g-oS-n3L.title" = "Publish";
+
+/* Class = "UIButton"; normalTitle = "Try Again"; ObjectID = "7BG-8k-w0K"; */
+"7BG-8k-w0K.normalTitle" = "Try Again";
+
+/* Class = "UILabel"; text = "Rating"; ObjectID = "7GF-5E-KjG"; */
+"7GF-5E-KjG.text" = "Rating";
+
+/* Class = "UILabel"; text = "English"; ObjectID = "7f5-yi-WOf"; */
+"7f5-yi-WOf.text" = "English";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "7fi-8v-DmN"; */
+"7fi-8v-DmN.text" = "Label";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "7qH-mE-Sbp"; */
+"7qH-mE-Sbp.text" = "Label";
+
+/* Class = "UILabel"; text = "WORK TEXT"; ObjectID = "8Gu-W5-vQS"; */
+"8Gu-W5-vQS.text" = "WORK TEXT";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "8j0-jh-8fV"; */
+"8j0-jh-8fV.text" = "Label";
+
+/* Class = "UILabel"; text = "0"; ObjectID = "8zv-1z-prL"; */
+"8zv-1z-prL.text" = "0";
+
+/* Class = "UIButton"; normalTitle = "Search and Save"; ObjectID = "94t-ZN-LIC"; */
+"94t-ZN-LIC.normalTitle" = "Search and Save";
+
+/* Class = "UIButton"; normalTitle = "Contents"; ObjectID = "9GD-Ss-iAe"; */
+"9GD-Ss-iAe.normalTitle" = "Contents";
+
+/* Class = "UILabel"; text = "Topic"; ObjectID = "9nb-J7-hFR"; */
+"9nb-J7-hFR.text" = "Topic";
+
+/* Class = "UIButton"; normalTitle = "Try Again"; ObjectID = "A75-PV-GyA"; */
+"A75-PV-GyA.normalTitle" = "Try Again";
+
+/* Class = "UILabel"; text = "17 Nov 2014"; ObjectID = "AF7-Ms-IXY"; */
+"AF7-Ms-IXY.text" = "17 Nov 2014";
+
+/* Class = "UITabBarItem"; title = "Item"; ObjectID = "AL5-w0-MyT"; */
+"AL5-w0-MyT.title" = "Item";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "AU5-ba-foJ"; */
+"AU5-ba-foJ.text" = "Label";
+
+/* Class = "UILabel"; text = "Confirm you are 18 and older"; ObjectID = "An2-hx-brd"; */
+"An2-hx-brd.text" = "Confirm you are 18 and older";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "Aro-oq-Q66"; */
+"Aro-oq-Q66.text" = "Label";
+
+/* Class = "UILabel"; text = "CATEGORY"; ObjectID = "AwF-93-ypU"; */
+"AwF-93-ypU.text" = "CATEGORY";
+
+/* Class = "UILabel"; text = "0"; ObjectID = "Aym-w0-65h"; */
+"Aym-w0-65h.text" = "0";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "B4h-2r-oZZ"; */
+"B4h-2r-oZZ.text" = "Label";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "B4l-Od-GeY"; */
+"B4l-Od-GeY.text" = "Label";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "BFP-BQ-ROk"; */
+"BFP-BQ-ROk.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "Read"; ObjectID = "BZH-PI-909"; */
+"BZH-PI-909.normalTitle" = "Read";
+
+/* Class = "UILabel"; text = "Topic"; ObjectID = "CbL-S4-54X"; */
+"CbL-S4-54X.text" = "Topic";
+
+/* Class = "UILabel"; text = "0"; ObjectID = "Csm-5L-6Gp"; */
+"Csm-5L-6Gp.text" = "0";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "Cyb-us-7ON"; */
+"Cyb-us-7ON.text" = "Title";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "ELq-6D-xID"; */
+"ELq-6D-xID.text" = "Label";
+
+/* Class = "UILabel"; text = "0"; ObjectID = "EWF-uJ-UPo"; */
+"EWF-uJ-UPo.text" = "0";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "EtU-Xl-SPN"; */
+"EtU-Xl-SPN.text" = "Label";
+
+/* Class = "UILabel"; text = "0"; ObjectID = "Fi2-8C-6AD"; */
+"Fi2-8C-6AD.text" = "0";
+
+/* Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "Fqm-o4-fyH"; */
+"Fqm-o4-fyH.title" = "Cancel";
+
+/* Class = "UILabel"; text = "–"; ObjectID = "GJw-AP-j6m"; */
+"GJw-AP-j6m.text" = "–";
+
+/* Class = "UILabel"; text = "0"; ObjectID = "HQ1-NE-8Xv"; */
+"HQ1-NE-8Xv.text" = "0";
+
+/* Class = "UILabel"; text = "Multi"; ObjectID = "HVw-WD-klK"; */
+"HVw-WD-klK.text" = "Multi";
+
+/* Class = "UILabel"; text = "Fandoms: TorchWood"; ObjectID = "Huk-Kh-Qyk"; */
+"Huk-Kh-Qyk.text" = "Fandoms: TorchWood";
+
+/* Class = "UILabel"; text = "Fandoms"; ObjectID = "I85-08-BaN"; */
+"I85-08-BaN.text" = "Fandoms";
+
+/* Class = "UILabel"; text = "17 Nov 2014"; ObjectID = "ICa-g0-KHF"; */
+"ICa-g0-KHF.text" = "17 Nov 2014";
+
+/* Class = "UILabel"; text = "0"; ObjectID = "IfZ-dz-d0u"; */
+"IfZ-dz-d0u.text" = "0";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "Ijh-as-Qrd"; */
+"Ijh-as-Qrd.text" = "Label";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "Iw2-hf-Eu6"; */
+"Iw2-hf-Eu6.text" = "Label";
+
+/* Class = "UITabBarItem"; title = "Browse"; ObjectID = "Jah-IT-gDA"; */
+"Jah-IT-gDA.title" = "Browse";
+
+/* Class = "UILabel"; text = "M/M"; ObjectID = "JeA-CC-Lha"; */
+"JeA-CC-Lha.text" = "M/M";
+
+/* Class = "UILabel"; text = "0"; ObjectID = "KHh-Cf-Hty"; */
+"KHh-Cf-Hty.text" = "0";
+
+/* Class = "UIButton"; normalTitle = "Try Again"; ObjectID = "KXq-iU-SSa"; */
+"KXq-iU-SSa.normalTitle" = "Try Again";
+
+/* Class = "UILabel"; text = "Fandoms: TorchWood"; ObjectID = "Kgb-E2-Ggc"; */
+"Kgb-E2-Ggc.text" = "Fandoms: TorchWood";
+
+/* Class = "UIBarButtonItem"; title = "Search"; ObjectID = "Kwm-ru-L9h"; */
+"Kwm-ru-L9h.title" = "Search";
+
+/* Class = "UILabel"; text = "0"; ObjectID = "LGo-tq-czb"; */
+"LGo-tq-czb.text" = "0";
+
+/* Class = "UIButton"; normalTitle = "Login"; ObjectID = "Lf4-tB-BNC"; */
+"Lf4-tB-BNC.normalTitle" = "Login";
+
+/* Class = "UILabel"; text = "Rape/Non-Con"; ObjectID = "Mcm-5b-ywq"; */
+"Mcm-5b-ywq.text" = "Rape/Non-Con";
+
+/* Class = "UILabel"; text = "0"; ObjectID = "NHz-sV-iLU"; */
+"NHz-sV-iLU.text" = "0";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "NP8-7c-TSv"; */
+"NP8-7c-TSv.text" = "Label";
+
+/* Class = "UILabel"; text = "17 Nov 2014"; ObjectID = "O82-Cm-joz"; */
+"O82-Cm-joz.text" = "17 Nov 2014";
+
+/* Class = "UIBarButtonItem"; title = "Upgrade"; ObjectID = "OIx-7O-wVZ"; */
+"OIx-7O-wVZ.title" = "Upgrade";
+
+/* Class = "UILabel"; text = "Major Character Death"; ObjectID = "P9w-QO-Xgb"; */
+"P9w-QO-Xgb.text" = "Major Character Death";
+
+/* Class = "UILabel"; text = "English"; ObjectID = "QIz-6y-VGT"; */
+"QIz-6y-VGT.text" = "English";
+
+/* Class = "UILabel"; text = "0"; ObjectID = "QoC-LR-IEr"; */
+"QoC-LR-IEr.text" = "0";
+
+/* Class = "UILabel"; text = "Choose Not To Use Archive Warnings"; ObjectID = "RB7-DA-foN"; */
+"RB7-DA-foN.text" = "Choose Not To Use Archive Warnings";
+
+/* Class = "UIButton"; normalTitle = "Create Support Ticket"; ObjectID = "SBp-j4-rba"; */
+"SBp-j4-rba.normalTitle" = "Create Support Ticket";
+
+/* Class = "UILabel"; text = "Underage"; ObjectID = "SED-4g-eW7"; */
+"SED-4g-eW7.text" = "Underage";
+
+/* Class = "UILabel"; text = "17 Nov 2014"; ObjectID = "SQg-IR-wxd"; */
+"SQg-IR-wxd.text" = "17 Nov 2014";
+
+/* Class = "UILabel"; text = "0"; ObjectID = "SUT-fl-WuF"; */
+"SUT-fl-WuF.text" = "0";
+
+/* Class = "UILabel"; text = "0"; ObjectID = "SVu-xG-6JQ"; */
+"SVu-xG-6JQ.text" = "0";
+
+/* Class = "UIButton"; normalTitle = "Try Again"; ObjectID = "SWE-i5-xSO"; */
+"SWE-i5-xSO.normalTitle" = "Try Again";
+
+/* Class = "UILabel"; text = "Fandoms: TorchWood"; ObjectID = "Sfx-4U-hTM"; */
+"Sfx-4U-hTM.text" = "Fandoms: TorchWood";
+
+/* Class = "UILabel"; text = "WARNINGS"; ObjectID = "TZt-dt-hDf"; */
+"TZt-dt-hDf.text" = "WARNINGS";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "V0u-ho-Dls"; */
+"V0u-ho-Dls.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "Privacy Policy and Terms of Use"; ObjectID = "V1g-5u-7Od"; */
+"V1g-5u-7Od.normalTitle" = "Privacy Policy and Terms of Use";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "VFd-qE-5pi"; */
+"VFd-qE-5pi.text" = "Label";
+
+/* Class = "UINavigationItem"; title = "Search"; ObjectID = "VL9-R8-rLb"; */
+"VL9-R8-rLb.title" = "Search";
+
+/* Class = "UILabel"; text = "Topic"; ObjectID = "VUr-2i-RNr"; */
+"VUr-2i-RNr.text" = "Topic";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "VxR-6U-HPo"; */
+"VxR-6U-HPo.text" = "Label";
+
+/* Class = "UILabel"; text = "English"; ObjectID = "X4z-9n-kqG"; */
+"X4z-9n-kqG.text" = "English";
+
+/* Class = "UILabel"; text = "English"; ObjectID = "XNO-sV-cG8"; */
+"XNO-sV-cG8.text" = "English";
+
+/* Class = "UILabel"; text = "0"; ObjectID = "YVp-AJ-IPd"; */
+"YVp-AJ-IPd.text" = "0";
+
+/* Class = "UILabel"; text = "0"; ObjectID = "Ynv-hY-rJe"; */
+"Ynv-hY-rJe.text" = "0";
+
+/* Class = "UILabel"; text = "17 Nov 2014"; ObjectID = "Yro-RH-hWL"; */
+"Yro-RH-hWL.text" = "17 Nov 2014";
+
+/* Class = "UILabel"; text = "Gen"; ObjectID = "YsZ-rL-fcF"; */
+"YsZ-rL-fcF.text" = "Gen";
+
+/* Class = "UINavigationItem"; title = " "; ObjectID = "b02-lS-ys5"; */
+"b02-lS-ys5.title" = " ";
+
+/* Class = "UINavigationItem"; title = "Title"; ObjectID = "c1a-hv-P2P"; */
+"c1a-hv-P2P.title" = "Title";
+
+/* Class = "UILabel"; text = "0"; ObjectID = "cCv-tz-0zs"; */
+"cCv-tz-0zs.text" = "0";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "cDJ-a1-8DB"; */
+"cDJ-a1-8DB.text" = "Label";
+
+/* Class = "UILabel"; text = "Multi"; ObjectID = "cZG-8V-5Ya"; */
+"cZG-8V-5Ya.text" = "Multi";
+
+/* Class = "UILabel"; text = "0"; ObjectID = "cbc-0w-Gar"; */
+"cbc-0w-Gar.text" = "0";
+
+/* Class = "UILabel"; text = "Complete"; ObjectID = "dnT-cy-sRR"; */
+"dnT-cy-sRR.text" = "Complete";
+
+/* Class = "UILabel"; text = "Other"; ObjectID = "eJY-YR-JUJ"; */
+"eJY-YR-JUJ.text" = "Other";
+
+/* Class = "UITabBarItem"; title = "Downloaded"; ObjectID = "eaC-Lk-gps"; */
+"eaC-Lk-gps.title" = "Downloaded";
+
+/* Class = "UILabel"; text = "Only show your work to registered users"; ObjectID = "eiA-yO-ocE"; */
+"eiA-yO-ocE.text" = "Only show your work to registered users";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "eiv-fZ-kA5"; */
+"eiv-fZ-kA5.text" = "Label";
+
+/* Class = "UILabel"; text = "0"; ObjectID = "fOb-J6-ufW"; */
+"fOb-J6-ufW.text" = "0";
+
+/* Class = "UILabel"; text = "What's your main fandom? "; ObjectID = "fcf-bB-WV2"; */
+"fcf-bB-WV2.text" = "What's your main fandom? ";
+
+/* Class = "UIBarButtonItem"; title = " "; ObjectID = "feO-jN-piB"; */
+"feO-jN-piB.title" = " ";
+
+/* Class = "UITextField"; placeholder = "Password"; ObjectID = "ffZ-kJ-tao"; */
+"ffZ-kJ-tao.placeholder" = "Password";
+
+/* Class = "UILabel"; text = "Topic"; ObjectID = "fpZ-8Y-LTR"; */
+"fpZ-8Y-LTR.text" = "Topic";
+
+/* Class = "UIViewController"; title = "Work Detail"; ObjectID = "g0F-jj-WaO"; */
+"g0F-jj-WaO.title" = "Work Detail";
+
+/* Class = "UILabel"; text = "No Archive Warnings Apply"; ObjectID = "geE-Tt-GlY"; */
+"geE-Tt-GlY.text" = "No Archive Warnings Apply";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "h1l-gt-NVP"; */
+"h1l-gt-NVP.text" = "Label";
+
+/* Class = "UIViewController"; title = "Work List"; ObjectID = "h60-ml-Ofy"; */
+"h60-ml-Ofy.title" = "Work List";
+
+/* Class = "UITextField"; placeholder = "User name"; ObjectID = "h7a-hW-0qY"; */
+"h7a-hW-0qY.placeholder" = "User name";
+
+/* Class = "UILabel"; text = "Audience"; ObjectID = "hKr-uF-seL"; */
+"hKr-uF-seL.text" = "Audience";
+
+/* Class = "UILabel"; text = "F/M"; ObjectID = "hzB-pu-fuB"; */
+"hzB-pu-fuB.text" = "F/M";
+
+/* Class = "UILabel"; text = "F/M"; ObjectID = "iDd-Ld-mPZ"; */
+"iDd-Ld-mPZ.text" = "F/M";
+
+/* Class = "UILabel"; text = "0"; ObjectID = "iLf-mV-Whu"; */
+"iLf-mV-Whu.text" = "0";
+
+/* Class = "UIButton"; normalTitle = "Leave Comment"; ObjectID = "ibn-K2-prA"; */
+"ibn-K2-prA.normalTitle" = "Leave Comment";
+
+/* Class = "UIButton"; normalTitle = "My Support Tickets"; ObjectID = "j6K-pq-U4F"; */
+"j6K-pq-U4F.normalTitle" = "My Support Tickets";
+
+/* Class = "UILabel"; text = "Fandoms: TorchWood"; ObjectID = "jRB-4q-l7U"; */
+"jRB-4q-l7U.text" = "Fandoms: TorchWood";
+
+/* Class = "UINavigationItem"; title = "Work Detail"; ObjectID = "jfK-6D-bZT"; */
+"jfK-6D-bZT.title" = "Work Detail";
+
+/* Class = "UIButton"; normalTitle = "Sync with AO3"; ObjectID = "jok-ZA-mT7"; */
+"jok-ZA-mT7.normalTitle" = "Sync with AO3";
+
+/* Class = "UILabel"; text = "Recommendations"; ObjectID = "juB-Iz-l0b"; */
+"juB-Iz-l0b.text" = "Recommendations";
+
+/* Class = "UILabel"; text = "0"; ObjectID = "kY2-EE-mLr"; */
+"kY2-EE-mLr.text" = "0";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "kZr-Kn-M4H"; */
+"kZr-Kn-M4H.text" = "Label";
+
+/* Class = "UITextField"; placeholder = "Star Wars, Futurama"; ObjectID = "kq4-KC-Xs7"; */
+"kq4-KC-Xs7.placeholder" = "Star Wars, Futurama";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "ky7-ex-yjl"; */
+"ky7-ex-yjl.text" = "Label";
+
+/* Class = "UILabel"; text = "M/M"; ObjectID = "lCI-eu-JA3"; */
+"lCI-eu-JA3.text" = "M/M";
+
+/* Class = "UILabel"; text = "Gen"; ObjectID = "mQg-k9-tTr"; */
+"mQg-k9-tTr.text" = "Gen";
+
+/* Class = "UINavigationItem"; title = "List"; ObjectID = "noR-z2-v4R"; */
+"noR-z2-v4R.title" = "List";
+
+/* Class = "UILabel"; text = "F/F"; ObjectID = "oJx-ei-49f"; */
+"oJx-ei-49f.text" = "F/F";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "paK-zo-TA8"; */
+"paK-zo-TA8.text" = "Title";
+
+/* Class = "UILabel"; text = "Cannot obtain data. \nPlease check your Internet connection and also make sure you are logged into your AO3 account (try to log in again)."; ObjectID = "pg6-4D-IWv"; */
+"pg6-4D-IWv.text" = "Cannot obtain data. \nPlease check your Internet connection and also make sure you are logged into your AO3 account (try to log in again).";
+
+/* Class = "UILabel"; text = "Other"; ObjectID = "pih-i1-DPs"; */
+"pih-i1-DPs.text" = "Other";
+
+/* Class = "UIBarButtonItem"; title = " "; ObjectID = "pvu-BR-NkF"; */
+"pvu-BR-NkF.title" = " ";
+
+/* Class = "UINavigationItem"; title = "Welcome!"; ObjectID = "qpJ-B9-N80"; */
+"qpJ-B9-N80.title" = "Welcome!";
+
+/* Class = "UILabel"; text = "0"; ObjectID = "r8O-b7-9oe"; */
+"r8O-b7-9oe.text" = "0";
+
+/* Class = "UIButton"; normalTitle = "Next"; ObjectID = "tKS-fA-gQ9"; */
+"tKS-fA-gQ9.normalTitle" = "Next";
+
+/* Class = "UILabel"; text = "Fandoms:"; ObjectID = "u0i-LR-414"; */
+"u0i-LR-414.text" = "Fandoms:";
+
+/* Class = "UILabel"; text = "0"; ObjectID = "u1n-sT-NbY"; */
+"u1n-sT-NbY.text" = "0";
+
+/* Class = "UILabel"; text = "Graphic Depictions Of Violence"; ObjectID = "uKV-vU-0Mg"; */
+"uKV-vU-0Mg.text" = "Graphic Depictions Of Violence";
+
+/* Class = "UILabel"; text = "Topic"; ObjectID = "ugS-IF-6Ts"; */
+"ugS-IF-6Ts.text" = "Topic";
+
+/* Class = "UILabel"; text = "0"; ObjectID = "ulu-gZ-mzD"; */
+"ulu-gZ-mzD.text" = "0";
+
+/* Class = "UILabel"; text = "Notify me when new Recommendations are ready (Pro only)"; ObjectID = "unF-Y4-c6i"; */
+"unF-Y4-c6i.text" = "Notify me when new Recommendations are ready (Pro only)";
+
+/* Class = "UILabel"; text = "0"; ObjectID = "vKQ-X2-UgD"; */
+"vKQ-X2-UgD.text" = "0";
+
+/* Class = "UILabel"; text = "17 Nov 2014"; ObjectID = "vLJ-ph-As1"; */
+"vLJ-ph-As1.text" = "17 Nov 2014";
+
+/* Class = "UILabel"; text = "Please select your pseud below for showing bookmarks and history"; ObjectID = "vjz-Ft-nxI"; */
+"vjz-Ft-nxI.text" = "Please select your pseud below for showing bookmarks and history";
+
+/* Class = "UIButton"; normalTitle = "Sync with AO3"; ObjectID = "vkf-xs-hdt"; */
+"vkf-xs-hdt.normalTitle" = "Sync with AO3";
+
+/* Class = "UILabel"; text = "English"; ObjectID = "vkj-PQ-Dlx"; */
+"vkj-PQ-Dlx.text" = "English";
+
+/* Class = "UILabel"; text = "0"; ObjectID = "vlh-gM-gr1"; */
+"vlh-gM-gr1.text" = "0";
+
+/* Class = "UILabel"; text = "0"; ObjectID = "w8b-GM-qab"; */
+"w8b-GM-qab.text" = "0";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "wUJ-2n-PrN"; */
+"wUJ-2n-PrN.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "Next Chapter"; ObjectID = "wnZ-d8-1x3"; */
+"wnZ-d8-1x3.normalTitle" = "Next Chapter";
+
+/* Class = "UILabel"; text = "Not Authorized"; ObjectID = "wtc-SS-BYB"; */
+"wtc-SS-BYB.text" = "Not Authorized";
+
+/* Class = "UILabel"; text = "Gen"; ObjectID = "wvj-CB-Ust"; */
+"wvj-CB-Ust.text" = "Gen";
+
+/* Class = "UILabel"; text = "Cannot obtain data. \nPlease check your Internet connection and also make sure you are logged into your AO3 account (try to log in again)."; ObjectID = "x0G-LH-Vxl"; */
+"x0G-LH-Vxl.text" = "Cannot obtain data. \nPlease check your Internet connection and also make sure you are logged into your AO3 account (try to log in again).";
+
+/* Class = "UITabBarItem"; title = "Bookmarks"; ObjectID = "xYS-vk-lFt"; */
+"xYS-vk-lFt.title" = "Bookmarks";
+
+/* Class = "UILabel"; text = "0"; ObjectID = "yAO-as-kET"; */
+"yAO-as-kET.text" = "0";
+
+/* Class = "UIButton"; normalTitle = "Try Again"; ObjectID = "ybH-RR-fjQ"; */
+"ybH-RR-fjQ.normalTitle" = "Try Again";
+
+/* Class = "UIButton"; normalTitle = "Sync with AO3"; ObjectID = "ydx-2q-z32"; */
+"ydx-2q-z32.normalTitle" = "Sync with AO3";
+
+/* Class = "UILabel"; text = "Application has Auto-Renewable Subscription (Prosub). The subscription price is 0.99$ per month.\nOnce you have purchased it, the subscription starts. Since then every week you will get digitally generated recommendations of fan fics (fan fiction works) to read. Subscription length is 1 month and it is auto-renewable.\n\nPayment will be charged to iTunes Account at confirmation of purchase.\nSubscription automatically renews unless auto-renew is turned off at least 24-hours before the end of the current period.\nAccount will be charged for renewal within 24-hours prior to the end of the current period, and identify the cost of the renewal.\nSubscriptions may be managed by the user and auto-renewal may be turned off by going to the user's Account Settings after purchase.\nNo cancellation of the current subscription is allowed during active subscription period.\n\nAny unused portion of a free trial period, if offered, will be forfeited when the user purchases a subscription to that publication.\n\nTo Unsubscribe:\n1. Go to Settings > iTunes & App Store.\n2. Tap your Apple ID at the top of the screen.\n3. Tap View Apple ID. \n4. Tap the subscription that you want to manage.\nIf you don't see a subscription but are still being charged, make sure that you're signed in with the correct Apple ID. \n5. Use the options to manage your subscription. You can tap Cancel Subscription. If you cancel, your subscription will stop at the end of the current billing cycle."; ObjectID = "yxE-bl-Qah"; */
+"yxE-bl-Qah.text" = "Application has Auto-Renewable Subscription (Prosub). The subscription price is 0.99$ per month.\nOnce you have purchased it, the subscription starts. Since then every week you will get digitally generated recommendations of fan fics (fan fiction works) to read. Subscription length is 1 month and it is auto-renewable.\n\nPayment will be charged to iTunes Account at confirmation of purchase.\nSubscription automatically renews unless auto-renew is turned off at least 24-hours before the end of the current period.\nAccount will be charged for renewal within 24-hours prior to the end of the current period, and identify the cost of the renewal.\nSubscriptions may be managed by the user and auto-renewal may be turned off by going to the user's Account Settings after purchase.\nNo cancellation of the current subscription is allowed during active subscription period.\n\nAny unused portion of a free trial period, if offered, will be forfeited when the user purchases a subscription to that publication.\n\nTo Unsubscribe:\n1. Go to Settings > iTunes & App Store.\n2. Tap your Apple ID at the top of the screen.\n3. Tap View Apple ID. \n4. Tap the subscription that you want to manage.\nIf you don't see a subscription but are still being charged, make sure that you're signed in with the correct Apple ID. \n5. Use the options to manage your subscription. You can tap Cancel Subscription. If you cancel, your subscription will stop at the end of the current billing cycle.";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "yxf-WI-AV9"; */
+"yxf-WI-AV9.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "Previous"; ObjectID = "z5B-7o-XaX"; */
+"z5B-7o-XaX.normalTitle" = "Previous";
+
+/* Class = "UILabel"; text = "0"; ObjectID = "z7a-zd-tYx"; */
+"z7a-zd-tYx.text" = "0";
+
+/* Class = "UILabel"; text = "Cannot obtain data. \nPlease check your Internet connection and also make sure you are logged into your AO3 account (try to log in again)."; ObjectID = "zKM-jc-i22"; */
+"zKM-jc-i22.text" = "Cannot obtain data. \nPlease check your Internet connection and also make sure you are logged into your AO3 account (try to log in again).";

@@ -221,7 +221,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             }
         }
         
-        showLoadingView(msg: "Loading work")
+        showLoadingView(msg: NSLocalizedString("LoadingWrk", comment: ""))
         
         Alamofire.request("http://archiveofourown.org/works/" + workItem.workId + vadult, method: .get, parameters: params)
             .response(completionHandler: { response in
@@ -233,7 +233,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                     self.hideLoadingView()
                 } else {
                     self.hideLoadingView()
-                    TSMessage.showNotification(in: self, title: "Error", subtitle: "Check your Internet connection", type: .error)
+                    TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
                 }
             })
         
@@ -251,8 +251,8 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         if let sorrydiv = doc.search(withXPathQuery: "//div[@class='flash error']") {
         
         if(sorrydiv.count>0 && (sorrydiv[0] as! TFHppleElement).text().range(of: "Sorry") != nil) {
-            workItem.author = "Sorry!";
-            workItem.workTitle = "This work is only available to registered users of the Archive";
+            workItem.author = NSLocalizedString("Sorry", comment: "")
+            workItem.workTitle = NSLocalizedString("WrkAvailOnlyRegistered", comment: "");
             workItem.complete = "";
          //   return NEXT_CHAPTER_NOT_EXIST;
             return
@@ -262,8 +262,8 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         var caution = doc.search(withXPathQuery: "//p[@class='caution']")
         
         if (caution != nil && (caution?.count)!>0 && (caution?[0] as! TFHppleElement).text().range(of: "adult content") != nil) {
-            workItem.setValue("Sorry!", forKey: "author")
-            workItem.setValue("This work contains adult content. To view it you need to login and confirm that you are at least 18 (Me -> Login, its NOT a premium feature).", forKey: "workTitle")
+            workItem.setValue(NSLocalizedString("Sorry", comment: ""), forKey: "author")
+            workItem.setValue(NSLocalizedString("ContainsAdultContent", comment: ""), forKey: "workTitle")
             workItem.setValue("", forKey: "complete")
             
             return
@@ -272,8 +272,8 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         if let errH = doc.search(withXPathQuery: "//h2[@class='heading']") {
         
         if (errH.count>0 && (errH[0] as! TFHppleElement).text().range(of: "Error") != nil) {
-            workItem.setValue("Sorry!", forKey: "author")
-            workItem.setValue("AO3 has been notified about this issue and they will take a look at it shortly.", forKey: "workTitle")
+            workItem.setValue(NSLocalizedString("Sorry", comment: ""), forKey: "author")
+            workItem.setValue(NSLocalizedString("AO3Issue", comment: ""), forKey: "workTitle")
             workItem.setValue("", forKey: "complete")
             
             return
@@ -527,7 +527,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
         if let noticediv: [TFHppleElement] = doc.search(withXPathQuery: "//div[@class='flash notice']") as? [TFHppleElement] {
             if(noticediv.count > 0) {
-                TSMessage.showNotification(in: self, title: "Adding Bookmark", subtitle: noticediv[0].content, type: .success)
+                TSMessage.showNotification(in: self, title: NSLocalizedString("AddingBmk", comment: ""), subtitle: noticediv[0].content, type: .success)
             
                 changedSmth = true
             }
@@ -536,7 +536,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         if let sorrydiv = doc.search(withXPathQuery: "//div[@class='flash error']") {
             
             if(sorrydiv.count>0 && (sorrydiv[0] as! TFHppleElement).text().range(of: "Sorry") != nil) {
-                TSMessage.showNotification(in: self, title: "Adding Bookmark", subtitle: (sorrydiv[0] as AnyObject).content, type: .error)
+                TSMessage.showNotification(in: self, title: NSLocalizedString("AddingBmk", comment: ""), subtitle: (sorrydiv[0] as AnyObject).content, type: .error)
                 return
             }
         }
@@ -1014,7 +1014,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             return
         }
         
-        showLoadingView(msg: "Adding bookmark")
+        showLoadingView(msg: NSLocalizedString("AddingBmk", comment: ""))
         
         var requestStr = "http://archiveofourown.org/works/"
         var bid = ""
@@ -1082,7 +1082,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                         
                     } else {
                         self.hideLoadingView()
-                        TSMessage.showNotification(in: self, title: "Error", subtitle: "Check your Internet connection", type: .error)
+                        TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
                     }
                 })
             }
@@ -1097,7 +1097,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             return
         }
         
-        showLoadingView(msg: "Deleting bookmark")
+        showLoadingView(msg: NSLocalizedString("DeletingBmk", comment: ""))
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
             Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
@@ -1131,7 +1131,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                     self.hideLoadingView()
                 } else {
                     self.hideLoadingView()
-                    TSMessage.showNotification(in: self, title: "Error", subtitle: "Check your Internet connection", type: .error)
+                    TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
 
                 }
             })
@@ -1144,7 +1144,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             if(noticediv.count > 0) {
                 bookmarked = false
                 changedSmth = true
-                self.view.makeToast(message: noticediv[0].content, duration: 3.0, position: "center" as AnyObject, title: "Delete from Bookmarks")
+                self.view.makeToast(message: noticediv[0].content, duration: 3.0, position: "center" as AnyObject, title: NSLocalizedString("DeleteFromBmk", comment: ""))
             
             }
         }
@@ -1152,7 +1152,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         if let sorrydiv = doc.search(withXPathQuery: "//div[@class='flash error']") {
             
             if(sorrydiv.count>0 && (sorrydiv[0] as! TFHppleElement).text().range(of: "Sorry") != nil) {
-                TSMessage.showNotification(in: self, title: "Delete from Bookmarks", subtitle: (sorrydiv[0] as AnyObject).content, type: .error)
+                TSMessage.showNotification(in: self, title: NSLocalizedString("DeleteFromBmk", comment: ""), subtitle: (sorrydiv[0] as AnyObject).content, type: .error)
 
                 return
             }
@@ -1167,13 +1167,13 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
          print("premium")
         } else {
             if (countWroksFromDB() > 29) {
-                TSMessage.showNotification(in: self, title: "Error", subtitle: "You can only download 30 stories. Please, upgrade to download more.", type: .error, duration: 2.0)
+                TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Only30Stroies", comment: ""), type: .error, duration: 2.0)
                 
                 return
             }
         }
         
-        showLoadingView(msg: "Downloading work")
+        showLoadingView(msg: NSLocalizedString("DwnloadingWrk", comment: ""))
         
         if let del = UIApplication.shared.delegate as? AppDelegate {
             if (del.cookies.count > 0) {
@@ -1214,7 +1214,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                         
                     } else {
                         self.hideLoadingView()
-                        TSMessage.showNotification(in: self, title: "Error", subtitle: "Check your Internet connection", type: .error)
+                        TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
                     }
                 })
         } else if (downloadedWorkItem != nil) {
@@ -1229,7 +1229,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                         self.downloadWork(d, workItemToReload: self.downloadedWorkItem)
                     } else {
                         self.hideLoadingView()
-                        TSMessage.showNotification(in: self, title: "Error", subtitle: "Check your Internet connection", type: .error)
+                        TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
                     }
                 })
         }
@@ -1238,13 +1238,13 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     
     func deleteWork() {
         if (downloadedWorkItem != nil) {
-            let deleteAlert = UIAlertController(title: "Are you sure?", message: "Are you sure you would like to delete this work?", preferredStyle: UIAlertControllerStyle.alert)
+            let deleteAlert = UIAlertController(title: NSLocalizedString("AreYouSure", comment: ""), message: NSLocalizedString("SureDeleteWrk", comment: ""), preferredStyle: UIAlertControllerStyle.alert)
             
-            deleteAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { (action: UIAlertAction) in
+            deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .default, handler: { (action: UIAlertAction) in
                 print("Cancel")
             }))
             
-            deleteAlert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action: UIAlertAction) in
+            deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Yes", comment: ""), style: .default, handler: { (action: UIAlertAction) in
                 let appDel:AppDelegate = UIApplication.shared.delegate as! AppDelegate
                 let context:NSManagedObjectContext = appDel.managedObjectContext!
                 context.delete(self.downloadedWorkItem as NSManagedObject)
@@ -1272,11 +1272,11 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     }
     
     @IBAction func settingsButtonTouched(_ sender: AnyObject) {
-        let optionMenu = UIAlertController(title: nil, message: "Work Options", preferredStyle: .actionSheet)
+        let optionMenu = UIAlertController(title: nil, message: NSLocalizedString("WrkOptions", comment: ""), preferredStyle: .actionSheet)
         optionMenu.view.tintColor = AppDelegate.redColor
         
         if (downloadedWorkItem != nil) {
-            let deleteAction = UIAlertAction(title: "Delete Work", style: .default, handler: {
+            let deleteAction = UIAlertAction(title: NSLocalizedString("DeleteWrk", comment: ""), style: .default, handler: {
                 (alert: UIAlertAction!) -> Void in
                 self.deleteWork()
             })
@@ -1284,39 +1284,39 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         }
         
         if (workItem != nil) {
-            let saveAction = UIAlertAction(title: "Download Work", style: .default, handler: {
+            let saveAction = UIAlertAction(title: NSLocalizedString("DownloadWrk", comment: ""), style: .default, handler: {
                 (alert: UIAlertAction!) -> Void in
                 self.downloadWorkAction()
             })
             optionMenu.addAction(saveAction)
         } else if (downloadedWorkItem != nil) {
-            let reloadAction = UIAlertAction(title: "Reload Work", style: .default, handler: {
+            let reloadAction = UIAlertAction(title: NSLocalizedString("ReloadWrk", comment: ""), style: .default, handler: {
                 (alert: UIAlertAction!) -> Void in
                 self.downloadWorkAction()
             })
             optionMenu.addAction(reloadAction)
         }
         
-        let commentAction = UIAlertAction(title: "View Comments", style: .default, handler: {
+        let commentAction = UIAlertAction(title: NSLocalizedString("ViewComments", comment: ""), style: .default, handler: {
             (alert: UIAlertAction!) -> Void in
             self.commentWorkAction()
         })
         optionMenu.addAction(commentAction)
         
-        let kudosAction = UIAlertAction(title: "Leave Kudos", style: .default, handler: {
+        let kudosAction = UIAlertAction(title: NSLocalizedString("LeaveKudos", comment: ""), style: .default, handler: {
             (alert: UIAlertAction!) -> Void in
             self.leaveKudos()
         })
         optionMenu.addAction(kudosAction)
         
         if (!bookmarked) {
-            let bookmarkAction = UIAlertAction(title: "Bookmark", style: .default, handler: {
+            let bookmarkAction = UIAlertAction(title: NSLocalizedString("Bookmark", comment: ""), style: .default, handler: {
                 (alert: UIAlertAction!) -> Void in
                 self.bookmarkWorkAction()
             })
             optionMenu.addAction(bookmarkAction)
         } else {
-            let bookmarkAction = UIAlertAction(title: "Delete Bookmark", style: .default, handler: {
+            let bookmarkAction = UIAlertAction(title: NSLocalizedString("DeleteBmk", comment: ""), style: .default, handler: {
                 (alert: UIAlertAction!) -> Void in
                 self.deletebookmarkWorkAction()
             })
@@ -1324,7 +1324,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         }
         
         if (downloadUrls.count > 0) {
-        let downloadAction = UIAlertAction(title: "Download DPF/EPUB/HTML/MOBI", style: .default, handler: {
+        let downloadAction = UIAlertAction(title: NSLocalizedString("DownloadFile", comment: ""), style: .default, handler: {
             (alert: UIAlertAction!) -> Void in
             self.showDownloadDialog()
         })
@@ -1332,7 +1332,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         }
         
         //
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: {
+        let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: {
             (alert: UIAlertAction!) -> Void in
             print("Cancelled")
         })
@@ -1348,7 +1348,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
         let keys: [String] = Array(downloadUrls.keys)
         
-        let optionMenu = UIAlertController(title: nil, message: "Work Options", preferredStyle: .actionSheet)
+        let optionMenu = UIAlertController(title: nil, message: NSLocalizedString("WrkOptions", comment: ""), preferredStyle: .actionSheet)
         optionMenu.view.tintColor = AppDelegate.redColor
         
         for key in keys {
@@ -1359,7 +1359,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             optionMenu.addAction(downloadAction)
         }
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: {
+        let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: {
             (alert: UIAlertAction!) -> Void in
             print("Cancelled")
         })
@@ -1379,7 +1379,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             return
         }
         
-        showLoadingView(msg: "Leaving kudos")
+        showLoadingView(msg: NSLocalizedString("LeavingKudos", comment: ""))
         
         var workId = ""
         
@@ -1421,14 +1421,14 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                         
                     } else {
                         self.hideLoadingView()
-                        TSMessage.showNotification(in: self, title: "Error", subtitle: "Check your Internet connection", type: .error)
+                        TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
                     }
                 })
             
         } else {
             
              self.hideLoadingView()
-            TSMessage.showNotification(in: self, title: "Error", subtitle: "Check your Internet connection", type: .error)
+            TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
         }
     }
     
@@ -1439,9 +1439,9 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         //print("the string is: \(dta)")
         
         if (dta.contains("errors") == true) {
-            TSMessage.showNotification(in: self, title: "Error", subtitle: "You have already left kudos here. :)", type: .error)
+            TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("LeftKudosAlready", comment: ""), type: .error)
         } else if (dta.contains("#kudos") == true) {
-            TSMessage.showNotification(in: self, title: "Kudos", subtitle: "Kudos added! :)", type: .success)
+            TSMessage.showNotification(in: self, title: NSLocalizedString("Kudos", comment: ""), subtitle: NSLocalizedString("KudosAdded", comment: ""), type: .success)
             
             var author = ""
             var category = ""

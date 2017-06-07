@@ -366,7 +366,7 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
                 }
             }
         } else {
-            foundItems = "0 Found"
+            foundItems = NSLocalizedString("0Found", comment: "")
         }
     }
     
@@ -411,7 +411,7 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
         (cell as! FeedTableViewCell).datetimeLabel.text = curWork.dateTime
         (cell as! FeedTableViewCell).languageLabel.text = curWork.language
         (cell as! FeedTableViewCell).wordsLabel.text = curWork.words
-        (cell as! FeedTableViewCell).chaptersLabel.text = "Chapters: " + curWork.chapters
+        (cell as! FeedTableViewCell).chaptersLabel.text = NSLocalizedString("Chapters_", comment: "") + curWork.chapters
         (cell as! FeedTableViewCell).commentsLabel.text = curWork.comments
         (cell as! FeedTableViewCell).kudosLabel.text = curWork.kudos
         (cell as! FeedTableViewCell).bookmarksLabel.text = curWork.bookmarks
@@ -473,22 +473,22 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
                     cStorage.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
                 }
             
-                showLoadingView(msg: "Loading page \(indexPath.row)")
+                showLoadingView(msg: ("\(NSLocalizedString("LoadingPage", comment: "")) \(indexPath.row)"))
             
-            let urlStr = "http://archiveofourown.org" + page.url
+                let urlStr = "http://archiveofourown.org" + page.url
             
-            Alamofire.request(urlStr)
-                .response(completionHandler: { response in
+                Alamofire.request(urlStr)
+                    .response(completionHandler: { response in
                     //  print(request)
                     //  println(response)
-                    print(response.error ?? "")
+                        print(response.error ?? "")
                     
-                    self.parseCookies(response)
+                        self.parseCookies(response)
                     
-                    if let data = response.data {
-                        self.getFeed(data)
-                    }
-                    self.showFeed()
+                        if let data = response.data {
+                            self.getFeed(data)
+                        }
+                        self.showFeed()
                 })
             }
         }
@@ -590,7 +590,7 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
             Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
         }
        
-        showLoadingView(msg: "Searching...")
+        showLoadingView(msg: NSLocalizedString("Searching", comment: ""))
         
         guard let url = URL( string: (encodedURLRequest?.url?.absoluteString)!) else {
             return
@@ -609,7 +609,7 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
                     self.getFeed(d)
                 } else {
                     self.hideLoadingView()
-                    TSMessage.showNotification(in: self, title: "Error", subtitle: "Check your Internet connection", type: .error, duration: 2.0)
+                    TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error, duration: 2.0)
                 }
                 
                 self.showFeed()
@@ -630,7 +630,7 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
             print("premium")
         } else {
             if (countWroksFromDB() > 29) {
-                TSMessage.showNotification(in: self, title: "Error", subtitle: "You can only download 30 stories. Please, upgrade to download more.", type: .error, duration: 2.0)
+                TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Only30Stroies", comment: ""), type: .error, duration: 2.0)
 
                 return
             }
@@ -638,7 +638,7 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
         
         let curWork:NewsFeedItem = works[sender.tag]
         
-        showLoadingView(msg: "Downloading work \(curWork.title)")
+        showLoadingView(msg: "\(NSLocalizedString("DwnloadingWrk", comment: "")) \(curWork.title)")
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
             Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
@@ -657,7 +657,7 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
                     self.downloadWork(d, curWork: curWork)
                     self.hideLoadingView()
                 } else {
-                    TSMessage.showNotification(in: self, title: "Error", subtitle: "Cannot download work!", type: .error, duration: 2.0)
+                    TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CannotDwnldWrk", comment: ""), type: .error, duration: 2.0)
                     self.hideLoadingView()
                 }
         })

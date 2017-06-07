@@ -296,23 +296,44 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
             }
         }
         
+//        Alamofire.request("http://archiveofourown.org/works/" + workItem.workId + "/chapters/" + chapterId, method: .get, parameters: params)
+//            .response(completionHandler: { response in
+//                print(response.request ?? "")
+//                
+//                print(response.error ?? "")
+//                
+//                if let d = response.data {
+//                    self.parseCookies(response)
+//                    self.work = self.parseChapter(d)
+//                    self.hideLoadingView()
+//                    self.showWork()
+//                    
+//                } else {
+//                    self.hideLoadingView()
+//                    TSMessage.showNotification(in: self, title: "Error", subtitle: "Check your Internet connection", type: .error)
+//                }
+//            })
+        
         Alamofire.request("http://archiveofourown.org/works/" + workItem.workId + "/chapters/" + chapterId, method: .get, parameters: params)
-            .response(completionHandler: { response in
-                print(response.request ?? "")
-                
-                print(response.error ?? "")
-                
-                if let d = response.data {
-                    self.parseCookies(response)
-                    self.work = self.parseChapter(d)
-                    self.hideLoadingView()
-                    self.showWork()
-                    
-                } else {
-                    self.hideLoadingView()
-                    TSMessage.showNotification(in: self, title: "Error", subtitle: "Check your Internet connection", type: .error)
-                }
-            })
+            .response(completionHandler: onWorksLoaded(_:))
+    }
+    
+    func onWorksLoaded(_ response: DefaultDataResponse) {
+        print(response.request ?? "")
+        
+        print(response.error ?? "")
+        
+        if let d = response.data {
+            self.parseCookies(response)
+            self.work = self.parseChapter(d)
+            self.hideLoadingView()
+            self.showWork()
+            
+        } else {
+            self.hideLoadingView()
+            TSMessage.showNotification(in: self, title: "Error", subtitle: "Check your Internet connection", type: .error)
+        }
+        
     }
     
     func parseChapter(_ data: Data) -> String {

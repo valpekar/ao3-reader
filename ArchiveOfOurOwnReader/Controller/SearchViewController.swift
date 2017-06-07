@@ -35,11 +35,28 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
    // var fandoms:[Fandom] = [Fandom]()
     var searchTags:[String] = [String]()
     var excludeTags:[String] = [String]()
-    var labelTitlesWithText:[String] = ["Any Field", "Title", "Author", "Language", "Rating"]
-    var sortlabelTitlesWithText:[String] = ["Sort by", "Sort direction"]
-    var worktagsTitlesWithText:[String] = ["Fandoms", "Relationships", "Characters"]
-    var labelTitlesFromTo:[String] = ["Kudos", "Hits", "Comments", "Bookmarks", "Word Count"]
-    var labelTitlesSwitch:[String] = ["Choose Not To Use Archive Warnings", "Graphic Depictions Of Violence", "Major Character Death", "No Archive Warnings Apply", "Rape/Non-Con", "Underage"]
+    var labelTitlesWithText:[String] = [
+        NSLocalizedString("AnyField", comment: ""),
+        NSLocalizedString("Title", comment: ""),
+        NSLocalizedString("Author", comment: ""),
+        NSLocalizedString("Language", comment: ""),
+        NSLocalizedString("Rating", comment: "")]
+    var sortlabelTitlesWithText:[String] = [NSLocalizedString("SortBy", comment: ""),
+                                            NSLocalizedString("SortDirection", comment: "")]
+    var worktagsTitlesWithText:[String] = [NSLocalizedString("Fandoms", comment: ""),
+                                           NSLocalizedString("Relationships", comment: ""),
+                                           NSLocalizedString("Characters", comment: "")]
+    var labelTitlesFromTo:[String] = [NSLocalizedString("Kudos", comment: ""),
+                                      NSLocalizedString("Hits", comment: ""),
+                                      NSLocalizedString("Comments", comment: ""),
+                                      NSLocalizedString("Bookmarks", comment: ""),
+                                      NSLocalizedString("WordCount", comment: "")]
+    var labelTitlesSwitch:[String] = [NSLocalizedString("ChooseNoWarn", comment: ""),
+                                      NSLocalizedString("GraphicViolence", comment: ""),
+                                      NSLocalizedString("MajorCharDeath", comment: ""),
+                                      NSLocalizedString("NoWarn", comment: ""),
+                                      NSLocalizedString("RapeNonCon", comment: ""),
+                                      NSLocalizedString("Underage", comment: "")]
     var imgTitlesFromTo:[String] = ["likes", "hits", "comments", "bookmark", "word"]
     
     var currentTextField: UITextField?
@@ -152,12 +169,12 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
                 (cell as? SearchTagWithTextCell)?.textField.text = selectedRaiting
             case 5:
                 cell = (tableView.dequeueReusableCell(withIdentifier: "searchSwitchCell") as? SearchSwitchCell)!
-                (cell as? SearchSwitchCell)?.label.text = "Single Chapter"
+                (cell as? SearchSwitchCell)?.label.text = NSLocalizedString("SingleChpt", comment: "")
                 (cell as? SearchSwitchCell)?.switchItem.tag = TAG_SINGLE_CHAPTER
                 setCategorySwitchState((cell as? SearchSwitchCell)!.switchItem)
             case 6:
                 cell = (tableView.dequeueReusableCell(withIdentifier: "searchSwitchCell") as? SearchSwitchCell)!
-                (cell as? SearchSwitchCell)?.label.text = "Complete"
+                (cell as? SearchSwitchCell)?.label.text = NSLocalizedString("Complete", comment: "")
                 (cell as? SearchSwitchCell)?.switchItem.tag = TAG_COMPLETE
                 setCategorySwitchState((cell as? SearchSwitchCell)!.switchItem)
             default:
@@ -172,8 +189,8 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
             (cell as? SearchFromToCell)?.fromTextView.delegate = self
             (cell as? SearchFromToCell)?.toTextView.delegate = self
             
-            (cell as? SearchFromToCell)?.fromTextView.placeholder = "From"
-            (cell as? SearchFromToCell)?.toTextView.placeholder = "To"
+            (cell as? SearchFromToCell)?.fromTextView.placeholder = NSLocalizedString("From", comment: "")
+            (cell as? SearchFromToCell)?.toTextView.placeholder = NSLocalizedString("To", comment: "")
             
             switch ((indexPath as NSIndexPath).row) {
             case 0:
@@ -346,21 +363,21 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
         
         switch (section) {
         case 0:
-            res = "Include Tags"
+            res = NSLocalizedString("IncludeTags", comment: "")
         case 1:
-            res = "Exclude Tags"
+            res = NSLocalizedString("ExcludeTags", comment: "")
         case 2:
-            res = "Work Info"
+            res = NSLocalizedString("WorkInfo", comment: "")
         case 3:
-            res = "Stats"
+            res = NSLocalizedString("Stats", comment: "")
         case 4:
-            res = "Category"
+            res = NSLocalizedString("Category", comment: "")
         case 5:
-            res = "Warnings"
+            res = NSLocalizedString("Warnings", comment: "")
         case 6:
-            res = "Work Tags"
+            res = NSLocalizedString("WorkTags", comment: "")
         case 7:
-            res = "Search"
+            res = NSLocalizedString("Search", comment: "")
         default:
             break
         }

@@ -10,12 +10,15 @@ import UIKit
 import Alamofire
 import TSMessages
 
-class CommentViewController: LoadingViewController, UITableViewDelegate, UITableViewDataSource, UIWebViewDelegate {
+class CommentViewController: LoadingViewController, UITableViewDelegate, UITableViewDataSource, UIWebViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     @IBOutlet weak var commentTv: UITextView!
     @IBOutlet weak var sendBtn: UIButton!
     @IBOutlet weak var commentsWebView: UIWebView!
     @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var collectionView: UICollectionView!
+    
+    var pages : [PageItem] = [PageItem]()
     
     var shouldScroll = false
     
@@ -102,6 +105,9 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
     }
     
     func parseComments(_ data: Data) {
+        
+        htmlStr = ""
+        
         let doc : TFHpple = TFHpple(htmlData: data)
         
         if let sorrydiv = doc.search(withXPathQuery: "//div[@class='flash error']") {
@@ -137,6 +143,41 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
         htmlStr.append("</ol></body></html>")
         htmlStr = htmlStr.replacingOccurrences(of: "\n", with: "<p></p>")
         //(.|\n)*?<\\/ul>
+        
+        pages.removeAll(keepingCapacity: false)
+        
+        //parse pages
+        if let paginationActions = doc.search(withXPathQuery: "//ol[@class='pagination actions']") {
+            if(paginationActions.count > 0) {
+                guard let paginationArr = (paginationActions[0] as AnyObject).search(withXPathQuery: "//li") else {
+                    return
+                }
+                
+                for i in 0..<paginationArr.count {
+                    let page: TFHppleElement = paginationArr[i] as! TFHppleElement
+                    let pageItem = PageItem()
+                    
+                    pageItem.name = page.content
+                    
+                    var attrs = page.search(withXPathQuery: "//a") as! [TFHppleElement]
+                    
+                    if (attrs.count > 0) {
+                        
+                        let attributesh : NSDictionary? = attrs[0].attributes as NSDictionary
+                        if (attributesh != nil) {
+                            pageItem.url = attributesh!["href"] as! String
+                        }
+                    }
+                    
+                    let current = page.search(withXPathQuery: "//span") as! [TFHppleElement]
+                    if (current.count > 0) {
+                        pageItem.isCurrent = true
+                    }
+                    
+                    pages.append(pageItem)
+                }
+            }
+        }
     }
     
     func loadCurrentTheme() {
@@ -175,6 +216,8 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
         
         commentsWebView.reload()
         commentsWebView.loadHTMLString(worktext, baseURL: nil)
+        
+        collectionView.reloadData()
     }
     
     //MARK: - UIWebViewDelegate
@@ -307,5 +350,63 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
         commentTv.endEditing(true)
         commentTv.text = ""
         
+    }
+    
+    //MARK: - collectionview
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return pages.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cellIdentifier: String = "PageCell"
+        
+        let cell: PageCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! PageCollectionViewCell
+        
+        cell.titleLabel.text = pages[(indexPath as NSIndexPath).row].name
+        
+        if (pages[(indexPath as NSIndexPath).row].url.isEmpty) {
+            cell.titleLabel.textColor = UIColor(red: 169/255, green: 164/255, blue: 164/255, alpha: 1)
+        } else {
+            cell.titleLabel.textColor = UIColor.black
+        }
+        
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        let page: PageItem = pages[indexPath.row]
+        if (!page.url.isEmpty) {
+            
+            if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
+                Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
+            }
+            
+            showLoadingView(msg: "Loading page \(indexPath.row)")
+            
+            Alamofire.request("http://archiveofourown.org" + page.url, method: .get).response(completionHandler: { response in
+                print(response.request ?? "")
+                print(response.error ?? "")
+                if let data: Data = response.data {
+                    self.parseCookies(response)
+                    self.parseComments(data)
+                    self.hideLoadingView()
+                    self.loadCurrentTheme()
+                } else {
+                    self.hideLoadingView()
+                    TSMessage.showNotification(in: self, title: "Error", subtitle: "Check your Internet connection", type: .error)
+                }
+            })
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        switch ((indexPath as NSIndexPath).row) {
+        case 0, self.collectionView(collectionView, numberOfItemsInSection: (indexPath as NSIndexPath).section) - 1:
+            return CGSize(width: 100, height: 28)
+        default:
+            return CGSize(width: 50, height: 28)
+        }
     }
 }
