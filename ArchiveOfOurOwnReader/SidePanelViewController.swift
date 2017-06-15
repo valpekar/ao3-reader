@@ -19,7 +19,14 @@ class SidePanelViewController: UIViewController, UITableViewDataSource, UITableV
 
     var delegate: SidePanelViewControllerDelegate?
     
-    let controllers = ["Browse", "Bookmarks", "History", "Downloaded", "Me", "Recommendations", "Support"/*, "Publish"*/]
+    let controllers = [NSLocalizedString("Browse", comment: ""),
+                       NSLocalizedString("Bookmarks", comment: ""),
+                       NSLocalizedString("History", comment: ""),
+                       NSLocalizedString("Downloaded", comment: ""),
+                       NSLocalizedString("Me", comment: ""),
+                       NSLocalizedString("Recommendations", comment: ""),
+                       NSLocalizedString("Support", comment: "")
+        /*, "Publish"*/]
     let imgs = ["shortstory", "bmk", "history" ,"download-100", "profile", "shortstory", "support"/*, "shortstory"*/]
     
     struct TableView {

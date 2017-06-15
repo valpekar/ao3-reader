@@ -241,8 +241,8 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
         if(sorrydiv.count>0) {
             if let sorrydivFirst = sorrydiv[0] as? TFHppleElement {
                 if (sorrydivFirst.text().range(of: "Sorry") != nil) {
-                    workItem.setValue("Sorry!", forKey: "author")
-                    workItem.setValue("This work is only available to registered users of the Archive", forKey: "workTitle")
+                    workItem.setValue(NSLocalizedString("Sorry", comment: ""), forKey: "author")
+                    workItem.setValue(NSLocalizedString("WrkAvailOnlyRegistered", comment: ""), forKey: "workTitle")
                     workItem.setValue("", forKey: "complete")
                     //   return NEXT_CHAPTER_NOT_EXIST;
                     return
@@ -254,8 +254,8 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
         if let caution = doc.search(withXPathQuery: "//p[@class='caution']") {
         
         if (caution.count>0 && (caution[0] as? TFHppleElement)?.text().range(of: "adult content") != nil) {
-            workItem.setValue("Sorry!", forKey: "author")
-            workItem.setValue("This work contains adult conetnt. To view it you need to login and confirm that you are at least 18.", forKey: "workTitle")
+            workItem.setValue(NSLocalizedString("Sorry", comment: ""), forKey: "author")
+            workItem.setValue(NSLocalizedString("ContainsAdultContent", comment: ""), forKey: "workTitle")
             workItem.setValue("", forKey: "complete")
             
             return
@@ -438,7 +438,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
                         print(response.request ?? "")
                         print(response.error ?? "")
                         if let data = response.data {
-                            self.showLoadingView(msg: "Loading next chapter")
+                            self.showLoadingView(msg: NSLocalizedString("LoadingNxtChapter", comment: ""))
                             self.parseNxtChapter(data, curworkItem: workItem)
                         }
                         
@@ -735,7 +735,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
         doneToolbar.backgroundColor = UIColor.white
         
         let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
-        let done: UIBarButtonItem = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.done, target: self, action: #selector(LoadingViewController.doneButtonAction))
+        let done: UIBarButtonItem = UIBarButtonItem(title: NSLocalizedString("Done", comment: ""), style: UIBarButtonItemStyle.done, target: self, action: #selector(LoadingViewController.doneButtonAction))
         done.tintColor = UIColor(red: 255/0, green: 77/255, blue: 80/255, alpha: 1)
         
         var items: [UIBarButtonItem] = [UIBarButtonItem]()
@@ -755,7 +755,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
         doneToolbar.backgroundColor = UIColor(red: 198/255, green: 208/255, blue: 209/255, alpha: 1)
         
         let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
-        let done: UIBarButtonItem = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.done, target: self, action: #selector(LoadingViewController.doneButtonAction))
+        let done: UIBarButtonItem = UIBarButtonItem(title: NSLocalizedString("Done", comment: ""), style: UIBarButtonItemStyle.done, target: self, action: #selector(LoadingViewController.doneButtonAction))
         done.tintColor = UIColor(red: 99/255, green: 0/255, blue: 0/255, alpha: 1)
         
         var items: [UIBarButtonItem] = [UIBarButtonItem]()

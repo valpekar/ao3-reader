@@ -33,7 +33,7 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 
 class HistoryViewController : LoadingViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
-    var boomarksAddedStr = "History"
+    var boomarksAddedStr = NSLocalizedString("History", comment: "")
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var tableView:UITableView!
     @IBOutlet weak var errView:UIView!
@@ -48,10 +48,10 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
         
         self.createDrawerButton()
         
-        self.title = "History"
+        self.title = NSLocalizedString("History", comment: "")
         
         self.refreshControl = UIRefreshControl()
-        self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        self.refreshControl.attributedTitle = NSAttributedString(string: NSLocalizedString("PullToRefresh", comment: ""))
         self.refreshControl.addTarget(self, action: #selector(HistoryViewController.refresh(_:)), for: UIControlEvents.valueChanged)
         self.tableView.addSubview(self.refreshControl)
         
@@ -87,7 +87,7 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
         
         let username = DefaultsManager.getString(DefaultsManager.LOGIN)
         
-        showLoadingView(msg: "Getting Hisory")
+        showLoadingView(msg: NSLocalizedString("GettingHistory", comment: ""))
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
             Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
@@ -108,7 +108,7 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
                     self.showHistory()
                 } else {
                     self.hideLoadingView()
-                    TSMessage.showNotification(in: self, title: "Error", subtitle: "Check your Internet connection", type: .error)
+                    TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
 
                 }
                 
@@ -352,7 +352,7 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
         cell?.datetimeLabel.text = curWork.dateTime
         cell?.languageLabel.text = curWork.language
         cell?.wordsLabel.text = curWork.words
-        cell?.chaptersLabel.text = "Chapters: " + curWork.chapters
+        cell?.chaptersLabel.text = NSLocalizedString("Chapters_", comment: "") + curWork.chapters
         cell?.commentsLabel.text = curWork.comments
         cell?.kudosLabel.text = curWork.kudos
         cell?.bookmarksLabel.text = curWork.bookmarks
@@ -402,7 +402,7 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
                 Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
             }
             
-            showLoadingView(msg: "Loading page \(indexPath.row)")
+            showLoadingView(msg: "\(NSLocalizedString("LoadingPage", comment: "")) \(indexPath.row)")
             
             Alamofire.request("http://archiveofourown.org" + page.url, method: .get).response(completionHandler: { response in
                 print(response.error ?? "")
@@ -412,7 +412,7 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
                     self.showHistory()
                 } else {
                     self.hideLoadingView()
-                    TSMessage.showNotification(in: self, title: "Error", subtitle: "Check your Internet connection", type: .error)
+                    TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
                 }
             })
             
@@ -473,7 +473,7 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
     @IBAction func downloadButtonTouched(_ sender: UIButton) {
         
         let curWork:NewsFeedItem = works[sender.tag]
-        showLoadingView(msg: "Downloading work \(curWork.title)")
+        showLoadingView(msg: "\(NSLocalizedString("DwnloadingWrk", comment: "")) \(curWork.title)")
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
             Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
@@ -493,7 +493,7 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
                     self.downloadWork(d, curWork: curWork)
                 } else {
                     self.hideLoadingView()
-                    TSMessage.showNotification(in: self, title: "Error", subtitle: "Check your Internet connection", type: .error)
+                    TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
                 }
             })
         
@@ -503,13 +503,13 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
     
     @IBAction func deleteButtonTouched(_ sender: UIButton) {
         
-        let deleteAlert = UIAlertController(title: "Are you sure?", message: "Are you sure you would like to delete this work from history?", preferredStyle: UIAlertControllerStyle.alert)
+        let deleteAlert = UIAlertController(title: NSLocalizedString("AreYouSure", comment: ""), message: NSLocalizedString("SureDeleteFromHistory", comment: ""), preferredStyle: UIAlertControllerStyle.alert)
         
-        deleteAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { (action: UIAlertAction) in
+        deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .default, handler: { (action: UIAlertAction) in
             print("Cancel")
         }))
         
-        deleteAlert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action: UIAlertAction) in
+        deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Yes", comment: ""), style: .default, handler: { (action: UIAlertAction) in
             
             let curWork:NewsFeedItem = self.works[sender.tag]
             self.deleteItemFromHistory(curWork)
@@ -523,7 +523,7 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
     }
     
     func deleteItemFromHistory(_ curWork: NewsFeedItem) {
-        showLoadingView(msg: "Deleting from History")
+        showLoadingView(msg: NSLocalizedString("DeletingFromHistory", comment: ""))
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
             Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
@@ -560,7 +560,7 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
                     self.hideLoadingView()
                 } else {
                     self.hideLoadingView()
-                    TSMessage.showNotification(in: self, title: "Error", subtitle: "Check your Internet connection", type: .error)
+                    TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
                 }
             })
     }
@@ -580,7 +580,7 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
             var sorrydiv = doc.search(withXPathQuery: "//div[@class='flash error']")
             
             if(sorrydiv != nil && sorrydiv?.count>0 && (sorrydiv?[0] as! TFHppleElement).text().range(of: "Sorry") != nil) {
-                self.view.makeToast(message: (sorrydiv![0] as AnyObject).content, duration: 4.0, position: "center" as AnyObject, title: "Delete from History")
+                self.view.makeToast(message: (sorrydiv![0] as AnyObject).content, duration: 4.0, position: "center" as AnyObject, title: NSLocalizedString("DeletingFromHistory", comment: ""))
                 return
             }
         }

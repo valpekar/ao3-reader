@@ -76,7 +76,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         }
         
        // donated = false
-      //  purchased = false
+       // purchased = true
         
         if ((purchased || donated) && DefaultsManager.getBool(DefaultsManager.ADULT) == nil) {
             DefaultsManager.putBool(true, key: DefaultsManager.ADULT)
@@ -1200,40 +1200,43 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             }
         }
 
-        
         if (workItem != nil) {
             Alamofire.request("http://archiveofourown.org/works/" + workItem.workId + vadult, method: .get, parameters: params)
-                .response(completionHandler: { response in
-                    print(response.request ?? "")
-                    
-                    print(response.error ?? "")
-                    
-                    if let d = response.data {
-                        self.parseCookies(response)
-                        self.downloadWork(d, workItemOld: self.workItem)
-                        
-                    } else {
-                        self.hideLoadingView()
-                        TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
-                    }
-                })
+                .response(completionHandler: onOnlineWorkLoaded(_:))
         } else if (downloadedWorkItem != nil) {
             Alamofire.request("http://archiveofourown.org/works/" + (downloadedWorkItem.value(forKey: "workId") as? String ?? "0"), method: .get, parameters: params)
-                .response(completionHandler: { response in
-                    print(response.request ?? "")
-                    
-                    print(response.error ?? "")
-                    
-                    if let d = response.data {
-                        self.parseCookies(response)
-                        self.downloadWork(d, workItemToReload: self.downloadedWorkItem)
-                    } else {
-                        self.hideLoadingView()
-                        TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
-                    }
-                })
+                .response(completionHandler: onSavedWorkLoaded(_:))
         }
 
+    }
+    
+    func onSavedWorkLoaded(_ response: DefaultDataResponse) {
+        print(response.request ?? "")
+        
+        print(response.error ?? "")
+        
+        if let d = response.data {
+            self.parseCookies(response)
+            self.downloadWork(d, workItemToReload: self.downloadedWorkItem)
+        } else {
+            self.hideLoadingView()
+            TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
+        }
+    }
+    
+    func onOnlineWorkLoaded(_ response: DefaultDataResponse) {
+        print(response.request ?? "")
+        
+        print(response.error ?? "")
+        
+        if let d = response.data {
+            self.parseCookies(response)
+            self.downloadWork(d, workItemOld: self.workItem)
+            
+        } else {
+            self.hideLoadingView()
+            TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
+        }
     }
     
     func deleteWork() {

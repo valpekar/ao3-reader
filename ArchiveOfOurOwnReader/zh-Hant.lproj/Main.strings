@@ -12,7 +12,7 @@
 "1R8-0L-DuC.text" = "F/F";
 
 /* Class = "UILabel"; text = "Further app improvements rely on your support! If you find app useful, pls consider supporting it by leaving a tip!"; ObjectID = "1uP-Y7-fEC"; */
-"1uP-Y7-fEC.text" = "Further app improvements rely on your support! If you find app useful, pls consider supporting it by leaving a tip!";
+"1uP-Y7-fEC.text" = "進一步的應用程序改進依賴於您的支持！ 如果您發現應用程序有用，請考慮支持它留下提示！";
 
 /* Class = "UILabel"; text = "Fandoms: TorchWood"; ObjectID = "2kE-Of-Bc8"; */
 "2kE-Of-Bc8.text" = "粉絲：BTS";
@@ -21,7 +21,7 @@
 "2n0-Ld-9Ht.text" = "English";
 
 /* Class = "UILabel"; text = "Sync with \nAO3"; ObjectID = "35J-U3-wfK"; */
-"35J-U3-wfK.text" = "Sync with \nAO3";
+"35J-U3-wfK.text" = "與AO3同步";
 
 /* Class = "UIViewController"; title = "Contents View Controller"; ObjectID = "4E5-kX-d7y"; */
 "4E5-kX-d7y.title" = "Contents View Controller";
@@ -33,7 +33,7 @@
 "4VT-L1-fAL.text" = "Topic";
 
 /* Class = "UIButton"; normalTitle = "Check AO3 Status"; ObjectID = "4h0-Cf-VHx"; */
-"4h0-Cf-VHx.normalTitle" = "Check AO3 Status";
+"4h0-Cf-VHx.normalTitle" = "檢查AO3狀態 🌐";
 
 /* Class = "UILabel"; text = "0"; ObjectID = "4iA-ni-4qk"; */
 "4iA-ni-4qk.text" = "0";
@@ -42,7 +42,7 @@
 "4x1-P4-Eyt.text" = "Label";
 
 /* Class = "UITabBarItem"; title = "Recommendations"; ObjectID = "5VD-on-31r"; */
-"5VD-on-31r.title" = "Recommendations";
+"5VD-on-31r.title" = "建議";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "5oW-a4-ug6"; */
 "5oW-a4-ug6.text" = "Label";
@@ -51,10 +51,10 @@
 "68l-ue-rnj.text" = "Label";
 
 /* Class = "UIButton"; normalTitle = "Sync with AO3"; ObjectID = "6HO-t4-687"; */
-"6HO-t4-687.normalTitle" = "Sync with AO3";
+"6HO-t4-687.normalTitle" = "與AO3同步";
 
 /* Class = "UIButton"; normalTitle = "About Subscription"; ObjectID = "6IA-j4-WUw"; */
-"6IA-j4-WUw.normalTitle" = "About Subscription";
+"6IA-j4-WUw.normalTitle" = "關於訂閱";
 
 /* Class = "UILabel"; text = "0"; ObjectID = "6WZ-X0-Dx0"; */
 "6WZ-X0-Dx0.text" = "0";
@@ -63,7 +63,7 @@
 "75g-oS-n3L.title" = "Publish";
 
 /* Class = "UIButton"; normalTitle = "Try Again"; ObjectID = "7BG-8k-w0K"; */
-"7BG-8k-w0K.normalTitle" = "再試一次";
+"7BG-8k-w0K.normalTitle" = "再試一次 🤔";
 
 /* Class = "UILabel"; text = "Rating"; ObjectID = "7GF-5E-KjG"; */
 "7GF-5E-KjG.text" = "Rating";
@@ -87,16 +87,16 @@
 "8zv-1z-prL.text" = "0";
 
 /* Class = "UIButton"; normalTitle = "Search and Save"; ObjectID = "94t-ZN-LIC"; */
-"94t-ZN-LIC.normalTitle" = "Search and Save";
+"94t-ZN-LIC.normalTitle" = "搜索和保存 🔍";
 
 /* Class = "UIButton"; normalTitle = "Contents"; ObjectID = "9GD-Ss-iAe"; */
-"9GD-Ss-iAe.normalTitle" = "Contents";
+"9GD-Ss-iAe.normalTitle" = "內容";
 
 /* Class = "UILabel"; text = "Topic"; ObjectID = "9nb-J7-hFR"; */
 "9nb-J7-hFR.text" = "Topic";
 
 /* Class = "UIButton"; normalTitle = "Try Again"; ObjectID = "A75-PV-GyA"; */
-"A75-PV-GyA.normalTitle" = "再試一次";
+"A75-PV-GyA.normalTitle" = "再試一次 🤔";
 
 /* Class = "UILabel"; text = "17 Nov 2014"; ObjectID = "AF7-Ms-IXY"; */
 "AF7-Ms-IXY.text" = "17 Nov 2014";
@@ -108,7 +108,7 @@
 "AU5-ba-foJ.text" = "Label";
 
 /* Class = "UILabel"; text = "Confirm you are 18 and older"; ObjectID = "An2-hx-brd"; */
-"An2-hx-brd.text" = "Confirm you are 18 and older";
+"An2-hx-brd.text" = "確認你是18歲以上";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "Aro-oq-Q66"; */
 "Aro-oq-Q66.text" = "Label";
@@ -129,7 +129,7 @@
 "BFP-BQ-ROk.text" = "Label";
 
 /* Class = "UIButton"; normalTitle = "Read"; ObjectID = "BZH-PI-909"; */
-"BZH-PI-909.normalTitle" = "Read";
+"BZH-PI-909.normalTitle" = "讀 📖";
 
 /* Class = "UILabel"; text = "Topic"; ObjectID = "CbL-S4-54X"; */
 "CbL-S4-54X.text" = "Topic";
@@ -153,7 +153,7 @@
 "Fi2-8C-6AD.text" = "0";
 
 /* Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "Fqm-o4-fyH"; */
-"Fqm-o4-fyH.title" = "Cancel";
+"Fqm-o4-fyH.title" = "取消";
 
 /* Class = "UILabel"; text = "–"; ObjectID = "GJw-AP-j6m"; */
 "GJw-AP-j6m.text" = "–";
@@ -192,13 +192,13 @@
 "KHh-Cf-Hty.text" = "0";
 
 /* Class = "UIButton"; normalTitle = "Try Again"; ObjectID = "KXq-iU-SSa"; */
-"KXq-iU-SSa.normalTitle" = "再試一次";
+"KXq-iU-SSa.normalTitle" = "再試一次 🤔";
 
 /* Class = "UILabel"; text = "Fandoms: TorchWood"; ObjectID = "Kgb-E2-Ggc"; */
 "Kgb-E2-Ggc.text" = "Fandoms: TorchWood";
 
 /* Class = "UIBarButtonItem"; title = "Search"; ObjectID = "Kwm-ru-L9h"; */
-"Kwm-ru-L9h.title" = "Search";
+"Kwm-ru-L9h.title" = "搜索";
 
 /* Class = "UILabel"; text = "0"; ObjectID = "LGo-tq-czb"; */
 "LGo-tq-czb.text" = "0";
@@ -249,7 +249,7 @@
 "SVu-xG-6JQ.text" = "0";
 
 /* Class = "UIButton"; normalTitle = "Try Again"; ObjectID = "SWE-i5-xSO"; */
-"SWE-i5-xSO.normalTitle" = "再試一次";
+"SWE-i5-xSO.normalTitle" = "再試一次 🤔";
 
 /* Class = "UILabel"; text = "Fandoms: TorchWood"; ObjectID = "Sfx-4U-hTM"; */
 "Sfx-4U-hTM.text" = "Fandoms: TorchWood";
@@ -330,7 +330,7 @@
 "fOb-J6-ufW.text" = "0";
 
 /* Class = "UILabel"; text = "What's your main fandom? "; ObjectID = "fcf-bB-WV2"; */
-"fcf-bB-WV2.text" = "What's your main fandom? ";
+"fcf-bB-WV2.text" = "你的主要粉絲是什麼？ ❤️";
 
 /* Class = "UIBarButtonItem"; title = " "; ObjectID = "feO-jN-piB"; */
 "feO-jN-piB.title" = " ";
@@ -414,7 +414,7 @@
 "paK-zo-TA8.text" = "Title";
 
 /* Class = "UILabel"; text = "Cannot obtain data. \nPlease check your Internet connection and also make sure you are logged into your AO3 account (try to log in again)."; ObjectID = "pg6-4D-IWv"; */
-"pg6-4D-IWv.text" = "Cannot obtain data. \nPlease check your Internet connection and also make sure you are logged into your AO3 account (try to log in again).";
+"pg6-4D-IWv.text" = "無法獲取數據。\n請檢查您的Internet連接，並確保您已登錄到您的AO3帳戶（嘗試重新登錄）。.";
 
 /* Class = "UILabel"; text = "Other"; ObjectID = "pih-i1-DPs"; */
 "pih-i1-DPs.text" = "Other";
@@ -447,7 +447,7 @@
 "ulu-gZ-mzD.text" = "0";
 
 /* Class = "UILabel"; text = "Notify me when new Recommendations are ready (Pro only)"; ObjectID = "unF-Y4-c6i"; */
-"unF-Y4-c6i.text" = "Notify me when new Recommendations are ready (Pro only)";
+"unF-Y4-c6i.text" = "新建議書準備好後通知我 (Pro only)";
 
 /* Class = "UILabel"; text = "0"; ObjectID = "vKQ-X2-UgD"; */
 "vKQ-X2-UgD.text" = "0";
@@ -456,7 +456,7 @@
 "vLJ-ph-As1.text" = "17 Nov 2014";
 
 /* Class = "UILabel"; text = "Please select your pseud below for showing bookmarks and history"; ObjectID = "vjz-Ft-nxI"; */
-"vjz-Ft-nxI.text" = "Please select your pseud below for showing bookmarks and history";
+"vjz-Ft-nxI.text" = "請選擇您的下面的偽文件以顯示書籤和歷史記錄";
 
 /* Class = "UIButton"; normalTitle = "Sync with AO3"; ObjectID = "vkf-xs-hdt"; */
 "vkf-xs-hdt.normalTitle" = "Sync with AO3";
@@ -474,16 +474,16 @@
 "wUJ-2n-PrN.text" = "Label";
 
 /* Class = "UIButton"; normalTitle = "Next Chapter"; ObjectID = "wnZ-d8-1x3"; */
-"wnZ-d8-1x3.normalTitle" = "Next Chapter";
+"wnZ-d8-1x3.normalTitle" = "下一章";
 
 /* Class = "UILabel"; text = "Not Authorized"; ObjectID = "wtc-SS-BYB"; */
-"wtc-SS-BYB.text" = "Not Authorized";
+"wtc-SS-BYB.text" = "未經授權";
 
 /* Class = "UILabel"; text = "Gen"; ObjectID = "wvj-CB-Ust"; */
 "wvj-CB-Ust.text" = "Gen";
 
 /* Class = "UILabel"; text = "Cannot obtain data. \nPlease check your Internet connection and also make sure you are logged into your AO3 account (try to log in again)."; ObjectID = "x0G-LH-Vxl"; */
-"x0G-LH-Vxl.text" = "Cannot obtain data. \nPlease check your Internet connection and also make sure you are logged into your AO3 account (try to log in again).";
+"x0G-LH-Vxl.text" = "無法獲取數據。\n請檢查您的Internet連接，並確保您已登錄到您的AO3帳戶（嘗試重新登錄）。";
 
 /* Class = "UITabBarItem"; title = "Bookmarks"; ObjectID = "xYS-vk-lFt"; */
 "xYS-vk-lFt.title" = "書籤";
@@ -492,13 +492,13 @@
 "yAO-as-kET.text" = "0";
 
 /* Class = "UIButton"; normalTitle = "Try Again"; ObjectID = "ybH-RR-fjQ"; */
-"ybH-RR-fjQ.normalTitle" = "再試一次";
+"ybH-RR-fjQ.normalTitle" = "再試一次 🤔";
 
 /* Class = "UIButton"; normalTitle = "Sync with AO3"; ObjectID = "ydx-2q-z32"; */
 "ydx-2q-z32.normalTitle" = "與AO3同步";
 
 /* Class = "UILabel"; text = "Application has Auto-Renewable Subscription (Prosub). The subscription price is 0.99$ per month.\nOnce you have purchased it, the subscription starts. Since then every week you will get digitally generated recommendations of fan fics (fan fiction works) to read. Subscription length is 1 month and it is auto-renewable.\n\nPayment will be charged to iTunes Account at confirmation of purchase.\nSubscription automatically renews unless auto-renew is turned off at least 24-hours before the end of the current period.\nAccount will be charged for renewal within 24-hours prior to the end of the current period, and identify the cost of the renewal.\nSubscriptions may be managed by the user and auto-renewal may be turned off by going to the user's Account Settings after purchase.\nNo cancellation of the current subscription is allowed during active subscription period.\n\nAny unused portion of a free trial period, if offered, will be forfeited when the user purchases a subscription to that publication.\n\nTo Unsubscribe:\n1. Go to Settings > iTunes & App Store.\n2. Tap your Apple ID at the top of the screen.\n3. Tap View Apple ID. \n4. Tap the subscription that you want to manage.\nIf you don't see a subscription but are still being charged, make sure that you're signed in with the correct Apple ID. \n5. Use the options to manage your subscription. You can tap Cancel Subscription. If you cancel, your subscription will stop at the end of the current billing cycle."; ObjectID = "yxE-bl-Qah"; */
-"yxE-bl-Qah.text" = "Application has Auto-Renewable Subscription (Prosub). The subscription price is 0.99$ per month.\nOnce you have purchased it, the subscription starts. Since then every week you will get digitally generated recommendations of fan fics (fan fiction works) to read. Subscription length is 1 month and it is auto-renewable.\n\nPayment will be charged to iTunes Account at confirmation of purchase.\nSubscription automatically renews unless auto-renew is turned off at least 24-hours before the end of the current period.\nAccount will be charged for renewal within 24-hours prior to the end of the current period, and identify the cost of the renewal.\nSubscriptions may be managed by the user and auto-renewal may be turned off by going to the user's Account Settings after purchase.\nNo cancellation of the current subscription is allowed during active subscription period.\n\nAny unused portion of a free trial period, if offered, will be forfeited when the user purchases a subscription to that publication.\n\nTo Unsubscribe:\n1. Go to Settings > iTunes & App Store.\n2. Tap your Apple ID at the top of the screen.\n3. Tap View Apple ID. \n4. Tap the subscription that you want to manage.\nIf you don't see a subscription but are still being charged, make sure that you're signed in with the correct Apple ID. \n5. Use the options to manage your subscription. You can tap Cancel Subscription. If you cancel, your subscription will stop at the end of the current billing cycle.";
+"yxE-bl-Qah.text" = "應用程序具有自動可再生訂閱（Prosub）。訂閱價格為每月0.99美元。\n一旦你購買了它，訂閱開始。從那以後，你每週都會獲得數字化的風扇迷你推薦（風扇小說作品）閱讀。訂閱期限為1個月，可自動更新。\n\n在確認購買時，付款將被收取到iTunes帳戶。\n訂閱將自動更新，除非自動續訂至少在本期結束前24小時關閉。\n帳戶將在本期結束前的24小時內收取續費費用，並確定續訂費用。\n訂閱可能由用戶管理，自動續訂可能會在購買後轉到用戶的帳戶設置關閉。\n在主動訂閱期間不允許取消當前訂閱。\n\n免費試用期的任何未使用部分（如果提供）將在用戶購買該出版物的訂閱時被沒收。\n\n取消訂閱：\n1.進入設置> iTunes＆App Store。\n2.點擊屏幕頂部的Apple ID。\n3.點擊查看Apple ID。\n4.點擊要管理的訂閱。\n如果您沒有看到訂閱但仍在收費，請確保您使用正確的Apple ID登錄。\n5.使用選項管理您的訂閱。您可以點擊取消訂閱。如果您取消訂閱，您的訂閱將在當前結算週期結束時停止。";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "yxf-WI-AV9"; */
 "yxf-WI-AV9.text" = "Label";

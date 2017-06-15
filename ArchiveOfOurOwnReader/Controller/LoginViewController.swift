@@ -63,7 +63,7 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
             let pass = passTextField.text {
             
             if (!login.isEmpty && !pass.isEmpty) {
-                showLoadingView(msg: "Please wait")
+                showLoadingView(msg: NSLocalizedString("PleaseWait", comment: ""))
                 getLoginParams()
             }
         }
@@ -131,7 +131,7 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
         
         guard let login = loginTextField.text,
             let pass = passTextField.text else {
-                TSMessage.showNotification(in: self, title: "Cannot login", subtitle: "Please fill user name and password", type: .error)
+                TSMessage.showNotification(in: self, title: NSLocalizedString("CannotLogin", comment: ""), subtitle: NSLocalizedString("FillUnamePass", comment: ""), type: .error)
                 return
         }
         
@@ -167,7 +167,7 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
                         
                     } else {
                         self.hideLoadingView()
-                        TSMessage.showNotification(in: self, title: "Error", subtitle: "Check your Internet connection", type: .error)
+                        TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
                     }
                 }
             })
@@ -183,7 +183,7 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
             return
         }
         
-        showLoadingView(msg: "Please wait")
+        showLoadingView(msg: NSLocalizedString("PleaseWait", comment: ""))
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
             Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
@@ -200,7 +200,7 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
                 } else {
                     self.hideLoadingView()
                     
-                    TSMessage.showNotification(in: self, title: "Error", subtitle: "Check your Internet connection", type: .error)
+                    TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
                 }
             })
     }
@@ -231,7 +231,7 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
         if (flashnoticediv.count > 0) {
             let noticeTxt = flashnoticediv[0].content as String
             if (noticeTxt == "Successfully logged in.") {
-                TSMessage.showNotification(in: self, title: "Log In", subtitle: "Successfully logged in!", type: .success)
+                TSMessage.showNotification(in: self, title: NSLocalizedString("LogIn", comment: ""), subtitle: NSLocalizedString("LoggedInScs", comment: ""), type: .success)
                 let delayTime = DispatchTime.now() + Double(Int64(1.500 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
                 
                 DefaultsManager.putBool(true, key: DefaultsManager.ADULT)
@@ -249,7 +249,7 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
     }
     
     func showError() {
-        TSMessage.showNotification(in: self, title: "Error", subtitle: "Cannot log in", type: .error)
+        TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CannotLogin", comment: ""), type: .error)
         
         self.dismiss(animated: true, completion: {
             self.controllerDelegate.controllerDidClosed()
@@ -305,16 +305,16 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
         
         guard let login = loginTextField.text,
             let pass = passTextField.text else {
-                TSMessage.showNotification(in: self, title: "Fields cannot be empty!", subtitle: "Please fill in login and password", type: .error)
+                TSMessage.showNotification(in: self, title: NSLocalizedString("FieldsCannotBeEmpty", comment: ""), subtitle: NSLocalizedString("FillUnamePass", comment: ""), type: .error)
                 return
         }
         
         if (pass.isEmpty || login.isEmpty) {
-            TSMessage.showNotification(in: self, title: "Fields cannot be empty!", subtitle: "Please fill in login and password", type: .error)
+            TSMessage.showNotification(in: self, title: NSLocalizedString("FieldsCannotBeEmpty", comment: ""), subtitle: NSLocalizedString("FillUnamePass", comment: ""), type: .error)
             return
         }
         
-        showLoadingView(msg: "Please wait")
+        showLoadingView(msg: NSLocalizedString("PleaseWait", comment: ""))
         getLoginParams()
         
         //sendLoginRequest()
@@ -346,9 +346,9 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
     }
     
     @IBAction func infoTouched(_ sender:AnyObject) {
-        let refreshAlert = UIAlertController(title: "Do I need to tell you my password?", message: "AO3 web site doesn't use OAuth technology which allows you to authorize without requiring you to share your password. So to get the data from your AO3 account this app uses your credentials to log in into the AO3 web site on your behalf. If you're not comfortable sharing your password, we would completely understand. However, your password is NEVER sent to nor stored on my server. Your password is saved securely on your iPhone or iPad in the iOS Keychain.", preferredStyle: UIAlertControllerStyle.alert)
+        let refreshAlert = UIAlertController(title: NSLocalizedString("DoINeedToTellMyPass", comment: ""), message: NSLocalizedString("TellPassExplain", comment: ""), preferredStyle: UIAlertControllerStyle.alert)
         
-        refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
+        refreshAlert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default, handler: { (action: UIAlertAction!) in
             refreshAlert.dismiss(animated: true, completion: nil)
         }))
         

@@ -22,14 +22,14 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
     
     var shouldScroll = false
     
-    var htmlStr = ""
+    var htmlStr = NSLocalizedString("NoComments", comment: "")
     var fontSize: Int = 100
     var workId = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = "Comments"
+        self.title = NSLocalizedString("Comments", comment: "")
         sendBtn.layer.cornerRadius = 5.0
         
         commentTv.layer.cornerRadius = 5.0
@@ -77,7 +77,7 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
         //http://archiveofourown.org/works/6107953?show_comments=true&view_full_work=true#comments
         let requestStr = "http://archiveofourown.org/works/" + workId + "?show_comments=true&view_full_work=true#comments"
         
-        showLoadingView(msg: "Getting comments")
+        showLoadingView(msg: NSLocalizedString("GettingComments", comment: ""))
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
             Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
@@ -97,7 +97,7 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
                     self.hideLoadingView()
                 } else {
                     self.hideLoadingView()
-                    TSMessage.showNotification(in: self, title: "Error", subtitle: "Check your Internet connection", type: .error)
+                    TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
                 }
             })
         
@@ -129,15 +129,26 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
                 do {
                     let regex = try NSRegularExpression(pattern: "href", options: .dotMatchesLineSeparators)
                 
-                    let raw:String = liEl.raw
+                    if let content = liEl.content {
+                        var c = content.replacingOccurrences(of: "\n", with: "")
+                        c = c.replacingOccurrences(of: " ", with: "")
+                        if (c.characters.count > 0) {
+                            let raw:String = liEl.raw
             
-                    htmlStr.append(regex.stringByReplacingMatches(in: raw, options: .reportCompletion, range: NSRange(location: 0, length: raw.characters.count), withTemplate: ""))
+                            htmlStr.append(regex.stringByReplacingMatches(in: raw, options: .reportCompletion, range: NSRange(location: 0, length: raw.characters.count), withTemplate: ""))
+                        }
+                    }
                 } catch {
                     print("commentsSection parse error")
                 }
             
             //htmlStr.appendContentsOf(liEl.raw.stringByReplacingOccurrencesOfString("<ul class='actions' role='menu' id='navigation_for_comment_[1-9]+'>(.|\n)*?</ul>", withString: "", options: NSStringCompareOptions.RegularExpressionSearch, range: nil))
             }
+        }
+        if (htmlStr.characters.count == 16) { //"<html><body><ol>"
+            htmlStr.append("<h2 align=\"center\">")
+            htmlStr.append(NSLocalizedString("NoComments", comment: ""))
+            htmlStr.append("</h2>")
         }
         
         htmlStr.append("</ol></body></html>")
@@ -276,12 +287,12 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
         if(commentTv.text != nil && commentTv.text.characters.count > 0) {
             sendComment()
         } else {
-            self.view.makeToast(message: "Please write your comment", duration: 1.5, position: "center" as AnyObject)
+            TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("PleaseWriteComment", comment: ""), type: .error)
         }
     }
     
     func sendComment() {
-        showLoadingView(msg: "Sending comment")
+        showLoadingView(msg: NSLocalizedString("SendingComment", comment: ""))
         
         let requestStr = "http://archiveofourown.org/works/" + workId + "/comments"
         let pseud_id = DefaultsManager.getString(DefaultsManager.PSEUD_ID)
@@ -319,7 +330,7 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
                         
                     } else {
                         self.hideLoadingView()
-                        TSMessage.showNotification(in: self, title: "Error", subtitle: "Check your Internet connection", type: .error)
+                        TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
                     }
                 })
         }
@@ -332,7 +343,7 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
         
         var noticediv: [TFHppleElement] = doc.search(withXPathQuery: "//div[@class='flash notice']") as! [TFHppleElement]
         if(noticediv.count > 0) {
-            self.view.makeToast(message: noticediv[0].content, duration: 3.0, position: "center" as AnyObject, title: "Adding Comment")
+            self.view.makeToast(message: noticediv[0].content, duration: 3.0, position: "center" as AnyObject, title: NSLocalizedString("AddingComment", comment: ""))
             
             //changedSmth = true
         } else {
@@ -383,7 +394,7 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
                 Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
             }
             
-            showLoadingView(msg: "Loading page \(indexPath.row)")
+            showLoadingView(msg: "\(NSLocalizedString("LoadingPage", comment: "")) \(indexPath.row)")
             
             Alamofire.request("http://archiveofourown.org" + page.url, method: .get).response(completionHandler: { response in
                 print(response.request ?? "")
@@ -395,7 +406,7 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
                     self.loadCurrentTheme()
                 } else {
                     self.hideLoadingView()
-                    TSMessage.showNotification(in: self, title: "Error", subtitle: "Check your Internet connection", type: .error)
+                    TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
                 }
             })
         }

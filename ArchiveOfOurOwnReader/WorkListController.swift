@@ -20,9 +20,9 @@ class WorkListController: LoadingViewController, UITableViewDataSource, UITableV
     var pages : [PageItem] = [PageItem]()
     var works : [NewsFeedItem] = [NewsFeedItem]()
     
-    var worksStr = "Work List"
+    var worksStr = NSLocalizedString("WorkList", comment: "")
     var tagUrl = ""
-    var tagName = "Work List"
+    var tagName = NSLocalizedString("WorkList", comment: "")
     
     var refreshControl: UIRefreshControl!
     
@@ -37,7 +37,7 @@ class WorkListController: LoadingViewController, UITableViewDataSource, UITableV
         self.tableView.estimatedRowHeight = 240
         
         self.refreshControl = UIRefreshControl()
-        self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        self.refreshControl.attributedTitle = NSAttributedString(string: NSLocalizedString("PullToRefresh", comment: ""))
         self.refreshControl.addTarget(self, action: #selector(FavoritesSiteController.refresh(_:)), for: UIControlEvents.valueChanged)
         self.tableView.addSubview(self.refreshControl)
         
@@ -73,7 +73,7 @@ class WorkListController: LoadingViewController, UITableViewDataSource, UITableV
             }
         }
         
-        showLoadingView(msg: "Loading works")
+        showLoadingView(msg: NSLocalizedString("GettingWorks", comment: ""))
         
         let urlStr = tagUrl
         
@@ -87,7 +87,7 @@ class WorkListController: LoadingViewController, UITableViewDataSource, UITableV
                     self.showWorks()
                 } else {
                     self.hideLoadingView()
-                    TSMessage.showNotification(in: self, title: "Error", subtitle: "Check your Internet connection", type: .error)
+                    TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
                 }
                 self.refreshControl.endRefreshing()
             })
@@ -382,7 +382,7 @@ class WorkListController: LoadingViewController, UITableViewDataSource, UITableV
                     self.showWorks()
                 } else {
                     self.hideLoadingView()
-                    TSMessage.showNotification(in: self, title: "Error", subtitle: "Check your Internet connection", type: .error)
+                    TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
                 }
             })
         }
@@ -446,7 +446,7 @@ class WorkListController: LoadingViewController, UITableViewDataSource, UITableV
     @IBAction func downloadButtonTouched(_ sender: UIButton) {
         
         let curWork:NewsFeedItem = works[sender.tag]
-        showLoadingView(msg: "Downloading work \(curWork.title)")
+        showLoadingView(msg: "\(NSLocalizedString("DwnloadingWrk", comment: "")) \(curWork.title)")
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
             Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
@@ -468,7 +468,7 @@ class WorkListController: LoadingViewController, UITableViewDataSource, UITableV
                     //self.saveWork()
                 } else {
                     self.hideLoadingView()
-                    TSMessage.showNotification(in: self, title: "Error", subtitle: "Check your Internet connection", type: .error)
+                    TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
                 }
             })
     }

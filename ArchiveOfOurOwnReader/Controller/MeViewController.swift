@@ -135,7 +135,7 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
             }
             
             pseudsTableView.reloadData()
-            loginButton.setTitle("Log Out", for: UIControlState())
+            loginButton.setTitle(NSLocalizedString("LogOut", comment: ""), for: UIControlState())
             
             adultSwitch.isEnabled = true
             notifSwitch.isEnabled = true
@@ -169,8 +169,8 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
     }
     
     func setNotAuthorizedUI() {
-        usernameLabel.text = "Not Authorized"
-        loginButton.setTitle("Log In", for: UIControlState())
+        usernameLabel.text = NSLocalizedString("NotAuthorized", comment: "")
+        loginButton.setTitle(NSLocalizedString("LogIn", comment: ""), for: UIControlState())
         
         notifSwitch.isEnabled = false
         adultSwitch.isEnabled = false
@@ -233,7 +233,7 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
     
     @IBAction func removeAdsTouched(_ sender: AnyObject) {
         
-        showLoadingView(msg: "Requesting data")
+        showLoadingView(msg: NSLocalizedString("RequestingData", comment: ""))
         
         products = []
         
@@ -261,7 +261,7 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
     
     @IBAction func smallTipTouched(_ sender: AnyObject) {
         
-        showLoadingView(msg: "Please wait")
+        showLoadingView(msg: NSLocalizedString("PleaseWait", comment: ""))
         
         products = []
         
@@ -289,7 +289,7 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
     
     @IBAction func mediumTipTouched(_ sender: AnyObject) {
         
-        showLoadingView(msg: "Please wait")
+        showLoadingView(msg: NSLocalizedString("PleaseWait", comment: ""))
         
         products = []
         
@@ -316,7 +316,7 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
     }
     
     @IBAction func largeTipTouched(_ sender: AnyObject) {
-        showLoadingView(msg: "Please wait")
+        showLoadingView(msg: NSLocalizedString("PleaseWait", comment: ""))
         
         products = []
         
@@ -343,12 +343,12 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
     }
     
     func showErrorAlert(productId: String) {
-        let refreshAlert = UIAlertController(title: "Error", message: "Cannot get product list. Please check your Internet connection", preferredStyle: UIAlertControllerStyle.alert)
+        let refreshAlert = UIAlertController(title: NSLocalizedString("Error", comment: ""), message: "Cannot get product list. Please check your Internet connection", preferredStyle: UIAlertControllerStyle.alert)
         refreshAlert.addAction(UIAlertAction(title: "Try again", style: .default, handler: { (action: UIAlertAction!) in
             self.reload(true, productId: productId)
         }))
         
-        refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
+        refreshAlert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: { (action: UIAlertAction!) in
         }))
         
         present(refreshAlert, animated: true, completion: nil)
@@ -392,16 +392,16 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
         SKPaymentQueue.default().add(self)
         ReaderProducts.store.restoreCompletedTransactions { error in
             if let err = error {
-                TSMessage.showNotification(in: self, title: "Error", subtitle: err.localizedDescription, type: .error)
+                TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: err.localizedDescription, type: .error)
             } else {
-                TSMessage.showNotification(in: self, title: "Finished", subtitle: "Restore Process", type: .success)
+                TSMessage.showNotification(in: self, title: NSLocalizedString("Finished", comment: ""), subtitle: NSLocalizedString("RestoreProcess", comment: ""), type: .success)
             }
         }
     }
     
     /// Initiates purchase of a product.
     func purchaseProduct(_ product: SKProduct) {
-        self.view.makeToast(message: "You will ned to restart the app for changes with native ads to take effect!", duration: 1, position: "center" as AnyObject, title: "Attention!")
+        self.view.makeToast(message: NSLocalizedString("NeedToRestart", comment: ""), duration: 1, position: "center" as AnyObject, title: NSLocalizedString("Attention", comment: ""))
         print("Buying \(product.productIdentifier)...")
         let payment = SKPayment(product: product)
         SKPaymentQueue.default().add(payment)
@@ -448,22 +448,22 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
             refreshUI()
         } else {
             removeAdsItem.isEnabled = true
-            removeAdsItem.title = "Upgrade"
+            removeAdsItem.title = NSLocalizedString("Upgrade", comment: "")
         }
     }
     
     func showBuyAlert(_ product: SKProduct, restore: Bool) {
         let alertController = UIAlertController(title: product.localizedTitle, message:
             product.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
-        alertController.addAction(UIAlertAction(title: "Buy", style: UIAlertActionStyle.default, handler: { (action: UIAlertAction!) in
+        alertController.addAction(UIAlertAction(title: NSLocalizedString("Buy", comment: ""), style: UIAlertActionStyle.default, handler: { (action: UIAlertAction!) in
             self.purchaseProduct(product)
         } ))
         if (restore) {
-            alertController.addAction(UIAlertAction(title: "Restore", style: UIAlertActionStyle.default, handler: { (action: UIAlertAction!) in
+            alertController.addAction(UIAlertAction(title: NSLocalizedString("Restore", comment: ""), style: UIAlertActionStyle.default, handler: { (action: UIAlertAction!) in
                 self.restoreTapped(self)
             } ))
         }
-        alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
+        alertController.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: UIAlertActionStyle.cancel, handler: nil))
         
         self.present(alertController, animated: true, completion: nil)
     }
@@ -489,7 +489,7 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
                     UserDefaults.standard.set(donated, forKey: "donated")
                     UserDefaults.standard.synchronize()
                     
-                    TSMessage.showNotification(in: self, title: "Thank you!", subtitle: "Thank you for leaving a tip! Thanks to you the app will become better!", type: .success)
+                    TSMessage.showNotification(in: self, title: NSLocalizedString("ThankYou", comment: ""), subtitle: NSLocalizedString("ThankYouForTip", comment: ""), type: .success)
                     
                 }
                 

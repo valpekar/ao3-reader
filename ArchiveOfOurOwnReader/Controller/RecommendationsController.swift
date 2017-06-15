@@ -28,11 +28,8 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
         
         self.createDrawerButton()
         
-        self.title = "Recommendations"
-        
-        descLabel.text = "Recommendations are based on your activity inside the app and are generated every week since you first open this page. Your data is not transferred anywhere and is used only to generate recommendations. (Available for Pro users only)"
-        
-        
+        self.title = NSLocalizedString("Recommendations", comment: "")
+        descLabel.text = NSLocalizedString("RecommendationsExplained", comment: "")
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -47,7 +44,7 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
                     generateRecommendations()
                 }
             } else {
-                TSMessage.showNotification(in: self, title: "Error", subtitle: "Sorry, you have not purchased the Pro Version!", type: .error)
+                TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("NotPurchased", comment: ""), type: .error)
             }
         }
     }
@@ -65,8 +62,8 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
         
         let notification = UILocalNotification()
         notification.fireDate = Date(timeIntervalSinceNow: 84600 * 7)
-        notification.alertBody = "Hi! It's time for new recommendations!"
-        notification.alertAction = "See them"
+        notification.alertBody = NSLocalizedString("SeeThem", comment: "")
+        notification.alertAction = NSLocalizedString("TimeForRecommendations", comment: "")
         notification.applicationIconBadgeNumber = UIApplication.shared.applicationIconBadgeNumber + 1
         notification.soundName = UILocalNotificationDefaultSoundName
         notification.repeatInterval = .weekOfMonth // .WeekOfMonth //Minute
@@ -85,7 +82,7 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
             generateNewRecs()
             DefaultsManager.putObject(Date() as AnyObject, key: DefaultsManager.LAST_DATE)
             
-            descLabel.text = "Recommendations are based on your activity inside the app and are generated every week since you first open this page. Your data is not transferred anywhere and is used only to generate recommendations. (Available for Pro users only)" + "\nLast update: " + dateFormatter.string(from: Date())
+            descLabel.text = NSLocalizedString("RecommendationsAreBased", comment: "") + NSLocalizedString("LastUpdate_", comment: "") + dateFormatter.string(from: Date())
             
             
             UIApplication.shared.cancelAllLocalNotifications()
@@ -96,7 +93,7 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
         
         let days = howManyDaysHavePassed(lastDate as! Date, today: Date())
         
-        descLabel.text = "Recommendations are based on your activity inside the app and are generated every week since you first open this page. Your data is not transferred anywhere and is used only to generate recommendations. (Available for Pro users only)" + "\nLast update: " + dateFormatter.string(from: lastDate as! Date)
+        descLabel.text = NSLocalizedString("RecommendationsAreBased", comment: "") + NSLocalizedString("LastUpdate_", comment: "") + dateFormatter.string(from: lastDate as! Date)
         
         if (days == 7) {
             
@@ -128,7 +125,7 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
                 
             }
             
-            showLoadingView(msg: "Getting works")
+            showLoadingView(msg: NSLocalizedString("GettingWorks", comment: ""))
             
             let mutableURLRequest = NSMutableURLRequest(url: URL( string: (encodedURLRequest!.url?.absoluteString)!)!)
             mutableURLRequest.httpMethod = "GET"
@@ -144,7 +141,7 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
                         self.showFeed()
                     } else {
                         self.hideLoadingView()
-                        self.view.makeToast(message: "Check your Internet connection", duration: 2.0, position: "center" as AnyObject)
+                        TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error, duration: 2.0)
                     }
                 })
         }
@@ -234,7 +231,7 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
             Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
         }
         
-        showLoadingView(msg: "Getting works")
+        showLoadingView(msg: NSLocalizedString("GettingWorks", comment: ""))
         
         let urlStr: String = (encodedURLRequest?.url?.absoluteString)!
         
@@ -254,7 +251,7 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
                     self.showFeed()
                 } else {
                     self.hideLoadingView()
-                    self.view.makeToast(message: "Check your Internet connection", duration: 2.0, position: "center" as AnyObject)
+                    TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error, duration: 2.0)
                 }
             })
         
@@ -462,7 +459,7 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
         cell?.datetimeLabel.text = curWork.dateTime
         cell?.languageLabel.text = curWork.language
         cell?.wordsLabel.text = curWork.words
-        cell?.chaptersLabel.text = "Chapters: " + curWork.chapters
+        cell?.chaptersLabel.text = NSLocalizedString("Chapters_", comment: "") + curWork.chapters
         cell?.commentsLabel.text = curWork.comments
         cell?.kudosLabel.text = curWork.kudos
         cell?.bookmarksLabel.text = curWork.bookmarks

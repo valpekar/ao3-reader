@@ -47,7 +47,7 @@ class ChoosePrefController : LoadingViewController {
     @IBAction func nextTouched(sender: AnyObject) {
         
         guard let txt = textField.text, !txt.isEmpty else {
-            TSMessage.showNotification(in: self, title: "Error", subtitle: "Please type at least one fandom name!", type: .error, duration: 2.0)
+            TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("AtLeastOneFandom", comment: ""), type: .error, duration: 2.0)
             return
         }
         

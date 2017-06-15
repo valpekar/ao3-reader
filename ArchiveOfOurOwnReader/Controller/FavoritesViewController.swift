@@ -65,7 +65,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         
         let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.white]
         self.navigationController!.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
-        self.title = String(downloadedWorkds.count) + " Downloaded"
+        self.title = String(downloadedWorkds.count) + " " + NSLocalizedString("Downloaded", comment: "")
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -93,7 +93,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         
         if let wTitle = curWork.value(forKey: "workTitle") as? String {
             if let wAuthor = curWork.value(forKey: "author") as? String {
-                cell?.topicLabel.text = wTitle + " by " + wAuthor
+                cell?.topicLabel.text = wTitle + " \(NSLocalizedString("by", comment: "")) " + wAuthor
             } else {
                 cell?.topicLabel.text = ""
             }
@@ -111,7 +111,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
             }
         }
         }
-        cell?.fandomsLabel.text = "Fandoms: " + fandomsStr
+        cell?.fandomsLabel.text = NSLocalizedString("Fandoms_", comment: "") + fandomsStr
         
         if (curWork.value(forKey: "topicPreview") as? String != nil) {
             cell?.topicPreviewLabel.text = curWork.value(forKey: "topicPreview") as? String
@@ -125,7 +125,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         cell?.datetimeLabel.text = curWork.value(forKey: "datetime") as? String
         cell?.languageLabel.text = curWork.value(forKey: "language") as? String
         cell?.wordsLabel.text = curWork.value(forKey: "words") as? String
-        cell?.chaptersLabel.text = "Chapters: \(chaptersCountStr)"
+        cell?.chaptersLabel.text = "\(NSLocalizedString("Chapters_", comment: "")) \(chaptersCountStr)"
         cell?.commentsLabel.text = curWork.value(forKey: "comments") as? String
         cell?.kudosLabel.text = curWork.value(forKey: "kudos") as? String
         cell?.bookmarksLabel.text = curWork.value(forKey: "bookmarks") as? String
@@ -208,7 +208,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         
         self.tableView.reloadData()
        // self.tableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: .Fade)
-        self.title = String(downloadedWorkds.count) + " Downloaded"
+        self.title = String(downloadedWorkds.count) + " " + NSLocalizedString("Downloaded", comment: "")
     }
     
     override func controllerDidClosed() {

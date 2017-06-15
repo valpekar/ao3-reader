@@ -599,22 +599,24 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
         mutableURLRequest.httpMethod = "GET"
         
         request("http://archiveofourown.org/works/search", method: .get, parameters: queryResult, encoding: URLEncoding.queryString)
-            .response(completionHandler: { response in
-                 print(response.request ?? "")
-                //print(response)
-                print(response.error ?? "")
-                
-                if let d = response.data {
-                    self.parseCookies(response)
-                    self.getFeed(d)
-                } else {
-                    self.hideLoadingView()
-                    TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error, duration: 2.0)
-                }
-                
-                self.showFeed()
-            })
+            .response(completionHandler: onFeedLoaded(_:))
         
+    }
+    
+    func onFeedLoaded(_ response: DefaultDataResponse) {
+        print(response.request ?? "")
+        //print(response)
+        print(response.error ?? "")
+        
+        if let d = response.data {
+            self.parseCookies(response)
+            self.getFeed(d)
+        } else {
+            self.hideLoadingView()
+            TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error, duration: 2.0)
+        }
+        
+        self.showFeed()
     }
     
     //MARK: - SAVE WORK TO DB

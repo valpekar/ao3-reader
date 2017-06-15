@@ -281,7 +281,7 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
     
     func turnOnlineChapter(_ chapterId: String) {
         
-        showLoadingView(msg: "Loading chapter")
+        showLoadingView(msg: NSLocalizedString("LoadingChapter", comment: ""))
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
             Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
@@ -331,7 +331,7 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
             
         } else {
             self.hideLoadingView()
-            TSMessage.showNotification(in: self, title: "Error", subtitle: "Check your Internet connection", type: .error)
+            TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
         }
         
     }
@@ -408,7 +408,7 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
     @IBAction func nextButtonTouched(_ sender: AnyObject) {
         
         if (workItem != nil) {
-            showLoadingView(msg: "Loading next chapter")
+            showLoadingView(msg: NSLocalizedString("LoadingNxtChapter", comment: ""))
             
             currentOnlineChapter = nextChapter
             
@@ -433,7 +433,7 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
     @IBAction func prevButtonTouched(_ sender: AnyObject) {
         
         if (workItem != nil) {
-            showLoadingView(msg: "Loading previous chapter")
+            showLoadingView(msg: NSLocalizedString("LoadingPrevChapter", comment: ""))
             
             currentOnlineChapter = prevChapter
         
@@ -587,7 +587,7 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
     }
     
     func changeTextSizeTouched() {
-        let alert = UIAlertController(title: "Font size", message: String(format: "%d", fontSize) + "%", preferredStyle: UIAlertControllerStyle.actionSheet)
+        let alert = UIAlertController(title: NSLocalizedString("FontSize", comment: ""), message: String(format: "%d", fontSize) + "%", preferredStyle: UIAlertControllerStyle.actionSheet)
         alert.addAction(UIAlertAction(title: "+", style: UIAlertActionStyle.default, handler: { action in
             switch action.style{
             case .default:
@@ -621,7 +621,7 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
             self.loadCurrentTheme()
         }))
         
-        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: UIAlertActionStyle.cancel, handler: nil))
         
         alert.popoverPresentationController?.sourceView = self.view
         alert.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.size.width / 2.0, y: self.view.bounds.size.height / 2.0, width: 1.0, height: 1.0)
