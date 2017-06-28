@@ -33,9 +33,6 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
     var pages : [PageItem] = [PageItem]()
     var works : [NewsFeedItem] = [NewsFeedItem]()
     
-    var purchased = false
-    var donated = false
-    
     var i = 0 //counts page transitions, display ads every 3rd time
     var flag = true
     var triedToLogin = 0
@@ -104,17 +101,7 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        UserDefaults.standard.synchronize()
-        if let pp = UserDefaults.standard.value(forKey: "pro") as? Bool {
-            purchased = pp
-        }
-        if let dd = UserDefaults.standard.value(forKey: "donated") as? Bool {
-            donated = dd
-        }
-    }
+ 
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -621,6 +608,7 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
     
     //MARK: - SAVE WORK TO DB
     
+    var curWork:NewsFeedItem?
     
     @IBAction func downloadButtonTouched(_ sender: UIButton) {
         
@@ -638,9 +626,9 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
             }
         }
         
-        let curWork:NewsFeedItem = works[sender.tag]
+        curWork = works[sender.tag]
         
-        showLoadingView(msg: "\(NSLocalizedString("DwnloadingWrk", comment: "")) \(curWork.title)")
+        showLoadingView(msg: "\(NSLocalizedString("DwnloadingWrk", comment: "")) \(curWork?.title ?? "")")
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
             Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
@@ -649,22 +637,25 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
         var params:[String:AnyObject] = [String:AnyObject]()
         params["view_adult"] = "true" as AnyObject?
         
-        request("http://archiveofourown.org/works/" + curWork.workId, method: .get, parameters: params)
-            .response(completionHandler: { response in
-                print(response.request ?? "")
-                //  println(response)
-                print(response.error ?? "")
-                self.parseCookies(response)
-                if let d = response.data {
-                    self.downloadWork(d, curWork: curWork)
-                    self.hideLoadingView()
-                } else {
-                    TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CannotDwnldWrk", comment: ""), type: .error, duration: 2.0)
-                    self.hideLoadingView()
-                }
-        })
+        request("http://archiveofourown.org/works/" + (curWork?.workId ?? ""), method: .get, parameters: params)
+            .response(completionHandler: onSavedWorkLoaded(_:))
     }
     
+    func onSavedWorkLoaded(_ response: DefaultDataResponse) {
+        print(response.request ?? "")
+        //  println(response)
+        print(response.error ?? "")
+        self.parseCookies(response)
+        if let d = response.data {
+            self.downloadWork(d, curWork: curWork)
+            self.hideLoadingView()
+        } else {
+            TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CannotDwnldWrk", comment: ""), type: .error, duration: 2.0)
+            self.hideLoadingView()
+        }
+        
+        curWork = nil
+    }
     
     func saveWork() {
         hideLoadingView()

@@ -12,7 +12,7 @@
 "LoadingPrevChapter" = "Loading Previous Chapter";
 "Searching" = "Searching...";
 "GettingWorks" = "Getting Works";
-"Error" = "Error";
+"Error" = "Error ‼️";
 "CheckInternet" = "Check your Internet connection";
 "Only30Stroies" = "You can only download 30 stories. Please, upgrade to download more.";
 "DwnloadingWrk" = "Downloading Work";
@@ -102,10 +102,10 @@
 "Attention" = "Attention!";
 "NeedToRestart" = "You will need to restart the app for changes with native ads to take effect!";
 "Upgrade" = "Upgrade";
-"Buy" = "Buy";
+"Buy" = "Buy ✅";
 "Restore" = "Restore";
-"ThankYou" = "Thank you!";
-"ThankYouForTip" = "Thank you for leaving a tip! Thanks to you the app will become better!";
+"ThankYou" = "Thank you! 🙏";
+"ThankYouForTip" = "Thank you for leaving a tip! Thanks to you the app will become better! 🙏";
 "History" = "History";
 "PullToRefresh" = "Pull To Refresh";
 "GettingHistory" = "Getting History";
@@ -118,7 +118,7 @@
 "Recommendations" = "Recommendations";
 "RecommendationsExplained" = "Recommendations are based on your activity inside the app and are generated every week since you first open this page. Your data is not transferred anywhere and is used only to generate recommendations. (Available for Pro users only)";
 "NotPurchased" = "Sorry, you have not purchased the Pro Version!";
-"SeeThem" = "See Them!";
+"SeeThem" = "See Them! 👀";
 "TimeForRecommendations" = "Hi! It's time for new recommendations! 📚";
 "RecommendationsAreBased" = "Recommendations are based on your activity inside the app and are generated every week since you first open this page. Your data is not transferred anywhere and is used only to generate recommendations. (Available for Pro users only)";
 "LastUpdate_" = "\nLast update: ";
@@ -129,5 +129,7 @@
 "Me" = "My Profile";
 "Support" = "Support";
 "NoComments" = "No Comments 😛";
-
+"Subscriptions" = "Subscriptions";
+"GettingSubs" = "Getting Subscriptions";
+"OpenInBrowser" = "Open In Browser";
 

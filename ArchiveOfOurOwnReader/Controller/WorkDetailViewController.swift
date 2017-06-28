@@ -31,9 +31,6 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     @IBOutlet weak var tableView: UITableView!
     
      @IBOutlet weak var bannerView: GADBannerView!
-
-    var purchased = false
-    var donated = false
     
     var downloadedWorkItem: NSManagedObject! = nil
     var downloadedFandoms: [DBFandom]! = nil
@@ -1327,12 +1324,18 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         }
         
         if (downloadUrls.count > 0) {
-        let downloadAction = UIAlertAction(title: NSLocalizedString("DownloadFile", comment: ""), style: .default, handler: {
-            (alert: UIAlertAction!) -> Void in
-            self.showDownloadDialog()
-        })
-        optionMenu.addAction(downloadAction)
+            let downloadAction = UIAlertAction(title: NSLocalizedString("DownloadFile", comment: ""), style: .default, handler: {
+                (alert: UIAlertAction!) -> Void in
+                self.showDownloadDialog()
+            })
+            optionMenu.addAction(downloadAction)
         }
+        
+        let browserAction = UIAlertAction(title: NSLocalizedString("OpenInBrowser", comment: ""), style: .default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            self.openBrowserAction()
+        })
+        optionMenu.addAction(browserAction)
         
         //
         let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: {
@@ -1587,6 +1590,17 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
 //                    }
 //                }
 //        }
+    }
+    
+    func openBrowserAction() {
+        var wId = ""
+        if (workItem != nil) {
+            wId = workItem.workId
+        } else if (downloadedWorkItem != nil) {
+            wId = downloadedWorkItem.value(forKey: "workId") as? String ?? ""
+        }
+        UIApplication.shared.openURL(NSURL(string: "http://archiveofourown.org/works/\(wId)")! as URL)
+
     }
    
 }

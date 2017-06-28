@@ -23,9 +23,6 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
     var pseuds: [String:String] = [:]
     var currentPseud = ""
     
-    var purchased = false
-    var donated = false
-    
     // This list of available in-app purchases
     var products: Array <SKProduct> = [SKProduct]()
     

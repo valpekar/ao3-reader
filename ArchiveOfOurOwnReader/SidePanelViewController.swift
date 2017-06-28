@@ -22,12 +22,13 @@ class SidePanelViewController: UIViewController, UITableViewDataSource, UITableV
     let controllers = [NSLocalizedString("Browse", comment: ""),
                        NSLocalizedString("Bookmarks", comment: ""),
                        NSLocalizedString("History", comment: ""),
+                       NSLocalizedString("Subscriptions", comment: ""),
                        NSLocalizedString("Downloaded", comment: ""),
                        NSLocalizedString("Me", comment: ""),
                        NSLocalizedString("Recommendations", comment: ""),
                        NSLocalizedString("Support", comment: "")
         /*, "Publish"*/]
-    let imgs = ["shortstory", "bmk", "history" ,"download-100", "profile", "shortstory", "support"/*, "shortstory"*/]
+    let imgs = ["shortstory", "bmk", "history" , "subscriptions", "download-100", "profile", "shortstory", "support"/*, "shortstory"*/]
     
     struct TableView {
         struct CellIdentifiers {

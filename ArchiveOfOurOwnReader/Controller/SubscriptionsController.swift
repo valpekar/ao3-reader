@@ -1,0 +1,346 @@
+//
+//  SubscriptionsController.swift
+//  ArchiveOfOurOwnReader
+//
+//  Created by Valeriya Pekar on 6/21/17.
+//  Copyright © 2017 Sergei Pekar. All rights reserved.
+//
+
+import UIKit
+import Alamofire
+import TSMessages
+
+class SubscriptionsViewController: LoadingViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+    
+    var subsAddedStr = NSLocalizedString("Subscriptions", comment: "")
+
+    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var tableView:UITableView!
+    @IBOutlet weak var errView:UIView!
+    
+    var pages : [PageItem] = [PageItem]()
+    var works : [NewsFeedItem] = [NewsFeedItem]()
+    
+    var refreshControl: UIRefreshControl!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.createDrawerButton()
+        
+        self.title = NSLocalizedString("Subscriptions", comment: "")
+        
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl.attributedTitle = NSAttributedString(string: NSLocalizedString("PullToRefresh", comment: ""))
+        self.refreshControl.addTarget(self, action: #selector(HistoryViewController.refresh(_:)), for: UIControlEvents.valueChanged)
+        self.tableView.addSubview(self.refreshControl)
+        
+        if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
+            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
+            requestFavs()
+        } else if ((UIApplication.shared.delegate as! AppDelegate).cookies.count == 0 || (UIApplication.shared.delegate as! AppDelegate).token.isEmpty) {
+            
+            openLoginController()
+            //requestFavs() //openLoginController()
+        }
+    }
+    
+    func refresh(_ sender:AnyObject) {
+        requestFavs()
+    }
+    
+    @IBAction func tryAgainTouched(_ sender:AnyObject) {
+        requestFavs()
+    }
+    
+    //MARK: - login
+    
+    
+    
+    @IBAction func loginTouched(_ sender: AnyObject) {
+        openLoginController()
+    }
+    
+    //MARK: - request
+    
+    func requestFavs() {
+        let username = DefaultsManager.getString(DefaultsManager.LOGIN)
+        
+        showLoadingView(msg: NSLocalizedString("GettingSubs", comment: ""))
+        
+        if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
+            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
+        }
+        
+        let urlStr: String = "http://archiveofourown.org/users/" + username + "/subscriptions"
+        
+        Alamofire.request(urlStr) //default is .get
+            .response(completionHandler: { response in
+                
+                //print(request)
+                print(response.error ?? "")
+                
+                if let d = response.data {
+                    self.parseCookies(response)
+                    self.parseSubs(d)
+                    self.refreshControl.endRefreshing()
+                    self.showSubs()
+                } else {
+                    self.hideLoadingView()
+                    TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
+                    
+                }
+                
+            })
+    }
+    
+    func parseSubs(_ data: Data) {
+        works.removeAll(keepingCapacity: false)
+        pages.removeAll(keepingCapacity: false)
+        
+        let string1 = NSString(data: data, encoding: String.Encoding.utf8.rawValue)
+        print(string1 ?? "")
+        
+        let doc : TFHpple = TFHpple(htmlData: data)
+        let historylist : [TFHppleElement]? = doc.search(withXPathQuery: "//dl[@class='subscription index group']//dt") as? [TFHppleElement]
+        if let workGroup = historylist {
+            
+            if (workGroup.count > 0) {
+                    
+                    for workListItem in workGroup {
+                        
+                        let item : NewsFeedItem = NewsFeedItem()
+                        
+                        
+                            let topic = workListItem.content ?? ""
+                                
+                            item.topic = topic.replacingOccurrences(of: "\n", with:"").trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+                                    .replacingOccurrences(of: "\\s+", with: " ", options: NSString.CompareOptions.regularExpression, range: nil)
+                        
+                        
+                            //parse work ID
+                        
+                        if let attributes : NSDictionary = (workListItem.search(withXPathQuery: "//a")[0] as? TFHppleElement)?.attributes as NSDictionary? {
+                            item.workId = (attributes["href"] as? String ?? "").replacingOccurrences(of: "/works/", with: "")
+                        }
+                        
+                            works.append(item)
+                            
+                            //parse pages
+                        if let paginationActions = doc.search(withXPathQuery: "//ol[@class='pagination actions']") {
+                            if(paginationActions.count > 0) {
+                                guard let paginationArr = (paginationActions[0] as AnyObject).search(withXPathQuery: "//li") else {
+                                    return
+                                }
+                                
+                                for i in 0..<paginationArr.count {
+                                    let page: TFHppleElement = paginationArr[i] as! TFHppleElement
+                                    let pageItem = PageItem()
+                                    
+                                    pageItem.name = page.content
+                                    
+                                    var attrs = page.search(withXPathQuery: "//a") as! [TFHppleElement]
+                                    
+                                    if (attrs.count > 0) {
+                                        
+                                        let attributesh : NSDictionary? = attrs[0].attributes as NSDictionary
+                                        if (attributesh != nil) {
+                                            pageItem.url = attributesh!["href"] as! String
+                                        }
+                                    }
+                                    
+                                    let current = page.search(withXPathQuery: "//span") as! [TFHppleElement]
+                                    if (current.count > 0) {
+                                        pageItem.isCurrent = true
+                                    }
+                                    
+                                    pages.append(pageItem)
+                                }
+                            }
+                        }
+                    
+                }
+            }
+        }
+    }
+    
+    func showSubs() {
+        if (works.count > 0) {
+            tableView.isHidden = false
+            errView.isHidden = true
+        } else {
+            tableView.isHidden = true
+            errView.isHidden = false
+        }
+        
+        tableView.reloadData()
+        collectionView.reloadData()
+        
+        hideLoadingView()
+        self.navigationItem.title = subsAddedStr
+        
+        tableView.setContentOffset(CGPoint.zero, animated:true)
+    }
+    
+    override func controllerDidClosed() {}
+    
+    func controllerDidClosedWithLogin() {
+        requestFavs()
+    }
+    
+    func controllerDidClosedWithChange() {
+    }
+    
+    //MARK: - download work
+    
+    @IBAction func downloadButtonTouched(_ sender: UIButton) {
+        
+        if (sender.tag >= works.count) {
+            return
+        }
+        
+        if (purchased || donated) {
+            print("premium")
+        } else {
+            if (countWroksFromDB() > 29) {
+                TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Only30Stroies", comment: ""), type: .error, duration: 2.0)
+                
+                return
+            }
+        }
+        
+        let curWork:NewsFeedItem = works[sender.tag]
+        
+        showLoadingView(msg: "\(NSLocalizedString("DwnloadingWrk", comment: "")) \(curWork.title)")
+        
+        if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
+            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
+        }
+        
+        var params:[String:AnyObject] = [String:AnyObject]()
+        params["view_adult"] = "true" as AnyObject?
+        
+        request("http://archiveofourown.org/works/" + curWork.workId, method: .get, parameters: params)
+            .response(completionHandler: { response in
+                print(response.request ?? "")
+                //  println(response)
+                print(response.error ?? "")
+                self.parseCookies(response)
+                if let d = response.data {
+                    self.downloadWork(d, curWork: curWork)
+                    self.hideLoadingView()
+                } else {
+                    TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CannotDwnldWrk", comment: ""), type: .error, duration: 2.0)
+                    self.hideLoadingView()
+                }
+            })
+    }
+    
+    
+    func saveWork() {
+        hideLoadingView()
+    }
+    
+    //MARK: - tableview
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return works.count;
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cellIdentifier: String = "SubsCell"
+        
+        var cell:SubsCell? = tableView.dequeueReusableCell(withIdentifier: cellIdentifier) as? SubsCell
+        
+        if (cell == nil) {
+            cell = SubsCell(reuseIdentifier: cellIdentifier)
+        }
+        
+        let curWork:NewsFeedItem = works[(indexPath as NSIndexPath).row]
+        
+        cell?.topicLabel.text = curWork.topic.replacingOccurrences(of: "\n", with: "")
+        
+        cell?.downloadButton.tag = (indexPath as NSIndexPath).row
+        
+        return cell!
+    }
+    
+    
+    //MARK: - collectionview
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return pages.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cellIdentifier: String = "PageCell"
+        
+        let cell: PageCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! PageCollectionViewCell
+        
+        cell.titleLabel.text = pages[(indexPath as NSIndexPath).row].name
+        
+        if (pages[(indexPath as NSIndexPath).row].url.isEmpty) {
+            cell.titleLabel.textColor = UIColor(red: 169/255, green: 164/255, blue: 164/255, alpha: 1)
+        } else {
+            cell.titleLabel.textColor = UIColor.black
+        }
+        
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        let page: PageItem = pages[indexPath.row]
+        if (!page.url.isEmpty) {
+            
+            if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
+                Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
+            }
+            
+            showLoadingView(msg: "\(NSLocalizedString("LoadingPage", comment: "")) \(indexPath.row)")
+            
+            Alamofire.request("http://archiveofourown.org" + page.url, method: .get).response(completionHandler: { response in
+                print(response.error ?? "")
+                if let data = response.data {
+                    self.parseCookies(response)
+                    self.parseSubs(data)
+                    self.showSubs()
+                } else {
+                    self.hideLoadingView()
+                    TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
+                }
+            })
+            
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        switch ((indexPath as NSIndexPath).row) {
+        case 0, self.collectionView(collectionView, numberOfItemsInSection: (indexPath as NSIndexPath).section) - 1:
+            return CGSize(width: 100, height: 28)
+        default:
+            return CGSize(width: 50, height: 28)
+        }
+    }
+    
+    // MARK: - navigation
+    override func  prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if(segue.identifier == "SubsDetail") {
+            let workDetail: UINavigationController = segue.destination as! UINavigationController
+            let newsItem:NewsFeedItem = works[(tableView.indexPathForSelectedRow! as NSIndexPath).row]
+            
+            let currentWorkItem = WorkItem()
+            
+            currentWorkItem.workTitle = newsItem.title
+            currentWorkItem.topic = newsItem.topic
+            
+            currentWorkItem.workId = newsItem.workId
+            
+            currentWorkItem.id = Int64(Int(newsItem.workId)!)
+            
+            (workDetail.viewControllers[0] as! WorkDetailViewController).workItem = currentWorkItem
+            (workDetail.viewControllers[0] as! WorkDetailViewController).modalDelegate = self
+            
+        }
+    }
+}

@@ -15,8 +15,6 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
     
     var downloadedWorkds: [NSManagedObject] = []
     var filtereddownloadedWorkds: [NSManagedObject] = []
-    var purchased = false
-    var donated = false
     
     var resultSearchController = UISearchController()
     

@@ -25,6 +25,10 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
    // var interstitial: MPInterstitialAdController =
    //     MPInterstitialAdController(forAdUnitId: "24f81f4beba548248fc64cfcf5d4d8f5")
     
+    
+    var purchased = false
+    var donated = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         //self.interstitialPresentationPolicy = ADInterstitialPresentationPolicy.Manual
@@ -50,7 +54,19 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
         
        // cycleInterstitial()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
+        UserDefaults.standard.synchronize()
+        if let pp = UserDefaults.standard.value(forKey: "pro") as? Bool {
+            purchased = pp
+        }
+        if let dd = UserDefaults.standard.value(forKey: "donated") as? Bool {
+            donated = dd
+        }
+    }
+    
     func showLoadingView(msg: String) {
         
         if (loadingView != nil) {
