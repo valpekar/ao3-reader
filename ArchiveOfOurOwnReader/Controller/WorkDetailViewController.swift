@@ -699,7 +699,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         case 5:
             if (workItem != nil) {
                 cell!.label.text = workItem.language
-            } else {
+            } else if (downloadedWorkItem != nil) {
                 cell!.label.text = downloadedWorkItem.value(forKey: "language") as? String ?? ""
             }
             cell!.imgView.image = UIImage(named: "lang")
@@ -708,7 +708,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         case 6:
             if (workItem != nil) {
                 cell!.label.text = workItem.stats
-            } else {
+            } else if (downloadedWorkItem != nil) {
                 cell!.label.text = downloadedWorkItem.value(forKey: "stats") as? String ?? ""
             }
             //cell!.label.font = UIFont.italicSystemFont(ofSize: 13)
@@ -1214,7 +1214,10 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
         if let d = response.data {
             self.parseCookies(response)
-            self.downloadWork(d, workItemToReload: self.downloadedWorkItem)
+            if let dd = self.downloadWork(d, workItemToReload: self.downloadedWorkItem) {
+                self.downloadedWorkItem = dd
+                showDownloadedWork()
+            }
         } else {
             self.hideLoadingView()
             TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)

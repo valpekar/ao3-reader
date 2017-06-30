@@ -14,6 +14,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
     @IBOutlet weak var tableView:UITableView!
     
     var downloadedWorkds: [NSManagedObject] = []
+    var downloadedFandoms: [DBFandom] = []
     var filtereddownloadedWorkds: [NSManagedObject] = []
     
     var resultSearchController = UISearchController()
@@ -59,6 +60,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         super.viewDidAppear(animated)
         
         loadWroksFromDB()
+        //loadFandomsFromWorks()
         tableView.reloadData()
         
         let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.white]
@@ -71,7 +73,24 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
             return self.filtereddownloadedWorkds.count
         }
         else {
-            return self.downloadedWorkds.count
+            if (section < downloadedFandoms.count) {
+                let curFandom: NSManagedObject = downloadedFandoms[section]
+                return numOfWorksInFandom(fandom: curFandom.value(forKey: "fandomName") as? String ?? "")
+            } else {
+                return self.downloadedWorkds.count
+            }
+        }
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1// downloadedFandoms.count
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if (downloadedFandoms.count > section) {
+            return downloadedFandoms[section].value(forKey: "fandomName") as? String ?? ""
+        } else {
+            return ""
         }
     }
     
@@ -84,13 +103,23 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
             cell = FeedTableViewCell(reuseIdentifier: cellIdentifier)
         }
         
-        var curWork = downloadedWorkds[(indexPath as NSIndexPath).row]
-        if (self.resultSearchController.isActive) {
-            curWork = filtereddownloadedWorkds[(indexPath as NSIndexPath).row]
+        var curWork: NSManagedObject?
+        
+        if (indexPath.section < downloadedFandoms.count) {
+            let curFandom: NSManagedObject = downloadedFandoms[indexPath.section]
+            var sectionWorks = getWorksInFandom(fandom: curFandom.value(forKey: "fandomName") as? String ?? "")
+            curWork = sectionWorks[indexPath.row]
+        } else {
+        
+            curWork = downloadedWorkds[indexPath.row]
         }
         
-        if let wTitle = curWork.value(forKey: "workTitle") as? String {
-            if let wAuthor = curWork.value(forKey: "author") as? String {
+        if (self.resultSearchController.isActive) {
+            curWork = filtereddownloadedWorkds[indexPath.row]
+        }
+        
+        if let wTitle = curWork?.value(forKey: "workTitle") as? String {
+            if let wAuthor = curWork?.value(forKey: "author") as? String {
                 cell?.topicLabel.text = wTitle + " \(NSLocalizedString("by", comment: "")) " + wAuthor
             } else {
                 cell?.topicLabel.text = ""
@@ -100,7 +129,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         }
         
         var fandomsStr = ""
-        if let downloadedFandoms = curWork.mutableSetValue(forKey: "fandoms").allObjects as? [DBFandom] {
+        if let downloadedFandoms = curWork?.mutableSetValue(forKey: "fandoms").allObjects as? [DBFandom] {
         for i in 0..<downloadedFandoms.count {
             let fandom = downloadedFandoms[i]
             fandomsStr += fandom.value(forKey: "fandomName") as! String
@@ -111,28 +140,28 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         }
         cell?.fandomsLabel.text = NSLocalizedString("Fandoms_", comment: "") + fandomsStr
         
-        if (curWork.value(forKey: "topicPreview") as? String != nil) {
-            cell?.topicPreviewLabel.text = curWork.value(forKey: "topicPreview") as? String
+        if (curWork?.value(forKey: "topicPreview") as? String != nil) {
+            cell?.topicPreviewLabel.text = curWork?.value(forKey: "topicPreview") as? String
         }
         else {
             cell?.topicPreviewLabel.text = ""
         }
         
-        let chaptersCountStr = (curWork.value(forKey: "chaptersCount") as? String) ?? ""
+        let chaptersCountStr = (curWork?.value(forKey: "chaptersCount") as? String) ?? ""
         
-        cell?.datetimeLabel.text = curWork.value(forKey: "datetime") as? String
-        cell?.languageLabel.text = curWork.value(forKey: "language") as? String
-        cell?.wordsLabel.text = curWork.value(forKey: "words") as? String
+        cell?.datetimeLabel.text = curWork?.value(forKey: "datetime") as? String
+        cell?.languageLabel.text = curWork?.value(forKey: "language") as? String
+        cell?.wordsLabel.text = curWork?.value(forKey: "words") as? String
         cell?.chaptersLabel.text = "\(NSLocalizedString("Chapters_", comment: "")) \(chaptersCountStr)"
-        cell?.commentsLabel.text = curWork.value(forKey: "comments") as? String
-        cell?.kudosLabel.text = curWork.value(forKey: "kudos") as? String
-        cell?.bookmarksLabel.text = curWork.value(forKey: "bookmarks") as? String
-        cell?.hitsLabel.text = curWork.value(forKey: "hits") as? String
+        cell?.commentsLabel.text = curWork?.value(forKey: "comments") as? String
+        cell?.kudosLabel.text = curWork?.value(forKey: "kudos") as? String
+        cell?.bookmarksLabel.text = curWork?.value(forKey: "bookmarks") as? String
+        cell?.hitsLabel.text = curWork?.value(forKey: "hits") as? String
         /*cell?.completeLabel.text = curWork.valueForKey("complete") as? String
         cell?.categoryLabel.text = curWork.valueForKey("category") as? String
         cell?.ratingLabel.text = curWork.valueForKey("ratingTags") as? String*/
         
-        cell?.tagsLabel.text = curWork.value(forKey: "tags") as? String
+        cell?.tagsLabel.text = curWork?.value(forKey: "tags") as? String
         
         cell?.deleteButton.tag = (indexPath as NSIndexPath).row
         
@@ -155,6 +184,37 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         } catch {
             print("cannot fetch.")
         }
+    }
+    
+    func loadFandomsFromWorks() {
+        downloadedFandoms.removeAll()
+        
+        for wItem in downloadedWorkds {
+            if let wFandoms: [DBFandom] = wItem.mutableSetValue(forKey: "fandoms").allObjects as? [DBFandom] {
+                downloadedFandoms.append(contentsOf: wFandoms)
+            }
+        }
+    }
+    
+    func numOfWorksInFandom(fandom: String) -> Int {
+        var res = 0
+        
+        let searchPredicate = NSPredicate(format: "fandoms.fandomName CONTAINS[c] %@ LIMIT 1", fandom)
+        let array = (downloadedWorkds as NSArray).filtered(using: searchPredicate)
+        res = array.count
+        
+        return res
+    }
+    
+    func getWorksInFandom(fandom: String) -> [NSManagedObject] {
+        var res: [NSManagedObject] = []
+        
+        let searchPredicate = NSPredicate(format: "fandoms.fandomName CONTAINS[c] %@ ", fandom)
+        if let array = (downloadedWorkds as NSArray).filtered(using: searchPredicate) as? [NSManagedObject] {
+            res = array
+        }
+        
+        return res
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

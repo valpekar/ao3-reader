@@ -336,7 +336,11 @@ class SubscriptionsViewController: LoadingViewController, UITableViewDataSource,
             
             currentWorkItem.workId = newsItem.workId
             
-            currentWorkItem.id = Int64(Int(newsItem.workId)!)
+            if let iid = Int(newsItem.workId) {
+                currentWorkItem.id = Int64(iid)
+            } else {
+                currentWorkItem.id = 0
+            }
             
             (workDetail.viewControllers[0] as! WorkDetailViewController).workItem = currentWorkItem
             (workDetail.viewControllers[0] as! WorkDetailViewController).modalDelegate = self

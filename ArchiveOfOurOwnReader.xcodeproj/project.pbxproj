@@ -277,6 +277,7 @@
 		3CB773601C847D6100DC15C4 /* SidePanelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SidePanelViewController.swift; sourceTree = "<group>"; };
 		3CB773621C8480C300DC15C4 /* CenterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CenterViewController.swift; sourceTree = "<group>"; };
 		3CB992C01CF470D5004772AF /* PublishWorkController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PublishWorkController.swift; path = Controller/PublishWorkController.swift; sourceTree = "<group>"; };
+		3CBB44E81F052D2300F09AB6 /* ArchiveOfOurOwnReader 5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ArchiveOfOurOwnReader 5.xcdatamodel"; sourceTree = "<group>"; };
 		3CBDC9A91E9E244500A97C24 /* DBChapter+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "DBChapter+CoreDataClass.swift"; path = "Model/DBChapter+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3CBDC9AA1E9E244500A97C24 /* DBChapter+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "DBChapter+CoreDataProperties.swift"; path = "Model/DBChapter+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3CBDC9AD1E9E265B00A97C24 /* AnalyticsItem+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "AnalyticsItem+CoreDataClass.swift"; path = "Model/AnalyticsItem+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -1248,6 +1249,7 @@
 		28B6DC2B1B4E3F5900F34529 /* ArchiveOfOurOwnReader.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				3CBB44E81F052D2300F09AB6 /* ArchiveOfOurOwnReader 5.xcdatamodel */,
 				3C89956F1E95135800D511CD /* ArchiveOfOurOwnReader 4.xcdatamodel */,
 				3CD8F8CE1CE4808F00C3D5BB /* ArchiveOfOurOwnReader 3.xcdatamodel */,
 				3C9C87BB1CE35D8800C10410 /* ArchiveOfOurOwnReader 2.xcdatamodel */,

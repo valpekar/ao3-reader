@@ -184,22 +184,46 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
     
     var chapters: [ChapterOnline] = [ChapterOnline]()
     
-    func downloadWork(_ data: Data, curWork: NewsFeedItem? = nil, workItemOld: WorkItem? = nil, workItemToReload: NSManagedObject? = nil) {
+    func downloadWork(_ data: Data, curWork: NewsFeedItem? = nil, workItemOld: WorkItem? = nil, workItemToReload: NSManagedObject? = nil) -> NSManagedObject? {
         
         var workItem : NSManagedObject! = nil
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            return
+            return workItemToReload
         }
         guard let managedContext = appDelegate.managedObjectContext else {
-            return
+            return workItemToReload
         }
         
-        if (workItemToReload == nil) {
+        var wid = ""
+        if let curWork = curWork {
+            wid = curWork.workId
+        } else if let wItemOld = workItemOld {
+            wid = wItemOld.workId
+        }
+        
+        if (workItemToReload == nil && workItem == nil) {
+            
+            let req: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "DBWorkItem")
+            let predicate = NSPredicate(format: "workId == %@", wid)
+            req.predicate = predicate
+            do {
+                if let fetchedWorks = try managedContext.fetch(req) as? [DBWorkItem] {
+                    if (fetchedWorks.count > 0) {
+                        workItem = fetchedWorks.first
+                    }
+                }
+            } catch {
+                fatalError("Failed to fetch works: \(error)")
+            }
+            
+            if (workItem == nil) {
+            
             guard let entity = NSEntityDescription.entity(forEntityName: "DBWorkItem",  in: managedContext) else {
-                return
+                return workItemToReload
             }
             workItem = NSManagedObject(entity: entity, insertInto:managedContext)
-        } else {
+            }
+        } else if (workItemToReload != nil) {
             workItem = workItemToReload
         }
         
@@ -208,6 +232,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
         chapters = [ChapterOnline]()
         
         if let curWork = curWork {
+            
             workItem.setValue(curWork.warning, forKey: "ArchiveWarnings")
             workItem.setValue(curWork.title, forKey: "workTitle")
             workItem.setValue(curWork.topic, forKey: "topic")
@@ -261,7 +286,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
                     workItem.setValue(NSLocalizedString("WrkAvailOnlyRegistered", comment: ""), forKey: "workTitle")
                     workItem.setValue("", forKey: "complete")
                     //   return NEXT_CHAPTER_NOT_EXIST;
-                    return
+                    return workItemToReload
                 }
             }
         }
@@ -274,7 +299,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
             workItem.setValue(NSLocalizedString("ContainsAdultContent", comment: ""), forKey: "workTitle")
             workItem.setValue("", forKey: "complete")
             
-            return
+            return workItemToReload
         }
         }
         
@@ -302,6 +327,9 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
             
             if let fandomsLiArr: [TFHppleElement] = workmeta[0].search(withXPathQuery: "//dd[@class='fandom tags']/ul[@class='commas']/li") as? [TFHppleElement] {
             
+                let workFandoms = workItem.value(forKeyPath: "fandoms") as! NSMutableSet
+                workFandoms.removeAllObjects()
+
             for i in 0..<fandomsLiArr.count {
                 let entityf =  NSEntityDescription.entity(forEntityName: "DBFandom",  in: managedContext)
                 let f = NSManagedObject(entity: entityf!, insertInto:managedContext)
@@ -310,7 +338,6 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
                 let attributes : NSDictionary = (fandomsLiArr[i].search(withXPathQuery: "//a")[0] as AnyObject).attributes as NSDictionary
                 f.setValue((attributes["href"] as? String ?? ""), forKey: "fandomUrl")
                 
-                let workFandoms = workItem.value(forKeyPath: "fandoms") as! NSMutableSet
                 workFandoms.add(f)
                 
                 let works = f.value(forKeyPath: "workItems") as! NSMutableSet
@@ -328,6 +355,8 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
             // workItem.setValue(categoryStr, forKey: "category")
             
             if let relationshipsLiArr: [TFHppleElement] = workmeta[0].search(withXPathQuery: "//dd[@class='relationship tags']/ul[@class='commas']/li") as? [TFHppleElement] {
+                let workRel = workItem.value(forKeyPath: "relationships") as! NSMutableSet
+                workRel.removeAllObjects()
             
             for i in 0..<relationshipsLiArr.count {
                 let entityr =  NSEntityDescription.entity(forEntityName: "DBRelationship",  in: managedContext)
@@ -337,7 +366,6 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
                 let attributes : NSDictionary = (relationshipsLiArr[i].search(withXPathQuery: "//a")[0] as AnyObject).attributes as NSDictionary
                 r.setValue((attributes["href"] as? String ?? ""), forKey: "relationshipUrl")
                 
-                let workRel = workItem.value(forKeyPath: "relationships") as! NSMutableSet
                 workRel.add(r)
                 
                 let works = r.value(forKeyPath: "workItems") as! NSMutableSet
@@ -346,7 +374,10 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
             }
             
             if let charactersLiArr: [TFHppleElement] = workmeta[0].search(withXPathQuery: "//dd[@class='character tags']/ul[@class='commas']/li") as? [TFHppleElement] {
-            
+
+                let workCharacters = workItem.value(forKeyPath: "characters") as! NSMutableSet
+                workCharacters.removeAllObjects()
+
             for i in 0..<charactersLiArr.count {
                 let entityc =  NSEntityDescription.entity(forEntityName: "DBCharacterItem",  in: managedContext)
                 let c = NSManagedObject(entity: entityc!, insertInto:managedContext)
@@ -354,7 +385,6 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
                 let attributes : NSDictionary = (charactersLiArr[i].search(withXPathQuery: "//a")[0] as AnyObject).attributes as NSDictionary
                 c.setValue((attributes["href"] as? String ?? ""), forKey: "characterUrl")
                 
-                let workCharacters = workItem.value(forKeyPath: "characters") as! NSMutableSet
                 workCharacters.add(c)
                 
                 let works = c.value(forKeyPath: "workItems") as! NSMutableSet
@@ -436,20 +466,24 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
         let navigationEl: [TFHppleElement]? = doc.search(withXPathQuery: "//ul[@class='work navigation actions']") as? [TFHppleElement]
         if let nxt: [TFHppleElement] = navigationEl?.first?.search(withXPathQuery: "//li[@class='chapter next']") as? [TFHppleElement],
             let nxtFirst = nxt.first {
-                guard let aEl: TFHppleElement = nxtFirst.search(withXPathQuery: "//a")[0] as? TFHppleElement else {
-                   return
-                }
-                let attributes : NSDictionary = aEl.attributes as NSDictionary
-                let next : String? = (attributes["href"] as? String)
+            
+            guard let aEl: TFHppleElement = nxtFirst.search(withXPathQuery: "//a")[0] as? TFHppleElement else {
+                   return workItemToReload
+            }
+            let attributes : NSDictionary = aEl.attributes as NSDictionary
+            
+            guard let next : String = (attributes["href"] as? String) else {
+                return workItemToReload
+            }
                 
-                if (!next!.isEmpty) {
+            if (!next.isEmpty) {
                     
-                    workItem.setValue(next, forKey: "nextChapter")
+                workItem.setValue(next, forKey: "nextChapter")
                     
-                    var params:[String:AnyObject] = [String:AnyObject]()
-                    params["view_adult"] = "true" as AnyObject?
+                var params:[String:AnyObject] = [String:AnyObject]()
+                params["view_adult"] = "true" as AnyObject?
                     
-                    Alamofire.request("http://archiveofourown.org" + next! , parameters: params).response(completionHandler: { response in
+                Alamofire.request("http://archiveofourown.org" + next, parameters: params).response(completionHandler: { response in
                         
                         print(response.request ?? "")
                         print(response.error ?? "")
@@ -458,12 +492,12 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
                             self.parseNxtChapter(data, curworkItem: workItem)
                         }
                         
-                    })
-                }
-            } else {
-                saveChapters(workItem)
-                hideLoadingView()
+                })
             }
+        } else {
+            saveChapters(workItem)
+            hideLoadingView()
+        }
         
         //save to DB
         do {
@@ -476,6 +510,8 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
         }
         
         saveToAnalytics(workItem.value(forKey: "author") as? String ?? "", category: workItem.value(forKey: "category") as? String ?? "", mainFandom: firstFandom, mainRelationship: firstRelationship)
+        
+        return workItemToReload
     }
     
     func saveChapters(_ curworkItem: NSManagedObject) {
@@ -601,7 +637,9 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
     func saveToAnalytics(_ author: String, category: String, mainFandom: String, mainRelationship: String) {
        
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-            let managedContext = appDelegate.managedObjectContext!
+            guard let managedContext = appDelegate.managedObjectContext else {
+                return
+            }
         
             let entity =  NSEntityDescription.entity(forEntityName: "AnalyticsItem",  in: managedContext)
             if let analyticsItem: AnalyticsItem = NSManagedObject(entity: entity!, insertInto:managedContext) as? AnalyticsItem {
