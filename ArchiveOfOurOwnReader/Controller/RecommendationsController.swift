@@ -30,6 +30,9 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
         
         self.title = NSLocalizedString("Recommendations", comment: "")
         descLabel.text = NSLocalizedString("RecommendationsExplained", comment: "")
+        
+        //test!
+        generateRecommendations()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -47,6 +50,7 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
                 TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("NotPurchased", comment: ""), type: .error)
             }
         }
+        
     }
    
     func scheduleLocal() {
@@ -506,6 +510,32 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
             return CGSize(width: 100, height: 28)
         default:
             return CGSize(width: 50, height: 28)
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        let page: PageItem = pages[indexPath.row]
+        if (!page.url.isEmpty) {
+            
+            if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
+                Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
+            }
+            
+            showLoadingView(msg: "\(NSLocalizedString("LoadingPage", comment: "")) \(indexPath.row)")
+            
+            Alamofire.request("http://archiveofourown.org" + page.url, method: .get).response(completionHandler: { response in
+                print(response.error ?? "")
+                if let data = response.data {
+                    self.parseCookies(response)
+                    self.getFeed(data)
+                    self.showFeed()
+                } else {
+                    self.hideLoadingView()
+                    TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
+                }
+            })
+            
         }
     }
     
