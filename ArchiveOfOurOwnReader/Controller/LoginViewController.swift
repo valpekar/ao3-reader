@@ -236,6 +236,7 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
                 
                 DefaultsManager.putBool(true, key: DefaultsManager.ADULT)
                 DefaultsManager.putString(token, key: DefaultsManager.TOKEN)
+                DefaultsManager.putObject(Date() as AnyObject, key: DefaultsManager.COOKIES_DATE)
                 
                 DispatchQueue.main.asyncAfter(deadline: delayTime) {
                 self.dismiss(animated: true, completion: {

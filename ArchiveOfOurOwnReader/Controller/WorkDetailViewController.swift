@@ -12,6 +12,7 @@ import GoogleMobileAds
 import TSMessages
 import Alamofire
 import Crashlytics
+import FolioReaderKit
 
 class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -588,8 +589,22 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             let workController: WorkViewController = segue.destination as! WorkViewController
             
             if (workItem != nil) {
+                
+                /*var url = ""
+                
+                for downloadUrl in downloadUrls {
+                    if (downloadUrl.key == "EPUB") {
+                        url = downloadUrl.value
+                    }
+                }
+                
+                downloadEpub(epubUrl: "http://archiveofourown.org" + url)
+                //openEpub(bookPath: "http://archiveofourown.org" + url)
+ */
+                
                 workController.workItem = workItem
                 workController.onlineChapters = onlineChapters
+                
             } else if (downloadedWorkItem != nil) {
                 workController.downloadedWorkItem = downloadedWorkItem
             }
@@ -611,6 +626,63 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             }
         }
         
+    }
+    
+    //MARK : - download temp epub 
+    
+    //better - https://www.ralfebert.de/snippets/ios/urlsession-background-downloads/
+    
+    func downloadEpub(epubUrl: String) {
+        // Create destination URL
+        let documentsUrl:URL =  FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first as URL!
+        let destinationFileUrl = documentsUrl.appendingPathComponent("tempWork.epub")
+        
+        //Create URL to the source file you want to download
+        let fileURL = URL(string: epubUrl)
+        
+        if (FileManager.default.fileExists(atPath: destinationFileUrl.absoluteString)) {
+            do {
+                try
+                    FileManager.default.removeItem(at: fileURL!)
+            } catch (let writeError) {
+                print("Error deleting a file \(destinationFileUrl) : \(writeError)")
+            }
+        }
+        
+        let sessionConfig = URLSessionConfiguration.default
+        let session = URLSession(configuration: sessionConfig)
+        
+        let request = URLRequest(url:fileURL!)
+        
+        let task = session.downloadTask(with: request) { (tempLocalUrl, response, error) in
+            if let tempLocalUrl = tempLocalUrl, error == nil {
+                // Success
+                if let statusCode = (response as? HTTPURLResponse)?.statusCode {
+                    print("Successfully downloaded. Status code: \(statusCode)")
+                    
+                    self.openEpub(bookPath: destinationFileUrl.absoluteString)
+                }
+                
+                do {
+                    try FileManager.default.copyItem(at: tempLocalUrl, to: destinationFileUrl)
+                } catch (let writeError) {
+                    print("Error creating a file \(destinationFileUrl) : \(writeError)")
+                }
+                
+            } else {
+                print("Error took place while downloading a file. Error description: %@", error?.localizedDescription ?? "")
+            }
+        }
+        task.resume()
+    }
+    
+    //https://github.com/taku33/FolioReaderPlus
+    
+    func openEpub(bookPath: String) {
+        let config = FolioReaderConfig()
+       // let bookPath = Bundle.main.path(forResource: "tempWork", ofType: "epub")
+        let folioReader = FolioReader()
+        folioReader.presentReader(parentViewController: self, withEpubPath: bookPath, andConfig: config)
     }
     
     // MARK: - tableview

@@ -56,9 +56,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             DefaultsManager.putObject(s as AnyObject, key: DefaultsManager.PSEUD_IDS)
         }
         
-        token = DefaultsManager.getString(DefaultsManager.TOKEN)
-        if let ck = DefaultsManager.getObject(DefaultsManager.COOKIES) as? [HTTPCookie] {
-            cookies = ck
+        if let cookiesDate = DefaultsManager.getObject(DefaultsManager.COOKIES_DATE) as? Date {
+            let calendar = Calendar.current
+            if let dateDayAfter = calendar.date(byAdding: .minute, value: 2, to: cookiesDate) { //assume cookies live 2 days 
+            
+                if (calendar.startOfDay(for: dateDayAfter) >= calendar.startOfDay(for: Date())) {
+                
+                    token = DefaultsManager.getString(DefaultsManager.TOKEN)
+                    if let ck = DefaultsManager.getObject(DefaultsManager.COOKIES) as? [HTTPCookie] {
+                        cookies = ck
+                    }
+                }
+            }
         }
         
        // UIApplication.sharedApplication().cancelAllLocalNotifications()

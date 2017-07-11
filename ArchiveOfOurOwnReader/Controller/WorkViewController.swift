@@ -37,17 +37,19 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
     
     var onlineChapters = [Int:ChapterOnline]()
     
+    var viewLaidoutSubviews = false // <-- variable to prevent the viewDidLayoutSubviews code from happening more than once
+
+    
     override func viewDidLoad() {
         
-//        webView.scrollView.contentInset = UIEdgeInsetsMake(4, 0, 0, 0)
-//        var basketTopFrame = self.layoutView.frame
-//        basketTopFrame.origin.y -= basketTopFrame.size.height
-//        self.layoutView.frame = basketTopFrame
+        super.viewDidLoad()
         
         addNavItems()
         
         prevButton.isHidden = true
         webView.delegate = self
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(willResignActive), name: .UIApplicationWillResignActive, object: nil)
         
         if (workItem != nil) {
             if (onlineChapters.count == 0) {
@@ -68,29 +70,7 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
                 loadCurrentTheme()
             }
             
-            if (!DefaultsManager.getString(DefaultsManager.LASTWRKCHAPTER).isEmpty) {
-                    
-                    nextChapter = DefaultsManager.getString(DefaultsManager.LASTWRKCHAPTER)
-                    nextButtonTouched(self.view)
-            }
             
-            if (!DefaultsManager.getString(DefaultsManager.LASTWRKSCROLL).isEmpty) {
-                let delayTime = DispatchTime.now() + Double(Int64(1.5 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
-                let offset: String? = DefaultsManager.getString(DefaultsManager.LASTWRKSCROLL)
-                DispatchQueue.main.asyncAfter(deadline: delayTime) {
-                    if (offset != nil) {
-                        let scrollOffset:CGPoint? = CGPointFromString(offset!)
-                        if let position:CGPoint = scrollOffset {
-                            self.webView.scrollView.setContentOffset(position, animated: true)
-                        }
-                    }
-                    
-                }
-            }
-            
-            DefaultsManager.putString("", key: DefaultsManager.LASTWRKSCROLL)
-            DefaultsManager.putString("", key: DefaultsManager.LASTWRKID)
-            DefaultsManager.putString("", key: DefaultsManager.LASTWRKCHAPTER)
             
         } else if (downloadedWorkItem != nil) {
             downloadedChapters = downloadedWorkItem.mutableSetValue(forKey: "chapters").allObjects as? [DBChapter]
@@ -127,6 +107,10 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
         print("Work view controller deinit")
         NotificationCenter.default.removeObserver(self)
     }
+    
+    func willResignActive(_ notification: Notification) {
+        saveChanges()
+    }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -139,36 +123,30 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
         
         if (workItem != nil) {
             self.title = workItem.workTitle
-        } else if (downloadedWorkItem != nil) {
-            self.title = downloadedWorkItem.value(forKey: "workTitle") as? String
-            let offset: String? = downloadedWorkItem.value(forKey: "scrollProgress") as? String
-            if (offset != nil) {
-                let scrollOffset:CGPoint? = CGPointFromString(offset!)
-                if let position:CGPoint = scrollOffset {
-                    webView.scrollView.setContentOffset(position, animated: true)
-                }
-            }
-        }
         
-//        let bounds = self.layoutView.bounds
-//        UIView.animateWithDuration(1.0, delay: 0.0, usingSpringWithDamping: 0.2, initialSpringVelocity: 10, options: nil, animations: {
-//            self.layoutView.bounds = CGRect(x: bounds.origin.x - 20, y: bounds.origin.y, width: bounds.size.width + 60, height: bounds.size.height)
-//            }, completion: nil)
+        }
         
         if (!nextChapter.isEmpty || !prevChapter.isEmpty) {
             animateLayoutDown()
         }
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        saveChanges()
+    }
     
+    func saveChanges() {
+        
         if (downloadedWorkItem != nil) {
             saveWorkChanged()
         } else if (workItem != nil) {
-            DefaultsManager.putString(NSStringFromCGPoint(webView.scrollView.contentOffset), key: DefaultsManager.LASTWRKSCROLL)
-            DefaultsManager.putString(workItem.workId, key: DefaultsManager.LASTWRKID)
-            DefaultsManager.putString(currentOnlineChapter, key: DefaultsManager.LASTWRKCHAPTER)
+            //            DefaultsManager.putString(NSStringFromCGPoint(webView.scrollView.contentOffset), key: DefaultsManager.LASTWRKSCROLL)
+            //            DefaultsManager.putString(workItem.workId, key: DefaultsManager.LASTWRKID)
+            //            DefaultsManager.putString(currentOnlineChapter, key: DefaultsManager.LASTWRKCHAPTER)
+            
+            saveHistoryItem(workItem: workItem)
         }
     }
     
@@ -182,6 +160,68 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
         }
         
         UIApplication.shared.isIdleTimerDisabled = false
+    }
+    
+    // Retrieve and set your content offset when the view re-appears
+    // and its subviews are first laid out
+    override func viewDidLayoutSubviews() {
+        
+        if (!viewLaidoutSubviews) {
+            
+            if (workItem != nil) {
+                self.title = workItem.workTitle
+                
+                if let historyItem: HistoryItem = self.getHistoryItem(workId: workItem.workId) {
+                    if let nxtChapter = historyItem.lastChapter {
+                        nextChapter = nxtChapter
+                        nextButtonTouched(self.view)
+                    }
+                    
+                    if let lastScroll = historyItem.scrollProgress {
+                        let delayTime = DispatchTime.now() + Double(Int64(1.5 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+                        DispatchQueue.main.asyncAfter(deadline: delayTime) {
+                            let scrollOffset:CGPoint? = CGPointFromString(lastScroll)
+                            if let position:CGPoint = scrollOffset {
+                                self.webView.scrollView.setContentOffset(position, animated: true)
+                            }
+                        }
+                    }
+                }
+                
+//                if (!DefaultsManager.getString(DefaultsManager.LASTWRKCHAPTER).isEmpty) {
+//                    
+//                    nextChapter = DefaultsManager.getString(DefaultsManager.LASTWRKCHAPTER)
+//                    nextButtonTouched(self.view)
+//                }
+                
+//                if (!DefaultsManager.getString(DefaultsManager.LASTWRKSCROLL).isEmpty) {
+//                    let delayTime = DispatchTime.now() + Double(Int64(1.5 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+//                    let offset: String = DefaultsManager.getString(DefaultsManager.LASTWRKSCROLL)
+//                    DispatchQueue.main.asyncAfter(deadline: delayTime) {
+//                        let scrollOffset:CGPoint? = CGPointFromString(offset)
+//                        if let position:CGPoint = scrollOffset {
+//                            self.webView.scrollView.setContentOffset(position, animated: false)
+//                        }
+//                    }
+//                }
+                
+                
+                
+//                DefaultsManager.putString("", key: DefaultsManager.LASTWRKSCROLL)
+//                DefaultsManager.putString("", key: DefaultsManager.LASTWRKID)
+//                DefaultsManager.putString("", key: DefaultsManager.LASTWRKCHAPTER)
+            }  else if (downloadedWorkItem != nil) {
+                self.title = downloadedWorkItem.value(forKey: "workTitle") as? String
+                let offset: String? = downloadedWorkItem.value(forKey: "scrollProgress") as? String
+                if (offset != nil) {
+                    let scrollOffset:CGPoint? = CGPointFromString(offset!)
+                    if let position:CGPoint = scrollOffset {
+                        webView.scrollView.setContentOffset(position, animated: true)
+                    }
+                }
+            }
+            viewLaidoutSubviews = true
+        }
     }
     
     func addNavItems() {
@@ -383,11 +423,9 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
             return
         }
         
-        guard let wid = downloadedWorkItem.value(forKey: "workId") as? String else {
+        guard let workId = downloadedWorkItem.value(forKey: "workId") as? String else {
             return
         }
-        
-        let workId = wid
         
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "DBWorkItem")
         fetchRequest.predicate = NSPredicate(format: "workId = %@", workId)
@@ -404,6 +442,77 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
             }
         }
     }
+    
+    
+    //MARK: - history items
+    
+    func saveHistoryItem(workItem: WorkItem) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        guard let managedContext = appDelegate.managedObjectContext else {
+            return
+        }
+        
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "HistoryItem")
+        fetchRequest.predicate = NSPredicate(format: "workId = %@", workItem.workId)
+        var selectWorks = (try! managedContext.fetch(fetchRequest)) as! [HistoryItem]
+        
+        if (selectWorks.count > 0) {
+            let currentWork = selectWorks[0] as HistoryItem
+            currentWork.lastChapter = currentOnlineChapter
+            currentWork.scrollProgress = NSStringFromCGPoint(webView.scrollView.contentOffset)
+            currentWork.timeStamp = NSDate()
+            
+            do {
+                try managedContext.save()
+            } catch _ {
+            }
+        } else {
+            //insert into managed context
+            
+            guard let entity = NSEntityDescription.entity(forEntityName: "HistoryItem",  in: managedContext) else {
+                return
+            }
+            let historyItem = HistoryItem(entity: entity, insertInto:managedContext)
+            historyItem.lastChapter = currentOnlineChapter
+            historyItem.scrollProgress = NSStringFromCGPoint(webView.scrollView.contentOffset)
+            historyItem.timeStamp = NSDate()
+            historyItem.workId = workItem.workId
+            
+            do {
+                try managedContext.save()
+            } catch let error as NSError {
+                print("Could not save \(String(describing: error.userInfo))")
+            }
+        }
+    }
+    
+    func getHistoryItem(workId: String) -> HistoryItem? {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return nil
+        }
+        guard let managedContext = appDelegate.managedObjectContext else {
+            return nil
+        }
+        
+        let req: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "HistoryItem")
+        let predicate = NSPredicate(format: "workId == %@", workId)
+        req.predicate = predicate
+        do {
+            if let fetchedWorks = try managedContext.fetch(req) as? [HistoryItem] {
+                if (fetchedWorks.count > 0) {
+                    return fetchedWorks.first
+                }
+            }
+        } catch {
+            fatalError("Failed to fetch works: \(error)")
+        }
+        
+        return nil
+    }
+    
+    //MARK: - chapter next/prev
     
     @IBAction func nextButtonTouched(_ sender: AnyObject) {
         

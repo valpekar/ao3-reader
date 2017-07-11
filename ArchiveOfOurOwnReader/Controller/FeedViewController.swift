@@ -96,6 +96,7 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
             } else if (query.isEmpty()) {
                 self.performSegue(withIdentifier: "choosePref", sender: self)
             } else {
+                
                 searchApplied(self.query, shouldAddKeyword: true)
             }
         }

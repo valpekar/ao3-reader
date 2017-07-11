@@ -50,6 +50,7 @@ class DefaultsManager {
     static var ADULT = "adlt"
     static var TOKEN = "authtoken"
     static var COOKIES = "cookies"
+    static var COOKIES_DATE = "cookies"
     static var LASTWRKID = "lwid"
     static var LASTWRKCHAPTER = "lwchp"
     static var LASTWRKSCROLL = "lwscrl"
