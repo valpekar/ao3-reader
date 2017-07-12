@@ -25,6 +25,7 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
     
     var currentChapterIndex = 0
     var currentOnlineChapter = ""
+    var currentOnlineChapterIdx = 0
     
     var workItem: WorkItem! = nil
     var workChapters: [Chapter] = [Chapter]()
@@ -52,7 +53,7 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
         NotificationCenter.default.addObserver(self, selector: #selector(willResignActive), name: .UIApplicationWillResignActive, object: nil)
         
         if (workItem != nil) {
-            if (onlineChapters.count == 0) {
+            if (onlineChapters.count == 0 || onlineChapters.count == 1) {
                 contentsButton.isHidden = true
             }
             
@@ -77,11 +78,12 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
             downloadedChapters?.sort(by: { (a:DBChapter, b: DBChapter) -> Bool in
                 return b.value(forKey: "chapterIndex") as! Int > a.value(forKey: "chapterIndex") as! Int
             })
-            if (downloadedChapters != nil && downloadedChapters!.count > 0) {
+            if (downloadedChapters != nil && downloadedChapters!.count > 1) {
                 contentsButton.isHidden = false
                 currentChapterIndex = downloadedWorkItem.value(forKey: "currentChapter") as? Int ?? 0
                 work = downloadedChapters?[currentChapterIndex].value(forKey: "chapterContent") as? String ?? ""
                 loadCurrentTheme()
+                
                 
                 if (downloadedChapters!.count == 1 || currentChapterIndex == downloadedChapters!.count - 1) {
                     nextButton.isHidden = true
@@ -172,9 +174,10 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
                 self.title = workItem.workTitle
                 
                 if let historyItem: HistoryItem = self.getHistoryItem(workId: workItem.workId) {
-                    if let nxtChapter = historyItem.lastChapter {
+                    if let nxtChapter = historyItem.lastChapter,
+                        let nxtChapterIdx = historyItem.lastChapterIdx {
                         nextChapter = nxtChapter
-                        turnOnlineChapter(nextChapter)
+                        turnOnlineChapter(nextChapter, index: Int(nxtChapterIdx))
                         //nextButtonTouched(self.view)
                     }
                     
@@ -212,7 +215,14 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
 //                DefaultsManager.putString("", key: DefaultsManager.LASTWRKID)
 //                DefaultsManager.putString("", key: DefaultsManager.LASTWRKCHAPTER)
             }  else if (downloadedWorkItem != nil) {
-                self.title = downloadedWorkItem.value(forKey: "workTitle") as? String
+                var title = downloadedWorkItem.value(forKey: "workTitle") as? String
+                
+                if let tt = downloadedChapters?[currentChapterIndex].value(forKey: "chapterName") as? String {
+                    title = tt
+                }
+                
+                self.title = title
+                
                 let offset: String? = downloadedWorkItem.value(forKey: "scrollProgress") as? String
                 if (offset != nil) {
                     let scrollOffset:CGPoint? = CGPointFromString(offset!)
@@ -240,6 +250,7 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
         self.navigationItem.rightBarButtonItems = [ searchButton, igButton, flexSpace]
     }
     
+    //https://stackoverflow.com/questions/31114340/setstatusbarhidden-is-deprecated-in-ios-9-0
     func handleSingleTap(_ recognizer: UITapGestureRecognizer) {
         if(layoutView.isHidden) {
             layoutView.isHidden = false
@@ -306,10 +317,10 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
             prevButton.isHidden = true
         }
         
-        if (downloadedWorkItem != nil && downloadedChapters!.count > 0) {
+        if (downloadedWorkItem != nil && downloadedChapters!.count > 1) {
             contentsButton.isHidden = false
         } else {
-           // contentsButton.hidden = true
+            contentsButton.isHidden = true
         }
         
         if (downloadedWorkItem != nil && downloadedChapters != nil && chapterIndex < downloadedChapters!.count) {
@@ -320,12 +331,15 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
             //favWork.setCurrentChapter(String.valueOf(chapterIndex));
             //saveFavWorkChanges();
             saveWorkChanged()
+            
+            self.title = downloadedChapters![chapterIndex].chapterName
         }
     }
     
     
-    func turnOnlineChapter(_ chapterId: String) {
+    func turnOnlineChapter(_ chapterId: String, index: Int) {
         currentOnlineChapter = chapterId
+        currentOnlineChapterIdx = index
         
         showLoadingView(msg: NSLocalizedString("LoadingChapter", comment: ""))
         
@@ -369,11 +383,13 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
         
         print(response.error ?? "")
         
+        var title = ""
+        
         if let d = response.data {
             self.parseCookies(response)
-            self.work = self.parseChapter(d)
+            (self.work, title) = self.parseChapter(d)
             self.hideLoadingView()
-            self.showWork()
+            self.showWork(title: title)
             
         } else {
             self.hideLoadingView()
@@ -382,7 +398,7 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
         
     }
     
-    func parseChapter(_ data: Data) -> String {
+    func parseChapter(_ data: Data) -> (String, String) {
         //
         let doc : TFHpple = TFHpple(htmlData: data)
         var workContentStr: String = ""
@@ -395,6 +411,12 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
             
             workContentStr = workContentStr.replacingOccurrences(of: "(?i)<strike\\b[^<]*>\\s*</strike>", with: "", options: .regularExpression, range: nil)
             workContentStr = workContentStr.replacingOccurrences(of: "<strike/>", with: "")
+        }
+        
+        var title = ""
+        if let tt = doc.search(withXPathQuery: "//h3[@class='title']") as? [TFHppleElement] {
+            title = tt[0].content ?? ""
+            title = title.trimmingCharacters(in: .whitespacesAndNewlines)
         }
         
         if let navigationEl: [TFHppleElement] = doc.search(withXPathQuery: "//ul[@class='work navigation actions']") as? [TFHppleElement] {
@@ -419,7 +441,7 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
             }
         }
         
-        return workContentStr
+        return (workContentStr, title)
     }
     
     func saveWorkChanged() {
@@ -468,6 +490,7 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
         if (selectWorks.count > 0) {
             let currentWork = selectWorks[0] as HistoryItem
             currentWork.lastChapter = currentOnlineChapter
+            currentWork.lastChapterIdx = currentOnlineChapterIdx as NSNumber
             currentWork.scrollProgress = NSStringFromCGPoint(webView.scrollView.contentOffset)
             currentWork.timeStamp = NSDate()
             
@@ -483,6 +506,7 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
             }
             let historyItem = HistoryItem(entity: entity, insertInto:managedContext)
             historyItem.lastChapter = currentOnlineChapter
+            historyItem.lastChapterIdx = currentOnlineChapterIdx as NSNumber
             historyItem.scrollProgress = NSStringFromCGPoint(webView.scrollView.contentOffset)
             historyItem.timeStamp = NSDate()
             historyItem.workId = workItem.workId
@@ -527,17 +551,22 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
             showLoadingView(msg: NSLocalizedString("LoadingNxtChapter", comment: ""))
             
             currentOnlineChapter = nextChapter
+            if (currentOnlineChapterIdx < onlineChapters.count - 1) {
+                currentOnlineChapterIdx = currentOnlineChapterIdx + 1
+            }
             
             var params:[String:AnyObject] = [String:AnyObject]()
             params["view_adult"] = "true" as AnyObject?
             
             let urlStr = "http://archiveofourown.org" + nextChapter
+            
+            var title = ""
         
             Alamofire.request(urlStr, method: .get, parameters: params)
             .response(completionHandler: { response in
                 print(response.request ?? "")
-                self.downloadFullWork(response.data!)
-                self.showWork()
+                title = self.downloadFullWork(response.data!)
+                self.showWork(title: title)
             })
             
         } else {
@@ -552,15 +581,20 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
             showLoadingView(msg: NSLocalizedString("LoadingPrevChapter", comment: ""))
             
             currentOnlineChapter = prevChapter
+            if (currentOnlineChapterIdx > 0) {
+                currentOnlineChapterIdx = currentOnlineChapterIdx - 1
+            }
         
             var params:[String:AnyObject] = [String:AnyObject]()
             params["view_adult"] = "true" as AnyObject?
+            
+            var title = ""
         
             Alamofire.request("http://archiveofourown.org" + prevChapter, method: .get, parameters: params)
                 .response(completionHandler: { response in
                     print(response.request ?? "")
-                    self.downloadFullWork(response.data!)
-                    self.showWork()
+                    title = self.downloadFullWork(response.data!)
+                    self.showWork(title: title)
                 })
         } else {
             currentChapterIndex -= 1
@@ -568,7 +602,7 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
         }
     }
     
-    func downloadFullWork(_ data: Data) {
+    func downloadFullWork(_ data: Data) -> String {
         
         prevChapter = ""
         nextChapter = ""
@@ -588,6 +622,12 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
             work = regex.stringByReplacingMatches(in: work, options: NSRegularExpression.MatchingOptions.withoutAnchoringBounds, range: NSRange(location: 0, length: work.characters.count), withTemplate: "$1")
         }
         
+        var title = ""
+        if let tt = doc.search(withXPathQuery: "//h3[@class='title']") as? [TFHppleElement] {
+            title = tt[0].content ?? ""
+            title = title.trimmingCharacters(in: .whitespacesAndNewlines)
+        }
+        
         var navigationEl: [TFHppleElement] = doc.search(withXPathQuery: "//ul[@class='work navigation actions']") as! [TFHppleElement]
         
         if (navigationEl.count > 0) {
@@ -604,9 +644,11 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
                 prevChapter = (attributesp["href"] as! String)
             }
         }
+        
+        return title
     }
     
-    func showWork() {
+    func showWork(title: String = "") {
         //webView.loadHTMLString(work, baseURL: nil)
         loadCurrentTheme()
         
@@ -622,13 +664,17 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
             prevButton.isHidden = false
         }
         
-        if (onlineChapters.count == 0) {
+        if (onlineChapters.count == 0 || onlineChapters.count == 1) {
             contentsButton.isHidden = true
         }
         
         hideLoadingView()
         if ((!nextChapter.isEmpty || !prevChapter.isEmpty) && layoutView != nil) {
             animateLayoutDown()
+        }
+        
+        if (!title.isEmpty) {
+            self.title = title
         }
     }
     
@@ -801,7 +847,7 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
         if (downloadedChapters != nil) {
             self.turnOnChapter(currentChapterIndex)
         } else {
-            turnOnlineChapter((onlineChapters[chapter]?.chapterId)!)
+            turnOnlineChapter((onlineChapters[chapter]?.chapterId)!, index: chapter)
         }
     }
     

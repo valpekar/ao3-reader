@@ -16,7 +16,6 @@ import Crashlytics
 class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UITableViewDelegate {
     
     var modalDelegate:ModalControllerDelegate?
-    var showInterstitial = false
     
     @IBOutlet weak var downloadTrashButton: UIButton!
     
@@ -582,9 +581,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     override func  prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if (segue.identifier == "readSegue") {
-            
-            //showInterstitial = true
-            
+                        
             let workController: WorkViewController = segue.destination as! WorkViewController
             
             if (workItem != nil) {

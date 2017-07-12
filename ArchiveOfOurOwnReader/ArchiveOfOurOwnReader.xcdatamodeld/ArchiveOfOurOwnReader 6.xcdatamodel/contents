@@ -70,6 +70,7 @@
     </entity>
     <entity name="HistoryItem" representedClassName=".HistoryItem" syncable="YES">
         <attribute name="lastChapter" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lastChapterIdx" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="scrollProgress" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="timeStamp" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="workId" optional="YES" attributeType="String" syncable="YES"/>
@@ -81,6 +82,6 @@
         <element name="DBFandom" positionX="-65" positionY="248" width="128" height="105"/>
         <element name="DBRelationship" positionX="162" positionY="507" width="128" height="30"/>
         <element name="DBWorkItem" positionX="-72" positionY="78" width="135" height="510"/>
-        <element name="HistoryItem" positionX="-108" positionY="234" width="128" height="105"/>
+        <element name="HistoryItem" positionX="-108" positionY="234" width="128" height="120"/>
     </elements>
 </model>

@@ -34,7 +34,7 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
     var works : [NewsFeedItem] = [NewsFeedItem]()
     
     var i = 0 //counts page transitions, display ads every 3rd time
-    var flag = true
+    var adsShown = 0
     var triedToLogin = 0
    
     //@IBOutlet weak var webView: UIWebView!
@@ -124,9 +124,9 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
         if (!purchased || !donated) {
             print("not purchased")
             //self.setupAdPlacer()
-            if (flag == true) {
+            if (adsShown % 3 == 0) {
                 loadAdMobInterstitial()
-                flag = false
+                adsShown += 1
             }
         }
         
@@ -673,7 +673,7 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
         
         if (i % 7 == 0 && (!purchased && !donated)) {
             showAdMobInterstitial()
-            flag = true
+            adsShown += 1
         }
         
         i += 1
