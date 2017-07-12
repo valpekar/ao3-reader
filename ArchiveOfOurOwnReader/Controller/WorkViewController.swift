@@ -275,6 +275,7 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
         })
     }
     
+    
     func gestureRecognizer(_: UIGestureRecognizer,  shouldRecognizeSimultaneouslyWith shouldRecognizeSimultaneouslyWithGestureRecognizer:UIGestureRecognizer) -> Bool {
         return true
     }
@@ -289,6 +290,7 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
     }
     
     func turnOnChapter(_ chapterIndex: Int) {
+        
         if (downloadedChapters != nil && chapterIndex == downloadedChapters!.count - 1) {
             nextButton.isHidden = true
         } else {
@@ -379,15 +381,16 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
     func parseChapter(_ data: Data) -> String {
         //
         let doc : TFHpple = TFHpple(htmlData: data)
-        var workContentStr = ""
+        var workContentStr: String = ""
         
         if let workContentEl = doc.search(withXPathQuery: "//div[@id='chapters']") as? [TFHppleElement] {
             workContentStr = workContentEl[0].raw ?? ""
             
-            //var error:NSErrorPointer = NSErrorPointer()
-            let regex:NSRegularExpression = try! NSRegularExpression(pattern: "<a href=\"[^\"]+\">([^<]+)</a>", options: NSRegularExpression.Options.caseInsensitive)
-            workContentStr = regex.stringByReplacingMatches(in: workContentStr, options: NSRegularExpression.MatchingOptions.withoutAnchoringBounds, range: NSRange(location: 0, length: workContentStr.characters.count), withTemplate: "$1")
+           // let regex:NSRegularExpression = try! NSRegularExpression(pattern: "<a href=\"[^\"]+\">([^<]+)</a>", options: NSRegularExpression.Options.caseInsensitive)
+           // workContentStr = regex.stringByReplacingMatches(in: workContentStr, options: NSRegularExpression.MatchingOptions.withoutAnchoringBounds, range: NSRange(location: 0, length: workContentStr.characters.count), withTemplate: "$1")
             
+            workContentStr = workContentStr.replacingOccurrences(of: "(?i)<strike\\b[^<]*>\\s*</strike>", with: "", options: .regularExpression, range: nil)
+            workContentStr = workContentStr.replacingOccurrences(of: "<strike/>", with: "")
         }
         
         if let navigationEl: [TFHppleElement] = doc.search(withXPathQuery: "//ul[@class='work navigation actions']") as? [TFHppleElement] {

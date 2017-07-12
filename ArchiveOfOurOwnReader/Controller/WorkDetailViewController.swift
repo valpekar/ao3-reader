@@ -12,7 +12,6 @@ import GoogleMobileAds
 import TSMessages
 import Alamofire
 import Crashlytics
-import FolioReaderKit
 
 class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -679,10 +678,10 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     //https://github.com/taku33/FolioReaderPlus
     
     func openEpub(bookPath: String) {
-        let config = FolioReaderConfig()
+        /*let config = FolioReaderConfig()
        // let bookPath = Bundle.main.path(forResource: "tempWork", ofType: "epub")
         let folioReader = FolioReader()
-        folioReader.presentReader(parentViewController: self, withEpubPath: bookPath, andConfig: config)
+        folioReader.presentReader(parentViewController: self, withEpubPath: bookPath, andConfig: config) */
     }
     
     // MARK: - tableview
