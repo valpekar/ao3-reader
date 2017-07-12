@@ -174,7 +174,8 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
                 if let historyItem: HistoryItem = self.getHistoryItem(workId: workItem.workId) {
                     if let nxtChapter = historyItem.lastChapter {
                         nextChapter = nxtChapter
-                        nextButtonTouched(self.view)
+                        turnOnlineChapter(nextChapter)
+                        //nextButtonTouched(self.view)
                     }
                     
                     if let lastScroll = historyItem.scrollProgress {
@@ -291,6 +292,8 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
     
     func turnOnChapter(_ chapterIndex: Int) {
         
+        currentChapterIndex = chapterIndex
+        
         if (downloadedChapters != nil && chapterIndex == downloadedChapters!.count - 1) {
             nextButton.isHidden = true
         } else {
@@ -322,6 +325,7 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
     
     
     func turnOnlineChapter(_ chapterId: String) {
+        currentOnlineChapter = chapterId
         
         showLoadingView(msg: NSLocalizedString("LoadingChapter", comment: ""))
         
@@ -386,8 +390,8 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
         if let workContentEl = doc.search(withXPathQuery: "//div[@id='chapters']") as? [TFHppleElement] {
             workContentStr = workContentEl[0].raw ?? ""
             
-           // let regex:NSRegularExpression = try! NSRegularExpression(pattern: "<a href=\"[^\"]+\">([^<]+)</a>", options: NSRegularExpression.Options.caseInsensitive)
-           // workContentStr = regex.stringByReplacingMatches(in: workContentStr, options: NSRegularExpression.MatchingOptions.withoutAnchoringBounds, range: NSRange(location: 0, length: workContentStr.characters.count), withTemplate: "$1")
+            let regex:NSRegularExpression = try! NSRegularExpression(pattern: "<a href=\"[^\"]+\">([^<]+)</a>", options: NSRegularExpression.Options.caseInsensitive)
+            workContentStr = regex.stringByReplacingMatches(in: workContentStr, options: NSRegularExpression.MatchingOptions.withoutAnchoringBounds, range: NSRange(location: 0, length: workContentStr.characters.count), withTemplate: "$1")
             
             workContentStr = workContentStr.replacingOccurrences(of: "(?i)<strike\\b[^<]*>\\s*</strike>", with: "", options: .regularExpression, range: nil)
             workContentStr = workContentStr.replacingOccurrences(of: "<strike/>", with: "")
