@@ -535,9 +535,9 @@
 			isa = PBXGroup;
 			children = (
 				28B6DC511B4E429100F34529 /* FeedTableViewCell.swift */,
-				28B6DC5F1B4E4B3C00F34529 /* PageCollectionViewCell.swift */,
 				1D1AAF151B98793700927CE1 /* WorkDetailCell.swift */,
 				1D87778F1B99D8DC00CEA738 /* SearchTagCell.swift */,
+				28B6DC5F1B4E4B3C00F34529 /* PageCollectionViewCell.swift */,
 				1D92E5FE1BAB17C500CAC9A5 /* SearchFromToCell.swift */,
 				1D8777931B99F5D000CEA738 /* SearchTagWithTextCell.swift */,
 				1D3476641BAC4381006AAF1A /* SearchSwitchesCell.swift */,

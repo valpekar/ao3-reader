@@ -442,6 +442,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
         }
         
         if let workContentEl = doc.search(withXPathQuery: "//div[@id='chapters']") as? [TFHppleElement] {
+            if (workContentEl.count > 0) {
             var workContentStr = workContentEl[0].raw ?? ""
             
             //var error:NSErrorPointer = NSErrorPointer()
@@ -465,6 +466,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
             chpt.url = chptName
             
             chapters.append(chpt)
+            }
         }
         
         let navigationEl: [TFHppleElement]? = doc.search(withXPathQuery: "//ul[@class='work navigation actions']") as? [TFHppleElement]

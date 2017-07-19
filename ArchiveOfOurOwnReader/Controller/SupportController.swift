@@ -48,8 +48,12 @@ class SupportController: CenterViewController, MFMailComposeViewControllerDelega
             UserDefaults.standard.synchronize()
             UserDefaults.standard.set(true, forKey: "donated")
             UserDefaults.standard.synchronize()
+            
+            TSMessage.showNotification(in: self, title: NSLocalizedString("Success", comment: ""), subtitle: "Promo Key Accepted!", type: .success)
+            
+            codeTv.text = ""
         } else {
-            TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: "No such promo key!", type: .error)
+            TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: "No Such Promo Key!", type: .error)
         }
     }
     
