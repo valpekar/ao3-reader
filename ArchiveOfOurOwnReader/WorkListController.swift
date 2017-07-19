@@ -45,7 +45,9 @@ class WorkListController: LoadingViewController, UITableViewDataSource, UITableV
             tagUrl = "http://archiveofourown.org\(tagUrl)"
         }
         
+        #if DEBUG
         print(tagUrl)
+            #endif
         
         requestWorks()
     }
@@ -79,8 +81,10 @@ class WorkListController: LoadingViewController, UITableViewDataSource, UITableV
         
         Alamofire.request(urlStr) //default is get
             .response(completionHandler: { response in
+                #if DEBUG
                 print(response.request ?? "")
                 print(response.error ?? "")
+                    #endif
                 if let d = response.data {
                     self.parseCookies(response)
                     self.parseWorks(d)
@@ -374,8 +378,10 @@ class WorkListController: LoadingViewController, UITableViewDataSource, UITableV
             showLoadingView(msg: "Loading page \(indexPath.row)")
             
             Alamofire.request("http://archiveofourown.org" + page.url, method: .get).response(completionHandler: { response in
+                #if DEBUG
                 print(response.request ?? "")
                 print(response.error ?? "")
+                    #endif
                 if let data: Data = response.data {
                     self.parseCookies(response)
                     self.parseWorks(data)
@@ -459,12 +465,14 @@ class WorkListController: LoadingViewController, UITableViewDataSource, UITableV
         
         Alamofire.request(urlStr, parameters: params)
             .response(completionHandler: { response in
+                #if DEBUG
                 print(response.request ?? "")
                 //  println(response ?? "")
                 print(response.error ?? "")
+                    #endif
                 if let d = response.data {
                     self.parseCookies(response)
-                    self.downloadWork(d, curWork: curWork)
+                    let _ = self.downloadWork(d, curWork: curWork)
                     //self.saveWork()
                 } else {
                     self.hideLoadingView()

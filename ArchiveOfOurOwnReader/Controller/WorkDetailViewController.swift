@@ -131,7 +131,9 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     }
     
     deinit {
+        #if DEBUG
         print ("Work Detail View Controller deinit")
+        #endif
     }
     
     func showDownloadedWork() {
@@ -517,8 +519,10 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     }
     
     func parseAddBookmarkResponse(_ data: Data) {
+        #if DEBUG
         let dta = NSString(data: data, encoding: String.Encoding.utf8.rawValue)
         print("the string is: \(String(describing: dta))")
+            #endif
         let doc : TFHpple = TFHpple(htmlData: data)
         
         if let noticediv: [TFHppleElement] = doc.search(withXPathQuery: "//div[@class='flash notice']") as? [TFHppleElement] {
@@ -641,7 +645,9 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 try
                     FileManager.default.removeItem(at: fileURL!)
             } catch (let writeError) {
+                #if DEBUG
                 print("Error deleting a file \(destinationFileUrl) : \(writeError)")
+                #endif
             }
         }
         
@@ -654,7 +660,9 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             if let tempLocalUrl = tempLocalUrl, error == nil {
                 // Success
                 if let statusCode = (response as? HTTPURLResponse)?.statusCode {
+                    #if DEBUG
                     print("Successfully downloaded. Status code: \(statusCode)")
+                        #endif
                     
                     self.openEpub(bookPath: destinationFileUrl.absoluteString)
                 }
@@ -662,11 +670,15 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 do {
                     try FileManager.default.copyItem(at: tempLocalUrl, to: destinationFileUrl)
                 } catch (let writeError) {
+                    #if DEBUG
                     print("Error creating a file \(destinationFileUrl) : \(writeError)")
+                    #endif
                 }
                 
             } else {
+                #if DEBUG
                 print("Error took place while downloading a file. Error description: %@", error?.localizedDescription ?? "")
+                #endif
             }
         }
         task.resume()
@@ -1134,9 +1146,11 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         if (del.cookies.count > 0) {
             Alamofire.request(requestStr, method: .post, parameters: params, encoding: URLEncoding.queryString /*ParameterEncoding.Custom(encodeParams)*/)
                 .response(completionHandler: { response in
+                    #if DEBUG
                     print(response.request ?? "")
                     // print(response)
                     print(response.error ?? "")
+                        #endif
                     
                     if let d = response.data {
                         self.parseCookies(response)
@@ -1186,8 +1200,10 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
         request("http://archiveofourown.org" + bookmarkId, method: .post, parameters: params)
             .response(completionHandler: { response in
+                #if DEBUG
                 print(response.request ?? "")
                 print(response.error ?? "")
+                    #endif
                 
                 if let d = response.data {
                     self.parseCookies(response)
@@ -1229,7 +1245,9 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     func downloadWorkAction() {
         
         if (purchased || donated) {
+            #if DEBUG
          print("premium")
+            #endif
         } else {
             if (countWroksFromDB() > 29) {
                 TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Only30Stroies", comment: ""), type: .error, duration: 2.0)
@@ -1276,9 +1294,11 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     }
     
     func onSavedWorkLoaded(_ response: DefaultDataResponse) {
+        #if DEBUG
         print(response.request ?? "")
         
         print(response.error ?? "")
+            #endif
         
         if let d = response.data {
             self.parseCookies(response)
@@ -1293,9 +1313,11 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     }
     
     func onOnlineWorkLoaded(_ response: DefaultDataResponse) {
+        #if DEBUG
         print(response.request ?? "")
         
         print(response.error ?? "")
+            #endif
         
         if let d = response.data {
             self.parseCookies(response)
@@ -1487,9 +1509,11 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
             Alamofire.request(requestStr, method: .post, parameters: params, encoding:URLEncoding.queryString /*ParameterEncoding.Custom(encodeParams)*/)
                 .response(completionHandler: { response in
+                    #if DEBUG
                     print(response.request ?? "")
                     // print(response.response ?? "")
                     print(response.error ?? "")
+                        #endif
                     
                     if let d = response.data {
                         self.parseCookies(response)

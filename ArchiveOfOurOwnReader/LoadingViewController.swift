@@ -45,7 +45,9 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
         if interstitial.isReady {
             interstitial.present(fromRootViewController: self)
         } else {
+            #if DEBUG
             print("Ad wasn't ready")
+            #endif
         }
     }
     
@@ -104,7 +106,9 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
     }
     
     func hideLoadingView() {
+        #if DEBUG
         print("hide loading view")
+            #endif
         if (activityView != nil && activityView.isAnimating) {
             activityView.stopAnimating()
         }
@@ -484,9 +488,11 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
                 params["view_adult"] = "true" as AnyObject?
                     
                 Alamofire.request("http://archiveofourown.org" + next, parameters: params).response(completionHandler: { response in
-                        
+                    
+                    #if DEBUG
                         print(response.request ?? "")
                         print(response.error ?? "")
+                    #endif
                         if let data = response.data {
                             self.showLoadingView(msg: NSLocalizedString("LoadingNxtChapter", comment: ""))
                             self.parseNxtChapter(data, curworkItem: workItem)
@@ -505,7 +511,9 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
             hideLoadingView()
         } catch let error as NSError {
             err = error
+            #if DEBUG
             print("Could not save \(String(describing: err?.userInfo))")
+                #endif
             hideLoadingView()
         }
         
@@ -516,7 +524,9 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
     
     func saveChapters(_ curworkItem: NSManagedObject) {
         
+        #if DEBUG
         print("save chapters begin")
+            #endif
         
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
             let managedContext = appDelegate.managedObjectContext!
@@ -537,7 +547,9 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
                 try managedContext.save()
             } catch let error as NSError {
                 err = error
+                #if DEBUG
                 print("Could not save \(String(describing: err?.userInfo))")
+                #endif
             }
         
             for i in 0..<chapters.count {
@@ -559,14 +571,20 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
                         try managedContext.save()
                     } catch let error as NSError {
                         err = error
+                        #if DEBUG
                         print("Could not save \(String(describing: err?.userInfo))")
+                        #endif
                     }
                 }
             }
         
+            #if DEBUG
             print("save chapters end")
+            #endif
         } else {
+            #if DEBUG
             print("save chapters end with error")
+            #endif
         }
     }
     
@@ -618,8 +636,10 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
                                     Alamofire.request(urlStr, parameters: params)
                                         .response(completionHandler: { response in
                                         
+                                            #if DEBUG
                                             print(response.request ?? "")
                                             print(response.error ?? "")
+                                                #endif
                                             if let d = response.data {
                                                 self.parseNxtChapter(d, curworkItem: curworkItem)
                                             }
@@ -655,11 +675,15 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
                     try managedContext.save()
                 } catch let error as NSError {
                     err = error
+                    #if DEBUG
                     print("Could not save \(String(describing: err)), \(String(describing: err?.userInfo))")
+                    #endif
                 }
             }
             } else {
+            #if DEBUG
                 print("Could not save AppDel = nil")
+            #endif
 
             }
     }

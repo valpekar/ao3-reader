@@ -54,7 +54,9 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
         loadQueryFromDefaults()
         
        // let pseud_id = DefaultsManager.getString(DefaultsManager.PSEUD_ID)
+        #if DEBUG
         print((UIApplication.shared.delegate as! AppDelegate).cookies)
+            #endif
         
        /* if (purchased /*&& !pseud_id.isEmpty*/ && (UIApplication.shared.delegate as! AppDelegate).cookies.count == 0) {
             openLoginController()
@@ -134,7 +136,9 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
     }
     
     deinit {
+        #if DEBUG
         print ("Work View Controller deinit")
+        #endif
     }
     
     @IBAction func tryAgainTouched(_ sender: AnyObject) {
@@ -182,7 +186,9 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
         guard let dta = NSString(data: data, encoding: String.Encoding.utf8.rawValue) else {
             return
         }
+        #if DEBUG
         print(dta)
+            #endif
         guard let doc : TFHpple = TFHpple(htmlData: data) else {
             return
         }
@@ -467,9 +473,11 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
             
                 Alamofire.request(urlStr)
                     .response(completionHandler: { response in
+                        #if DEBUG
                     //  print(request)
                     //  println(response)
                         print(response.error ?? "")
+                            #endif
                     
                         self.parseCookies(response)
                     
@@ -592,9 +600,11 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
     }
     
     func onFeedLoaded(_ response: DefaultDataResponse) {
+        #if DEBUG
         print(response.request ?? "")
         //print(response)
         print(response.error ?? "")
+            #endif
         
         if let d = response.data {
             self.parseCookies(response)
@@ -618,7 +628,9 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
         }
         
         if (purchased || donated) {
+            #if DEBUG
             print("premium")
+            #endif
         } else {
             if (countWroksFromDB() > 29) {
                 TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Only30Stroies", comment: ""), type: .error, duration: 2.0)
@@ -643,12 +655,14 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
     }
     
     func onSavedWorkLoaded(_ response: DefaultDataResponse) {
+        #if DEBUG
         print(response.request ?? "")
         //  println(response)
         print(response.error ?? "")
+            #endif
         self.parseCookies(response)
         if let d = response.data {
-            self.downloadWork(d, curWork: curWork)
+            let _ = self.downloadWork(d, curWork: curWork)
             self.hideLoadingView()
         } else {
             TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CannotDwnldWrk", comment: ""), type: .error, duration: 2.0)

@@ -101,8 +101,10 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
     func getLoginParams() {
         Alamofire.request("http://archiveofourown.org/", method: .get)
             .response(completionHandler: { response in
-                print(response.request ?? "")
-                print(response.error ?? "")
+                #if DEBUG
+                    print(response.request ?? "")
+                    print(response.error ?? "")
+                #endif
                 self.parseParams(response.data!)
                 self.tryLogin() //Uncomment!
                // self.hideLoadingView()
@@ -146,9 +148,11 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
         
         Alamofire.request("http://archiveofourown.org/user_sessions/", method: .post, parameters: params)
             .response(completionHandler: { response in
+                #if DEBUG
                 print(response.request ?? "")
                 print(response.response ?? "")
                 print(response.error ?? "")
+                    #endif
                 
                 if (response.error != nil) {
                     self.hideLoadingView()
@@ -191,8 +195,10 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
         
         Alamofire.request("http://archiveofourown.org/works/new", method: .get, parameters: params)
             .response(completionHandler: { response in
+                #if DEBUG
                 print(response.request ?? "")
                 print(response.error ?? "")
+                    #endif
                 if let d = response.data {
                     self.parseCookies(response)
                     self.parsePseudId(d)
@@ -206,8 +212,10 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
     }
     
     func parseParams(_ data: Data) {
+        #if DEBUG
         let datastring = NSString(data: data, encoding: String.Encoding.utf8.rawValue)
         print(datastring ?? "")
+            #endif
 
         let doc : TFHpple = TFHpple(htmlData: data)
        // let logindiv : [TFHppleElement]? = doc.search(withXPathQuery: "//div[@id='login']") as? [TFHppleElement]
@@ -259,13 +267,17 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
     
     func parsePseudId(_ data: Data) {
         
+        #if DEBUG
         print(NSString(data: data, encoding: String.Encoding.utf8.rawValue) ?? "")
+            #endif
         
         let doc : TFHpple = TFHpple(htmlData: data)
         
         var workActions: [TFHppleElement] = doc.search(withXPathQuery: "//select[@id='work_author_attributes_ids_']") as! [TFHppleElement]
         if (workActions.count > 0) {
+            #if DEBUG
             print(workActions[0].raw)
+                #endif
             
             let optionEl: [TFHppleElement] = workActions[0].search(withXPathQuery: "//option") as! [TFHppleElement]
             if (optionEl.count > 0) {

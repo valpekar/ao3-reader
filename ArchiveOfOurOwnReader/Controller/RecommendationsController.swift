@@ -136,9 +136,11 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
             
             request("http://archiveofourown.org/works/search", parameters: queryResult, encoding: URLEncoding.queryString)
                 .response(completionHandler: { response in
+                    #if DEBUG
                     //print(request)
                     //print(response)
                     print(response.error ?? "")
+                        #endif
                     if let d = response.data {
                         self.parseCookies(response)
                         self.getFeed(d)
@@ -246,9 +248,11 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
         
         Alamofire.request(surlStr, parameters: queryResult, encoding: /*ParameterEncoding.Custom(encodeParams) */ URLEncoding.httpBody)
             .response(completionHandler: { response in
+                #if DEBUG
                 //print(request ?? "")
                 //print(response ?? "")
                 print(response.error ?? "")
+                    #endif
                 if let d = response.data {
                     self.parseCookies(response)
                     self.getFeed(d)
@@ -525,7 +529,9 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
             showLoadingView(msg: "\(NSLocalizedString("LoadingPage", comment: "")) \(indexPath.row)")
             
             Alamofire.request("http://archiveofourown.org" + page.url, method: .get).response(completionHandler: { response in
+                #if DEBUG
                 print(response.error ?? "")
+                    #endif
                 if let data = response.data {
                     self.parseCookies(response)
                     self.getFeed(data)

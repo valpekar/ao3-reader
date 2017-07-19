@@ -97,9 +97,10 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
         
         Alamofire.request(urlStr) //default is .get
             .response(completionHandler: { response in
-                
+                #if DEBUG
                 //print(request)
                 print(response.error ?? "")
+                    #endif
                 
                 if let d = response.data {
                     self.parseCookies(response)
@@ -120,8 +121,10 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
         works.removeAll(keepingCapacity: false)
         pages.removeAll(keepingCapacity: false)
         
+        #if DEBUG
         let string1 = NSString(data: data, encoding: String.Encoding.utf8.rawValue)
         print(string1 ?? "")
+            #endif
         
         let doc : TFHpple = TFHpple(htmlData: data)
         let historylist : [TFHppleElement]? = doc.search(withXPathQuery: "//ol[@class='reading work index group']") as? [TFHppleElement]
@@ -405,7 +408,10 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
             showLoadingView(msg: "\(NSLocalizedString("LoadingPage", comment: "")) \(indexPath.row)")
             
             Alamofire.request("http://archiveofourown.org" + page.url, method: .get).response(completionHandler: { response in
+                
+                #if DEBUG
                 print(response.error ?? "")
+                    #endif
                 if let data = response.data {
                     self.parseCookies(response)
                     self.parseHistory(data)
@@ -486,11 +492,13 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
         
         Alamofire.request(urlStr, parameters: params) //default is get
             .response(completionHandler: { response in
+                #if DEBUG
                 print(response.request ?? "")
                 print(response.error ?? "")
+                    #endif
                 if let d = response.data {
                     self.parseCookies(response)
-                    self.downloadWork(d, curWork: curWork)
+                    let _ = self.downloadWork(d, curWork: curWork)
                 } else {
                     self.hideLoadingView()
                     TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
@@ -506,7 +514,9 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
         let deleteAlert = UIAlertController(title: NSLocalizedString("AreYouSure", comment: ""), message: NSLocalizedString("SureDeleteFromHistory", comment: ""), preferredStyle: UIAlertControllerStyle.alert)
         
         deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .default, handler: { (action: UIAlertAction) in
+            #if DEBUG
             print("Cancel")
+            #endif
         }))
         
         deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Yes", comment: ""), style: .default, handler: { (action: UIAlertAction) in
@@ -551,8 +561,10 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
         
         Alamofire.request(urlStr, method: .post, parameters: params)
             .response(completionHandler: { response in
+                #if DEBUG
                 print(response.request ?? "")
                 print(response.error ?? "")
+                    #endif
                 if let d = response.data {
                     self.parseCookies(response)
                     self.parseDeleteResponse(d, curWork: curWork)

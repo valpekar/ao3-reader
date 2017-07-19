@@ -78,8 +78,10 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
             downloadedChapters?.sort(by: { (a:DBChapter, b: DBChapter) -> Bool in
                 return b.value(forKey: "chapterIndex") as! Int > a.value(forKey: "chapterIndex") as! Int
             })
-            if (downloadedChapters != nil && downloadedChapters!.count > 1) {
-                contentsButton.isHidden = false
+            if (downloadedChapters != nil && downloadedChapters!.count > 0) {
+                if (downloadedChapters!.count > 1) {
+                    contentsButton.isHidden = false
+                }
                 currentChapterIndex = downloadedWorkItem.value(forKey: "currentChapter") as? Int ?? 0
                 work = downloadedChapters?[currentChapterIndex].value(forKey: "chapterContent") as? String ?? ""
                 loadCurrentTheme()
@@ -106,7 +108,9 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
     }
     
     deinit {
-        print("Work view controller deinit")
+        #if DEBUG
+            print("Work view controller deinit")
+        #endif
         NotificationCenter.default.removeObserver(self)
     }
     
@@ -181,7 +185,8 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
                         //nextButtonTouched(self.view)
                     }
                     
-                    if let lastScroll = historyItem.scrollProgress {
+                    if let lastScroll = historyItem.scrollProgress,
+                        let _ = self.webView {
                         let delayTime = DispatchTime.now() + Double(Int64(1.5 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
                         DispatchQueue.main.asyncAfter(deadline: delayTime) {
                             let scrollOffset:CGPoint? = CGPointFromString(lastScroll)
@@ -215,7 +220,7 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
 //                DefaultsManager.putString("", key: DefaultsManager.LASTWRKID)
 //                DefaultsManager.putString("", key: DefaultsManager.LASTWRKCHAPTER)
             }  else if (downloadedWorkItem != nil) {
-                var title = downloadedWorkItem.value(forKey: "workTitle") as? String
+                var title = downloadedWorkItem.value(forKey: "workTitle") as? String ?? ""
                 
                 if let tt = downloadedChapters?[currentChapterIndex].value(forKey: "chapterName") as? String {
                     title = tt
@@ -223,16 +228,16 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
                 
                 self.title = title
                 
-                let offset: String? = downloadedWorkItem.value(forKey: "scrollProgress") as? String
-                if (offset != nil) {
-                    let scrollOffset:CGPoint? = CGPointFromString(offset!)
-                    if let position:CGPoint = scrollOffset {
-                        webView.scrollView.setContentOffset(position, animated: true)
-                    }
+                if let offset: String = downloadedWorkItem.value(forKey: "scrollProgress") as? String,
+                    let _ = self.webView {
+                        let scrollOffset:CGPoint = CGPointFromString(offset)
+                        self.webView.scrollView.setContentOffset(scrollOffset, animated: true)
                 }
             }
             viewLaidoutSubviews = true
         }
+        
+        self.view.layoutIfNeeded()
     }
     
     func addNavItems() {
@@ -283,7 +288,9 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
             }
             
             }, completion: { finished in
+                #if DEBUG
                 print("animation done")
+                #endif
         })
     }
     
@@ -379,9 +386,10 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
     }
     
     func onWorksLoaded(_ response: DefaultDataResponse) {
+        #if DEBUG
         print(response.request ?? "")
-        
         print(response.error ?? "")
+        #endif
         
         var title = ""
         
@@ -415,8 +423,10 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
         
         var title = ""
         if let tt = doc.search(withXPathQuery: "//h3[@class='title']") as? [TFHppleElement] {
-            title = tt[0].content ?? ""
-            title = title.trimmingCharacters(in: .whitespacesAndNewlines)
+            if (tt.count > 0) {
+                title = tt[0].content ?? ""
+                title = title.trimmingCharacters(in: .whitespacesAndNewlines)
+            }
         }
         
         if let navigationEl: [TFHppleElement] = doc.search(withXPathQuery: "//ul[@class='work navigation actions']") as? [TFHppleElement] {
@@ -564,7 +574,9 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
         
             Alamofire.request(urlStr, method: .get, parameters: params)
             .response(completionHandler: { response in
+                #if DEBUG
                 print(response.request ?? "")
+                    #endif
                 title = self.downloadFullWork(response.data!)
                 self.showWork(title: title)
             })
@@ -592,7 +604,9 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
         
             Alamofire.request("http://archiveofourown.org" + prevChapter, method: .get, parameters: params)
                 .response(completionHandler: { response in
+                    #if DEBUG
                     print(response.request ?? "")
+                        #endif
                     title = self.downloadFullWork(response.data!)
                     self.showWork(title: title)
                 })
@@ -608,10 +622,12 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
         nextChapter = ""
         
         let dta = NSString(data: data, encoding: String.Encoding.utf8.rawValue)
-        print("the string is: \(String(describing: dta))")
+        #if DEBUG
+            print("the string is: \(String(describing: dta))")
+        #endif
         let doc : TFHpple = TFHpple(htmlData: data)
         
-        var chaptersEl: [TFHppleElement] = doc.search(withXPathQuery: "//div[@id='chapters']") as! [TFHppleElement]
+        if let  chaptersEl: [TFHppleElement] = doc.search(withXPathQuery: "//div[@id='chapters']") as? [TFHppleElement] {
         
         if (chaptersEl.count > 0) {
             work = chaptersEl[0].raw
@@ -621,30 +637,35 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
             let regex:NSRegularExpression = try! NSRegularExpression(pattern: "<a href=\"[^\"]+\">([^<]+)</a>", options: NSRegularExpression.Options.caseInsensitive)
             work = regex.stringByReplacingMatches(in: work, options: NSRegularExpression.MatchingOptions.withoutAnchoringBounds, range: NSRange(location: 0, length: work.characters.count), withTemplate: "$1")
         }
+        }
         
         var title = ""
         if let tt = doc.search(withXPathQuery: "//h3[@class='title']") as? [TFHppleElement] {
+            if (tt.count > 0) {
             title = tt[0].content ?? ""
             title = title.trimmingCharacters(in: .whitespacesAndNewlines)
+            }
         }
         
-        var navigationEl: [TFHppleElement] = doc.search(withXPathQuery: "//ul[@class='work navigation actions']") as! [TFHppleElement]
+        if let navigationEl: [TFHppleElement] = doc.search(withXPathQuery: "//ul[@class='work navigation actions']") as? [TFHppleElement] {
         
         if (navigationEl.count > 0) {
             
-            var chapterNextEl: [TFHppleElement] = navigationEl[0].search(withXPathQuery: "//li[@class='chapter next']") as! [TFHppleElement]
+            if let chapterNextEl: [TFHppleElement] = navigationEl[0].search(withXPathQuery: "//li[@class='chapter next']") as? [TFHppleElement] {
             if (chapterNextEl.count > 0) {
                 let attributes : NSDictionary = (chapterNextEl[0].search(withXPathQuery: "//a")[0] as AnyObject).attributes as NSDictionary
-                nextChapter = (attributes["href"] as! String)
+                nextChapter = (attributes["href"] as? String ?? "")
+            }
             }
             
-            var chapterPrevEl: [TFHppleElement] = navigationEl[0].search(withXPathQuery: "//li[@class='chapter previous']") as! [TFHppleElement]
+            if let chapterPrevEl: [TFHppleElement] = navigationEl[0].search(withXPathQuery: "//li[@class='chapter previous']") as? [TFHppleElement] {
             if(chapterPrevEl.count > 0) {
                 let attributesp : NSDictionary = (chapterPrevEl[0].search(withXPathQuery: "//a")[0] as AnyObject).attributes as NSDictionary
-                prevChapter = (attributesp["href"] as! String)
+                prevChapter = (attributesp["href"] as? String ?? "")
+            }
             }
         }
-        
+        }
         return title
     }
     
@@ -859,30 +880,40 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
         repeat
         {
             guard let internalVar: Ivar = class_getInstanceVariable(UIWebView.self, "_internal") else {
+                #if DEBUG
                 print("enable GL _internal invalid!")
+                    #endif
                 break
             }
     
             let internalObj = object_getIvar(wview, internalVar)
             guard let browserVar: Ivar = class_getInstanceVariable(object_getClass(internalObj), "browserView") else {
+                #if DEBUG
                 print("enable GL browserView invalid!")
+                    #endif
                 break
             }
     
             let webbrowser: Any = object_getIvar(internalObj, browserVar)
             guard let webViewVar: Ivar = class_getInstanceVariable(object_getClass(webbrowser), "_webView") else {
+                #if DEBUG
                 print("enable GL _webView invalid!")
+                    #endif
                 break
             }
     
             guard let webView: Any = object_getIvar(webbrowser, webViewVar) else {
+                #if DEBUG
                 print("enable GL webView obj nil!")
+                    #endif
                 break
             }
     
             if(object_getClass(webView) != NSClassFromString("WebView"))
             {
+                #if DEBUG
                 print("enable GL webView not WebView!")
+                    #endif
                 break
             }
     

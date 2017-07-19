@@ -182,7 +182,9 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
                 downloadedWorkds = results
             }
         } catch {
+            #if DEBUG
             print("cannot fetch.")
+            #endif
         }
     }
     
@@ -238,7 +240,9 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
             let deleteAlert = UIAlertController(title: "Are you sure?", message: "Are you sure you would like to delete this work from Downloaded?", preferredStyle: UIAlertControllerStyle.alert)
             
             deleteAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { (action: UIAlertAction) in
+                #if DEBUG
                 print("Cancel")
+                #endif
             }))
             
             deleteAlert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action: UIAlertAction) in

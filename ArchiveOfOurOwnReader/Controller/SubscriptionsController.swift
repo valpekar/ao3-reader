@@ -77,8 +77,10 @@ class SubscriptionsViewController: LoadingViewController, UITableViewDataSource,
         Alamofire.request(urlStr) //default is .get
             .response(completionHandler: { response in
                 
+                #if DEBUG
                 //print(request)
                 print(response.error ?? "")
+                    #endif
                 
                 if let d = response.data {
                     self.parseCookies(response)
@@ -98,8 +100,10 @@ class SubscriptionsViewController: LoadingViewController, UITableViewDataSource,
         works.removeAll(keepingCapacity: false)
         pages.removeAll(keepingCapacity: false)
         
+        #if DEBUG
         let string1 = NSString(data: data, encoding: String.Encoding.utf8.rawValue)
         print(string1 ?? "")
+            #endif
         
         let doc : TFHpple = TFHpple(htmlData: data)
         let historylist : [TFHppleElement]? = doc.search(withXPathQuery: "//dl[@class='subscription index group']//dt") as? [TFHppleElement]
@@ -200,7 +204,9 @@ class SubscriptionsViewController: LoadingViewController, UITableViewDataSource,
         }
         
         if (purchased || donated) {
+            #if DEBUG
             print("premium")
+            #endif
         } else {
             if (countWroksFromDB() > 29) {
                 TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Only30Stroies", comment: ""), type: .error, duration: 2.0)
