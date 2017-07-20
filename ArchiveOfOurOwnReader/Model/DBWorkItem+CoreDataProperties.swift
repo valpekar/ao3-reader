@@ -2,17 +2,19 @@
 //  DBWorkItem+CoreDataProperties.swift
 //  ArchiveOfOurOwnReader
 //
-//  Created by Valeriya Pekar on 4/5/17.
+//  Created by Valeriya Pekar on 7/20/17.
 //  Copyright © 2017 Sergei Pekar. All rights reserved.
+//
 //
 
 import Foundation
 import CoreData
+import ArchiveOfOurOwnReader
 
 extension DBWorkItem {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<DBWorkItem> {
-        return NSFetchRequest<DBWorkItem>(entityName: "DBWorkItem");
+        return NSFetchRequest<DBWorkItem>(entityName: "DBWorkItem")
     }
 
     @NSManaged public var archiveWarnings: String?
@@ -46,6 +48,7 @@ extension DBWorkItem {
     @NSManaged public var characters: NSSet?
     @NSManaged public var fandoms: NSSet?
     @NSManaged public var relationships: NSSet?
+    @NSManaged public var folder: Folder?
 
 }
 

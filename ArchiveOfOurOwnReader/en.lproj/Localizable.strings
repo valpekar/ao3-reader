@@ -133,5 +133,6 @@
 "GettingSubs" = "Getting Subscriptions";
 "OpenInBrowser" = "Open In Browser";
 "Success" = "Success";
+"FolderNameEmpty" = "Folder Name Cannot Be Empty";
 
 

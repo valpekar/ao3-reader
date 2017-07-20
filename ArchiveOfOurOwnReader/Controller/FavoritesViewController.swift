@@ -8,14 +8,19 @@
 
 import UIKit
 import CoreData
+import Crashlytics
+import TSMessages
 
 class FavoritesViewController: LoadingViewController, UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating {
     
     @IBOutlet weak var tableView:UITableView!
     
-    var downloadedWorkds: [NSManagedObject] = []
+    var downloadedWorkds: [DBWorkItem] = []
     var downloadedFandoms: [DBFandom] = []
-    var filtereddownloadedWorkds: [NSManagedObject] = []
+    var folders: [Folder] = []
+    var filtereddownloadedWorkds: [DBWorkItem] = []
+    
+    var hidden:[Bool] = []
     
     var resultSearchController = UISearchController()
     
@@ -53,7 +58,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         })()
         
         // Reload the table
-        self.tableView.reloadData()
+        //self.tableView.reloadData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -83,14 +88,14 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1// downloadedFandoms.count
+        return folders.count + 1 //1 for uncategorized
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if (downloadedFandoms.count > section) {
-            return downloadedFandoms[section].value(forKey: "fandomName") as? String ?? ""
+        if (section == 0) {
+            return "Uncategorized"
         } else {
-            return ""
+            return folders[section - 1].name ?? ""
         }
     }
     
@@ -176,14 +181,29 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "dateAdded", ascending: false)]
         
         do {
-            let fetchedResults = try managedContext.fetch(fetchRequest) as? [NSManagedObject]
+            let fetchedResults = try managedContext.fetch(fetchRequest) as? [DBWorkItem]
             
             if let results = fetchedResults {
                 downloadedWorkds = results
             }
         } catch {
             #if DEBUG
-            print("cannot fetch.")
+            print("cannot fetch favorites.")
+            #endif
+        }
+        
+        let fetchfolderRequest: NSFetchRequest <NSFetchRequestResult> = NSFetchRequest(entityName:"Folder")
+        fetchfolderRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: false)]
+        
+        do {
+            let fetchedResults = try managedContext.fetch(fetchRequest) as? [Folder]
+            
+            if let results = fetchedResults {
+                folders = results
+            }
+        } catch {
+            #if DEBUG
+                print("cannot fetch folders.")
             #endif
         }
     }
@@ -300,7 +320,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         
         let searchPredicate = NSPredicate(format: "topic CONTAINS[c] %@ OR topicPreview CONTAINS[c] %@  OR tags CONTAINS[c] %@ OR author CONTAINS[c] %@ OR workTitle CONTAINS[c] %@", text, text, text, text, text)
         let array = (downloadedWorkds as NSArray).filtered(using: searchPredicate)
-        filtereddownloadedWorkds = array as! [NSManagedObject]
+        filtereddownloadedWorkds = array as! [DBWorkItem]
         
         self.tableView.reloadData()
     }
@@ -317,5 +337,44 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         
         self.resultSearchController.dismiss(animated: true, completion: nil)
     }
-
+    
+    //MARK: - folders
+    
+    @IBAction func addFolder(_ sender: AnyObject) {
+        let alert = UIAlertController(title: "Folder", message: "Add New Folder", preferredStyle: .alert)
+        
+        alert.addTextField { (textField) in
+            textField.autocapitalizationType = .words
+            textField.clearButtonMode = .whileEditing
+            textField.text = "Folder \(self.folders.count + 1)"
+        }
+        
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert] (_) in
+            let textField = alert?.textFields![0] // Force unwrapping because we know it exists.
+            
+            if let txt = textField?.text {
+            
+                self.addNewFolder(name: txt)
+                Answers.logCustomEvent(withName: "New_folder",
+                                   customAttributes: [
+                                    "name": txt])
+            } else {
+                TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("FolderNameEmpty", comment: ""), type: .error)
+            }
+            
+        }))
+        
+        // 4. Present the alert.
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func addNewFolder(name: String) {
+        
+    }
+    
+    //https://codebasecamp.com/2016/12/02/Expandable-TableView/
+    //https://www.appcoda.com/expandable-table-view/
+    //https://newfivefour.com/swift-ios-expanding-uitableview-sections.html
+    //https://github.com/HuyVuong1121/TreeTableView/tree/master/无级级树状TableView/YSTreeTableView/YSTreeTableView
+    //https://github.com/younatics/YNExpandableCell
 }
