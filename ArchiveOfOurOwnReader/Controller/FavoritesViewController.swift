@@ -72,6 +72,8 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         
         loadWroksFromDB()
         
+        hidden.append(false)
+        
         for folder in folders {
             hidden.append(true)
         }
@@ -545,7 +547,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
     //MARK: - expanding
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let label = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 21))
+        /*let label = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 21))
         label.textAlignment = .left
         label.tag = section
         label.textColor = AppDelegate.redColor
@@ -555,13 +557,15 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         } else {
             let name = folders[section - 1].name ?? "No Name"
             label.text = "\(name) (\(downloadedWorkds[name]?.count ?? 0))"
-        }
+        }*/
+        
+        let vvv = tableView.headerView(forSection: section)
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(FavoritesViewController.tapFunction))
-        label.isUserInteractionEnabled = true
-        label.addGestureRecognizer(tap)
+        vvv?.isUserInteractionEnabled = true
+        vvv?.addGestureRecognizer(tap)
         
-        return label
+        return vvv
     }
     
     func tapFunction(sender:UITapGestureRecognizer) {
