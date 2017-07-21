@@ -102,6 +102,9 @@
 		3C89958F1E95169B00D511CD /* DBCharacterItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C8995831E95169B00D511CD /* DBCharacterItem+CoreDataProperties.swift */; };
 		3C8995901E95169B00D511CD /* DBWorkItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C8995841E95169B00D511CD /* DBWorkItem+CoreDataClass.swift */; };
 		3C8995911E95169B00D511CD /* DBWorkItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C8995851E95169B00D511CD /* DBWorkItem+CoreDataProperties.swift */; };
+		3C93D4AC1F22297A00948D08 /* ButtonWithSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C93D4AB1F22297A00948D08 /* ButtonWithSection.swift */; };
+		3C93D4AE1F22330900948D08 /* DownloadedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C93D4AD1F22330900948D08 /* DownloadedCell.swift */; };
+		3C93D4B01F223AB000948D08 /* EditFoldersController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C93D4AF1F223AB000948D08 /* EditFoldersController.swift */; };
 		3C9C87BA1CE3557D00C10410 /* RecommendationsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9C87B91CE3557D00C10410 /* RecommendationsController.swift */; };
 		3CB7735F1C847CCD00DC15C4 /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB7735E1C847CCD00DC15C4 /* ContainerViewController.swift */; };
 		3CB773611C847D6100DC15C4 /* SidePanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB773601C847D6100DC15C4 /* SidePanelViewController.swift */; };
@@ -280,6 +283,9 @@
 		3C8995831E95169B00D511CD /* DBCharacterItem+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "DBCharacterItem+CoreDataProperties.swift"; path = "Model/DBCharacterItem+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3C8995841E95169B00D511CD /* DBWorkItem+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "DBWorkItem+CoreDataClass.swift"; path = "Model/DBWorkItem+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3C8995851E95169B00D511CD /* DBWorkItem+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "DBWorkItem+CoreDataProperties.swift"; path = "Model/DBWorkItem+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		3C93D4AB1F22297A00948D08 /* ButtonWithSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ButtonWithSection.swift; path = View/Custom/ButtonWithSection.swift; sourceTree = "<group>"; };
+		3C93D4AD1F22330900948D08 /* DownloadedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DownloadedCell.swift; path = View/Custom/Cells/DownloadedCell.swift; sourceTree = "<group>"; };
+		3C93D4AF1F223AB000948D08 /* EditFoldersController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EditFoldersController.swift; path = Controller/EditFoldersController.swift; sourceTree = "<group>"; };
 		3C9C87B91CE3557D00C10410 /* RecommendationsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RecommendationsController.swift; path = Controller/RecommendationsController.swift; sourceTree = "<group>"; };
 		3C9C87BB1CE35D8800C10410 /* ArchiveOfOurOwnReader 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ArchiveOfOurOwnReader 2.xcdatamodel"; sourceTree = "<group>"; };
 		3CB7735E1C847CCD00DC15C4 /* ContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
@@ -523,6 +529,7 @@
 				3CDC4A2B1E825F5100D9438E /* AboutSubscriptionController.swift */,
 				3C728C691E8CBA06006D7100 /* ChoosePrefController.swift */,
 				3CCA7B3B1EFAA1EC00590D12 /* SubscriptionsController.swift */,
+				3C93D4AF1F223AB000948D08 /* EditFoldersController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -531,6 +538,7 @@
 			isa = PBXGroup;
 			children = (
 				28B6DC501B4E425500F34529 /* Cells */,
+				3C93D4AB1F22297A00948D08 /* ButtonWithSection.swift */,
 			);
 			name = Custom;
 			sourceTree = "<group>";
@@ -550,6 +558,7 @@
 				1D8582D01BB4238E0005B05B /* ButtonCell.swift */,
 				3C13D2CD1CCA1D0D008B023B /* CommentCell.swift */,
 				3CCA7B3D1EFAA3C600590D12 /* SubsCell.swift */,
+				3C93D4AD1F22330900948D08 /* DownloadedCell.swift */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -896,6 +905,7 @@
 				3C082A541F20E21100CA717D /* Folder+CoreDataProperties.swift in Sources */,
 				3C728C6A1E8CBA06006D7100 /* ChoosePrefController.swift in Sources */,
 				1D28320A1BBD6A4700FFC887 /* WorkItem.swift in Sources */,
+				3C93D4B01F223AB000948D08 /* EditFoldersController.swift in Sources */,
 				3C082A531F20E21100CA717D /* Folder+CoreDataClass.swift in Sources */,
 				3CB7735F1C847CCD00DC15C4 /* ContainerViewController.swift in Sources */,
 				3C0448F71C634209005DCE5F /* ReaderProducts.swift in Sources */,
@@ -920,9 +930,11 @@
 				3CCA7B3C1EFAA1EC00590D12 /* SubscriptionsController.swift in Sources */,
 				1D8777901B99D8DC00CEA738 /* SearchTagCell.swift in Sources */,
 				1D28320F1BBD6A7200FFC887 /* Chapter.swift in Sources */,
+				3C93D4AE1F22330900948D08 /* DownloadedCell.swift in Sources */,
 				3C89958A1E95169B00D511CD /* DBFandom+CoreDataClass.swift in Sources */,
 				28B6DC2A1B4E3F5900F34529 /* AppDelegate.swift in Sources */,
 				3C89958D1E95169B00D511CD /* DBRelationship+CoreDataProperties.swift in Sources */,
+				3C93D4AC1F22297A00948D08 /* ButtonWithSection.swift in Sources */,
 				1D1C2FE91B8DA3050076D10C /* WorkRelationship.swift in Sources */,
 				1D7BDD361B5E755F0017C346 /* TFHpple.m in Sources */,
 				3C9C87BA1CE3557D00C10410 /* RecommendationsController.swift in Sources */,

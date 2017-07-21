@@ -12,7 +12,7 @@
 "LoadingPrevChapter" = "Loading Previous Chapter";
 "Searching" = "Searching...";
 "GettingWorks" = "Getting Works";
-"Error" = "Error ‼️";
+"Error" = "Error 👻";
 "CheckInternet" = "Check your Internet connection";
 "Only30Stroies" = "You can only download 30 stories. Please, upgrade to download more.";
 "DwnloadingWrk" = "Downloading Work";
@@ -134,5 +134,8 @@
 "OpenInBrowser" = "Open In Browser";
 "Success" = "Success";
 "FolderNameEmpty" = "Folder Name Cannot Be Empty";
+"FolderNotFound" = "Folder Not Found";
+"FolderAlreadyExists" = "Folder With Such Name Already Exists!";
+"NoFolders" = "You Have No Folders! Please create one by pressing '+' button";
 
 

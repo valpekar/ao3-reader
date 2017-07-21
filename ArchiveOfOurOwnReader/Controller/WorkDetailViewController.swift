@@ -1079,6 +1079,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             self.sendDeleteBookmarkRequest()
         }))
         
+        deleteAlert.view.tintColor = AppDelegate.redColor
         present(deleteAlert, animated: true, completion: nil)
     }
     
@@ -1352,6 +1353,8 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 })
             }))
             
+            deleteAlert.view.tintColor = AppDelegate.redColor
+            
             present(deleteAlert, animated: true, completion: nil)
         }
     }
@@ -1439,7 +1442,9 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
         optionMenu.popoverPresentationController?.sourceView = self.view
         optionMenu.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.size.width / 2.0, y: self.view.bounds.size.height / 2.0, width: 1.0, height: 1.0)
-    
+        
+        optionMenu.view.tintColor = AppDelegate.redColor
+        
         self.present(optionMenu, animated: true, completion: nil)
     }
     
@@ -1467,6 +1472,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         optionMenu.popoverPresentationController?.sourceView = self.view
         optionMenu.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.size.width / 2.0, y: self.view.bounds.size.height / 2.0, width: 1.0, height: 1.0)
         
+        optionMenu.view.tintColor = AppDelegate.redColor
         self.present(optionMenu, animated: true, completion: nil)
     }
     

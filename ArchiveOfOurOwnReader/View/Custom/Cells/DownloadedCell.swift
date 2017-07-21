@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FeedTableViewCell: UITableViewCell {
+class DownloadedCell: UITableViewCell {
     @IBOutlet weak var bgView:UIView!
     @IBOutlet weak var ratingLabel: UILabel!
     
@@ -40,8 +40,7 @@ class FeedTableViewCell: UITableViewCell {
     
     @IBOutlet weak var hitsLabel: UILabel!
     
-    @IBOutlet weak var downloadButton: UIButton!
-    
+    @IBOutlet weak var folderButton: ButtonWithSection!
     @IBOutlet weak var deleteButton: ButtonWithSection!
     
     convenience init(reuseIdentifier: String?) {
@@ -52,3 +51,4 @@ class FeedTableViewCell: UITableViewCell {
         self.bgView.layer.cornerRadius = 5
     }
 }
+

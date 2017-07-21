@@ -550,6 +550,44 @@
             </objects>
             <point key="canvasLocation" x="1210" y="-480"/>
         </scene>
+        <!--Edit Folders Controller-->
+        <scene sceneID="R8l-9t-MuK">
+            <objects>
+                <tableViewController storyboardIdentifier="EditFoldersController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="zne-OV-4Ng" customClass="EditFoldersController" customModule="ArchiveOfOurOwnReader" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="G1G-7G-X7d">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="672"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FolderCell" textLabel="7NC-5t-gVl" style="IBUITableViewCellStyleDefault" id="6dR-ES-Ik8">
+                                <rect key="frame" x="0.0" y="28" width="414" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="6dR-ES-Ik8" id="ikV-Zv-M1n">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.666666666666664"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="7NC-5t-gVl">
+                                            <rect key="frame" x="20" y="0.0" width="379" height="43.666666666666664"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="zne-OV-4Ng" id="wBO-kO-EDn"/>
+                            <outlet property="delegate" destination="zne-OV-4Ng" id="gbY-yV-dno"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="SvM-yi-Rz9"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UIJ-gH-C4s" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1884" y="-1249"/>
+        </scene>
         <!--Comment View Controller-->
         <scene sceneID="LSo-kA-Txm">
             <objects>
@@ -1117,7 +1155,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7BG-8k-w0K">
-                                <rect key="frame" x="152.66666666666669" y="351" width="109.00000000000006" height="34"/>
+                                <rect key="frame" x="153" y="351" width="109" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <state key="normal" title="Try Again  🤔">
                                     <color key="titleColor" red="0.70196078429999997" green="0.27450980390000002" blue="0.27450980390000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -3908,7 +3946,7 @@ If you don't see a subscription but are still being charged, make sure that you'
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="672"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="35J-U3-wfK">
-                                <rect key="frame" x="137" y="36" width="140.66666666666669" height="77"/>
+                                <rect key="frame" x="137.33333333333337" y="36" width="140.66666666666663" height="77"/>
                                 <string key="text">Sync with 
 AO3</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="32"/>
@@ -3994,7 +4032,7 @@ AO3</string>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoDark" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lhA-qx-8Oj">
-                                <rect key="frame" x="285.66666666666669" y="43" width="22" height="22"/>
+                                <rect key="frame" x="286" y="43" width="22" height="22"/>
                                 <color key="tintColor" red="1" green="0.30196078431372547" blue="0.31372549019607843" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
                                     <action selector="infoTouched:" destination="J09-NV-9xf" eventType="touchUpInside" id="Ant-o9-3J0"/>
@@ -4401,60 +4439,14 @@ Major Problems:
                                     <action selector="mailTouched:" destination="zkS-sK-Im9" eventType="touchUpInside" id="FXS-65-YAB"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter promo code:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J9F-qa-gUx">
-                                <rect key="frame" x="20" y="569" width="374" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                                <variation key="heightClass=regular-widthClass=regular">
-                                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                </variation>
-                            </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="ocO-tb-yUD">
-                                <rect key="frame" x="107" y="594" width="200" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="300" id="jNQ-RM-g0D"/>
-                                    <constraint firstAttribute="width" constant="200" id="thB-la-XJM"/>
-                                </constraints>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocorrectionType="no"/>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="jNQ-RM-g0D"/>
-                                    </mask>
-                                </variation>
-                                <variation key="heightClass=regular-widthClass=regular">
-                                    <mask key="constraints">
-                                        <include reference="jNQ-RM-g0D"/>
-                                        <exclude reference="thB-la-XJM"/>
-                                    </mask>
-                                </variation>
-                            </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bQ1-6D-toj">
-                                <rect key="frame" x="188.66666666666666" y="626" width="37" height="30"/>
-                                <state key="normal" title="Done">
-                                    <color key="titleColor" red="0.70196078431372544" green="0.27450980392156865" blue="0.27450980392156865" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="doneTouched:" destination="zkS-sK-Im9" eventType="touchUpInside" id="Hy6-aK-IoR"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="ocO-tb-yUD" firstAttribute="top" secondItem="J9F-qa-gUx" secondAttribute="bottom" constant="4" id="0wv-cT-2zA"/>
                             <constraint firstItem="fFg-fh-XVG" firstAttribute="leading" secondItem="WAl-zX-Vrk" secondAttribute="leadingMargin" id="1kh-I8-f4N"/>
-                            <constraint firstItem="bQ1-6D-toj" firstAttribute="top" secondItem="ocO-tb-yUD" secondAttribute="bottom" constant="2" id="Bvm-uu-mjL"/>
                             <constraint firstItem="fFg-fh-XVG" firstAttribute="centerY" secondItem="WAl-zX-Vrk" secondAttribute="centerY" multiplier="0.8" id="SFt-Ly-bVw"/>
-                            <constraint firstItem="J9F-qa-gUx" firstAttribute="leading" secondItem="WAl-zX-Vrk" secondAttribute="leadingMargin" id="beu-WA-Mp7"/>
                             <constraint firstAttribute="trailingMargin" secondItem="fFg-fh-XVG" secondAttribute="trailing" id="cWp-uz-1f5"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="J9F-qa-gUx" secondAttribute="trailing" id="dqB-vV-RdG"/>
-                            <constraint firstItem="bQ1-6D-toj" firstAttribute="centerX" secondItem="WAl-zX-Vrk" secondAttribute="centerX" id="duX-9g-rTI"/>
-                            <constraint firstItem="ocO-tb-yUD" firstAttribute="centerX" secondItem="WAl-zX-Vrk" secondAttribute="centerX" id="hI4-GY-rlk"/>
                             <constraint firstItem="fFg-fh-XVG" firstAttribute="top" secondItem="UY8-6w-y2q" secondAttribute="bottom" constant="70" id="hry-W3-GEx"/>
                             <constraint firstItem="fFg-fh-XVG" firstAttribute="centerX" secondItem="WAl-zX-Vrk" secondAttribute="centerX" id="iWY-es-GlC"/>
-                            <constraint firstItem="55G-Es-FkS" firstAttribute="top" secondItem="bQ1-6D-toj" secondAttribute="bottom" constant="16" id="w0z-yB-Uj4"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
@@ -4463,9 +4455,6 @@ Major Problems:
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" id="rE3-Sq-NHR"/>
-                    <connections>
-                        <outlet property="codeTv" destination="ocO-tb-yUD" id="hWB-TZ-Bs8"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5cR-P8-6CE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -4487,7 +4476,7 @@ Major Problems:
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="672"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="FeedCell" rowHeight="240" id="2lf-xe-t6k" customClass="FeedTableViewCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="FeedCell" rowHeight="240" id="2lf-xe-t6k" customClass="DownloadedCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="55.333333333333336" width="414" height="240"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2lf-xe-t6k" id="f6J-rP-IgG">
@@ -4500,10 +4489,10 @@ Major Problems:
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hHJ-3A-iJ2">
                                                             <rect key="frame" x="0.0" y="0.0" width="398" height="40"/>
                                                             <subviews>
-                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e5T-hr-Pt6">
-                                                                    <rect key="frame" x="346" y="4" width="44" height="32"/>
+                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e5T-hr-Pt6" customClass="ButtonWithSection" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
+                                                                    <rect key="frame" x="350" y="4" width="40" height="32"/>
                                                                     <constraints>
-                                                                        <constraint firstAttribute="width" constant="44" id="bsl-aT-gBn"/>
+                                                                        <constraint firstAttribute="width" constant="40" id="bsl-aT-gBn"/>
                                                                     </constraints>
                                                                     <state key="normal" image="trash"/>
                                                                     <connections>
@@ -4511,7 +4500,7 @@ Major Problems:
                                                                     </connections>
                                                                 </button>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Topic" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumFontSize="12" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4VT-L1-fAL">
-                                                                    <rect key="frame" x="16" y="4" width="326" height="32"/>
+                                                                    <rect key="frame" x="16" y="4" width="330" height="32"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="50" id="wTJ-xF-Kqn"/>
                                                                     </constraints>
@@ -4527,12 +4516,28 @@ Major Problems:
                                                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                                     </variation>
                                                                 </label>
+                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2ao-YX-uFQ" customClass="ButtonWithSection" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
+                                                                    <rect key="frame" x="308" y="5" width="36" height="30"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="height" constant="30" id="kK4-xv-1oh"/>
+                                                                        <constraint firstAttribute="width" constant="36" id="t1f-1E-eB5"/>
+                                                                    </constraints>
+                                                                    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                                    <state key="normal" title="Button" image="folder">
+                                                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                                    </state>
+                                                                    <connections>
+                                                                        <action selector="folderTouchedWithSender:" destination="gZt-Yz-NNP" eventType="touchUpInside" id="7nE-D5-q5H"/>
+                                                                    </connections>
+                                                                </button>
                                                             </subviews>
                                                             <color key="backgroundColor" red="0.70196078431372544" green="0.27450980392156865" blue="0.27450980392156865" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <constraints>
                                                                 <constraint firstItem="4VT-L1-fAL" firstAttribute="top" secondItem="hHJ-3A-iJ2" secondAttribute="topMargin" constant="-4" id="ABD-Sa-ve8"/>
                                                                 <constraint firstItem="e5T-hr-Pt6" firstAttribute="leading" secondItem="4VT-L1-fAL" secondAttribute="trailing" constant="4" id="CKs-KC-ltb"/>
+                                                                <constraint firstItem="2ao-YX-uFQ" firstAttribute="centerY" secondItem="hHJ-3A-iJ2" secondAttribute="centerY" id="Dah-ey-Cip"/>
                                                                 <constraint firstAttribute="centerY" secondItem="e5T-hr-Pt6" secondAttribute="centerY" id="Hx2-nr-jjq"/>
+                                                                <constraint firstItem="e5T-hr-Pt6" firstAttribute="leading" secondItem="2ao-YX-uFQ" secondAttribute="trailing" constant="6" id="PMs-Wn-qzE"/>
                                                                 <constraint firstAttribute="height" constant="40" id="Qlg-0l-a7h"/>
                                                                 <constraint firstItem="4VT-L1-fAL" firstAttribute="leading" secondItem="hHJ-3A-iJ2" secondAttribute="leadingMargin" constant="8" id="Rgh-dg-1ec"/>
                                                                 <constraint firstAttribute="bottomMargin" secondItem="4VT-L1-fAL" secondAttribute="bottom" constant="-4" id="o2S-EJ-Miz"/>
@@ -5004,17 +5009,18 @@ Major Problems:
                                         <color key="backgroundColor" red="0.92000001668930054" green="0.92000001668930054" blue="0.92000001668930054" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
                                             <outlet property="bgView" destination="e43-xT-xfS" id="Thk-uZ-fuP"/>
-                                            <outlet property="bookmarksLabel" destination="Csm-5L-6Gp" id="Jyt-of-O4X"/>
+                                            <outlet property="bookmarksLabel" destination="Csm-5L-6Gp" id="2m6-xe-hxR"/>
                                             <outlet property="chaptersLabel" destination="h1l-gt-NVP" id="xe8-FY-02I"/>
-                                            <outlet property="commentsLabel" destination="cbc-0w-Gar" id="Pua-xO-1xZ"/>
+                                            <outlet property="commentsLabel" destination="cbc-0w-Gar" id="LTN-qZ-9A0"/>
                                             <outlet property="datetimeLabel" destination="vLJ-ph-As1" id="qhi-6F-xJR"/>
-                                            <outlet property="deleteButton" destination="e5T-hr-Pt6" id="b8D-sZ-xFm"/>
+                                            <outlet property="deleteButton" destination="e5T-hr-Pt6" id="4JF-7r-Nfh"/>
                                             <outlet property="fandomsLabel" destination="u0i-LR-414" id="o5W-t0-QTO"/>
+                                            <outlet property="folderButton" destination="2ao-YX-uFQ" id="YF2-iD-hUp"/>
                                             <outlet property="hitsLabel" destination="6WZ-X0-Dx0" id="R0z-RQ-rvd"/>
-                                            <outlet property="kudosLabel" destination="8zv-1z-prL" id="laP-kF-LE4"/>
+                                            <outlet property="kudosLabel" destination="8zv-1z-prL" id="KMP-yg-ldK"/>
                                             <outlet property="languageLabel" destination="X4z-9n-kqG" id="mfT-ZX-J5H"/>
                                             <outlet property="tagsLabel" destination="B4h-2r-oZZ" id="4b4-ph-r1M"/>
-                                            <outlet property="topicLabel" destination="4VT-L1-fAL" id="iay-hh-oJ2"/>
+                                            <outlet property="topicLabel" destination="4VT-L1-fAL" id="R2j-mc-aA4"/>
                                             <outlet property="topicPreviewLabel" destination="yxf-WI-AV9" id="Yne-8F-5Zq"/>
                                             <outlet property="wordsLabel" destination="ulu-gZ-mzD" id="0Fh-da-7SF"/>
                                             <segue destination="ebL-Wn-891" kind="presentation" identifier="offlineWorkDetail" id="J60-cL-uox"/>
@@ -5037,8 +5043,16 @@ Major Problems:
                     </view>
                     <navigationItem key="navigationItem" id="EaZ-dI-3d8">
                         <rightBarButtonItems>
-                            <barButtonItem systemItem="edit" id="mgx-OT-uJU"/>
-                            <barButtonItem systemItem="add" id="O5O-H8-X90"/>
+                            <barButtonItem systemItem="edit" id="yjt-Zj-D4F">
+                                <connections>
+                                    <segue destination="zne-OV-4Ng" kind="push" identifier="editFoldersSegue" id="xFq-gT-2pC"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem systemItem="add" id="rj0-gs-2rg">
+                                <connections>
+                                    <action selector="addFolder:" destination="gZt-Yz-NNP" id="F7F-iq-X0X"/>
+                                </connections>
+                            </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
@@ -7153,6 +7167,7 @@ Please check your Internet connection and also make sure you are logged into you
         <image name="comments" width="56" height="56"/>
         <image name="download-100" width="33" height="33"/>
         <image name="empty_filter" width="32" height="32"/>
+        <image name="folder" width="174" height="174"/>
         <image name="hits" width="56" height="56"/>
         <image name="icon-download" width="32" height="32"/>
         <image name="lang" width="18" height="18"/>
