@@ -44,7 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         application.applicationIconBadgeNumber = 0
         
-         Flurry.startSession("DW87V8SZQC24X83XPSXB")
+       //  Flurry.startSession("DW87V8SZQC24X83XPSXB")
         FirebaseApp.configure()
         GADMobileAds.configure(withApplicationID: "ca-app-pub-8760316520462117~7329426789");
         

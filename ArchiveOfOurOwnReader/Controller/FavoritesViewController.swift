@@ -78,8 +78,8 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
             hidden.append(true)
         }
         
-        //loadFandomsFromWorks()
-        tableView.reloadData()
+       // tableView.reloadData()
+        reloadTableView()
         
         let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.white]
         self.navigationController!.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
@@ -190,6 +190,26 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         
         return cell!
     }
+    
+    let tap = UITapGestureRecognizer(target: self, action: #selector(FavoritesViewController.tapFunction))
+    
+    func reloadTableView() {
+        tableView.reloadData()
+        
+//        for section in 0..<folders.count {
+//        let vvv = tableView.headerView(forSection: section)
+//        vvv?.tag = section
+//
+//        vvv?.isUserInteractionEnabled = true
+//
+//            let condition = vvv?.gestureRecognizers?.contains(tap) ?? false
+//            if (!condition) {
+//                vvv?.addGestureRecognizer(tap)
+//            }
+//        }
+    }
+    
+    //MARK: - works
     
     func loadWroksFromDB() {
         folders.removeAll()
@@ -559,11 +579,19 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
             label.text = "\(name) (\(downloadedWorkds[name]?.count ?? 0))"
         }*/
         
-        let vvv = tableView.headerView(forSection: section)
+//        let vvv = tableView.headerView(forSection: section)
+//        vvv?.tag = section
+//
+//        let tap = UITapGestureRecognizer(target: self, action: #selector(FavoritesViewController.tapFunction))
+//        vvv?.isUserInteractionEnabled = true
+//        vvv?.addGestureRecognizer(tap)
         
-        let tap = UITapGestureRecognizer(target: self, action: #selector(FavoritesViewController.tapFunction))
-        vvv?.isUserInteractionEnabled = true
-        vvv?.addGestureRecognizer(tap)
+        let vvv = UITableViewHeaderFooterView()
+        vvv.tag = section
+        
+                let tap = UITapGestureRecognizer(target: self, action: #selector(FavoritesViewController.tapFunction))
+                vvv.isUserInteractionEnabled = true
+                vvv.addGestureRecognizer(tap)
         
         return vvv
     }
