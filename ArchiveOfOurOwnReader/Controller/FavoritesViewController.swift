@@ -20,7 +20,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
     var downloadedWorkds: [String : [DBWorkItem]] = [:]
     var downloadedFandoms: [DBFandom] = []
     var folders: [Folder] = []
-    var filtereddownloadedWorkds: [DBWorkItem] = []
+    var filtereddownloadedWorkds: [String : [DBWorkItem]] = [:]
     
     var hidden:[Bool] = []
     
@@ -70,13 +70,15 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        loadWroksFromDB()
+        loadWroksFromDB(predicate: nil, predicateWFolder: NSPredicate(format: "folder = nil"))
         
         hidden.append(false)
         
         for folder in folders {
             hidden.append(true)
         }
+        
+        filtereddownloadedWorkds = downloadedWorkds
         
        // tableView.reloadData()
         reloadTableView()
@@ -89,7 +91,11 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if (self.resultSearchController.isActive) {
-            return self.filtereddownloadedWorkds.count
+            if (section == 0) {
+                return filtereddownloadedWorkds[uncategorized]?.count ?? 0
+            } else {
+                return filtereddownloadedWorkds[folders[section - 1].name ?? "No Name"]?.count ?? 0
+            }
         }
         else {
             if (hidden.count > section && hidden[section]) {
@@ -109,11 +115,21 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if (section == 0) {
-            return "\(uncategorized) (\(downloadedWorkds[uncategorized]?.count ?? 0))"
+        
+        if (self.resultSearchController.isActive) {
+            if (section == 0) {
+                return "\(uncategorized) (\(filtereddownloadedWorkds[uncategorized]?.count ?? 0))"
+            } else {
+                let name = folders[section - 1].name ?? "No Name"
+                return "\(name) (\(filtereddownloadedWorkds[name]?.count ?? 0))"
+            }
         } else {
-            let name = folders[section - 1].name ?? "No Name"
-            return "\(name) (\(downloadedWorkds[name]?.count ?? 0))"
+            if (section == 0) {
+                return "\(uncategorized) (\(downloadedWorkds[uncategorized]?.count ?? 0))"
+            } else {
+                let name = folders[section - 1].name ?? "No Name"
+                return "\(name) (\(downloadedWorkds[name]?.count ?? 0))"
+            }
         }
     }
     
@@ -128,15 +144,20 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         
         var curWork: DBWorkItem?
         
-        if (indexPath.section == 0) {
-            curWork = (downloadedWorkds["Uncategorized"])?[indexPath.row]
-        } else if (indexPath.section - 1 < folders.count) {
-            let curFolderName: String = folders[indexPath.section - 1].name ?? "No Name"
-            curWork = (downloadedWorkds[curFolderName])?[indexPath.row]
-        }
-        
         if (self.resultSearchController.isActive) {
-            curWork = filtereddownloadedWorkds[indexPath.row]
+            if (indexPath.section == 0) {
+                curWork = (filtereddownloadedWorkds["Uncategorized"])?[indexPath.row]
+            } else if (indexPath.section - 1 < folders.count) {
+                let curFolderName: String = folders[indexPath.section - 1].name ?? "No Name"
+                curWork = (filtereddownloadedWorkds[curFolderName])?[indexPath.row]
+            }
+        } else {
+            if (indexPath.section == 0) {
+                curWork = (downloadedWorkds["Uncategorized"])?[indexPath.row]
+            } else if (indexPath.section - 1 < folders.count) {
+                let curFolderName: String = folders[indexPath.section - 1].name ?? "No Name"
+                curWork = (downloadedWorkds[curFolderName])?[indexPath.row]
+            }
         }
         
         if let wTitle = curWork?.value(forKey: "workTitle") as? String {
@@ -211,22 +232,33 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
     
     //MARK: - works
     
-    func loadWroksFromDB() {
+    func loadWroksFromDB(predicate: NSPredicate?, predicateWFolder: NSPredicate) {
         folders.removeAll()
-        downloadedWorkds.removeAll()
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let managedContext = appDelegate.managedObjectContext!
         let fetchRequest: NSFetchRequest <NSFetchRequestResult> = NSFetchRequest(entityName:"DBWorkItem")
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "dateAdded", ascending: false)]
-        let searchPredicate = NSPredicate(format: "folder = nil")
+        var searchPredicate: NSPredicate? = nil
+        
+        if ( predicate != nil) {
+         searchPredicate = predicateWFolder
+        } else {
+         searchPredicate = predicateWFolder
+            downloadedWorkds.removeAll()
+        }
+        
         fetchRequest.predicate = searchPredicate
         
         do {
             let fetchedResults = try managedContext.fetch(fetchRequest) as? [DBWorkItem]
             
             if let results = fetchedResults {
-                downloadedWorkds["Uncategorized"] = results
+                if (predicate != nil) {
+                    filtereddownloadedWorkds["Uncategorized"] = results
+                } else {
+                    downloadedWorkds["Uncategorized"] = results
+                }
             }
         } catch {
             #if DEBUG
@@ -250,7 +282,12 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         }
         
         for folder in folders {
-            downloadedWorkds[folder.name ?? "No Name" ] = folder.works?.allObjects as? [DBWorkItem]
+            if (predicate != nil) {
+                let array = (folder.works?.allObjects as NSArray?)?.filtered(using: predicate!) as? [DBWorkItem]
+                filtereddownloadedWorkds[folder.name ?? "No Name" ] = array
+            } else {
+                downloadedWorkds[folder.name ?? "No Name" ] = folder.works?.allObjects as? [DBWorkItem]
+            }
         }
     }
     
@@ -295,16 +332,22 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
             
             var curWork: DBWorkItem?
             
-            if (indexPath.section == 0) {
-                curWork = (downloadedWorkds["Uncategorized"])?[indexPath.row]
-            } else if (indexPath.section - 1 < folders.count) {
-                let curFolderName: String = folders[indexPath.section - 1].name ?? "No Name"
-                curWork = (downloadedWorkds[curFolderName])?[indexPath.row]
-            }
-            
             if (self.resultSearchController.isActive) {
-                if ((tableView.indexPathForSelectedRow! as NSIndexPath).row < filtereddownloadedWorkds.count ) {
-                    curWork = filtereddownloadedWorkds[(tableView.indexPathForSelectedRow! as NSIndexPath).row]
+                if (indexPath.section == 0) {
+                    curWork = (filtereddownloadedWorkds["Uncategorized"])?[indexPath.row]
+                } else if (indexPath.section - 1 < folders.count) {
+                    let curFolderName: String = folders[indexPath.section - 1].name ?? "No Name"
+                    curWork = (filtereddownloadedWorkds[curFolderName])?[indexPath.row]
+                }
+//                if ((tableView.indexPathForSelectedRow! as NSIndexPath).row < filtereddownloadedWorkds.count ) {
+//                    curWork = filtereddownloadedWorkds[(tableView.indexPathForSelectedRow! as NSIndexPath).row]
+//                }
+            } else {
+                if (indexPath.section == 0) {
+                    curWork = (downloadedWorkds["Uncategorized"])?[indexPath.row]
+                } else if (indexPath.section - 1 < folders.count) {
+                    let curFolderName: String = folders[indexPath.section - 1].name ?? "No Name"
+                    curWork = (downloadedWorkds[curFolderName])?[indexPath.row]
                 }
             }
             
@@ -364,7 +407,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
             } catch _ {
             }
             
-            loadWroksFromDB()
+            loadWroksFromDB(predicate: nil, predicateWFolder: NSPredicate(format: "folder = nil"))
             
             self.tableView.reloadData()
             // self.tableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: .Fade)
@@ -384,7 +427,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
     //MARK: - UISearchBarDelegate
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        filtereddownloadedWorkds = Array(downloadedWorkds.values.joined())
+//        filtereddownloadedWorkds = downloadedWorkds
     }
     
     //MARK: - UISearchResultsUpdating delegate
@@ -403,17 +446,30 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         
         filtereddownloadedWorkds.removeAll(keepingCapacity: false)
         
-        let searchPredicate = NSPredicate(format: "topic CONTAINS[c] %@ OR topicPreview CONTAINS[c] %@  OR tags CONTAINS[c] %@ OR author CONTAINS[c] %@ OR workTitle CONTAINS[c] %@", text, text, text, text, text)
-        let array = (Array(downloadedWorkds.values.joined()) as NSArray).filtered(using: searchPredicate)
-        filtereddownloadedWorkds = array as! [DBWorkItem]
+        let searchPredicate = NSPredicate(format: "topic CONTAINS[cd] %@ OR topicPreview CONTAINS[cd] %@ OR tags CONTAINS[cd] %@ OR author CONTAINS[cd] %@ OR workTitle CONTAINS[cd] %@", text, text, text, text, text)
+        
+        let predicateWFolder = NSPredicate(format: "folder = nil AND (topic CONTAINS[cd] %@ OR topicPreview CONTAINS[cd] %@ OR tags CONTAINS[cd] %@ OR author CONTAINS[cd] %@ OR workTitle CONTAINS[cd] %@)", text, text, text, text, text)
+//        let array = (Array(downloadedWorkds.values.joined()) as NSArray).filtered(using: searchPredicate)
+//        filtereddownloadedWorkds = array as! [DBWorkItem]
+        
+        loadWroksFromDB(predicate: searchPredicate, predicateWFolder: predicateWFolder)
         
         self.tableView.reloadData()
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.text = ""
+        self.tableView.endEditing(true)
+        self.resultSearchController.dismiss(animated: true, completion: nil)
+        
+        tableView.reloadData()
     }
 
     
     override func doneButtonAction() {
+        resultSearchController.searchBar.endEditing(true)
         //self.tableView.endEditing(true)
-        self.resultSearchController.dismiss(animated: true, completion: nil)
+        //self.resultSearchController.dismiss(animated: true, completion: nil)
     }
     
     @IBAction override func drawerClicked(_ sender: AnyObject) {
@@ -496,7 +552,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
             #endif
         }
         
-        loadWroksFromDB()
+        loadWroksFromDB(predicate: nil, predicateWFolder: NSPredicate(format: "folder = nil"))
         tableView.reloadData()
     }
     
@@ -553,14 +609,14 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
             #endif
         }
         
-        loadWroksFromDB()
+        loadWroksFromDB(predicate: nil, predicateWFolder: NSPredicate(format: "folder = nil"))
         tableView.reloadData()
     }
     
     //MARK: - EditFoldersProtocol
     
      func foldersEdited() {
-        loadWroksFromDB()
+        loadWroksFromDB(predicate: nil, predicateWFolder: NSPredicate(format: "folder = nil"))
         tableView.reloadData()
     }
     
