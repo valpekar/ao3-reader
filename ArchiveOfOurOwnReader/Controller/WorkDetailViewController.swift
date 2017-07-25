@@ -95,7 +95,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
         self.tableView.tableFooterView = UIView()
         self.tableView.rowHeight = UITableViewAutomaticDimension
-        self.tableView.estimatedRowHeight = 44
+        self.tableView.estimatedRowHeight = 64
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
             Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
@@ -683,10 +683,22 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     // MARK: - tableview
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell: WorkDetailCell? = tableView.dequeueReusableCell(withIdentifier: "cell") as? WorkDetailCell
+        var cell: WorkDetailCell? = nil
+        
+        if (indexPath.section == 0) {
+            cell = tableView.dequeueReusableCell(withIdentifier: "txtCell") as? WorkDetailCell
+        } else {
+            cell = tableView.dequeueReusableCell(withIdentifier: "cell") as? WorkDetailCell
+        }
         
         if(cell == nil) {
-            cell = WorkDetailCell(style: UITableViewCellStyle.default, reuseIdentifier: "cell")
+            if (indexPath.section == 0) {
+                cell = WorkDetailTxtCell(style: UITableViewCellStyle.default, reuseIdentifier: "txtCell")
+            } else {
+                if(cell == nil) {
+                    cell = WorkDetailCell(style: UITableViewCellStyle.default, reuseIdentifier: "cell")
+                }
+            }
         }
         
         if (indexesToHide != nil) {
@@ -703,14 +715,10 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             } else if (downloadedWorkItem != nil) {
                 cell!.label.text = downloadedWorkItem.value(forKey: "topicPreview") as? String ?? ""
             }
-            //cell!.label.font = UIFont.systemFont(ofSize: 13)
-            cell!.imgView.image = UIImage(named: "")
-            
         case 1:
             if (warnings.count > (indexPath as NSIndexPath).row) {
                 cell!.label.text = warnings.joined(separator: ", ")
                 
-               // cell!.label.font = UIFont.systemFont(ofSize: 13)
             } else {
                 indexesToHide.append(0)
                 cell!.label.text = "None"
@@ -720,12 +728,8 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             if (fandoms != nil && fandoms.count > (indexPath as NSIndexPath).row) {
                 cell!.label.text = fandoms[(indexPath as NSIndexPath).row].fandomName
                 
-                //cell!.label.font = UIFont.systemFont(ofSize: 13)
-                
             } else if (downloadedFandoms != nil && downloadedFandoms.count > (indexPath as NSIndexPath).row) {
                 cell!.label.text = downloadedFandoms[(indexPath as NSIndexPath).row].value(forKey: "fandomName") as? String
-                
-                //cell!.label.font = UIFont.systemFont(ofSize: 13)
                 
             } else {
                 indexesToHide.append(1)
@@ -736,12 +740,8 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             if (relationships != nil && relationships.count > (indexPath as NSIndexPath).row) {
                 cell!.label.text = relationships[(indexPath as NSIndexPath).row].relationshipName
                 
-                //cell!.label.font = UIFont.systemFont(ofSize: 13)
-                
             } else if (downloadedRelationships != nil && downloadedRelationships.count > (indexPath as NSIndexPath).row) {
                 cell!.label.text = downloadedRelationships[(indexPath as NSIndexPath).row].value(forKey: "relationshipName") as? String
-                
-                //cell!.label.font = UIFont.systemFont(ofSize: 13)
                 
             } else {
                 indexesToHide.append(2)
@@ -752,12 +752,9 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             if (characters != nil && characters.count > (indexPath as NSIndexPath).row) {
                 cell!.label.text = characters[(indexPath as NSIndexPath).row].characterName
                 
-                //cell!.label.font = UIFont.systemFont(ofSize: 13)
-                
             } else if (downloadedCharacters != nil && downloadedCharacters.count > (indexPath as NSIndexPath).row) {
                 cell!.label.text = downloadedCharacters[(indexPath as NSIndexPath).row].value(forKey: "characterName") as? String
                 
-                //cell!.label.font = UIFont.systemFont(ofSize: 13)
             } else {
                 indexesToHide.append(3)
                 cell!.label.text = "None"
@@ -771,19 +768,16 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             }
             cell!.imgView.image = UIImage(named: "lang")
                 
-            //cell!.label.font = UIFont.systemFont(ofSize: 13)
         case 6:
             if (workItem != nil) {
                 cell!.label.text = workItem.stats
             } else if (downloadedWorkItem != nil) {
                 cell!.label.text = downloadedWorkItem.value(forKey: "stats") as? String ?? ""
             }
-            //cell!.label.font = UIFont.italicSystemFont(ofSize: 13)
             cell!.imgView.image = UIImage(named: "info")
             
             
         default:
-            //cell!.label.font = UIFont.systemFont(ofSize: 13)
             break
         }
         

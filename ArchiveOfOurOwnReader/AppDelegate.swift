@@ -56,7 +56,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             DefaultsManager.putObject(s as AnyObject, key: DefaultsManager.PSEUD_IDS)
         }
         
-        if let cookiesDate = DefaultsManager.getObject(DefaultsManager.COOKIES_DATE) as? Date {
+        if let cookiesDate = DefaultsManager.getDate(DefaultsManager.COOKIES_DATE) {
             let calendar = Calendar.current
             if let dateDayAfter = calendar.date(byAdding: .minute, value: 2, to: cookiesDate) { //assume cookies live 2 days 
             

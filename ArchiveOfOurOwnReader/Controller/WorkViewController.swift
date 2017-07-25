@@ -418,7 +418,8 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
             workContentStr = regex.stringByReplacingMatches(in: workContentStr, options: NSRegularExpression.MatchingOptions.withoutAnchoringBounds, range: NSRange(location: 0, length: workContentStr.characters.count), withTemplate: "$1")
             
             workContentStr = workContentStr.replacingOccurrences(of: "(?i)<strike\\b[^<]*>\\s*</strike>", with: "", options: .regularExpression, range: nil)
-            workContentStr = workContentStr.replacingOccurrences(of: "<strike/>", with: "")
+            //workContentStr = workContentStr.replacingOccurrences(of: "<strike/>", with: "")
+            workContentStr = workContentStr.replacingOccurrences(of: "<[^>]+/>", with: "", options: .regularExpression, range: nil)
         }
         
         var title = ""

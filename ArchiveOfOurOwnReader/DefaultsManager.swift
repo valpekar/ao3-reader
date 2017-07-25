@@ -51,7 +51,7 @@ class DefaultsManager {
     static var SAFE = "safe"
     static var TOKEN = "authtoken"
     static var COOKIES = "cookies"
-    static var COOKIES_DATE = "cookies"
+    static var COOKIES_DATE = "cookies_date"
     static var LASTWRKID = "lwid"
     static var LASTWRKCHAPTER = "lwchp"
     static var LASTWRKSCROLL = "lwscrl"
@@ -86,9 +86,22 @@ class DefaultsManager {
         return res
     }
     
+    class func getDate(_ key:String) -> Date? {
+        getDefaults().synchronize()
+        let res : Date? = getDefaults().object(forKey: key) as? Date
+        return res
+    }
+    
     class func putString(_ text:String, key:String) {
         let defaults : UserDefaults = getDefaults()
         defaults.set(text, forKey: key)
+        defaults.synchronize()
+        
+    }
+    
+    class func putDate(_ date:Date, key:String) {
+        let defaults : UserDefaults = getDefaults()
+        defaults.set(date, forKey: key)
         defaults.synchronize()
         
     }
