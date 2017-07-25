@@ -25,6 +25,8 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
    // var interstitial: MPInterstitialAdController =
    //     MPInterstitialAdController(forAdUnitId: "24f81f4beba548248fc64cfcf5d4d8f5")
     
+    var isAdult = false
+    var isSafe = true
     
     var purchased = false
     var donated = false
@@ -55,6 +57,13 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
         super.viewDidAppear(animated)
         
        // cycleInterstitial()
+        
+        if let adult = DefaultsManager.getBool(DefaultsManager.ADULT)  {
+            self.isAdult = adult
+        }
+        if let safe = DefaultsManager.getBool(DefaultsManager.SAFE) {
+           self.isSafe = safe
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

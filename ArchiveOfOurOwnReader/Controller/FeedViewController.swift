@@ -36,6 +36,8 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
     var i = 0 //counts page transitions, display ads every 3rd time
     var adsShown = 0
     var triedToLogin = 0
+    
+    var refreshControl: UIRefreshControl!
    
     //@IBOutlet weak var webView: UIWebView!
 
@@ -47,6 +49,11 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
         
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 240
+        
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        self.refreshControl.addTarget(self, action: #selector(FeedViewController.refresh(_:)), for: UIControlEvents.valueChanged)
+        self.tableView.addSubview(self.refreshControl)
         
         let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.white]
         self.navigationController!.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
@@ -88,20 +95,7 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
             showContestAlert()
         }*/
         
-        if (Reachability.isConnectedToNetwork()) {
-            if (!DefaultsManager.getString(DefaultsManager.PSEUD_ID).isEmpty &&  ((UIApplication.shared.delegate as! AppDelegate).cookies.count == 0 || (UIApplication.shared.delegate as! AppDelegate).token.isEmpty)) {
-                
-                if (triedToLogin < 2) {
-                    openLoginController()
-                    triedToLogin += 1
-                }
-            } else if (query.isEmpty()) {
-                self.performSegue(withIdentifier: "choosePref", sender: self)
-            } else {
-                
-                searchApplied(self.query, shouldAddKeyword: true)
-            }
-        }
+        refresh(tableView)
     }
     
  
@@ -131,8 +125,6 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
                 adsShown += 1
             }
         }
-        
-        
     }
     
     deinit {
@@ -142,11 +134,25 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
     }
     
     @IBAction func tryAgainTouched(_ sender: AnyObject) {
-        if ((purchased || donated) && (UIApplication.shared.delegate as! AppDelegate).cookies.count == 0) {
-            openLoginController()
+        refresh(tableView)
+    }
+    
+    func refresh(_ sender:AnyObject) {
+        if (Reachability.isConnectedToNetwork()) {
+            if (!DefaultsManager.getString(DefaultsManager.PSEUD_ID).isEmpty &&  ((UIApplication.shared.delegate as! AppDelegate).cookies.count == 0 || (UIApplication.shared.delegate as! AppDelegate).token.isEmpty)) {
+                
+                if (triedToLogin < 2) {
+                    openLoginController()
+                    triedToLogin += 1
+                }
+            } else if (query.isEmpty()) {
+                self.performSegue(withIdentifier: "choosePref", sender: self)
+            } else {
+                
+                searchApplied(self.query, shouldAddKeyword: true)
+            }
         } else {
-            
-            searchApplied(self.query, shouldAddKeyword: true)
+            TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error, duration: 2.0)
         }
     }
     
@@ -613,6 +619,8 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
             self.hideLoadingView()
             TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error, duration: 2.0)
         }
+        
+        self.refreshControl.endRefreshing()
         
         self.showFeed()
     }

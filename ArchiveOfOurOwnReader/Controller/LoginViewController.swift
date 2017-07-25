@@ -277,7 +277,7 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
                                                                                         withTemplate: "")
                     
                     pseuds[pseud_id] = htmlLessString
-                    DefaultsManager.putObject(pseud_id as AnyObject, key: DefaultsManager.PSEUD_ID)
+                    DefaultsManager.putString(pseud_id, key: DefaultsManager.PSEUD_ID)
                 }
                 
                 DefaultsManager.putObject(pseuds as AnyObject, key: DefaultsManager.PSEUD_IDS)

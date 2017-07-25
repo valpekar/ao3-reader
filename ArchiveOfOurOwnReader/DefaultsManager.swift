@@ -48,6 +48,7 @@ class DefaultsManager {
     static var LAST_DATE = "lastdt"
     static var NOTIFY = "notify"
     static var ADULT = "adlt"
+    static var SAFE = "safe"
     static var TOKEN = "authtoken"
     static var COOKIES = "cookies"
     static var COOKIES_DATE = "cookies"

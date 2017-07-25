@@ -17,6 +17,7 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var notifSwitch: UISwitch!
     @IBOutlet weak var adultSwitch: UISwitch!
+    @IBOutlet weak var safeSwitch: UISwitch!
     @IBOutlet weak var adultLabel: UILabel!
     @IBOutlet weak var pseudsTableView: UITableView!
     
@@ -38,10 +39,10 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
         
         pseudsTableView.tableFooterView = UIView()
         
-        //reload(false, productId: "")
+        reload(false, productId: "")
+        
         NotificationCenter.default.addObserver(self, selector: #selector(MeViewController.productPurchased(_:)), name: NSNotification.Name(rawValue: IAPHelperProductPurchasedNotification), object: nil)
         //SKPaymentQueue.default().add(self)
-        
         
     }
     
@@ -136,6 +137,7 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
             
             adultSwitch.isEnabled = true
             notifSwitch.isEnabled = true
+            safeSwitch.isEnabled = true
             
             if let isAdult = DefaultsManager.getBool(DefaultsManager.ADULT)  {
                 if (isAdult == true) {
@@ -143,6 +145,8 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
                 } else {
                     adultSwitch.setOn(false, animated: true)
                 }
+            } else {
+                adultSwitch.setOn(false, animated: true)
             }
             
             if let notify = DefaultsManager.getBool(DefaultsManager.NOTIFY) {
@@ -152,6 +156,16 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
                     notifSwitch.setOn(false, animated: true)
                 }
             }
+            
+            if let safe = DefaultsManager.getBool(DefaultsManager.SAFE) {
+                if (safe == true) {
+                    safeSwitch.setOn(true, animated: true)
+                } else {
+                    safeSwitch.setOn(false, animated: true)
+                }
+            }
+            
+            self.pseudsTableView.reloadData()
             
         } else {
             setNotAuthorizedUI()
@@ -189,7 +203,14 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
             DefaultsManager.putBool(false, key: DefaultsManager.ADULT)
         }
     }
-   
+    
+    @IBAction func safeSwitchChanged(_ sender: UISwitch) {
+        if (sender.isOn) {
+            DefaultsManager.putBool(true, key: DefaultsManager.SAFE)
+        } else {
+            DefaultsManager.putBool(false, key: DefaultsManager.SAFE)
+        }
+    }
     
     //Mark: - TableView
     

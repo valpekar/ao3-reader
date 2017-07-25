@@ -295,7 +295,14 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
         showLoadingView(msg: NSLocalizedString("SendingComment", comment: ""))
         
         let requestStr = "http://archiveofourown.org/works/" + workId + "/comments"
-        let pseud_id = DefaultsManager.getString(DefaultsManager.PSEUD_ID)
+        var pseud_id = DefaultsManager.getString(DefaultsManager.PSEUD_ID)
+        
+        if(pseud_id.isEmpty) {
+            if let pseuds = DefaultsManager.getObject(DefaultsManager.PSEUD_IDS) as? [String : String] {
+                pseud_id = pseuds.first?.value ?? ""
+                DefaultsManager.putString(pseud_id, key: DefaultsManager.PSEUD_ID)
+            }
+        }
         
         var params:[String:Any] = [String:Any]()
         params["utf8"] = "✓" as AnyObject?

@@ -54,9 +54,9 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
     var labelTitlesSwitch:[String] = [NSLocalizedString("ChooseNoWarn", comment: ""),
                                       NSLocalizedString("GraphicViolence", comment: ""),
                                       NSLocalizedString("MajorCharDeath", comment: ""),
-                                      NSLocalizedString("NoWarn", comment: ""),
-                                      NSLocalizedString("RapeNonCon", comment: ""),
-                                      NSLocalizedString("Underage", comment: "")]
+                                      NSLocalizedString("NoWarn", comment: "")]
+                                      //NSLocalizedString("RapeNonCon", comment: ""),
+                                      //NSLocalizedString("Underage", comment: "")]
     var imgTitlesFromTo:[String] = ["likes", "hits", "comments", "bookmark", "word"]
     
     var currentTextField: UITextField?
@@ -343,7 +343,7 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
         case 4:
             res = 1
         case 5:
-            res = 6
+            res = labelTitlesSwitch.count
         case 6:
             res = 3
         case 7:

@@ -12,6 +12,5 @@ class WorkDetailCell: UITableViewCell {
     
 
     @IBOutlet weak var imgView: UIImageView!
-    
     @IBOutlet weak var label: UILabel!
 }

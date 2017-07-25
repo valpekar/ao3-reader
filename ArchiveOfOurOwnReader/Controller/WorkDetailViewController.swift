@@ -72,7 +72,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         }
         
        // donated = false
-       // purchased = true
+      //  purchased = true
         
         if ((purchased || donated) && DefaultsManager.getBool(DefaultsManager.ADULT) == nil) {
             DefaultsManager.putBool(true, key: DefaultsManager.ADULT)
@@ -93,7 +93,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         let name = String(format:"b%d", Int(arc4random_uniform(4)))
         bgImage.image = UIImage(named:name)
         
-        self.tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, -1.0, 0.0)
+        self.tableView.tableFooterView = UIView()
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 44
         
@@ -515,7 +515,6 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 }
             }
         }
-        
     }
     
     func parseAddBookmarkResponse(_ data: Data) {
@@ -540,6 +539,11 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 return
             }
         }
+        
+        if (data.isEmpty) {
+            TSMessage.showNotification(in: self, title: NSLocalizedString("AddingBmk", comment: ""), subtitle: NSLocalizedString("CannotAddBmk", comment: ""), type: .error)
+        }
+        return
     }
     
     //MARK: - show work
@@ -567,19 +571,19 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         }
     }
     
-    func fitLabel(_ label:UILabel, text:String) {
-        let textWidth = text.boundingRect(with: CGSize(width: 280, height: Int.max), options: NSStringDrawingOptions.usesLineFragmentOrigin,                  attributes: [NSFontAttributeName: label.font] as [String:AnyObject],
-            context:nil)
-        
-        var lines:Int = 1
-        
-        if (textWidth.width > (label.frame.width - 26)) {
-            lines += Int(textWidth.width / (tableView.frame.width - 26))
-        }
-        
-        label.numberOfLines = lines
-        label.frame = CGRect(x: label.frame.origin.x, y: label.frame.origin.y, width: label.frame.width, height: CGFloat(lines * 18))
-    }
+//    func fitLabel(_ label:UILabel, text:String) {
+//        let textWidth = text.boundingRect(with: CGSize(width: 280, height: Int.max), options: NSStringDrawingOptions.usesLineFragmentOrigin,                  attributes: [NSFontAttributeName: label.font] as [String:AnyObject],
+//            context:nil)
+//
+//        var lines:Int = 1
+//
+//        if (textWidth.width > (label.frame.width - 26)) {
+//            lines += Int(textWidth.width / (tableView.frame.width - 26))
+//        }
+//
+//        label.numberOfLines = lines
+//        label.frame = CGRect(x: label.frame.origin.x, y: label.frame.origin.y, width: label.frame.width, height: CGFloat(lines * 18))
+//    }
     
     // MARK: - navigation
     override func  prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -717,7 +721,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 cell!.label.text = downloadedWorkItem.value(forKey: "topicPreview") as? String ?? ""
             }
             //cell!.label.font = UIFont.systemFont(ofSize: 13)
-            cell!.imgView.image = UIImage(named: "preview")
+            cell!.imgView.image = UIImage(named: "")
             
         case 1:
             if (warnings.count > (indexPath as NSIndexPath).row) {
@@ -823,18 +827,18 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
 //        
 //    }
 //    
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        
-        return 1.0
-        
-        //return heightForSection(section)
-    }
-
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-            return 1.0
-        
-        //return heightForSection(section)
-    }
+//    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+//
+//        return 1.0
+//
+//        //return heightForSection(section)
+//    }
+//
+//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+//            return 1.0
+//
+//        //return heightForSection(section)
+//    }
 //
 //    func heightForSection(_ section: Int) -> CGFloat {
 //        var res:CGFloat = 1.0
@@ -958,34 +962,34 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         performSegue(withIdentifier: "listSegue", sender: self)
     }
     
-    func addOneLabel(_ text:String, imageName:String, cell:UITableViewCell ) {
-        let label = UILabel(frame: CGRect(x: 21, y: 0, width: authorLabel.frame.width, height: 21))
-        label.textAlignment = NSTextAlignment.left
-        label.font = UIFont(name: "HelveticaNeue", size: 14)
-        label.text = text
-        
-        let textWidth = text.boundingRect(with: CGSize(width: 280, height: Int.max), options: NSStringDrawingOptions.usesLineFragmentOrigin,                  attributes: [NSFontAttributeName: label.font] as [String:AnyObject],
-            context:nil)
-        
-        var lines:Int = 1
-        
-        if (textWidth.width > (tableView.frame.width - 24)) {
-            lines = Int(textWidth.width / (tableView.frame.width - 24))
-        }
-        
-        label.numberOfLines = lines
-        label.frame = CGRect(x: label.frame.origin.x, y: label.frame.origin.y, width: label.frame.width, height: CGFloat(lines * 18))
-        cell.addSubview(label)
-        
-        let image = UIImage(named: imageName)
-        let imageView = UIImageView(image: image!)
-        imageView.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
-        cell.addSubview(imageView)
-        
-    }
+//    func addOneLabel(_ text:String, imageName:String, cell:UITableViewCell ) {
+//        let label = UILabel(frame: CGRect(x: 21, y: 0, width: authorLabel.frame.width, height: 21))
+//        label.textAlignment = NSTextAlignment.left
+//        label.font = UIFont(name: "HelveticaNeue", size: 14)
+//        label.text = text
+//
+//        let textWidth = text.boundingRect(with: CGSize(width: 280, height: Int.max), options: NSStringDrawingOptions.usesLineFragmentOrigin,                  attributes: [NSFontAttributeName: label.font] as [String:AnyObject],
+//            context:nil)
+//
+//        var lines:Int = 1
+//
+//        if (textWidth.width > (tableView.frame.width - 24)) {
+//            lines = Int(textWidth.width / (tableView.frame.width - 24))
+//        }
+//
+//        label.numberOfLines = lines
+//        label.frame = CGRect(x: label.frame.origin.x, y: label.frame.origin.y, width: label.frame.width, height: CGFloat(lines * 18))
+//        cell.addSubview(label)
+//
+//        let image = UIImage(named: imageName)
+//        let imageView = UIImageView(image: image!)
+//        imageView.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
+//        cell.addSubview(imageView)
+//
+//    }
     
     
-    func buildLabelsWithLinks(_ items:[String], urls:[String], imageName:String, cell:UITableViewCell, selector:Selector) {
+   /* func buildLabelsWithLinks(_ items:[String], urls:[String], imageName:String, cell:UITableViewCell, selector:Selector) {
         var wordLocation : CGPoint = CGPoint(x: 24.0, y: 0.0)
         
         let image = UIImage(named: imageName)
@@ -1036,7 +1040,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             // Update the horizontal position for the next word:
             wordLocation.x += label.frame.size.width;
         }
-    }
+    } */
     
     @IBAction func closeClicked(_ sender: AnyObject) {
         
@@ -1058,8 +1062,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     
     func bookmarkWorkAction() {
         let pseud_id = DefaultsManager.getString(DefaultsManager.PSEUD_ID)
-        if (pseud_id.isEmpty || (UIApplication.shared.delegate as! AppDelegate).cookies.count == 0
-            || (UIApplication.shared.delegate as! AppDelegate).token.isEmpty) {
+        if (pseud_id.isEmpty || ((UIApplication.shared.delegate as! AppDelegate).cookies.count == 0 || (UIApplication.shared.delegate as! AppDelegate).token.isEmpty)) {
             openLoginController()
             triedTo = 1
         } else {
@@ -1096,8 +1099,15 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
         var requestStr = "http://archiveofourown.org/works/"
         var bid = ""
-        let pseud_id = DefaultsManager.getString(DefaultsManager.PSEUD_ID)
-    
+        var pseud_id = DefaultsManager.getString(DefaultsManager.PSEUD_ID)
+        
+        if(pseud_id.isEmpty) {
+            if let pseuds = DefaultsManager.getObject(DefaultsManager.PSEUD_IDS) as? [String : String] {
+                pseud_id = pseuds.first?.value ?? ""
+                
+                DefaultsManager.putString(pseud_id, key: DefaultsManager.PSEUD_ID)
+            }
+        }
         
         if (workItem != nil) {
             bid = workItem.workId
@@ -1496,7 +1506,6 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
         let requestStr = "http://archiveofourown.org/kudos.js"
         //let pseud_id = DefaultsManager.getString(DefaultsManager.PSEUD_ID)
-        
         
         var params:[String:Any] = [String:Any]()
         params["utf8"] = "✓" as AnyObject?
