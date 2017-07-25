@@ -25,8 +25,7 @@ class ChoosePrefController : LoadingViewController {
         
         nextButton.layer.borderWidth = 1.0
         nextButton.layer.borderColor = AppDelegate.redColor.cgColor
-        nextButton.layer.cornerRadius = 5.0
-        
+        makeRoundView(view: nextButton)
         addDoneButtonOnKeyboardTf(textField)
         
         NotificationCenter.default.addObserver(self, selector: #selector(ChoosePrefController.keyboardWillShow(notification:)), name:NSNotification.Name.UIKeyboardWillShow, object: nil);

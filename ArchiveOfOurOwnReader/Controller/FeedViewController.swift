@@ -139,7 +139,7 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
     
     func refresh(_ sender:AnyObject) {
         if (Reachability.isConnectedToNetwork()) {
-            if (!DefaultsManager.getString(DefaultsManager.PSEUD_ID).isEmpty &&  ((UIApplication.shared.delegate as! AppDelegate).cookies.count == 0 || (UIApplication.shared.delegate as! AppDelegate).token.isEmpty)) {
+            if (!DefaultsManager.getString(DefaultsManager.PSEUD_ID).isEmpty &&  (/*(UIApplication.shared.delegate as! AppDelegate).cookies.count == 0 ||*/ (UIApplication.shared.delegate as! AppDelegate).token.isEmpty)) {
                 
                 if (triedToLogin < 2) {
                     openLoginController()

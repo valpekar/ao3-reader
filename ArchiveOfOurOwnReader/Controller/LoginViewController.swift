@@ -16,13 +16,15 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
     @IBOutlet weak var loginTextField: UITextField!
     @IBOutlet weak var passTextField: UITextField!
     @IBOutlet weak var loginButton: UIButton!
+    @IBOutlet weak var bgView: UIView!
     var controllerDelegate: ModalControllerDelegate!
     //var purchased = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        loginButton.layer.cornerRadius = 10.0
+       makeRoundButton(button: loginButton)
+        makeRoundView(view: bgView)
         loginTextField.delegate = self
         passTextField.delegate = self
         addDoneButtonOnKeyboardTf(loginTextField)
@@ -331,7 +333,6 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
     }
     
     
-    
     override func doneButtonAction() {
         loginTextField.resignFirstResponder()
         passTextField.resignFirstResponder()
@@ -345,6 +346,19 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
         }))
         
         present(refreshAlert, animated: true, completion: nil)
+    }
+    
+    @IBAction func inviteTouched(_ sender: AnyObject) {
+        if let requestUrl = URL(string: "http://archiveofourown.org/invite_requests") {
+            UIApplication.shared.openURL(requestUrl)
+        }
+    }
+    
+    @IBAction func forgotPassTouched(_ sender: AnyObject) {
+        if let requestUrl = URL(string: "http://archiveofourown.org/passwords/new") {
+            UIApplication.shared.openURL(requestUrl)
+        }
+        
     }
 }
 

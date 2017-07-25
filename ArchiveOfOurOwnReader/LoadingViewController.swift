@@ -877,6 +877,12 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
         }
     }
     
+    func makeRoundButton(button: UIButton) {
+         button.layer.cornerRadius = 4.0
+    }
+    func makeRoundView(view: UIView) {
+        view.layer.cornerRadius = 4.0
+    }
 }
 
 

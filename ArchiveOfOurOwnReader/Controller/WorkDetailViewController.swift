@@ -152,9 +152,6 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         categoryLabel.text = downloadedWorkItem.value(forKey: "category") as? String
         completeLabel.text = downloadedWorkItem.value(forKey: "complete") as? String
         
-       // fitLabel(titleLabel, text: titleLabel.text!)
-       // fitLabel(authorLabel, text: authorLabel.text!)
-        
         
         warnings = [String]()
         if let warn = downloadedWorkItem.value(forKey: "ArchiveWarnings") as? String {
@@ -571,20 +568,6 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         }
     }
     
-//    func fitLabel(_ label:UILabel, text:String) {
-//        let textWidth = text.boundingRect(with: CGSize(width: 280, height: Int.max), options: NSStringDrawingOptions.usesLineFragmentOrigin,                  attributes: [NSFontAttributeName: label.font] as [String:AnyObject],
-//            context:nil)
-//
-//        var lines:Int = 1
-//
-//        if (textWidth.width > (label.frame.width - 26)) {
-//            lines += Int(textWidth.width / (tableView.frame.width - 26))
-//        }
-//
-//        label.numberOfLines = lines
-//        label.frame = CGRect(x: label.frame.origin.x, y: label.frame.origin.y, width: label.frame.width, height: CGFloat(lines * 18))
-//    }
-    
     // MARK: - navigation
     override func  prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
@@ -807,68 +790,6 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         return cell!
     }
     
-//    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-//        var heightForRow : CGFloat = 42
-//        
-//        if(indexesToHide != nil) {
-//            for i in 0..<indexesToHide.count {
-//                if(indexesToHide[i] == indexPath.section) {
-//                    heightForRow = 0
-//                    break
-//                }
-//            }
-//        }
-//        
-//        if (indexPath.section == 5) {
-//            heightForRow = 21 * 4
-//        }
-//        
-//        return heightForRow
-//        
-//    }
-//    
-//    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-//
-//        return 1.0
-//
-//        //return heightForSection(section)
-//    }
-//
-//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-//            return 1.0
-//
-//        //return heightForSection(section)
-//    }
-//
-//    func heightForSection(_ section: Int) -> CGFloat {
-//        var res:CGFloat = 1.0
-//        
-//        switch (section) {
-//        case 0, 5, 6:
-//            res = 2.0
-//        case 1:
-//            if (warnings != nil && warnings.count > 0) {
-//                res = 2.0
-//            }
-//        case 2:
-//            if ((fandoms != nil && fandoms.count > 0) || (downloadedFandoms != nil && downloadedFandoms.count > 0)) {
-//                res = 2.0
-//            }
-//        case 3:
-//            if ((relationships != nil && relationships.count > 0) || (downloadedRelationships != nil && downloadedRelationships.count > 0)) {
-//                res = 2.0
-//            }
-//        case 4:
-//            if ((characters != nil && characters.count > 0) || (downloadedCharacters != nil && downloadedCharacters.count > 0)) {
-//                res = 2.0
-//            }
-//        default:
-//            break
-//        }
-//        
-//        return res
-//    }
-    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 7
     }
@@ -961,86 +882,6 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         tagUrl = "http://archiveofourown.org/users/\(authorName)/works"
         performSegue(withIdentifier: "listSegue", sender: self)
     }
-    
-//    func addOneLabel(_ text:String, imageName:String, cell:UITableViewCell ) {
-//        let label = UILabel(frame: CGRect(x: 21, y: 0, width: authorLabel.frame.width, height: 21))
-//        label.textAlignment = NSTextAlignment.left
-//        label.font = UIFont(name: "HelveticaNeue", size: 14)
-//        label.text = text
-//
-//        let textWidth = text.boundingRect(with: CGSize(width: 280, height: Int.max), options: NSStringDrawingOptions.usesLineFragmentOrigin,                  attributes: [NSFontAttributeName: label.font] as [String:AnyObject],
-//            context:nil)
-//
-//        var lines:Int = 1
-//
-//        if (textWidth.width > (tableView.frame.width - 24)) {
-//            lines = Int(textWidth.width / (tableView.frame.width - 24))
-//        }
-//
-//        label.numberOfLines = lines
-//        label.frame = CGRect(x: label.frame.origin.x, y: label.frame.origin.y, width: label.frame.width, height: CGFloat(lines * 18))
-//        cell.addSubview(label)
-//
-//        let image = UIImage(named: imageName)
-//        let imageView = UIImageView(image: image!)
-//        imageView.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
-//        cell.addSubview(imageView)
-//
-//    }
-    
-    
-   /* func buildLabelsWithLinks(_ items:[String], urls:[String], imageName:String, cell:UITableViewCell, selector:Selector) {
-        var wordLocation : CGPoint = CGPoint(x: 24.0, y: 0.0)
-        
-        let image = UIImage(named: imageName)
-        let imageView = UIImageView(image: image!)
-        imageView.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
-        cell.addSubview(imageView)
-        
-        for i in 0..<items.count {
-            
-            let size = CGSize(width: 280, height: Int.max)
-            let font = UIFont(name: "HelveticaNeue", size: 14)
-            
-            let boundingRect = items[i].boundingRect(with: size, options: NSStringDrawingOptions.usesLineFragmentOrigin,                  attributes: [NSFontAttributeName: font!] as [String:AnyObject],
-                context:nil)
-            
-            let label = UILabel(frame: CGRect(x: 24, y: 0, width: boundingRect.width, height: 21))
-            label.textAlignment = NSTextAlignment.left
-            label.font = font
-            label.text = items[i]
-            if(i != items.count - 1) {
-                label.text? += ","
-            }
-            label.isUserInteractionEnabled = true
-            label.tag = i
-            
-            label.textColor = UIColor(red:110/255.0, green:181/255.0, blue:229/255.0, alpha:1.0)
-            
-            let tapGesture = UITapGestureRecognizer(target: self, action: selector)
-            label.addGestureRecognizer(tapGesture)
-            
-            label.sizeToFit()
-            
-            if ((cell.frame.size.width - 24) < wordLocation.x + label.bounds.size.width)
-            {
-                wordLocation.x = 0.0;                       // move this word all the way to the left...
-                wordLocation.y += label.frame.size.height;  // ...on the next line
-                
-            }
-            
-            // Set the location for this label:
-            label.frame = CGRect(x: wordLocation.x,
-                y: wordLocation.y,
-                width: label.frame.size.width,
-                height: label.frame.size.height);
-            // Show this label:
-            cell.addSubview(label)
-            
-            // Update the horizontal position for the next word:
-            wordLocation.x += label.frame.size.width;
-        }
-    } */
     
     @IBAction func closeClicked(_ sender: AnyObject) {
         
@@ -1236,8 +1077,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             if(noticediv.count > 0) {
                 bookmarked = false
                 changedSmth = true
-                self.view.makeToast(message: noticediv[0].content, duration: 3.0, position: "center" as AnyObject, title: NSLocalizedString("DeleteFromBmk", comment: ""))
-            
+                TSMessage.showNotification(in: self, title: NSLocalizedString("DeleteFromBmk", comment: ""), subtitle: noticediv[0].content, type: .success)
             }
         }
         
@@ -1622,19 +1462,6 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
 //       self.adBanner.alpha = 0.0
 //    }
     
-    /* func tftBanner(banner: TFTBanner!, didFail reason: String!) {
-        print(reason)
-    }
-    
-    func tftBannerDidReceiveAd(banner: TFTBanner!) {
-        print("tftBannerDidReceiveAd")
-    }
-    
-    func createTFTBanner() {
-        let y = self.view.frame.size.height - 50.0
-        let banner: TFTBanner = TFTBanner(frame: CGRectMake(0, y, 320, 50), delegate: self)
-        adBannerView.addSubview(banner)
-    } */
     
     override func controllerDidClosed() {
         //if (!purchased) {

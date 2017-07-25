@@ -30,9 +30,10 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
         super.viewDidLoad()
         
         self.title = NSLocalizedString("Comments", comment: "")
-        sendBtn.layer.cornerRadius = 5.0
         
-        commentTv.layer.cornerRadius = 5.0
+        makeRoundView(view: sendBtn)
+        makeRoundView(view: commentTv)
+        
         commentTv.layer.borderColor = UIColor.purple.cgColor
         commentTv.layer.borderWidth = 1
         
