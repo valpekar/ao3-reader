@@ -64,8 +64,8 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        underlineTextField(loginTextField)
-        underlineTextField(passTextField)
+        //underlineTextField(loginTextField)
+        //underlineTextField(passTextField)
     }
     
     func underlineTextField(_ textField: UITextField) {
