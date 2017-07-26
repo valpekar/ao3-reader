@@ -136,6 +136,8 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
                     
                     for workListItem in worksList {
                         
+                        autoreleasepool { [unowned self, unowned workListItem] in
+                        
                         var item : NewsFeedItem = NewsFeedItem()
                         
                         let statsEls : [TFHppleElement] = workListItem.search(withXPathQuery: "//dl[@class='stats']") as! [TFHppleElement]
@@ -257,7 +259,8 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
                                 }
                             }
                             
-                            works.append(item)
+                            self.works.append(item)
+                            }
                             
                             //parse pages
                             var paginationActions = doc.search(withXPathQuery: "//ol[@class='pagination actions']")
@@ -287,7 +290,7 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
                                         pageItem.isCurrent = true
                                     }
                                     
-                                    pages.append(pageItem)
+                                    self.pages.append(pageItem)
                                 }
                             }
                         }
