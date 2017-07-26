@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ChapterOnline {
+struct ChapterOnline {
     
     var chapterId = ""
     var content = ""

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Fandom {
+struct Fandom {
     
     var id: Int64 = 0
     var fandomName = ""

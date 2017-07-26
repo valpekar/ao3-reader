@@ -113,16 +113,15 @@ class SubscriptionsViewController: LoadingViewController, UITableViewDataSource,
                     
                     for workListItem in workGroup {
                         
-                        let item : NewsFeedItem = NewsFeedItem()
+                        var item : NewsFeedItem = NewsFeedItem()
                         
+                        let topic = workListItem.content ?? ""
                         
-                            let topic = workListItem.content ?? ""
-                                
-                            item.topic = topic.replacingOccurrences(of: "\n", with:"").trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+                        item.topic = topic.replacingOccurrences(of: "\n", with:"").trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
                                     .replacingOccurrences(of: "\\s+", with: " ", options: NSString.CompareOptions.regularExpression, range: nil)
                         
                         
-                            //parse work ID
+                        //parse work ID
                         
                         if let attributes : NSDictionary = (workListItem.search(withXPathQuery: "//a")[0] as? TFHppleElement)?.attributes as NSDictionary? {
                             item.workId = (attributes["href"] as? String ?? "").replacingOccurrences(of: "/works/", with: "")
@@ -139,7 +138,7 @@ class SubscriptionsViewController: LoadingViewController, UITableViewDataSource,
                                 
                                 for i in 0..<paginationArr.count {
                                     let page: TFHppleElement = paginationArr[i] as! TFHppleElement
-                                    let pageItem = PageItem()
+                                    var pageItem: PageItem = PageItem()
                                     
                                     pageItem.name = page.content
                                     

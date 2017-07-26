@@ -212,7 +212,9 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
                     
                     for workListItem in worksList {
                         
-                        let item : NewsFeedItem = NewsFeedItem()
+                        autoreleasepool { [unowned self, unowned workListItem] in
+                        
+                        var item : NewsFeedItem = NewsFeedItem()
                         
                         if let header : TFHppleElement = workListItem.search(withXPathQuery: "//div[@class='header module']")[0] as? TFHppleElement {
                         
@@ -327,7 +329,8 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
                             item.workId = (attributes["id"] as? String)?.replacingOccurrences(of: "work_", with: "") ?? ""
                         }
             
-                        works.append(item)
+                        self.works.append(item)
+                        }
                     }
                     
                     //parse pages
@@ -339,7 +342,7 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
                         
                         for i in 0..<paginationArr.count {
                             let page: TFHppleElement = paginationArr[i] as! TFHppleElement
-                            let pageItem = PageItem()
+                            var pageItem = PageItem()
                             
                             pageItem.name = page.content
                             

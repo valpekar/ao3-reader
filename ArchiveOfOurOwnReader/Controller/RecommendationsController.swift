@@ -306,7 +306,7 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
                         let topic : TFHppleElement = header.search(withXPathQuery: "//h4[@class='heading']")[0] as! TFHppleElement
                         let stats : TFHppleElement = workListItem.search(withXPathQuery: "//dl[@class='stats']")[0] as! TFHppleElement
                         
-                        let item : NewsFeedItem = NewsFeedItem()
+                        var item : NewsFeedItem = NewsFeedItem()
                         item.topic = topic.content.replacingOccurrences(of: "\n", with:"").trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
                             .replacingOccurrences(of: "\\s+", with: " ", options: NSString.CompareOptions.regularExpression, range: nil)
                         
@@ -409,7 +409,7 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
                             
                             for i in 0..<paginationArr.count {
                                 let page: TFHppleElement = paginationArr[i] as! TFHppleElement
-                                let pageItem = PageItem()
+                                var pageItem: PageItem = PageItem()
                                 
                                 pageItem.name = page.content
                                 

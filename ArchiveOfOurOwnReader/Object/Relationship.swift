@@ -7,7 +7,7 @@
 //
 
 import Foundation
-class Relationship  {
+struct Relationship  {
     var id: Int64 = 0
     var relationshipName = ""
     var relationshipUrl = ""

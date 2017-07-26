@@ -8,7 +8,7 @@
 
 import Foundation
 
-class PageItem {
+struct PageItem {
 
     var url: String = ""
     var name = ""

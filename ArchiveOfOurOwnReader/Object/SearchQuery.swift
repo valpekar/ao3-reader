@@ -19,18 +19,18 @@ class SearchQuery : NSObject, NSCoding {
     var complete = "0" 
     var single_chapter = "0" 
     var word_count = "" 
-    var fandom_names = ""  {didSet{
+    var fandom_names = ""  /*{didSet{
         NSLog("fandom_names=" + String(fandom_names))
-        }}
+        }}*/
     var language_id = "" 
     var rating_ids = "" 
     var character_names = "" 
     var relationship_names = "" 
     var freeform_names = "" 
     var hits = "" 
-    var kudos_count = "" {didSet{
+    var kudos_count = "" /*{didSet{
         NSLog("kudoscount=" + String(kudos_count))
-        }}
+        }}*/
     var comments_count = "" 
     var bookmarks_count = "" 
     var sort_column = "" 

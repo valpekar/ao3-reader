@@ -470,7 +470,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
                 chptName = str
             }
             
-            let chpt = ChapterOnline()
+            var chpt = ChapterOnline()
             chpt.content = workContentStr
             chpt.url = chptName
             
@@ -621,7 +621,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
                 chptName = str
             }
             
-            let chpt = ChapterOnline()
+            var chpt = ChapterOnline()
             chpt.content = workContentStr
             chpt.url = chptName
             

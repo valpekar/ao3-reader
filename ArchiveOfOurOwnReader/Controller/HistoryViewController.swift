@@ -136,8 +136,7 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
                     
                     for workListItem in worksList {
                         
-                        
-                        let item : NewsFeedItem = NewsFeedItem()
+                        var item : NewsFeedItem = NewsFeedItem()
                         
                         let statsEls : [TFHppleElement] = workListItem.search(withXPathQuery: "//dl[@class='stats']") as! [TFHppleElement]
                         
@@ -269,7 +268,7 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
                                 
                                 for i in 0..<paginationArr.count {
                                     let page: TFHppleElement = paginationArr[i] as! TFHppleElement
-                                    let pageItem = PageItem()
+                                    var pageItem = PageItem()
                                     
                                     pageItem.name = page.content
                                     

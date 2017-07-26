@@ -299,7 +299,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             fandoms = [Fandom]()
             
             for i in 0..<fandomsLiArr.count {
-                let f : Fandom = Fandom()
+                var f : Fandom = Fandom()
                 f.fandomName = fandomsLiArr[i].content
                 firstFandom = f.fandomName
                 let attributes : NSDictionary = (fandomsLiArr[i].search(withXPathQuery: "//a")[0] as AnyObject).attributes as NSDictionary
@@ -318,7 +318,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             relationships = [Relationship]()
             
             for i in 0..<relationshipsLiArr.count {
-                let r : Relationship = Relationship()
+                var r : Relationship = Relationship()
                 r.relationshipName = relationshipsLiArr[i].content
                 firstRelationship = r.relationshipName
                 let attributes : NSDictionary = (relationshipsLiArr[i].search(withXPathQuery: "//a")[0] as AnyObject).attributes as NSDictionary
@@ -330,7 +330,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             characters = [CharacterItem]()
             
             for i in 0..<charactersLiArr.count {
-                let c : CharacterItem = CharacterItem()
+                var c : CharacterItem = CharacterItem()
                 c.characterName = charactersLiArr[i].content
                 let attributes : NSDictionary = (charactersLiArr[i].search(withXPathQuery: "//a")[0] as AnyObject).attributes as NSDictionary
                 c.characterUrl = (attributes["href"] as? String ?? "")
@@ -412,7 +412,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         if (chaptersEl != nil && chaptersEl!.count > 0) {
             if let optionsEl: [TFHppleElement] = chaptersEl?[0].search(withXPathQuery: "//select/option") as? [TFHppleElement] {
             for i in 0..<optionsEl.count {
-                let chptOnline: ChapterOnline = ChapterOnline()
+                var chptOnline: ChapterOnline = ChapterOnline()
                 chptOnline.url = optionsEl[i].text()
                 chptOnline.chapterId = optionsEl[i].attributes["value"] as? String ?? ""
                 

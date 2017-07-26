@@ -167,23 +167,23 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
                 
                 for i in 0..<paginationArr.count {
                     let page: TFHppleElement = paginationArr[i] as! TFHppleElement
-                    let pageItem = PageItem()
+                    var pageItem: PageItem = PageItem()
                     
                     pageItem.name = page.content
                     
-                    var attrs = page.search(withXPathQuery: "//a") as! [TFHppleElement]
+                    if let attrs = page.search(withXPathQuery: "//a") as? [TFHppleElement] {
                     
-                    if (attrs.count > 0) {
-                        
-                        let attributesh : NSDictionary? = attrs[0].attributes as NSDictionary
-                        if (attributesh != nil) {
-                            pageItem.url = attributesh!["href"] as! String
+                        if (attrs.count > 0) {
+                        if let attributesh : NSDictionary? = attrs[0].attributes as? NSDictionary  {
+                            pageItem.url = attributesh!["href"] as? String ?? ""
                         }
                     }
+                    }
                     
-                    let current = page.search(withXPathQuery: "//span") as! [TFHppleElement]
+                    if let current = page.search(withXPathQuery: "//span") as? [TFHppleElement] {
                     if (current.count > 0) {
                         pageItem.isCurrent = true
+                    }
                     }
                     
                     pages.append(pageItem)

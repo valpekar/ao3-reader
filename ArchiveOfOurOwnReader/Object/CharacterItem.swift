@@ -7,7 +7,7 @@
 //
 
 import Foundation
-class CharacterItem {
+struct CharacterItem {
     var id: Int64 = 0
     var characterName = ""
     var characterUrl = ""

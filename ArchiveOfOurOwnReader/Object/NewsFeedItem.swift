@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NewsFeedItem {
+struct NewsFeedItem {
     
      var title = ""
      var topic = ""
