@@ -281,8 +281,8 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
                                 
                                 if (attrs?.count ?? 0 > 0) {
                                     
-                                    if let attributesh : NSDictionary? = attrs?[0].attributes as? NSDictionary {
-                                        pageItem.url = attributesh?["href"] as? String ?? ""
+                                    if let attributesh = attrs?[0].attributes as NSDictionary? {
+                                        pageItem.url = attributesh["href"] as? String ?? ""
                                     }
                                 }
                                 
