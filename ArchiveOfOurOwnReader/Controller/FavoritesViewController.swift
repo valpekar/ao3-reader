@@ -653,7 +653,9 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
     }
     
     func tapFunction(sender:UITapGestureRecognizer) {
-        let section = sender.view!.tag
+        guard let section = sender.view?.tag else {
+            return
+        }
         var folderName = ""
         if (section == 0) {
             folderName = uncategorized

@@ -219,13 +219,23 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
                         var item : NewsFeedItem = NewsFeedItem()
                         
                         if let header : TFHppleElement = workListItem.search(withXPathQuery: "//div[@class='header module']")[0] as? TFHppleElement {
-                        
-                            let topic : TFHppleElement = header.search(withXPathQuery: "//h4[@class='heading']")[0] as! TFHppleElement
                             
-                            item.topic = topic.content.replacingOccurrences(of: "\n", with:"").trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
-                                .replacingOccurrences(of: "\\s+", with: " ", options: NSString.CompareOptions.regularExpression, range: nil)
+                            let topicEl: [TFHppleElement]? = header.search(withXPathQuery: "//h4[@class='heading']") as? [TFHppleElement]
+                            if (topicEl?.count ?? 0 > 0) {
+                                let topic : TFHppleElement? = topicEl?[0]
+                            
+                                item.topic = topic?.content.replacingOccurrences(of: "\n", with:"").trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+                                .replacingOccurrences(of: "\\s+", with: " ", options: NSString.CompareOptions.regularExpression, range: nil) ?? ""
+                            } else {
+                                item.topic = ""
+                            }
                         }
-                        let stats : TFHppleElement = workListItem.search(withXPathQuery: "//dl[@class='stats']")[0] as! TFHppleElement
+                            
+                            var stats : TFHppleElement? = nil
+                            let statsEl: [TFHppleElement]? = workListItem.search(withXPathQuery: "//dl[@class='stats']") as? [TFHppleElement]
+                            if (statsEl?.count ?? 0 > 0) {
+                                stats = statsEl?[0]
+                            }
             
                         if let userstuffArr = workListItem.search(withXPathQuery: "//blockquote[@class='userstuff summary']/p") {
                             if(userstuffArr.count > 0) {
@@ -237,10 +247,11 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
             
                         if let fandomsArr = workListItem.search(withXPathQuery: "//h5[@class='fandoms heading']") {
                             if(fandomsArr.count > 0) {
-                                let fandoms  = fandomsArr[0] as! TFHppleElement
-                                item.fandoms = fandoms.content.replacingOccurrences(of: "\n", with:"").trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
-                                .replacingOccurrences(of: "\\s+", with: " ", options: NSString.CompareOptions.regularExpression, range: nil)
-                                item.fandoms = item.fandoms.replacingOccurrences(of: "Fandoms:", with: "")
+                                if let fandoms  = fandomsArr[0] as? TFHppleElement {
+                                    item.fandoms = fandoms.content.replacingOccurrences(of: "\n", with:"").trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+                                        .replacingOccurrences(of: "\\s+", with: " ", options: NSString.CompareOptions.regularExpression, range: nil)
+                                    item.fandoms = item.fandoms.replacingOccurrences(of: "Fandoms:", with: "")
+                                }
                             }
                         }
             
@@ -257,13 +268,13 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
                         }
            
                         //parse stats
-                        if let langVar = stats.search(withXPathQuery: "//dd[@class='language']") {
+                            if let langVar = stats?.search(withXPathQuery: "//dd[@class='language']") {
                             if(langVar.count > 0) {
                                 item.language = (langVar[0] as? TFHppleElement)?.text() ?? ""
                             }
                         }
             
-                        if let wordsVar = stats.search(withXPathQuery: "//dd[@class='words']") {
+                            if let wordsVar = stats?.search(withXPathQuery: "//dd[@class='words']") {
                             if(wordsVar.count > 0) {
                                 if let wordsNum: TFHppleElement = wordsVar[0] as? TFHppleElement {
                                     if (wordsNum.text() != nil) {
@@ -273,31 +284,31 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
                             }
                         }
             
-                        if let chaptersVar = stats.search(withXPathQuery: "//dd[@class='chapters']") {
+                            if let chaptersVar = stats?.search(withXPathQuery: "//dd[@class='chapters']") {
                             if(chaptersVar.count > 0) {
                                 item.chapters = (chaptersVar[0] as? TFHppleElement)?.text() ?? ""
                             }
                         }
             
-                        if let commentsVar = stats.search(withXPathQuery: "//dd[@class='comments']") {
+                            if let commentsVar = stats?.search(withXPathQuery: "//dd[@class='comments']") {
                             if(commentsVar.count > 0) {
                                 item.comments = ((commentsVar[0] as? TFHppleElement)?.search(withXPathQuery: "//a")[0] as? TFHppleElement)?.text() ?? ""
                             }
                         }
             
-                        if let kudosVar = stats.search(withXPathQuery: "//dd[@class='kudos']") {
+                            if let kudosVar = stats?.search(withXPathQuery: "//dd[@class='kudos']") {
                             if(kudosVar.count > 0) {
                                 item.kudos = ((kudosVar[0] as? TFHppleElement)?.search(withXPathQuery: "//a")[0] as? TFHppleElement)?.text() ?? ""
                             }
                         }
             
-                        if let bookmarksVar = stats.search(withXPathQuery: "//dd[@class='bookmarks']") {
+                            if let bookmarksVar = stats?.search(withXPathQuery: "//dd[@class='bookmarks']") {
                             if(bookmarksVar.count > 0) {
                                 item.bookmarks = ((bookmarksVar[0] as? TFHppleElement)?.search(withXPathQuery: "//a")[0] as? TFHppleElement)?.text() ?? ""
                             }
                         }
             
-                        if let hitsVar = stats.search(withXPathQuery: "//dd[@class='hits']") {
+                            if let hitsVar = stats?.search(withXPathQuery: "//dd[@class='hits']") {
                             if(hitsVar.count > 0) {
                                 item.hits = (hitsVar[0] as? TFHppleElement)?.text() ?? ""
                             }

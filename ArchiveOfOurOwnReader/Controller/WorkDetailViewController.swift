@@ -1284,8 +1284,8 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         })
         optionMenu.addAction(cancelAction)
         
-        optionMenu.popoverPresentationController?.sourceView = self.view
-        optionMenu.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.size.width / 2.0, y: self.view.bounds.size.height / 2.0, width: 1.0, height: 1.0)
+        optionMenu.popoverPresentationController?.sourceView =  self.titleLabel
+        optionMenu.popoverPresentationController?.sourceRect = CGRect(x: self.titleLabel.bounds.size.width / 2.0, y: self.titleLabel.bounds.size.height / 2.0, width: 1.0, height: 1.0)
         
         optionMenu.view.tintColor = AppDelegate.redColor
         

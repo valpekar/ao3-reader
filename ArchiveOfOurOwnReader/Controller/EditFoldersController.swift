@@ -67,6 +67,8 @@ class EditFoldersController: UITableViewController {
         }))
         
         alert.view.tintColor = AppDelegate.redColor
+        alert.popoverPresentationController?.sourceView = self.tableView
+        alert.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.size.width / 2.0, y: self.navigationController?.navigationBar.bounds.height ?? 64, width: 1.0, height: 1.0)
         
         self.present(alert, animated: true) {
             //code to execute once the alert is showing

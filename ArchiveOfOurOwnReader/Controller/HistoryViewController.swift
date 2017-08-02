@@ -137,21 +137,21 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
                     for workListItem in worksList {
                         
                         autoreleasepool { [unowned self, unowned workListItem] in
+                            
+                            var item : NewsFeedItem = NewsFeedItem()
                         
-                        var item : NewsFeedItem = NewsFeedItem()
+                        let statsEls : [TFHppleElement]? = workListItem.search(withXPathQuery: "//dl[@class='stats']") as? [TFHppleElement]
                         
-                        let statsEls : [TFHppleElement] = workListItem.search(withXPathQuery: "//dl[@class='stats']") as! [TFHppleElement]
-                        
-                        if (statsEls.count > 0) {
-                            let stats = statsEls[0]
+                        if (statsEls?.count ?? 0 > 0) {
+                            let stats = statsEls?[0]
                             
                             //parse stats
-                            var langVar = stats.search(withXPathQuery: "//dd[@class='language']")
+                            var langVar = stats?.search(withXPathQuery: "//dd[@class='language']")
                             if(langVar?.count > 0) {
-                                item.language = (langVar?[0] as! TFHppleElement).text()
+                                item.language = (langVar?[0] as? TFHppleElement)?.text() ?? ""
                             }
                             
-                            var wordsVar = stats.search(withXPathQuery: "//dd[@class='words']")
+                            var wordsVar = stats?.search(withXPathQuery: "//dd[@class='words']")
                             if(wordsVar?.count > 0) {
                                 if let wordsNum: TFHppleElement = wordsVar?[0] as? TFHppleElement {
                                     if (wordsNum.text() != nil) {
@@ -160,27 +160,27 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
                                 }
                             }
                             
-                            var chaptersVar = stats.search(withXPathQuery: "//dd[@class='chapters']")
+                            var chaptersVar = stats?.search(withXPathQuery: "//dd[@class='chapters']")
                             if(chaptersVar?.count > 0) {
                                 item.chapters = (chaptersVar?[0] as! TFHppleElement).text()
                             }
                             
-                            var commentsVar = stats.search(withXPathQuery: "//dd[@class='comments']")
+                            var commentsVar = stats?.search(withXPathQuery: "//dd[@class='comments']")
                             if(commentsVar?.count > 0) {
                                 item.comments = ((commentsVar?[0] as! TFHppleElement).search(withXPathQuery: "//a")[0] as! TFHppleElement).text()
                             }
                             
-                            var kudosVar = stats.search(withXPathQuery: "//dd[@class='kudos']")
+                            var kudosVar = stats?.search(withXPathQuery: "//dd[@class='kudos']")
                             if(kudosVar?.count > 0) {
                                 item.kudos = ((kudosVar?[0] as! TFHppleElement).search(withXPathQuery: "//a")[0] as! TFHppleElement).text()
                             }
                             
-                            var bookmarksVar = stats.search(withXPathQuery: "//dd[@class='bookmarks']")
+                            var bookmarksVar = stats?.search(withXPathQuery: "//dd[@class='bookmarks']")
                             if(bookmarksVar?.count > 0) {
                                 item.bookmarks = ((bookmarksVar?[0] as! TFHppleElement).search(withXPathQuery: "//a")[0] as! TFHppleElement).text()
                             }
                             
-                            var hitsVar = stats.search(withXPathQuery: "//dd[@class='hits']")
+                            var hitsVar = stats?.search(withXPathQuery: "//dd[@class='hits']")
                             if(hitsVar?.count > 0) {
                                 item.hits = (hitsVar?[0] as! TFHppleElement).text()
                             }
@@ -261,40 +261,39 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
                             
                             self.works.append(item)
                             }
+                        }
+                            }
+                        
+                        //parse pages
+                        var paginationActions = doc.search(withXPathQuery: "//ol[@class='pagination actions']")
+                        if(paginationActions?.count > 0) {
+                            guard let paginationArr = (paginationActions?[0] as AnyObject).search(withXPathQuery: "//li") else {
+                                return
+                            }
                             
-                            //parse pages
-                            var paginationActions = doc.search(withXPathQuery: "//ol[@class='pagination actions']")
-                            if(paginationActions?.count > 0) {
-                                guard let paginationArr = (paginationActions?[0] as AnyObject).search(withXPathQuery: "//li") else {
-                                    return
+                            for i in 0..<paginationArr.count {
+                                let page: TFHppleElement = paginationArr[i] as! TFHppleElement
+                                var pageItem = PageItem()
+                                
+                                pageItem.name = page.content
+                                
+                                let attrs: [TFHppleElement]? = page.search(withXPathQuery: "//a") as? [TFHppleElement]
+                                
+                                if (attrs?.count ?? 0 > 0) {
+                                    
+                                    if let attributesh : NSDictionary? = attrs?[0].attributes as? NSDictionary {
+                                        pageItem.url = attributesh?["href"] as? String ?? ""
+                                    }
                                 }
                                 
-                                for i in 0..<paginationArr.count {
-                                    let page: TFHppleElement = paginationArr[i] as! TFHppleElement
-                                    var pageItem = PageItem()
-                                    
-                                    pageItem.name = page.content
-                                    
-                                    var attrs = page.search(withXPathQuery: "//a") as! [TFHppleElement]
-                                    
-                                    if (attrs.count > 0) {
-                                        
-                                        let attributesh : NSDictionary? = attrs[0].attributes as NSDictionary
-                                        if (attributesh != nil) {
-                                            pageItem.url = attributesh!["href"] as! String
-                                        }
-                                    }
-                                    
-                                    let current = page.search(withXPathQuery: "//span") as! [TFHppleElement]
-                                    if (current.count > 0) {
-                                        pageItem.isCurrent = true
-                                    }
-                                    
-                                    self.pages.append(pageItem)
+                                let current = page.search(withXPathQuery: "//span") as? [TFHppleElement]
+                                if (current?.count ?? 0 > 0) {
+                                    pageItem.isCurrent = true
                                 }
+                                
+                                self.pages.append(pageItem)
                             }
                         }
-                    }
                 }
             }
         }
