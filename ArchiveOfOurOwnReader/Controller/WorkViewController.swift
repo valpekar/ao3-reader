@@ -64,7 +64,7 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
             }
             
             if (workItem.chapters.count > 0) {
-                work = workItem.chapters.allObjects[0] as! String
+                work = workItem.chapters.allObjects[0] as? String ?? ""
                 loadCurrentTheme()
             } else if (!workItem.workContent.isEmpty) {
                 work = workItem.workContent.replacingOccurrences(of: "\n", with: "<p></p>")
@@ -331,7 +331,7 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
         }
         
         if (downloadedWorkItem != nil && downloadedChapters != nil && chapterIndex < downloadedChapters!.count) {
-            work = downloadedChapters![chapterIndex].chapterContent ?? ""
+            work = downloadedChapters?[chapterIndex].chapterContent ?? ""
             loadCurrentTheme()
             downloadedWorkItem.setValue(NSNumber(value: chapterIndex as Int), forKey: "currentChapter")
             
@@ -408,10 +408,12 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
     
     func parseChapter(_ data: Data) -> (String, String) {
         //
-        let doc : TFHpple = TFHpple(htmlData: data)
+        guard let doc : TFHpple? = TFHpple(htmlData: data) else {
+            return ("", "")
+        }
         var workContentStr: String = ""
         
-        if let workContentEl = doc.search(withXPathQuery: "//div[@id='chapters']") as? [TFHppleElement] {
+        if let workContentEl = doc?.search(withXPathQuery: "//div[@id='chapters']") as? [TFHppleElement] {
             workContentStr = workContentEl[0].raw ?? ""
             
             let regex:NSRegularExpression = try! NSRegularExpression(pattern: "<a href=\"[^\"]+\">([^<]+)</a>", options: NSRegularExpression.Options.caseInsensitive)
@@ -423,14 +425,14 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
         }
         
         var title = ""
-        if let tt = doc.search(withXPathQuery: "//h3[@class='title']") as? [TFHppleElement] {
+        if let tt = doc?.search(withXPathQuery: "//h3[@class='title']") as? [TFHppleElement] {
             if (tt.count > 0) {
                 title = tt[0].content ?? ""
                 title = title.trimmingCharacters(in: .whitespacesAndNewlines)
             }
         }
         
-        if let navigationEl: [TFHppleElement] = doc.search(withXPathQuery: "//ul[@class='work navigation actions']") as? [TFHppleElement] {
+        if let navigationEl: [TFHppleElement] = doc?.search(withXPathQuery: "//ul[@class='work navigation actions']") as? [TFHppleElement] {
         
         if (navigationEl.count > 0) {
             
@@ -469,9 +471,9 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
         
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "DBWorkItem")
         fetchRequest.predicate = NSPredicate(format: "workId = %@", workId)
-        var selectWorks = (try! managedContext.fetch(fetchRequest)) as! [DBWorkItem]
+        if let selectWorks = (try! managedContext.fetch(fetchRequest)) as? [DBWorkItem] {
         
-        if (selectWorks.count > 0) {
+            if (selectWorks.count > 0) {
             let currentWork = selectWorks[0] as DBWorkItem
             currentWork.currentChapter = NSNumber(value: currentChapterIndex as Int)
             currentWork.scrollProgress = NSStringFromCGPoint(webView.scrollView.contentOffset)
@@ -480,6 +482,7 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
                 try managedContext.save()
             } catch _ {
             }
+        }
         }
     }
     
@@ -496,14 +499,14 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
         
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "HistoryItem")
         fetchRequest.predicate = NSPredicate(format: "workId = %@", workItem.workId)
-        var selectWorks = (try! managedContext.fetch(fetchRequest)) as! [HistoryItem]
+        var selectWorks = (try! managedContext.fetch(fetchRequest)) as? [HistoryItem]
         
-        if (selectWorks.count > 0) {
-            let currentWork = selectWorks[0] as HistoryItem
-            currentWork.lastChapter = currentOnlineChapter
-            currentWork.lastChapterIdx = currentOnlineChapterIdx as NSNumber
-            currentWork.scrollProgress = NSStringFromCGPoint(webView.scrollView.contentOffset)
-            currentWork.timeStamp = NSDate()
+        if (selectWorks?.count ?? 0 > 0) {
+            let currentWork = selectWorks?[0]
+            currentWork?.lastChapter = currentOnlineChapter
+            currentWork?.lastChapterIdx = currentOnlineChapterIdx as NSNumber
+            currentWork?.scrollProgress = NSStringFromCGPoint(webView.scrollView.contentOffset)
+            currentWork?.timeStamp = NSDate()
             
             do {
                 try managedContext.save()
@@ -578,8 +581,10 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
                 #if DEBUG
                 print(response.request ?? "")
                     #endif
-                title = self.downloadFullWork(response.data!)
-                self.showWork(title: title)
+                if let d = response.data {
+                    title = self.downloadFullWork(d)
+                    self.showWork(title: title)
+                }
             })
             
         } else {
@@ -608,8 +613,10 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
                     #if DEBUG
                     print(response.request ?? "")
                         #endif
-                    title = self.downloadFullWork(response.data!)
-                    self.showWork(title: title)
+                    if let d = response.data {
+                        title = self.downloadFullWork(d)
+                        self.showWork(title: title)
+                    }
                 })
         } else {
             currentChapterIndex -= 1
@@ -869,7 +876,7 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
         if (downloadedChapters != nil) {
             self.turnOnChapter(currentChapterIndex)
         } else {
-            turnOnlineChapter((onlineChapters[chapter]?.chapterId)!, index: chapter)
+            turnOnlineChapter((onlineChapters[chapter]?.chapterId) ?? "0", index: chapter)
         }
     }
     
