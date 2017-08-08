@@ -99,7 +99,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
             return
         }
         
-        activityView!.frame = CGRect(x: 65, y: 40, width: aView.bounds.size.width, height: aView.bounds.size.height)
+        activityView?.frame = CGRect(x: 65, y: 40, width: aView.bounds.size.width, height: aView.bounds.size.height)
         loadingView.addSubview(activityView!)
         
         loadingLabel = UILabel(frame:CGRect(x: 20, y: 115, width: 130, height: 22))

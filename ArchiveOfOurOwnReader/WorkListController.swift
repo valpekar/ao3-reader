@@ -66,6 +66,11 @@ class WorkListController: LoadingViewController, UITableViewDataSource, UITableV
     }
     
     func requestWorks() {
+        
+        self.pages.removeAll()
+        self.works.removeAll()
+        self.worksStr = ""
+        
         if let del = UIApplication.shared.delegate as? AppDelegate {
             if (del.cookies.count > 0) {
                 guard let cStorage = Alamofire.SessionManager.default.session.configuration.httpCookieStorage else {
@@ -87,7 +92,8 @@ class WorkListController: LoadingViewController, UITableViewDataSource, UITableV
                     #endif
                 if let d = response.data {
                     self.parseCookies(response)
-                    self.parseWorks(d)
+                    (self.pages, self.works, self.worksStr) = WorksParser.parseWorks(d, itemsCountHeading: "h2")
+                    //self.parseWorks(d)
                     self.showWorks()
                 } else {
                     self.hideLoadingView()
@@ -141,29 +147,34 @@ class WorkListController: LoadingViewController, UITableViewDataSource, UITableV
                                 }
                             }
                             
-                            var chaptersVar = stats.search(withXPathQuery: "//dd[@class='chapters']") as? [TFHppleElement]
-                            if((chaptersVar?.count)! > 0) {
-                                item.chapters = (chaptersVar?[0].text())!
+                            if let chaptersVar = stats.search(withXPathQuery: "//dd[@class='chapters']") as? [TFHppleElement] {
+                                if(chaptersVar.count > 0) {
+                                    item.chapters = chaptersVar[0].text()
+                                }
                             }
                             
-                            var commentsVar = stats.search(withXPathQuery: "//dd[@class='comments']") as? [TFHppleElement]
-                            if((commentsVar?.count)! > 0) {
-                                item.comments = (commentsVar?[0].search(withXPathQuery: "//a")[0] as! TFHppleElement).text()
+                            if let commentsVar = stats.search(withXPathQuery: "//dd[@class='comments']") as? [TFHppleElement] {
+                                if(commentsVar.count > 0) {
+                                    item.comments = (commentsVar[0].search(withXPathQuery: "//a")[0] as? TFHppleElement)?.text() ?? ""
+                                }
                             }
                             
-                            var kudosVar = stats.search(withXPathQuery: "//dd[@class='kudos']") as! [TFHppleElement]
-                            if(kudosVar.count > 0) {
-                                item.kudos = (kudosVar[0].search(withXPathQuery: "//a")[0] as! TFHppleElement).text()
+                            if let kudosVar = stats.search(withXPathQuery: "//dd[@class='kudos']") as? [TFHppleElement] {
+                                if(kudosVar.count > 0) {
+                                    item.kudos = (kudosVar[0].search(withXPathQuery: "//a")[0] as? TFHppleElement)?.text() ?? ""
+                                }
                             }
                             
-                            var bookmarksVar = stats.search(withXPathQuery: "//dd[@class='bookmarks']") as? [TFHppleElement]
-                            if((bookmarksVar?.count)! > 0) {
-                                item.bookmarks = (bookmarksVar?[0].search(withXPathQuery: "//a")[0] as! TFHppleElement).text()
+                            if let bookmarksVar = stats.search(withXPathQuery: "//dd[@class='bookmarks']") as? [TFHppleElement] {
+                                if(bookmarksVar.count > 0) {
+                                    item.bookmarks = (bookmarksVar[0].search(withXPathQuery: "//a")[0] as? TFHppleElement)?.text() ?? ""
+                                }
                             }
                             
-                            var hitsVar = stats.search(withXPathQuery: "//dd[@class='hits']") as? [TFHppleElement]
-                            if((hitsVar?.count)! > 0) {
-                                item.hits = (hitsVar?[0].text())!
+                            if let hitsVar = stats.search(withXPathQuery: "//dd[@class='hits']") as? [TFHppleElement] {
+                            if(hitsVar.count > 0) {
+                                item.hits = hitsVar[0].text()
+                            }
                             }
                         }
                         

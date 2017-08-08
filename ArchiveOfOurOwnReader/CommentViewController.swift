@@ -195,8 +195,8 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
     func loadCurrentTheme() {
         var theme: Int
         
-        if (DefaultsManager.getInt(DefaultsManager.THEME) != nil) {
-            theme = DefaultsManager.getInt(DefaultsManager.THEME)!
+        if let th = DefaultsManager.getInt(DefaultsManager.THEME) {
+            theme = th
         } else {
             theme = DefaultsManager.THEME_DAY
         }

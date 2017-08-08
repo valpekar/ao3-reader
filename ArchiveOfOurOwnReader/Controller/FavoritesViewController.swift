@@ -56,7 +56,9 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
             controller.searchBar.tintColor = UIColor(red: 255/255, green: 77/255, blue: 80/255, alpha: 1.0)
             controller.searchBar.delegate = self
             
-            addDoneButtonOnKeyboardTf(controller.searchBar.value(forKey: "_searchField") as! UITextField)
+            if let tf = controller.searchBar.value(forKey: "_searchField") as? UITextField {
+                addDoneButtonOnKeyboardTf(tf)
+            }
             
             self.tableView.tableHeaderView = controller.searchBar
             
@@ -74,7 +76,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         
         hidden.append(false)
         
-        for folder in folders {
+        for _ in folders {
             hidden.append(true)
         }
         

@@ -56,7 +56,7 @@
 "LoadingWrk" = "Loading Work";
 "Sorry" = "Sorry!";
 "WrkAvailOnlyRegistered" = "This work is only available to registered users of the Archive";
-"ContainsAdultContent" = "This work contains adult content. To view it you need to login and confirm that you are at least 18 (Me -> Login, its NOT a premium feature).";
+"ContainsAdultContent" = "This work contains adult content. To view it you need to login and confirm that you are at least 18 (Me -> Login).";
 "AO3Issue" = "AO3 has been notified about this issue and they will take a look at it shortly.";
 "AddingBmk" = "Adding Bookmark";
 "DeletingBmk" = "Deleting Bookmark";

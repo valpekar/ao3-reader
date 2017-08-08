@@ -504,7 +504,8 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
                         self.parseCookies(response)
                     
                         if let data = response.data {
-                            self.getFeed(data)
+                            (self.pages, self.works, self.foundItems) = WorksParser.parseWorks(data, itemsCountHeading: "h3")
+                            //self.getFeed(data)
                         }
                         self.showFeed()
                 })
@@ -630,7 +631,8 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
         
         if let d = response.data {
             self.parseCookies(response)
-            self.getFeed(d)
+            (self.pages, self.works, self.foundItems) = WorksParser.parseWorks(d, itemsCountHeading: "h3")
+            //self.getFeed(d)
         } else {
             self.hideLoadingView()
             TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error, duration: 2.0)

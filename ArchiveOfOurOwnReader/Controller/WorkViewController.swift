@@ -381,7 +381,11 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
 //                }
 //            })
         
-        Alamofire.request("http://archiveofourown.org/works/" + workItem.workId + "/chapters/" + chapterId, method: .get, parameters: params)
+        var strUrl = chapterId
+        if (!strUrl.contains("/works/")) {
+            strUrl = "/works/" + workItem.workId + "/chapters/" + chapterId
+        }
+        Alamofire.request("http://archiveofourown.org" + strUrl, method: .get, parameters: params)
             .response(completionHandler: onWorksLoaded(_:))
     }
     
@@ -414,14 +418,16 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
         var workContentStr: String = ""
         
         if let workContentEl = doc?.search(withXPathQuery: "//div[@id='chapters']") as? [TFHppleElement] {
-            workContentStr = workContentEl[0].raw ?? ""
+            if (workContentEl.count > 0) {
+                workContentStr = workContentEl[0].raw ?? ""
             
-            let regex:NSRegularExpression = try! NSRegularExpression(pattern: "<a href=\"[^\"]+\">([^<]+)</a>", options: NSRegularExpression.Options.caseInsensitive)
-            workContentStr = regex.stringByReplacingMatches(in: workContentStr, options: NSRegularExpression.MatchingOptions.withoutAnchoringBounds, range: NSRange(location: 0, length: workContentStr.characters.count), withTemplate: "$1")
+                let regex:NSRegularExpression = try! NSRegularExpression(pattern: "<a href=\"[^\"]+\">([^<]+)</a>", options: NSRegularExpression.Options.caseInsensitive)
+                workContentStr = regex.stringByReplacingMatches(in: workContentStr, options: NSRegularExpression.MatchingOptions.withoutAnchoringBounds, range: NSRange(location: 0, length: workContentStr.characters.count), withTemplate: "$1")
             
-            workContentStr = workContentStr.replacingOccurrences(of: "(?i)<strike\\b[^<]*>\\s*</strike>", with: "", options: .regularExpression, range: nil)
-            //workContentStr = workContentStr.replacingOccurrences(of: "<strike/>", with: "")
-            workContentStr = workContentStr.replacingOccurrences(of: "<[^>]+/>", with: "", options: .regularExpression, range: nil)
+                workContentStr = workContentStr.replacingOccurrences(of: "(?i)<strike\\b[^<]*>\\s*</strike>", with: "", options: .regularExpression, range: nil)
+                //workContentStr = workContentStr.replacingOccurrences(of: "<strike/>", with: "")
+                workContentStr = workContentStr.replacingOccurrences(of: "<[^>]+/>", with: "", options: .regularExpression, range: nil)
+            }
         }
         
         var title = ""
@@ -447,7 +453,7 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
             let chapterPrevEl: [TFHppleElement]? = navigationEl[0].search(withXPathQuery: "//li[@class='chapter previous']") as? [TFHppleElement]
             if(chapterPrevEl?.count ?? 0 > 0) {
                 let attributesp : NSDictionary = (chapterPrevEl?[0].search(withXPathQuery: "//a")[0] as AnyObject).attributes as NSDictionary
-                prevChapter = (attributesp["href"] as! String)
+                prevChapter = attributesp["href"] as? String ?? ""
             } else {
                 prevChapter = ""
             }
@@ -471,7 +477,7 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
         
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "DBWorkItem")
         fetchRequest.predicate = NSPredicate(format: "workId = %@", workId)
-        if let selectWorks = (try! managedContext.fetch(fetchRequest)) as? [DBWorkItem] {
+        if let selectWorks = (try? managedContext.fetch(fetchRequest)) as? [DBWorkItem] {
         
             if (selectWorks.count > 0) {
             let currentWork = selectWorks[0] as DBWorkItem
@@ -499,7 +505,7 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
         
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "HistoryItem")
         fetchRequest.predicate = NSPredicate(format: "workId = %@", workItem.workId)
-        var selectWorks = (try! managedContext.fetch(fetchRequest)) as? [HistoryItem]
+        let selectWorks = (try? managedContext.fetch(fetchRequest)) as? [HistoryItem]
         
         if (selectWorks?.count ?? 0 > 0) {
             let currentWork = selectWorks?[0]
@@ -642,8 +648,11 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
           //  work = work.stringByReplacingOccurrencesOfString("<a.*\"\\s*>", withString:"")
           //  work = work.stringByReplacingOccurrencesOfString("</a>", withString: "")
          //   var error:NSErrorPointer = NSErrorPointer()
-            let regex:NSRegularExpression = try! NSRegularExpression(pattern: "<a href=\"[^\"]+\">([^<]+)</a>", options: NSRegularExpression.Options.caseInsensitive)
-            work = regex.stringByReplacingMatches(in: work, options: NSRegularExpression.MatchingOptions.withoutAnchoringBounds, range: NSRange(location: 0, length: work.characters.count), withTemplate: "$1")
+            if let regex:NSRegularExpression = try? NSRegularExpression(pattern: "<a href=\"[^\"]+\">([^<]+)</a>", options: NSRegularExpression.Options.caseInsensitive) {
+                work = regex.stringByReplacingMatches(in: work, options: NSRegularExpression.MatchingOptions.withoutAnchoringBounds, range: NSRange(location: 0, length: work.characters.count), withTemplate: "$1")
+            } else {
+                work = ""
+            }
         }
         }
         
@@ -716,14 +725,14 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
     func loadCurrentTheme() {
         var theme: Int
         
-        if (DefaultsManager.getInt(DefaultsManager.THEME) != nil) {
-            theme = DefaultsManager.getInt(DefaultsManager.THEME)!
+        if let th = DefaultsManager.getInt(DefaultsManager.THEME) {
+            theme = th
         } else {
             theme = DefaultsManager.THEME_DAY
         }
         
-        if (DefaultsManager.getInt(DefaultsManager.FONT_SIZE) != nil) {
-            fontSize = DefaultsManager.getInt(DefaultsManager.FONT_SIZE)!
+        if let fs = DefaultsManager.getInt(DefaultsManager.FONT_SIZE) {
+            fontSize = fs
         }
         
         var worktext: String = work
@@ -757,8 +766,8 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
         
         var theme: Int
         
-        if (DefaultsManager.getInt(DefaultsManager.THEME) != nil) {
-            theme = DefaultsManager.getInt(DefaultsManager.THEME)!
+        if let th = DefaultsManager.getInt(DefaultsManager.THEME) {
+            theme = th
         } else {
             theme = DefaultsManager.THEME_DAY
         }
@@ -825,7 +834,9 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
             let storyboard : UIStoryboard = UIStoryboard(
                 name: "Main",
                 bundle: nil)
-            let contentsViewController: ContentsViewController = storyboard.instantiateViewController(withIdentifier: "contentsController") as! ContentsViewController
+            guard let contentsViewController: ContentsViewController = storyboard.instantiateViewController(withIdentifier: "contentsController") as? ContentsViewController else {
+                return
+            }
         
             if (workItem != nil) {
                 contentsViewController.onlineChapters = onlineChapters
