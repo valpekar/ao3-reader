@@ -31,7 +31,7 @@ class WorksParser {
                 worksCountStr = itemsCount[0].content.trimmingCharacters(
                     in: CharacterSet.whitespacesAndNewlines
                 )
-                if let idx = worksCountStr.index(of: "d") {
+                if let idx = worksCountStr.characters.index(of: "d") {
                     worksCountStr = worksCountStr.substring(to: worksCountStr.index(after: idx))
                 }
             }
