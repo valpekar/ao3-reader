@@ -11,7 +11,7 @@ import Foundation
 
 class WorksParser {
     
-    class func parseWorks(_ data: Data, itemsCountHeading: String) -> ([PageItem], [NewsFeedItem], String) {
+    class func parseWorks(_ data: Data, itemsCountHeading: String, worksElement: String) -> ([PageItem], [NewsFeedItem], String) {
         var pages : [PageItem] = [PageItem]()
         var works : [NewsFeedItem] = [NewsFeedItem]()
         var worksCountStr = ""
@@ -31,11 +31,14 @@ class WorksParser {
                 worksCountStr = itemsCount[0].content.trimmingCharacters(
                     in: CharacterSet.whitespacesAndNewlines
                 )
+                if let idx = worksCountStr.index(of: "d") {
+                    worksCountStr = worksCountStr.substring(to: worksCountStr.index(after: idx))
+                }
             }
         }
-        if let workGroup = doc.search(withXPathQuery: "//ol[@class='work index group']") as? [TFHppleElement] {
+        if let workGroup = doc.search(withXPathQuery: "//ol[@class='\(worksElement) index group']") as? [TFHppleElement] {
             if (workGroup.count > 0) {
-                if let worksList : [TFHppleElement] = workGroup[0].search(withXPathQuery: "//li[@class='work blurb group']") as? [TFHppleElement] {
+                if let worksList : [TFHppleElement] = workGroup[0].search(withXPathQuery: "//li[@class='\(worksElement) blurb group']") as? [TFHppleElement] {
                 
                     for workListItem in worksList {
                         
@@ -43,16 +46,17 @@ class WorksParser {
                             
                             var item : NewsFeedItem = NewsFeedItem()
                             
-                            if let header : TFHppleElement = workListItem.search(withXPathQuery: "//div[@class='header module']")[0] as? TFHppleElement {
+                            if let header : [TFHppleElement] = workListItem.search(withXPathQuery: "//div[@class='header module']") as? [TFHppleElement] {
                                 
-                                let topicEl: [TFHppleElement]? = header.search(withXPathQuery: "//h4[@class='heading']") as? [TFHppleElement]
-                                if (topicEl?.count ?? 0 > 0) {
-                                    let topic : TFHppleElement? = topicEl?[0]
+                                if (header.count > 0) {
+                                    if let topicEl: [TFHppleElement] = header[0].search(withXPathQuery: "//h4[@class='heading']") as? [TFHppleElement] {
+                                        if (topicEl.count > 0) {
+                                            let topic : TFHppleElement? = topicEl[0]
                                     
-                                    item.topic = topic?.content.replacingOccurrences(of: "\n", with:"").trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
-                                        .replacingOccurrences(of: "\\s+", with: " ", options: NSString.CompareOptions.regularExpression, range: nil) ?? ""
-                                } else {
-                                    item.topic = ""
+                                            item.topic = topic?.content.replacingOccurrences(of: "\n", with:"").trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+                                                .replacingOccurrences(of: "\\s+", with: " ", options: NSString.CompareOptions.regularExpression, range: nil) ?? ""
+                                        }
+                                    }
                                 }
                             }
                             
@@ -165,6 +169,26 @@ class WorksParser {
                             //parse work ID
                             if let attributes : NSDictionary = workListItem.attributes as NSDictionary? {
                                 item.workId = (attributes["id"] as? String)?.replacingOccurrences(of: "work_", with: "") ?? ""
+                            }
+                            
+                            if let _ = item.workId.rangeOfCharacter(from: CharacterSet.letters) {
+                                if let headingH4 = workListItem.search(withXPathQuery: "//h4[@class='heading']//a") as? [TFHppleElement] {
+                                    if (headingH4.count > 0) {
+                                        let attributes : NSDictionary = headingH4[0].attributes as NSDictionary
+                                        item.workId = (attributes["href"] as? String)?.replacingOccurrences(of: "/works/", with: "") ?? ""
+                                    }
+                                    
+                                    if let readingIdGroup = workListItem.search(withXPathQuery: "//ul[@class='actions']//li") as? [TFHppleElement] {
+                                        if (readingIdGroup.count > 1) {
+                                            if let readingIdInput = readingIdGroup[1].search(withXPathQuery: "//a") as? [TFHppleElement] {
+                                                if (readingIdInput.count > 0) {
+                                                    let attributes : NSDictionary = readingIdInput[0].attributes as NSDictionary
+                                                    item.readingId = (attributes["href"] as? String)?.replacingOccurrences(of: "/confirm_delete", with: "") ?? ""
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
                             }
                             
                             works.append(item)

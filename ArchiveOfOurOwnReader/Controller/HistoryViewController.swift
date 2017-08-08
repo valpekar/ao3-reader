@@ -10,26 +10,6 @@ import Foundation
 import Alamofire
 import TSMessages
 
-fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l < r
-  case (nil, _?):
-    return true
-  default:
-    return false
-  }
-}
-
-fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l > r
-  default:
-    return rhs < lhs
-  }
-}
-
 
 class HistoryViewController : LoadingViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
@@ -49,6 +29,9 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
         self.createDrawerButton()
         
         self.title = NSLocalizedString("History", comment: "")
+        
+        self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.estimatedRowHeight = 240
         
         self.refreshControl = UIRefreshControl()
         self.refreshControl.attributedTitle = NSAttributedString(string: NSLocalizedString("PullToRefresh", comment: ""))
@@ -104,7 +87,8 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
                 
                 if let d = response.data {
                     self.parseCookies(response)
-                    self.parseHistory(d)
+                    (self.pages, self.works, self.boomarksAddedStr) = WorksParser.parseWorks(d, itemsCountHeading: "h2", worksElement: "reading work")
+                    //self.parseHistory(d)
                     self.refreshControl.endRefreshing()
                     self.showHistory()
                 } else {
@@ -117,7 +101,7 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
         
     }
     
-    func parseHistory(_ data: Data) {
+    /*func parseHistory(_ data: Data) {
         works.removeAll(keepingCapacity: false)
         pages.removeAll(keepingCapacity: false)
         
@@ -297,7 +281,7 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
                 }
             }
         }
-    }
+    }*/
     
     func showHistory() {
         if (works.count > 0) {
@@ -314,7 +298,10 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
         hideLoadingView()
         self.navigationItem.title = boomarksAddedStr
         
-        tableView.setContentOffset(CGPoint.zero, animated:true)
+        if (tableView.numberOfSections > 0 && tableView.numberOfRows(inSection: 0) > 0) {
+            tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+        }
+        collectionView.flashScrollIndicators()
     }
     
     override func controllerDidClosed() {}
@@ -406,7 +393,7 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
                 Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
             }
             
-            showLoadingView(msg: "\(NSLocalizedString("LoadingPage", comment: "")) \(indexPath.row)")
+            showLoadingView(msg: "\(NSLocalizedString("LoadingPage", comment: "")) \(page.name)")
             
             Alamofire.request("http://archiveofourown.org" + page.url, method: .get).response(completionHandler: { response in
                 
@@ -415,7 +402,8 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
                     #endif
                 if let data = response.data {
                     self.parseCookies(response)
-                    self.parseHistory(data)
+                    (self.pages, self.works, self.boomarksAddedStr) = WorksParser.parseWorks(data, itemsCountHeading: "h2", worksElement: "reading work")
+                    //self.parseHistory(data)
                     self.showHistory()
                 } else {
                     self.hideLoadingView()
@@ -583,18 +571,19 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
        // print("the string is: \(dta)")
         let doc : TFHpple = TFHpple(htmlData: data)
         
-        var noticediv: [TFHppleElement] = doc.search(withXPathQuery: "//div[@class='flash notice']") as! [TFHppleElement]
-        if(noticediv.count > 0) {
+        var noticediv: [TFHppleElement]? = doc.search(withXPathQuery: "//div[@class='flash notice']") as? [TFHppleElement]
+        if(noticediv?.count ?? 0 > 0) {
             if let index = self.works.index( where: {$0.workId == curWork.workId}) {
                 self.works.remove(at: index)
             }
-            self.view.makeToast(message: noticediv[0].content, duration: 3.0, position: "center" as AnyObject, title: "Delete from History")
+            TSMessage.showNotification(in: self, title: NSLocalizedString("DeletingFromHistory", comment: ""), subtitle: noticediv?[0].content ?? "", type: .success)
         } else {
-            var sorrydiv = doc.search(withXPathQuery: "//div[@class='flash error']")
+            if let sorrydiv = doc.search(withXPathQuery: "//div[@class='flash error']") as? [TFHppleElement] {
             
-            if(sorrydiv != nil && sorrydiv?.count>0 && (sorrydiv?[0] as! TFHppleElement).text().range(of: "Sorry") != nil) {
-                self.view.makeToast(message: (sorrydiv![0] as AnyObject).content, duration: 4.0, position: "center" as AnyObject, title: NSLocalizedString("DeletingFromHistory", comment: ""))
-                return
+                if(sorrydiv.count>0 && sorrydiv[0].text().range(of: "Sorry") != nil) {
+                    TSMessage.showNotification(in: self, title: NSLocalizedString("DeletingFromHistory", comment: ""), subtitle: sorrydiv[0].content, type: .error)
+                    return
+                }
             }
         }
     }

@@ -28,6 +28,9 @@ class FavoritesSiteController : LoadingViewController, UITableViewDataSource, UI
         
         self.createDrawerButton()
         
+        self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.estimatedRowHeight = 240
+        
         self.refreshControl = UIRefreshControl()
         self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
         self.refreshControl.addTarget(self, action: #selector(FavoritesSiteController.refresh(_:)), for: UIControlEvents.valueChanged)
@@ -106,7 +109,8 @@ class FavoritesSiteController : LoadingViewController, UITableViewDataSource, UI
                 print(response.error ?? "")
                 if let d = response.data {
                     self.parseCookies(response)
-                    self.parseBookmarks(d)
+                    (self.pages, self.works, self.boomarksAddedStr) = WorksParser.parseWorks(d, itemsCountHeading: "h2", worksElement: "bookmark")
+                    //self.parseBookmarks(d)
                     self.showBookmarks()
                 } else {
                     self.hideLoadingView()
@@ -116,7 +120,7 @@ class FavoritesSiteController : LoadingViewController, UITableViewDataSource, UI
             })
         }
     
-    func parseBookmarks(_ data: Data) {
+   /* func parseBookmarks(_ data: Data) {
         works.removeAll(keepingCapacity: false)
         pages.removeAll(keepingCapacity: false)
         
@@ -311,7 +315,7 @@ class FavoritesSiteController : LoadingViewController, UITableViewDataSource, UI
                 }
             }
         }
-    }
+    }*/
     
     func showBookmarks() {
         if (works.count > 0) {
@@ -327,6 +331,11 @@ class FavoritesSiteController : LoadingViewController, UITableViewDataSource, UI
         
         hideLoadingView()
         self.navigationItem.title = boomarksAddedStr
+        
+        if (tableView.numberOfSections > 0 && tableView.numberOfRows(inSection: 0) > 0) {
+            tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+        }
+        collectionView.flashScrollIndicators()
     }
     
     override func controllerDidClosed() {}
@@ -419,14 +428,15 @@ class FavoritesSiteController : LoadingViewController, UITableViewDataSource, UI
                 Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
             }
             
-            showLoadingView(msg: "\(NSLocalizedString("LoadingPage", comment: "")) \(indexPath.row)")
+            showLoadingView(msg: "\(NSLocalizedString("LoadingPage", comment: "")) \(page.name)")
             
             Alamofire.request("http://archiveofourown.org" + page.url, method: .get).response(completionHandler: { response in
                 print(response.request ?? "")
                 print(response.error ?? "")
                 if let data: Data = response.data {
                     self.parseCookies(response)
-                    self.parseBookmarks(data)
+                    (self.pages, self.works, self.boomarksAddedStr) = WorksParser.parseWorks(data, itemsCountHeading: "h2", worksElement: "bookmark")
+                    //self.parseBookmarks(data)
                     self.showBookmarks()
                 } else {
                     self.hideLoadingView()

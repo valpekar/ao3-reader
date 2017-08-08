@@ -92,7 +92,7 @@ class WorkListController: LoadingViewController, UITableViewDataSource, UITableV
                     #endif
                 if let d = response.data {
                     self.parseCookies(response)
-                    (self.pages, self.works, self.worksStr) = WorksParser.parseWorks(d, itemsCountHeading: "h2")
+                    (self.pages, self.works, self.worksStr) = WorksParser.parseWorks(d, itemsCountHeading: "h2", worksElement: "work")
                     //self.parseWorks(d)
                     self.showWorks()
                 } else {
@@ -386,7 +386,9 @@ class WorkListController: LoadingViewController, UITableViewDataSource, UITableV
                 Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
             }
             
-            showLoadingView(msg: "Loading page \(indexPath.row)")
+            showLoadingView(msg: "Loading page \(page.name)")
+            
+            self.worksStr = NSLocalizedString("0Found", comment: "")
             
             Alamofire.request("http://archiveofourown.org" + page.url, method: .get).response(completionHandler: { response in
                 #if DEBUG
@@ -395,7 +397,8 @@ class WorkListController: LoadingViewController, UITableViewDataSource, UITableV
                     #endif
                 if let data: Data = response.data {
                     self.parseCookies(response)
-                    self.parseWorks(data)
+                    (self.pages, self.works, self.worksStr) = WorksParser.parseWorks(data, itemsCountHeading: "h2", worksElement: "work")
+                    //self.parseWorks(data)
                     self.showWorks()
                 } else {
                     self.hideLoadingView()

@@ -883,12 +883,13 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         DefaultsManager.putString("", key: DefaultsManager.LASTWRKID)
         DefaultsManager.putString("", key: DefaultsManager.LASTWRKCHAPTER)
         
+        if (self.changedSmth) {
+            self.modalDelegate?.controllerDidClosedWithChange!()
+        } else {
+            self.modalDelegate?.controllerDidClosed()
+        }
         self.dismiss(animated: true, completion: { () -> Void in
-            if (self.changedSmth) {
-                self.modalDelegate?.controllerDidClosedWithChange!()
-            } else {
-                self.modalDelegate?.controllerDidClosed()
-            }
+            
             NSLog("closeClicked")
         })
     }

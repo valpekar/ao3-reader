@@ -132,4 +132,9 @@
 "Subscriptions" = "Assinaturas";
 "GettingSubs" = "Obtendo assinaturas";
 "OpenInBrowser" = "Abra no navegador";
+"Success" = "Sucesso";
+"FolderNameEmpty" = "Nome da pasta não pode estar vazio";
+"FolderNotFound" = "Pasta não encontrada";
+"FolderAlreadyExists" = "A pasta com esse nome já existe!";
+"NoFolders" = "Você não tem pastas! Por favor, crie uma pressionando o botão '+'";
 

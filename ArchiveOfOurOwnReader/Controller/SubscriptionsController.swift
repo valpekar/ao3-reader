@@ -302,7 +302,7 @@ class SubscriptionsViewController: LoadingViewController, UITableViewDataSource,
                 Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
             }
             
-            showLoadingView(msg: "\(NSLocalizedString("LoadingPage", comment: "")) \(indexPath.row)")
+            showLoadingView(msg: "\(NSLocalizedString("LoadingPage", comment: "")) \(page.name)")
             
             Alamofire.request("http://archiveofourown.org" + page.url, method: .get).response(completionHandler: { response in
                 print(response.error ?? "")

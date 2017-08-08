@@ -132,5 +132,10 @@
 "Subscriptions" = "訂閱";
 "GettingSubs" = "獲取訂閱";
 "OpenInBrowser" = "在瀏覽器中打開";
+"Success" = "成功";
+"FolderNameEmpty" = "文件夾名稱不能為空";
+"FolderNotFound" = "找不到文件夾";
+"FolderAlreadyExists" = "具有這樣的名稱的文件夾已經存在！";
+"NoFolders" = "你沒有文件夾！請按 '+' 按鈕創建一個";
 
 

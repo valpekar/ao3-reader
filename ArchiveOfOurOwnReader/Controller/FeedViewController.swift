@@ -181,7 +181,9 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
             tryAgainButton.isHidden = true
             checkStatusButton.isHidden = true
             
-            tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+            if (tableView.numberOfSections > 0 && tableView.numberOfRows(inSection: 0) > 0) {
+                tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+            }
             collectionView.flashScrollIndicators()
         }
     }
@@ -489,7 +491,7 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
                     cStorage.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
                 }
             
-                showLoadingView(msg: ("\(NSLocalizedString("LoadingPage", comment: "")) \(indexPath.row)"))
+                showLoadingView(msg: ("\(NSLocalizedString("LoadingPage", comment: "")) \(page.name)"))
             
                 let urlStr = "http://archiveofourown.org" + page.url
             
@@ -504,7 +506,7 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
                         self.parseCookies(response)
                     
                         if let data = response.data {
-                            (self.pages, self.works, self.foundItems) = WorksParser.parseWorks(data, itemsCountHeading: "h3")
+                            (self.pages, self.works, self.foundItems) = WorksParser.parseWorks(data, itemsCountHeading: "h3", worksElement: "work")
                             //self.getFeed(data)
                         }
                         self.showFeed()
@@ -588,6 +590,7 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
         
         pages = [PageItem]()
         works = [NewsFeedItem]()
+        self.foundItems = ""
 
         if (searchQuery.isEmpty() && shouldAddKeyword) {
             searchQuery.include_tags = "popular"
@@ -631,7 +634,7 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
         
         if let d = response.data {
             self.parseCookies(response)
-            (self.pages, self.works, self.foundItems) = WorksParser.parseWorks(d, itemsCountHeading: "h3")
+            (self.pages, self.works, self.foundItems) = WorksParser.parseWorks(d, itemsCountHeading: "h3", worksElement: "work")
             //self.getFeed(d)
         } else {
             self.hideLoadingView()

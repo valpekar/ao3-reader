@@ -132,4 +132,12 @@
 "Subscriptions" = "定期購読";
 "GettingSubs" = "購読の取得";
 "OpenInBrowser" = "ブラウザで開く";
+"Success" = "成功";
+"FolderNameEmpty" = "フォルダ名は空にできません";
+"FolderNotFound" = "フォルダが見つかりません";
+"FolderAlreadyExists" = "このような名前が既に存在するフォルダ！";
+"NoFolders" = "フォルダがありません！ '+'ボタンを押して作成してください。";
+
+
+
 

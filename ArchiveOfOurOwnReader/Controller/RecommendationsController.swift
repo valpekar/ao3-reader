@@ -23,21 +23,27 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
     var analyticsItems : [NSManagedObject] = [NSManagedObject]()
     var foundItems = "0 Found"
     
+    var shouldReload = true
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.createDrawerButton()
         
+        self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.estimatedRowHeight = 240
+        
         self.title = NSLocalizedString("Recommendations", comment: "")
         descLabel.text = NSLocalizedString("RecommendationsExplained", comment: "")
         
         //test!
-        generateRecommendations()
+        //generateRecommendations()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+        if (shouldReload) {
         UserDefaults.standard.synchronize()
         if let pp = UserDefaults.standard.value(forKey: "pro") as? Bool {
             if (pp) {
@@ -50,7 +56,12 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
                 TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("NotPurchased", comment: ""), type: .error)
             }
         }
-        
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        shouldReload = true
     }
    
     func scheduleLocal() {
@@ -75,7 +86,6 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
         UIApplication.shared.scheduleLocalNotification(notification)
     }
     
-   
     
     func generateRecommendations() {
         
@@ -125,8 +135,6 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
             
             if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
                 Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
-                
-                
             }
             
             showLoadingView(msg: NSLocalizedString("GettingWorks", comment: ""))
@@ -143,7 +151,8 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
                         #endif
                     if let d = response.data {
                         self.parseCookies(response)
-                        self.getFeed(d)
+                        (self.pages, self.works, self.foundItems) = WorksParser.parseWorks(d, itemsCountHeading: "h3", worksElement: "work")
+                        //self.getFeed(d)
                         self.showFeed()
                     } else {
                         self.hideLoadingView()
@@ -151,7 +160,6 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
                     }
                 })
         }
-        
     }
     
     func loadAnalyticsFromDB() {
@@ -170,8 +178,6 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
         } catch {
             print("cannot fetch.")
         }
-        
-        
     }
     
     func howManyDaysHavePassed(_ lastDate: Date, today: Date) -> Int {
@@ -255,7 +261,8 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
                     #endif
                 if let d = response.data {
                     self.parseCookies(response)
-                    self.getFeed(d)
+                    (self.pages, self.works, self.foundItems) = WorksParser.parseWorks(d, itemsCountHeading: "h3", worksElement: "work")
+                    //self.getFeed(d)
                     self.showFeed()
                 } else {
                     self.hideLoadingView()
@@ -276,9 +283,14 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
             hideLoadingView()
         }
         self.title = foundItems
+        
+        if (tableView.numberOfSections > 0 && tableView.numberOfRows(inSection: 0) > 0) {
+            tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+        }
+        collectionView.flashScrollIndicators()
     }
     
-    func getFeed(_ data: Data) {
+    /*func getFeed(_ data: Data) {
         
         works.removeAll(keepingCapacity: false)
         pages.removeAll(keepingCapacity: false)
@@ -435,7 +447,7 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
                 }
             }
         }
-    }
+    } */
     
     //MARK: - tableview
     
@@ -526,7 +538,7 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
                 Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
             }
             
-            showLoadingView(msg: "\(NSLocalizedString("LoadingPage", comment: "")) \(indexPath.row)")
+            showLoadingView(msg: "\(NSLocalizedString("LoadingPage", comment: "")) \(page.name)")
             
             Alamofire.request("http://archiveofourown.org" + page.url, method: .get).response(completionHandler: { response in
                 #if DEBUG
@@ -534,7 +546,8 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
                     #endif
                 if let data = response.data {
                     self.parseCookies(response)
-                    self.getFeed(data)
+                    (self.pages, self.works, self.foundItems) = WorksParser.parseWorks(data, itemsCountHeading: "h3", worksElement: "work")
+                    //self.getFeed(data)
                     self.showFeed()
                 } else {
                     self.hideLoadingView()
@@ -583,5 +596,15 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
             (workDetail.viewControllers[0] as! WorkDetailViewController).modalDelegate = self
             
         }
+    }
+    
+    //MARK: - ModalControllerDelegate
+    
+    override func controllerDidClosed() {
+        shouldReload = false
+    }
+    
+    func controllerDidClosedWithChange() {
+        shouldReload = false
     }
 }
