@@ -364,9 +364,9 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
     
     @IBAction func deleteButtonTouched(_ sender: UIButton) {
             
-            let deleteAlert = UIAlertController(title: "Are you sure?", message: "Are you sure you would like to delete this work from Downloaded?", preferredStyle: UIAlertControllerStyle.alert)
+            let deleteAlert = UIAlertController(title: NSLocalizedString("AreYouSure", comment: ""), message: NSLocalizedString("DeleteFromDownloaded", comment: ""), preferredStyle: UIAlertControllerStyle.alert)
             
-            deleteAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { (action: UIAlertAction) in
+            deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .default, handler: { (action: UIAlertAction) in
                 #if DEBUG
                 print("Cancel")
                 #endif
@@ -579,14 +579,23 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
             return
         }
         
-        let alert = UIAlertController(title: "Move Work", message: "Please Choose Folder", preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: NSLocalizedString("MoveWork", comment: ""), message: NSLocalizedString("ChooseFolder", comment: ""), preferredStyle: .actionSheet)
         
         for folder in folders {
             alert.addAction(UIAlertAction(title: folder.name ?? "No Name", style: .default, handler: { (action) in
                 self.moveToFolder(folder: folder, curWork: cWork)
             }))
         }
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: { (action) in
+            #if DEBUG
+                print("cancel")
+            #endif
+        }))
         alert.view.tintColor = AppDelegate.redColor
+        
+        alert.popoverPresentationController?.sourceView = self.tableView
+        alert.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.size.width / 2.0, y: self.navigationController?.navigationBar.bounds.height ?? 64, width: 1.0, height: 1.0)
+        
         self.present(alert, animated: true) {
             //code to execute once the alert is showing
         }

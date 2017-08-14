@@ -127,13 +127,51 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
         self.navigationController!.navigationBar.shadowImage = UIImage()
         self.navigationController!.navigationBar.isTranslucent = false
         
-        if (workItem != nil) {
+        if (workItem != nil) { 
             self.title = workItem.workTitle
-        
         }
         
         if (!nextChapter.isEmpty || !prevChapter.isEmpty) {
             animateLayoutDown()
+        }
+        
+        if (workItem != nil) {
+            self.title = workItem.workTitle
+            
+            if let historyItem: HistoryItem = self.getHistoryItem(workId: workItem.workId) {
+                if let nxtChapter = historyItem.lastChapter,
+                    let nxtChapterIdx = historyItem.lastChapterIdx {
+                    nextChapter = nxtChapter
+                    turnOnlineChapter(nextChapter, index: Int(nxtChapterIdx))
+                    //nextButtonTouched(self.view)
+                }
+                
+                if let lastScroll = historyItem.scrollProgress,
+                    let _ = self.webView {
+                    let delayTime = DispatchTime.now() + Double(Int64(1.5 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+                    DispatchQueue.main.asyncAfter(deadline: delayTime) {
+                        let scrollOffset:CGPoint? = CGPointFromString(lastScroll)
+                        if let position:CGPoint = scrollOffset {
+                            self.webView.scrollView.setContentOffset(position, animated: true)
+                        }
+                    }
+                }
+            }
+            
+        }  else if (downloadedWorkItem != nil) {
+            var title = downloadedWorkItem.value(forKey: "workTitle") as? String ?? ""
+            
+            if let tt = downloadedChapters?[currentChapterIndex].value(forKey: "chapterName") as? String {
+                title = tt
+            }
+            
+            self.title = title
+            
+            if let offset: String = downloadedWorkItem.value(forKey: "scrollProgress") as? String,
+                let _ = self.webView {
+                let scrollOffset:CGPoint = CGPointFromString(offset)
+                self.webView.scrollView.setContentOffset(scrollOffset, animated: true)
+            }
         }
     }
     
@@ -170,7 +208,7 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
     
     // Retrieve and set your content offset when the view re-appears
     // and its subviews are first laid out
-    override func viewDidLayoutSubviews() {
+    /*override func viewDidLayoutSubviews() {
         
         if (!viewLaidoutSubviews) {
             
@@ -238,7 +276,7 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
         }
         
         self.view.layoutIfNeeded()
-    }
+    }*/
     
     func addNavItems() {
         let imageS = UIImage(named: "ic_themechange") as UIImage?

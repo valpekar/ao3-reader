@@ -17,6 +17,8 @@ class AboutSubscriptionController: UIViewController {
     }
     
      @IBAction func aboutSubsTouched(_ sender: AnyObject) {
-        UIApplication.shared.openURL(URL(string: "http://simpleappalliance.blogspot.com/2016/05/unofficial-ao3-reader-privacy-policy.html")!)
+        if let url = URL(string: "http://simpleappalliance.blogspot.com/2016/05/unofficial-ao3-reader-privacy-policy.html") {
+            UIApplication.shared.openURL(url)
+        }
     }
 }

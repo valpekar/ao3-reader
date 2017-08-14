@@ -21,6 +21,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     
     @IBOutlet weak var bgImage: UIImageView!
     @IBOutlet weak var authorLabel: UIButton!
+    @IBOutlet weak var readButton: UIButton!
     @IBOutlet weak var titleLabel: UILabel!
     
     @IBOutlet weak var audienceLabel: UILabel!
@@ -57,6 +58,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     var tagUrl = ""
     
     var triedTo = -1
+    var isSensitive = false
     
     var downloadUrls: [String:String] = [:]
     
@@ -138,11 +140,14 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     
     func showDownloadedWork() {
         
+        let auth = downloadedWorkItem.value(forKey: "author") as? String ?? ""
+        
         let underlineAttribute = [NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue]
-        let underlineAttributedString = NSAttributedString(string: (downloadedWorkItem.value(forKey: "author") as? String ?? ""), attributes: underlineAttribute)
+        let underlineAttributedString = NSAttributedString(string: auth, attributes: underlineAttribute)
         authorLabel.setAttributedTitle(underlineAttributedString, for: .normal) // = underlineAttributedString
         
-        let trimmedTitle = (downloadedWorkItem.value(forKey: "workTitle") as? String)!.trimmingCharacters(
+        let title = downloadedWorkItem.value(forKey: "workTitle") as? String ?? ""
+        let trimmedTitle = title.trimmingCharacters(
             in: CharacterSet.whitespacesAndNewlines
         )
         
@@ -281,17 +286,33 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         var firstRelationship = ""
         
         if let workmeta: [TFHppleElement] = doc.search(withXPathQuery: "//dl[@class='work meta group']") as? [TFHppleElement] {
+            
+        isSensitive = false
         
         if(workmeta.count > 0) {
-            var ratings: [TFHppleElement] = workmeta[0].search(withXPathQuery: "//dd[@class='rating tags']/ul[@class='*']/li") as! [TFHppleElement]
+            if let ratings: [TFHppleElement] = workmeta[0].search(withXPathQuery: "//dd[@class='rating tags']/ul[@class='*']/li") as? [TFHppleElement] {
             if (ratings.count > 0) {
-                workItem.ratingTags = ratings[0].content
+                if let ratingStr = ratings[0].content {
+                    workItem.ratingTags = ratingStr
+                }
+            }
             }
         
-            var archiveWarnings: [TFHppleElement] = workmeta[0].search(withXPathQuery: "//dd[@class='warning tags']/ul[@class='commas']/li") as! [TFHppleElement]
+            if let archiveWarnings: [TFHppleElement] = workmeta[0].search(withXPathQuery: "//dd[@class='warning tags']/ul[@class='commas']/li") as? [TFHppleElement] {
             warnings = [String]()
             for i in 0..<archiveWarnings.count {
-                warnings.append(archiveWarnings[i].content)
+                if var warnStr = archiveWarnings[i].content {
+                    if (warnStr.contains("Underage")) {
+                        warnStr = warnStr.replacingOccurrences(of: "Underage", with: "")
+                        isSensitive = true
+                    }
+                    if (warnStr.contains("Rape")) {
+                        warnStr = warnStr.replacingOccurrences(of: "Rape", with: "")
+                        isSensitive = true
+                    }
+                    warnings.append(warnStr)
+                }
+                }
                 //workItem.archiveWarnings = archiveWarnings[0].content
             }
             
@@ -345,18 +366,19 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             
             workItem.stats = ""
             
-            var statsElDt: [TFHppleElement] = workmeta[0].search(withXPathQuery: "//dd[@class='stats']/dl[@class='stats']/dt") as! [TFHppleElement]
-            var statsElDd: [TFHppleElement] = workmeta[0].search(withXPathQuery: "//dd[@class='stats']/dl[@class='stats']/dd") as! [TFHppleElement]
-            if(statsElDt.count > 0 && statsElDd.count > 0) {
+            if let statsElDt: [TFHppleElement] = workmeta[0].search(withXPathQuery: "//dd[@class='stats']/dl[@class='stats']/dt") as? [TFHppleElement],
+                let statsElDd: [TFHppleElement] = workmeta[0].search(withXPathQuery: "//dd[@class='stats']/dl[@class='stats']/dd") as? [TFHppleElement] {
                 
-                for i in 0..<statsElDt.count {
-                    workItem.stats += statsElDt[i].text() + " "
-                    if ((statsElDd.count > i) && (statsElDd[i].text() != nil)) {
-                        workItem.stats += statsElDd[i].text() + " "
+                if(statsElDt.count > 0 && statsElDd.count > 0) {
+                    for i in 0..<statsElDt.count {
+                        workItem.stats += statsElDt[i].text() + " "
+                        if ((statsElDd.count > i) && (statsElDd[i].text() != nil)) {
+                            workItem.stats += statsElDd[i].text() + " "
+                        }
                     }
                 }
             }
-        }
+            }
         }
         
         if let h2El = doc.search(withXPathQuery: "//h2[@class='title heading']") as? [TFHppleElement] {
@@ -564,7 +586,13 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
         if (!DefaultsManager.getString(DefaultsManager.LASTWRKID).isEmpty) {
             performSegue(withIdentifier: "readSegue", sender: nil)
-
+        }
+        
+        if (isSensitive == true) {
+            readButton.isEnabled = false
+            readButton.alpha = 0.5
+            
+            TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("SensitiveContent", comment: ""), type: .warning, duration: 9.999999999999999e999, canBeDismissedByUser: true)
         }
     }
     
@@ -619,7 +647,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     
     //better - https://www.ralfebert.de/snippets/ios/urlsession-background-downloads/
     
-    func downloadEpub(epubUrl: String) {
+    /*func downloadEpub(epubUrl: String) {
         // Create destination URL
         let documentsUrl:URL =  FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first as URL!
         let destinationFileUrl = documentsUrl.appendingPathComponent("tempWork.epub")
@@ -669,16 +697,16 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             }
         }
         task.resume()
-    }
+    }*/
     
     //https://github.com/taku33/FolioReaderPlus
     
-    func openEpub(bookPath: String) {
-        /*let config = FolioReaderConfig()
-       // let bookPath = Bundle.main.path(forResource: "tempWork", ofType: "epub")
-        let folioReader = FolioReader()
-        folioReader.presentReader(parentViewController: self, withEpubPath: bookPath, andConfig: config) */
-    }
+//    func openEpub(bookPath: String) {
+//        /*let config = FolioReaderConfig()
+//       // let bookPath = Bundle.main.path(forResource: "tempWork", ofType: "epub")
+//        let folioReader = FolioReader()
+//        folioReader.presentReader(parentViewController: self, withEpubPath: bookPath, andConfig: config) */
+//    }
     
     // MARK: - tableview
     
@@ -711,7 +739,11 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         case 0:
         
             if (workItem != nil) {
-                cell!.label.text = workItem.topicPreview
+                if (!isSensitive) {
+                    cell!.label.text = workItem.topicPreview
+                } else {
+                    cell!.label.text = NSLocalizedString("SensitiveContent", comment: "")
+                }
             } else if (downloadedWorkItem != nil) {
                 cell!.label.text = downloadedWorkItem.value(forKey: "topicPreview") as? String ?? ""
             }
@@ -907,13 +939,13 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     }
     
     func deletebookmarkWorkAction() {
-        let deleteAlert = UIAlertController(title: "Are you sure?", message: "Are you sure you would like to delete this work from bookmarks?", preferredStyle: UIAlertControllerStyle.alert)
+        let deleteAlert = UIAlertController(title: NSLocalizedString("AreYouSure", comment: ""), message: NSLocalizedString("SureDeleteWrkFromBmks", comment: ""), preferredStyle: UIAlertControllerStyle.alert)
         
-        deleteAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { (action: UIAlertAction) in
+        deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .default, handler: { (action: UIAlertAction) in
             print("Cancel")
         }))
         
-        deleteAlert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action: UIAlertAction) in
+        deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Yes", comment: ""), style: .default, handler: { (action: UIAlertAction) in
             
             self.sendDeleteBookmarkRequest()
         }))
@@ -1078,7 +1110,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
         if let sorrydiv = doc.search(withXPathQuery: "//div[@class='flash error']") {
             
-            if(sorrydiv.count>0 && (sorrydiv[0] as! TFHppleElement).text().range(of: "Sorry") != nil) {
+            if(sorrydiv.count>0 && (sorrydiv[0] as? TFHppleElement)?.text().range(of: "Sorry") != nil) {
                 TSMessage.showNotification(in: self, title: NSLocalizedString("DeleteFromBmk", comment: ""), subtitle: (sorrydiv[0] as AnyObject).content, type: .error)
 
                 return
@@ -1224,7 +1256,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             optionMenu.addAction(deleteAction)
         }
         
-        if (workItem != nil) {
+        if (workItem != nil  && !isSensitive) {
             let saveAction = UIAlertAction(title: NSLocalizedString("DownloadWrk", comment: ""), style: .default, handler: {
                 (alert: UIAlertAction!) -> Void in
                 self.downloadWorkAction()
@@ -1264,7 +1296,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             optionMenu.addAction(bookmarkAction)
         }
         
-        if (downloadUrls.count > 0) {
+        if (downloadUrls.count > 0 && !isSensitive) {
             let downloadAction = UIAlertAction(title: NSLocalizedString("DownloadFile", comment: ""), style: .default, handler: {
                 (alert: UIAlertAction!) -> Void in
                 self.showDownloadDialog()

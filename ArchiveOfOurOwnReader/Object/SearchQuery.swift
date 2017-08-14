@@ -205,14 +205,14 @@ class SearchQuery : NSObject, NSCoding {
             tagStr += " "
         }
         
-        var safe = true
-        if let s = DefaultsManager.getBool(DefaultsManager.SAFE) {
-            safe = s
-        }
-        if (safe == true) {
-            tagStr += "-\"Rape\""
+ //       var safe = true
+//        if let s = DefaultsManager.getBool(DefaultsManager.SAFE) {
+//            safe = s
+//        }
+//        if (safe == true) {
+            tagStr += "-\"Rape\" "
             tagStr += "-\"Underage\" "
-        }
+ //       }
         
         var includeTags: [String] = include_tags.characters.split {$0 == ","}.map { String($0) }
         for i in 0..<includeTags.count {

@@ -118,10 +118,10 @@
 "AddingComment" = "Adding Comment";
 "Recommendations" = "Recommendations";
 "RecommendationsExplained" = "Recommendations are based on your activity inside the app and are generated every week since you first open this page. Your data is not transferred anywhere and is used only to generate recommendations. (Available for Pro users only)";
+"RecommendationsExplainedShort" = "Available for Pro users only";
 "NotPurchased" = "Sorry, you have not purchased the Pro Version!";
 "SeeThem" = "See Them! 👀";
 "TimeForRecommendations" = "Hi! It's time for new recommendations! 📚";
-"RecommendationsAreBased" = "Recommendations are based on your activity inside the app and are generated every week since you first open this page. Your data is not transferred anywhere and is used only to generate recommendations. (Available for Pro users only)";
 "LastUpdate_" = "\nLast update: ";
 "WorkList" = "Work List";
 "AtLeastOneFandom" = "Please type at least one fandom name!";
@@ -138,5 +138,12 @@
 "FolderNotFound" = "Folder Not Found";
 "FolderAlreadyExists" = "Folder With Such Name Already Exists!";
 "NoFolders" = "You Have No Folders! Please create one by pressing '+' button";
+"SensitiveContent" = "Sorry! This work contains sensitive content and cannot be viewed inside the app due to AppStore Review Guidelines.";
+"DeleteFromDownloaded" = "Are you sure you would like to delete this work from Downloaded?";
+"MoveWork" = "Move Work";
+"ChooseFolder" = "Please Choose Folder";
+"MoreDetails" = "More Details";
+"Attention" = "Attention!";
+"SensitiveAttention" = "Hi! Due to App Store Review Guidelines the app should not include content related to rape and underage sex, and such content should not be available via search. So Safe Mode is removed and works with such content will not be available in the app. Sorry for any inconvinience!";
 
 

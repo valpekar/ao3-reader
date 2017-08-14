@@ -17,7 +17,6 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var notifSwitch: UISwitch!
     @IBOutlet weak var adultSwitch: UISwitch!
-    @IBOutlet weak var safeSwitch: UISwitch!
     @IBOutlet weak var adultLabel: UILabel!
     @IBOutlet weak var pseudsTableView: UITableView!
     
@@ -137,7 +136,6 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
             
             adultSwitch.isEnabled = true
             notifSwitch.isEnabled = true
-            safeSwitch.isEnabled = true
             
             if let isAdult = DefaultsManager.getBool(DefaultsManager.ADULT)  {
                 if (isAdult == true) {
@@ -154,14 +152,6 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
                     notifSwitch.setOn(true, animated: true)
                 } else {
                     notifSwitch.setOn(false, animated: true)
-                }
-            }
-            
-            if let safe = DefaultsManager.getBool(DefaultsManager.SAFE) {
-                if (safe == true) {
-                    safeSwitch.setOn(true, animated: true)
-                } else {
-                    safeSwitch.setOn(false, animated: true)
                 }
             }
             

@@ -34,7 +34,7 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
         self.tableView.estimatedRowHeight = 240
         
         self.title = NSLocalizedString("Recommendations", comment: "")
-        descLabel.text = NSLocalizedString("RecommendationsExplained", comment: "")
+        descLabel.text = NSLocalizedString("RecommendationsExplainedShort", comment: "")
         
         //test!
         //generateRecommendations()
@@ -62,6 +62,16 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         shouldReload = true
+    }
+    
+    @IBAction func infoTouched(_ sender: AnyObject) {
+        let refreshAlert = UIAlertController(title: NSLocalizedString("Recommendations", comment: ""), message: NSLocalizedString("RecommendationsExplained", comment: ""), preferredStyle: UIAlertControllerStyle.alert)
+        
+        refreshAlert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { (action: UIAlertAction!) in
+            DefaultsManager.putBool(true, key: DefaultsManager.CONTENT_SHOWSN)
+        }))
+        
+        present(refreshAlert, animated: true, completion: nil)
     }
    
     func scheduleLocal() {
@@ -96,7 +106,7 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
             generateNewRecs()
             DefaultsManager.putObject(Date() as AnyObject, key: DefaultsManager.LAST_DATE)
             
-            descLabel.text = NSLocalizedString("RecommendationsAreBased", comment: "") + NSLocalizedString("LastUpdate_", comment: "") + dateFormatter.string(from: Date())
+            descLabel.text = NSLocalizedString("RecommendationsExplainedShort", comment: "") + NSLocalizedString("LastUpdate_", comment: "") + dateFormatter.string(from: Date())
             
             
             UIApplication.shared.cancelAllLocalNotifications()
@@ -107,9 +117,9 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
         
         let days = howManyDaysHavePassed(lastDate as! Date, today: Date())
         
-        descLabel.text = NSLocalizedString("RecommendationsAreBased", comment: "") + NSLocalizedString("LastUpdate_", comment: "") + dateFormatter.string(from: lastDate as! Date)
+        descLabel.text = NSLocalizedString("RecommendationsExplainedShort", comment: "") + NSLocalizedString("LastUpdate_", comment: "") + dateFormatter.string(from: lastDate as! Date)
         
-        if (days == 7) {
+        if (days >= 7) {
             
             generateNewRecs()
             DefaultsManager.putObject(Date() as AnyObject, key: DefaultsManager.LAST_DATE)
@@ -335,6 +345,7 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
         
         cell?.downloadButton.tag = (indexPath as NSIndexPath).row
         cell?.deleteButton.tag = (indexPath as NSIndexPath).row
+        cell?.deleteButton.isHidden = true
         
         return cell!
     }
@@ -436,8 +447,66 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
             
             (workDetail.viewControllers[0] as! WorkDetailViewController).workItem = currentWorkItem
             (workDetail.viewControllers[0] as! WorkDetailViewController).modalDelegate = self
-            
         }
+    }
+    
+    //MARK: - SAVE WORK TO DB
+    
+    var curWork:NewsFeedItem?
+    
+    @IBAction func downloadButtonTouched(_ sender: UIButton) {
+        
+        if (sender.tag >= works.count) {
+            return
+        }
+        
+        if (purchased || donated) {
+            #if DEBUG
+                print("premium")
+            #endif
+        } else {
+            if (countWroksFromDB() > 29) {
+                TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Only30Stroies", comment: ""), type: .error, duration: 2.0)
+                
+                return
+            }
+        }
+        
+        curWork = works[sender.tag]
+        
+        showLoadingView(msg: "\(NSLocalizedString("DwnloadingWrk", comment: "")) \(curWork?.title ?? "")")
+        
+        if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
+            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
+        }
+        
+        var params:[String:AnyObject] = [String:AnyObject]()
+        params["view_adult"] = "true" as AnyObject?
+        
+        request("http://archiveofourown.org/works/" + (curWork?.workId ?? ""), method: .get, parameters: params)
+            .response(completionHandler: onSavedWorkLoaded(_:))
+    }
+    
+    func onSavedWorkLoaded(_ response: DefaultDataResponse) {
+        #if DEBUG
+            print(response.request ?? "")
+            //  println(response)
+            print(response.error ?? "")
+        #endif
+        self.parseCookies(response)
+        if let d = response.data {
+            let _ = self.downloadWork(d, curWork: curWork)
+            self.hideLoadingView()
+        } else {
+            TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CannotDwnldWrk", comment: ""), type: .error, duration: 2.0)
+            self.hideLoadingView()
+        }
+        
+        curWork = nil
+    }
+    
+    func saveWork() {
+        hideLoadingView()
     }
     
     //MARK: - ModalControllerDelegate

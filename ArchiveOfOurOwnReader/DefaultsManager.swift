@@ -11,7 +11,7 @@ import Foundation
 class DefaultsManager {
     
     static var SEARCH_Q : String = "sq"
-    static var SEARCH_Q_RECOMMEND : String = "sq"
+    static var SEARCH_Q_RECOMMEND : String = "sqr"
     static var SEARCH_Q_PREF : String = "sqt"
     static var SEARCH_Q_PREF1 : String = "sqt1"
     static var SEARCH_Q_PREF2 : String = "sqt2"
@@ -56,6 +56,7 @@ class DefaultsManager {
     static var LASTWRKCHAPTER = "lwchp"
     static var LASTWRKSCROLL = "lwscrl"
     static var DONTSHOW_CONTEST = "dntshc"
+    static var CONTENT_SHOWSN = "cntshwn"
     static var THEME_DAY : Int = 0
     static var THEME_NIGHT : Int = 1
     

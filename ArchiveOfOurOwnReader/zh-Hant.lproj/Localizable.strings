@@ -117,10 +117,10 @@
 "AddingComment" = "添加評論";
 "Recommendations" = "建議";
 "RecommendationsExplained" = "建議是基於您的應用程序內的活動，並自您首次打開此頁面以來每週生成一次。 您的數據不會在任何地方傳輸，僅用於生成建議。 （僅適用於專業用戶）";
+"RecommendationsExplainedShort" = "僅適用於專業用戶";
 "NotPurchased" = "對不起，您尚未購買專業版！";
 "SeeThem" = "看他們！";
 "TimeForRecommendations" = "嗨！ 現在是新建議的時候了！ 📚";
-"RecommendationsAreBased" = "建議是基於您的應用程序內的活動，並自您首次打開此頁面以來每週生成一次。 您的數據不會在任何地方傳輸，僅用於生成建議。 （僅適用於專業用戶）";
 "LastUpdate_" = "\n最後更新：";
 "WorkList" = "工作清單";
 "AtLeastOneFandom" = "請至少輸入一個粉絲名！";
@@ -137,5 +137,12 @@
 "FolderNotFound" = "找不到文件夾";
 "FolderAlreadyExists" = "具有這樣的名稱的文件夾已經存在！";
 "NoFolders" = "你沒有文件夾！請按 '+' 按鈕創建一個";
+"SensitiveContent" = "抱歉! 這項工作包含敏感內容，由於App Store Review指南，無法在應用程式內查看。 您仍然可以在瀏覽器中打開它（點擊設置圖標）。";
+"DeleteFromDownloaded" = "你確定要從下載中刪除這項工作嗎？";
+"MoveWork" = "移動工作";
+"ChooseFolder" = "請選擇文件夾";
+"MoreDetails" = "更多細節";
+"Attention" = "注意!";
+"SensitiveAttention" = "嗨！ 由於App Store Review指南，應用程序不應包含與強姦和未成年性相關的內容，並且此類內容不應通過搜索獲得。 所以安全模式被刪除，並且與此類內容一起使用在應用程序中將不可用。 對不起，有什麼不方便！";
 
 

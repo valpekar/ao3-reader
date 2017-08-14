@@ -86,7 +86,15 @@ class WorksParser {
                             
                             if let tagsUl : [TFHppleElement] = workListItem.search(withXPathQuery: "//ul[@class='tags commas']/li") as? [TFHppleElement] {
                                 for tagUl in tagsUl {
-                                    item.tags.append(tagUl.content)
+                                    if var tagStr = tagUl.content {
+                                    if (tagStr.contains("Underage")) {
+                                        tagStr = tagStr.replacingOccurrences(of: "Underage", with: "")
+                                    }
+                                    if (tagStr.contains("Rape")) {
+                                        tagStr = tagStr.replacingOccurrences(of: "Rape", with: "")
+                                    }
+                                    item.tags.append(tagStr)
+                                    }
                                 }
                             }
                             
@@ -164,6 +172,14 @@ class WorksParser {
                                         }
                                     }
                                 }
+                            }
+                            
+                            //MARK: - remove underage and rape ratings!!
+                            if (item.warning.contains("Underage")) {
+                                item.warning = item.warning.replacingOccurrences(of: "Underage", with: "")
+                            }
+                            if (item.warning.contains("Rape")) {
+                                item.warning = item.warning.replacingOccurrences(of: "Rape", with: "")
                             }
                             
                             //parse work ID

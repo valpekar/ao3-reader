@@ -517,6 +517,7 @@
 				28B6DC551B4E47FC00F34529 /* SearchViewController.swift */,
 				28B6DC571B4E480F00F34529 /* ArticleDetailsViewController.swift */,
 				28E1C7121B8D9246001E2E5A /* WorkDetailViewController.swift */,
+				3C662F071C9C40F700D1F917 /* SupportController.swift */,
 				28E1C7141B8D9257001E2E5A /* WorkViewController.swift */,
 				1D3F4BA81BBABF5100279C27 /* LoadingViewController.swift */,
 				1D2832271BBD6CDA00FFC887 /* FavoritesViewController.swift */,
@@ -525,7 +526,6 @@
 				3C3105491C7F57020065256E /* FavoritesSiteController.swift */,
 				3C0A80921C85D14200BBCF2B /* MeViewController.swift */,
 				3CF1D00D1C87182300D219B2 /* HistoryViewController.swift */,
-				3C662F071C9C40F700D1F917 /* SupportController.swift */,
 				3C13D2CB1CCA149A008B023B /* CommentViewController.swift */,
 				3C9C87B91CE3557D00C10410 /* RecommendationsController.swift */,
 				3CB992C01CF470D5004772AF /* PublishWorkController.swift */,
@@ -1060,7 +1060,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Sergei Pekar (539SFCFYYY)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Sergei Pekar (539SFCFYYY)";
-				COPY_PHASE_STRIP = NO;
+				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = DL7Z77P4W8;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -1086,7 +1086,7 @@
 				"OTHER_SWIFT_FLAGS[arch=*]" = "-D DEBUG";
 				PROVISIONING_PROFILE = "d0b78a26-c757-4fb3-b0fc-3b6c0dcf5a99";
 				SDKROOT = iphoneos;
-				STRIP_INSTALLED_PRODUCT = NO;
+				STRIP_INSTALLED_PRODUCT = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -1113,7 +1113,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Sergei Pekar (DL7Z77P4W8)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Sergei Pekar (DL7Z77P4W8)";
-				COPY_PHASE_STRIP = NO;
+				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = DL7Z77P4W8;
 				ENABLE_BITCODE = YES;
@@ -1131,7 +1131,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PROVISIONING_PROFILE = "3a2d16d4-3e58-4758-8d8e-5d2c7a136c18";
 				SDKROOT = iphoneos;
-				STRIP_INSTALLED_PRODUCT = NO;
+				STRIP_INSTALLED_PRODUCT = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1168,7 +1168,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "6e6222be-147b-4239-9e06-b4f68f281921";
 				PROVISIONING_PROFILE_SPECIFIER = "Unofficial Reader for AO3 Development";
-				STRIP_INSTALLED_PRODUCT = NO;
+				STRIP_INSTALLED_PRODUCT = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "./ArchiveOfOurOwnReader/Swift-HTML-Parser-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1206,7 +1206,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "3a2d16d4-3e58-4758-8d8e-5d2c7a136c18";
 				PROVISIONING_PROFILE_SPECIFIER = "Unofficial Reader for AO3 Distribution Profile";
-				STRIP_INSTALLED_PRODUCT = NO;
+				STRIP_INSTALLED_PRODUCT = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "./ArchiveOfOurOwnReader/Swift-HTML-Parser-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

@@ -91,9 +91,10 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
         checkStatusButton.layer.borderColor = AppDelegate.redColor.cgColor
         checkStatusButton.layer.cornerRadius = 5.0
         
-       /* if (DefaultsManager.getObject(DefaultsManager.DONTSHOW_CONTEST) == nil || DefaultsManager.getObject(DefaultsManager.DONTSHOW_CONTEST) as! Bool == false) {
-            showContestAlert()
-        }*/
+        let shown: Bool = DefaultsManager.getBool(DefaultsManager.CONTENT_SHOWSN) ?? false
+        if (shown == false) {
+            showContentAlert()
+        }
         
         refresh(tableView)
     }
@@ -190,8 +191,8 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
     
     
     func loadQueryFromDefaults() {
-        if (DefaultsManager.getObject(DefaultsManager.SEARCH_Q) != nil) {
-            self.query = DefaultsManager.getObject(DefaultsManager.SEARCH_Q) as! SearchQuery
+        if let sq = DefaultsManager.getObject(DefaultsManager.SEARCH_Q) as? SearchQuery {
+            self.query = sq
         }
     }
     
@@ -545,6 +546,22 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
         }))
         
         //presentViewController(refreshAlert, animated: true, completion: nil)
+    }
+    
+    func showContentAlert() {
+        let refreshAlert = UIAlertController(title: NSLocalizedString("Attention", comment: ""), message: NSLocalizedString("SensitiveAttention", comment: ""), preferredStyle: UIAlertControllerStyle.alert)
+        
+        refreshAlert.addAction(UIAlertAction(title: NSLocalizedString("MoreDetails", comment: ""), style: .default, handler: { (action: UIAlertAction!) in
+            if let url: URL = URL(string: "https://www.tumblr.com/blog/unofficialao3app") {
+                UIApplication.shared.openURL(url)
+            }
+        }))
+        
+        refreshAlert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { (action: UIAlertAction!) in
+             DefaultsManager.putBool(true, key: DefaultsManager.CONTENT_SHOWSN)
+        }))
+        
+        present(refreshAlert, animated: true, completion: nil)
     }
     
     //Mark: - ChoosePrefProtocol

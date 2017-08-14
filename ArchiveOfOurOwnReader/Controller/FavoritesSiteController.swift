@@ -100,8 +100,10 @@ class FavoritesSiteController : LoadingViewController, UITableViewDataSource, UI
         }
         
         let login = DefaultsManager.getString(DefaultsManager.LOGIN)
-        
-        let urlStr = "http://archiveofourown.org/users/\(login)/pseuds/\(pseuds[currentPseud]!)/bookmarks" // + pseuds[currentPseud]! + "/bookmarks"
+        guard let curPs = pseuds[currentPseud] else {
+            return
+        }
+        let urlStr = "http://archiveofourown.org/users/\(login)/pseuds/\(curPs)/bookmarks" // + pseuds[currentPseud]! + "/bookmarks"
         
         Alamofire.request(urlStr) //default is get
             .response(completionHandler: { response in

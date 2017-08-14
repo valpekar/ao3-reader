@@ -117,10 +117,10 @@
 "AddingComment" = "Adicionando Comentário";
 "Recommendations" = "Recomendações";
 "RecommendationsExplained" = "As recomendações são baseadas na sua atividade dentro do aplicativo e são geradas todas as semanas desde que você abriu esta página pela primeira vez. Os seus dados não são transferidos em qualquer lugar e são usados apenas para gerar recomendações. (Disponível apenas para usuários Pro)";
+"RecommendationsExplainedShort" = "Disponível apenas para usuários Pro";
 "NotPurchased" = "Desculpe, você não comprou a versão Pro!";
 "SeeThem" = "Vê-los!";
 "TimeForRecommendations" = "Oi! É hora de novas recomendações! 📚";
-"RecommendationsAreBased" = "As recomendações são baseadas na sua atividade dentro do aplicativo e são geradas todas as semanas desde que você abriu esta página pela primeira vez. Os seus dados não são transferidos em qualquer lugar e são usados apenas para gerar recomendações. (Disponível apenas para usuários Pro)";
 "LastUpdate_" = "\nÚltima Atualização: ";
 "WorkList" = "Lista de Trabalhos";
 "AtLeastOneFandom" = "Digite pelo menos um nome de fandom!";
@@ -137,4 +137,11 @@
 "FolderNotFound" = "Pasta não encontrada";
 "FolderAlreadyExists" = "A pasta com esse nome já existe!";
 "NoFolders" = "Você não tem pastas! Por favor, crie uma pressionando o botão '+'";
+"SensitiveContent" = "Desculpa! Este trabalho contém conteúdo sensível e não pode ser visualizado dentro do aplicativo devido às Diretrizes de Revisão da App Store. Você ainda pode abri-lo no navegador (toque o ícone Configurações).";
+"DeleteFromDownloaded" = "Tem certeza de que deseja excluir este trabalho do Downloaded?";
+"MoveWork" = "Mova o trabalho";
+"ChooseFolder" = "Escolha pasta";
+"MoreDetails" = "Mais detalhes";
+"Attention" = "Atenção!";
+"SensitiveAttention" = "Oi! Devido às Diretrizes de revisão da App Store, o aplicativo não deve incluir conteúdo relacionado a estupro e sexo com menores de idade, e esse conteúdo não deve estar disponível por meio da pesquisa. Então o Modo de segurança é removido e funciona com tal conteúdo não estará disponível no aplicativo. Desculpe por qualquer inconveniente!";
 
