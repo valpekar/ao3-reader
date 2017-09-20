@@ -58,7 +58,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if let cookiesDate = DefaultsManager.getDate(DefaultsManager.COOKIES_DATE) {
             let calendar = Calendar.current
-            if let dateDayAfter = calendar.date(byAdding: .minute, value: 2, to: cookiesDate) { //assume cookies live 2 days 
+            if let dateDayAfter = calendar.date(byAdding: .minute, value: 13, to: cookiesDate) { // cookies live 14 days 
             
                 if (calendar.startOfDay(for: dateDayAfter) >= calendar.startOfDay(for: Date())) {
                 

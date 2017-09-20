@@ -80,6 +80,7 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
         pseuds = s
         
         (UIApplication.shared.delegate as! AppDelegate).cookies = [HTTPCookie]()
+        DefaultsManager.putObject([HTTPCookie]() as AnyObject, key: DefaultsManager.COOKIES)
         
         pseudsTableView.reloadData()
     }

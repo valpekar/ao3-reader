@@ -80,7 +80,7 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
     }
     
     func getLoginParams() {
-        Alamofire.request("http://archiveofourown.org/", method: .get)
+        Alamofire.request("http://archiveofourown.org/user_sessions/new", method: .get)
             .response(completionHandler: { response in
                 #if DEBUG
                     print(response.request ?? "")

@@ -106,7 +106,7 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
             generateNewRecs()
             DefaultsManager.putObject(Date() as AnyObject, key: DefaultsManager.LAST_DATE)
             
-            descLabel.text = NSLocalizedString("RecommendationsExplainedShort", comment: "") + NSLocalizedString("LastUpdate_", comment: "") + dateFormatter.string(from: Date())
+            descLabel.text = "\(NSLocalizedString("RecommendationsExplainedShort", comment: "")) \(NSLocalizedString("LastUpdate_", comment: "")) \(dateFormatter.string(from:  Date()))"
             
             
             UIApplication.shared.cancelAllLocalNotifications()
@@ -117,7 +117,7 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
         
         let days = howManyDaysHavePassed(lastDate as! Date, today: Date())
         
-        descLabel.text = NSLocalizedString("RecommendationsExplainedShort", comment: "") + NSLocalizedString("LastUpdate_", comment: "") + dateFormatter.string(from: lastDate as! Date)
+        descLabel.text = "\(NSLocalizedString("RecommendationsExplainedShort", comment: "")) \(NSLocalizedString("LastUpdate_", comment: "")) \(dateFormatter.string(from: lastDate as? Date ?? Date()))"
         
         if (days >= 7) {
             
