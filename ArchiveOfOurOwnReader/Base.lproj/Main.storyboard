@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.17" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="yfP-Fh-r7Y">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="yfP-Fh-r7Y">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
@@ -24,10 +24,10 @@
                 <navigationController storyboardIdentifier="FeedController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="qPz-U9-04d" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Browse" image="shortstory" id="Jah-IT-gDA"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="VFR-IH-oeg">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <rect key="frame" x="0.0" y="20" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <color key="barTintColor" red="0.70196078431372544" green="0.27450980392156865" blue="0.27450980392156865" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </navigationBar>
                     <connections>
                         <segue destination="aL3-TE-7vv" kind="relationship" relationship="rootViewController" id="Ho4-q4-iBy"/>
@@ -51,7 +51,7 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jfc-9F-Fbs">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="20"/>
-                                <color key="backgroundColor" red="0.70196078431372544" green="0.27450980392156865" blue="0.27450980392156865" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="19z-U2-Uzd"/>
                                 </constraints>
@@ -59,7 +59,7 @@
                             <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z2d-ic-USg">
                                 <rect key="frame" x="0.0" y="20" width="414" height="44"/>
                                 <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <color key="barTintColor" red="0.70196078431372544" green="0.27450980392156865" blue="0.27450980392156865" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="barTintColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <textAttributes key="titleTextAttributes">
                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </textAttributes>
@@ -277,8 +277,8 @@
                                                 <switch opaque="NO" tag="22" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="KZ9-eH-Qmg">
                                                     <rect key="frame" x="153" y="3" width="51" height="31"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <color key="tintColor" red="0.70196078429999997" green="0.27450980390000002" blue="0.27450980390000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <color key="onTintColor" red="0.70196078429999997" green="0.27450980390000002" blue="0.27450980390000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="tintColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="onTintColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <connections>
                                                         <action selector="ffSwitchChanged:" destination="nbw-Ly-8Cb" eventType="valueChanged" id="LaO-IJ-In9"/>
                                                     </connections>
@@ -293,8 +293,8 @@
                                                 <switch opaque="NO" tag="21" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="uN7-iD-aNV">
                                                     <rect key="frame" x="259" y="3" width="51" height="31"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <color key="tintColor" red="0.70196078429999997" green="0.27450980390000002" blue="0.27450980390000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <color key="onTintColor" red="0.70196078431372544" green="0.27450980392156865" blue="0.27450980392156865" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="tintColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="onTintColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <connections>
                                                         <action selector="ffSwitchChanged:" destination="nbw-Ly-8Cb" eventType="valueChanged" id="p26-X1-D0M"/>
                                                     </connections>
@@ -309,8 +309,8 @@
                                                 <switch opaque="NO" tag="23" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="FtK-Ak-2Xf">
                                                     <rect key="frame" x="44" y="40" width="51" height="31"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <color key="tintColor" red="0.70196078429999997" green="0.27450980390000002" blue="0.27450980390000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <color key="onTintColor" red="0.70196078429999997" green="0.27450980390000002" blue="0.27450980390000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="tintColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="onTintColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <connections>
                                                         <action selector="ffSwitchChanged:" destination="nbw-Ly-8Cb" eventType="valueChanged" id="Kkm-CS-OcX"/>
                                                     </connections>
@@ -325,8 +325,8 @@
                                                 <switch opaque="NO" tag="2246" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="UwM-67-lp0">
                                                     <rect key="frame" x="153" y="36" width="51" height="31"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <color key="tintColor" red="0.70196078429999997" green="0.27450980390000002" blue="0.27450980390000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <color key="onTintColor" red="0.70196078429999997" green="0.27450980390000002" blue="0.27450980390000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="tintColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="onTintColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <connections>
                                                         <action selector="ffSwitchChanged:" destination="nbw-Ly-8Cb" eventType="valueChanged" id="YOC-kI-Q2g"/>
                                                     </connections>
@@ -341,8 +341,8 @@
                                                 <switch opaque="NO" tag="24" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="l9W-BH-dht">
                                                     <rect key="frame" x="259" y="40" width="51" height="31"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <color key="tintColor" red="0.70196078431372544" green="0.27450980392156865" blue="0.27450980392156865" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <color key="onTintColor" red="0.70196078429999997" green="0.27450980390000002" blue="0.27450980390000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="tintColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="onTintColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <connections>
                                                         <action selector="ffSwitchChanged:" destination="nbw-Ly-8Cb" eventType="valueChanged" id="OBE-rD-Qga"/>
                                                     </connections>
@@ -350,8 +350,8 @@
                                                 <switch opaque="NO" tag="116" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Wby-Jj-rem">
                                                     <rect key="frame" x="44" y="3" width="51" height="31"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <color key="tintColor" red="0.70196078429999997" green="0.27450980390000002" blue="0.27450980390000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <color key="onTintColor" red="0.70196078429999997" green="0.27450980390000002" blue="0.27450980390000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="tintColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="onTintColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <connections>
                                                         <action selector="ffSwitchChanged:" destination="nbw-Ly-8Cb" eventType="valueChanged" id="LJA-Jl-ax4"/>
                                                     </connections>
@@ -382,8 +382,8 @@
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="AgE-rG-SCi">
                                                     <rect key="frame" x="357" y="6" width="51" height="31"/>
-                                                    <color key="tintColor" red="0.70196078431372544" green="0.27450980392156865" blue="0.27450980392156865" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <color key="onTintColor" red="0.70196078431372544" green="0.27450980392156865" blue="0.27450980392156865" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="tintColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="onTintColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <connections>
                                                         <action selector="categorySwitchChanged:" destination="nbw-Ly-8Cb" eventType="valueChanged" id="ugq-VR-oL8"/>
                                                     </connections>
@@ -597,21 +597,21 @@
                         <viewControllerLayoutGuide type="bottom" id="eb4-ON-vEz"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="rnr-VF-upb">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="672"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7bU-sj-Io5" customClass="UIScrollView">
-                                <rect key="frame" x="0.0" y="20" width="414" height="716"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="672"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OGW-bT-jr5">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="672"/>
                                         <subviews>
                                             <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U2o-2W-hDy">
-                                                <rect key="frame" x="0.0" y="0.0" width="414" height="520"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="414" height="476"/>
                                                 <color key="backgroundColor" red="0.28958413004875183" green="0.31462949514389038" blue="0.32950475811958313" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </webView>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="onDrag" translatesAutoresizingMaskIntoConstraints="NO" id="Tub-7u-x9f">
-                                                <rect key="frame" x="20" y="572" width="374" height="100"/>
+                                                <rect key="frame" x="20" y="528" width="374" height="100"/>
                                                 <color key="backgroundColor" red="0.99310782068062831" green="0.99310782068062831" blue="0.99310782068062831" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="100" id="CsP-nN-m1L"/>
@@ -620,7 +620,7 @@
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ibn-K2-prA">
-                                                <rect key="frame" x="20" y="672" width="374" height="40"/>
+                                                <rect key="frame" x="20" y="628" width="374" height="40"/>
                                                 <color key="backgroundColor" red="0.70196078431372544" green="0.27450980392156865" blue="0.27450980392156865" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="9zR-dv-d0E"/>
@@ -647,7 +647,7 @@
                                                 </connections>
                                             </button>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="BvH-fm-6Yj">
-                                                <rect key="frame" x="0.0" y="520" width="414" height="44"/>
+                                                <rect key="frame" x="0.0" y="476" width="414" height="44"/>
                                                 <color key="backgroundColor" red="0.92000001669999998" green="0.92000001669999998" blue="0.92000001669999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="44" id="R4a-rn-kGl"/>
@@ -757,11 +757,11 @@
                         <viewControllerLayoutGuide type="bottom" id="RvI-P4-Jsq"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="cdF-HD-3HJ">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="672"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1uf-cP-mwU">
-                                <rect key="frame" x="0.0" y="-44" width="414" height="266"/>
+                                <rect key="frame" x="0.0" y="-64" width="414" height="266"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="1080" id="Phm-TZ-SpA"/>
                                     <constraint firstAttribute="height" constant="720" id="rhD-Fq-Qpc"/>
@@ -775,10 +775,10 @@
                                 </variation>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JVy-x2-Pai">
-                                <rect key="frame" x="20" y="70" width="374" height="604"/>
+                                <rect key="frame" x="20" y="50" width="374" height="560"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cyb-us-7ON">
-                                        <rect key="frame" x="8" y="33.333333333333329" width="348" height="19.333333333333343"/>
+                                        <rect key="frame" x="8" y="33.333333333333343" width="348" height="19.333333333333314"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="18" id="EJ7-x3-dZW"/>
                                             <constraint firstAttribute="height" constant="30" id="qx9-ib-aQ4"/>
@@ -800,7 +800,7 @@
                                         <rect key="frame" x="8" y="58.666666666666657" width="358" height="14.333333333333343"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Audience" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hKr-uF-seL">
-                                                <rect key="frame" x="0.0" y="0.0" width="0.0" height="14.333333333333343"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="114" height="14.333333333333343"/>
                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
                                                 <color key="textColor" red="0.20000000000000001" green="0.70980392160000005" blue="0.8980392157" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -809,7 +809,7 @@
                                                 </variation>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gen" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mQg-k9-tTr">
-                                                <rect key="frame" x="724" y="0.0" width="0.0" height="14.333333333333343"/>
+                                                <rect key="frame" x="122" y="0.0" width="114" height="14.333333333333343"/>
                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
                                                 <color key="textColor" red="0.19215686269999999" green="0.73725490199999999" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -818,7 +818,7 @@
                                                 </variation>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Complete" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dnT-cy-sRR">
-                                                <rect key="frame" x="-28" y="0.0" width="0.0" height="14.333333333333343"/>
+                                                <rect key="frame" x="244" y="0.0" width="114" height="14.333333333333343"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="shQ-Ru-ah2"/>
                                                 </constraints>
@@ -837,7 +837,7 @@
                                         </subviews>
                                     </stackView>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="FbH-Ta-u8Z">
-                                        <rect key="frame" x="0.0" y="81" width="366" height="523"/>
+                                        <rect key="frame" x="0.0" y="81" width="366" height="479"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <prototypes>
                                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="zrD-0Z-lBk" customClass="WorkDetailCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
@@ -969,7 +969,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="tailTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AI8-nY-JpQ">
-                                        <rect key="frame" x="44" y="4" width="274" height="29.333333333333329"/>
+                                        <rect key="frame" x="44" y="4" width="274" height="29.333333333333343"/>
                                         <color key="tintColor" red="0.4823529411764706" green="0.4823529411764706" blue="0.4823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal">
                                             <attributedString key="attributedTitle">
@@ -1023,7 +1023,7 @@
                                 </variation>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DFN-f7-SBP" customClass="GADBannerView">
-                                <rect key="frame" x="47" y="20" width="320" height="50"/>
+                                <rect key="frame" x="47" y="0.0" width="320" height="50"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="hAO-nD-7DA"/>
@@ -1031,7 +1031,7 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BZH-PI-909">
-                                <rect key="frame" x="20" y="684" width="374" height="42"/>
+                                <rect key="frame" x="20" y="620" width="374" height="42"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.85999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="42" id="LKz-oN-kpU"/>
@@ -1172,11 +1172,11 @@
                         <viewControllerLayoutGuide type="bottom" id="Yoc-3C-4q5"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="7oc-1t-9bM">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="672"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7BG-8k-w0K">
-                                <rect key="frame" x="153" y="351" width="109" height="34"/>
+                                <rect key="frame" x="153" y="319" width="109" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <state key="normal" title="Try Again  🤔">
                                     <color key="titleColor" red="0.70196078429999997" green="0.27450980390000002" blue="0.27450980390000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1186,7 +1186,7 @@
                                 </connections>
                             </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="RmA-Nc-iEP">
-                                <rect key="frame" x="0.0" y="692" width="414" height="44"/>
+                                <rect key="frame" x="0.0" y="628" width="414" height="44"/>
                                 <color key="backgroundColor" red="0.92000001669999998" green="0.92000001669999998" blue="0.92000001669999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="K3h-4G-MaI"/>
@@ -1230,7 +1230,7 @@
                                 </connections>
                             </collectionView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="240" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="dVv-Wb-Czg">
-                                <rect key="frame" x="0.0" y="20" width="414" height="672"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="628"/>
                                 <color key="backgroundColor" red="0.92000001669999998" green="0.92000001669999998" blue="0.92000001669999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="FeedCell" rowHeight="240" id="3mG-9j-QZh" customClass="FeedTableViewCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
@@ -1788,21 +1788,21 @@
                         <viewControllerLayoutGuide type="bottom" id="7u2-7t-GEs"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="qtN-uh-88S">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="672"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ey9-JX-1ZK">
-                                <rect key="frame" x="0.0" y="20" width="414" height="716"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="672"/>
                                 <color key="backgroundColor" red="0.19607843137254902" green="0.20392156862745098" blue="0.22352941176470587" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <dataDetectorType key="dataDetectorTypes"/>
                             </webView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QBX-yq-43c">
-                                <rect key="frame" x="0.0" y="20" width="414" height="44"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wnZ-d8-1x3">
                                         <rect key="frame" x="276.66666666666674" y="0.0" width="137.33333333333331" height="44"/>
                                         <state key="normal" title="Next Chapter">
-                                            <color key="titleColor" red="0.70196078431372544" green="0.27450980392156865" blue="0.27450980392156865" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
@@ -1812,7 +1812,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9GD-Ss-iAe">
                                         <rect key="frame" x="138" y="0.0" width="138.66666666666669" height="44"/>
                                         <state key="normal" title="Contents">
-                                            <color key="titleColor" red="0.70196078431372544" green="0.27450980392156865" blue="0.27450980392156865" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
@@ -1822,7 +1822,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z5B-7o-XaX">
                                         <rect key="frame" x="0.0" y="0.0" width="138" height="44"/>
                                         <state key="normal" title="Previous">
-                                            <color key="titleColor" red="0.70196078431372544" green="0.27450980392156865" blue="0.27450980392156865" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
@@ -1942,10 +1942,10 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0Lt-Lf-0cs">
                                 <rect key="frame" x="0.0" y="40" width="414" height="696"/>
-                                <color key="backgroundColor" red="0.54509803921568623" green="0.21568627450980393" blue="0.21568627450980393" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <color key="tintColor" red="1" green="0.23921568627450979" blue="0.31372549019607843" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="tintColor" red="0.51177360384944381" green="0.32856875011783893" blue="0.63539022842639592" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="separatorColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <color key="sectionIndexTrackingBackgroundColor" red="0.54509803921568623" green="0.21568627450980393" blue="0.21568627450980393" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="sectionIndexTrackingBackgroundColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="gray" indentationWidth="10" reuseIdentifier="NavigationCell" id="AIV-Ty-CBp" customClass="TagCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="44"/>
@@ -1968,7 +1968,7 @@
                                                     </constraints>
                                                 </imageView>
                                             </subviews>
-                                            <color key="backgroundColor" red="0.54509803921568623" green="0.21568627450980393" blue="0.21568627450980393" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="backgroundColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstItem="VFd-qE-5pi" firstAttribute="leading" secondItem="iUS-Sq-Nt3" secondAttribute="trailing" constant="16" id="9Me-A0-2Bq"/>
                                                 <constraint firstItem="VFd-qE-5pi" firstAttribute="top" secondItem="R1q-eH-Kkc" secondAttribute="topMargin" id="Ava-pJ-MrG"/>
@@ -1998,7 +1998,7 @@
                                 </connections>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" red="0.54509803921568623" green="0.21568627450980393" blue="0.21568627450980393" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="0Lt-Lf-0cs" firstAttribute="top" secondItem="b5o-p3-S4K" secondAttribute="bottom" id="BZn-wN-dRD"/>
                             <constraint firstItem="0Lt-Lf-0cs" firstAttribute="top" secondItem="b5o-p3-S4K" secondAttribute="bottom" constant="20" id="L2X-fh-nLI"/>
@@ -2079,7 +2079,7 @@
                                                                     </connections>
                                                                 </button>
                                                             </subviews>
-                                                            <color key="backgroundColor" red="0.70196078431372544" green="0.27450980392156865" blue="0.27450980392156865" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <color key="backgroundColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <constraints>
                                                                 <constraint firstItem="ugS-IF-6Ts" firstAttribute="trailing" secondItem="YFd-IL-rpc" secondAttribute="trailingMargin" constant="-60" id="1pS-RB-zYs"/>
                                                                 <constraint firstAttribute="trailingMargin" secondItem="ugS-IF-6Ts" secondAttribute="trailing" constant="8" id="9N2-JV-OaO"/>
@@ -2638,7 +2638,7 @@
                                 </connections>
                             </collectionView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ybH-RR-fjQ">
-                                <rect key="frame" x="147" y="215.33333333333334" width="120" height="40"/>
+                                <rect key="frame" x="147" y="215.33333333333331" width="120" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="260" id="c8g-ra-4j0"/>
                                     <constraint firstAttribute="height" constant="56" id="ehW-NF-Lcw"/>
@@ -2762,7 +2762,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0av-Zm-bNs">
-                                <rect key="frame" x="0.0" y="20" width="414" height="652"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="672"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pg6-4D-IWv">
                                         <rect key="frame" x="24" y="180" width="366" height="76.666666666666686"/>
@@ -2831,7 +2831,7 @@ Please check your Internet connection and also make sure you are logged into you
                                 </variation>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="240" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="BV6-B7-sL7">
-                                <rect key="frame" x="0.0" y="20" width="414" height="608"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="628"/>
                                 <color key="backgroundColor" red="0.92000001668930054" green="0.92000001668930054" blue="0.92000001668930054" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="FeedCell" rowHeight="240" id="GaJ-kH-z0B" customClass="FeedTableViewCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
@@ -2889,7 +2889,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                                     </connections>
                                                                 </button>
                                                             </subviews>
-                                                            <color key="backgroundColor" red="0.70196078431372544" green="0.27450980392156865" blue="0.27450980392156865" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <color key="backgroundColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <constraints>
                                                                 <constraint firstItem="bhA-6K-Gch" firstAttribute="leading" secondItem="8Hm-DA-PbH" secondAttribute="leading" id="02L-Xy-34D"/>
                                                                 <constraint firstAttribute="trailingMargin" secondItem="CbL-S4-54X" secondAttribute="trailing" constant="8" id="3pp-X9-aiI"/>
@@ -3493,7 +3493,7 @@ Please check your Internet connection and also make sure you are logged into you
                         <subviews>
                             <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gIx-Us-Adw">
                                 <rect key="frame" x="0.0" y="40" width="414" height="44"/>
-                                <color key="barTintColor" red="0.70196078431372544" green="0.27450980392156865" blue="0.27450980392156865" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="barTintColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <textAttributes key="titleTextAttributes">
                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </textAttributes>
@@ -3513,7 +3513,7 @@ Please check your Internet connection and also make sure you are logged into you
                                 <color key="backgroundColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </webView>
                         </subviews>
-                        <color key="backgroundColor" red="0.70196078431372544" green="0.27450980392156865" blue="0.27450980392156865" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="gIx-Us-Adw" firstAttribute="top" secondItem="Q3k-bH-zXq" secondAttribute="topMargin" constant="20" id="80B-yy-FrD"/>
                             <constraint firstItem="Pms-kR-u0o" firstAttribute="leading" secondItem="Q3k-bH-zXq" secondAttribute="leading" id="Iky-ti-6VI"/>
@@ -3537,9 +3537,9 @@ Please check your Internet connection and also make sure you are logged into you
             <objects>
                 <navigationController storyboardIdentifier="navLoginViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="FQS-F3-Crm" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="ji9-WR-nk5">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <rect key="frame" x="0.0" y="20" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.70196078431372544" green="0.27450980392156865" blue="0.27450980392156865" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </navigationBar>
                     <connections>
                         <segue destination="J09-NV-9xf" kind="relationship" relationship="rootViewController" id="PhR-hM-cyb"/>
@@ -3554,9 +3554,16 @@ Please check your Internet connection and also make sure you are logged into you
             <objects>
                 <navigationController id="b7D-pa-0NE" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="h57-jh-QTN">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <rect key="frame" x="0.0" y="20" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.70196078431372544" green="0.27450980392156865" blue="0.27450980392156865" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="barTintColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </textAttributes>
                     </navigationBar>
                     <connections>
                         <segue destination="aAL-eX-Mdc" kind="relationship" relationship="rootViewController" id="0cK-Ss-4ZO"/>
@@ -3595,9 +3602,9 @@ Please check your Internet connection and also make sure you are logged into you
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please select your pseud below for showing bookmarks and history" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vjz-Ft-nxI">
-                                        <rect key="frame" x="0.0" y="65" width="414" height="13.333333333333329"/>
+                                        <rect key="frame" x="0.0" y="65" width="414" height="13.333333333333343"/>
                                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="11"/>
-                                        <color key="textColor" red="0.79029187817258884" green="0.12968469499779589" blue="0.097417953037764168" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="textColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
@@ -3624,7 +3631,7 @@ Please check your Internet connection and also make sure you are logged into you
                             </label>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QI5-Oe-bD7">
                                 <rect key="frame" x="345" y="635" width="51" height="31"/>
-                                <color key="onTintColor" red="0.72941176470588232" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="onTintColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
                                     <action selector="notifSwitchChanged:" destination="aAL-eX-Mdc" eventType="valueChanged" id="acg-Yt-aDq"/>
                                 </connections>
@@ -3640,7 +3647,7 @@ Please check your Internet connection and also make sure you are logged into you
                             </label>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZsP-KK-vj8">
                                 <rect key="frame" x="345" y="597" width="51" height="31"/>
-                                <color key="onTintColor" red="0.72941176470588232" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="onTintColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
                                     <action selector="adultSwitchChanged:" destination="aAL-eX-Mdc" eventType="valueChanged" id="p2p-ab-dyh"/>
                                 </connections>
@@ -3671,7 +3678,7 @@ Please check your Internet connection and also make sure you are logged into you
                                 <rect key="frame" x="183.66666666666666" y="246" width="47" height="33"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <state key="normal" title="Log In">
-                                    <color key="titleColor" red="0.70196078431372544" green="0.27450980392156865" blue="0.27450980392156865" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="titleColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <variation key="heightClass=regular-widthClass=regular">
                                     <fontDescription key="fontDescription" type="system" pointSize="26"/>
@@ -3964,16 +3971,16 @@ If you don't see a subscription but are still being charged, make sure that you'
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="672"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sync with AO3" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="35J-U3-wfK">
-                                <rect key="frame" x="118" y="34" width="178.66666666666669" height="33.666666666666671"/>
+                                <rect key="frame" x="118" y="34" width="178.66666666666669" height="33.666666666666657"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="28"/>
-                                <color key="textColor" red="0.70196078431372544" green="0.27450980392156865" blue="0.27450980392156865" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="textColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="heightClass=regular-widthClass=regular">
                                     <fontDescription key="fontDescription" type="system" pointSize="38"/>
                                 </variation>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lf4-tB-BNC">
-                                <rect key="frame" x="87" y="203.66666666666666" width="240" height="44"/>
+                                <rect key="frame" x="87" y="203.66666666666669" width="240" height="44"/>
                                 <color key="backgroundColor" red="0.70196078431372544" green="0.27450980392156865" blue="0.27450980392156865" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="6Tc-fw-shr"/>
@@ -4020,13 +4027,13 @@ If you don't see a subscription but are still being charged, make sure that you'
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c2w-0Y-Rzi">
-                                <rect key="frame" x="87" y="103.66666666666666" width="240" height="79.999999999999972"/>
+                                <rect key="frame" x="87" y="103.66666666666666" width="240" height="80"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="qjG-Jf-bdJ">
-                                        <rect key="frame" x="8" y="0.0" width="224" height="79.999999999999986"/>
+                                        <rect key="frame" x="8" y="0.0" width="224" height="80"/>
                                         <subviews>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="User name" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="h7a-hW-0qY">
-                                                <rect key="frame" x="0.0" y="0.0" width="224" height="38.999999999999986"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="224" height="39"/>
                                                 <color key="tintColor" red="0.59607843137254901" green="0.36862745098039218" blue="0.37254901960784315" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="39" id="2Vg-2H-5rU"/>
@@ -4050,14 +4057,14 @@ If you don't see a subscription but are still being charged, make sure that you'
                                                 </variation>
                                             </textField>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZoH-XP-5Sc">
-                                                <rect key="frame" x="0.0" y="39.666666666666671" width="224" height="1"/>
+                                                <rect key="frame" x="0.0" y="39.666666666666686" width="224" height="1"/>
                                                 <color key="backgroundColor" name="windowFrameColor" catalog="System" colorSpace="catalog"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="1" id="tad-ON-zUb"/>
                                                 </constraints>
                                             </view>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="ffZ-kJ-tao">
-                                                <rect key="frame" x="0.0" y="40.999999999999986" width="224" height="39"/>
+                                                <rect key="frame" x="0.0" y="41" width="224" height="39"/>
                                                 <color key="tintColor" red="0.59607843137254901" green="0.36862745098039218" blue="0.37254901960784315" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="39" id="7ng-ws-oiQ"/>
@@ -4182,9 +4189,9 @@ If you don't see a subscription but are still being charged, make sure that you'
                 <navigationController id="9Lw-RS-RQq" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Bookmarks" image="bmk" id="xYS-vk-lFt"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="N9X-Uv-a38">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <rect key="frame" x="0.0" y="20" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.70196078431372544" green="0.27450980392156865" blue="0.27450980392156865" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </navigationBar>
                     <connections>
                         <segue destination="ha1-Xg-SDp" kind="relationship" relationship="rootViewController" id="5gH-g6-4dJ"/>
@@ -4199,9 +4206,9 @@ If you don't see a subscription but are still being charged, make sure that you'
             <objects>
                 <navigationController id="Jei-rf-5yX" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="gUV-uk-gN9">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="20" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.70196078431372544" green="0.27450980392156865" blue="0.27450980392156865" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </navigationBar>
                     <connections>
                         <segue destination="nSG-lm-yHh" kind="relationship" relationship="rootViewController" id="Kxr-Zg-Lku"/>
@@ -4339,7 +4346,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                                     </connections>
                                                                 </button>
                                                             </subviews>
-                                                            <color key="backgroundColor" red="0.70196078429999997" green="0.27450980390000002" blue="0.27450980390000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <color key="backgroundColor" red="0.5425336825229562" green="0.3483173274716948" blue="0.67358026649746194" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <constraints>
                                                                 <constraint firstItem="CaE-Ge-EDS" firstAttribute="top" secondItem="sOy-c3-Aux" secondAttribute="top" id="0xn-yH-Uzh"/>
                                                                 <constraint firstItem="CaE-Ge-EDS" firstAttribute="leading" secondItem="sOy-c3-Aux" secondAttribute="leadingMargin" constant="4" id="8sJ-PB-Sun"/>
@@ -4475,9 +4482,9 @@ Please check your Internet connection and also make sure you are logged into you
             <objects>
                 <navigationController id="KAx-0R-jSX" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="WQb-iR-8u2">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <rect key="frame" x="0.0" y="20" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.70196078431372544" green="0.27450980392156865" blue="0.27450980392156865" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </navigationBar>
                     <connections>
                         <segue destination="zkS-sK-Im9" kind="relationship" relationship="rootViewController" id="gZ6-ws-33P"/>
@@ -4500,7 +4507,7 @@ Please check your Internet connection and also make sure you are logged into you
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fFg-fh-XVG">
-                                <rect key="frame" x="20" y="201.66666666666669" width="374" height="134.00000000000006"/>
+                                <rect key="frame" x="20" y="201.66666666666669" width="374" height="134"/>
                                 <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal">
                                     <attributedString key="attributedTitle">
@@ -4628,7 +4635,7 @@ Major Problems:
                                                                     </connections>
                                                                 </button>
                                                             </subviews>
-                                                            <color key="backgroundColor" red="0.70196078431372544" green="0.27450980392156865" blue="0.27450980392156865" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <color key="backgroundColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <constraints>
                                                                 <constraint firstItem="4VT-L1-fAL" firstAttribute="top" secondItem="hHJ-3A-iJ2" secondAttribute="topMargin" constant="-4" id="ABD-Sa-ve8"/>
                                                                 <constraint firstItem="2ao-YX-uFQ" firstAttribute="centerY" secondItem="hHJ-3A-iJ2" secondAttribute="centerY" id="Dah-ey-Cip"/>
@@ -5165,10 +5172,10 @@ Major Problems:
             <objects>
                 <navigationController id="rrx-NH-aLK" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="1VW-Wh-Y2I">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="20" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <color key="barTintColor" red="0.70196078431372544" green="0.27450980392156865" blue="0.27450980392156865" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </textAttributes>
@@ -5223,7 +5230,7 @@ Major Problems:
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What's your main fandom? ❤️" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="9" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fcf-bB-WV2">
                                 <rect key="frame" x="36" y="248.00000000000003" width="342" height="21.666666666666714"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <color key="textColor" red="0.70196078431372544" green="0.27450980392156865" blue="0.27450980392156865" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="textColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="heightClass=regular-widthClass=regular">
                                     <fontDescription key="fontDescription" type="system" pointSize="28"/>
@@ -5239,7 +5246,7 @@ Major Problems:
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <state key="normal" title="Next">
-                                    <color key="titleColor" red="0.70196078431372544" green="0.27450980392156865" blue="0.27450980392156865" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="titleColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <variation key="default">
                                     <mask key="constraints">
@@ -5306,10 +5313,10 @@ Major Problems:
                 <navigationController storyboardIdentifier="NavigationViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="SUr-JL-5Mg" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Downloaded" image="icon-download" id="eaC-Lk-gps"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="gFx-fM-ZDF">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <rect key="frame" x="0.0" y="20" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <color key="barTintColor" red="0.70196078431372544" green="0.27450980392156865" blue="0.27450980392156865" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </navigationBar>
                     <connections>
                         <segue destination="gZt-Yz-NNP" kind="relationship" relationship="rootViewController" id="243-5y-110"/>
@@ -5325,16 +5332,15 @@ Major Problems:
                 <navigationController storyboardIdentifier="navWorkDetailViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ebL-Wn-891" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="AL5-w0-MyT"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="lEf-WY-4Vp">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <rect key="frame" x="0.0" y="20" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <color key="barTintColor" red="0.70196078431372544" green="0.27450980392156865" blue="0.27450980392156865" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </textAttributes>
                     </navigationBar>
                     <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="Qqj-D3-Tlc">
-                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </toolbar>
                     <connections>
@@ -5427,7 +5433,7 @@ Please check your Internet connection and also make sure you are logged into you
                                 </variation>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="240" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="ECo-kh-8ii">
-                                <rect key="frame" x="0.0" y="20" width="414" height="608"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="628"/>
                                 <color key="backgroundColor" red="0.92000001668930054" green="0.92000001668930054" blue="0.92000001668930054" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="FeedCell" rowHeight="240" id="CE4-sy-gmS" customClass="FeedTableViewCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
@@ -5485,7 +5491,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                                     </connections>
                                                                 </button>
                                                             </subviews>
-                                                            <color key="backgroundColor" red="0.70196078431372544" green="0.27450980392156865" blue="0.27450980392156865" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <color key="backgroundColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="bottomMargin" secondItem="fpZ-8Y-LTR" secondAttribute="bottom" constant="-4" id="5xf-me-av7"/>
                                                                 <constraint firstItem="fpZ-8Y-LTR" firstAttribute="trailing" secondItem="d7x-vh-kfu" secondAttribute="trailingMargin" constant="-60" id="7qk-ge-QDm"/>
@@ -6061,9 +6067,9 @@ Please check your Internet connection and also make sure you are logged into you
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="j2d-gi-5Xp"/>
                                 <exclude reference="E6D-gU-Ias"/>
                                 <exclude reference="qZ9-aL-4GU"/>
+                                <exclude reference="j2d-gi-5Xp"/>
                                 <exclude reference="5ee-Z7-4db"/>
                                 <exclude reference="ChJ-nk-nqE"/>
                                 <exclude reference="gPX-dG-i7H"/>
@@ -6087,9 +6093,9 @@ Please check your Internet connection and also make sure you are logged into you
                 <navigationController id="UxC-hc-RdK" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="History" image="bmk" id="07b-Ws-9Rb"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="nFr-fE-XZB">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <rect key="frame" x="0.0" y="20" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.70196078431372544" green="0.27450980392156865" blue="0.27450980392156865" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </navigationBar>
                     <connections>
                         <segue destination="k4C-kA-xzX" kind="relationship" relationship="rootViewController" id="Cey-nI-j6h"/>
@@ -6181,7 +6187,7 @@ Please check your Internet connection and also make sure you are logged into you
                                 </variation>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Recommendations" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="6" baselineAdjustment="alignBaselines" minimumFontSize="8" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="juB-Iz-l0b">
-                                <rect key="frame" x="20" y="2" width="374" height="14.666666666666668"/>
+                                <rect key="frame" x="20" y="2" width="374" height="14.666666666666671"/>
                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="12"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -6248,7 +6254,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                                     </connections>
                                                                 </button>
                                                             </subviews>
-                                                            <color key="backgroundColor" red="0.70196078431372544" green="0.27450980392156865" blue="0.27450980392156865" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <color key="backgroundColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <constraints>
                                                                 <constraint firstItem="9nb-J7-hFR" firstAttribute="top" secondItem="SHv-Ri-eK1" secondAttribute="topMargin" constant="-4" id="1fv-FB-izR"/>
                                                                 <constraint firstItem="5gf-TD-udM" firstAttribute="leading" secondItem="SHv-Ri-eK1" secondAttribute="leading" id="5cE-O3-E9a"/>
@@ -6862,10 +6868,10 @@ Please check your Internet connection and also make sure you are logged into you
             <objects>
                 <navigationController id="cHa-cX-9Dd" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="cZ0-5m-iUc">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <rect key="frame" x="0.0" y="20" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <color key="barTintColor" red="0.70196078431372544" green="0.27450980392156865" blue="0.27450980392156865" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </textAttributes>
@@ -7251,9 +7257,9 @@ Please check your Internet connection and also make sure you are logged into you
                 <navigationController id="WAk-L1-c5d" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Recommendations" image="bmk" id="5VD-on-31r"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="r4H-UA-xN3">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <rect key="frame" x="0.0" y="20" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.70196078431372544" green="0.27450980392156865" blue="0.27450980392156865" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </navigationBar>
                     <connections>
                         <segue destination="F3c-k5-Lyi" kind="relationship" relationship="rootViewController" id="rlG-7u-0kE"/>
@@ -7284,7 +7290,7 @@ Please check your Internet connection and also make sure you are logged into you
         <image name="word" width="56" height="56"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="p5b-Lc-CDi"/>
-        <segue reference="d54-C7-Lcv"/>
+        <segue reference="hw9-tI-ehj"/>
+        <segue reference="Qmm-If-9sy"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var cookies: [HTTPCookie] = [HTTPCookie]()
     var token = ""
     
-    static var redColor = UIColor(red: 179/255, green: 70/255, blue: 70/255, alpha: 1.0) //179 70 70
+    static var redColor = UIColor(red: 81/255, green: 52/255, blue: 99/255, alpha: 1.0) 
     
     //utf8=%E2%9C%93&authenticity_token=Ew7ritgSHINn3NyzuiPTBYjEBWyddhe%2FYmcAqQJQ8iU%3D&user_session%5Blogin%5D=SSADev&user_session%5Bpassword%5D=IsiT301-1&commit=Log+In
 
