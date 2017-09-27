@@ -115,7 +115,7 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
             return
         }
         
-        let days = howManyDaysHavePassed(lastDate as! Date, today: Date())
+        let days = howManyDaysHavePassed(lastDate as? Date ?? Date(), today: Date())
         
         descLabel.text = "\(NSLocalizedString("RecommendationsExplainedShort", comment: "")) \(NSLocalizedString("LastUpdate_", comment: "")) \(dateFormatter.string(from: lastDate as? Date ?? Date()))"
         
