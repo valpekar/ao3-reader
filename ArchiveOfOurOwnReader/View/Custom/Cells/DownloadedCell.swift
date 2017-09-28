@@ -28,8 +28,6 @@ class DownloadedCell: UITableViewCell {
     
     @IBOutlet weak var topicPreviewLabel: UILabel!
     
-    @IBOutlet weak var wordsLabel: UILabel!
-    
     @IBOutlet weak var chaptersLabel: UILabel!
     
     @IBOutlet weak var commentsLabel: UILabel!

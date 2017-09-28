@@ -28,7 +28,7 @@ class SidePanelViewController: UIViewController, UITableViewDataSource, UITableV
                        NSLocalizedString("Recommendations", comment: ""),
                        NSLocalizedString("Support", comment: "")
         /*, "Publish"*/]
-    let imgs = ["shortstory", "bmk", "history" , "subscriptions", "download-100", "profile", "shortstory", "support"/*, "shortstory"*/]
+    let imgs = ["shortstory", "bmk", "history" , "subscriptions", "download-red", "profile", "shortstory", "support"/*, "shortstory"*/]
     
     struct TableView {
         struct CellIdentifiers {
@@ -57,7 +57,7 @@ class SidePanelViewController: UIViewController, UITableViewDataSource, UITableV
         let cell = tableView.dequeueReusableCell(withIdentifier: TableView.CellIdentifiers.TagCell, for: indexPath) as! TagCell
         
         let customColorView : UIView = UIView()
-        customColorView.backgroundColor = UIColor.init(red: 154/255, green: 30/255, blue: 64/255, alpha: 0.5)
+        customColorView.backgroundColor = UIColor.init(red: 146/255, green: 84/255, blue: 180/255, alpha: 0.5)
         cell.selectedBackgroundView =  customColorView;
         
         cell.configureForHeader(controllers[(indexPath as NSIndexPath).row], imageName: imgs[(indexPath as NSIndexPath).row])

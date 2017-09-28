@@ -21,5 +21,14 @@ class SubsCell : UITableViewCell {
     
     override func layoutSubviews() {
         self.bgView.layer.cornerRadius = 5
+        
+        let gradient: CAGradientLayer = CAGradientLayer()
+        
+        gradient.frame = CGRect(origin: CGPoint.zero, size: self.bgView.frame.size)//self.bgView.bounds
+        //gradient.startPoint = CGPoint(x: 1.0, y: 0.5)
+        //gradient.endPoint = CGPoint(x: 0.0, y:0.5)
+        gradient.colors = [AppDelegate.redLightColor.cgColor, AppDelegate.purpleLightColor.cgColor]
+        
+        self.bgView.layer.insertSublayer(gradient, at: 0)
     }
 }

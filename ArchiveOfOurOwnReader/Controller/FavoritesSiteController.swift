@@ -137,8 +137,11 @@ class FavoritesSiteController : LoadingViewController, UITableViewDataSource, UI
         hideLoadingView()
         self.navigationItem.title = boomarksAddedStr
         
-        if (tableView.numberOfSections > 0 && tableView.numberOfRows(inSection: 0) > 0) {
-            tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            if (self.tableView.numberOfSections > 0 && self.tableView.numberOfRows(inSection: 0) > 0) {
+                self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+            }
         }
         collectionView.flashScrollIndicators()
     }
@@ -182,12 +185,32 @@ class FavoritesSiteController : LoadingViewController, UITableViewDataSource, UI
         
         cell?.datetimeLabel.text = curWork.dateTime
         cell?.languageLabel.text = curWork.language
-        cell?.wordsLabel.text = curWork.words
         cell?.chaptersLabel.text = NSLocalizedString("Chapters_", comment: "") + curWork.chapters
-        cell?.commentsLabel.text = curWork.comments
-        cell?.kudosLabel.text = curWork.kudos
-        cell?.bookmarksLabel.text = curWork.bookmarks
-        cell?.hitsLabel.text = curWork.hits
+        
+        if let commentsNum: Float = Float(curWork.comments) {
+            (cell as! FeedTableViewCell).commentsLabel.text =  commentsNum.formatUsingAbbrevation()
+        } else {
+            (cell as! FeedTableViewCell).commentsLabel.text = curWork.comments
+        }
+        
+        if let kudosNum: Float = Float(curWork.kudos) {
+            (cell as! FeedTableViewCell).kudosLabel.text =  kudosNum.formatUsingAbbrevation()
+        } else {
+            (cell as! FeedTableViewCell).kudosLabel.text = curWork.kudos
+        }
+        
+        if let bookmarksNum: Float = Float(curWork.bookmarks) {
+            (cell as! FeedTableViewCell).bookmarksLabel.text =  bookmarksNum.formatUsingAbbrevation()
+        } else {
+            (cell as! FeedTableViewCell).bookmarksLabel.text = curWork.bookmarks
+        }
+        
+        if let hitsNum: Float = Float(curWork.hits) {
+            (cell as! FeedTableViewCell).hitsLabel.text =  hitsNum.formatUsingAbbrevation()
+        } else {
+            (cell as! FeedTableViewCell).hitsLabel.text = curWork.hits
+        }
+        
         /*cell?.completeLabel.text = curWork.complete
         cell?.categoryLabel.text = curWork.category
         cell?.ratingLabel.text = curWork.rating*/

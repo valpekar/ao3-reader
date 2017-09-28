@@ -28,8 +28,6 @@ class FeedTableViewCell: UITableViewCell {
     
     @IBOutlet weak var topicPreviewLabel: UILabel!
     
-    @IBOutlet weak var wordsLabel: UILabel!
-    
     @IBOutlet weak var chaptersLabel: UILabel!
     
     @IBOutlet weak var commentsLabel: UILabel!
@@ -50,5 +48,7 @@ class FeedTableViewCell: UITableViewCell {
     
     override func layoutSubviews() {
         self.bgView.layer.cornerRadius = 5
+        
+        self.fandomsLabel.textColor = AppDelegate.greenColor
     }
 }

@@ -20,7 +20,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var cookies: [HTTPCookie] = [HTTPCookie]()
     var token = ""
     
-    static var redColor = UIColor(red: 81/255, green: 52/255, blue: 99/255, alpha: 1.0) 
+    static var redColor = UIColor(red: 81/255, green: 52/255, blue: 99/255, alpha: 1.0)
+    static var redLightColor = UIColor(red: 100/255, green: 29/255, blue: 139/255, alpha: 1.0)
+    static var redDarkColor = UIColor(red: 49/255, green: 28/255, blue: 59/255, alpha: 1.0)
+    static var purpleLightColor = UIColor(red: 146/255, green: 84/255, blue: 180/255, alpha: 1.0)
+    static var greyColor = UIColor(red: 149/255, green: 155/255, blue: 174/255, alpha: 1.0)
+    static var greenColor = UIColor(red: 110/255, green: 177/255, blue: 157/255, alpha: 1.0) 
     
     //utf8=%E2%9C%93&authenticity_token=Ew7ritgSHINn3NyzuiPTBYjEBWyddhe%2FYmcAqQJQ8iU%3D&user_session%5Blogin%5D=SSADev&user_session%5Bpassword%5D=IsiT301-1&commit=Log+In
 

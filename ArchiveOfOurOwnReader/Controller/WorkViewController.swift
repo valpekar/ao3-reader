@@ -102,6 +102,8 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
         tapRecognizer.numberOfTapsRequired = 1
         tapRecognizer.numberOfTouchesRequired = 1
         tapRecognizer.delegate = self
+        tapRecognizer.delaysTouchesBegan = true
+        tapRecognizer.delaysTouchesEnded = true
         webView.addGestureRecognizer(tapRecognizer)
         
         NotificationCenter.default.addObserver(self, selector: #selector(WorkViewController.lockScreen), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)

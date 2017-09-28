@@ -139,7 +139,7 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
     }
     
     func refresh(_ sender:AnyObject) {
-        searchApplied(self.query, shouldAddKeyword: false)
+        searchApplied(self.query, shouldAddKeyword: true)
         
         if (Reachability.isConnectedToNetwork()) {
             if (!DefaultsManager.getString(DefaultsManager.PSEUD_ID).isEmpty &&  (/*(UIApplication.shared.delegate as! AppDelegate).cookies.count == 0 ||*/ (UIApplication.shared.delegate as! AppDelegate).token.isEmpty)) {
@@ -230,12 +230,31 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
         
         (cell as! FeedTableViewCell).datetimeLabel.text = curWork.dateTime
         (cell as! FeedTableViewCell).languageLabel.text = curWork.language
-        (cell as! FeedTableViewCell).wordsLabel.text = curWork.words
         (cell as! FeedTableViewCell).chaptersLabel.text = NSLocalizedString("Chapters_", comment: "") + curWork.chapters
-        (cell as! FeedTableViewCell).commentsLabel.text = curWork.comments
-        (cell as! FeedTableViewCell).kudosLabel.text = curWork.kudos
-        (cell as! FeedTableViewCell).bookmarksLabel.text = curWork.bookmarks
-        (cell as! FeedTableViewCell).hitsLabel.text = curWork.hits
+        
+        if let commentsNum: Float = Float(curWork.comments) {
+            (cell as! FeedTableViewCell).commentsLabel.text =  commentsNum.formatUsingAbbrevation()
+        } else {
+            (cell as! FeedTableViewCell).commentsLabel.text = curWork.comments
+        }
+        
+        if let kudosNum: Float = Float(curWork.kudos) {
+            (cell as! FeedTableViewCell).kudosLabel.text =  kudosNum.formatUsingAbbrevation()
+        } else {
+            (cell as! FeedTableViewCell).kudosLabel.text = curWork.kudos
+        }
+        
+        if let bookmarksNum: Float = Float(curWork.bookmarks) {
+            (cell as! FeedTableViewCell).bookmarksLabel.text =  bookmarksNum.formatUsingAbbrevation()
+        } else {
+            (cell as! FeedTableViewCell).bookmarksLabel.text = curWork.bookmarks
+        }
+        
+        if let hitsNum: Float = Float(curWork.hits) {
+            (cell as! FeedTableViewCell).hitsLabel.text =  hitsNum.formatUsingAbbrevation()
+        } else {
+            (cell as! FeedTableViewCell).hitsLabel.text = curWork.hits
+        }
        // cell?.completeLabel.text = curWork.complete
        // cell?.categoryLabel.text = curWork.category
        // cell?.ratingLabel.text = curWork.rating
@@ -569,8 +588,45 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
         query.fandom_names = pref
         DefaultsManager.putObject(query, key: DefaultsManager.SEARCH_Q)
         
-        self.searchApplied(self.query, shouldAddKeyword: false)
+        self.searchApplied(self.query, shouldAddKeyword: true)
     }
     
 
+}
+
+extension Float {
+    
+    func formatUsingAbbrevation () -> String {
+        let numFormatter = NumberFormatter()
+        
+        typealias Abbrevation = (threshold:Double, divisor:Double, suffix:String)
+        let abbreviations:[Abbrevation] = [(0, 1, ""),
+                                           (1000.0, 1000.0, "K"),
+                                           (100_000.0, 1_000_000.0, "M"),
+                                           (100_000_000.0, 1_000_000_000.0, "B")]
+        // you can add more !
+        
+        let startValue = Double (abs(self))
+        let abbreviation:Abbrevation = {
+            var prevAbbreviation = abbreviations[0]
+            for tmpAbbreviation in abbreviations {
+                if (startValue < tmpAbbreviation.threshold) {
+                    break
+                }
+                prevAbbreviation = tmpAbbreviation
+            }
+            return prevAbbreviation
+        } ()
+        
+        let value = Double(self) / abbreviation.divisor
+        numFormatter.positiveSuffix = abbreviation.suffix
+        numFormatter.negativeSuffix = abbreviation.suffix
+        numFormatter.allowsFloats = true
+        numFormatter.minimumIntegerDigits = 1
+        numFormatter.minimumFractionDigits = 0
+        numFormatter.maximumFractionDigits = 1
+        
+        return numFormatter.string(from: NSNumber (value:value)) ?? ""
+    }
+    
 }

@@ -263,7 +263,6 @@ class SubscriptionsViewController: LoadingViewController, UITableViewDataSource,
         let curWork:NewsFeedItem = works[(indexPath as NSIndexPath).row]
         
         cell?.topicLabel.text = curWork.topic.replacingOccurrences(of: "\n", with: "")
-        
         cell?.downloadButton.tag = (indexPath as NSIndexPath).row
         
         return cell!

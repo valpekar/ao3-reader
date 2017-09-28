@@ -799,8 +799,16 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 cell!.label.text = downloadedWorkItem.value(forKey: "language") as? String ?? ""
             }
             cell!.imgView.image = UIImage(named: "lang")
-                
+            
         case 6:
+            if (workItem != nil) {
+                cell!.label.text = "\(workItem.words) \(NSLocalizedString("Words", comment: ""))"
+            } else if (downloadedWorkItem != nil) {
+                cell!.label.text = downloadedWorkItem.value(forKey: "words") as? String ?? ""
+            }
+            cell!.imgView.image = UIImage(named: "word")
+                
+        case 7:
             if (workItem != nil) {
                 cell!.label.text = workItem.stats
             } else if (downloadedWorkItem != nil) {
@@ -817,7 +825,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 7
+        return 8
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

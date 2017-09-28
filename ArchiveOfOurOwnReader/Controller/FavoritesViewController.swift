@@ -195,12 +195,32 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         
         cell?.datetimeLabel.text = curWork?.value(forKey: "datetime") as? String
         cell?.languageLabel.text = curWork?.value(forKey: "language") as? String
-        cell?.wordsLabel.text = curWork?.value(forKey: "words") as? String
         cell?.chaptersLabel.text = "\(NSLocalizedString("Chapters_", comment: "")) \(chaptersCountStr)"
-        cell?.commentsLabel.text = curWork?.value(forKey: "comments") as? String
-        cell?.kudosLabel.text = curWork?.value(forKey: "kudos") as? String
-        cell?.bookmarksLabel.text = curWork?.value(forKey: "bookmarks") as? String
-        cell?.hitsLabel.text = curWork?.value(forKey: "hits") as? String
+        
+        if let commentsNum: Float = Float(curWork?.value(forKey: "comments") as? String ?? "0") {
+            cell?.commentsLabel.text =  commentsNum.formatUsingAbbrevation()
+        } else {
+            cell?.commentsLabel.text = curWork?.value(forKey: "comments") as? String
+        }
+        
+        if let kudosNum: Float = Float(curWork?.value(forKey: "kudos") as? String ?? "0") {
+            cell?.kudosLabel.text =  kudosNum.formatUsingAbbrevation()
+        } else {
+            cell?.kudosLabel.text = curWork?.value(forKey: "kudos") as? String
+        }
+        
+        if let bookmarksNum: Float = Float(curWork?.value(forKey: "bookmarks") as? String ?? "0") {
+            cell?.bookmarksLabel.text =  bookmarksNum.formatUsingAbbrevation()
+        } else {
+            cell?.bookmarksLabel.text = curWork?.value(forKey: "bookmarks") as? String
+        }
+        
+        if let hitsNum: Float = Float(curWork?.value(forKey: "hits") as? String ?? "0") {
+            cell?.hitsLabel.text =  hitsNum.formatUsingAbbrevation()
+        } else {
+            cell?.hitsLabel.text = curWork?.value(forKey: "hits") as? String
+        }
+        
         /*cell?.completeLabel.text = curWork.valueForKey("complete") as? String
         cell?.categoryLabel.text = curWork.valueForKey("category") as? String
         cell?.ratingLabel.text = curWork.valueForKey("ratingTags") as? String*/
