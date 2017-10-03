@@ -825,7 +825,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
         
         let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
         let done: UIBarButtonItem = UIBarButtonItem(title: NSLocalizedString("Done", comment: ""), style: UIBarButtonItemStyle.done, target: self, action: #selector(LoadingViewController.doneButtonAction))
-        done.tintColor = UIColor(red: 255/0, green: 77/255, blue: 80/255, alpha: 1)
+        done.tintColor = AppDelegate.redColor
         
         var items: [UIBarButtonItem] = [UIBarButtonItem]()
         items.append(flexSpace)
@@ -845,7 +845,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
         
         let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
         let done: UIBarButtonItem = UIBarButtonItem(title: NSLocalizedString("Done", comment: ""), style: UIBarButtonItemStyle.done, target: self, action: #selector(LoadingViewController.doneButtonAction))
-        done.tintColor = UIColor(red: 99/255, green: 0/255, blue: 0/255, alpha: 1)
+        done.tintColor = AppDelegate.redColor
         
         var items: [UIBarButtonItem] = [UIBarButtonItem]()
         items.append(flexSpace)
@@ -895,3 +895,40 @@ extension String: ParameterEncoding {
     }
     
 }
+
+ extension Float {
+    
+    func formatUsingAbbrevation () -> String {
+        let numFormatter = NumberFormatter()
+        
+        typealias Abbrevation = (threshold:Double, divisor:Double, suffix:String)
+        let abbreviations:[Abbrevation] = [(0, 1, ""),
+                                           (1000.0, 1000.0, "K"),
+                                           (100_000.0, 1_000_000.0, "M"),
+                                           (100_000_000.0, 1_000_000_000.0, "B")]
+        // you can add more !
+        
+        let startValue = Double (abs(self))
+        let abbreviation:Abbrevation = {
+            var prevAbbreviation = abbreviations[0]
+            for tmpAbbreviation in abbreviations {
+                if (startValue < tmpAbbreviation.threshold) {
+                    break
+                }
+                prevAbbreviation = tmpAbbreviation
+            }
+            return prevAbbreviation
+        } ()
+        
+        let value = Double(self) / abbreviation.divisor
+        numFormatter.positiveSuffix = abbreviation.suffix
+        numFormatter.negativeSuffix = abbreviation.suffix
+        numFormatter.allowsFloats = true
+        numFormatter.minimumIntegerDigits = 1
+        numFormatter.minimumFractionDigits = 0
+        numFormatter.maximumFractionDigits = 1
+        
+        return numFormatter.string(from: NSNumber (value:value)) ?? ""
+    }
+    
+ }

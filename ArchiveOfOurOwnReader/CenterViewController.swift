@@ -13,7 +13,7 @@ protocol CenterViewControllerDelegate {
     func collapseSidePanels()
 }
 
-class CenterViewController: UIViewController {
+class CenterViewController: ListViewController {
 
     var delegate: CenterViewControllerDelegate?
     
@@ -22,7 +22,7 @@ class CenterViewController: UIViewController {
         
         delegate?.toggleLeftPanel()
     }
-    
+        
     func createDrawerButton() {
         let barButtonItem = UIBarButtonItem(image: UIImage(named: "drawer"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(CenterViewController.drawerClicked(_:)))
         self.navigationItem.leftBarButtonItem = barButtonItem

@@ -115,6 +115,7 @@
 		3CBDC9AF1E9E265B00A97C24 /* AnalyticsItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CBDC9AD1E9E265B00A97C24 /* AnalyticsItem+CoreDataClass.swift */; };
 		3CBDC9B01E9E265B00A97C24 /* AnalyticsItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CBDC9AE1E9E265B00A97C24 /* AnalyticsItem+CoreDataProperties.swift */; };
 		3CC6A2881E66800F005D1255 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CC6A2871E66800F005D1255 /* Reachability.swift */; };
+		3CC888971F83CC1C0027C469 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CC888961F83CC1C0027C469 /* ListViewController.swift */; };
 		3CCA7B3C1EFAA1EC00590D12 /* SubscriptionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CCA7B3B1EFAA1EC00590D12 /* SubscriptionsController.swift */; };
 		3CCA7B3E1EFAA3C600590D12 /* SubsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CCA7B3D1EFAA3C600590D12 /* SubsCell.swift */; };
 		3CCBC0DE1CB534A1000207CF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CCBC0DD1CB534A1000207CF /* CoreGraphics.framework */; };
@@ -300,6 +301,7 @@
 		3CBDC9AD1E9E265B00A97C24 /* AnalyticsItem+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "AnalyticsItem+CoreDataClass.swift"; path = "Model/AnalyticsItem+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3CBDC9AE1E9E265B00A97C24 /* AnalyticsItem+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "AnalyticsItem+CoreDataProperties.swift"; path = "Model/AnalyticsItem+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3CC6A2871E66800F005D1255 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Reachability.swift; path = Utils/Reachability.swift; sourceTree = "<group>"; };
+		3CC888961F83CC1C0027C469 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ListViewController.swift; path = Controller/ListViewController.swift; sourceTree = "<group>"; };
 		3CCA7B3B1EFAA1EC00590D12 /* SubscriptionsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SubscriptionsController.swift; path = Controller/SubscriptionsController.swift; sourceTree = "<group>"; };
 		3CCA7B3D1EFAA3C600590D12 /* SubsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubsCell.swift; sourceTree = "<group>"; };
 		3CCBC0DD1CB534A1000207CF /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -534,6 +536,7 @@
 				3C728C691E8CBA06006D7100 /* ChoosePrefController.swift */,
 				3CCA7B3B1EFAA1EC00590D12 /* SubscriptionsController.swift */,
 				3C93D4AF1F223AB000948D08 /* EditFoldersController.swift */,
+				3CC888961F83CC1C0027C469 /* ListViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -955,6 +958,7 @@
 				1D1AAF161B98793700927CE1 /* WorkDetailCell.swift in Sources */,
 				1D3F4BA91BBABF5100279C27 /* LoadingViewController.swift in Sources */,
 				3C88102D1F14BED900ED6B5D /* HistoryItem+CoreDataProperties.swift in Sources */,
+				3CC888971F83CC1C0027C469 /* ListViewController.swift in Sources */,
 				3C31054A1C7F57020065256E /* FavoritesSiteController.swift in Sources */,
 				1D2CFFFF1B8C7F7F0065EB2B /* PageItem.swift in Sources */,
 				3CB992C11CF470D5004772AF /* PublishWorkController.swift in Sources */,

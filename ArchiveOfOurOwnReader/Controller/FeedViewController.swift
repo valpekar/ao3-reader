@@ -17,13 +17,16 @@ protocol SearchControllerDelegate {
     func searchApplied(_ searchQuery:SearchQuery, shouldAddKeyword: Bool)
 }
 
-class FeedViewController: LoadingViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, SearchControllerDelegate, UIWebViewDelegate, ChoosePrefProtocol {
+class FeedViewController: LoadingViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, SearchControllerDelegate, UIWebViewDelegate, ChoosePrefProtocol, UISearchResultsUpdating {
+    
 
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var tableView:UITableView!
     
     @IBOutlet weak var tryAgainButton:UIButton!
     @IBOutlet weak var checkStatusButton:UIButton!
+    
+    var resultSearchController = UISearchController()
     
     //var placer: MPTableViewAdPlacer!
     
@@ -58,6 +61,26 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
         let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.white]
         self.navigationController!.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
         
+        self.resultSearchController = ({
+            let controller = UISearchController(searchResultsController: nil)
+            controller.searchResultsUpdater = self
+            controller.dimsBackgroundDuringPresentation = false
+            controller.hidesNavigationBarDuringPresentation = false
+            controller.searchBar.sizeToFit()
+            controller.searchBar.tintColor = AppDelegate.redLightColor
+            controller.searchBar.delegate = self
+            
+            if let tf = controller.searchBar.value(forKey: "_searchField") as? UITextField {
+                addDoneButtonOnKeyboardTf(tf)
+            }
+            
+            self.tableView.tableHeaderView = controller.searchBar
+            
+            return controller
+        })()
+        
+        
+        //Load query
         loadQueryFromDefaults()
         
        // let pseud_id = DefaultsManager.getString(DefaultsManager.PSEUD_ID)
@@ -205,70 +228,24 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellIdentifier: String = "FeedCell"
         
-        var cell:UITableViewCell?
-        cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
-        
-        if (cell == nil) {
+        var cell: FeedTableViewCell! = nil
+        if let c:FeedTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? FeedTableViewCell {
+            cell = c
+        } else {
             cell = FeedTableViewCell(reuseIdentifier: cellIdentifier)
         }
         
         if (works.count == 0) {
-            return cell!
+            return cell
         }
         
         let curWork:NewsFeedItem = works[(indexPath as NSIndexPath).row]
         
-        (cell as! FeedTableViewCell).topicLabel.text = curWork.topic.replacingOccurrences(of: "\n", with: "")
-        (cell as! FeedTableViewCell).fandomsLabel.text = curWork.fandoms
-       
-        if (curWork.topicPreview != nil) {
-            (cell as! FeedTableViewCell).topicPreviewLabel.text = curWork.topicPreview
-        }
-        else {
-            (cell as! FeedTableViewCell).topicPreviewLabel.text = ""
-        }
+        cell = fillCell(cell: cell, curWork: curWork)
         
-        (cell as! FeedTableViewCell).datetimeLabel.text = curWork.dateTime
-        (cell as! FeedTableViewCell).languageLabel.text = curWork.language
-        (cell as! FeedTableViewCell).chaptersLabel.text = NSLocalizedString("Chapters_", comment: "") + curWork.chapters
+        cell.downloadButton.tag = (indexPath as NSIndexPath).row
         
-        if let commentsNum: Float = Float(curWork.comments) {
-            (cell as! FeedTableViewCell).commentsLabel.text =  commentsNum.formatUsingAbbrevation()
-        } else {
-            (cell as! FeedTableViewCell).commentsLabel.text = curWork.comments
-        }
-        
-        if let kudosNum: Float = Float(curWork.kudos) {
-            (cell as! FeedTableViewCell).kudosLabel.text =  kudosNum.formatUsingAbbrevation()
-        } else {
-            (cell as! FeedTableViewCell).kudosLabel.text = curWork.kudos
-        }
-        
-        if let bookmarksNum: Float = Float(curWork.bookmarks) {
-            (cell as! FeedTableViewCell).bookmarksLabel.text =  bookmarksNum.formatUsingAbbrevation()
-        } else {
-            (cell as! FeedTableViewCell).bookmarksLabel.text = curWork.bookmarks
-        }
-        
-        if let hitsNum: Float = Float(curWork.hits) {
-            (cell as! FeedTableViewCell).hitsLabel.text =  hitsNum.formatUsingAbbrevation()
-        } else {
-            (cell as! FeedTableViewCell).hitsLabel.text = curWork.hits
-        }
-       // cell?.completeLabel.text = curWork.complete
-       // cell?.categoryLabel.text = curWork.category
-       // cell?.ratingLabel.text = curWork.rating
-        
-        
-        var tagsString = ""
-        if (curWork.tags.count > 0) {
-            tagsString = curWork.tags.joined(separator: ", ")
-        }
-        (cell as! FeedTableViewCell).tagsLabel.text = tagsString
-        
-        (cell as! FeedTableViewCell).downloadButton.tag = (indexPath as NSIndexPath).row
-        
-        return cell!
+        return cell
     }
     
     // MARK: - UICollectionViewDataSource
@@ -467,6 +444,17 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
         self.showFeed()
     }
     
+    override func doneButtonAction() {
+        super.doneButtonAction()
+        self.resultSearchController.dismiss(animated: true, completion: nil)
+    }
+    
+    override func drawerClicked(_ sender: AnyObject) {
+        
+        doneButtonAction()
+        super.drawerClicked(sender)
+    }
+    
     //MARK: - SAVE WORK TO DB
     
     var curWork:NewsFeedItem?
@@ -591,42 +579,32 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
         self.searchApplied(self.query, shouldAddKeyword: true)
     }
     
-
-}
-
-extension Float {
     
-    func formatUsingAbbrevation () -> String {
-        let numFormatter = NumberFormatter()
+    //MARK: - UISearchResultsUpdating
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let txt = searchController.searchBar.text else {
+            TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error, duration: 2.0)
+            return
+        }
         
-        typealias Abbrevation = (threshold:Double, divisor:Double, suffix:String)
-        let abbreviations:[Abbrevation] = [(0, 1, ""),
-                                           (1000.0, 1000.0, "K"),
-                                           (100_000.0, 1_000_000.0, "M"),
-                                           (100_000_000.0, 1_000_000_000.0, "B")]
-        // you can add more !
-        
-        let startValue = Double (abs(self))
-        let abbreviation:Abbrevation = {
-            var prevAbbreviation = abbreviations[0]
-            for tmpAbbreviation in abbreviations {
-                if (startValue < tmpAbbreviation.threshold) {
-                    break
-                }
-                prevAbbreviation = tmpAbbreviation
-            }
-            return prevAbbreviation
-        } ()
-        
-        let value = Double(self) / abbreviation.divisor
-        numFormatter.positiveSuffix = abbreviation.suffix
-        numFormatter.negativeSuffix = abbreviation.suffix
-        numFormatter.allowsFloats = true
-        numFormatter.minimumIntegerDigits = 1
-        numFormatter.minimumFractionDigits = 0
-        numFormatter.maximumFractionDigits = 1
-        
-        return numFormatter.string(from: NSNumber (value:value)) ?? ""
+        if (!txt.isEmpty) {
+            query = SearchQuery()
+            
+            query.include_tags = txt
+            DefaultsManager.putObject(query, key: DefaultsManager.SEARCH_Q)
+            
+            searchApplied(query, shouldAddKeyword: false)
+        }
     }
-    
+
 }
+
+extension FeedViewController : UISearchBarDelegate {
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        
+    }
+}
+
+

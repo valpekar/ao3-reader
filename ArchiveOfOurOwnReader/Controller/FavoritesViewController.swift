@@ -53,7 +53,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
             controller.dimsBackgroundDuringPresentation = false
             controller.hidesNavigationBarDuringPresentation = false
             controller.searchBar.sizeToFit()
-            controller.searchBar.tintColor = UIColor(red: 255/255, green: 77/255, blue: 80/255, alpha: 1.0)
+            controller.searchBar.tintColor = AppDelegate.redLightColor
             controller.searchBar.delegate = self
             
             if let tf = controller.searchBar.value(forKey: "_searchField") as? UITextField {

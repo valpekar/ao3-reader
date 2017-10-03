@@ -310,63 +310,22 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellIdentifier: String = "FeedCell"
         
-        var cell:FeedTableViewCell? = tableView.dequeueReusableCell(withIdentifier: cellIdentifier) as? FeedTableViewCell
-        
-        if (cell == nil) {
+        var cell: FeedTableViewCell! = nil
+        if let c:FeedTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? FeedTableViewCell {
+            cell = c
+        } else {
             cell = FeedTableViewCell(reuseIdentifier: cellIdentifier)
         }
         
         let curWork:NewsFeedItem = works[(indexPath as NSIndexPath).row]
         
-        cell?.topicLabel.text = curWork.topic.replacingOccurrences(of: "\n", with: "")
-        cell?.fandomsLabel.text = curWork.fandoms
+        cell = fillCell(cell: cell, curWork: curWork)
         
-        if (curWork.topicPreview != nil) {
-            cell?.topicPreviewLabel.text = curWork.topicPreview
-        }
-        else {
-            cell?.topicPreviewLabel.text = ""
-        }
+        cell.downloadButton.tag = (indexPath as NSIndexPath).row
+        cell.deleteButton.tag = (indexPath as NSIndexPath).row
+        cell.deleteButton.isHidden = true
         
-        cell?.datetimeLabel.text = curWork.dateTime
-        cell?.languageLabel.text = curWork.language
-        cell?.chaptersLabel.text = NSLocalizedString("Chapters_", comment: "") + curWork.chapters
-        
-        if let commentsNum: Float = Float(curWork.comments) {
-            (cell as! FeedTableViewCell).commentsLabel.text =  commentsNum.formatUsingAbbrevation()
-        } else {
-            (cell as! FeedTableViewCell).commentsLabel.text = curWork.comments
-        }
-        
-        if let kudosNum: Float = Float(curWork.kudos) {
-            (cell as! FeedTableViewCell).kudosLabel.text =  kudosNum.formatUsingAbbrevation()
-        } else {
-            (cell as! FeedTableViewCell).kudosLabel.text = curWork.kudos
-        }
-        
-        if let bookmarksNum: Float = Float(curWork.bookmarks) {
-            (cell as! FeedTableViewCell).bookmarksLabel.text =  bookmarksNum.formatUsingAbbrevation()
-        } else {
-            (cell as! FeedTableViewCell).bookmarksLabel.text = curWork.bookmarks
-        }
-        
-        if let hitsNum: Float = Float(curWork.hits) {
-            (cell as! FeedTableViewCell).hitsLabel.text =  hitsNum.formatUsingAbbrevation()
-        } else {
-            (cell as! FeedTableViewCell).hitsLabel.text = curWork.hits
-        }
-        /*cell?.completeLabel.text = curWork.complete
-         cell?.categoryLabel.text = curWork.category
-         cell?.ratingLabel.text = curWork.rating*/
-        
-        let tagsString:NSString = curWork.tags.joined(separator: ", ") as NSString
-        cell?.tagsLabel.text = tagsString as String
-        
-        cell?.downloadButton.tag = (indexPath as NSIndexPath).row
-        cell?.deleteButton.tag = (indexPath as NSIndexPath).row
-        cell?.deleteButton.isHidden = true
-        
-        return cell!
+        return cell
     }
 
     
