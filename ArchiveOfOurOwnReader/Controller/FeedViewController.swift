@@ -17,7 +17,7 @@ protocol SearchControllerDelegate {
     func searchApplied(_ searchQuery:SearchQuery, shouldAddKeyword: Bool)
 }
 
-class FeedViewController: LoadingViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, SearchControllerDelegate, UIWebViewDelegate, ChoosePrefProtocol, UISearchResultsUpdating {
+class FeedViewController: LoadingViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, SearchControllerDelegate, UIWebViewDelegate, ChoosePrefProtocol {
     
 
     @IBOutlet weak var collectionView: UICollectionView!
@@ -206,7 +206,7 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
             checkStatusButton.isHidden = true
             
             if (tableView.numberOfSections > 0 && tableView.numberOfRows(inSection: 0) > 0) {
-                tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+                tableView.setContentOffset( CGPoint(x: 0, y: 0) , animated: true)
             }
             collectionView.flashScrollIndicators()
         }
@@ -579,16 +579,24 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
         self.searchApplied(self.query, shouldAddKeyword: true)
     }
     
+
+}
+
+extension FeedViewController : UISearchBarDelegate, UISearchResultsUpdating {
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        
+    }
     
     //MARK: - UISearchResultsUpdating
     
     func updateSearchResults(for searchController: UISearchController) {
         guard let txt = searchController.searchBar.text else {
-            TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error, duration: 2.0)
+            TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CannotBeEmpty", comment: ""), type: .error, duration: 2.0)
             return
         }
         
-        if (!txt.isEmpty) {
+        if (!txt.isEmpty && query.include_tags != txt) {
             query = SearchQuery()
             
             query.include_tags = txt
@@ -596,14 +604,6 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
             
             searchApplied(query, shouldAddKeyword: false)
         }
-    }
-
-}
-
-extension FeedViewController : UISearchBarDelegate {
-    
-    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        
     }
 }
 

@@ -13,6 +13,7 @@
 "Searching" = "検索...";
 "GettingWorks" = "作品を手に入れる";
 "Error" = "エラー 👻";
+"CannotBeEmpty" = "何か入力してください！";
 "CheckInternet" = "インターネット接続を確認する";
 "Only30Stroies" = "30話しかダウンロードできません。 もっとダウンロードするにはアップグレードしてください。";
 "DwnloadingWrk" = "仕事をダウンロードする";

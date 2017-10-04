@@ -13,6 +13,7 @@
 "Searching" = "Procurando...";
 "GettingWorks" = "Obtendo Trabalhos";
 "Error" = "Erro 👻";
+"CannotBeEmpty" = "Digite algo!";
 "CheckInternet" = "Verifique a sua conexão com a internet";
 "Only30Stroies" = "Você só pode baixar 30 histórias. Por favor, atualize para baixar mais.";
 "DwnloadingWrk" = "Baixando Trabalho";
