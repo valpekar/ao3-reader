@@ -106,6 +106,8 @@
 		3C93D4AE1F22330900948D08 /* DownloadedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C93D4AD1F22330900948D08 /* DownloadedCell.swift */; };
 		3C93D4B01F223AB000948D08 /* EditFoldersController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C93D4AF1F223AB000948D08 /* EditFoldersController.swift */; };
 		3C9C87BA1CE3557D00C10410 /* RecommendationsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9C87B91CE3557D00C10410 /* RecommendationsController.swift */; };
+		3CB2A74B1F8BB237004A6F76 /* SerieViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB2A74A1F8BB237004A6F76 /* SerieViewController.swift */; };
+		3CB2A74F1F8BB4F8004A6F76 /* SerieInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB2A74E1F8BB4F8004A6F76 /* SerieInfoCell.swift */; };
 		3CB7735F1C847CCD00DC15C4 /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB7735E1C847CCD00DC15C4 /* ContainerViewController.swift */; };
 		3CB773611C847D6100DC15C4 /* SidePanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB773601C847D6100DC15C4 /* SidePanelViewController.swift */; };
 		3CB773631C8480C300DC15C4 /* CenterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB773621C8480C300DC15C4 /* CenterViewController.swift */; };
@@ -123,6 +125,7 @@
 		3CCBC0E21CB534CE000207CF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CCBC0E11CB534CE000207CF /* Foundation.framework */; };
 		3CCBC0E41CB534DE000207CF /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CCBC0E31CB534DE000207CF /* QuartzCore.framework */; };
 		3CCBC0E61CB534F9000207CF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CCBC0E51CB534F9000207CF /* UIKit.framework */; };
+		3CD0F4AC1F87A45400E54046 /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CD0F4AB1F87A45400E54046 /* LocalAuthentication.framework */; };
 		3CD1CE6A1F27731600E8AAFC /* WorkDetailTxtCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD1CE691F27731600E8AAFC /* WorkDetailTxtCell.swift */; };
 		3CD808541D804F310099F778 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3CD808531D804F310099F778 /* GoogleService-Info.plist */; };
 		3CDC4A2C1E825F5100D9438E /* AboutSubscriptionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CDC4A2B1E825F5100D9438E /* AboutSubscriptionController.swift */; };
@@ -291,6 +294,8 @@
 		3CA0A7B31F7BCC7900ADEE04 /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "pt-PT"; path = "pt-PT.lproj/LaunchScreen.xib"; sourceTree = "<group>"; };
 		3CA0A7B41F7BCC7A00ADEE04 /* ko */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ko; path = ko.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		3CA0A7B51F7BCCBC00ADEE04 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3CB2A74A1F8BB237004A6F76 /* SerieViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SerieViewController.swift; path = Controller/SerieViewController.swift; sourceTree = "<group>"; };
+		3CB2A74E1F8BB4F8004A6F76 /* SerieInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SerieInfoCell.swift; path = View/Custom/Cells/SerieInfoCell.swift; sourceTree = "<group>"; };
 		3CB7735E1C847CCD00DC15C4 /* ContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
 		3CB773601C847D6100DC15C4 /* SidePanelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SidePanelViewController.swift; sourceTree = "<group>"; };
 		3CB773621C8480C300DC15C4 /* CenterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CenterViewController.swift; sourceTree = "<group>"; };
@@ -309,6 +314,7 @@
 		3CCBC0E11CB534CE000207CF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		3CCBC0E31CB534DE000207CF /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		3CCBC0E51CB534F9000207CF /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		3CD0F4AB1F87A45400E54046 /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
 		3CD1CE691F27731600E8AAFC /* WorkDetailTxtCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WorkDetailTxtCell.swift; path = View/Custom/Cells/WorkDetailTxtCell.swift; sourceTree = "<group>"; };
 		3CD808531D804F310099F778 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3CD8F8CE1CE4808F00C3D5BB /* ArchiveOfOurOwnReader 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ArchiveOfOurOwnReader 3.xcdatamodel"; sourceTree = "<group>"; };
@@ -325,6 +331,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3CD0F4AC1F87A45400E54046 /* LocalAuthentication.framework in Frameworks */,
 				3CFD2A651CB55A2F0072FEC5 /* MessageUI.framework in Frameworks */,
 				3CFD2A631CB55A0F0072FEC5 /* Twitter.framework in Frameworks */,
 				3CCBC0E61CB534F9000207CF /* UIKit.framework in Frameworks */,
@@ -537,6 +544,7 @@
 				3CCA7B3B1EFAA1EC00590D12 /* SubscriptionsController.swift */,
 				3C93D4AF1F223AB000948D08 /* EditFoldersController.swift */,
 				3CC888961F83CC1C0027C469 /* ListViewController.swift */,
+				3CB2A74A1F8BB237004A6F76 /* SerieViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -567,6 +575,7 @@
 				3CCA7B3D1EFAA3C600590D12 /* SubsCell.swift */,
 				3C93D4AD1F22330900948D08 /* DownloadedCell.swift */,
 				3CD1CE691F27731600E8AAFC /* WorkDetailTxtCell.swift */,
+				3CB2A74E1F8BB4F8004A6F76 /* SerieInfoCell.swift */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -623,6 +632,7 @@
 		EE320A781FA37486137D80FD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3CD0F4AB1F87A45400E54046 /* LocalAuthentication.framework */,
 				3C274CBD1CE4CCBA00F3AC68 /* Flurry */,
 				1D7BDD391B5E75870017C346 /* libxml2.2.dylib */,
 				3CFD2A641CB55A2F0072FEC5 /* MessageUI.framework */,
@@ -902,6 +912,7 @@
 				1D7BDD371B5E755F0017C346 /* TFHppleElement.m in Sources */,
 				28B6DC561B4E47FC00F34529 /* SearchViewController.swift in Sources */,
 				3C89958B1E95169B00D511CD /* DBFandom+CoreDataProperties.swift in Sources */,
+				3CB2A74B1F8BB237004A6F76 /* SerieViewController.swift in Sources */,
 				3C274CC31CE4CCBA00F3AC68 /* FlurryEmpty.m in Sources */,
 				3CCA7B3E1EFAA3C600590D12 /* SubsCell.swift in Sources */,
 				1D7BDD381B5E755F0017C346 /* XPathQuery.m in Sources */,
@@ -929,6 +940,7 @@
 				3C00E9C31D9C05FA00B0BBDF /* CustomEncoding.swift in Sources */,
 				1D7BDD3E1B5E7B1D0017C346 /* SearchQuery.swift in Sources */,
 				1D2832101BBD6A7200FFC887 /* CharacterItem.swift in Sources */,
+				3CB2A74F1F8BB4F8004A6F76 /* SerieInfoCell.swift in Sources */,
 				3CDF1FAB1F39AA57004D858F /* WorksParser.swift in Sources */,
 				3CBDC9AC1E9E244500A97C24 /* DBChapter+CoreDataProperties.swift in Sources */,
 				3CF1D00E1C87182300D219B2 /* HistoryViewController.swift in Sources */,

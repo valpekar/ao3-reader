@@ -26,8 +26,8 @@ class ListViewController: UIViewController {
         }
         
         cell.datetimeLabel.text = curWork.dateTime
-        (cell as! FeedTableViewCell).languageLabel.text = curWork.language
-        (cell as! FeedTableViewCell).chaptersLabel.text = NSLocalizedString("Chapters_", comment: "") + curWork.chapters
+        cell.languageLabel.text = curWork.language
+        cell.chaptersLabel.text = NSLocalizedString("Chapters_", comment: "") + curWork.chapters
         
         if let commentsNum: Float = Float(curWork.comments) {
             cell.commentsLabel.text =  commentsNum.formatUsingAbbrevation()
@@ -42,9 +42,9 @@ class ListViewController: UIViewController {
         }
         
         if let bookmarksNum: Float = Float(curWork.bookmarks) {
-            (cell as! FeedTableViewCell).bookmarksLabel.text =  bookmarksNum.formatUsingAbbrevation()
+            cell.bookmarksLabel.text =  bookmarksNum.formatUsingAbbrevation()
         } else {
-            (cell as! FeedTableViewCell).bookmarksLabel.text = curWork.bookmarks
+            cell.bookmarksLabel.text = curWork.bookmarks
         }
         
         if let hitsNum: Float = Float(curWork.hits) {
@@ -64,5 +64,9 @@ class ListViewController: UIViewController {
         cell.tagsLabel.text = tagsString
         
         return cell
+    }
+    
+    func selectCell() {
+        
     }
 }

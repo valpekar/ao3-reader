@@ -102,7 +102,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
             Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
         }
-        
+                
         if (workItem != nil) {
             showOnlineWork()
         } else if (downloadedWorkItem != nil) {

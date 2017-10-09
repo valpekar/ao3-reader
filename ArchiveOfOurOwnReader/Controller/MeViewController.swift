@@ -17,6 +17,7 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var notifSwitch: UISwitch!
     @IBOutlet weak var adultSwitch: UISwitch!
+    @IBOutlet weak var authSwitch: UISwitch!
     @IBOutlet weak var adultLabel: UILabel!
     @IBOutlet weak var pseudsTableView: UITableView!
     
@@ -156,6 +157,14 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
                 }
             }
             
+            if let auth = DefaultsManager.getBool(DefaultsManager.NEEDS_AUTH) {
+                if (auth == true) {
+                    authSwitch.setOn(true, animated: true)
+                } else {
+                    authSwitch.setOn(false, animated: true)
+                }
+            }
+            
             self.pseudsTableView.reloadData()
             
         } else {
@@ -176,6 +185,14 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
         
         notifSwitch.isEnabled = false
         adultSwitch.isEnabled = false
+    }
+    
+    @IBAction func authSwitchChanged(_ sender: UISwitch) {
+        if (sender.isOn) {
+            DefaultsManager.putBool(true, key: DefaultsManager.NEEDS_AUTH)
+        } else {
+            DefaultsManager.putBool(false, key: DefaultsManager.NEEDS_AUTH)
+        }
     }
     
     @IBAction func notifSwitchChanged(_ sender: UISwitch) {
