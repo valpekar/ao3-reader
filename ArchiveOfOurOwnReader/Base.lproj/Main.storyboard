@@ -1597,7 +1597,9 @@
                                                     </constraints>
                                                 </tableViewCellContentView>
                                                 <connections>
+                                                    <outlet property="bgView" destination="OJd-G7-DrW" id="JOz-kb-fw3"/>
                                                     <outlet property="bookmarksLabel" destination="fGI-Tl-ZBt" id="Sxh-e7-adP"/>
+                                                    <outlet property="chaptersLabel" destination="mQI-oU-tIp" id="uRM-My-Mug"/>
                                                     <outlet property="commentsLabel" destination="0jl-hn-qUA" id="lGg-4Y-Z67"/>
                                                     <outlet property="datetimeLabel" destination="NQn-31-mp3" id="IO2-zG-w4n"/>
                                                     <outlet property="downloadButton" destination="gj0-J1-faQ" id="4jR-41-B3g"/>
@@ -1605,7 +1607,9 @@
                                                     <outlet property="hitsLabel" destination="ROX-wd-IPG" id="gHt-od-tad"/>
                                                     <outlet property="kudosLabel" destination="OB1-bt-qKc" id="sXC-pu-VpS"/>
                                                     <outlet property="languageLabel" destination="YJp-dA-6Aq" id="dJg-O4-6VE"/>
+                                                    <outlet property="tagsLabel" destination="7Df-Td-gLW" id="V7u-Z8-jLH"/>
                                                     <outlet property="topicLabel" destination="zRL-Oe-dO3" id="F2V-Ac-6qH"/>
+                                                    <outlet property="topicPreviewLabel" destination="Ccg-wK-dqP" id="kbB-yP-rfW"/>
                                                 </connections>
                                             </tableViewCell>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SerieInfoCell" rowHeight="200" id="axe-Jb-Jhu" customClass="SerieInfoCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
