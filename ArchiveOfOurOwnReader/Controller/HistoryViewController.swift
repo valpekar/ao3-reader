@@ -39,7 +39,7 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
         self.tableView.addSubview(self.refreshControl)
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
+            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
             requestFavs()
         } else if ((UIApplication.shared.delegate as! AppDelegate).cookies.count == 0 || (UIApplication.shared.delegate as! AppDelegate).token.isEmpty) {
             
@@ -73,10 +73,10 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
         showLoadingView(msg: NSLocalizedString("GettingHistory", comment: ""))
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
+            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
         }
         
-        let urlStr: String = "http://archiveofourown.org/users/" + username + "/readings"
+        let urlStr: String = "https://archiveofourown.org/users/" + username + "/readings"
         
         Alamofire.request(urlStr) //default is .get
             .response(completionHandler: { response in
@@ -225,12 +225,12 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
         if (!page.url.isEmpty) {
             
             if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-                Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
+                Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
             }
             
             showLoadingView(msg: "\(NSLocalizedString("LoadingPage", comment: "")) \(page.name)")
             
-            Alamofire.request("http://archiveofourown.org" + page.url, method: .get).response(completionHandler: { response in
+            Alamofire.request("https://archiveofourown.org" + page.url, method: .get).response(completionHandler: { response in
                 
                 #if DEBUG
                 print(response.error ?? "")
@@ -381,7 +381,7 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
         params["_method"] = "delete" as AnyObject?
         params["reading"] = curWork.readingId as AnyObject?
         
-        let urlStr: String = "http://archiveofourown.org/users/" + pseuds[currentPseud]! + "/readings/" + curWork.readingId
+        let urlStr: String = "https://archiveofourown.org/users/" + pseuds[currentPseud]! + "/readings/" + curWork.readingId
         
         Alamofire.request(urlStr, method: .post, parameters: params)
             .response(completionHandler: { response in

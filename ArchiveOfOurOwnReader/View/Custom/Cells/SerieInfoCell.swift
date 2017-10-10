@@ -17,4 +17,7 @@ class SerieInfoCell: UITableViewCell {
     @IBOutlet weak var endedLabel: UILabel!
     @IBOutlet weak var statsLabel: UILabel!
     
+    convenience init(reuseIdentifier: String?) {
+        self.init(style: .default, reuseIdentifier: reuseIdentifier)
+    }
 }

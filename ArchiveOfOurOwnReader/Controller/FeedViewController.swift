@@ -253,7 +253,7 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
             }
             
             // Optionally the error description can be displayed on the console.
-            print(error?.localizedDescription)
+            print(error?.localizedDescription ?? "")
             
             // Show the custom alert view to allow users to enter the password.
             self.showPasswordAlert()
@@ -395,12 +395,12 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
                         else {
                             return
                     }
-                    cStorage.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
+                    cStorage.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
                 }
             
                 showLoadingView(msg: ("\(NSLocalizedString("LoadingPage", comment: "")) \(page.name)"))
             
-                let urlStr = "http://archiveofourown.org" + page.url
+                let urlStr = "https://archiveofourown.org" + page.url
             
                 Alamofire.request(urlStr)
                     .response(completionHandler: { response in
@@ -423,15 +423,7 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if (indexPath.row >= works.count) {
-            return
-        }
-        
-        let newsItem:NewsFeedItem = works[indexPath.row]
-        if (newsItem.workId.contains("serie")) {
-            performSegue(withIdentifier: "serieDetail", sender: self)
-        }
-        self.performSegue(withIdentifier: "workDetail", sender: self)
+        selectCell(row: indexPath.row, works: works)
     }
     
     // MARK: - UICollectionViewDelegateFlowLayout
@@ -446,65 +438,21 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
     
     // MARK: - navigation
     override func  prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if(segue.identifier == "WorkDetail") {
-            if let workDetail: UINavigationController = segue.destination as? UINavigationController {
-            var row = 0
-            //if (!purchased) {
-            //    row = tableView.mp_indexPathForSelectedRow().row
-            //} else {
-                row = (tableView.indexPathForSelectedRow! as NSIndexPath).row
-            //}
+        if(segue.identifier == "workDetail") {
             
-            if (row >= works.count) {
-                return
-            }
-            
-            let newsItem:NewsFeedItem = works[row]
-            
-            let currentWorkItem = WorkItem()
-            
-            currentWorkItem.archiveWarnings = newsItem.warning
-            currentWorkItem.workTitle = newsItem.title
-            currentWorkItem.topic = newsItem.topic
-            
-            if (newsItem.topicPreview != nil) {
-                currentWorkItem.topicPreview = newsItem.topicPreview!
-            }
-            
-            let tagsString = newsItem.tags.joined(separator: ", ")
-            currentWorkItem.tags = tagsString
-            
-            currentWorkItem.datetime = newsItem.dateTime
-            currentWorkItem.language = newsItem.language
-            currentWorkItem.words = newsItem.words
-            currentWorkItem.comments = newsItem.comments
-            currentWorkItem.kudos = newsItem.kudos
-            currentWorkItem.chaptersCount = newsItem.chapters
-            currentWorkItem.bookmarks = newsItem.bookmarks
-            currentWorkItem.hits = newsItem.hits
-            currentWorkItem.ratingTags = newsItem.rating
-            currentWorkItem.category = newsItem.category
-            currentWorkItem.complete = newsItem.complete
-            currentWorkItem.workId = newsItem.workId
-            
-            currentWorkItem.id = Int64(Int(newsItem.workId)!)
-            
-           (workDetail.topViewController as! WorkDetailViewController).workItem = currentWorkItem
-            (workDetail.topViewController as! WorkDetailViewController).modalDelegate = self
-            }
-        }else if (segue.identifier == "serieDetail") {
-            if let navController: UINavigationController = segue.destination as? UINavigationController {
-                if let row = tableView.indexPathForSelectedRow?.row {
-                
-                    if (row >= works.count) {
-                        return
-                    }
-                
-                    let newsItem:NewsFeedItem = works[row]
-                    (navController.topViewController as! SerieViewController).serieId = newsItem.workId
+            if let row = tableView.indexPathForSelectedRow?.row {
+                if (row < works.count) {
+                    selectedWorkDetail(segue: segue, row: row, modalDelegate: self, newsItem: works[row])
                 }
             }
             
+        } else if (segue.identifier == "serieDetail") {
+            if let row = tableView.indexPathForSelectedRow?.row {
+                
+                if (row < works.count) {
+                    selectedSerieDetail(segue: segue, row: row, newsItem: works[row])
+                }
+            }
         } else if(segue.identifier == "searchSegue") {
             if let searchController: SearchViewController = segue.destination as? SearchViewController {
                 searchController.delegate = self
@@ -532,7 +480,7 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
         query = searchQuery
         
         let queryResult = query.formQuery()
-        let encodableURLRequest = URLRequest(url: URL( string: "http://archiveofourown.org/works/search" )!)
+        let encodableURLRequest = URLRequest(url: URL( string: "https://archiveofourown.org/works/search" )!)
         var encodedURLRequest: URLRequest? = nil
         do {
             encodedURLRequest = try URLEncoding.queryString.encode(encodableURLRequest, with: queryResult)
@@ -541,7 +489,7 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
         }
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
+            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
         }
        
         showLoadingView(msg: NSLocalizedString("Searching", comment: ""))
@@ -552,7 +500,7 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
         let mutableURLRequest = NSMutableURLRequest(url: url)
         mutableURLRequest.httpMethod = "GET"
         
-        request("http://archiveofourown.org/works/search", method: .get, parameters: queryResult, encoding: URLEncoding.queryString)
+        request("https://archiveofourown.org/works/search", method: .get, parameters: queryResult, encoding: URLEncoding.queryString)
             .response(completionHandler: onFeedLoaded(_:))
         
     }
@@ -616,13 +564,13 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
         showLoadingView(msg: "\(NSLocalizedString("DwnloadingWrk", comment: "")) \(curWork?.title ?? "")")
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
+            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
         }
         
         var params:[String:AnyObject] = [String:AnyObject]()
         params["view_adult"] = "true" as AnyObject?
         
-        request("http://archiveofourown.org/works/" + (curWork?.workId ?? ""), method: .get, parameters: params)
+        request("https://archiveofourown.org/works/" + (curWork?.workId ?? ""), method: .get, parameters: params)
             .response(completionHandler: onSavedWorkLoaded(_:))
     }
     

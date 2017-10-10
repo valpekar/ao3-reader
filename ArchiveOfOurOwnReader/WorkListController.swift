@@ -42,7 +42,7 @@ class WorkListController: LoadingViewController, UITableViewDataSource, UITableV
         self.tableView.addSubview(self.refreshControl)
         
         if (!tagUrl.contains("archiveofourown.org")) {
-            tagUrl = "http://archiveofourown.org\(tagUrl)"
+            tagUrl = "https://archiveofourown.org\(tagUrl)"
         }
         
         #if DEBUG
@@ -76,7 +76,7 @@ class WorkListController: LoadingViewController, UITableViewDataSource, UITableV
                 guard let cStorage = Alamofire.SessionManager.default.session.configuration.httpCookieStorage else {
                     return
                 }
-                cStorage.setCookies(del.cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
+                cStorage.setCookies(del.cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
             }
         }
         
@@ -214,14 +214,14 @@ class WorkListController: LoadingViewController, UITableViewDataSource, UITableV
         if (!page.url.isEmpty) {
             
             if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-                Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
+                Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
             }
             
             showLoadingView(msg: "Loading page \(page.name)")
             
             self.worksStr = NSLocalizedString("0Found", comment: "")
             
-            Alamofire.request("http://archiveofourown.org" + page.url, method: .get).response(completionHandler: { response in
+            Alamofire.request("https://archiveofourown.org" + page.url, method: .get).response(completionHandler: { response in
                 #if DEBUG
                 print(response.request ?? "")
                 print(response.error ?? "")
@@ -300,13 +300,13 @@ class WorkListController: LoadingViewController, UITableViewDataSource, UITableV
         showLoadingView(msg: "\(NSLocalizedString("DwnloadingWrk", comment: "")) \(curWork.title)")
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
+            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
         }
         
         var params:[String:AnyObject] = [String:AnyObject]()
         params["view_adult"] = "true" as AnyObject?
         
-        let urlStr =  "http://archiveofourown.org/works/" + curWork.workId
+        let urlStr =  "https://archiveofourown.org/works/" + curWork.workId
         
         Alamofire.request(urlStr, parameters: params)
             .response(completionHandler: { response in

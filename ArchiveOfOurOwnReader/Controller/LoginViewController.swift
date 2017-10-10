@@ -80,7 +80,7 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
     }
     
     func getLoginParams() {
-        Alamofire.request("http://archiveofourown.org/user_sessions/new", method: .get)
+        Alamofire.request("https://archiveofourown.org/user_sessions/new", method: .get)
             .response(completionHandler: { response in
                 #if DEBUG
                     print(response.request ?? "")
@@ -127,7 +127,7 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
         
      //   showLoadingView()
         
-        Alamofire.request("http://archiveofourown.org/user_sessions/", method: .post, parameters: params)
+        Alamofire.request("https://archiveofourown.org/user_sessions/", method: .post, parameters: params)
             .response(completionHandler: { response in
                 #if DEBUG
                 print(response.request ?? "")
@@ -171,10 +171,10 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
         showLoadingView(msg: NSLocalizedString("PleaseWait", comment: ""))
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
+            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
         }
         
-        Alamofire.request("http://archiveofourown.org/works/new", method: .get, parameters: params)
+        Alamofire.request("https://archiveofourown.org/works/new", method: .get, parameters: params)
             .response(completionHandler: { response in
                 #if DEBUG
                 print(response.request ?? "")
@@ -219,7 +219,7 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
         }
         if (flashnoticediv.count > 0) {
             let noticeTxt = flashnoticediv[0].content as String
-            if (noticeTxt == "Successfully logged in.") {
+            if (noticeTxt.contains("Successfully logged")) {
                 TSMessage.showNotification(in: self, title: NSLocalizedString("LogIn", comment: ""), subtitle: NSLocalizedString("LoggedInScs", comment: ""), type: .success)
                 let delayTime = DispatchTime.now() + Double(Int64(1.500 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
                 
@@ -349,13 +349,13 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
     }
     
     @IBAction func inviteTouched(_ sender: AnyObject) {
-        if let requestUrl = URL(string: "http://archiveofourown.org/invite_requests") {
+        if let requestUrl = URL(string: "https://archiveofourown.org/invite_requests") {
             UIApplication.shared.openURL(requestUrl)
         }
     }
     
     @IBAction func forgotPassTouched(_ sender: AnyObject) {
-        if let requestUrl = URL(string: "http://archiveofourown.org/passwords/new") {
+        if let requestUrl = URL(string: "https://archiveofourown.org/passwords/new") {
             UIApplication.shared.openURL(requestUrl)
         }
         

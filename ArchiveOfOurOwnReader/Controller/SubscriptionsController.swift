@@ -268,6 +268,10 @@ class SubscriptionsViewController: LoadingViewController, UITableViewDataSource,
         return cell!
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        selectCell(row: indexPath.row, works: works)
+    }
+    
     
     //MARK: - collectionview
     
@@ -328,25 +332,20 @@ class SubscriptionsViewController: LoadingViewController, UITableViewDataSource,
     
     // MARK: - navigation
     override func  prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if(segue.identifier == "SubsDetail") {
-            let workDetail: UINavigationController = segue.destination as! UINavigationController
-            let newsItem:NewsFeedItem = works[(tableView.indexPathForSelectedRow! as NSIndexPath).row]
-            
-            let currentWorkItem = WorkItem()
-            
-            currentWorkItem.workTitle = newsItem.title
-            currentWorkItem.topic = newsItem.topic
-            
-            currentWorkItem.workId = newsItem.workId
-            
-            if let iid = Int(newsItem.workId) {
-                currentWorkItem.id = Int64(iid)
-            } else {
-                currentWorkItem.id = 0
+        if(segue.identifier == "workDetail") {
+            if let row = tableView.indexPathForSelectedRow?.row {
+                if (row < works.count) {
+                    selectedWorkDetail(segue: segue, row: row, modalDelegate: self, newsItem: works[row])
+                }
             }
             
-            (workDetail.viewControllers[0] as! WorkDetailViewController).workItem = currentWorkItem
-            (workDetail.viewControllers[0] as! WorkDetailViewController).modalDelegate = self
+        } else if (segue.identifier == "serieDetail") {
+            if let row = tableView.indexPathForSelectedRow?.row {
+                
+                if (row < works.count) {
+                    selectedSerieDetail(segue: segue, row: row, newsItem: works[row])
+                }
+            }
             
         }
     }

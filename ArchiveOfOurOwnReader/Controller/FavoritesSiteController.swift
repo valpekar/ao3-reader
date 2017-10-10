@@ -39,7 +39,7 @@ class FavoritesSiteController : LoadingViewController, UITableViewDataSource, UI
         self.title = NSLocalizedString("Bookmarks", comment: "")
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
+            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
             requestFavs()
         } else {
             openLoginController() //openLoginController()
@@ -79,7 +79,7 @@ class FavoritesSiteController : LoadingViewController, UITableViewDataSource, UI
             guard let cStorage = Alamofire.SessionManager.default.session.configuration.httpCookieStorage else {
                 return
             }
-            cStorage.setCookies(del.cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
+            cStorage.setCookies(del.cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
         }
         }
         
@@ -103,7 +103,7 @@ class FavoritesSiteController : LoadingViewController, UITableViewDataSource, UI
         guard let curPs = pseuds[currentPseud] else {
             return
         }
-        let urlStr = "http://archiveofourown.org/users/\(login)/pseuds/\(curPs)/bookmarks" // + pseuds[currentPseud]! + "/bookmarks"
+        let urlStr = "https://archiveofourown.org/users/\(login)/pseuds/\(curPs)/bookmarks" // + pseuds[currentPseud]! + "/bookmarks"
         
         Alamofire.request(urlStr) //default is get
             .response(completionHandler: { response in
@@ -185,6 +185,9 @@ class FavoritesSiteController : LoadingViewController, UITableViewDataSource, UI
         return cell!
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        selectCell(row: indexPath.row, works: works)
+    }
     
     //MARK: - collectionview
     
@@ -214,12 +217,12 @@ class FavoritesSiteController : LoadingViewController, UITableViewDataSource, UI
         if (!page.url.isEmpty) {
             
             if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-                Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
+                Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
             }
             
             showLoadingView(msg: "\(NSLocalizedString("LoadingPage", comment: "")) \(page.name)")
             
-            Alamofire.request("http://archiveofourown.org" + page.url, method: .get).response(completionHandler: { response in
+            Alamofire.request("https://archiveofourown.org" + page.url, method: .get).response(completionHandler: { response in
                 print(response.request ?? "")
                 print(response.error ?? "")
                 if let data: Data = response.data {
@@ -246,42 +249,21 @@ class FavoritesSiteController : LoadingViewController, UITableViewDataSource, UI
     
     // MARK: - navigation
     override func  prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if(segue.identifier == "BookmarkDetail") {
-            let workDetail: UINavigationController = segue.destination as! UINavigationController
-            let newsItem:NewsFeedItem = works[(tableView.indexPathForSelectedRow! as NSIndexPath).row]
-            
-            let currentWorkItem = WorkItem()
-            
-            currentWorkItem.archiveWarnings = newsItem.warning
-            currentWorkItem.workTitle = newsItem.title
-            currentWorkItem.topic = newsItem.topic
-            
-            if (newsItem.topicPreview != nil) {
-                currentWorkItem.topicPreview = newsItem.topicPreview!
+        if(segue.identifier == "workDetail") {
+            if let row = tableView.indexPathForSelectedRow?.row {
+                if (row < works.count) {
+                    selectedWorkDetail(segue: segue, row: row, modalDelegate: self, newsItem: works[row])
+                    
+                }
             }
             
-            let tagsString = newsItem.tags.joined(separator: ", ")
-            currentWorkItem.tags = tagsString
-            
-            currentWorkItem.datetime = newsItem.dateTime
-            currentWorkItem.language = newsItem.language
-            currentWorkItem.words = newsItem.words
-            currentWorkItem.comments = newsItem.comments
-            currentWorkItem.kudos = newsItem.kudos
-            currentWorkItem.chaptersCount = newsItem.chapters
-            currentWorkItem.bookmarks = newsItem.bookmarks
-            currentWorkItem.hits = newsItem.hits
-            currentWorkItem.ratingTags = newsItem.rating
-            currentWorkItem.category = newsItem.category
-            currentWorkItem.complete = newsItem.complete
-            currentWorkItem.workId = newsItem.workId
-            
-            let workIdStr = newsItem.workId.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()
-            currentWorkItem.id = Int64(workIdStr) ?? 0
-            
-            (workDetail.viewControllers[0] as! WorkDetailViewController).workItem = currentWorkItem
-            (workDetail.viewControllers[0] as! WorkDetailViewController).modalDelegate = self
-            
+        } else if (segue.identifier == "serieDetail" ) {
+            if let row = tableView.indexPathForSelectedRow?.row {
+                
+                if (row < works.count) {
+                    selectedSerieDetail(segue: segue, row: row, newsItem: works[row])
+                }
+            }
         }
     }
     
@@ -293,13 +275,13 @@ class FavoritesSiteController : LoadingViewController, UITableViewDataSource, UI
         showLoadingView(msg: "\(NSLocalizedString("DwnloadingWrk", comment: "")) \(curWork.title)")
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
+            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
         }
         
         var params:[String:AnyObject] = [String:AnyObject]()
         params["view_adult"] = "true" as AnyObject?
         
-        let urlStr =  "http://archiveofourown.org/works/" + curWork.workId
+        let urlStr =  "https://archiveofourown.org/works/" + curWork.workId
         
         Alamofire.request(urlStr, parameters: params)
             .response(completionHandler: { response in
@@ -344,7 +326,7 @@ class FavoritesSiteController : LoadingViewController, UITableViewDataSource, UI
         showLoadingView(msg: NSLocalizedString("DeletingFromBmks", comment: ""))
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
+            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
         }
         
         //let username = DefaultsManager.getString(DefaultsManager.LOGIN)
@@ -363,7 +345,7 @@ class FavoritesSiteController : LoadingViewController, UITableViewDataSource, UI
         params["authenticity_token"] = (UIApplication.shared.delegate as! AppDelegate).token as AnyObject?
         params["_method"] = "delete" as AnyObject?
         
-        let urlStr = "http://archiveofourown.org" + curWork.readingId
+        let urlStr = "https://archiveofourown.org" + curWork.readingId
         
         Alamofire.request(urlStr, method: .post, parameters: params)
             .response(completionHandler: { response in

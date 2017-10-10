@@ -20,6 +20,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     @IBOutlet weak var downloadTrashButton: UIButton!
     
     @IBOutlet weak var bgImage: UIImageView!
+    @IBOutlet weak var authorImage: RoundImageView!
     @IBOutlet weak var authorLabel: UIButton!
     @IBOutlet weak var readButton: UIButton!
     @IBOutlet weak var titleLabel: UILabel!
@@ -250,7 +251,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
         if let sorrydiv = doc.search(withXPathQuery: "//div[@class='flash error']") {
         
-        if(sorrydiv.count>0 && (sorrydiv[0] as! TFHppleElement).text().range(of: "Sorry") != nil) {
+        if(sorrydiv.count>0 && (sorrydiv[0] as? TFHppleElement)?.text().range(of: "Sorry") != nil) {
             workItem.author = NSLocalizedString("Sorry", comment: "")
             workItem.workTitle = NSLocalizedString("WrkAvailOnlyRegistered", comment: "");
             workItem.complete = "";
@@ -261,7 +262,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
         var caution = doc.search(withXPathQuery: "//p[@class='caution']")
         
-        if (caution != nil && (caution?.count)!>0 && (caution?[0] as! TFHppleElement).text().range(of: "adult content") != nil) {
+        if (caution != nil && (caution?.count)!>0 && (caution?[0] as? TFHppleElement)?.text().range(of: "adult content") != nil) {
             workItem.setValue(NSLocalizedString("Sorry", comment: ""), forKey: "author")
             workItem.setValue(NSLocalizedString("ContainsAdultContent", comment: ""), forKey: "workTitle")
             workItem.setValue("", forKey: "complete")
@@ -303,12 +304,12 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             for i in 0..<archiveWarnings.count {
                 if var warnStr = archiveWarnings[i].content {
                     if (warnStr.contains("Underage")) {
-                        warnStr = warnStr.replacingOccurrences(of: "Underage", with: "")
-                        isSensitive = true
+                        warnStr = warnStr.replacingOccurrences(of: "Underage", with: "Archive Warnings")
+                       // isSensitive = true
                     }
                     if (warnStr.contains("Rape")) {
-                        warnStr = warnStr.replacingOccurrences(of: "Rape", with: "")
-                        isSensitive = true
+                        warnStr = warnStr.replacingOccurrences(of: "Rape", with: "Warning: Violence")
+                       // isSensitive = true
                     }
                     warnings.append(warnStr)
                 }

@@ -2,7 +2,7 @@
 //  DBWorkItem+CoreDataProperties.swift
 //  ArchiveOfOurOwnReader
 //
-//  Created by Valeriya Pekar on 7/20/17.
+//  Created by Valeriya Pekar on 10/10/17.
 //  Copyright © 2017 Sergei Pekar. All rights reserved.
 //
 //
@@ -47,8 +47,9 @@ extension DBWorkItem {
     @NSManaged public var chapters: NSSet?
     @NSManaged public var characters: NSSet?
     @NSManaged public var fandoms: NSSet?
-    @NSManaged public var relationships: NSSet?
     @NSManaged public var folder: Folder?
+    @NSManaged public var relationships: NSSet?
+    @NSManaged public var series: Serie?
 
 }
 

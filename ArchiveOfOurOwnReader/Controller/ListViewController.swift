@@ -48,7 +48,7 @@ class ListViewController: UIViewController {
         }
         
         if let hitsNum: Float = Float(curWork.hits) {
-            (cell as! FeedTableViewCell).hitsLabel.text =  hitsNum.formatUsingAbbrevation()
+            cell.hitsLabel.text =  hitsNum.formatUsingAbbrevation()
         } else {
             cell.hitsLabel.text = curWork.hits
         }
@@ -66,7 +66,59 @@ class ListViewController: UIViewController {
         return cell
     }
     
-    func selectCell() {
+    func selectCell(row: Int, works: [NewsFeedItem]) {
+        if (row >= works.count) {
+            return
+        }
         
+        let newsItem:NewsFeedItem = works[row]
+        if (newsItem.workId.contains("serie")) {
+            self.performSegue(withIdentifier: "serieDetail", sender: self)
+        } else {
+            self.performSegue(withIdentifier: "workDetail", sender: self)
+        }
+    }
+    
+    func selectedWorkDetail(segue: UIStoryboardSegue, row: Int, modalDelegate: ModalControllerDelegate, newsItem:NewsFeedItem) {
+        if let workDetail: UINavigationController = segue.destination as? UINavigationController {
+                        
+            let currentWorkItem = WorkItem()
+            
+            currentWorkItem.archiveWarnings = newsItem.warning
+            currentWorkItem.workTitle = newsItem.title
+            currentWorkItem.topic = newsItem.topic
+            
+            if (newsItem.topicPreview != nil) {
+                currentWorkItem.topicPreview = newsItem.topicPreview!
+            }
+            
+            let tagsString = newsItem.tags.joined(separator: ", ")
+            currentWorkItem.tags = tagsString
+            
+            currentWorkItem.datetime = newsItem.dateTime
+            currentWorkItem.language = newsItem.language
+            currentWorkItem.words = newsItem.words
+            currentWorkItem.comments = newsItem.comments
+            currentWorkItem.kudos = newsItem.kudos
+            currentWorkItem.chaptersCount = newsItem.chapters
+            currentWorkItem.bookmarks = newsItem.bookmarks
+            currentWorkItem.hits = newsItem.hits
+            currentWorkItem.ratingTags = newsItem.rating
+            currentWorkItem.category = newsItem.category
+            currentWorkItem.complete = newsItem.complete
+            currentWorkItem.workId = newsItem.workId
+            
+            currentWorkItem.id = Int64(Int(newsItem.workId)!)
+            
+            (workDetail.topViewController as! WorkDetailViewController).workItem = currentWorkItem
+            (workDetail.topViewController as! WorkDetailViewController).modalDelegate = modalDelegate
+        }
+    }
+    
+    func selectedSerieDetail(segue: UIStoryboardSegue, row: Int, newsItem:NewsFeedItem) {
+        if let navController: SerieViewController = segue.destination as? SerieViewController {
+            navController.serieId = newsItem.workId
+            
+        }
     }
 }
