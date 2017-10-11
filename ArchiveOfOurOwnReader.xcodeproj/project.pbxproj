@@ -94,6 +94,7 @@
 		3C5813D71C6E010300C3FC12 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C5813D61C6E010300C3FC12 /* SystemConfiguration.framework */; };
 		3C662F061C9C40DC00D1F917 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C662F051C9C40DC00D1F917 /* Security.framework */; };
 		3C662F081C9C40F700D1F917 /* SupportController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C662F071C9C40F700D1F917 /* SupportController.swift */; };
+		3C684E5D1F8E391500419D69 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C684E5C1F8E391500419D69 /* AuthViewController.swift */; };
 		3C728C6A1E8CBA06006D7100 /* ChoosePrefController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C728C691E8CBA06006D7100 /* ChoosePrefController.swift */; };
 		3C88102C1F14BED900ED6B5D /* HistoryItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C88102A1F14BED900ED6B5D /* HistoryItem+CoreDataClass.swift */; };
 		3C88102D1F14BED900ED6B5D /* HistoryItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C88102B1F14BED900ED6B5D /* HistoryItem+CoreDataProperties.swift */; };
@@ -278,6 +279,7 @@
 		3C5813D61C6E010300C3FC12 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		3C662F051C9C40DC00D1F917 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		3C662F071C9C40F700D1F917 /* SupportController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SupportController.swift; path = Controller/SupportController.swift; sourceTree = "<group>"; };
+		3C684E5C1F8E391500419D69 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AuthViewController.swift; path = Controller/AuthViewController.swift; sourceTree = "<group>"; };
 		3C728C691E8CBA06006D7100 /* ChoosePrefController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChoosePrefController.swift; sourceTree = "<group>"; };
 		3C8810291F14BE5C00ED6B5D /* ArchiveOfOurOwnReader 6.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ArchiveOfOurOwnReader 6.xcdatamodel"; sourceTree = "<group>"; };
 		3C88102A1F14BED900ED6B5D /* HistoryItem+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "HistoryItem+CoreDataClass.swift"; path = "Model/HistoryItem+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -557,6 +559,7 @@
 				3C93D4AF1F223AB000948D08 /* EditFoldersController.swift */,
 				3CC888961F83CC1C0027C469 /* ListViewController.swift */,
 				3CB2A74A1F8BB237004A6F76 /* SerieViewController.swift */,
+				3C684E5C1F8E391500419D69 /* AuthViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -925,6 +928,7 @@
 				1D7BDD371B5E755F0017C346 /* TFHppleElement.m in Sources */,
 				28B6DC561B4E47FC00F34529 /* SearchViewController.swift in Sources */,
 				3C89958B1E95169B00D511CD /* DBFandom+CoreDataProperties.swift in Sources */,
+				3C684E5D1F8E391500419D69 /* AuthViewController.swift in Sources */,
 				3CB2A74B1F8BB237004A6F76 /* SerieViewController.swift in Sources */,
 				3C274CC31CE4CCBA00F3AC68 /* FlurryEmpty.m in Sources */,
 				3CCA7B3E1EFAA3C600590D12 /* SubsCell.swift in Sources */,

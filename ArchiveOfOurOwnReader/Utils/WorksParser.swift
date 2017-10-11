@@ -271,10 +271,44 @@ class WorksParser {
         if let itemsCount: [TFHppleElement] = doc.search(withXPathQuery: "//h2[@class='heading']") as? [TFHppleElement] {
             if (itemsCount.count > 0) {
                 serieItem.title = itemsCount[0].content.trimmingCharacters(
-                    in: CharacterSet.whitespacesAndNewlines
-                )
+                    in: CharacterSet.whitespacesAndNewlines)
             }
         }
+        
+        if let seriesMeta: [TFHppleElement] = doc.search(withXPathQuery: "//dl[@class='series meta group']//dd") as? [TFHppleElement] {
+            if (seriesMeta.count > 0) {
+                serieItem.author = seriesMeta[0].content.trimmingCharacters(
+                    in: CharacterSet.whitespacesAndNewlines)
+                
+                if (seriesMeta.count > 1) {
+                    serieItem.serieBegun = seriesMeta[1].content.trimmingCharacters(
+                        in: CharacterSet.whitespacesAndNewlines)
+                }
+                
+                if (seriesMeta.count > 2) {
+                    serieItem.serieUpdated = seriesMeta[2].content.trimmingCharacters(
+                        in: CharacterSet.whitespacesAndNewlines)
+                }
+                
+                if (seriesMeta.count > 3) {
+                    serieItem.desc = seriesMeta[3].content.trimmingCharacters(
+                        in: CharacterSet.whitespacesAndNewlines)
+                }
+                
+                if (seriesMeta.count > 4) {
+                    serieItem.notes = seriesMeta[4].content.trimmingCharacters(
+                        in: CharacterSet.whitespacesAndNewlines)
+                }
+            }
+        }
+        
+        if let seriesStats: [TFHppleElement] = doc.search(withXPathQuery: "//dl[@class='series meta group']//dd[@class='stats']") as? [TFHppleElement] {
+            if (seriesStats.count > 0) {
+                serieItem.stats = seriesStats[0].content.trimmingCharacters(
+                    in: CharacterSet.whitespacesAndNewlines)
+            }
+        }
+        
         if let workGroup = doc.search(withXPathQuery: "//ul[@class='series work index group']") as? [TFHppleElement] {
             if (workGroup.count > 0) {
                 if let worksList : [TFHppleElement] = workGroup[0].search(withXPathQuery: "//li[@class='work blurb group']") as? [TFHppleElement] {

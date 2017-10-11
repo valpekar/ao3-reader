@@ -104,7 +104,7 @@ class SerieViewController: LoadingViewController, UITableViewDataSource, UITable
     //MARK: - tableview
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return works.count
+        return works.count + 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -119,6 +119,8 @@ class SerieViewController: LoadingViewController, UITableViewDataSource, UITable
                 cell = SerieInfoCell(reuseIdentifier: cellIdentifier)
             }
             
+            cell.titleLabel.text = serieItem.title
+            cell.authorLabel.text = serieItem.author
             
             return cell
             
@@ -136,13 +138,93 @@ class SerieViewController: LoadingViewController, UITableViewDataSource, UITable
                 return cell
             }
             
-            let curWork:NewsFeedItem = works[(indexPath as NSIndexPath).row]
+            let curWork:NewsFeedItem = works[indexPath.row - 1]
             
             cell = fillCell(cell: cell, curWork: curWork)
             
-            cell.downloadButton.tag = (indexPath as NSIndexPath).row
+            cell.downloadButton.tag = indexPath.row - 1
             
             return cell
         }
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if (indexPath.row > 0) {
+            selectCell(row: indexPath.row - 1, works: works)
+        }
+    }
+    
+    //MARK: - collectionview
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return pages.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cellIdentifier: String = "PageCell"
+        
+        let cell: PageCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! PageCollectionViewCell
+        
+        cell.titleLabel.text = pages[(indexPath as NSIndexPath).row].name
+        
+        if (pages[(indexPath as NSIndexPath).row].url.isEmpty) {
+            cell.titleLabel.textColor = UIColor(red: 169/255, green: 164/255, blue: 164/255, alpha: 1)
+        } else {
+            cell.titleLabel.textColor = UIColor.black
+        }
+        
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        let page: PageItem = pages[indexPath.row]
+        if (!page.url.isEmpty) {
+            
+            if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
+                Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
+            }
+            
+            showLoadingView(msg: "\(NSLocalizedString("GettingWorks", comment: "")) \(page.name)")
+            
+            Alamofire.request("https://archiveofourown.org" + page.url, method: .get).response(completionHandler: { response in
+                print(response.request ?? "")
+                print(response.error ?? "")
+                if let d: Data = response.data {
+                    self.parseCookies(response)
+                    (self.pages, self.works, self.serieItem) = WorksParser.parseSerie(d)
+                    self.parseSerie(data: d)
+                    self.showSerie()
+                } else {
+                    self.hideLoadingView()
+                    TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
+                }
+            })
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        switch ((indexPath as NSIndexPath).row) {
+        case 0, self.collectionView(collectionView, numberOfItemsInSection: (indexPath as NSIndexPath).section) - 1:
+            return CGSize(width: 100, height: 28)
+        default:
+            return CGSize(width: 50, height: 28)
+        }
+    }
+    
+    // MARK: - navigation
+    override func  prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if(segue.identifier == "workDetail") {
+            
+            if let row = tableView.indexPathForSelectedRow?.row {
+                if (row < works.count) {
+                    selectedWorkDetail(segue: segue, row: row, modalDelegate: self, newsItem: works[row])
+                }
+            }
+            
+        }
+    }
+    
+    override func controllerDidClosed() {
+    }
+    
 }

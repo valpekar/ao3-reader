@@ -12,7 +12,6 @@ import StoreKit
 import CoreLocation
 import TSMessages
 import Alamofire
-import LocalAuthentication
 
 protocol SearchControllerDelegate {
     func searchApplied(_ searchQuery:SearchQuery, shouldAddKeyword: Bool)
@@ -44,7 +43,6 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
     var refreshControl: UIRefreshControl!
    
     //@IBOutlet weak var webView: UIWebView!
-
     
     // MARK: - UIViewController Lifecycle
     override func viewDidLoad() {
@@ -119,17 +117,9 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
         if (shown == false) {
             showContentAlert()
         }
-        
-//        let needsAuth: Bool = DefaultsManager.getBool(DefaultsManager.CONTENT_SHOWSN) ?? false
-//        if (needsAuth == true) {
-//            self.authenticateUser()
-//        } else {
-        
-            refresh(tableView)
-//        }
+      
+        checkAuth()
     }
-    
- 
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -160,8 +150,18 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
     
     deinit {
         #if DEBUG
-        print ("Work View Controller deinit")
+        print ("Feed View Controller deinit")
         #endif
+    }
+    
+    override func authFinished(success: Bool) {
+        if (success == true) {
+            refresh(tableView)
+        }
+    }
+    
+    override func loadAfterAuth() {
+        refresh(tableView)
     }
     
     @IBAction func tryAgainTouched(_ sender: AnyObject) {
@@ -189,105 +189,7 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
         }
     }
     
-    //MARK: - authenticate
-    
-    func authenticateUser() {
-        // Get the local authentication context.
-        let context : LAContext = LAContext()
-        
-        var error: NSError?
-        
-        // Set the reason string that will appear on the authentication alert.
-        var reasonString = "Authentication is needed to access your stories."
-        // Check if the device can evaluate the policy.
-        if context.canEvaluatePolicy(LAPolicy.deviceOwnerAuthenticationWithBiometrics, error: &error) {
-            [context.evaluatePolicy(LAPolicy.deviceOwnerAuthenticationWithBiometrics, localizedReason: reasonString, reply: { (success: Bool, evalPolicyError: Error?) -> Void in
-                
-                if success {
-                    self.refresh(self.tableView)
-                }
-                else{
-                    // If authentication failed then show a message to the console with a short description.
-                    // In case that the error is a user fallback, then show the password alert view.
-                    print(evalPolicyError?.localizedDescription ?? "")
-                    guard let Errcode = evalPolicyError?._code else {
-                        TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Authentication failed", comment: ""), type: .error, duration: 2.0)
-                        return
-                    }
-                    
-                    switch Errcode {
-                        
-                    case LAError.systemCancel.rawValue:
-                        TSMessage.showNotification(in: self, title:  NSLocalizedString("Warning", comment: ""), subtitle: NSLocalizedString("Authentication was cancelled by the system", comment: ""), type: .warning, duration: 2.0)
-                        
-                    case LAError.userCancel.rawValue:
-                        TSMessage.showNotification(in: self, title:  NSLocalizedString("Warning", comment: ""), subtitle: NSLocalizedString("Authentication was cancelled by the user", comment: ""), type: .warning, duration: 2.0)
-                        
-                    case LAError.userFallback.rawValue:
-                        print("User selected to enter custom password")
-                        OperationQueue.main.addOperation({ () -> Void in
-                            self.showPasswordAlert()
-                        })
-                        
-                    default:
-                        TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Authentication failed", comment: ""), type: .error, duration: 2.0)
-                        OperationQueue.main.addOperation({ () -> Void in
-                            self.showPasswordAlert()
-                        })
-                    }
-                }
-            })]
-        }  else {
-            // If the security policy cannot be evaluated then show a short message depending on the error.
-            switch error!.code{
-                
-            case LAError.touchIDNotEnrolled.rawValue:
-                TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("TouchID is not enrolled", comment: ""), type: .error, duration: 2.0)
-                
-            case LAError.passcodeNotSet.rawValue:
-                TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("A passcode has not been set", comment: ""), type: .error, duration: 2.0)
-                
-            default:
-                // The LAError.TouchIDNotAvailable case.
-                TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("TouchID not available", comment: ""), type: .error, duration: 2.0)
-            }
-            
-            // Optionally the error description can be displayed on the console.
-            print(error?.localizedDescription ?? "")
-            
-            // Show the custom alert view to allow users to enter the password.
-            self.showPasswordAlert()
-        }
-    }
-    
-    func showPasswordAlert() {
-        let passwordAlert = UIAlertController(title: "Password Authentication", message: "Please type your password", preferredStyle: .alert)
-        let defaultButton = UIAlertAction(title: "OK",
-                                          style: .default) {(_) in
-
-                                            if let txt: String = passwordAlert.textFields?[0].text {
-                                                if (txt.isEmpty) {
-                                                    TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Please type your password!", comment: ""), type: .error, duration: 2.0)
-                                                } else {
-                                                    let userPass: String = DefaultsManager.getString(DefaultsManager.USER_PASS);
-                                                    if (userPass == txt) {
-                                                        self.refresh(self.tableView)
-                                                    } else {
-                                                        TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Incorrect password!", comment: ""), type: .error, duration: 2.0)
-                                                    }
-                                                }
-                                            }
-        }
-        let cancelButton = UIAlertAction(title: "Cancel",
-                                          style: .cancel) {(_) in
-        }
-        
-        passwordAlert.addAction(defaultButton)
-        passwordAlert.addAction(cancelButton)
-        present(passwordAlert, animated: true) {
-            // completion goes here
-        }
-    }
+   
     
     //MARK: - feed
     
@@ -462,7 +364,7 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
             if let choosePref: UINavigationController = segue.destination as? UINavigationController {
                 (choosePref.topViewController as! ChoosePrefController).chosenDelegate = self
             }
-        }
+        } 
     }
 
     

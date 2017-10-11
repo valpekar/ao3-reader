@@ -14,6 +14,8 @@ struct SerieItem {
     var desc = ""
     var author = ""
     var serieBegun = ""
-    var serieEnded = ""
+    var serieUpdated = ""
     var serieId = ""
+    var notes = ""
+    var stats = ""
 }

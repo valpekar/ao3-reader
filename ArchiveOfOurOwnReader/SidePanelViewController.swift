@@ -57,10 +57,13 @@ class SidePanelViewController: UIViewController, UITableViewDataSource, UITableV
         let cell = tableView.dequeueReusableCell(withIdentifier: TableView.CellIdentifiers.TagCell, for: indexPath) as! TagCell
         
         let customColorView : UIView = UIView()
-        customColorView.backgroundColor = UIColor.init(red: 146/255, green: 84/255, blue: 180/255, alpha: 0.5)
+        customColorView.backgroundColor = AppDelegate.redDarkColor
         cell.selectedBackgroundView =  customColorView;
         
-        cell.configureForHeader(controllers[(indexPath as NSIndexPath).row], imageName: imgs[(indexPath as NSIndexPath).row])
+        cell.preservesSuperviewLayoutMargins = false
+        cell.separatorInset = UIEdgeInsets.zero
+        
+        cell.configureForHeader(controllers[indexPath.row], imageName: imgs[indexPath.row])
         return cell
     }
     
@@ -70,11 +73,11 @@ class SidePanelViewController: UIViewController, UITableViewDataSource, UITableV
         delegate?.selectedControllerAtIndex(indexPath)
     }
     
-    func tableView(_ tableView: UITableView, viewForFooterInSection section:Int) -> UIView?
-    {
-        let dynamicView = UIView(frame: CGRect.zero)
-        return dynamicView
-    }
+//    func tableView(_ tableView: UITableView, viewForFooterInSection section:Int) -> UIView?
+//    {
+//        let dynamicView = UIView(frame: CGRect.zero)
+//        return dynamicView
+//    }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50

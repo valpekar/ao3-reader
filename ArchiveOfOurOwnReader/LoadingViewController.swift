@@ -12,7 +12,7 @@ import CoreData
 import GoogleMobileAds
 import Alamofire
 
-class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAlertViewDelegate {
+class LoadingViewController: CenterViewController, ModalControllerDelegate, AuthProtocol, UIAlertViewDelegate {
     
    // var interstitial: ADInterstitialAd! = nil
     
@@ -31,10 +31,48 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, UIAl
     var purchased = false
     var donated = false
     
+    private var notification: NSObjectProtocol?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         //self.interstitialPresentationPolicy = ADInterstitialPresentationPolicy.Manual
    
+        
+        notification = NotificationCenter.default.addObserver(forName: .UIApplicationWillEnterForeground, object: nil, queue: .main) {
+            [unowned self] notification in
+            
+            self.checkAuth()
+        }
+    }
+    
+    func checkAuth() {
+        let needsAuth: Bool = DefaultsManager.getBool(DefaultsManager.NEEDS_AUTH) ?? false
+        if (needsAuth == true) {
+            
+            let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            if let newViewController = storyBoard.instantiateViewController(withIdentifier: "AuthNavController") as? UINavigationController {
+                self.present(newViewController, animated: true, completion: {
+                    (newViewController.topViewController as? AuthViewController)?.authDelegate = self
+                })
+            }
+            //self.performSegue(withIdentifier: "authSegue", sender: self)
+        } else {
+            loadAfterAuth()
+        }
+    }
+    
+    func authFinished(success: Bool) {
+        
+    }
+    
+    func loadAfterAuth() {
+        
+    }
+    
+    deinit {
+        if let notification = notification {
+            NotificationCenter.default.removeObserver(notification)
+        }
     }
     
     func loadAdMobInterstitial() {

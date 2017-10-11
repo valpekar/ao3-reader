@@ -159,9 +159,9 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
             
             if let auth = DefaultsManager.getBool(DefaultsManager.NEEDS_AUTH) {
                 if (auth == true) {
-                    authSwitch.setOn(true, animated: true)
+                    authSwitch.setOn(true, animated: false)
                 } else {
-                    authSwitch.setOn(false, animated: true)
+                    authSwitch.setOn(false, animated: false)
                 }
             }
             
@@ -251,7 +251,14 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "PSEUDS"
+        return "Select Pseud for showing bookmarks, history etc"
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if section == 0 {
+            return 40
+        }
+        return tableView.sectionHeaderHeight
     }
     
     
