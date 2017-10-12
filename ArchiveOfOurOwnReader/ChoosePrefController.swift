@@ -8,6 +8,7 @@
 
 import UIKit
 import TSMessages
+import Crashlytics
 
 class ChoosePrefController : LoadingViewController {
     
@@ -49,6 +50,10 @@ class ChoosePrefController : LoadingViewController {
             TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("AtLeastOneFandom", comment: ""), type: .error, duration: 2.0)
             return
         }
+        
+        Answers.logCustomEvent(withName: "prefChosen",
+                               customAttributes: [
+                                "fandom": txt])
         
         self.dismiss(animated: true) {
             print(self.chosenFandoms)

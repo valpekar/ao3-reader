@@ -15,12 +15,19 @@ class AuthViewController: UIViewController {
     var authDelegate:AuthProtocol?
     
     @IBOutlet weak var passTextField:UITextField!
-    
+    @IBOutlet weak var touchIDButton:UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.title = "Authentication"
+        
+        let onlyPass = DefaultsManager.getBool(DefaultsManager.NEEDS_PASS) ?? false
+        if (onlyPass == false) {
+            touchIDdDone(passTextField)
+        } else if (!DefaultsManager.getString(DefaultsManager.USER_PASS).isEmpty) {
+            touchIDButton.isHidden = true
+        }
     }
     
     //MARK: - authenticate
@@ -91,7 +98,7 @@ class AuthViewController: UIViewController {
     @IBAction func passwordDone(_ sender: AnyObject) {
         if let txt: String = passTextField.text {
             if (txt.isEmpty) {
-                TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Please type your password!", comment: ""), type: .error, duration: 2.0)
+                TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Please type your passcode!", comment: ""), type: .error, duration: 2.0)
             } else {
                 let userPass: String = DefaultsManager.getString(DefaultsManager.USER_PASS);
                 if (userPass == txt) {

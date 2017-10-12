@@ -101,7 +101,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         self.tableView.estimatedRowHeight = 64
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
+            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
         }
                 
         if (workItem != nil) {
@@ -200,7 +200,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
 //        }
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
+            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
         }
         
         var params:[String:AnyObject] = [String:AnyObject]()
@@ -224,7 +224,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
         showLoadingView(msg: NSLocalizedString("LoadingWrk", comment: ""))
         
-        Alamofire.request("http://archiveofourown.org/works/" + workItem.workId + vadult, method: .get, parameters: params)
+        Alamofire.request("https://archiveofourown.org/works/" + workItem.workId + vadult, method: .get, parameters: params)
             .response(completionHandler: { response in
                 // print(response.request)
                 if let d = response.data {
@@ -286,12 +286,22 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         var firstFandom = ""
         var firstRelationship = ""
         
+        if let workSumm: [TFHppleElement] = doc.search(withXPathQuery: "//div[@id='workskin']//div[@class='summary module']//blockquote") as? [TFHppleElement] {
+            if (workSumm.count > 0) {
+                if let summ = workSumm[0].content {
+                if (!summ.isEmpty) {
+                    workItem.topicPreview = summ.trimmingCharacters(in: .whitespacesAndNewlines)
+                }
+                }
+            }
+        }
+        
         if let workmeta: [TFHppleElement] = doc.search(withXPathQuery: "//dl[@class='work meta group']") as? [TFHppleElement] {
             
         isSensitive = false
         
         if(workmeta.count > 0) {
-            if let ratings: [TFHppleElement] = workmeta[0].search(withXPathQuery: "//dd[@class='rating tags']/ul[@class='*']/li") as? [TFHppleElement] {
+            if let ratings: [TFHppleElement] = workmeta[0].search(withXPathQuery: "//dd[@class='rating tags']/ul/li") as? [TFHppleElement] {
             if (ratings.count > 0) {
                 if let ratingStr = ratings[0].content {
                     workItem.ratingTags = ratingStr
@@ -299,7 +309,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             }
             }
         
-            if let archiveWarnings: [TFHppleElement] = workmeta[0].search(withXPathQuery: "//dd[@class='warning tags']/ul[@class='commas']/li") as? [TFHppleElement] {
+            if let archiveWarnings: [TFHppleElement] = workmeta[0].search(withXPathQuery: "//dd[@class='warning tags']/ul/li") as? [TFHppleElement] {
             warnings = [String]()
             for i in 0..<archiveWarnings.count {
                 if var warnStr = archiveWarnings[i].content {
@@ -330,10 +340,11 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             }
             }
             
-            var categoryLiArr: [TFHppleElement] = workmeta[0].search(withXPathQuery: "//dd[@class='category tags']/ul[@class=*]/li") as! [TFHppleElement]
+            if let categoryLiArr: [TFHppleElement] = workmeta[0].search(withXPathQuery: "//dd[@class='category tags']/ul/li") as? [TFHppleElement] {
             
-            for i in 0..<categoryLiArr.count {
-                workItem.category += categoryLiArr[i].text() + " "
+                for i in 0..<categoryLiArr.count {
+                    workItem.category += categoryLiArr[i].content.trimmingCharacters(in: .whitespacesAndNewlines) + " "
+                }
             }
             
             var relationshipsLiArr: [TFHppleElement] = workmeta[0].search(withXPathQuery: "//dd[@class='relationship tags']/ul[@class='commas']/li") as! [TFHppleElement]
@@ -378,6 +389,12 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                         }
                     }
                 }
+            }
+            
+            if (workItem.stats.contains("Completed")) {
+                workItem.complete = "Complete"
+            } else {
+                workItem.complete = "Work In Progress"
             }
             }
         }
@@ -453,7 +470,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     func checkBookmark() {
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
+            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
         }
         
         var params:[String:AnyObject] = [String:AnyObject]()
@@ -479,7 +496,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             wid = downloadedWorkItem.value(forKey: "workId") as? String ?? ""
         }
         
-        Alamofire.request("http://archiveofourown.org/works/" + wid + vadult + "#bookmark-form", method: .get, parameters: params)
+        Alamofire.request("https://archiveofourown.org/works/" + wid + vadult + "#bookmark-form", method: .get, parameters: params)
             .response(completionHandler: { response in
                 // print(response.request)
                 if let d = response.data {
@@ -614,8 +631,8 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                     }
                 }
                 
-                downloadEpub(epubUrl: "http://archiveofourown.org" + url)
-                //openEpub(bookPath: "http://archiveofourown.org" + url)
+                downloadEpub(epubUrl: "https://archiveofourown.org" + url)
+                //openEpub(bookPath: "https://archiveofourown.org" + url)
  */
                 
                 workController.workItem = workItem
@@ -914,7 +931,15 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             authorName = downloadedWorkItem.value(forKey: "author") as? String ?? ""
         }
         
-        tagUrl = "http://archiveofourown.org/users/\(authorName)/works"
+        if (authorName.contains(" ") && !authorName.contains(",")) {
+            let nameArr = authorName.characters.split{$0 == " "}.map(String.init)
+            var an = nameArr[1].replacingOccurrences(of: "(", with: "")
+            an = an.replacingOccurrences(of: ")", with: "")
+            tagUrl = "https://archiveofourown.org/users/\(an)/pseuds/\(nameArr[0])/works"
+        }
+        else {
+            tagUrl = "https://archiveofourown.org/users/\(authorName)/works"
+        }
         performSegue(withIdentifier: "listSegue", sender: self)
     }
     
@@ -974,7 +999,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
         showLoadingView(msg: NSLocalizedString("AddingBmk", comment: ""))
         
-        var requestStr = "http://archiveofourown.org/works/"
+        var requestStr = "https://archiveofourown.org/works/"
         var bid = ""
         var pseud_id = DefaultsManager.getString(DefaultsManager.PSEUD_ID)
         
@@ -1028,7 +1053,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 guard let cStorage = Alamofire.SessionManager.default.session.configuration.httpCookieStorage else {
                     return
                 }
-                cStorage.setCookies(del.cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
+                cStorage.setCookies(del.cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
             }
         
         if (del.cookies.count > 0) {
@@ -1067,7 +1092,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         showLoadingView(msg: NSLocalizedString("DeletingBmk", comment: ""))
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
+            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
         }
         
         //let username = DefaultsManager.getString(DefaultsManager.LOGIN)
@@ -1086,7 +1111,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         params["authenticity_token"] = (UIApplication.shared.delegate as! AppDelegate).token as AnyObject?
         params["_method"] = "delete" as AnyObject?
         
-        request("http://archiveofourown.org" + bookmarkId, method: .post, parameters: params)
+        request("https://archiveofourown.org" + bookmarkId, method: .post, parameters: params)
             .response(completionHandler: { response in
                 #if DEBUG
                 print(response.request ?? "")
@@ -1150,7 +1175,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 guard let cStorage = Alamofire.SessionManager.default.session.configuration.httpCookieStorage else {
                     return
                 }
-                cStorage.setCookies(del.cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
+                cStorage.setCookies(del.cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
             }
         }
         
@@ -1171,10 +1196,10 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         }
 
         if (workItem != nil) {
-            Alamofire.request("http://archiveofourown.org/works/" + workItem.workId + vadult, method: .get, parameters: params)
+            Alamofire.request("https://archiveofourown.org/works/" + workItem.workId + vadult, method: .get, parameters: params)
                 .response(completionHandler: onOnlineWorkLoaded(_:))
         } else if (downloadedWorkItem != nil) {
-            Alamofire.request("http://archiveofourown.org/works/" + (downloadedWorkItem.value(forKey: "workId") as? String ?? "0"), method: .get, parameters: params)
+            Alamofire.request("https://archiveofourown.org/works/" + (downloadedWorkItem.value(forKey: "workId") as? String ?? "0"), method: .get, parameters: params)
                 .response(completionHandler: onSavedWorkLoaded(_:))
         }
 
@@ -1380,7 +1405,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             workId = downloadedWorkItem.value(forKey: "workId") as? String ?? "0"
         }
         
-        let requestStr = "http://archiveofourown.org/kudos.js"
+        let requestStr = "https://archiveofourown.org/kudos.js"
         //let pseud_id = DefaultsManager.getString(DefaultsManager.PSEUD_ID)
         
         var params:[String:Any] = [String:Any]()
@@ -1394,7 +1419,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
+            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
         }
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
@@ -1519,7 +1544,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     }
     
     func downloadFile(downloadUrl: String) {
-        let finalPath = "http://archiveofourown.org" + downloadUrl
+        let finalPath = "https://archiveofourown.org" + downloadUrl
         print("download"+downloadUrl)
         
         Answers.logCustomEvent(withName: "Download_work",
@@ -1572,7 +1597,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         } else if (downloadedWorkItem != nil) {
             wId = downloadedWorkItem.value(forKey: "workId") as? String ?? ""
         }
-        UIApplication.shared.openURL(NSURL(string: "http://archiveofourown.org/works/\(wId)")! as URL)
+        UIApplication.shared.openURL(NSURL(string: "https://archiveofourown.org/works/\(wId)")! as URL)
 
     }
    

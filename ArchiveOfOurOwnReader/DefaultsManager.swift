@@ -58,6 +58,7 @@ class DefaultsManager {
     static var DONTSHOW_CONTEST = "dntshc"
     static var CONTENT_SHOWSN = "cntshwn"
     static var NEEDS_AUTH = "needsAuth"
+    static var NEEDS_PASS = "needsPass"
     static var USER_PASS = "upass"
     static var THEME_DAY : Int = 0
     static var THEME_NIGHT : Int = 1

@@ -260,41 +260,21 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
     
     // MARK: - navigation
     override func  prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if(segue.identifier == "HistoryDetail") {
-            let workDetail: UINavigationController = segue.destination as! UINavigationController
-            let newsItem:NewsFeedItem = works[(tableView.indexPathForSelectedRow! as NSIndexPath).row]
-            
-            let currentWorkItem = WorkItem()
-            
-            currentWorkItem.archiveWarnings = newsItem.warning
-            currentWorkItem.workTitle = newsItem.title
-            currentWorkItem.topic = newsItem.topic
-            
-            if (newsItem.topicPreview != nil) {
-                currentWorkItem.topicPreview = newsItem.topicPreview!
+        if(segue.identifier == "workDetail") {
+            if let row = tableView.indexPathForSelectedRow?.row {
+                if (row < works.count) {
+                    selectedWorkDetail(segue: segue, row: row, modalDelegate: self, newsItem: works[row])
+                    
+                }
             }
             
-            let tagsString = newsItem.tags.joined(separator: ", ")
-            currentWorkItem.tags = tagsString
-            
-            currentWorkItem.datetime = newsItem.dateTime
-            currentWorkItem.language = newsItem.language
-            currentWorkItem.words = newsItem.words
-            currentWorkItem.comments = newsItem.comments
-            currentWorkItem.kudos = newsItem.kudos
-            currentWorkItem.chaptersCount = newsItem.chapters
-            currentWorkItem.bookmarks = newsItem.bookmarks
-            currentWorkItem.hits = newsItem.hits
-            currentWorkItem.ratingTags = newsItem.rating
-            currentWorkItem.category = newsItem.category
-            currentWorkItem.complete = newsItem.complete
-            currentWorkItem.workId = newsItem.workId
-            
-            currentWorkItem.id = Int64(Int(newsItem.workId)!)
-            
-            (workDetail.viewControllers[0] as! WorkDetailViewController).workItem = currentWorkItem
-            (workDetail.viewControllers[0] as! WorkDetailViewController).modalDelegate = self
-            
+        } else if (segue.identifier == "serieDetail" ) {
+            if let row = tableView.indexPathForSelectedRow?.row {
+                
+                if (row < works.count) {
+                    selectedSerieDetail(segue: segue, row: row, newsItem: works[row])
+                }
+            }
         }
     }
     

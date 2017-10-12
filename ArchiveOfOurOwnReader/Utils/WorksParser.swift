@@ -275,7 +275,8 @@ class WorksParser {
             }
         }
         
-        if let seriesMeta: [TFHppleElement] = doc.search(withXPathQuery: "//dl[@class='series meta group']//dd") as? [TFHppleElement] {
+        if let seriesMeta: [TFHppleElement] = doc.search(withXPathQuery: "//dl[@class='series meta group']//dd") as? [TFHppleElement],
+            let seriesMetaDt: [TFHppleElement] = doc.search(withXPathQuery: "//dl[@class='series meta group']//dt") as? [TFHppleElement] {
             if (seriesMeta.count > 0) {
                 serieItem.author = seriesMeta[0].content.trimmingCharacters(
                     in: CharacterSet.whitespacesAndNewlines)
@@ -290,14 +291,24 @@ class WorksParser {
                         in: CharacterSet.whitespacesAndNewlines)
                 }
                 
-                if (seriesMeta.count > 3) {
-                    serieItem.desc = seriesMeta[3].content.trimmingCharacters(
-                        in: CharacterSet.whitespacesAndNewlines)
+                if (seriesMeta.count > 3 && seriesMetaDt.count > 3) {
+                    if (seriesMetaDt[3].content.contains("Description")) {
+                        serieItem.desc = seriesMeta[3].content.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+                    }
                 }
                 
-                if (seriesMeta.count > 4) {
-                    serieItem.notes = seriesMeta[4].content.trimmingCharacters(
+                if (seriesMeta.count > 4 && seriesMetaDt.count > 4) { //beacuse stats item is number 4
+                    if (seriesMetaDt[4].content.contains("Notes")) {
+                        serieItem.notes = seriesMeta[4].content.trimmingCharacters(
                         in: CharacterSet.whitespacesAndNewlines)
+                    }
+                }
+                
+                if (seriesMeta.count > 5 && seriesMetaDt.count > 5) { //beacuse stats item is number 4
+                    if (seriesMetaDt[5].content.contains("Notes")) {
+                        serieItem.notes = seriesMeta[4].content.trimmingCharacters(
+                            in: CharacterSet.whitespacesAndNewlines)
+                    }
                 }
             }
         }

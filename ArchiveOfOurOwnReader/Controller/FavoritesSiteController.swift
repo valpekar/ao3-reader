@@ -179,8 +179,8 @@ class FavoritesSiteController : LoadingViewController, UITableViewDataSource, UI
         let curWork:NewsFeedItem = works[(indexPath as NSIndexPath).row]
         
         cell = fillCell(cell: cell, curWork: curWork)
-        cell?.downloadButton.tag = (indexPath as NSIndexPath).row
-        cell?.deleteButton.tag = (indexPath as NSIndexPath).row
+        cell?.downloadButton.tag = indexPath.row
+        cell?.deleteButton.tag = indexPath.row
         
         return cell!
     }

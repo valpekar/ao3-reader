@@ -17,7 +17,6 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var notifSwitch: UISwitch!
     @IBOutlet weak var adultSwitch: UISwitch!
-    @IBOutlet weak var authSwitch: UISwitch!
     @IBOutlet weak var adultLabel: UILabel!
     @IBOutlet weak var pseudsTableView: UITableView!
     
@@ -157,14 +156,6 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
                 }
             }
             
-            if let auth = DefaultsManager.getBool(DefaultsManager.NEEDS_AUTH) {
-                if (auth == true) {
-                    authSwitch.setOn(true, animated: false)
-                } else {
-                    authSwitch.setOn(false, animated: false)
-                }
-            }
-            
             self.pseudsTableView.reloadData()
             
         } else {
@@ -185,14 +176,6 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
         
         notifSwitch.isEnabled = false
         adultSwitch.isEnabled = false
-    }
-    
-    @IBAction func authSwitchChanged(_ sender: UISwitch) {
-        if (sender.isOn) {
-            DefaultsManager.putBool(true, key: DefaultsManager.NEEDS_AUTH)
-        } else {
-            DefaultsManager.putBool(false, key: DefaultsManager.NEEDS_AUTH)
-        }
     }
     
     @IBAction func notifSwitchChanged(_ sender: UISwitch) {
@@ -224,41 +207,68 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:UITableViewCell? = tableView.dequeueReusableCell(withIdentifier: "pseudCell")
-        let curKey = Array(pseuds.keys)[(indexPath as NSIndexPath).row]
-        cell?.textLabel?.text = pseuds[curKey]
         
-        if (curKey == currentPseud) {
-            cell?.accessoryType = .checkmark
-        } else {
-            cell?.accessoryType = .none
+        switch (indexPath.section) {
+        case 0:
+            cell?.textLabel?.text = "Protect with TouchID or passcode"
+            cell?.accessoryType = .disclosureIndicator
+        case 1:
+            let curKey = Array(pseuds.keys)[indexPath.row]
+            cell?.textLabel?.text = pseuds[curKey]
+            
+            if (curKey == currentPseud) {
+                cell?.accessoryType = .checkmark
+            } else {
+                cell?.accessoryType = .none
+            }
+            
+        default: break
         }
         
         return cell!
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return pseuds.count
+        switch (section) {
+        case 0:
+            return 1
+        case 1:
+            return pseuds.count
+        default: return 0
+        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        let curKey = Array(pseuds.keys)[(indexPath as NSIndexPath).row]
-        currentPseud = curKey
-        DefaultsManager.putString(curKey, key: DefaultsManager.PSEUD_ID)
-        
-        tableView.reloadData()
+        switch (indexPath.section) {
+        case 0:
+            self.performSegue(withIdentifier: "securitySegue", sender: self)
+        case 1:
+            let curKey = Array(pseuds.keys)[(indexPath as NSIndexPath).row]
+            currentPseud = curKey
+            DefaultsManager.putString(curKey, key: DefaultsManager.PSEUD_ID)
+            
+            tableView.reloadData()
+        default: break
+            
+        }
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "Select Pseud for showing bookmarks, history etc"
+        if (section == 0) {
+            return "Security Settings"
+        } else {
+            return "Pseud for bookmarks, history etc"
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if section == 0 {
-            return 40
-        }
-        return tableView.sectionHeaderHeight
+        return 40
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
     }
     
     

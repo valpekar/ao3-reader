@@ -99,14 +99,27 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
         }
         
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(WorkViewController.handleSingleTap(_:)))
-        tapRecognizer.numberOfTapsRequired = 1
-        tapRecognizer.numberOfTouchesRequired = 1
+        tapRecognizer.numberOfTapsRequired = 2
         tapRecognizer.delegate = self
         tapRecognizer.delaysTouchesBegan = true
         tapRecognizer.delaysTouchesEnded = true
         webView.addGestureRecognizer(tapRecognizer)
         
         NotificationCenter.default.addObserver(self, selector: #selector(WorkViewController.lockScreen), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
+        
+        if (DefaultsManager.getBool("featuresShown") ?? false == false) {
+            showContentAlert()
+        }
+    }
+    
+    func showContentAlert() {
+        let refreshAlert = UIAlertController(title: NSLocalizedString("Attention", comment: ""), message: "Enter/Leave Fullscreen mode with 2 taps", preferredStyle: UIAlertControllerStyle.alert)
+        
+        refreshAlert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { (action: UIAlertAction!) in
+            DefaultsManager.putBool(true, key: "featuresShown")
+        }))
+        
+        present(refreshAlert, animated: true, completion: nil)
     }
     
     deinit {
@@ -391,7 +404,7 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
         showLoadingView(msg: NSLocalizedString("LoadingChapter", comment: ""))
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
+            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
         }
         
         var params:[String:AnyObject] = [String:AnyObject]()
@@ -425,7 +438,7 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
         if (!strUrl.contains("/works/")) {
             strUrl = "/works/" + workItem.workId + "/chapters/" + chapterId
         }
-        Alamofire.request("http://archiveofourown.org" + strUrl, method: .get, parameters: params)
+        Alamofire.request("https://archiveofourown.org" + strUrl, method: .get, parameters: params)
             .response(completionHandler: onWorksLoaded(_:))
     }
     
@@ -618,7 +631,7 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
             var params:[String:AnyObject] = [String:AnyObject]()
             params["view_adult"] = "true" as AnyObject?
             
-            let urlStr = "http://archiveofourown.org" + nextChapter
+            let urlStr = "https://archiveofourown.org" + nextChapter
             
             var title = ""
         
@@ -654,7 +667,7 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
             
             var title = ""
         
-            Alamofire.request("http://archiveofourown.org" + prevChapter, method: .get, parameters: params)
+            Alamofire.request("https://archiveofourown.org" + prevChapter, method: .get, parameters: params)
                 .response(completionHandler: { response in
                     #if DEBUG
                     print(response.request ?? "")

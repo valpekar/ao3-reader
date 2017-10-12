@@ -27,18 +27,23 @@ class ListViewController: UIViewController {
         
         cell.datetimeLabel.text = curWork.dateTime
         cell.languageLabel.text = curWork.language
-        cell.chaptersLabel.text = NSLocalizedString("Chapters_", comment: "") + curWork.chapters
+        
+        if (!curWork.chapters.isEmpty) {
+            cell.chaptersLabel.text = NSLocalizedString("Chapters_", comment: "") + curWork.chapters
+        } else {
+            cell.chaptersLabel.text = ""
+        }
         
         if let commentsNum: Float = Float(curWork.comments) {
             cell.commentsLabel.text =  commentsNum.formatUsingAbbrevation()
         } else {
-            (cell as! FeedTableViewCell).commentsLabel.text = curWork.comments
+            cell.commentsLabel.text = curWork.comments
         }
         
         if let kudosNum: Float = Float(curWork.kudos) {
-            (cell as! FeedTableViewCell).kudosLabel.text =  kudosNum.formatUsingAbbrevation()
+            cell.kudosLabel.text =  kudosNum.formatUsingAbbrevation()
         } else {
-            (cell as! FeedTableViewCell).kudosLabel.text = curWork.kudos
+            cell.kudosLabel.text = curWork.kudos
         }
         
         if let bookmarksNum: Float = Float(curWork.bookmarks) {
@@ -81,8 +86,14 @@ class ListViewController: UIViewController {
     
     func selectedWorkDetail(segue: UIStoryboardSegue, row: Int, modalDelegate: ModalControllerDelegate, newsItem:NewsFeedItem) {
         if let workDetail: UINavigationController = segue.destination as? UINavigationController {
-                        
+            
+            guard let work_id = Int(newsItem.workId) else {
+                return
+            }
+            
             let currentWorkItem = WorkItem()
+            
+            currentWorkItem.id = Int64(work_id)
             
             currentWorkItem.archiveWarnings = newsItem.warning
             currentWorkItem.workTitle = newsItem.title
@@ -107,8 +118,7 @@ class ListViewController: UIViewController {
             currentWorkItem.category = newsItem.category
             currentWorkItem.complete = newsItem.complete
             currentWorkItem.workId = newsItem.workId
-            
-            currentWorkItem.id = Int64(Int(newsItem.workId)!)
+        
             
             (workDetail.topViewController as! WorkDetailViewController).workItem = currentWorkItem
             (workDetail.topViewController as! WorkDetailViewController).modalDelegate = modalDelegate

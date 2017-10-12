@@ -9,8 +9,9 @@
 import UIKit
 import Alamofire
 import TSMessages
+import Crashlytics
 
-class SerieViewController: LoadingViewController, UITableViewDataSource, UITableViewDelegate {
+class SerieViewController: LoadingViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     var serieId: String = ""
     var serieItem: SerieItem = SerieItem()
@@ -35,6 +36,10 @@ class SerieViewController: LoadingViewController, UITableViewDataSource, UITable
         self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
         self.refreshControl.addTarget(self, action: #selector(SerieViewController.refresh(_:)), for: UIControlEvents.valueChanged)
         self.tableView.addSubview(self.refreshControl)
+        
+        Answers.logCustomEvent(withName: "Serie_opened",
+                               customAttributes: [
+                                "serieId": serieId])
         
         requestSerie()
     }
@@ -64,7 +69,6 @@ class SerieViewController: LoadingViewController, UITableViewDataSource, UITable
                 if let d = response.data {
                     self.parseCookies(response)
                     (self.pages, self.works, self.serieItem) = WorksParser.parseSerie(d)
-                    self.parseSerie(data: d)
                     self.showSerie()
                 } else {
                     self.hideLoadingView()
@@ -72,10 +76,6 @@ class SerieViewController: LoadingViewController, UITableViewDataSource, UITable
                 }
                 self.refreshControl.endRefreshing()
             })
-    }
-    
-    func parseSerie(data: Data) {
-        
     }
     
     func showSerie() {
@@ -121,6 +121,11 @@ class SerieViewController: LoadingViewController, UITableViewDataSource, UITable
             
             cell.titleLabel.text = serieItem.title
             cell.authorLabel.text = serieItem.author
+            cell.descLabel.text = serieItem.desc
+            cell.notesLabel.text = serieItem.notes
+            cell.begunLabel.text = "Series Begun \(serieItem.serieBegun)"
+            cell.endedLabel.text = "Series Updated \(serieItem.serieUpdated)"
+            cell.statsLabel.text = "Stats: \(serieItem.stats)"
             
             return cell
             
@@ -192,7 +197,6 @@ class SerieViewController: LoadingViewController, UITableViewDataSource, UITable
                 if let d: Data = response.data {
                     self.parseCookies(response)
                     (self.pages, self.works, self.serieItem) = WorksParser.parseSerie(d)
-                    self.parseSerie(data: d)
                     self.showSerie()
                 } else {
                     self.hideLoadingView()

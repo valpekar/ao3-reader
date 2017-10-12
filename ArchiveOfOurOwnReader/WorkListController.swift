@@ -9,6 +9,7 @@
 import UIKit
 import TSMessages
 import Alamofire
+import Crashlytics
 
 class WorkListController: LoadingViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
@@ -84,6 +85,10 @@ class WorkListController: LoadingViewController, UITableViewDataSource, UITableV
         
         let urlStr = tagUrl
         
+        Answers.logCustomEvent(withName: "WorkList_opened",
+                               customAttributes: [
+                                "urlStr": urlStr])
+        
         Alamofire.request(urlStr) //default is get
             .response(completionHandler: { response in
                 #if DEBUG
@@ -122,7 +127,7 @@ class WorkListController: LoadingViewController, UITableViewDataSource, UITableV
     //MARK: - tableview
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return works.count;
+        return works.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -134,55 +139,16 @@ class WorkListController: LoadingViewController, UITableViewDataSource, UITableV
             cell = FeedTableViewCell(reuseIdentifier: cellIdentifier)
         }
         
-        let curWork:NewsFeedItem = works[(indexPath as NSIndexPath).row]
+        let curWork:NewsFeedItem = works[indexPath.row]
         
-        cell?.topicLabel.text = curWork.topic.replacingOccurrences(of: "\n", with: "")
-        cell?.fandomsLabel.text = curWork.fandoms
-        
-        if (curWork.topicPreview != nil) {
-            cell?.topicPreviewLabel.text = curWork.topicPreview
-        }
-        else {
-            cell?.topicPreviewLabel.text = ""
-        }
-        
-        cell?.datetimeLabel.text = curWork.dateTime
-        cell?.languageLabel.text = curWork.language
-        cell?.chaptersLabel.text = "Chapters: " + curWork.chapters
-       
-        if let commentsNum: Float = Float(curWork.comments) {
-            (cell as! FeedTableViewCell).commentsLabel.text =  commentsNum.formatUsingAbbrevation()
-        } else {
-            (cell as! FeedTableViewCell).commentsLabel.text = curWork.comments
-        }
-        
-        if let kudosNum: Float = Float(curWork.kudos) {
-            (cell as! FeedTableViewCell).kudosLabel.text =  kudosNum.formatUsingAbbrevation()
-        } else {
-            (cell as! FeedTableViewCell).kudosLabel.text = curWork.kudos
-        }
-        
-        if let bookmarksNum: Float = Float(curWork.bookmarks) {
-            (cell as! FeedTableViewCell).bookmarksLabel.text =  bookmarksNum.formatUsingAbbrevation()
-        } else {
-            (cell as! FeedTableViewCell).bookmarksLabel.text = curWork.bookmarks
-        }
-        
-        if let hitsNum: Float = Float(curWork.hits) {
-            (cell as! FeedTableViewCell).hitsLabel.text =  hitsNum.formatUsingAbbrevation()
-        } else {
-            (cell as! FeedTableViewCell).hitsLabel.text = curWork.hits
-        }
-        /*cell?.completeLabel.text = curWork.complete
-         cell?.categoryLabel.text = curWork.category
-         cell?.ratingLabel.text = curWork.rating*/
-        
-        let tagsString:NSString = curWork.tags.joined(separator: ", ") as NSString
-        cell?.tagsLabel.text = tagsString as String
-        
-        cell?.downloadButton.tag = (indexPath as NSIndexPath).row
+        cell = fillCell(cell: cell!, curWork: curWork)
+        cell?.downloadButton.tag = indexPath.row
         
         return cell!
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        selectCell(row: indexPath.row, works: works)
     }
     
     
@@ -251,40 +217,20 @@ class WorkListController: LoadingViewController, UITableViewDataSource, UITableV
     // MARK: - navigation
     override func  prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier == "workDetail") {
-            let workDetail: WorkDetailViewController = segue.destination as! WorkDetailViewController
-            let newsItem:NewsFeedItem = works[(tableView.indexPathForSelectedRow! as NSIndexPath).row]
-            
-            let currentWorkItem = WorkItem()
-            
-            currentWorkItem.archiveWarnings = newsItem.warning
-            currentWorkItem.workTitle = newsItem.title
-            currentWorkItem.topic = newsItem.topic
-            
-            if (newsItem.topicPreview != nil) {
-                currentWorkItem.topicPreview = newsItem.topicPreview!
+            if let row = tableView.indexPathForSelectedRow?.row {
+                if (row < works.count) {
+                    selectedWorkDetail(segue: segue, row: row, modalDelegate: self, newsItem: works[row])
+                    
+                }
             }
             
-            let tagsString = newsItem.tags.joined(separator: ", ")
-            currentWorkItem.tags = tagsString
-            
-            currentWorkItem.datetime = newsItem.dateTime
-            currentWorkItem.language = newsItem.language
-            currentWorkItem.words = newsItem.words
-            currentWorkItem.comments = newsItem.comments
-            currentWorkItem.kudos = newsItem.kudos
-            currentWorkItem.chaptersCount = newsItem.chapters
-            currentWorkItem.bookmarks = newsItem.bookmarks
-            currentWorkItem.hits = newsItem.hits
-            currentWorkItem.ratingTags = newsItem.rating
-            currentWorkItem.category = newsItem.category
-            currentWorkItem.complete = newsItem.complete
-            currentWorkItem.workId = newsItem.workId
-            
-            currentWorkItem.id = Int64(Int(newsItem.workId)!)
-            
-            workDetail.workItem = currentWorkItem
-            workDetail.modalDelegate = self
-            
+        } else if (segue.identifier == "serieDetail" ) {
+            if let row = tableView.indexPathForSelectedRow?.row {
+                
+                if (row < works.count) {
+                    selectedSerieDetail(segue: segue, row: row, newsItem: works[row])
+                }
+            }
         }
     }
     
