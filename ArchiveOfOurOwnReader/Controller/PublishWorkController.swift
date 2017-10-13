@@ -32,7 +32,7 @@ class PublishWorkController: LoadingViewController, UIPickerViewDataSource, UIPi
         addDoneButtonOnKeyboard(workTextTv);
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
+            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
             //requestFavs()
         } else {
             openLoginController() //openLoginController()

@@ -286,13 +286,13 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
         showLoadingView(msg: "\(NSLocalizedString("DwnloadingWrk", comment: "")) \(curWork.title)")
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
+            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
         }
         
         var params:[String:AnyObject] = [String:AnyObject]()
         params["view_adult"] = "true" as AnyObject?
         
-        let urlStr: String = "http://archiveofourown.org/works/" + curWork.workId
+        let urlStr: String = "https://archiveofourown.org/works/" + curWork.workId
         
         Alamofire.request(urlStr, parameters: params) //default is get
             .response(completionHandler: { response in
@@ -340,7 +340,7 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
         showLoadingView(msg: NSLocalizedString("DeletingFromHistory", comment: ""))
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
+            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
         }
         
         //let username = DefaultsManager.getString(DefaultsManager.LOGIN)

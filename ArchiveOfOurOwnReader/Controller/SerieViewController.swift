@@ -21,6 +21,11 @@ class SerieViewController: LoadingViewController, UITableViewDataSource, UITable
     @IBOutlet weak var errView:UIView!
     var refreshControl: UIRefreshControl!
     
+    
+    @IBOutlet weak var stackHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var bottomViewConstraint: NSLayoutConstraint!
+    @IBOutlet weak var bottomButtonsConstraint: NSLayoutConstraint!
+    
     var pages : [PageItem] = [PageItem]()
     var works : [NewsFeedItem] = [NewsFeedItem]()
     
@@ -99,6 +104,47 @@ class SerieViewController: LoadingViewController, UITableViewDataSource, UITable
             }
         }
         collectionView.flashScrollIndicators()
+        
+        if (pages.count == 0) {
+            stackHeightConstraint.isActive = false
+            bottomButtonsConstraint.isActive = false
+            bottomViewConstraint.isActive = true
+        } else {
+            stackHeightConstraint.isActive = true
+            bottomButtonsConstraint.isActive = true
+            bottomViewConstraint.isActive = false
+        }
+    }
+    
+    @IBAction func downloadButtonTouched(_ sender: UIButton) {
+        
+        let curWork:NewsFeedItem = works[sender.tag]
+        showLoadingView(msg: "\(NSLocalizedString("DwnloadingWrk", comment: "")) \(curWork.title)")
+        
+        if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
+            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
+        }
+        
+        var params:[String:AnyObject] = [String:AnyObject]()
+        params["view_adult"] = "true" as AnyObject?
+        
+        let urlStr =  "https://archiveofourown.org/works/" + curWork.workId
+        
+        Alamofire.request(urlStr, parameters: params)
+            .response(completionHandler: { response in
+                #if DEBUG
+                print(response.request ?? "")
+                print(response.error ?? "")
+                    #endif
+                if let d = response.data {
+                    self.parseCookies(response)
+                    self.downloadWork(d, curWork: curWork)
+                    //self.saveWork()
+                } else {
+                    self.hideLoadingView()
+                    TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
+                }
+            })
     }
     
     //MARK: - tableview

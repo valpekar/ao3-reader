@@ -19,12 +19,16 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
     @IBOutlet weak var errView:UIView!
     @IBOutlet weak var descLabel:UILabel!
     
+    var refreshControl: UIRefreshControl!
+    
     var pages : [PageItem] = [PageItem]()
     var works : [NewsFeedItem] = [NewsFeedItem]()
     var analyticsItems : [NSManagedObject] = [NSManagedObject]()
     var foundItems = "0 Found"
     
     var shouldReload = true
+    
+    var noFound = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,6 +37,11 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
         
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 240
+        
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        self.refreshControl.addTarget(self, action: #selector(RecommendationsController.refresh(_:)), for: UIControlEvents.valueChanged)
+        self.tableView.addSubview(self.refreshControl)
         
         self.title = NSLocalizedString("Recommendations", comment: "")
         descLabel.text = NSLocalizedString("RecommendationsExplainedShort", comment: "")
@@ -44,25 +53,29 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        if (shouldReload) {
-        UserDefaults.standard.synchronize()
-        if let pp = UserDefaults.standard.value(forKey: "pro") as? Bool {
-            if (pp) {
-                generateRecommendations()
-            } else if let dd = UserDefaults.standard.value(forKey: "donated") as? Bool {
-                if (dd) {
-                    generateRecommendations()
-                }
-            } else {
-                TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("NotPurchased", comment: ""), type: .error)
-            }
-        }
-        }
+       refresh(tableView)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         shouldReload = true
+    }
+    
+    func refresh(_ sender: AnyObject) {
+        if (shouldReload || noFound) {
+            UserDefaults.standard.synchronize()
+            if let pp = UserDefaults.standard.value(forKey: "pro") as? Bool {
+                if (pp) {
+                    generateRecommendations()
+                } else if let dd = UserDefaults.standard.value(forKey: "donated") as? Bool {
+                    if (dd) {
+                        generateRecommendations()
+                    }
+                } else {
+                    TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("NotPurchased", comment: ""), type: .error)
+                }
+            }
+        }
     }
     
     @IBAction func infoTouched(_ sender: AnyObject) {
@@ -120,7 +133,7 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
         
         descLabel.text = "\(NSLocalizedString("RecommendationsExplainedShort", comment: "")) \(NSLocalizedString("LastUpdate_", comment: "")) \(dateFormatter.string(from: lastDate as? Date ?? Date()))"
         
-        if (days >= 7) {
+        if (days >= 7 || noFound) {
             
             generateNewRecs()
             DefaultsManager.putObject(Date() as AnyObject, key: DefaultsManager.LAST_DATE)
@@ -136,7 +149,7 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
             }
             
             let queryResult = searchQuery.formQuery()
-            let encodableURLRequest = URLRequest(url: URL( string: "http://archiveofourown.org/works/search" )!)
+            let encodableURLRequest = URLRequest(url: URL( string: "https://archiveofourown.org/works/search" )!)
             var encodedURLRequest: URLRequest? = nil
             do {
                 encodedURLRequest = try URLEncoding.queryString.encode(encodableURLRequest, with: queryResult)
@@ -145,7 +158,7 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
             }
             
             if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-                Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
+                Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
             }
             
             showLoadingView(msg: NSLocalizedString("GettingWorks", comment: ""))
@@ -153,10 +166,10 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
             let mutableURLRequest = NSMutableURLRequest(url: URL( string: (encodedURLRequest!.url?.absoluteString)!)!)
             mutableURLRequest.httpMethod = "GET"
             
-            request("http://archiveofourown.org/works/search", parameters: queryResult, encoding: URLEncoding.queryString)
+            request("https://archiveofourown.org/works/search", parameters: queryResult, encoding: URLEncoding.queryString)
                 .response(completionHandler: { response in
                     #if DEBUG
-                    //print(request)
+                    print(request)
                     //print(response)
                     print(response.error ?? "")
                         #endif
@@ -208,7 +221,18 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
         
         var count = 0
         
+//        let randF = Int(arc4random_uniform(UInt32(analyticsItems.count - 1)))
+//        let randC = Int(arc4random_uniform(UInt32(analyticsItems.count - 1)))
+//        let randR = Int(arc4random_uniform(UInt32(analyticsItems.count - 1)))
+        
         for aitem in analyticsItems {
+            
+          //  if (count == randF || count == randC || count == randR) {
+            
+                if (!searchQuery.tag.isEmpty) {
+                    searchQuery.tag += " || "
+                }
+                
             searchQuery.tag += "("
             if (!searchQuery.tag.contains(aitem.value(forKey: "fandom") as! String)) {
                 //searchQuery.tag += ", "
@@ -222,10 +246,10 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
             }
             
             searchQuery.tag += ")"
-            if (count != analyticsItems.count - 1) {
-                searchQuery.tag += " || "
-            }
-            
+//            if (count != analyticsItems.count - 1) {
+//                searchQuery.tag += " || "
+//            }
+//            }
             //searchQuery.categories.append(aitem.valueForKey("category") as! String)
             
             count += 1
@@ -246,7 +270,7 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
         works = [NewsFeedItem]()
         
         let queryResult = searchQuery.formQuery()
-        let encodableURLRequest = URLRequest(url: URL( string: "http://archiveofourown.org/works/search" )!)
+        let encodableURLRequest = URLRequest(url: URL( string: "https://archiveofourown.org/works/search" )!)
         var encodedURLRequest: URLRequest? = nil
         do {
             encodedURLRequest = try URLEncoding.queryString.encode(encodableURLRequest, with: queryResult)
@@ -255,7 +279,7 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
         }
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
+            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
         }
         
         showLoadingView(msg: NSLocalizedString("GettingWorks", comment: ""))
@@ -265,12 +289,12 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
         let mutableURLRequest = NSMutableURLRequest(url: URL( string: urlStr)!)
         mutableURLRequest.httpMethod = "GET"
         
-        let surlStr = "http://archiveofourown.org/works/search"
+        let surlStr = "https://archiveofourown.org/works/search"
         
-        Alamofire.request(surlStr, parameters: queryResult, encoding: /*ParameterEncoding.Custom(encodeParams) */ URLEncoding.httpBody)
+        Alamofire.request(surlStr, method: .get, parameters: queryResult, encoding: URLEncoding.queryString)
             .response(completionHandler: { response in
                 #if DEBUG
-                //print(request ?? "")
+                print(response.request ?? "")
                 //print(response ?? "")
                 print(response.error ?? "")
                     #endif
@@ -283,6 +307,7 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
                     self.hideLoadingView()
                     TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error, duration: 2.0)
                 }
+                self.refreshControl.endRefreshing()
             })
         
     }
@@ -300,9 +325,13 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
         self.title = foundItems
         
         if (tableView.numberOfSections > 0 && tableView.numberOfRows(inSection: 0) > 0) {
-            tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+            tableView.setContentOffset( CGPoint(x: 0, y: 0) , animated: true)
         }
         collectionView.flashScrollIndicators()
+        
+        if (works.count == 0) {
+            noFound = true
+        }
     }
     
     
@@ -374,12 +403,12 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
         if (!page.url.isEmpty) {
             
             if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-                Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
+                Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
             }
             
             showLoadingView(msg: "\(NSLocalizedString("LoadingPage", comment: "")) \(page.name)")
             
-            Alamofire.request("http://archiveofourown.org" + page.url, method: .get).response(completionHandler: { response in
+            Alamofire.request("https://archiveofourown.org" + page.url, method: .get).response(completionHandler: { response in
                 #if DEBUG
                 print(response.error ?? "")
                     #endif
@@ -444,13 +473,13 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
         showLoadingView(msg: "\(NSLocalizedString("DwnloadingWrk", comment: "")) \(curWork?.title ?? "")")
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
+            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
         }
         
         var params:[String:AnyObject] = [String:AnyObject]()
         params["view_adult"] = "true" as AnyObject?
         
-        request("http://archiveofourown.org/works/" + (curWork?.workId ?? ""), method: .get, parameters: params)
+        request("https://archiveofourown.org/works/" + (curWork?.workId ?? ""), method: .get, parameters: params)
             .response(completionHandler: onSavedWorkLoaded(_:))
     }
     

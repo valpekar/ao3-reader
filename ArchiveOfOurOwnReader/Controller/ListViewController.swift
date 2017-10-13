@@ -26,7 +26,12 @@ class ListViewController: UIViewController {
         }
         
         cell.datetimeLabel.text = curWork.dateTime
-        cell.languageLabel.text = curWork.language
+        
+        if (curWork.language.isEmpty) {
+            cell.languageLabel.text = "-"
+        } else {
+            cell.languageLabel.text = curWork.language
+        }
         
         if (!curWork.chapters.isEmpty) {
             cell.chaptersLabel.text = NSLocalizedString("Chapters_", comment: "") + curWork.chapters

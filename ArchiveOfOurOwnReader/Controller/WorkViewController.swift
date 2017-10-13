@@ -416,7 +416,7 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
             }
         }
         
-//        Alamofire.request("http://archiveofourown.org/works/" + workItem.workId + "/chapters/" + chapterId, method: .get, parameters: params)
+//        Alamofire.request("https://archiveofourown.org/works/" + workItem.workId + "/chapters/" + chapterId, method: .get, parameters: params)
 //            .response(completionHandler: { response in
 //                print(response.request ?? "")
 //                

@@ -36,7 +36,7 @@ class SubscriptionsViewController: LoadingViewController, UITableViewDataSource,
         self.tableView.addSubview(self.refreshControl)
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
+            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
             requestFavs()
         } else if ((UIApplication.shared.delegate as! AppDelegate).cookies.count == 0 || (UIApplication.shared.delegate as! AppDelegate).token.isEmpty) {
             
@@ -69,10 +69,10 @@ class SubscriptionsViewController: LoadingViewController, UITableViewDataSource,
         showLoadingView(msg: NSLocalizedString("GettingSubs", comment: ""))
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
+            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
         }
         
-        let urlStr: String = "http://archiveofourown.org/users/" + username + "/subscriptions"
+        let urlStr: String = "https://archiveofourown.org/users/" + username + "/subscriptions"
         
         Alamofire.request(urlStr) //default is .get
             .response(completionHandler: { response in
@@ -218,13 +218,13 @@ class SubscriptionsViewController: LoadingViewController, UITableViewDataSource,
         showLoadingView(msg: "\(NSLocalizedString("DwnloadingWrk", comment: "")) \(curWork.title)")
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
+            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
         }
         
         var params:[String:AnyObject] = [String:AnyObject]()
         params["view_adult"] = "true" as AnyObject?
         
-        request("http://archiveofourown.org/works/" + curWork.workId, method: .get, parameters: params)
+        request("https://archiveofourown.org/works/" + curWork.workId, method: .get, parameters: params)
             .response(completionHandler: { response in
                 print(response.request ?? "")
                 //  println(response)
@@ -301,12 +301,12 @@ class SubscriptionsViewController: LoadingViewController, UITableViewDataSource,
         if (!page.url.isEmpty) {
             
             if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-                Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
+                Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
             }
             
             showLoadingView(msg: "\(NSLocalizedString("LoadingPage", comment: "")) \(page.name)")
             
-            Alamofire.request("http://archiveofourown.org" + page.url, method: .get).response(completionHandler: { response in
+            Alamofire.request("https://archiveofourown.org" + page.url, method: .get).response(completionHandler: { response in
                 print(response.error ?? "")
                 if let data = response.data {
                     self.parseCookies(response)

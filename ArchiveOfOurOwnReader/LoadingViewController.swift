@@ -11,6 +11,7 @@ import iAd
 import CoreData
 import GoogleMobileAds
 import Alamofire
+ import TSMessages
 
 class LoadingViewController: CenterViewController, ModalControllerDelegate, AuthProtocol, UIAlertViewDelegate {
     
@@ -235,9 +236,9 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
     
     var chapters: [ChapterOnline] = [ChapterOnline]()
     
-    func downloadWork(_ data: Data, curWork: NewsFeedItem? = nil, workItemOld: WorkItem? = nil, workItemToReload: NSManagedObject? = nil) -> NSManagedObject? {
+    func downloadWork(_ data: Data, curWork: NewsFeedItem? = nil, workItemOld: WorkItem? = nil, workItemToReload: DBWorkItem? = nil) -> DBWorkItem? {
         
-        var workItem : NSManagedObject! = nil
+        var workItem : DBWorkItem! = nil
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return workItemToReload
         }
@@ -272,7 +273,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
             guard let entity = NSEntityDescription.entity(forEntityName: "DBWorkItem",  in: managedContext) else {
                 return workItemToReload
             }
-            workItem = NSManagedObject(entity: entity, insertInto:managedContext)
+            workItem = DBWorkItem(entity: entity, insertInto:managedContext)
             }
         } else if (workItemToReload != nil) {
             workItem = workItemToReload
@@ -452,6 +453,16 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
             }
             }
             
+            if let seriesEl: [TFHppleElement] = workmeta[0].search(withXPathQuery: "//dd[@class='series']//span[@class='position']") as? [TFHppleElement] {
+                if(seriesEl.count > 0) {
+                    let sTxt = seriesEl[0].content.replacingOccurrences(of: "\n", with:"")
+                        .replacingOccurrences(of: "\\s+", with: " ", options: NSString.CompareOptions.regularExpression, range: nil)
+                    if (!sTxt.isEmpty) {
+                        workItem.setValue("\(sTxt) \n\n\(workItem.topicPreview)", forKey: "topicPreview")
+                    }
+                }
+            }
+            
             if let statsElDt: [TFHppleElement] = workmeta[0].search(withXPathQuery: "//dd[@class='stats']/dl[@class='stats']/dt") as? [TFHppleElement],
                 let statsElDd: [TFHppleElement] = workmeta[0].search(withXPathQuery: "//dd[@class='stats']/dl[@class='stats']/dd") as? [TFHppleElement] {
             if(statsElDt.count > 0 && statsElDd.count > 0) {
@@ -536,7 +547,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
                 var params:[String:AnyObject] = [String:AnyObject]()
                 params["view_adult"] = "true" as AnyObject?
                     
-                Alamofire.request("http://archiveofourown.org" + next, parameters: params).response(completionHandler: { response in
+                Alamofire.request("https://archiveofourown.org" + next, parameters: params).response(completionHandler: { response in
                     
                     #if DEBUG
                         print(response.request ?? "")
@@ -564,9 +575,13 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
             print("Could not save \(String(describing: err?.userInfo))")
                 #endif
             hideLoadingView()
+            
+            TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: "Could not save \(String(describing: err?.userInfo))", type: .error)
         }
         
         saveToAnalytics(workItem.value(forKey: "author") as? String ?? "", category: workItem.value(forKey: "category") as? String ?? "", mainFandom: firstFandom, mainRelationship: firstRelationship)
+        
+        TSMessage.showNotification(in: self, title: NSLocalizedString("Success", comment: ""), subtitle: "Work has been downloaded! You can access if from Downloaded screen", type: .success)
         
         return workItemToReload
     }
@@ -680,7 +695,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
                                     var params:[String:AnyObject] = [String:AnyObject]()
                                     params["view_adult"] = "true" as AnyObject?
                                 
-                                    let urlStr: String = "http://archiveofourown.org" + next
+                                    let urlStr: String = "https://archiveofourown.org" + next
                                 
                                     Alamofire.request(urlStr, parameters: params)
                                         .response(completionHandler: { response in
@@ -833,7 +848,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
             return
         }
         
-        let cookiesH: [HTTPCookie] = HTTPCookie.cookies(withResponseHeaderFields: allHeaders, for: URL(string: "http://archiveofourown.org")!)
+        let cookiesH: [HTTPCookie] = HTTPCookie.cookies(withResponseHeaderFields: allHeaders, for: URL(string: "https://archiveofourown.org")!)
             //let cookies = headers["Set-Cookie"]
         if (cookiesH.count > 0) {
             (UIApplication.shared.delegate as! AppDelegate).cookies = cookiesH

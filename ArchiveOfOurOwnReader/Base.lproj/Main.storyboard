@@ -976,9 +976,16 @@
                                         <color key="tintColor" red="0.4823529411764706" green="0.4823529411764706" blue="0.4823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal">
                                             <attributedString key="attributedTitle">
-                                                <fragment content="Author">
+                                                <fragment content="Author ">
                                                     <attributes>
                                                         <color key="NSColor" red="0.40784313725490196" green="0.40784313725490196" blue="0.40784313725490196" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <font key="NSFont" size="15" name="ArimaMadurai-Black"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                    </attributes>
+                                                </fragment>
+                                                <fragment content="Author Author Author Author Author Author Author Author Author">
+                                                    <attributes>
+                                                        <color key="NSColor" red="0.40783999999999998" green="0.40783999999999998" blue="0.40783999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <font key="NSFont" size="15" name="ArimaMadurai-Black"/>
                                                         <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                     </attributes>
@@ -1228,10 +1235,10 @@ Please check your Internet connection and also make sure you are logged into you
                                 </variation>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y5e-59-w9r">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="628"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="672"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="240" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Zqd-4u-mNa">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="628"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="672"/>
                                         <color key="backgroundColor" red="0.92000001669999998" green="0.92000001669999998" blue="0.92000001669999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <prototypes>
                                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="FeedCell" rowHeight="240" id="eZg-yN-QHZ" customClass="FeedTableViewCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
@@ -1248,7 +1255,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                                     <rect key="frame" x="0.0" y="0.0" width="398" height="40"/>
                                                                     <subviews>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Topic" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumFontSize="12" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zRL-Oe-dO3">
-                                                                            <rect key="frame" x="16" y="4" width="270" height="32"/>
+                                                                            <rect key="frame" x="16" y="4" width="324" height="32"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="50" id="MOu-1J-0Vq"/>
                                                                             </constraints>
@@ -1272,17 +1279,8 @@ Please check your Internet connection and also make sure you are logged into you
                                                                             </constraints>
                                                                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <state key="normal" image="download-100"/>
-                                                                        </button>
-                                                                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SM8-Ud-q02">
-                                                                            <rect key="frame" x="288" y="0.0" width="54" height="40"/>
-                                                                            <constraints>
-                                                                                <constraint firstAttribute="width" constant="54" id="0aG-Nm-3Qz"/>
-                                                                            </constraints>
-                                                                            <state key="normal" image="trash">
-                                                                                <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                            </state>
                                                                             <connections>
-                                                                                <action selector="deleteButtonTouched:" destination="ha1-Xg-SDp" eventType="touchUpInside" id="qiL-t7-cpI"/>
+                                                                                <action selector="downloadButtonTouched:" destination="UP5-M8-Ap4" eventType="touchUpInside" id="bOU-g1-f56"/>
                                                                             </connections>
                                                                         </button>
                                                                     </subviews>
@@ -1293,16 +1291,13 @@ Please check your Internet connection and also make sure you are logged into you
                                                                         <constraint firstItem="zRL-Oe-dO3" firstAttribute="trailing" secondItem="re7-Cz-73R" secondAttribute="trailingMargin" constant="-60" id="Ezf-Uj-bfE"/>
                                                                         <constraint firstAttribute="trailing" secondItem="zRL-Oe-dO3" secondAttribute="trailing" constant="8" id="H5H-pE-lXG"/>
                                                                         <constraint firstItem="gj0-J1-faQ" firstAttribute="leading" secondItem="re7-Cz-73R" secondAttribute="leadingMargin" constant="4" id="Jh6-Ps-iZa"/>
-                                                                        <constraint firstItem="SM8-Ud-q02" firstAttribute="leading" secondItem="zRL-Oe-dO3" secondAttribute="trailing" constant="2" id="LNl-HT-YeR"/>
                                                                         <constraint firstAttribute="trailingMargin" secondItem="zRL-Oe-dO3" secondAttribute="trailing" constant="8" id="NYB-hS-de4"/>
                                                                         <constraint firstAttribute="bottomMargin" secondItem="zRL-Oe-dO3" secondAttribute="bottom" constant="-4" id="QJO-TA-nx3"/>
                                                                         <constraint firstItem="zRL-Oe-dO3" firstAttribute="top" secondItem="re7-Cz-73R" secondAttribute="topMargin" constant="-4" id="R0n-gH-AAa"/>
-                                                                        <constraint firstItem="gj0-J1-faQ" firstAttribute="leading" secondItem="SM8-Ud-q02" secondAttribute="trailing" constant="2" id="Uqh-rh-WtW"/>
                                                                         <constraint firstAttribute="height" constant="40" id="VeK-Gq-cbV"/>
                                                                         <constraint firstAttribute="centerY" secondItem="gj0-J1-faQ" secondAttribute="centerY" id="XTE-Fj-smK"/>
-                                                                        <constraint firstItem="SM8-Ud-q02" firstAttribute="top" secondItem="re7-Cz-73R" secondAttribute="top" id="ZEX-00-obQ"/>
+                                                                        <constraint firstItem="gj0-J1-faQ" firstAttribute="leading" secondItem="zRL-Oe-dO3" secondAttribute="trailing" constant="4" id="arc-N2-UvN"/>
                                                                         <constraint firstAttribute="bottom" secondItem="gj0-J1-faQ" secondAttribute="bottom" id="k3t-oh-lWl"/>
-                                                                        <constraint firstAttribute="bottom" secondItem="SM8-Ud-q02" secondAttribute="bottom" id="sbK-co-NyW"/>
                                                                         <constraint firstAttribute="trailing" secondItem="gj0-J1-faQ" secondAttribute="trailing" id="tgd-JO-pfP"/>
                                                                         <constraint firstItem="gj0-J1-faQ" firstAttribute="leading" secondItem="re7-Cz-73R" secondAttribute="leading" id="ueC-zb-vIS"/>
                                                                     </constraints>
@@ -1832,16 +1827,18 @@ Please check your Internet connection and also make sure you are logged into you
                                     <constraint firstItem="Zqd-4u-mNa" firstAttribute="top" secondItem="y5e-59-w9r" secondAttribute="top" id="i5T-uM-fM1"/>
                                     <constraint firstItem="Zqd-4u-mNa" firstAttribute="leading" secondItem="y5e-59-w9r" secondAttribute="leading" id="zzX-ab-Vo2"/>
                                 </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="8rc-iB-Ye5"/>
+                                    </mask>
+                                </variation>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="udP-kR-Lcm">
-                                <rect key="frame" x="0.0" y="628" width="414" height="44"/>
+                                <rect key="frame" x="0.0" y="672" width="414" height="0.0"/>
                                 <subviews>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="4Bp-cP-ZSE">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="0.0"/>
                                         <color key="backgroundColor" red="0.92000001669999998" green="0.92000001669999998" blue="0.92000001669999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="44" id="bca-qz-1jy"/>
-                                        </constraints>
                                         <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="SCb-4T-nfZ">
                                             <size key="itemSize" width="50" height="28"/>
                                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -1850,14 +1847,11 @@ Please check your Internet connection and also make sure you are logged into you
                                         </collectionViewFlowLayout>
                                         <cells>
                                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PageCell" id="PC4-j1-KyW" customClass="PageCollectionViewCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
-                                                <rect key="frame" x="8" y="8" width="50" height="28"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                                    <rect key="frame" x="0.0" y="0.0" width="50" height="28"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8hg-sW-Hmw">
-                                                            <rect key="frame" x="0.0" y="0.0" width="50" height="28"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -1881,10 +1875,19 @@ Please check your Internet connection and also make sure you are logged into you
                                         </connections>
                                     </collectionView>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="DDp-hx-ShN"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="DDp-hx-ShN"/>
+                                    </mask>
+                                </variation>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" red="0.92000001669999998" green="0.92000001669999998" blue="0.92000001669999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="2gP-YE-8LQ" firstAttribute="top" secondItem="y5e-59-w9r" secondAttribute="bottom" id="79Y-4f-HWK"/>
                             <constraint firstAttribute="trailing" secondItem="udP-kR-Lcm" secondAttribute="trailing" id="AO8-Hk-Vq9"/>
                             <constraint firstAttribute="trailing" secondItem="Rm7-tC-aCz" secondAttribute="trailing" id="Bfc-2k-mdg"/>
                             <constraint firstItem="Rm7-tC-aCz" firstAttribute="top" secondItem="ldM-cd-Ww9" secondAttribute="top" id="Bye-BF-fjp"/>
@@ -1903,8 +1906,11 @@ Please check your Internet connection and also make sure you are logged into you
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="bottomButtonsConstraint" destination="8rc-iB-Ye5" id="Nvt-eJ-KyG"/>
+                        <outlet property="bottomViewConstraint" destination="79Y-4f-HWK" id="Ufz-T3-pEI"/>
                         <outlet property="collectionView" destination="4Bp-cP-ZSE" id="CQe-lU-371"/>
                         <outlet property="errView" destination="LWg-kn-n5O" id="hay-9a-eYJ"/>
+                        <outlet property="stackHeightConstraint" destination="DDp-hx-ShN" id="JBL-aE-bIZ"/>
                         <outlet property="tableView" destination="Zqd-4u-mNa" id="jwa-zM-rRv"/>
                         <segue destination="ebL-Wn-891" kind="presentation" identifier="workDetail" id="Ymh-bO-ZMz"/>
                     </connections>
@@ -4681,8 +4687,8 @@ If you don't see a subscription but are still being charged, make sure that you'
                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" secureTextEntry="YES" textContentType="password"/>
                                                 <variation key="default">
                                                     <mask key="constraints">
-                                                        <exclude reference="NmO-V0-cDc"/>
                                                         <exclude reference="C8V-G0-RIs"/>
+                                                        <exclude reference="NmO-V0-cDc"/>
                                                     </mask>
                                                 </variation>
                                                 <variation key="heightClass=regular-widthClass=regular">
@@ -5935,7 +5941,7 @@ Major Problems:
                         <rightBarButtonItems>
                             <barButtonItem systemItem="edit" id="yjt-Zj-D4F">
                                 <connections>
-                                    <segue destination="zne-OV-4Ng" kind="push" identifier="editFoldersSegue" id="xFq-gT-2pC"/>
+                                    <segue destination="zne-OV-4Ng" kind="show" identifier="editFoldersSegue" id="xFq-gT-2pC"/>
                                 </connections>
                             </barButtonItem>
                             <barButtonItem systemItem="add" id="rj0-gs-2rg">
@@ -7870,8 +7876,8 @@ Please check your Internet connection and also make sure you are logged into you
         <image name="trash" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="nkx-gQ-6IW"/>
-        <segue reference="YvP-vi-Pnc"/>
+        <segue reference="Ymh-bO-ZMz"/>
+        <segue reference="GOa-zO-Fy6"/>
         <segue reference="Qmm-If-9sy"/>
     </inferredMetricsTieBreakers>
 </document>

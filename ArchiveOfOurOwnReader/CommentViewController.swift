@@ -75,13 +75,13 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
     //MARK: - get comments
     
     func getAllComments() {
-        //http://archiveofourown.org/works/6107953?show_comments=true&view_full_work=true#comments
-        let requestStr = "http://archiveofourown.org/works/" + workId + "?show_comments=true&view_full_work=true#comments"
+        //https://archiveofourown.org/works/6107953?show_comments=true&view_full_work=true#comments
+        let requestStr = "https://archiveofourown.org/works/" + workId + "?show_comments=true&view_full_work=true#comments"
         
         showLoadingView(msg: NSLocalizedString("GettingComments", comment: ""))
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
+            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
         }
         
         var params:[String:AnyObject] = [String:AnyObject]()
@@ -295,7 +295,7 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
     func sendComment() {
         showLoadingView(msg: NSLocalizedString("SendingComment", comment: ""))
         
-        let requestStr = "http://archiveofourown.org/works/" + workId + "/comments"
+        let requestStr = "https://archiveofourown.org/works/" + workId + "/comments"
         var pseud_id = DefaultsManager.getString(DefaultsManager.PSEUD_ID)
         
         if(pseud_id.isEmpty) {
@@ -319,7 +319,7 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
         params["commit"] = "Comment" as AnyObject?
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
+            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
         }
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
@@ -399,12 +399,12 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
         if (!page.url.isEmpty) {
             
             if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-                Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "http://archiveofourown.org"), mainDocumentURL: nil)
+                Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
             }
             
             showLoadingView(msg: "\(NSLocalizedString("LoadingPage", comment: "")) \(page.name)")
             
-            Alamofire.request("http://archiveofourown.org" + page.url, method: .get).response(completionHandler: { response in
+            Alamofire.request("https://archiveofourown.org" + page.url, method: .get).response(completionHandler: { response in
                 print(response.request ?? "")
                 print(response.error ?? "")
                 if let data: Data = response.data {

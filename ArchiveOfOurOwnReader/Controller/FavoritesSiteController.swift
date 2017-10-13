@@ -285,9 +285,11 @@ class FavoritesSiteController : LoadingViewController, UITableViewDataSource, UI
         
         Alamofire.request(urlStr, parameters: params)
             .response(completionHandler: { response in
+                #if DEBUG
                 print(response.request ?? "")
                 //  println(response ?? "")
                 print(response.error ?? "")
+                    #endif
                 if let d = response.data {
                     self.parseCookies(response)
                     self.downloadWork(d, curWork: curWork)

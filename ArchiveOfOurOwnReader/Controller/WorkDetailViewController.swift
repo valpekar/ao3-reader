@@ -33,7 +33,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     
      @IBOutlet weak var bannerView: GADBannerView!
     
-    var downloadedWorkItem: NSManagedObject! = nil
+    var downloadedWorkItem: DBWorkItem! = nil
     var downloadedFandoms: [DBFandom]! = nil
     var downloadedRelationships: [DBRelationship]! = nil
     var downloadedCharacters: [DBCharacterItem]! = nil
@@ -341,7 +341,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             }
             
             if let categoryLiArr: [TFHppleElement] = workmeta[0].search(withXPathQuery: "//dd[@class='category tags']/ul/li") as? [TFHppleElement] {
-            
+                workItem.category = ""
                 for i in 0..<categoryLiArr.count {
                     workItem.category += categoryLiArr[i].content.trimmingCharacters(in: .whitespacesAndNewlines) + " "
                 }
@@ -374,6 +374,16 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             if(languageEl.count > 0) {
                 workItem.language = languageEl[0].text().replacingOccurrences(of: "\n", with:"")
                     .replacingOccurrences(of: "\\s+", with: " ", options: NSString.CompareOptions.regularExpression, range: nil)
+            }
+            
+            if let seriesEl: [TFHppleElement] = workmeta[0].search(withXPathQuery: "//dd[@class='series']//span[@class='position']") as? [TFHppleElement] {
+            if(seriesEl.count > 0) {
+                let sTxt = seriesEl[0].content.replacingOccurrences(of: "\n", with:"")
+                    .replacingOccurrences(of: "\\s+", with: " ", options: NSString.CompareOptions.regularExpression, range: nil)
+                if (!sTxt.isEmpty) {
+                    workItem.topicPreview = "\(sTxt) \n\n\(workItem.topicPreview)"
+                }
+            }
             }
             
             workItem.stats = ""
