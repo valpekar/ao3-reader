@@ -10,8 +10,16 @@ import Foundation
 
 class ListViewController: UIViewController {
     
+    var theme: Int = DefaultsManager.THEME_DAY
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        
     }
     
     func fillCell(cell: FeedTableViewCell, curWork: NewsFeedItem) -> FeedTableViewCell {
@@ -73,6 +81,36 @@ class ListViewController: UIViewController {
         }
         cell.tagsLabel.text = tagsString
         
+        if (theme == DefaultsManager.THEME_DAY) {
+            cell.backgroundColor = AppDelegate.greyLightBg
+            cell.bgView.backgroundColor = UIColor.white
+            cell.topicLabel.textColor = AppDelegate.redColor
+            cell.languageLabel.textColor = AppDelegate.redColor
+            cell.datetimeLabel.textColor = AppDelegate.redColor
+            cell.chaptersLabel.textColor = AppDelegate.redColor
+            cell.topicPreviewLabel.textColor = UIColor.black
+            cell.tagsLabel.textColor = AppDelegate.darkerGreyColor
+            cell.kudosLabel.textColor = AppDelegate.redColor
+            cell.commentsLabel.textColor = AppDelegate.redColor
+            cell.bookmarksLabel.textColor = AppDelegate.redColor
+            cell.hitsLabel.textColor = AppDelegate.redColor
+            
+        } else {
+            cell.backgroundColor = AppDelegate.greyDarkBg
+            cell.bgView.backgroundColor = AppDelegate.greyBg
+            cell.topicLabel.textColor = AppDelegate.textLightColor
+            cell.languageLabel.textColor = AppDelegate.greyLightColor
+            cell.datetimeLabel.textColor = AppDelegate.greyLightColor
+            cell.chaptersLabel.textColor = AppDelegate.greyLightColor
+            cell.topicPreviewLabel.textColor = AppDelegate.textLightColor
+            cell.tagsLabel.textColor = AppDelegate.redTextColor
+            cell.tagsLabel.textColor = AppDelegate.greyLightColor
+            cell.kudosLabel.textColor = AppDelegate.darkerGreyColor
+            cell.commentsLabel.textColor = AppDelegate.darkerGreyColor
+            cell.bookmarksLabel.textColor = AppDelegate.darkerGreyColor
+            cell.hitsLabel.textColor = AppDelegate.darkerGreyColor
+        }
+        
         return cell
     }
     
@@ -128,6 +166,27 @@ class ListViewController: UIViewController {
             (workDetail.topViewController as! WorkDetailViewController).workItem = currentWorkItem
             (workDetail.topViewController as! WorkDetailViewController).modalDelegate = modalDelegate
         }
+    }
+    
+    func fillCollCell(cell: PageCollectionViewCell, isCurrent: Bool) -> PageCollectionViewCell {
+        
+        if (theme == DefaultsManager.THEME_DAY) {
+            if (isCurrent) {
+                cell.titleLabel.textColor = UIColor(red: 169/255, green: 164/255, blue: 164/255, alpha: 1)
+            } else {
+                cell.titleLabel.textColor = UIColor.black
+            }
+            cell.backgroundColor = AppDelegate.greyLightBg
+        } else {
+            if (isCurrent) {
+                cell.titleLabel.textColor = AppDelegate.greyColor
+            } else {
+                cell.titleLabel.textColor = UIColor.white
+            }
+            cell.backgroundColor = AppDelegate.redDarkColor
+        }
+        
+        return cell
     }
     
     func selectedSerieDetail(segue: UIStoryboardSegue, row: Int, newsItem:NewsFeedItem) {

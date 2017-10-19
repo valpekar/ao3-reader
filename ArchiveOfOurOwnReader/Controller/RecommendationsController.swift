@@ -88,6 +88,18 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
         present(refreshAlert, animated: true, completion: nil)
     }
    
+    override func applyTheme() {
+        super.applyTheme()
+        
+        if (theme == DefaultsManager.THEME_DAY) {
+            self.tableView.backgroundColor = AppDelegate.greyLightBg
+            self.collectionView.backgroundColor = AppDelegate.greyLightBg
+        } else {
+            self.tableView.backgroundColor = AppDelegate.greyDarkBg
+            self.collectionView.backgroundColor = AppDelegate.redDarkColor
+        }
+    }
+    
     func scheduleLocal() {
         
         guard let settings = UIApplication.shared.currentUserNotificationSettings else { return }
@@ -375,15 +387,15 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cellIdentifier: String = "PageCell"
         
-        let cell: PageCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! PageCollectionViewCell
+        var cell: PageCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! PageCollectionViewCell
         
-        cell.titleLabel.text = pages[(indexPath as NSIndexPath).row].name
-        
-        if (pages[(indexPath as NSIndexPath).row].url.isEmpty) {
-            cell.titleLabel.textColor = UIColor(red: 169/255, green: 164/255, blue: 164/255, alpha: 1)
+        if (pages[indexPath.row].url.isEmpty) {
+            cell = fillCollCell(cell: cell, isCurrent: true)
         } else {
-            cell.titleLabel.textColor = UIColor.black
+            cell = fillCollCell(cell: cell, isCurrent: false)
         }
+        
+        cell.titleLabel.text = pages[indexPath.row].name
         
         return cell
     }

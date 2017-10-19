@@ -10,14 +10,19 @@ import Foundation
 import StoreKit
 import CoreData
 import TSMessages
+import Crashlytics
 
 class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewDataSource, SKPaymentTransactionObserver {
     
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var loginButton: UIButton!
+    @IBOutlet weak var aboutButton: UIButton!
     @IBOutlet weak var notifSwitch: UISwitch!
     @IBOutlet weak var adultSwitch: UISwitch!
+    @IBOutlet weak var nightSwitch: UISwitch!
     @IBOutlet weak var adultLabel: UILabel!
+    @IBOutlet weak var notifLabel: UILabel!
+    @IBOutlet weak var nightLabel: UILabel!
     @IBOutlet weak var pseudsTableView: UITableView!
     
     var pseuds: [String:String] = [:]
@@ -65,6 +70,26 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
         UserDefaults.standard.synchronize()
         
         refreshUI()
+    }
+    
+    override func applyTheme() {
+        super.applyTheme()
+        
+        if (theme == DefaultsManager.THEME_DAY) {
+            self.pseudsTableView.backgroundColor = AppDelegate.greyLightBg
+            self.notifLabel.textColor = UIColor.black
+            self.adultLabel.textColor = UIColor.black
+            self.nightLabel.textColor = UIColor.black
+            loginButton.setTitleColor(AppDelegate.redColor, for: .normal)
+            aboutButton.setTitleColor(AppDelegate.redColor, for: .normal)
+        } else {
+            self.pseudsTableView.backgroundColor = AppDelegate.greyDarkBg
+            self.notifLabel.textColor = AppDelegate.textLightColor
+            self.adultLabel.textColor = AppDelegate.textLightColor
+            self.nightLabel.textColor = AppDelegate.textLightColor
+            loginButton.setTitleColor(AppDelegate.purpleLightColor, for: .normal)
+            aboutButton.setTitleColor(AppDelegate.purpleLightColor, for: .normal)
+        }
     }
     
     //MARK: - log in / out
@@ -168,6 +193,12 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
             removeAdsItem.isEnabled = false
             removeAdsItem.title = ""
         }
+        
+        if (theme == DefaultsManager.THEME_DAY) {
+            self.nightSwitch.setOn(false, animated: false)
+        } else {
+            self.nightSwitch.setOn(true, animated: false)
+        }
     }
     
     func setNotAuthorizedUI() {
@@ -203,6 +234,16 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
         }
     }
     
+    @IBAction func nightSwitchChanged(_ sender: UISwitch) {
+        if (sender.isOn) {
+            DefaultsManager.putInt(DefaultsManager.THEME_NIGHT, key: DefaultsManager.THEME)
+            Answers.logCustomEvent(withName: "ME_Theme", customAttributes: ["theme" : "night"])
+        } else {
+            DefaultsManager.putInt(DefaultsManager.THEME_DAY, key: DefaultsManager.THEME)
+            Answers.logCustomEvent(withName: "ME_Theme", customAttributes: ["theme" : "day"])
+        }
+    }
+    
     //Mark: - TableView
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -223,6 +264,14 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
             }
             
         default: break
+        }
+        
+        if (theme == DefaultsManager.THEME_DAY) {
+            cell?.backgroundColor = AppDelegate.greyLightBg
+            cell?.textLabel?.textColor = AppDelegate.redTextColor
+        } else {
+            cell?.backgroundColor = AppDelegate.greyDarkBg
+            cell?.textLabel?.textColor = AppDelegate.textLightColor
         }
         
         return cell!

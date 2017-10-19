@@ -10,6 +10,7 @@ import UIKit
 import CoreData
 import Alamofire
 import TSMessages
+import Crashlytics
 
 class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UIWebViewDelegate, UIPopoverPresentationControllerDelegate {
     
@@ -184,8 +185,9 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
             
             if let offset: String = downloadedWorkItem.value(forKey: "scrollProgress") as? String,
                 let _ = self.webView {
-                let scrollOffset:CGPoint = CGPointFromString(offset)
-                self.webView.scrollView.setContentOffset(scrollOffset, animated: true)
+                if let scrollOffset:CGPoint = CGPointFromString(offset) {
+                    self.webView.scrollView.setContentOffset(scrollOffset, animated: true)
+                }
             }
         }
     }
@@ -792,18 +794,18 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
         
         switch (theme) {
             case DefaultsManager.THEME_DAY :
-                webView.backgroundColor = UIColor.clear
+                webView.backgroundColor = AppDelegate.dayBgColor
                 webView.isOpaque = false
                 
                 let fontStr = "font-size: " + String(format:"%d", fontSize) + "%;"
-                worktext = String(format:"<style>body { color: #021439; %@ }</style>%@", fontStr, work)
+                worktext = String(format:"<style>body { color: #FF021439; %@ }</style>%@", fontStr, work)
                 
             case DefaultsManager.THEME_NIGHT :
-                self.webView.backgroundColor = UIColor(red: 50/255, green: 52/255, blue: 57/255, alpha: 1)
+                self.webView.backgroundColor = AppDelegate.nightBgColor
                 self.webView.isOpaque = false
                 
                 let fontStr = "font-size: " + String(format:"%d", fontSize) + "%;"
-                worktext = String(format:"<style>body { color: #f5f5e9; %@ }</style>%@", fontStr, work)
+                worktext = String(format:"<style>body { color: #FFE1E1CE; %@ }</style>%@", fontStr, work)
                 
             default:
                 break
@@ -828,9 +830,11 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
         switch (theme) {
         case DefaultsManager.THEME_DAY :
             DefaultsManager.putInt(DefaultsManager.THEME_NIGHT, key: DefaultsManager.THEME)
+            Answers.logCustomEvent(withName: "Work_Theme", customAttributes: ["theme" : "night"])
             
         case DefaultsManager.THEME_NIGHT :
             DefaultsManager.putInt(DefaultsManager.THEME_DAY, key: DefaultsManager.THEME)
+            Answers.logCustomEvent(withName: "Work_Theme", customAttributes: ["theme" : "day"])
             
         default:
             break

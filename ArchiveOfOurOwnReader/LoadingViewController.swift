@@ -92,21 +92,10 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         }
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-       // cycleInterstitial()
-        
-        if let adult = DefaultsManager.getBool(DefaultsManager.ADULT)  {
-            self.isAdult = adult
-        }
-        if let safe = DefaultsManager.getBool(DefaultsManager.SAFE) {
-           self.isSafe = safe
-        }
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+       // cycleInterstitial()
         
         UserDefaults.standard.synchronize()
         if let pp = UserDefaults.standard.value(forKey: "pro") as? Bool {
@@ -114,6 +103,29 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         }
         if let dd = UserDefaults.standard.value(forKey: "donated") as? Bool {
             donated = dd
+        }
+        
+        if let adult = DefaultsManager.getBool(DefaultsManager.ADULT)  {
+            self.isAdult = adult
+        }
+        if let safe = DefaultsManager.getBool(DefaultsManager.SAFE) {
+           self.isSafe = safe
+        }
+        
+        if let th = DefaultsManager.getInt(DefaultsManager.THEME) {
+            theme = th
+        } else {
+            theme = DefaultsManager.THEME_DAY
+        }
+        
+        applyTheme()
+    }
+    
+    func applyTheme() {
+        if (theme == DefaultsManager.THEME_DAY) {
+            self.view.backgroundColor = AppDelegate.greyLightBg
+        } else {
+            self.view.backgroundColor = AppDelegate.greyDarkBg
         }
     }
     

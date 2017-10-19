@@ -30,7 +30,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     @IBOutlet weak var completeLabel: UILabel!
     
     @IBOutlet weak var tableView: UITableView!
-    
+    @IBOutlet weak var bgView: UIView!
      @IBOutlet weak var bannerView: GADBannerView!
     
     var downloadedWorkItem: DBWorkItem! = nil
@@ -131,6 +131,22 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             self.title = downloadedWorkItem.value(forKey: "workTitle") as? String ?? ""
         }
         
+        tableView.backgroundColor = UIColor.clear
+        
+        if (theme == DefaultsManager.THEME_DAY) {
+            tableView.separatorColor = AppDelegate.greyLightColor
+            bgView.backgroundColor = AppDelegate.whiteTransparentColor
+            readButton.backgroundColor = AppDelegate.whiteTransparentColor
+            readButton.setTitleColor(AppDelegate.redColor, for: .normal)
+            authorLabel.setTitleColor(AppDelegate.greyColor, for: .normal)
+        } else {
+            tableView.separatorColor = AppDelegate.greyBg
+            bgView.backgroundColor = AppDelegate.greyTransparentColor
+            readButton.backgroundColor = AppDelegate.greyTransparentColor
+            readButton.setTitleColor(UIColor.white, for: .normal)
+            authorLabel.setTitleColor(AppDelegate.nightTextColor, for: .normal)
+        }
+        
     }
     
     deinit {
@@ -142,10 +158,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     func showDownloadedWork() {
         
         let auth = downloadedWorkItem.value(forKey: "author") as? String ?? ""
-        
-        let underlineAttribute = [NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue]
-        let underlineAttributedString = NSAttributedString(string: auth, attributes: underlineAttribute)
-        authorLabel.setAttributedTitle(underlineAttributedString, for: .normal) // = underlineAttributedString
+        authorLabel.setTitle("🔗 \(auth)", for: .normal) // = underlineAttributedString
         
         let title = downloadedWorkItem.value(forKey: "workTitle") as? String ?? ""
         let trimmedTitle = title.trimmingCharacters(
@@ -596,9 +609,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     //MARK: - show work
     func showWork() {
         
-        let underlineAttribute = [NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue]
-        let underlineAttributedString = NSAttributedString(string: workItem.author, attributes: underlineAttribute)
-        authorLabel.setAttributedTitle(underlineAttributedString, for: .normal) // = underlineAttributedString
+        authorLabel.setTitle("🔗 \(workItem.author)", for: .normal)
         
         titleLabel.text = workItem.workTitle
         
@@ -739,12 +750,12 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     // MARK: - tableview
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell: WorkDetailCell? = nil
+        var cell: WorkDetailCell! = nil
         
         if (indexPath.section == 0) {
-            cell = tableView.dequeueReusableCell(withIdentifier: "txtCell") as? WorkDetailCell
+            cell = tableView.dequeueReusableCell(withIdentifier: "txtCell") as! WorkDetailCell
         } else {
-            cell = tableView.dequeueReusableCell(withIdentifier: "cell") as? WorkDetailCell
+            cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! WorkDetailCell
         }
         
         if(cell == nil) {
@@ -763,7 +774,16 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             indexesToHide = [Int]()
         }
         
-        switch ((indexPath as NSIndexPath).section) {
+        var txtColor: UIColor = UIColor.white
+        if (theme == DefaultsManager.THEME_DAY) {
+            txtColor = AppDelegate.redColor
+        } else {
+            txtColor = AppDelegate.nightTextColor
+        }
+        cell.label.textColor = txtColor
+        cell.backgroundColor = UIColor.clear
+        
+        switch (indexPath.section) {
         case 0:
         
             if (workItem != nil) {
@@ -775,6 +795,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             } else if (downloadedWorkItem != nil) {
                 cell!.label.text = downloadedWorkItem.value(forKey: "topicPreview") as? String ?? ""
             }
+            cell.label.textColor = txtColor
         case 1:
             if (warnings.count > (indexPath as NSIndexPath).row) {
                 cell!.label.text = warnings.joined(separator: ", ")
@@ -848,6 +869,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         default:
             break
         }
+        
         
         return cell!
     }

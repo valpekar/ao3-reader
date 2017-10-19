@@ -54,6 +54,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
             controller.hidesNavigationBarDuringPresentation = false
             controller.searchBar.sizeToFit()
             controller.searchBar.tintColor = AppDelegate.redLightColor
+            controller.searchBar.backgroundImage = UIImage()
             controller.searchBar.delegate = self
             
             if let tf = controller.searchBar.value(forKey: "_searchField") as? UITextField {
@@ -88,6 +89,16 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.white]
         self.navigationController!.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
         self.title = String(downloadedWorkds.values.joined().count) + " " + NSLocalizedString("Downloaded", comment: "")
+    }
+    
+    override func applyTheme() {
+        super.applyTheme()
+        
+        if (theme == DefaultsManager.THEME_DAY) {
+            self.tableView.backgroundColor = AppDelegate.greyLightBg
+        } else {
+            self.tableView.backgroundColor = AppDelegate.greyDarkBg
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -138,9 +149,11 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellIdentifier: String = "FeedCell"
         
-        var cell:DownloadedCell? = tableView.dequeueReusableCell(withIdentifier: cellIdentifier) as? DownloadedCell
+        var cell:DownloadedCell! = nil
         
-        if (cell == nil) {
+        if let c:DownloadedCell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? DownloadedCell {
+            cell = c
+        } else {
             cell = DownloadedCell(reuseIdentifier: cellIdentifier)
         }
         
@@ -230,6 +243,35 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         cell?.deleteButton.btnIndexPath = indexPath
         cell?.folderButton.btnIndexPath = indexPath
         
+        if (theme == DefaultsManager.THEME_DAY) {
+            cell.backgroundColor = AppDelegate.greyLightBg
+            cell.bgView.backgroundColor = UIColor.white
+            cell.topicLabel.textColor = AppDelegate.redColor
+            cell.languageLabel.textColor = AppDelegate.redColor
+            cell.datetimeLabel.textColor = AppDelegate.redColor
+            cell.chaptersLabel.textColor = AppDelegate.redColor
+            cell.topicPreviewLabel.textColor = UIColor.black
+            cell.tagsLabel.textColor = AppDelegate.darkerGreyColor
+            cell.kudosLabel.textColor = AppDelegate.redColor
+            cell.commentsLabel.textColor = AppDelegate.redColor
+            cell.bookmarksLabel.textColor = AppDelegate.redColor
+            cell.hitsLabel.textColor = AppDelegate.redColor
+            
+        } else {
+            cell.backgroundColor = AppDelegate.greyDarkBg
+            cell.bgView.backgroundColor = AppDelegate.greyBg
+            cell.topicLabel.textColor = AppDelegate.textLightColor
+            cell.languageLabel.textColor = AppDelegate.greyLightColor
+            cell.datetimeLabel.textColor = AppDelegate.greyLightColor
+            cell.chaptersLabel.textColor = AppDelegate.greyLightColor
+            cell.topicPreviewLabel.textColor = AppDelegate.textLightColor
+            cell.tagsLabel.textColor = AppDelegate.redTextColor
+            cell.tagsLabel.textColor = AppDelegate.greyLightColor
+            cell.kudosLabel.textColor = AppDelegate.darkerGreyColor
+            cell.commentsLabel.textColor = AppDelegate.darkerGreyColor
+            cell.bookmarksLabel.textColor = AppDelegate.darkerGreyColor
+            cell.hitsLabel.textColor = AppDelegate.darkerGreyColor
+        }
         
         return cell!
     }

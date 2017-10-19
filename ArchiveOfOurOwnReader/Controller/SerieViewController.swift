@@ -49,6 +49,18 @@ class SerieViewController: LoadingViewController, UITableViewDataSource, UITable
         requestSerie()
     }
     
+    override func applyTheme() {
+        super.applyTheme()
+        
+        if (theme == DefaultsManager.THEME_DAY) {
+            self.tableView.backgroundColor = AppDelegate.greyLightBg
+            self.collectionView.backgroundColor = AppDelegate.greyLightBg
+        } else {
+            self.tableView.backgroundColor = AppDelegate.greyDarkBg
+            self.collectionView.backgroundColor = AppDelegate.redDarkColor
+        }
+    }
+    
     func refresh(_ sender:AnyObject) {
         requestSerie()
     }

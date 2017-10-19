@@ -24,8 +24,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     static var redLightColor = UIColor(red: 100/255, green: 29/255, blue: 139/255, alpha: 1.0)
     static var redDarkColor = UIColor(red: 49/255, green: 28/255, blue: 59/255, alpha: 1.0)
     static var purpleLightColor = UIColor(red: 146/255, green: 84/255, blue: 180/255, alpha: 1.0)
+    static var redTxtColor = UIColor(red: 108/255, green: 93/255, blue: 93/255, alpha: 1.0)
     static var greyColor = UIColor(red: 149/255, green: 155/255, blue: 174/255, alpha: 1.0)
-    static var greenColor = UIColor(red: 110/255, green: 177/255, blue: 157/255, alpha: 1.0) 
+    static var greyBg = UIColor(red: 92/255, green: 73/255, blue: 100/255, alpha: 1.0)
+    static var greyLightBg = UIColor(red: 235/255, green: 235/255, blue: 235/255, alpha: 1.0)
+    static var greyDarkBg = UIColor(red: 54/255, green: 45/255, blue: 62/255, alpha: 1.0)
+    static var greenColor = UIColor(red: 110/255, green: 177/255, blue: 157/255, alpha: 1.0)
+    static var textLightColor = UIColor(red: 247/255, green: 245/255, blue: 247/255, alpha: 1.0)
+    static var greyLightColor = UIColor(red: 188/255, green: 186/255, blue: 188/255, alpha: 1.0)
+    static var redTextColor = UIColor(red: 108/255, green: 93/255, blue: 93/255, alpha: 1.0)
+    static var darkerGreyColor = UIColor(red: 170/255, green: 170/255, blue: 170/255, alpha: 1.0)
+    static var nightTextColor = UIColor(red: 225/255, green: 225/255, blue: 206/255, alpha: 1.0)
+    static var dayTextColor = UIColor(red: 2/255, green: 20/255, blue: 57/255, alpha: 1.0)
+    static var nightBgColor = UIColor(red: 39/255, green: 40/255, blue: 43/255, alpha: 1.0)
+    static var dayBgColor = UIColor(red: 231/255, green: 234/255, blue: 238/255, alpha: 1.0)
+    static var greyTransparentColor = UIColor(red: 115/255, green: 116/255, blue: 118/255, alpha: 0.87)
+    static var whiteTransparentColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.87)
+    
     
     //utf8=%E2%9C%93&authenticity_token=Ew7ritgSHINn3NyzuiPTBYjEBWyddhe%2FYmcAqQJQ8iU%3D&user_session%5Blogin%5D=SSADev&user_session%5Bpassword%5D=IsiT301-1&commit=Log+In
 

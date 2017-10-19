@@ -67,6 +67,7 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
             controller.hidesNavigationBarDuringPresentation = false
             controller.searchBar.sizeToFit()
             controller.searchBar.tintColor = AppDelegate.redLightColor
+            controller.searchBar.backgroundImage = UIImage()
             controller.searchBar.delegate = self
             
             if let tf = controller.searchBar.value(forKey: "_searchField") as? UITextField {
@@ -138,13 +139,25 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
         
         //
         
-        if (!purchased || !donated) {
+        if (!purchased && !donated) {
             print("not purchased")
             //self.setupAdPlacer()
             if (adsShown % 3 == 0) {
                 loadAdMobInterstitial()
                 adsShown += 1
             }
+        }
+    }
+    
+    override func applyTheme() {
+        super.applyTheme()
+        
+        if (theme == DefaultsManager.THEME_DAY) {
+            self.tableView.backgroundColor = AppDelegate.greyLightBg
+            self.collectionView.backgroundColor = AppDelegate.greyLightBg
+        } else {
+            self.tableView.backgroundColor = AppDelegate.greyDarkBg
+            self.collectionView.backgroundColor = AppDelegate.redDarkColor
         }
     }
     
@@ -267,18 +280,18 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cellIdentifier: String = "PageCell"
         
-        let cell: UICollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) 
+        var cell: UICollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath)
        // let cell: PageCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier(cellIdentifier, forIndexPath: indexPath) as! PageCollectionViewCell
         
     //    switch (indexPath.row) {
-            
-            (cell as! PageCollectionViewCell).titleLabel.text = pages[(indexPath as NSIndexPath).row].name
-        
-        if (pages[(indexPath as NSIndexPath).row].url.isEmpty) {
-            (cell as! PageCollectionViewCell).titleLabel.textColor = UIColor(red: 169/255, green: 164/255, blue: 164/255, alpha: 1)
+   
+        if (pages[indexPath.row].url.isEmpty) {
+            cell = fillCollCell(cell: cell as! PageCollectionViewCell, isCurrent: true)
         } else {
-            (cell as! PageCollectionViewCell).titleLabel.textColor = UIColor.black
+            cell = fillCollCell(cell: cell as! PageCollectionViewCell, isCurrent: false)
         }
+        
+        (cell as! PageCollectionViewCell).titleLabel.text = pages[indexPath.row].name
         
         return cell
     }
