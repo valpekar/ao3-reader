@@ -22,7 +22,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
     var activityView: UIActivityIndicatorView!
     var loadingView: UIView!
     var loadingLabel: UILabel!
-    var interstitial: GADInterstitial!
+    var interstitial: GADInterstitial?
    // var interstitial: MPInterstitialAdController =
    //     MPInterstitialAdController(forAdUnitId: "24f81f4beba548248fc64cfcf5d4d8f5")
     
@@ -79,12 +79,12 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
     func loadAdMobInterstitial() {
         interstitial = GADInterstitial(adUnitID: "ca-app-pub-8760316520462117/1282893180")
         let request = GADRequest()
-        interstitial.load(request)
+        interstitial?.load(request)
     }
 
     func showAdMobInterstitial() {
-        if interstitial.isReady {
-            interstitial.present(fromRootViewController: self)
+        if interstitial?.isReady ?? false {
+            interstitial?.present(fromRootViewController: self)
         } else {
             #if DEBUG
             print("Ad wasn't ready")
@@ -121,12 +121,8 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         applyTheme()
     }
     
-    func applyTheme() {
-        if (theme == DefaultsManager.THEME_DAY) {
-            self.view.backgroundColor = AppDelegate.greyLightBg
-        } else {
-            self.view.backgroundColor = AppDelegate.greyDarkBg
-        }
+    override func applyTheme() {
+        super.applyTheme()
     }
     
     func showLoadingView(msg: String) {

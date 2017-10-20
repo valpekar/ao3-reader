@@ -262,6 +262,8 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
             } else {
                 cell?.accessoryType = .none
             }
+        case 2:
+            cell?.textLabel?.text = "My Works"
             
         default: break
         }
@@ -283,6 +285,8 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
             return 1
         case 1:
             return pseuds.count
+        case 2:
+            return 1
         default: return 0
         }
     }
@@ -299,16 +303,22 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
             DefaultsManager.putString(curKey, key: DefaultsManager.PSEUD_ID)
             
             tableView.reloadData()
+        case 2:
+            self.performSegue(withIdentifier: "listSegue", sender: self)
         default: break
             
         }
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if (section == 0) {
+        switch (section) {
+        case 0:
             return "Security Settings"
-        } else {
+        case 1:
             return "Pseud for bookmarks, history etc"
+        case 2:
+            return "Other"
+        default: return ""
         }
     }
     
@@ -317,7 +327,17 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 3
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "listSegue") {
+            if let cController: WorkListController = segue.destination as? WorkListController {
+                let login = DefaultsManager.getString(DefaultsManager.LOGIN)
+                cController.tagUrl = "/users/\(login)/works"
+                cController.worksElement = "own work"
+            }
+        }
     }
     
     

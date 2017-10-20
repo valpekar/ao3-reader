@@ -10,10 +10,29 @@ import UIKit
 
 class AboutSubscriptionController: UIViewController {
     
+    @IBOutlet weak var btn:UIButton!
+    @IBOutlet weak var lbl:UILabel!
+    
+    var theme: Int = DefaultsManager.THEME_DAY
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if let th = DefaultsManager.getInt(DefaultsManager.THEME) {
+            theme = th
+        } else {
+            theme = DefaultsManager.THEME_DAY
+        }
         
+        if (theme == DefaultsManager.THEME_DAY) {
+            self.view.backgroundColor = AppDelegate.greyLightBg
+            self.lbl.textColor = UIColor.black
+            self.btn.setTitleColor(AppDelegate.redColor, for: .normal)
+        } else {
+            self.view.backgroundColor = AppDelegate.greyDarkBg
+            self.lbl.textColor = AppDelegate.nightTextColor
+            self.btn.setTitleColor(AppDelegate.purpleLightColor, for: .normal)
+        }
     }
     
      @IBAction func aboutSubsTouched(_ sender: AnyObject) {

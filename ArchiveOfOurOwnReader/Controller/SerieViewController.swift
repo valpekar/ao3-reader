@@ -185,6 +185,27 @@ class SerieViewController: LoadingViewController, UITableViewDataSource, UITable
             cell.endedLabel.text = "Series Updated \(serieItem.serieUpdated)"
             cell.statsLabel.text = "Stats: \(serieItem.stats)"
             
+            if (theme == DefaultsManager.THEME_DAY) {
+                cell.backgroundColor = AppDelegate.greyLightBg
+                cell.titleLabel.textColor = UIColor.black
+                cell.authorLabel.textColor = UIColor.black
+                cell.descLabel.textColor = UIColor.black
+                cell.notesLabel.textColor = UIColor.black
+                cell.begunLabel.textColor = UIColor.black
+                cell.endedLabel.textColor = UIColor.black
+                cell.statsLabel.textColor = AppDelegate.redColor
+                
+            } else {
+                cell.backgroundColor = AppDelegate.greyDarkBg
+                cell.titleLabel.textColor = AppDelegate.textLightColor
+                cell.authorLabel.textColor = AppDelegate.textLightColor
+                cell.descLabel.textColor = AppDelegate.textLightColor
+                cell.notesLabel.textColor = AppDelegate.textLightColor
+                cell.begunLabel.textColor = AppDelegate.textLightColor
+                cell.endedLabel.textColor = AppDelegate.textLightColor
+                cell.statsLabel.textColor = AppDelegate.purpleLightColor
+            }
+            
             return cell
             
         } else {

@@ -24,6 +24,7 @@ class WorkListController: LoadingViewController, UITableViewDataSource, UITableV
     var worksStr = NSLocalizedString("WorkList", comment: "")
     var tagUrl = ""
     var tagName = NSLocalizedString("WorkList", comment: "")
+    var worksElement = "work"
     
     var refreshControl: UIRefreshControl!
     
@@ -109,7 +110,7 @@ class WorkListController: LoadingViewController, UITableViewDataSource, UITableV
                     #endif
                 if let d = response.data {
                     self.parseCookies(response)
-                    (self.pages, self.works, self.worksStr) = WorksParser.parseWorks(d, itemsCountHeading: "h2", worksElement: "work")
+                    (self.pages, self.works, self.worksStr) = WorksParser.parseWorks(d, itemsCountHeading: "h2", worksElement: "work", liWorksElement: self.worksElement)
                     //self.parseWorks(d)
                     self.showWorks()
                 } else {
@@ -176,12 +177,12 @@ class WorkListController: LoadingViewController, UITableViewDataSource, UITableV
         var cell: PageCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! PageCollectionViewCell
         
         if (pages[indexPath.row].url.isEmpty) {
-            cell = fillCollCell(cell: cell as! PageCollectionViewCell, isCurrent: true)
+            cell = fillCollCell(cell: cell, isCurrent: true)
         } else {
-            cell = fillCollCell(cell: cell as! PageCollectionViewCell, isCurrent: false)
+            cell = fillCollCell(cell: cell, isCurrent: false)
         }
         
-        (cell as! PageCollectionViewCell).titleLabel.text = pages[indexPath.row].name
+        cell.titleLabel.text = pages[indexPath.row].name
         
         return cell
     }

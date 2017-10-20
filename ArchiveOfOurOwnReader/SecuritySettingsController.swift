@@ -17,12 +17,29 @@ class SecuritySettingsController: LoadingViewController {
     @IBOutlet weak var passSwitch: UISwitch!
     @IBOutlet weak var passTextView: UITextField!
     @IBOutlet weak var passrepTextView: UITextField!
+    @IBOutlet weak var explainLabel: UILabel!
+    @IBOutlet weak var authLabel: UILabel!
+    @IBOutlet weak var passLabel: UILabel!
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         refreshUI ()
+    }
+    
+    override func applyTheme() {
+        super.applyTheme()
+        
+        if (theme == DefaultsManager.THEME_DAY) {
+            self.explainLabel.textColor = UIColor.black
+            self.authLabel.textColor = UIColor.black
+            self.passLabel.textColor = UIColor.black
+        } else {
+            self.explainLabel.textColor = AppDelegate.textLightColor
+            self.authLabel.textColor = AppDelegate.textLightColor
+            self.passLabel.textColor = AppDelegate.textLightColor
+        }
     }
     
     func refreshUI () {

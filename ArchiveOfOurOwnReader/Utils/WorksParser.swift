@@ -11,7 +11,7 @@ import Foundation
 
 class WorksParser {
     
-    class func parseWorks(_ data: Data, itemsCountHeading: String, worksElement: String) -> ([PageItem], [NewsFeedItem], String) {
+    class func parseWorks(_ data: Data, itemsCountHeading: String, worksElement: String, liWorksElement: String? = "") -> ([PageItem], [NewsFeedItem], String) {
         var pages : [PageItem] = [PageItem]()
         var works : [NewsFeedItem] = [NewsFeedItem]()
         var worksCountStr = ""
@@ -26,6 +26,13 @@ class WorksParser {
             return (pages, works, worksCountStr)
         }
         
+        var liEl = worksElement
+        if let l = liWorksElement {
+            if (l.isEmpty == false) {
+                liEl = l
+            }
+        }
+        
         if let itemsCount: [TFHppleElement] = doc.search(withXPathQuery: "//\(itemsCountHeading)[@class='heading']") as? [TFHppleElement] {
             if (itemsCount.count > 0) {
                 worksCountStr = itemsCount[0].content.trimmingCharacters(
@@ -38,7 +45,7 @@ class WorksParser {
         }
         if let workGroup = doc.search(withXPathQuery: "//ol[@class='\(worksElement) index group']") as? [TFHppleElement] {
             if (workGroup.count > 0) {
-                if let worksList : [TFHppleElement] = workGroup[0].search(withXPathQuery: "//li[@class='\(worksElement) blurb group']") as? [TFHppleElement] {
+                if let worksList : [TFHppleElement] = workGroup[0].search(withXPathQuery: "//li[@class='\(liEl) blurb group']") as? [TFHppleElement] {
                 
                     for workListItem in worksList {
                         

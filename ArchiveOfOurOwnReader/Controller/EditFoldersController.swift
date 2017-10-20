@@ -15,11 +15,24 @@ class EditFoldersController: UITableViewController {
     
     var folders: [Folder] = []
     var editFoldersProtocol: EditFoldersProtocol!
+    var theme: Int = DefaultsManager.THEME_DAY
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.title = "Edit Folders"
+        
+        if let th = DefaultsManager.getInt(DefaultsManager.THEME) {
+            theme = th
+        } else {
+            theme = DefaultsManager.THEME_DAY
+        }
+        
+        if (theme == DefaultsManager.THEME_DAY) {
+            self.tableView.backgroundColor = AppDelegate.greyLightBg
+        } else {
+            self.tableView.backgroundColor = AppDelegate.greyDarkBg
+        }
     }
     
     //MARK: - tableview
@@ -38,6 +51,15 @@ class EditFoldersController: UITableViewController {
         let folder = folders[indexPath.row]
         
         cell.textLabel?.text = folder.name ?? "No Name"
+        
+        if (theme == DefaultsManager.THEME_DAY) {
+            cell.backgroundColor = AppDelegate.greyLightBg
+            cell.textLabel?.textColor = AppDelegate.redColor
+            
+        } else {
+            cell.backgroundColor = AppDelegate.greyDarkBg
+            cell.textLabel?.textColor = AppDelegate.textLightColor
+        }
         
         return cell
     }

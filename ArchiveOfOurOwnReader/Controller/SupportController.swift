@@ -10,10 +10,9 @@ import MessageUI
 import TSMessages
 import UIKit
 
-class SupportController: CenterViewController, MFMailComposeViewControllerDelegate {
+class SupportController: LoadingViewController, MFMailComposeViewControllerDelegate {
     
-    @IBOutlet weak var codeTv: UITextField!
-    @IBOutlet weak var doneBtn: UIButton!
+    @IBOutlet weak var explainButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,29 +32,39 @@ class SupportController: CenterViewController, MFMailComposeViewControllerDelega
         self.title = NSLocalizedString("Support", comment: "")
     }
     
+    override func applyTheme() {
+        super.applyTheme()
+        
+        if (theme == DefaultsManager.THEME_DAY) {
+            self.explainButton.setTitleColor(UIColor.black, for: .normal)
+        } else {
+            self.explainButton.setTitleColor(AppDelegate.textLightColor, for: .normal) 
+        }
+    }
+    
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
         // Dismiss the mail compose view controller.
         controller.dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func doneTouched(_ sender: AnyObject) {
-        guard let text = codeTv.text else {
-            TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: "Promo code cannot be empty", type: .error)
-            return
-        }
-        
-        if (text == "ZpRzBIRDA2") {
-            UserDefaults.standard.synchronize()
-            UserDefaults.standard.set(true, forKey: "donated")
-            UserDefaults.standard.synchronize()
-            
-            TSMessage.showNotification(in: self, title: NSLocalizedString("Success", comment: ""), subtitle: "Promo Key Accepted!", type: .success)
-            
-            codeTv.text = ""
-        } else {
-            TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: "No Such Promo Key!", type: .error)
-        }
-    }
+//    @IBAction func doneTouched(_ sender: AnyObject) {
+//        guard let text = codeTv.text else {
+//            TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: "Promo code cannot be empty", type: .error)
+//            return
+//        }
+//
+//        if (text == "ZpRzBIRDA2") {
+//            UserDefaults.standard.synchronize()
+//            UserDefaults.standard.set(true, forKey: "donated")
+//            UserDefaults.standard.synchronize()
+//
+//            TSMessage.showNotification(in: self, title: NSLocalizedString("Success", comment: ""), subtitle: "Promo Key Accepted!", type: .success)
+//
+//            codeTv.text = ""
+//        } else {
+//            TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: "No Such Promo Key!", type: .error)
+//        }
+//    }
     
     @IBAction func WebLink(_ sender: AnyObject) {
         if let url = URL(string: "http://indiefics.com") {

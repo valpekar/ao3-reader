@@ -22,6 +22,14 @@ class CenterViewController: ListViewController {
         
         delegate?.toggleLeftPanel()
     }
+    
+    func applyTheme() {
+        if (theme == DefaultsManager.THEME_DAY) {
+            self.view.backgroundColor = AppDelegate.greyLightBg
+        } else {
+            self.view.backgroundColor = AppDelegate.greyDarkBg
+        }
+    }
         
     func createDrawerButton() {
         let barButtonItem = UIBarButtonItem(image: UIImage(named: "drawer"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(CenterViewController.drawerClicked(_:)))

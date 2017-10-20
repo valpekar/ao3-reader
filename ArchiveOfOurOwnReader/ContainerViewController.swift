@@ -181,6 +181,7 @@ class ContainerViewController: UIViewController, CenterViewControllerDelegate, U
                 let controller = UIStoryboard.mainStoryboard().instantiateViewController(withIdentifier: self.viewControllers[(indexPath as NSIndexPath).row]) as! CenterViewController
                 self.instantiatedControllers[(indexPath as NSIndexPath).row] = controller
                 controller.delegate = self
+                controller.applyTheme()
                 
                 self.centerNavigationController.setViewControllers([controller], animated: true)
         }
