@@ -98,6 +98,7 @@
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gls-Lz-J4W">
                                                     <rect key="frame" x="8" y="8" width="398" height="63"/>
                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="tintColor" red="0.57254901960000004" green="0.3294117647" blue="0.70588235290000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="no"/>
                                                     <connections>
@@ -138,6 +139,7 @@
                                                 </label>
                                                 <textField opaque="NO" clipsSubviews="YES" tag="100" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="ew7-Bj-jjp">
                                                     <rect key="frame" x="52" y="9" width="354" height="26"/>
+                                                    <color key="tintColor" red="0.57254901960000004" green="0.3294117647" blue="0.70588235290000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no"/>
                                                     <connections>
@@ -197,6 +199,7 @@
                                                 </label>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3gc-yM-zJe">
                                                     <rect key="frame" x="338" y="7" width="60" height="30"/>
+                                                    <color key="tintColor" red="0.57254901960000004" green="0.3294117647" blue="0.70588235290000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="60" id="GNQ-Tr-dv6"/>
                                                         <constraint firstAttribute="height" constant="30" id="GwI-WB-K6O"/>
@@ -209,6 +212,7 @@
                                                 </textField>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CNG-4R-LoU">
                                                     <rect key="frame" x="245" y="7" width="60" height="30"/>
+                                                    <color key="tintColor" red="0.57254901960000004" green="0.3294117647" blue="0.70588235290000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="60" id="LJZ-bG-Kti"/>
                                                         <constraint firstAttribute="width" constant="65" id="cGh-gn-u2R"/>
@@ -434,6 +438,7 @@
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mZ8-Zl-7qc">
                                                     <rect key="frame" x="8" y="25" width="398" height="46"/>
                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="tintColor" red="0.57254901960000004" green="0.3294117647" blue="0.70588235290000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 </textView>
@@ -765,7 +770,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="S3B-Rq-8hK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2008.6956521739132" y="-442.66304347826093"/>
+            <point key="canvasLocation" x="2077" y="-523"/>
         </scene>
         <!--Title-->
         <scene sceneID="kRG-vM-MlH">
@@ -990,7 +995,7 @@
                                     <button opaque="NO" contentMode="left" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="AI8-nY-JpQ">
                                         <rect key="frame" x="9" y="4" width="309" height="34"/>
                                         <color key="tintColor" red="0.4823529411764706" green="0.4823529411764706" blue="0.4823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <state key="normal" title="Author Author Author ">
+                                        <state key="normal" title="Author">
                                             <color key="titleColor" red="0.40784313725490196" green="0.40784313725490196" blue="0.40784313725490196" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
@@ -1112,12 +1117,7 @@
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Work Detail" id="jfK-6D-bZT">
-                        <barButtonItem key="backBarButtonItem" title=" " id="pvu-BR-NkF"/>
-                        <barButtonItem key="leftBarButtonItem" systemItem="stop" id="NmE-Jq-ymG">
-                            <connections>
-                                <action selector="closeClicked:" destination="g0F-jj-WaO" id="YFV-IH-LLz"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="backBarButtonItem" title="  " id="pvu-BR-NkF"/>
                     </navigationItem>
                     <connections>
                         <outlet property="audienceLabel" destination="hKr-uF-seL" id="yW0-LN-igq"/>
@@ -1133,13 +1133,13 @@
                         <outlet property="tableView" destination="FbH-Ta-u8Z" id="r3r-7C-p1Z"/>
                         <outlet property="titleLabel" destination="Cyb-us-7ON" id="F1S-ZI-o8q"/>
                         <segue destination="aFH-5Z-kbf" kind="show" identifier="leaveComment" id="aEt-Fa-YHa"/>
-                        <segue destination="h60-ml-Ofy" kind="show" identifier="listSegue" id="5rQ-gu-17N"/>
+                        <segue destination="h60-ml-Ofy" kind="push" identifier="listSegue" id="5rQ-gu-17N"/>
                         <segue destination="UP5-M8-Ap4" kind="show" identifier="showSerie" action="showDetailViewController:sender:" id="GOa-zO-Fy6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5sT-GC-Bt4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2009.375" y="244.92187499999997"/>
+            <point key="canvasLocation" x="1699" y="264"/>
         </scene>
         <!--Serie View Controller-->
         <scene sceneID="t0i-hU-Prl">
@@ -1914,7 +1914,7 @@ Please check your Internet connection and also make sure you are logged into you
                         <outlet property="errView" destination="LWg-kn-n5O" id="hay-9a-eYJ"/>
                         <outlet property="stackHeightConstraint" destination="DDp-hx-ShN" id="JBL-aE-bIZ"/>
                         <outlet property="tableView" destination="Zqd-4u-mNa" id="jwa-zM-rRv"/>
-                        <segue destination="ebL-Wn-891" kind="presentation" identifier="workDetail" id="Ymh-bO-ZMz"/>
+                        <segue destination="g0F-jj-WaO" kind="show" identifier="workDetail" id="Zz6-01-vau"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="b0x-y3-Ud8" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2478,7 +2478,7 @@ Please check your Internet connection and also make sure you are logged into you
                             <constraint firstItem="RmA-Nc-iEP" firstAttribute="leading" secondItem="7oc-1t-9bM" secondAttribute="leading" id="v9d-Tr-3J7"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="List" id="noR-z2-v4R"/>
+                    <navigationItem key="navigationItem" title="Title" id="B7Y-8Z-ywV"/>
                     <connections>
                         <outlet property="collectionView" destination="RmA-Nc-iEP" id="qcI-Jr-Arj"/>
                         <outlet property="tableView" destination="dVv-Wb-Czg" id="0yN-JY-EZh"/>
@@ -3434,7 +3434,7 @@ Please check your Internet connection and also make sure you are logged into you
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <color key="tintColor" red="0.70196078431372544" green="0.27450980392156865" blue="0.27450980392156865" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="Try Again 🤔">
-                                    <color key="titleColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="titleColor" red="0.5725490196078431" green="0.32941176470588235" blue="0.70588235294117641" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <variation key="default">
                                     <mask key="constraints">
@@ -3465,7 +3465,7 @@ Please check your Internet connection and also make sure you are logged into you
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                                 <state key="normal" title="Check AO3 Status 🌐">
-                                    <color key="titleColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="titleColor" red="0.5725490196078431" green="0.32941176470588235" blue="0.70588235294117641" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <variation key="default">
                                     <mask key="constraints">
@@ -3528,10 +3528,9 @@ Please check your Internet connection and also make sure you are logged into you
                         <outlet property="collectionView" destination="fql-nO-Cal" id="4e8-Zl-y2A"/>
                         <outlet property="tableView" destination="83n-aJ-0hQ" id="qOV-in-GjT"/>
                         <outlet property="tryAgainButton" destination="ybH-RR-fjQ" id="auD-iC-X3F"/>
-                        <segue destination="ZIm-lB-bUB" kind="presentation" identifier="interstitialSegue" id="SU8-HX-Aa8"/>
                         <segue destination="rrx-NH-aLK" kind="presentation" identifier="choosePref" id="hi9-h9-2xY"/>
-                        <segue destination="ebL-Wn-891" kind="presentation" identifier="workDetail" id="IAp-bh-6e9"/>
                         <segue destination="eeR-tC-252" kind="presentation" identifier="authSegue" id="8K5-SU-SJt"/>
+                        <segue destination="g0F-jj-WaO" kind="show" identifier="workDetail" id="hCS-wp-Ndf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="C1R-GE-i2Z" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3567,7 +3566,7 @@ Please check your Internet connection and also make sure you are logged into you
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6HO-t4-687">
                                         <rect key="frame" x="215.33333333333337" y="296.66666666666669" width="158.66666666666663" height="30"/>
                                         <state key="normal" title="Sync with AO3">
-                                            <color key="titleColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleColor" red="0.57254901960000004" green="0.3294117647" blue="0.70588235290000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <variation key="heightClass=regular-widthClass=regular">
                                             <fontDescription key="fontDescription" type="system" pointSize="24"/>
@@ -3579,7 +3578,7 @@ Please check your Internet connection and also make sure you are logged into you
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KXq-iU-SSa">
                                         <rect key="frame" x="40" y="296.66666666666669" width="159.33333333333334" height="30"/>
                                         <state key="normal" title="Try Again 🤔">
-                                            <color key="titleColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleColor" red="0.57254901960000004" green="0.3294117647" blue="0.70588235290000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <variation key="heightClass=regular-widthClass=regular">
                                             <fontDescription key="fontDescription" type="system" pointSize="24"/>
@@ -4158,8 +4157,8 @@ Please check your Internet connection and also make sure you are logged into you
                         <outlet property="collectionView" destination="3vt-Rc-Qv3" id="uLe-fL-pgR"/>
                         <outlet property="errView" destination="0av-Zm-bNs" id="0JN-64-AZj"/>
                         <outlet property="tableView" destination="BV6-B7-sL7" id="cGv-Ih-lLb"/>
-                        <segue destination="ebL-Wn-891" kind="presentation" identifier="workDetail" id="nkx-gQ-6IW"/>
                         <segue destination="UP5-M8-Ap4" kind="show" identifier="serieDetail" id="YvP-vi-Pnc"/>
+                        <segue destination="g0F-jj-WaO" kind="show" identifier="workDetail" id="sOC-2j-lqm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="13e-vW-JxF" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -5181,7 +5180,7 @@ Please check your Internet connection and also make sure you are logged into you
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7bg-Ae-gez">
                                         <rect key="frame" x="215.33333333333337" y="296.66666666666669" width="158.66666666666663" height="30"/>
                                         <state key="normal" title="Sync with AO3">
-                                            <color key="titleColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleColor" red="0.57254901960000004" green="0.3294117647" blue="0.70588235290000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <variation key="heightClass=regular-widthClass=regular">
                                             <fontDescription key="fontDescription" type="system" pointSize="24"/>
@@ -5193,7 +5192,7 @@ Please check your Internet connection and also make sure you are logged into you
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VIP-O3-ndq">
                                         <rect key="frame" x="40" y="296.66666666666669" width="159.33333333333334" height="30"/>
                                         <state key="normal" title="Try Again 🤔">
-                                            <color key="titleColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleColor" red="0.57254901960000004" green="0.3294117647" blue="0.70588235290000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <variation key="heightClass=regular-widthClass=regular">
                                             <fontDescription key="fontDescription" type="system" pointSize="24"/>
@@ -5404,9 +5403,8 @@ Please check your Internet connection and also make sure you are logged into you
                         <outlet property="collectionView" destination="PXY-gb-fck" id="8Db-Tq-dn1"/>
                         <outlet property="errView" destination="D7m-t1-MtN" id="gXb-H9-Qis"/>
                         <outlet property="tableView" destination="1fx-at-e2q" id="3Qj-nS-UCZ"/>
-                        <segue destination="ebL-Wn-891" kind="presentation" identifier="workDetail" id="WeI-8T-RJM"/>
                         <segue destination="UP5-M8-Ap4" kind="show" identifier="serieDetail" id="hi6-p3-hy3"/>
-                        <segue destination="ebL-Wn-891" kind="presentation" identifier="workDetail" id="2fc-bX-ta2"/>
+                        <segue destination="g0F-jj-WaO" kind="show" identifier="workDetail" id="s76-7m-Rm2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1LG-AT-tCw" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -5966,7 +5964,7 @@ Major Problems:
                                             <outlet property="tagsLabel" destination="B4h-2r-oZZ" id="4b4-ph-r1M"/>
                                             <outlet property="topicLabel" destination="4VT-L1-fAL" id="R2j-mc-aA4"/>
                                             <outlet property="topicPreviewLabel" destination="yxf-WI-AV9" id="Yne-8F-5Zq"/>
-                                            <segue destination="ebL-Wn-891" kind="presentation" identifier="offlineWorkDetail" id="J60-cL-uox"/>
+                                            <segue destination="g0F-jj-WaO" kind="show" identifier="offlineWorkDetail" id="6Vy-m9-kwB"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -6165,31 +6163,6 @@ Major Problems:
             </objects>
             <point key="canvasLocation" x="-346" y="-621"/>
         </scene>
-        <!--Item-->
-        <scene sceneID="yuL-Km-Kg6">
-            <objects>
-                <navigationController storyboardIdentifier="navWorkDetailViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ebL-Wn-891" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="AL5-w0-MyT"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="lEf-WY-4Vp">
-                        <rect key="frame" x="0.0" y="20" width="414" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <color key="barTintColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <textAttributes key="titleTextAttributes">
-                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        </textAttributes>
-                    </navigationBar>
-                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="Qqj-D3-Tlc">
-                        <autoresizingMask key="autoresizingMask"/>
-                    </toolbar>
-                    <connections>
-                        <segue destination="g0F-jj-WaO" kind="relationship" relationship="rootViewController" id="Qmm-If-9sy"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="0By-aG-kYz" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1210" y="246"/>
-        </scene>
         <!--History View Controller-->
         <scene sceneID="BVF-cT-dcE">
             <objects>
@@ -6219,7 +6192,7 @@ Please check your Internet connection and also make sure you are logged into you
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vkf-xs-hdt">
                                         <rect key="frame" x="215.33333333333337" y="296.66666666666669" width="158.66666666666663" height="30"/>
                                         <state key="normal" title="Sync with AO3">
-                                            <color key="titleColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleColor" red="0.57254901960000004" green="0.3294117647" blue="0.70588235290000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <variation key="heightClass=regular-widthClass=regular">
                                             <fontDescription key="fontDescription" type="system" pointSize="24"/>
@@ -6231,7 +6204,7 @@ Please check your Internet connection and also make sure you are logged into you
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SWE-i5-xSO">
                                         <rect key="frame" x="40" y="296.66666666666669" width="159.33333333333334" height="30"/>
                                         <state key="normal" title="Try Again 🤔">
-                                            <color key="titleColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleColor" red="0.57254901960000004" green="0.3294117647" blue="0.70588235290000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <variation key="heightClass=regular-widthClass=regular">
                                             <fontDescription key="fontDescription" type="system" pointSize="24"/>
@@ -6726,7 +6699,6 @@ Please check your Internet connection and also make sure you are logged into you
                                             <outlet property="tagsLabel" destination="68l-ue-rnj" id="QAa-qu-5DF"/>
                                             <outlet property="topicLabel" destination="fpZ-8Y-LTR" id="kSJ-hn-gpr"/>
                                             <outlet property="topicPreviewLabel" destination="VxR-6U-HPo" id="NtL-JJ-Q4t"/>
-                                            <segue destination="ebL-Wn-891" kind="presentation" identifier="workDetail" id="92D-1i-Hxn"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -6817,6 +6789,7 @@ Please check your Internet connection and also make sure you are logged into you
                         <outlet property="collectionView" destination="bpT-FT-At2" id="vH3-cv-TSb"/>
                         <outlet property="errView" destination="MrX-S3-vvo" id="tAK-7x-KiF"/>
                         <outlet property="tableView" destination="ECo-kh-8ii" id="iTu-Su-yxe"/>
+                        <segue destination="g0F-jj-WaO" kind="show" identifier="workDetail" id="ZjT-ZS-xG2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Twr-Yh-3WJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -6870,7 +6843,7 @@ Please check your Internet connection and also make sure you are logged into you
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jok-ZA-mT7">
                                         <rect key="frame" x="215.33333333333337" y="296.66666666666669" width="158.66666666666663" height="30"/>
                                         <state key="normal" title="Sync with AO3">
-                                            <color key="titleColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleColor" red="0.57254901960000004" green="0.3294117647" blue="0.70588235290000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <variation key="heightClass=regular-widthClass=regular">
                                             <fontDescription key="fontDescription" type="system" pointSize="24"/>
@@ -6882,7 +6855,7 @@ Please check your Internet connection and also make sure you are logged into you
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A75-PV-GyA">
                                         <rect key="frame" x="40" y="296.66666666666669" width="159.33333333333334" height="30"/>
                                         <state key="normal" title="Try Again 🤔">
-                                            <color key="titleColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleColor" red="0.57254901960000004" green="0.3294117647" blue="0.70588235290000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <variation key="heightClass=regular-widthClass=regular">
                                             <fontDescription key="fontDescription" type="system" pointSize="24"/>
@@ -7386,7 +7359,6 @@ Please check your Internet connection and also make sure you are logged into you
                                             <outlet property="tagsLabel" destination="wUJ-2n-PrN" id="4hg-u8-ipS"/>
                                             <outlet property="topicLabel" destination="9nb-J7-hFR" id="WRV-gH-JGL"/>
                                             <outlet property="topicPreviewLabel" destination="Aro-oq-Q66" id="H4V-tn-W7H"/>
-                                            <segue destination="ebL-Wn-891" kind="presentation" identifier="workDetail" id="d54-C7-Lcv"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -7490,6 +7462,7 @@ Please check your Internet connection and also make sure you are logged into you
                         <outlet property="descLabel" destination="juB-Iz-l0b" id="giR-ZM-bHB"/>
                         <outlet property="errView" destination="4C4-Za-m6M" id="6Ux-Gb-0kk"/>
                         <outlet property="tableView" destination="cLw-AE-lu2" id="bbd-nX-7KA"/>
+                        <segue destination="g0F-jj-WaO" kind="show" identifier="workDetail" id="QjG-hc-3tA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JLF-VH-HRc" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -7923,9 +7896,8 @@ Please check your Internet connection and also make sure you are logged into you
         <image name="trash" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="WeI-8T-RJM"/>
-        <segue reference="jXE-kt-jek"/>
-        <segue reference="hi6-p3-hy3"/>
-        <segue reference="p5b-Lc-CDi"/>
+        <segue reference="5rQ-gu-17N"/>
+        <segue reference="GOa-zO-Fy6"/>
+        <segue reference="hCS-wp-Ndf"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -66,12 +66,21 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
             controller.dimsBackgroundDuringPresentation = false
             controller.hidesNavigationBarDuringPresentation = false
             controller.searchBar.sizeToFit()
-            controller.searchBar.tintColor = AppDelegate.redLightColor
+            controller.searchBar.tintColor = AppDelegate.purpleLightColor
             controller.searchBar.backgroundImage = UIImage()
             controller.searchBar.delegate = self
             
             if let tf = controller.searchBar.value(forKey: "_searchField") as? UITextField {
                 addDoneButtonOnKeyboardTf(tf)
+                
+                if (theme == DefaultsManager.THEME_DAY) {
+                    tf.textColor = AppDelegate.redColor
+                    tf.backgroundColor = UIColor.white
+                    
+                } else {
+                    tf.textColor = AppDelegate.textLightColor
+                    tf.backgroundColor = AppDelegate.greyBg
+                }
             }
             
             self.tableView.tableHeaderView = controller.searchBar
@@ -97,13 +106,13 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
         
         if ( !DefaultsManager.getString(DefaultsManager.LASTWRKID).isEmpty) {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let vc: UINavigationController = storyboard.instantiateViewController(withIdentifier: "navWorkDetailViewController") as! UINavigationController
+            let vc: WorkDetailViewController = storyboard.instantiateViewController(withIdentifier: "WorkDetailViewController") as! WorkDetailViewController
             let item: WorkItem = WorkItem()
             item.workId = DefaultsManager.getString(DefaultsManager.LASTWRKID)
-            (vc.viewControllers[0] as! WorkDetailViewController).workItem = item
-            (vc.viewControllers[0] as! WorkDetailViewController).modalDelegate = self
+            vc.workItem = item
+            vc.modalDelegate = self
             
-            self.present(vc, animated: true, completion: nil)
+            self.navigationController?.pushViewController(vc, animated: true)
         }
         
         tryAgainButton.layer.borderWidth = 1.0
@@ -266,11 +275,11 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
             return cell
         }
         
-        let curWork:NewsFeedItem = works[(indexPath as NSIndexPath).row]
+        let curWork:NewsFeedItem = works[indexPath.row]
         
         cell = fillCell(cell: cell, curWork: curWork)
         
-        cell.downloadButton.tag = (indexPath as NSIndexPath).row
+        cell.downloadButton.tag = indexPath.row
         
         return cell
     }

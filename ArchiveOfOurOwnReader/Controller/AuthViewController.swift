@@ -39,17 +39,20 @@ class AuthViewController: UIViewController {
         var error: NSError?
         
         // Set the reason string that will appear on the authentication alert.
-        var reasonString = "Authentication is needed to access your stories."
+        let reasonString = "Authentication is needed to access your stories."
         // Check if the device can evaluate the policy.
         if context.canEvaluatePolicy(LAPolicy.deviceOwnerAuthenticationWithBiometrics, error: &error) {
             [context.evaluatePolicy(LAPolicy.deviceOwnerAuthenticationWithBiometrics, localizedReason: reasonString, reply: { (success: Bool, evalPolicyError: Error?) -> Void in
                 
                 if success {
-                    self.dismiss(animated: true) {
-                        self.authDelegate?.authFinished(success: true)
+                    DispatchQueue.main.async {
+                    
+                        self.dismiss(animated: true) {
+                            self.authDelegate?.authFinished(success: true)
+                        }
                     }
                 }
-                else{
+                else {
                     // If authentication failed then show a message to the console with a short description.
                     // In case that the error is a user fallback, then show the password alert view.
                     print(evalPolicyError?.localizedDescription ?? "")
@@ -102,8 +105,10 @@ class AuthViewController: UIViewController {
             } else {
                 let userPass: String = DefaultsManager.getString(DefaultsManager.USER_PASS);
                 if (userPass == txt) {
-                    self.dismiss(animated: true) {
-                        self.authDelegate?.authFinished(success: true)
+                    DispatchQueue.main.async {
+                        self.dismiss(animated: true) {
+                            self.authDelegate?.authFinished(success: true)
+                        }
                     }
                 } else {
                     TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Incorrect password!", comment: ""), type: .error, duration: 2.0)

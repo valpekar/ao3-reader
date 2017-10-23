@@ -31,9 +31,9 @@ class WorkListController: LoadingViewController, UITableViewDataSource, UITableV
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationController!.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
-        self.navigationController!.navigationBar.shadowImage = UIImage()
-        self.navigationController!.navigationBar.isTranslucent = false
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.isTranslucent = false
         
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 240

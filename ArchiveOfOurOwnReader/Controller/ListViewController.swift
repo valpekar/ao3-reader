@@ -111,6 +111,8 @@ class ListViewController: UIViewController {
             cell.hitsLabel.textColor = AppDelegate.darkerGreyColor
         }
         
+        cell.fandomsLabel.textColor = AppDelegate.greenColor
+        
         return cell
     }
     
@@ -128,7 +130,7 @@ class ListViewController: UIViewController {
     }
     
     func selectedWorkDetail(segue: UIStoryboardSegue, row: Int, modalDelegate: ModalControllerDelegate, newsItem:NewsFeedItem) {
-        if let workDetail: UINavigationController = segue.destination as? UINavigationController {
+        if let workDetail: WorkDetailViewController = segue.destination as? WorkDetailViewController {
             
             guard let work_id = Int(newsItem.workId) else {
                 return
@@ -163,8 +165,8 @@ class ListViewController: UIViewController {
             currentWorkItem.workId = newsItem.workId
         
             
-            (workDetail.topViewController as! WorkDetailViewController).workItem = currentWorkItem
-            (workDetail.topViewController as! WorkDetailViewController).modalDelegate = modalDelegate
+            workDetail.workItem = currentWorkItem
+            workDetail.modalDelegate = modalDelegate
         }
     }
     

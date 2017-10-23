@@ -93,7 +93,7 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
                     //contentsButton.hidden = true
                 }
                 
-                if (currentChapterIndex > 0) {
+                if (currentChapterIndex != nil && currentChapterIndex > 0) {
                     prevButton.isHidden = false
                 }
             }

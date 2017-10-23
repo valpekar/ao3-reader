@@ -273,6 +273,8 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
             cell.hitsLabel.textColor = AppDelegate.darkerGreyColor
         }
         
+        cell.fandomsLabel.textColor = AppDelegate.greenColor
+        
         return cell!
     }
     
@@ -391,7 +393,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier == "offlineWorkDetail") {
     
-            let workDetail: UINavigationController = segue.destination as! UINavigationController
+            let workDetail: WorkDetailViewController = segue.destination as! WorkDetailViewController
             let indexPath = tableView.indexPathForSelectedRow! as IndexPath
             
             var curWork: DBWorkItem?
@@ -415,8 +417,8 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
                 }
             }
             
-            (workDetail.viewControllers[0] as! WorkDetailViewController).downloadedWorkItem = curWork
-             (workDetail.viewControllers[0] as! WorkDetailViewController).modalDelegate = self
+            workDetail.downloadedWorkItem = curWork
+             workDetail.modalDelegate = self
         } else if (segue.identifier == "editFoldersSegue") {
             let editController: EditFoldersController = segue.destination as! EditFoldersController
             editController.editFoldersProtocol = self
