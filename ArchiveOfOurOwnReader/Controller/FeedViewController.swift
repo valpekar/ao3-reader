@@ -147,6 +147,9 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
                 adsShown += 1
             }
         }
+        
+        self.tableView.reloadData()
+        self.collectionView.reloadData()
     }
     
     override func applyTheme() {

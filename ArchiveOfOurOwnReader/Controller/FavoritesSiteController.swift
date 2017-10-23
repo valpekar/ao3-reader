@@ -47,6 +47,13 @@ class FavoritesSiteController : LoadingViewController, UITableViewDataSource, UI
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.tableView.reloadData()
+        self.collectionView.reloadData()
+    }
+    
     func refresh(_ sender:AnyObject) {
         requestFavs()
     }
@@ -213,12 +220,12 @@ class FavoritesSiteController : LoadingViewController, UITableViewDataSource, UI
         var cell: PageCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! PageCollectionViewCell
         
         if (pages[indexPath.row].url.isEmpty) {
-            cell = fillCollCell(cell: cell as! PageCollectionViewCell, isCurrent: true)
+            cell = fillCollCell(cell: cell, isCurrent: true)
         } else {
-            cell = fillCollCell(cell: cell as! PageCollectionViewCell, isCurrent: false)
+            cell = fillCollCell(cell: cell, isCurrent: false)
         }
         
-        (cell as! PageCollectionViewCell).titleLabel.text = pages[indexPath.row].name
+        cell.titleLabel.text = pages[indexPath.row].name
         
         return cell
     }

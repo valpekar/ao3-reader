@@ -50,6 +50,13 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
         //generateRecommendations()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.tableView.reloadData()
+        self.collectionView.reloadData()
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         

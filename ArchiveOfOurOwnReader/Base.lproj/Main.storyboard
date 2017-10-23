@@ -282,6 +282,7 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="tintColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <color key="onTintColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="thumbTintColor" red="1" green="1" blue="1" alpha="0.90000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <connections>
                                                         <action selector="ffSwitchChanged:" destination="nbw-Ly-8Cb" eventType="valueChanged" id="LaO-IJ-In9"/>
                                                     </connections>
@@ -298,6 +299,7 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="tintColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <color key="onTintColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="thumbTintColor" red="1" green="1" blue="1" alpha="0.90000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <connections>
                                                         <action selector="ffSwitchChanged:" destination="nbw-Ly-8Cb" eventType="valueChanged" id="p26-X1-D0M"/>
                                                     </connections>
@@ -314,6 +316,7 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="tintColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <color key="onTintColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="thumbTintColor" red="1" green="1" blue="1" alpha="0.90000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <connections>
                                                         <action selector="ffSwitchChanged:" destination="nbw-Ly-8Cb" eventType="valueChanged" id="Kkm-CS-OcX"/>
                                                     </connections>
@@ -330,6 +333,7 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="tintColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <color key="onTintColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="thumbTintColor" red="1" green="1" blue="1" alpha="0.90000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <connections>
                                                         <action selector="ffSwitchChanged:" destination="nbw-Ly-8Cb" eventType="valueChanged" id="YOC-kI-Q2g"/>
                                                     </connections>
@@ -346,6 +350,7 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="tintColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <color key="onTintColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="thumbTintColor" red="1" green="1" blue="1" alpha="0.90000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <connections>
                                                         <action selector="ffSwitchChanged:" destination="nbw-Ly-8Cb" eventType="valueChanged" id="OBE-rD-Qga"/>
                                                     </connections>
@@ -355,6 +360,7 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="tintColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <color key="onTintColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="thumbTintColor" red="1" green="1" blue="1" alpha="0.90000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <connections>
                                                         <action selector="ffSwitchChanged:" destination="nbw-Ly-8Cb" eventType="valueChanged" id="LJA-Jl-ax4"/>
                                                     </connections>
@@ -363,11 +369,17 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="ffSwitch" destination="Wby-Jj-rem" id="pOG-AV-Mwu"/>
+                                            <outlet property="fflabel" destination="1R8-0L-DuC" id="evn-ix-iEp"/>
                                             <outlet property="fmSwitch" destination="KZ9-eH-Qmg" id="ape-do-XgZ"/>
+                                            <outlet property="fmlabel" destination="iDd-Ld-mPZ" id="nZB-rh-HFA"/>
                                             <outlet property="genSwitch" destination="uN7-iD-aNV" id="XgU-4F-8ft"/>
+                                            <outlet property="genlabel" destination="wvj-CB-Ust" id="q1t-7j-pGP"/>
                                             <outlet property="mmSwitch" destination="FtK-Ak-2Xf" id="T0a-pK-05l"/>
+                                            <outlet property="mmlabel" destination="JeA-CC-Lha" id="xUx-FG-Sgs"/>
                                             <outlet property="multiSwitch" destination="UwM-67-lp0" id="Xpt-v3-CwP"/>
+                                            <outlet property="multlabel" destination="cZG-8V-5Ya" id="X3A-O9-RGJ"/>
                                             <outlet property="otherSwitch" destination="l9W-BH-dht" id="Fbd-6c-LYT"/>
+                                            <outlet property="otherlabel" destination="pih-i1-DPs" id="zf4-z4-ctf"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="searchSwitchCell" id="gf1-47-CgH" customClass="SearchSwitchCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
@@ -387,6 +399,7 @@
                                                     <rect key="frame" x="357" y="6" width="51" height="31"/>
                                                     <color key="tintColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <color key="onTintColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="thumbTintColor" red="1" green="1" blue="1" alpha="0.90000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <connections>
                                                         <action selector="categorySwitchChanged:" destination="nbw-Ly-8Cb" eventType="valueChanged" id="ugq-VR-oL8"/>
                                                     </connections>
@@ -481,6 +494,9 @@
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="btn" destination="94t-ZN-LIC" id="XaU-zR-IO7"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>

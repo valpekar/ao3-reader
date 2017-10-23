@@ -11,4 +11,5 @@ import UIKit
 class ButtonCell : UITableViewCell {
     
     
+    @IBOutlet weak var btn: UIButton!
 }

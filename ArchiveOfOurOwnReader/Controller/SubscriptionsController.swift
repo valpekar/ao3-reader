@@ -45,6 +45,13 @@ class SubscriptionsViewController: LoadingViewController, UITableViewDataSource,
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.tableView.reloadData()
+        self.collectionView.reloadData()
+    }
+    
     func refresh(_ sender:AnyObject) {
         requestFavs()
     }

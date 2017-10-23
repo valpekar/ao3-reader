@@ -13,6 +13,8 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
     var delegate:SearchControllerDelegate?
     var modalDelegate:ModalControllerDelegate?
     
+    var theme: Int = DefaultsManager.THEME_DAY
+    
     @IBOutlet weak var langPickerView: UIPickerView!
     @IBOutlet weak var sortbyPickerView: UIPickerView!
     @IBOutlet weak var sortdirectionPickerView: UIPickerView!
@@ -99,6 +101,18 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
         ratingDict = NSDictionary(contentsOfFile: path!)
         
         loadDefaults()
+        
+        if let th = DefaultsManager.getInt(DefaultsManager.THEME) {
+            theme = th
+        } else {
+            theme = DefaultsManager.THEME_DAY
+        }
+        
+        if (theme == DefaultsManager.THEME_DAY) {
+            self.tableView.backgroundColor = AppDelegate.greyLightBg
+        } else {
+            self.tableView.backgroundColor = AppDelegate.greyDarkBg
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -130,26 +144,50 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell : UITableViewCell?
      
-        switch ((indexPath as NSIndexPath).section) {
+        switch (indexPath.section) {
         case 0:
             cell = (tableView.dequeueReusableCell(withIdentifier: "searchTagCell") as? SearchTagCell)!
            (cell as? SearchTagCell)?.textView.text = searchQuery.include_tags
             (cell as? SearchTagCell)?.textView.tag = TAG_INCLUDE_TAGS
+            
+            if (theme == DefaultsManager.THEME_DAY) {
+                cell?.backgroundColor = AppDelegate.greyLightBg
+                (cell as? SearchTagCell)?.textView.textColor = UIColor.black
+                (cell as? SearchTagCell)?.textView.backgroundColor = UIColor.white
+                
+            } else {
+                cell?.backgroundColor = AppDelegate.greyDarkBg
+                (cell as? SearchTagCell)?.textView.textColor = AppDelegate.textLightColor
+                (cell as? SearchTagCell)?.textView.backgroundColor = AppDelegate.greyBg
+            }
+            
         case 1:
             cell = (tableView.dequeueReusableCell(withIdentifier: "searchTagCell") as? SearchTagCell)!
             //if (excludeTags.count > indexPath.row) {
                 (cell as? SearchTagCell)?.textView.text = searchQuery.exclude_tags
            // }
             (cell as? SearchTagCell)?.textView.tag = TAG_EXCLUDE_TAGS
+            
+            if (theme == DefaultsManager.THEME_DAY) {
+                cell?.backgroundColor = AppDelegate.greyLightBg
+                (cell as? SearchTagCell)?.textView.textColor = UIColor.black
+                (cell as? SearchTagCell)?.textView.backgroundColor = UIColor.white
+                
+            } else {
+                cell?.backgroundColor = AppDelegate.greyDarkBg
+                (cell as? SearchTagCell)?.textView.textColor = AppDelegate.textLightColor
+                (cell as? SearchTagCell)?.textView.backgroundColor = AppDelegate.greyBg
+            }
+            
         case 2:
             cell = (tableView.dequeueReusableCell(withIdentifier: "searchTagTextCell") as? SearchTagWithTextCell)!
             if ((indexPath as NSIndexPath).row < labelTitlesWithText.count) {
-                (cell as? SearchTagWithTextCell)?.label.text = labelTitlesWithText[(indexPath as NSIndexPath).row]
+                (cell as? SearchTagWithTextCell)?.label.text = labelTitlesWithText[indexPath.row]
             }
             (cell as? SearchTagWithTextCell)?.textField.delegate = self
             (cell as? SearchTagWithTextCell)?.textField.inputView = nil
             
-            switch ((indexPath as NSIndexPath).row) {
+            switch (indexPath.row) {
             case 0:
                 (cell as? SearchTagWithTextCell)?.textField.tag = TAG_ANYFIELD
                 (cell as? SearchTagWithTextCell)?.textField.text = searchQuery.tag
@@ -182,6 +220,23 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
                 (cell as? SearchTagWithTextCell)?.textField.text = ""
             }
             
+            if (theme == DefaultsManager.THEME_DAY) {
+                cell?.backgroundColor = AppDelegate.greyLightBg
+                (cell as? SearchTagWithTextCell)?.textField.textColor = UIColor.black
+                (cell as? SearchTagWithTextCell)?.label.textColor = UIColor.black
+                (cell as? SearchTagWithTextCell)?.textField.backgroundColor = UIColor.white
+                
+                (cell as? SearchSwitchCell)?.label.textColor = UIColor.black
+                
+            } else {
+                cell?.backgroundColor = AppDelegate.greyDarkBg
+                (cell as? SearchTagWithTextCell)?.textField.textColor = AppDelegate.textLightColor
+                (cell as? SearchTagWithTextCell)?.label.textColor = AppDelegate.textLightColor
+                (cell as? SearchTagWithTextCell)?.textField.backgroundColor = AppDelegate.greyBg
+                
+                (cell as? SearchSwitchCell)?.label.textColor = AppDelegate.textLightColor
+            }
+            
         case 3:
             cell = (tableView.dequeueReusableCell(withIdentifier: "serachFromToCell") as? SearchFromToCell)!
             (cell as? SearchFromToCell)?.nameLabel.text = labelTitlesFromTo[(indexPath as NSIndexPath).row]
@@ -192,7 +247,25 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
             (cell as? SearchFromToCell)?.fromTextView.placeholder = NSLocalizedString("From", comment: "")
             (cell as? SearchFromToCell)?.toTextView.placeholder = NSLocalizedString("To", comment: "")
             
-            switch ((indexPath as NSIndexPath).row) {
+            if (theme == DefaultsManager.THEME_DAY) {
+                cell?.backgroundColor = AppDelegate.greyLightBg
+                (cell as? SearchFromToCell)?.fromTextView.textColor = UIColor.black
+                (cell as? SearchFromToCell)?.toTextView.textColor = UIColor.black
+                (cell as? SearchFromToCell)?.nameLabel.textColor = UIColor.black
+                
+                (cell as? SearchFromToCell)?.fromTextView.backgroundColor = UIColor.white
+                (cell as? SearchFromToCell)?.toTextView.backgroundColor = UIColor.white
+            } else {
+                cell?.backgroundColor = AppDelegate.greyDarkBg
+                (cell as? SearchFromToCell)?.fromTextView.textColor = AppDelegate.textLightColor
+                (cell as? SearchFromToCell)?.toTextView.textColor = AppDelegate.textLightColor
+                (cell as? SearchFromToCell)?.nameLabel.textColor = AppDelegate.textLightColor
+                
+                (cell as? SearchFromToCell)?.fromTextView.backgroundColor = AppDelegate.greyBg
+                (cell as? SearchFromToCell)?.toTextView.backgroundColor = AppDelegate.greyBg
+            }
+            
+            switch (indexPath.row) {
             case 0:
                 (cell as? SearchFromToCell)?.fromTextView.tag = TAG_KUDOS_FROM
                 (cell as? SearchFromToCell)?.toTextView.tag = TAG_KUDOS_TO
@@ -241,11 +314,39 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
             setWarningSwitchState((cell as? SearchSwitchesCell)!.multiSwitch)
             setWarningSwitchState((cell as? SearchSwitchesCell)!.otherSwitch)
             
+            if (theme == DefaultsManager.THEME_DAY) {
+                cell?.backgroundColor = AppDelegate.greyLightBg
+                (cell as? SearchSwitchesCell)?.fflabel.textColor = UIColor.black
+                (cell as? SearchSwitchesCell)?.fmlabel.textColor = UIColor.black
+                (cell as? SearchSwitchesCell)?.mmlabel.textColor = UIColor.black
+                (cell as? SearchSwitchesCell)?.multlabel.textColor = UIColor.black
+                (cell as? SearchSwitchesCell)?.genlabel.textColor = UIColor.black
+                (cell as? SearchSwitchesCell)?.otherlabel.textColor = UIColor.black
+                
+            } else {
+                cell?.backgroundColor = AppDelegate.greyDarkBg
+                (cell as? SearchSwitchesCell)?.fflabel.textColor = AppDelegate.textLightColor
+                (cell as? SearchSwitchesCell)?.fmlabel.textColor = AppDelegate.textLightColor
+                (cell as? SearchSwitchesCell)?.mmlabel.textColor = AppDelegate.textLightColor
+                (cell as? SearchSwitchesCell)?.multlabel.textColor = AppDelegate.textLightColor
+                (cell as? SearchSwitchesCell)?.genlabel.textColor = AppDelegate.textLightColor
+                (cell as? SearchSwitchesCell)?.otherlabel.textColor = AppDelegate.textLightColor
+            }
+            
         case 5:
             cell = (tableView.dequeueReusableCell(withIdentifier: "searchSwitchCell") as? SearchSwitchCell)!
-            (cell as? SearchSwitchCell)?.label.text = labelTitlesSwitch[(indexPath as NSIndexPath).row]
+            (cell as? SearchSwitchCell)?.label.text = labelTitlesSwitch[indexPath.row]
             
-            switch ((indexPath as NSIndexPath).row) {
+            if (theme == DefaultsManager.THEME_DAY) {
+                cell?.backgroundColor = AppDelegate.greyLightBg
+                (cell as? SearchSwitchCell)?.label.textColor = UIColor.black
+                
+            } else {
+                cell?.backgroundColor = AppDelegate.greyDarkBg
+                (cell as? SearchSwitchCell)?.label.textColor = AppDelegate.textLightColor
+            }
+            
+            switch (indexPath.row) {
             case 0:
                 (cell as? SearchSwitchCell)?.switchItem.tag = 14
             case 1:
@@ -266,10 +367,23 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
             
         case 6:
             cell = (tableView.dequeueReusableCell(withIdentifier: "searchFandomsCell") as? SearchFandomsCell)!
-            (cell as? SearchFandomsCell)?.nameLabel.text = worktagsTitlesWithText[(indexPath as NSIndexPath).row]
+            (cell as? SearchFandomsCell)?.nameLabel.text = worktagsTitlesWithText[indexPath.row]
             (cell as? SearchFandomsCell)?.textfield.delegate = self
             
-            switch ((indexPath as NSIndexPath).row) {
+            if (theme == DefaultsManager.THEME_DAY) {
+                cell?.backgroundColor = AppDelegate.greyLightBg
+                (cell as? SearchFandomsCell)?.nameLabel.textColor = AppDelegate.greyColor
+                (cell as? SearchFandomsCell)?.textfield.textColor = UIColor.black
+                (cell as? SearchFandomsCell)?.textfield.backgroundColor = UIColor.white
+                
+            } else {
+                cell?.backgroundColor = AppDelegate.greyDarkBg
+                (cell as? SearchFandomsCell)?.nameLabel.textColor = AppDelegate.textLightColor
+                (cell as? SearchFandomsCell)?.textfield.textColor = UIColor.white
+                (cell as? SearchFandomsCell)?.textfield.backgroundColor = AppDelegate.greyBg
+            }
+            
+            switch (indexPath.row) {
             case 0:
                 (cell as? SearchFandomsCell)?.textfield.tag = TAG_FANDOMS
                 (cell as? SearchFandomsCell)?.textfield.text = searchQuery.fandom_names
@@ -285,18 +399,40 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
             
         case 7:
             cell = (tableView.dequeueReusableCell(withIdentifier: "searchTagTextCell") as? SearchTagWithTextCell)!
-            (cell as? SearchTagWithTextCell)?.label.text = sortlabelTitlesWithText[(indexPath as NSIndexPath).row]
+            (cell as? SearchTagWithTextCell)?.label.text = sortlabelTitlesWithText[indexPath.row]
             (cell as? SearchTagWithTextCell)?.textField.delegate = self
             
-            if ((indexPath as NSIndexPath).row == 0) {
+            if (theme == DefaultsManager.THEME_DAY) {
+                cell?.backgroundColor = AppDelegate.greyLightBg
+                (cell as? SearchTagWithTextCell)?.textField.textColor = UIColor.black
+                (cell as? SearchTagWithTextCell)?.label.textColor = UIColor.black
+                (cell as? SearchTagWithTextCell)?.textField.backgroundColor = UIColor.white
+                
+            } else {
+                cell?.backgroundColor = AppDelegate.greyDarkBg
+                (cell as? SearchTagWithTextCell)?.textField.textColor = AppDelegate.textLightColor
+                (cell as? SearchTagWithTextCell)?.label.textColor = AppDelegate.textLightColor
+                (cell as? SearchTagWithTextCell)?.textField.backgroundColor = AppDelegate.greyBg
+            }
+            
+            if (indexPath.row == 0) {
                 (cell as? SearchTagWithTextCell)?.textField.inputView = sortbyPickerView
                 (cell as? SearchTagWithTextCell)?.textField.text = selectedSortBy
-            } else if ((indexPath as NSIndexPath).row == 1) {
+            } else if (indexPath.row == 1) {
                 (cell as? SearchTagWithTextCell)?.textField.inputView = sortdirectionPickerView
                 (cell as? SearchTagWithTextCell)?.textField.text = selectedSortDirection
             }
         case 8:
             cell = (tableView.dequeueReusableCell(withIdentifier: "buttonCell") as? ButtonCell)!
+            
+            if (theme == DefaultsManager.THEME_DAY) {
+                cell?.backgroundColor = AppDelegate.greyLightBg
+                (cell as? ButtonCell)?.btn.setTitleColor(AppDelegate.redColor, for: .normal)
+                
+            } else {
+                cell?.backgroundColor = AppDelegate.greyDarkBg
+                (cell as? ButtonCell)?.btn.setTitleColor(UIColor.white, for: .normal)
+            }
             
         default:
             break

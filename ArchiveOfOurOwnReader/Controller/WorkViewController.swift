@@ -798,14 +798,14 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
                 webView.isOpaque = false
                 
                 let fontStr = "font-size: " + String(format:"%d", fontSize) + "%;"
-                worktext = String(format:"<style>body { color: #FF021439; %@ }</style>%@", fontStr, work)
+                worktext = String(format:"<style>body { color: #021439; %@ }</style>%@", fontStr, work)
                 
             case DefaultsManager.THEME_NIGHT :
                 self.webView.backgroundColor = AppDelegate.nightBgColor
                 self.webView.isOpaque = false
                 
                 let fontStr = "font-size: " + String(format:"%d", fontSize) + "%;"
-                worktext = String(format:"<style>body { color: #FFE1E1CE; %@ }</style>%@", fontStr, work)
+                worktext = String(format:"<style>body { color: #e1e1ce; %@ }</style>%@", fontStr, work)
                 
             default:
                 break
