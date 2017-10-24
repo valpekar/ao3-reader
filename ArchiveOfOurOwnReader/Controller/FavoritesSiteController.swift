@@ -397,12 +397,12 @@ class FavoritesSiteController : LoadingViewController, UITableViewDataSource, UI
             if let index = self.works.index( where: {$0.workId == curWork.workId}) {
                 self.works.remove(at: index)
             }
-            self.view.makeToast(message: noticediv?[0].content ?? "", duration: 3.0, position: "center" as AnyObject, title: NSLocalizedString("DeleteFromBmk", comment: ""))
+            TSMessage.showNotification(in: self, title: NSLocalizedString("DeleteFromBmk", comment: ""), subtitle: noticediv?[0].content ?? "", type: .success)
         } else {
             if let sorrydiv = doc.search(withXPathQuery: "//div[@class='flash error']") {
             
                 if(sorrydiv.count>0 && (sorrydiv[0] as? TFHppleElement)?.text().range(of: "Sorry") != nil) {
-                    self.view.makeToast(message: (sorrydiv[0] as AnyObject).content, duration: 4.0, position: "center" as AnyObject, title: NSLocalizedString("DeleteFromBmk", comment: ""))
+                    TSMessage.showNotification(in: self, title: NSLocalizedString("DeleteFromBmk", comment: ""), subtitle: (sorrydiv[0] as AnyObject).content, type: .error)
                     return
                 }
             }

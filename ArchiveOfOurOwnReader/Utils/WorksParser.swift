@@ -342,6 +342,19 @@ class WorksParser {
             }
         }
         
+        if (item.readingId.isEmpty) {
+            if let readingIdGroup = workListItem.search(withXPathQuery: "//ul[@class='actions']//li") as? [TFHppleElement] {
+                if (readingIdGroup.count > 1) {
+                    if let readingIdInput = readingIdGroup[1].search(withXPathQuery: "//a") as? [TFHppleElement] {
+                        if (readingIdInput.count > 0) {
+                            let attributes : NSDictionary = readingIdInput[0].attributes as NSDictionary
+                            item.readingId = (attributes["href"] as? String)?.replacingOccurrences(of: "/confirm_delete", with: "") ?? ""
+                        }
+                    }
+                }
+            }
+        }
+        
         return item
     }
     
