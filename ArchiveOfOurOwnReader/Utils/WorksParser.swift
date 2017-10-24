@@ -328,15 +328,15 @@ class WorksParser {
                     let attributes : NSDictionary = headingH4[0].attributes as NSDictionary
                     item.workId = (attributes["href"] as? String)?.replacingOccurrences(of: "/works/", with: "") ?? ""
                 }
-                
-                if let readingIdGroup = workListItem.search(withXPathQuery: "//ul[@class='actions']//li") as? [TFHppleElement] {
-                    if (readingIdGroup.count > 1) {
-                        if let readingIdInput = readingIdGroup[1].search(withXPathQuery: "//a") as? [TFHppleElement] {
-                            if (readingIdInput.count > 0) {
-                                let attributes : NSDictionary = readingIdInput[0].attributes as NSDictionary
-                                item.readingId = (attributes["href"] as? String)?.replacingOccurrences(of: "/confirm_delete", with: "") ?? ""
-                            }
-                        }
+            }
+        }
+        
+        if let readingIdGroup = workListItem.search(withXPathQuery: "//ul[@class='actions']//li") as? [TFHppleElement] {
+            if (readingIdGroup.count > 0) {
+                if let readingIdInput = readingIdGroup[0].search(withXPathQuery: "//input[@id='reading']") as? [TFHppleElement] {
+                    if (readingIdInput.count > 0) {
+                        let attributes : NSDictionary = readingIdInput[0].attributes as NSDictionary
+                        item.readingId = (attributes["value"] as? String) ?? "" //.replacingOccurrences(of: "/confirm_delete", with: "") ?? ""
                     }
                 }
             }

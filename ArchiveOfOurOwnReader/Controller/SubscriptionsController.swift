@@ -50,6 +50,8 @@ class SubscriptionsViewController: LoadingViewController, UITableViewDataSource,
         
         self.tableView.reloadData()
         self.collectionView.reloadData()
+        
+        showNav()
     }
     
     func refresh(_ sender:AnyObject) {

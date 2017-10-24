@@ -92,7 +92,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         } else {
             self.bannerView.isHidden = true
         }
-        
+        //self.bannerView.isHidden = true
         let name = String(format:"b%d", Int(arc4random_uniform(4)))
         bgImage.image = UIImage(named:name)
         
@@ -153,6 +153,16 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         #if DEBUG
         print ("Work Detail View Controller deinit")
         #endif
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        DefaultsManager.putString("", key: DefaultsManager.LASTWRKSCROLL)
+        DefaultsManager.putString("", key: DefaultsManager.LASTWRKID)
+        DefaultsManager.putString("", key: DefaultsManager.LASTWRKCHAPTER)
+        
+         self.modalDelegate?.controllerDidClosed()
     }
     
     func showDownloadedWork() {
@@ -1226,6 +1236,8 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 vadult = "?view_adult=true"
             }
         }
+        
+        //purchased = true
 
         if (workItem != nil) {
             Alamofire.request("https://archiveofourown.org/works/" + workItem.workId + vadult, method: .get, parameters: params)

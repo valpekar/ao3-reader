@@ -53,6 +53,8 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
         
         self.tableView.reloadData()
         self.collectionView.reloadData()
+        
+        showNav()
     }
     
     func refresh(_ sender:AnyObject) {
@@ -173,6 +175,9 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
         return cell!
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        selectCell(row: indexPath.row, works: works)
+    }
     
     //MARK: - collectionview
     
@@ -294,7 +299,7 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
         
         let deleteAlert = UIAlertController(title: NSLocalizedString("AreYouSure", comment: ""), message: NSLocalizedString("SureDeleteFromHistory", comment: ""), preferredStyle: UIAlertControllerStyle.alert)
         
-        deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .default, handler: { (action: UIAlertAction) in
+        deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: { (action: UIAlertAction) in
             #if DEBUG
             print("Cancel")
             #endif
@@ -359,8 +364,11 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
     }
     
     func parseDeleteResponse(_ data: Data, curWork: NewsFeedItem) {
-       // let dta = NSString(data: data, encoding: NSUTF8StringEncoding)
-       // print("the string is: \(dta)")
+        /*#if DEBUG
+            let dta = NSString(data: data, encoding: String.Encoding.utf8.rawValue)
+        print("the string is: \(dta)")
+            #endif */
+            
         let doc : TFHpple = TFHpple(htmlData: data)
         
         var noticediv: [TFHppleElement]? = doc.search(withXPathQuery: "//div[@class='flash notice']") as? [TFHppleElement]

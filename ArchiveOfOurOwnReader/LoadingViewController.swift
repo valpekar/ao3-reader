@@ -76,6 +76,16 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         }
     }
     
+    func showNav() {
+        
+        if let navVC = self.navigationController {
+            
+            navVC.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+            navVC.navigationBar.shadowImage = UIImage()
+            navVC.navigationBar.isTranslucent = false
+        }
+    }
+    
     func loadAdMobInterstitial() {
         interstitial = GADInterstitial(adUnitID: "ca-app-pub-8760316520462117/1282893180")
         let request = GADRequest()

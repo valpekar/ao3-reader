@@ -55,6 +55,8 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
         
         self.tableView.reloadData()
         self.collectionView.reloadData()
+        
+        showNav()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -240,13 +242,13 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
         
         var count = 0
         
-//        let randF = Int(arc4random_uniform(UInt32(analyticsItems.count - 1)))
-//        let randC = Int(arc4random_uniform(UInt32(analyticsItems.count - 1)))
-//        let randR = Int(arc4random_uniform(UInt32(analyticsItems.count - 1)))
+        let randF = Int(arc4random_uniform(UInt32(analyticsItems.count - 1)))
+        let randC = Int(arc4random_uniform(UInt32(analyticsItems.count - 1)))
+        let randR = Int(arc4random_uniform(UInt32(analyticsItems.count - 1)))
         
         for aitem in analyticsItems {
             
-          //  if (count == randF || count == randC || count == randR) {
+            if (count == randF || count == randC || count == randR) {
             
                 if (!searchQuery.tag.isEmpty) {
                     searchQuery.tag += " || "
@@ -268,7 +270,7 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
 //            if (count != analyticsItems.count - 1) {
 //                searchQuery.tag += " || "
 //            }
-//            }
+            }
             //searchQuery.categories.append(aitem.valueForKey("category") as! String)
             
             count += 1

@@ -185,9 +185,8 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
             
             if let offset: String = downloadedWorkItem.value(forKey: "scrollProgress") as? String,
                 let _ = self.webView {
-                if let scrollOffset:CGPoint = CGPointFromString(offset) {
-                    self.webView.scrollView.setContentOffset(scrollOffset, animated: true)
-                }
+                let scrollOffset:CGPoint = CGPointFromString(offset)
+                self.webView.scrollView.setContentOffset(scrollOffset, animated: true)
             }
         }
     }

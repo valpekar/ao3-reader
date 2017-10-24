@@ -109,7 +109,7 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
         }
         
         if (theme == DefaultsManager.THEME_DAY) {
-            self.tableView.backgroundColor = AppDelegate.greyLightBg
+            self.tableView.backgroundColor = UIColor.white
         } else {
             self.tableView.backgroundColor = AppDelegate.greyDarkBg
         }
@@ -151,12 +151,10 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
             (cell as? SearchTagCell)?.textView.tag = TAG_INCLUDE_TAGS
             
             if (theme == DefaultsManager.THEME_DAY) {
-                cell?.backgroundColor = AppDelegate.greyLightBg
                 (cell as? SearchTagCell)?.textView.textColor = UIColor.black
                 (cell as? SearchTagCell)?.textView.backgroundColor = UIColor.white
                 
             } else {
-                cell?.backgroundColor = AppDelegate.greyDarkBg
                 (cell as? SearchTagCell)?.textView.textColor = AppDelegate.textLightColor
                 (cell as? SearchTagCell)?.textView.backgroundColor = AppDelegate.greyBg
             }
@@ -169,12 +167,10 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
             (cell as? SearchTagCell)?.textView.tag = TAG_EXCLUDE_TAGS
             
             if (theme == DefaultsManager.THEME_DAY) {
-                cell?.backgroundColor = AppDelegate.greyLightBg
                 (cell as? SearchTagCell)?.textView.textColor = UIColor.black
                 (cell as? SearchTagCell)?.textView.backgroundColor = UIColor.white
                 
             } else {
-                cell?.backgroundColor = AppDelegate.greyDarkBg
                 (cell as? SearchTagCell)?.textView.textColor = AppDelegate.textLightColor
                 (cell as? SearchTagCell)?.textView.backgroundColor = AppDelegate.greyBg
             }
@@ -221,7 +217,6 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
             }
             
             if (theme == DefaultsManager.THEME_DAY) {
-                cell?.backgroundColor = AppDelegate.greyLightBg
                 (cell as? SearchTagWithTextCell)?.textField.textColor = UIColor.black
                 (cell as? SearchTagWithTextCell)?.label.textColor = UIColor.black
                 (cell as? SearchTagWithTextCell)?.textField.backgroundColor = UIColor.white
@@ -229,7 +224,6 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
                 (cell as? SearchSwitchCell)?.label.textColor = UIColor.black
                 
             } else {
-                cell?.backgroundColor = AppDelegate.greyDarkBg
                 (cell as? SearchTagWithTextCell)?.textField.textColor = AppDelegate.textLightColor
                 (cell as? SearchTagWithTextCell)?.label.textColor = AppDelegate.textLightColor
                 (cell as? SearchTagWithTextCell)?.textField.backgroundColor = AppDelegate.greyBg
@@ -248,7 +242,6 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
             (cell as? SearchFromToCell)?.toTextView.placeholder = NSLocalizedString("To", comment: "")
             
             if (theme == DefaultsManager.THEME_DAY) {
-                cell?.backgroundColor = AppDelegate.greyLightBg
                 (cell as? SearchFromToCell)?.fromTextView.textColor = UIColor.black
                 (cell as? SearchFromToCell)?.toTextView.textColor = UIColor.black
                 (cell as? SearchFromToCell)?.nameLabel.textColor = UIColor.black
@@ -256,7 +249,6 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
                 (cell as? SearchFromToCell)?.fromTextView.backgroundColor = UIColor.white
                 (cell as? SearchFromToCell)?.toTextView.backgroundColor = UIColor.white
             } else {
-                cell?.backgroundColor = AppDelegate.greyDarkBg
                 (cell as? SearchFromToCell)?.fromTextView.textColor = AppDelegate.textLightColor
                 (cell as? SearchFromToCell)?.toTextView.textColor = AppDelegate.textLightColor
                 (cell as? SearchFromToCell)?.nameLabel.textColor = AppDelegate.textLightColor
@@ -315,7 +307,6 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
             setWarningSwitchState((cell as? SearchSwitchesCell)!.otherSwitch)
             
             if (theme == DefaultsManager.THEME_DAY) {
-                cell?.backgroundColor = AppDelegate.greyLightBg
                 (cell as? SearchSwitchesCell)?.fflabel.textColor = UIColor.black
                 (cell as? SearchSwitchesCell)?.fmlabel.textColor = UIColor.black
                 (cell as? SearchSwitchesCell)?.mmlabel.textColor = UIColor.black
@@ -324,7 +315,6 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
                 (cell as? SearchSwitchesCell)?.otherlabel.textColor = UIColor.black
                 
             } else {
-                cell?.backgroundColor = AppDelegate.greyDarkBg
                 (cell as? SearchSwitchesCell)?.fflabel.textColor = AppDelegate.textLightColor
                 (cell as? SearchSwitchesCell)?.fmlabel.textColor = AppDelegate.textLightColor
                 (cell as? SearchSwitchesCell)?.mmlabel.textColor = AppDelegate.textLightColor
@@ -338,11 +328,9 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
             (cell as? SearchSwitchCell)?.label.text = labelTitlesSwitch[indexPath.row]
             
             if (theme == DefaultsManager.THEME_DAY) {
-                cell?.backgroundColor = AppDelegate.greyLightBg
                 (cell as? SearchSwitchCell)?.label.textColor = UIColor.black
                 
             } else {
-                cell?.backgroundColor = AppDelegate.greyDarkBg
                 (cell as? SearchSwitchCell)?.label.textColor = AppDelegate.textLightColor
             }
             
@@ -371,13 +359,11 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
             (cell as? SearchFandomsCell)?.textfield.delegate = self
             
             if (theme == DefaultsManager.THEME_DAY) {
-                cell?.backgroundColor = AppDelegate.greyLightBg
                 (cell as? SearchFandomsCell)?.nameLabel.textColor = AppDelegate.greyColor
                 (cell as? SearchFandomsCell)?.textfield.textColor = UIColor.black
                 (cell as? SearchFandomsCell)?.textfield.backgroundColor = UIColor.white
                 
             } else {
-                cell?.backgroundColor = AppDelegate.greyDarkBg
                 (cell as? SearchFandomsCell)?.nameLabel.textColor = AppDelegate.textLightColor
                 (cell as? SearchFandomsCell)?.textfield.textColor = UIColor.white
                 (cell as? SearchFandomsCell)?.textfield.backgroundColor = AppDelegate.greyBg
@@ -403,13 +389,11 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
             (cell as? SearchTagWithTextCell)?.textField.delegate = self
             
             if (theme == DefaultsManager.THEME_DAY) {
-                cell?.backgroundColor = AppDelegate.greyLightBg
                 (cell as? SearchTagWithTextCell)?.textField.textColor = UIColor.black
                 (cell as? SearchTagWithTextCell)?.label.textColor = UIColor.black
                 (cell as? SearchTagWithTextCell)?.textField.backgroundColor = UIColor.white
                 
             } else {
-                cell?.backgroundColor = AppDelegate.greyDarkBg
                 (cell as? SearchTagWithTextCell)?.textField.textColor = AppDelegate.textLightColor
                 (cell as? SearchTagWithTextCell)?.label.textColor = AppDelegate.textLightColor
                 (cell as? SearchTagWithTextCell)?.textField.backgroundColor = AppDelegate.greyBg
@@ -426,16 +410,20 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
             cell = (tableView.dequeueReusableCell(withIdentifier: "buttonCell") as? ButtonCell)!
             
             if (theme == DefaultsManager.THEME_DAY) {
-                cell?.backgroundColor = AppDelegate.greyLightBg
                 (cell as? ButtonCell)?.btn.setTitleColor(AppDelegate.redColor, for: .normal)
                 
             } else {
-                cell?.backgroundColor = AppDelegate.greyDarkBg
                 (cell as? ButtonCell)?.btn.setTitleColor(UIColor.white, for: .normal)
             }
             
         default:
             break
+        }
+        
+        if (theme == DefaultsManager.THEME_DAY) {
+            cell?.backgroundColor = UIColor.white
+        } else {
+            cell?.backgroundColor = AppDelegate.greyDarkBg
         }
         
         return cell!

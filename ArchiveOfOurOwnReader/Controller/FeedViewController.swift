@@ -123,10 +123,10 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
         checkStatusButton.layer.borderColor = AppDelegate.redColor.cgColor
         checkStatusButton.layer.cornerRadius = 5.0
         
-        let shown: Bool = DefaultsManager.getBool(DefaultsManager.CONTENT_SHOWSN) ?? false
-        if (shown == false) {
-            showContentAlert()
-        }
+//        let shown: Bool = DefaultsManager.getBool(DefaultsManager.CONTENT_SHOWSN) ?? false
+//        if (shown == false) {
+//            showContentAlert()
+//        }
       
         checkAuth()
     }
@@ -186,7 +186,11 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
     }
     
     override func loadAfterAuth() {
-        refresh(tableView)
+        if (query.isEmpty()) {
+            self.performSegue(withIdentifier: "choosePref", sender: self)
+        } else {
+            refresh(tableView)
+        }
     }
     
     @IBAction func tryAgainTouched(_ sender: AnyObject) {
@@ -528,7 +532,7 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
        //     showWvInterstitial()
        // }
         
-        if (i % 7 == 0 && (!purchased && !donated)) {
+        if (i % 5 == 0 && (!purchased && !donated)) {
             showAdMobInterstitial()
             adsShown += 1
         }

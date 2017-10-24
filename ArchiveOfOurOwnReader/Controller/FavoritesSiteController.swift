@@ -52,6 +52,8 @@ class FavoritesSiteController : LoadingViewController, UITableViewDataSource, UI
         
         self.tableView.reloadData()
         self.collectionView.reloadData()
+        
+        showNav()
     }
     
     func refresh(_ sender:AnyObject) {

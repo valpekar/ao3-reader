@@ -54,9 +54,10 @@ class WorkListController: LoadingViewController, UITableViewDataSource, UITableV
         requestWorks()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
+        showNav()
     }
     
     override func applyTheme() {
