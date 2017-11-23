@@ -147,7 +147,7 @@ class WorkListController: LoadingViewController, UITableViewDataSource, UITableV
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellIdentifier: String = "FeedCell"
         
-        var cell:FeedTableViewCell? = tableView.dequeueReusableCell(withIdentifier: cellIdentifier) as? FeedTableViewCell
+        var cell:FeedTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier) as! FeedTableViewCell
         
         if (cell == nil) {
             cell = FeedTableViewCell(reuseIdentifier: cellIdentifier)
@@ -155,10 +155,10 @@ class WorkListController: LoadingViewController, UITableViewDataSource, UITableV
         
         let curWork:NewsFeedItem = works[indexPath.row]
         
-        cell = fillCell(cell: cell!, curWork: curWork)
-        cell?.downloadButton.tag = indexPath.row
+        cell = fillCell(cell: cell, curWork: curWork)
+        cell.downloadButton.tag = indexPath.row
         
-        return cell!
+        return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

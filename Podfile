@@ -14,6 +14,7 @@ pod 'Firebase/AdMob'
 pod 'Firebase/Core'
 pod 'Firebase/Analytics'
 pod 'Alamofire', '~> 4.5'
+pod 'Appirater'
 
   target 'ArchiveOfOurOwnReaderTests' do
     inherit! :search_paths

@@ -40,6 +40,7 @@ class DefaultsManager {
     static var FANDOMS = "fndms"
     static var RELATIONSHIPS = "rltshps"
     static var FONT_SIZE = "fsz"
+    static var FONT_FAMILY = "ffam"
     static var THEME = "thm"
     static var LOGIN = "login"
     static var PSWD = "pswd"

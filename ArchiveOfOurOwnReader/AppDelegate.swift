@@ -12,6 +12,7 @@ import Fabric
 import Crashlytics
 import Firebase
 import AVFoundation
+import Appirater
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -91,6 +92,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
        // UIApplication.sharedApplication().cancelAllLocalNotifications()
+        
+        Appirater.setAppId("1047221122")
+        Appirater.setDaysUntilPrompt(2)
+        Appirater.setUsesUntilPrompt(4)
+        Appirater.setSignificantEventsUntilPrompt(-1)
+        Appirater.setTimeBeforeReminding(4)
+        Appirater.setDebug(false)
+        Appirater.appLaunched(true)
         
         return true
     }

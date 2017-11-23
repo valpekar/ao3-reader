@@ -36,6 +36,7 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
     
     var work: String = ""
     var fontSize: Int = 100
+    var fontFamily: String = "Verdana"
     
     var onlineChapters = [Int:ChapterOnline]()
     
@@ -93,7 +94,7 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
                     //contentsButton.hidden = true
                 }
                 
-                if (currentChapterIndex != nil && currentChapterIndex > 0) {
+                if (prevButton != nil && currentChapterIndex > 0) {
                     prevButton.isHidden = false
                 }
             }
@@ -177,8 +178,10 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
         }  else if (downloadedWorkItem != nil) {
             var title = downloadedWorkItem.value(forKey: "workTitle") as? String ?? ""
             
+            if (currentChapterIndex < downloadedChapters?.count ?? 0) {
             if let tt = downloadedChapters?[currentChapterIndex].value(forKey: "chapterName") as? String {
                 title = tt
+            }
             }
             
             self.title = title
@@ -302,11 +305,16 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
         let imageI = UIImage(named: "ic_textsize") as UIImage?
         let igButton = UIBarButtonItem(image : imageI, style: .plain, target: self, action: #selector(WorkViewController.changeTextSizeTouched) );
         igButton.tintColor = UIColor.white
-        igButton.imageInsets = UIEdgeInsetsMake(0.0, 0.0, 0, -30);
+     //   igButton.imageInsets = UIEdgeInsetsMake(0.0, 0.0, 0, -30);
+        
+        let imageF = UIImage(named: "ic_textfamily") as UIImage?
+        let ffButton = UIBarButtonItem(image : imageF, style: .plain, target: self, action: #selector(WorkViewController.changeTextFamilyTouched) );
+        ffButton.tintColor = UIColor.white
+      //  ffButton.imageInsets = UIEdgeInsetsMake(0.0, 0.0, 0, -60);
         
         let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace, target: nil, action: nil)
         
-        self.navigationItem.rightBarButtonItems = [ searchButton, igButton, flexSpace]
+        self.navigationItem.rightBarButtonItems = [ searchButton, igButton, ffButton, flexSpace]
     }
     
     //https://stackoverflow.com/questions/31114340/setstatusbarhidden-is-deprecated-in-ios-9-0
@@ -789,28 +797,36 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
             fontSize = fs
         }
         
+       let ffam = DefaultsManager.getString(DefaultsManager.FONT_FAMILY)
+       if (ffam.isEmpty == false) {
+            fontFamily = ffam
+        }
+        
         var worktext: String = work
+        
+        Answers.logCustomEvent(withName: "Work: Theme Load", customAttributes: ["font_family" : fontFamily,
+                                                                                "font_size" : fontSize])
         
         switch (theme) {
             case DefaultsManager.THEME_DAY :
                 webView.backgroundColor = AppDelegate.dayBgColor
                 webView.isOpaque = false
                 
-                let fontStr = "font-size: " + String(format:"%d", fontSize) + "%;"
+                let fontStr = "font-size: " + String(format:"%d", fontSize) + "%; font-family: \"\(fontFamily)\";"
                 worktext = String(format:"<style>body { color: #021439; %@ }</style>%@", fontStr, work)
                 
             case DefaultsManager.THEME_NIGHT :
                 self.webView.backgroundColor = AppDelegate.nightBgColor
                 self.webView.isOpaque = false
                 
-                let fontStr = "font-size: " + String(format:"%d", fontSize) + "%;"
+                let fontStr = "font-size: " + String(format:"%d", fontSize) + "%; font-family: \"\(fontFamily)\";"
                 worktext = String(format:"<style>body { color: #e1e1ce; %@ }</style>%@", fontStr, work)
                 
             default:
                 break
         }
         
-        webView(wview: webView, enableGL: false)
+        let _ = webView(wview: webView, enableGL: false)
         
         webView.reload()
         webView.loadHTMLString(worktext, baseURL: nil)
@@ -878,6 +894,66 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
         }))
         
         alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: UIAlertActionStyle.cancel, handler: nil))
+        
+        alert.popoverPresentationController?.sourceView = self.view
+        alert.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.size.width / 2.0, y: self.view.bounds.size.height / 2.0, width: 1.0, height: 1.0)
+        
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func changeTextFamilyTouched() {
+        let alert = UIAlertController(title: NSLocalizedString("FontFamily", comment: ""), message: "Select font family (\(fontFamily)", preferredStyle: UIAlertControllerStyle.actionSheet)
+        alert.addAction(UIAlertAction(title: "Verdana (default)", style: UIAlertActionStyle.default, handler: { action in
+        
+            self.fontFamily = "Verdana"
+            DefaultsManager.putString(self.fontFamily, key: DefaultsManager.FONT_FAMILY)
+            alert.message = "Select font family (\(self.fontFamily)"
+            self.loadCurrentTheme()
+        }))
+        alert.addAction(UIAlertAction(title: "Arial", style: UIAlertActionStyle.default, handler: { action in
+            
+            self.fontFamily = "Arial"
+            DefaultsManager.putString(self.fontFamily, key: DefaultsManager.FONT_FAMILY)
+            alert.message = "Select font family (\(self.fontFamily)"
+            self.loadCurrentTheme()
+        }))
+        alert.addAction(UIAlertAction(title: "Courier New", style: UIAlertActionStyle.default, handler: { action in
+            
+            self.fontFamily = "Courier New"
+            DefaultsManager.putString(self.fontFamily, key: DefaultsManager.FONT_FAMILY)
+            alert.message = "Select font family (\(self.fontFamily)"
+            self.loadCurrentTheme()
+        }))
+        alert.addAction(UIAlertAction(title: "Helvetica", style: UIAlertActionStyle.default, handler: { action in
+            
+            self.fontFamily = "Helvetica"
+            DefaultsManager.putString(self.fontFamily, key: DefaultsManager.FONT_FAMILY)
+            alert.message = "Select font family (\(self.fontFamily)"
+            self.loadCurrentTheme()
+        }))
+        alert.addAction(UIAlertAction(title: "Georgia", style: UIAlertActionStyle.default, handler: { action in
+            
+            self.fontFamily = "Georgia"
+            DefaultsManager.putString(self.fontFamily, key: DefaultsManager.FONT_FAMILY)
+            alert.message = "Select font family (\(self.fontFamily)"
+            self.loadCurrentTheme()
+        }))
+        alert.addAction(UIAlertAction(title: "Trebuchet MS", style: UIAlertActionStyle.default, handler: { action in
+            
+            self.fontFamily = "Trebuchet MS"
+            DefaultsManager.putString(self.fontFamily, key: DefaultsManager.FONT_FAMILY)
+            alert.message = "Select font family (\(self.fontFamily)"
+            self.loadCurrentTheme()
+        }))
+        alert.addAction(UIAlertAction(title: "Times New Roman", style: UIAlertActionStyle.default, handler: { action in
+            
+            self.fontFamily = "Times New Roman"
+            DefaultsManager.putString(self.fontFamily, key: DefaultsManager.FONT_FAMILY)
+            alert.message = "Select font family (\(self.fontFamily)"
+            self.loadCurrentTheme()
+        }))
+        
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: UIAlertActionStyle.cancel, handler: nil))
         
         alert.popoverPresentationController?.sourceView = self.view
         alert.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.size.width / 2.0, y: self.view.bounds.size.height / 2.0, width: 1.0, height: 1.0)
