@@ -248,7 +248,7 @@ class SerieViewController: LoadingViewController, UITableViewDataSource, UITable
         
         let cell: PageCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! PageCollectionViewCell
         
-        cell.titleLabel.text = pages[(indexPath as NSIndexPath).row].name
+        cell.titleLabel.text = pages[indexPath.row].name
         
         if (pages[(indexPath as NSIndexPath).row].url.isEmpty) {
             cell.titleLabel.textColor = UIColor(red: 169/255, green: 164/255, blue: 164/255, alpha: 1)
@@ -286,8 +286,8 @@ class SerieViewController: LoadingViewController, UITableViewDataSource, UITable
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        switch ((indexPath as NSIndexPath).row) {
-        case 0, self.collectionView(collectionView, numberOfItemsInSection: (indexPath as NSIndexPath).section) - 1:
+        switch (indexPath.row) {
+        case 0, self.collectionView(collectionView, numberOfItemsInSection: indexPath.section) - 1:
             return CGSize(width: 100, height: 28)
         default:
             return CGSize(width: 50, height: 28)

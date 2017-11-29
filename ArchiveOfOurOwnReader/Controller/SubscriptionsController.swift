@@ -284,7 +284,7 @@ class SubscriptionsViewController: LoadingViewController, UITableViewDataSource,
         let curWork:NewsFeedItem = works[(indexPath as NSIndexPath).row]
         
         cell?.topicLabel.text = curWork.topic.replacingOccurrences(of: "\n", with: "")
-        cell?.downloadButton.tag = (indexPath as NSIndexPath).row
+        cell?.downloadButton.tag = indexPath.row
         
         if (theme == DefaultsManager.THEME_DAY) {
             cell?.backgroundColor = AppDelegate.greyLightBg
@@ -349,8 +349,8 @@ class SubscriptionsViewController: LoadingViewController, UITableViewDataSource,
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        switch ((indexPath as NSIndexPath).row) {
-        case 0, self.collectionView(collectionView, numberOfItemsInSection: (indexPath as NSIndexPath).section) - 1:
+        switch (indexPath.row) {
+        case 0, self.collectionView(collectionView, numberOfItemsInSection: indexPath.section) - 1:
             return CGSize(width: 100, height: 28)
         default:
             return CGSize(width: 50, height: 28)

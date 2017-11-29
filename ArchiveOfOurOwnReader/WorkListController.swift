@@ -221,7 +221,7 @@ class WorkListController: LoadingViewController, UITableViewDataSource, UITableV
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         switch ((indexPath as NSIndexPath).row) {
-        case 0, self.collectionView(collectionView, numberOfItemsInSection: (indexPath as NSIndexPath).section) - 1:
+        case 0, self.collectionView(collectionView, numberOfItemsInSection: indexPath.section) - 1:
             return CGSize(width: 100, height: 28)
         default:
             return CGSize(width: 50, height: 28)

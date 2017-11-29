@@ -2815,6 +2815,127 @@ Please check your Internet connection and also make sure you are logged into you
             </objects>
             <point key="canvasLocation" x="3848" y="571"/>
         </scene>
+        <!--Categories Controller-->
+        <scene sceneID="qdf-aM-Vea">
+            <objects>
+                <viewController useStoryboardIdentifierAsRestorationIdentifier="YES" id="A3N-gi-QBq" customClass="CategoriesController" customModule="ArchiveOfOurOwnReader" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Ye5-K5-20M"/>
+                        <viewControllerLayoutGuide type="bottom" id="s6F-gY-z6y"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="lNH-s3-bkO">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="672"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2BD-to-SOv">
+                                <rect key="frame" x="10" y="10" width="394" height="662"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2VT-qZ-euH">
+                                        <rect key="frame" x="24" y="180" width="346" height="38.333333333333314"/>
+                                        <string key="text">Cannot obtain data. 
+Please check your Internet connection and also make sure you are logged into your AO3 account (try to log in again).</string>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                        <variation key="heightClass=regular-widthClass=regular">
+                                            <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        </variation>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="op4-4M-9jf">
+                                        <rect key="frame" x="40" y="258.33333333333331" width="314" height="30"/>
+                                        <state key="normal" title="Try Again 🤔">
+                                            <color key="titleColor" red="0.57254901960000004" green="0.3294117647" blue="0.70588235290000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <variation key="heightClass=regular-widthClass=regular">
+                                            <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        </variation>
+                                        <connections>
+                                            <action selector="tryAgainTouched:" destination="A3N-gi-QBq" eventType="touchUpInside" id="u0x-DR-hcH"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="2VT-qZ-euH" secondAttribute="trailing" constant="24" id="5Md-LU-pGY"/>
+                                    <constraint firstAttribute="trailing" secondItem="2VT-qZ-euH" secondAttribute="trailing" constant="20" id="6Oy-uU-FhR"/>
+                                    <constraint firstItem="op4-4M-9jf" firstAttribute="top" secondItem="2VT-qZ-euH" secondAttribute="bottom" constant="40" id="6oT-fP-z4Z"/>
+                                    <constraint firstItem="2VT-qZ-euH" firstAttribute="centerY" secondItem="2BD-to-SOv" secondAttribute="centerY" id="GXF-Id-WTt"/>
+                                    <constraint firstAttribute="trailing" secondItem="op4-4M-9jf" secondAttribute="trailing" constant="40" id="ISM-WY-WBG"/>
+                                    <constraint firstItem="op4-4M-9jf" firstAttribute="leading" secondItem="2BD-to-SOv" secondAttribute="leading" constant="40" id="JdA-gf-lsd"/>
+                                    <constraint firstAttribute="height" constant="400" id="XA9-aA-qGx"/>
+                                    <constraint firstAttribute="width" constant="600" id="YEo-SI-6p6"/>
+                                    <constraint firstItem="2VT-qZ-euH" firstAttribute="top" secondItem="2BD-to-SOv" secondAttribute="top" constant="180" id="mZt-as-YHA"/>
+                                    <constraint firstItem="2VT-qZ-euH" firstAttribute="leading" secondItem="2BD-to-SOv" secondAttribute="leading" constant="20" id="osc-6O-qSp"/>
+                                    <constraint firstItem="2VT-qZ-euH" firstAttribute="centerX" secondItem="2BD-to-SOv" secondAttribute="centerX" id="pky-hH-esl"/>
+                                    <constraint firstItem="2VT-qZ-euH" firstAttribute="leading" secondItem="2BD-to-SOv" secondAttribute="leading" constant="24" id="uhC-cx-dOI"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="XA9-aA-qGx"/>
+                                        <exclude reference="YEo-SI-6p6"/>
+                                        <exclude reference="6Oy-uU-FhR"/>
+                                        <exclude reference="GXF-Id-WTt"/>
+                                        <exclude reference="osc-6O-qSp"/>
+                                    </mask>
+                                </variation>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Zyn-sb-mAW">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="672"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="CategoryCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="CategoryCell" id="dWU-rR-wgR" customClass="CategoryCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="dWU-rR-wgR" id="zt5-Wl-Okx">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.666666666666664"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g54-sZ-Igj">
+                                                    <rect key="frame" x="8" y="12.000000000000002" width="398" height="19.666666666666671"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottomMargin" secondItem="g54-sZ-Igj" secondAttribute="bottom" constant="4" id="GOh-dW-QCb"/>
+                                                <constraint firstItem="g54-sZ-Igj" firstAttribute="top" secondItem="zt5-Wl-Okx" secondAttribute="topMargin" constant="4" id="L4c-1g-UDr"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="g54-sZ-Igj" secondAttribute="trailing" id="Pph-HF-Hnm"/>
+                                                <constraint firstItem="g54-sZ-Igj" firstAttribute="leading" secondItem="zt5-Wl-Okx" secondAttribute="leadingMargin" id="oGl-0X-SqE"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="titleLabel" destination="g54-sZ-Igj" id="E3o-m0-vSy"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="A3N-gi-QBq" id="CtP-4O-h8h"/>
+                                    <outlet property="delegate" destination="A3N-gi-QBq" id="9l4-Jg-QjI"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="s6F-gY-z6y" firstAttribute="top" secondItem="Zyn-sb-mAW" secondAttribute="bottom" id="6ex-tH-BYL"/>
+                            <constraint firstAttribute="trailing" secondItem="2BD-to-SOv" secondAttribute="trailing" constant="10" id="L6x-JD-U3u"/>
+                            <constraint firstItem="2BD-to-SOv" firstAttribute="leading" secondItem="lNH-s3-bkO" secondAttribute="leading" constant="10" id="TDP-Py-H8Q"/>
+                            <constraint firstItem="Zyn-sb-mAW" firstAttribute="leading" secondItem="lNH-s3-bkO" secondAttribute="leading" id="X2e-Bh-Eak"/>
+                            <constraint firstAttribute="bottom" secondItem="2BD-to-SOv" secondAttribute="bottom" id="YbH-9N-LQh"/>
+                            <constraint firstItem="Zyn-sb-mAW" firstAttribute="top" secondItem="Ye5-K5-20M" secondAttribute="bottom" id="dRR-yi-ecs"/>
+                            <constraint firstAttribute="trailing" secondItem="Zyn-sb-mAW" secondAttribute="trailing" id="oC0-lS-cHI"/>
+                            <constraint firstItem="2BD-to-SOv" firstAttribute="top" secondItem="Ye5-K5-20M" secondAttribute="bottom" constant="10" id="yyf-cm-u7B"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="errView" destination="2BD-to-SOv" id="5Ie-2z-sTj"/>
+                        <outlet property="tableView" destination="Zyn-sb-mAW" id="QqL-K2-C9q"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="TmS-cM-KAX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4962" y="228"/>
+        </scene>
         <!--Container View Controller-->
         <scene sceneID="UkV-0j-djh">
             <objects>
@@ -3546,12 +3667,19 @@ Please check your Internet connection and also make sure you are logged into you
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" id="MtN-tR-JcF">
-                        <barButtonItem key="rightBarButtonItem" image="empty_filter" id="NGj-mJ-24D">
-                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <connections>
-                                <segue destination="nbw-Ly-8Cb" kind="presentation" identifier="searchSegue" id="Xdl-ie-pGJ"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem image="empty_filter" id="NGj-mJ-24D">
+                                <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <connections>
+                                    <segue destination="nbw-Ly-8Cb" kind="presentation" identifier="searchSegue" id="Xdl-ie-pGJ"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Item" image="categories" id="rXd-Ew-qFZ">
+                                <connections>
+                                    <segue destination="A3N-gi-QBq" kind="show" identifier="categoriesSegue" id="89s-Wf-Kdl"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="checkStatusButton" destination="4h0-Cf-VHx" id="SY4-IH-j6m"/>
@@ -7888,6 +8016,7 @@ Please check your Internet connection and also make sure you are logged into you
         <image name="bmk" width="32" height="32"/>
         <image name="book_bg" width="360" height="640"/>
         <image name="bookmark" width="56" height="56"/>
+        <image name="categories" width="32" height="32"/>
         <image name="comments" width="56" height="56"/>
         <image name="download-100" width="33" height="33"/>
         <image name="download-red" width="33" height="33"/>
@@ -7906,6 +8035,6 @@ Please check your Internet connection and also make sure you are logged into you
     <inferredMetricsTieBreakers>
         <segue reference="5rQ-gu-17N"/>
         <segue reference="YvP-vi-Pnc"/>
-        <segue reference="Zz6-01-vau"/>
+        <segue reference="sOC-2j-lqm"/>
     </inferredMetricsTieBreakers>
 </document>

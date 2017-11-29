@@ -414,8 +414,8 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
                     let curFolderName: String = folders[indexPath.section - 1].name ?? "No Name"
                     curWork = (filtereddownloadedWorkds[curFolderName])?[indexPath.row]
                 }
-//                if ((tableView.indexPathForSelectedRow! as NSIndexPath).row < filtereddownloadedWorkds.count ) {
-//                    curWork = filtereddownloadedWorkds[(tableView.indexPathForSelectedRow! as NSIndexPath).row]
+//                if ((tableView.indexPathForSelectedRow!.row < filtereddownloadedWorkds.count ) {
+//                    curWork = filtereddownloadedWorkds[tableView.indexPathForSelectedRow!.row]
 //                }
             } else {
                 if (indexPath.section == 0) {

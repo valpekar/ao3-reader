@@ -112,6 +112,9 @@
 		3C93D4AE1F22330900948D08 /* DownloadedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C93D4AD1F22330900948D08 /* DownloadedCell.swift */; };
 		3C93D4B01F223AB000948D08 /* EditFoldersController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C93D4AF1F223AB000948D08 /* EditFoldersController.swift */; };
 		3C93ED5A1FCED24900F1F4D4 /* MyProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C93ED591FCED24900F1F4D4 /* MyProfileCell.swift */; };
+		3C93ED5C1FCF0C5D00F1F4D4 /* CategoriesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C93ED5B1FCF0C5D00F1F4D4 /* CategoriesController.swift */; };
+		3C93ED5E1FCF12EF00F1F4D4 /* CategoryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C93ED5D1FCF12EF00F1F4D4 /* CategoryItem.swift */; };
+		3C93ED601FCF140100F1F4D4 /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C93ED5F1FCF140100F1F4D4 /* CategoryCell.swift */; };
 		3C9C87BA1CE3557D00C10410 /* RecommendationsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9C87B91CE3557D00C10410 /* RecommendationsController.swift */; };
 		3CB2A74B1F8BB237004A6F76 /* SerieViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB2A74A1F8BB237004A6F76 /* SerieViewController.swift */; };
 		3CB2A74F1F8BB4F8004A6F76 /* SerieInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB2A74E1F8BB4F8004A6F76 /* SerieInfoCell.swift */; };
@@ -301,6 +304,9 @@
 		3C93D4AD1F22330900948D08 /* DownloadedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DownloadedCell.swift; path = View/Custom/Cells/DownloadedCell.swift; sourceTree = "<group>"; };
 		3C93D4AF1F223AB000948D08 /* EditFoldersController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EditFoldersController.swift; path = Controller/EditFoldersController.swift; sourceTree = "<group>"; };
 		3C93ED591FCED24900F1F4D4 /* MyProfileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileCell.swift; sourceTree = "<group>"; };
+		3C93ED5B1FCF0C5D00F1F4D4 /* CategoriesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CategoriesController.swift; path = Controller/CategoriesController.swift; sourceTree = "<group>"; };
+		3C93ED5D1FCF12EF00F1F4D4 /* CategoryItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryItem.swift; sourceTree = "<group>"; };
+		3C93ED5F1FCF140100F1F4D4 /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CategoryCell.swift; path = View/Custom/Cells/CategoryCell.swift; sourceTree = "<group>"; };
 		3C9C87B91CE3557D00C10410 /* RecommendationsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RecommendationsController.swift; path = Controller/RecommendationsController.swift; sourceTree = "<group>"; };
 		3C9C87BB1CE35D8800C10410 /* ArchiveOfOurOwnReader 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ArchiveOfOurOwnReader 2.xcdatamodel"; sourceTree = "<group>"; };
 		3CA0A7B01F7BCC7800ADEE04 /* ja */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ja; path = ja.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -422,6 +428,7 @@
 				1D1C2FEC1B8DA46D0076D10C /* WorkFandom.swift */,
 				3C3EF71B1E6D55DA000CAA1F /* ChapterOnline.swift */,
 				3C0465991F8CBD5D003B6AE7 /* SerieItem.swift */,
+				3C93ED5D1FCF12EF00F1F4D4 /* CategoryItem.swift */,
 			);
 			name = Object;
 			sourceTree = "<group>";
@@ -565,6 +572,7 @@
 				3CB2A74A1F8BB237004A6F76 /* SerieViewController.swift */,
 				3C684E5C1F8E391500419D69 /* AuthViewController.swift */,
 				3C44A7A61F8F56F100AEAE7B /* SecuritySettingsController.swift */,
+				3C93ED5B1FCF0C5D00F1F4D4 /* CategoriesController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -598,6 +606,7 @@
 				3CD1CE691F27731600E8AAFC /* WorkDetailTxtCell.swift */,
 				3CB2A74E1F8BB4F8004A6F76 /* SerieInfoCell.swift */,
 				3C93ED591FCED24900F1F4D4 /* MyProfileCell.swift */,
+				3C93ED5F1FCF140100F1F4D4 /* CategoryCell.swift */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -968,12 +977,14 @@
 				3C082A541F20E21100CA717D /* Folder+CoreDataProperties.swift in Sources */,
 				3C728C6A1E8CBA06006D7100 /* ChoosePrefController.swift in Sources */,
 				1D28320A1BBD6A4700FFC887 /* WorkItem.swift in Sources */,
+				3C93ED601FCF140100F1F4D4 /* CategoryCell.swift in Sources */,
 				3C93D4B01F223AB000948D08 /* EditFoldersController.swift in Sources */,
 				3C082A531F20E21100CA717D /* Folder+CoreDataClass.swift in Sources */,
 				3CB7735F1C847CCD00DC15C4 /* ContainerViewController.swift in Sources */,
 				3C0448F71C634209005DCE5F /* ReaderProducts.swift in Sources */,
 				3C44A7A71F8F56F100AEAE7B /* SecuritySettingsController.swift in Sources */,
 				1D8777941B99F5D000CEA738 /* SearchTagWithTextCell.swift in Sources */,
+				3C93ED5C1FCF0C5D00F1F4D4 /* CategoriesController.swift in Sources */,
 				3CBDC9AB1E9E244500A97C24 /* DBChapter+CoreDataClass.swift in Sources */,
 				3C04659A1F8CBD5D003B6AE7 /* SerieItem.swift in Sources */,
 				3C89958C1E95169B00D511CD /* DBRelationship+CoreDataClass.swift in Sources */,
@@ -992,6 +1003,7 @@
 				28B6DC2D1B4E3F5900F34529 /* ArchiveOfOurOwnReader.xcdatamodeld in Sources */,
 				3C3EF71C1E6D55DA000CAA1F /* ChapterOnline.swift in Sources */,
 				3C8995911E95169B00D511CD /* DBWorkItem+CoreDataProperties.swift in Sources */,
+				3C93ED5E1FCF12EF00F1F4D4 /* CategoryItem.swift in Sources */,
 				28B6DC601B4E4B3C00F34529 /* PageCollectionViewCell.swift in Sources */,
 				3C0465981F8CBCBA003B6AE7 /* Serie+CoreDataProperties.swift in Sources */,
 				28B6DC541B4E47E700F34529 /* FeedViewController.swift in Sources */,

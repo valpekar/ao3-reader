@@ -175,11 +175,11 @@ class ContainerViewController: UIViewController, CenterViewControllerDelegate, U
     func selectedControllerAtIndex(_ indexPath:IndexPath) {
         self.collapseSidePanels()
         
-        if let controller = self.instantiatedControllers[(indexPath as NSIndexPath).row] {
+        if let controller = self.instantiatedControllers[indexPath.row] {
                 self.centerNavigationController.setViewControllers([controller], animated: true)
             } else {
-                let controller = UIStoryboard.mainStoryboard().instantiateViewController(withIdentifier: self.viewControllers[(indexPath as NSIndexPath).row]) as! CenterViewController
-                self.instantiatedControllers[(indexPath as NSIndexPath).row] = controller
+                let controller = UIStoryboard.mainStoryboard().instantiateViewController(withIdentifier: self.viewControllers[indexPath.row]) as! CenterViewController
+                self.instantiatedControllers[indexPath.row] = controller
                 controller.delegate = self
                 controller.applyTheme()
                 

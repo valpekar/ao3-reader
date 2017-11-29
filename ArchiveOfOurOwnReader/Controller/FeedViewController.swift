@@ -12,6 +12,7 @@ import StoreKit
 import CoreLocation
 import TSMessages
 import Alamofire
+import Crashlytics
 
 protocol SearchControllerDelegate {
     func searchApplied(_ searchQuery:SearchQuery, shouldAddKeyword: Bool)
@@ -359,8 +360,8 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
     
     // MARK: - UICollectionViewDelegateFlowLayout
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        switch ((indexPath as NSIndexPath).row) {
-        case 0, self.collectionView(collectionView, numberOfItemsInSection: (indexPath as NSIndexPath).section) - 1:
+        switch (indexPath.row) {
+        case 0, self.collectionView(collectionView, numberOfItemsInSection: indexPath.section) - 1:
             return CGSize(width: 120, height: 28)
         default:
             return CGSize(width: 50, height: 28)
@@ -388,6 +389,9 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
             if let searchController: SearchViewController = segue.destination as? SearchViewController {
                 searchController.delegate = self
                 searchController.modalDelegate = self
+                
+                Answers.logCustomEvent(withName: "Search: Extended Opened",
+                                       customAttributes: [:])
             }
         } else if (segue.identifier == "choosePref") {
             if let choosePref: UINavigationController = segue.destination as? UINavigationController {
@@ -589,6 +593,10 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
         query.fandom_names = pref
         DefaultsManager.putObject(query, key: DefaultsManager.SEARCH_Q)
         
+        Answers.logCustomEvent(withName: "Fandom Chosen",
+                               customAttributes: [
+                                "pref": pref])
+        
         self.searchApplied(self.query, shouldAddKeyword: true)
     }
     
@@ -608,6 +616,10 @@ extension FeedViewController : UISearchBarDelegate, UISearchResultsUpdating {
             
             query.include_tags = txt
             DefaultsManager.putObject(query, key: DefaultsManager.SEARCH_Q)
+            
+            Answers.logCustomEvent(withName: "Search: Quick",
+                                   customAttributes: [
+                                    "txt": txt])
             
             searchApplied(query, shouldAddKeyword: false)
         }

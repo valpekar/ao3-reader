@@ -802,7 +802,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             }
             cell.label.textColor = txtColor
         case 1:
-            if (warnings.count > (indexPath as NSIndexPath).row) {
+            if (warnings.count > indexPath.row) {
                 cell!.label.text = warnings.joined(separator: ", ")
                 
             } else {
@@ -811,11 +811,11 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             }
             cell!.imgView.image = UIImage(named: "warning")
         case 2:
-            if (fandoms != nil && fandoms.count > (indexPath as NSIndexPath).row) {
-                cell!.label.text = fandoms[(indexPath as NSIndexPath).row].fandomName
+            if (fandoms != nil && fandoms.count > indexPath.row) {
+                cell!.label.text = fandoms[indexPath.row].fandomName
                 
-            } else if (downloadedFandoms != nil && downloadedFandoms.count > (indexPath as NSIndexPath).row) {
-                cell!.label.text = downloadedFandoms[(indexPath as NSIndexPath).row].value(forKey: "fandomName") as? String
+            } else if (downloadedFandoms != nil && downloadedFandoms.count > indexPath.row) {
+                cell!.label.text = downloadedFandoms[indexPath.row].value(forKey: "fandomName") as? String
                 
             } else {
                 indexesToHide.append(1)
@@ -823,11 +823,11 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             }
             cell!.imgView.image = UIImage(named: "fandom")
         case 3:
-            if (relationships != nil && relationships.count > (indexPath as NSIndexPath).row) {
-                cell!.label.text = relationships[(indexPath as NSIndexPath).row].relationshipName
+            if (relationships != nil && relationships.count > indexPath.row) {
+                cell!.label.text = relationships[indexPath.row].relationshipName
                 
-            } else if (downloadedRelationships != nil && downloadedRelationships.count > (indexPath as NSIndexPath).row) {
-                cell!.label.text = downloadedRelationships[(indexPath as NSIndexPath).row].value(forKey: "relationshipName") as? String
+            } else if (downloadedRelationships != nil && downloadedRelationships.count > indexPath.row) {
+                cell!.label.text = downloadedRelationships[indexPath.row].value(forKey: "relationshipName") as? String
                 
             } else {
                 indexesToHide.append(2)
@@ -835,11 +835,11 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             }
             cell!.imgView.image = UIImage(named: "heart")
         case 4:
-            if (characters != nil && characters.count > (indexPath as NSIndexPath).row) {
-                cell!.label.text = characters[(indexPath as NSIndexPath).row].characterName
+            if (characters != nil && characters.count > indexPath.row) {
+                cell!.label.text = characters[indexPath.row].characterName
                 
-            } else if (downloadedCharacters != nil && downloadedCharacters.count > (indexPath as NSIndexPath).row) {
-                cell!.label.text = downloadedCharacters[(indexPath as NSIndexPath).row].value(forKey: "characterName") as? String
+            } else if (downloadedCharacters != nil && downloadedCharacters.count > indexPath.row) {
+                cell!.label.text = downloadedCharacters[indexPath.row].value(forKey: "characterName") as? String
                 
             } else {
                 indexesToHide.append(3)
@@ -968,6 +968,10 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             authorName = downloadedWorkItem.value(forKey: "author") as? String ?? ""
         }
         
+        Answers.logCustomEvent(withName: "WorkDetail: author touched",
+                               customAttributes: [
+                                "author": authorName])
+        
         if (authorName.contains(" ") && !authorName.contains(",")) {
             let nameArr = authorName.characters.split{$0 == " "}.map(String.init)
             var an = nameArr[1].replacingOccurrences(of: "(", with: "")
@@ -1071,6 +1075,10 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             }
         }
         
+        Answers.logCustomEvent(withName: "WorkDetail: Bookmark add",
+                               customAttributes: [
+                                "boomarkableId": bid])
+        
         var params:[String:Any] = [String:Any]()
         params["utf8"] = "✓" as AnyObject?
         params["authenticity_token"] = (UIApplication.shared.delegate as! AppDelegate).token as AnyObject?
@@ -1144,6 +1152,9 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 currentPseud = keys[0]
             }
         }*/
+        
+        Answers.logCustomEvent(withName: "WorkDetail: Bookmark delete",
+                               customAttributes: [:])
         
         var params:[String:AnyObject] = [String:AnyObject]()
         params["utf8"] = "✓" as AnyObject?
@@ -1230,14 +1241,23 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         vadult = "?view_adult=true"
        
         //purchased = true
+        
+        var wId = ""
 
         if (workItem != nil) {
+            wId = workItem.workId
             Alamofire.request("https://archiveofourown.org/works/" + workItem.workId + vadult, method: .get, parameters: params)
                 .response(completionHandler: onOnlineWorkLoaded(_:))
         } else if (downloadedWorkItem != nil) {
+            wId = downloadedWorkItem.value(forKey: "workId") as? String ?? "0"
             Alamofire.request("https://archiveofourown.org/works/" + (downloadedWorkItem.value(forKey: "workId") as? String ?? "0"), method: .get, parameters: params)
                 .response(completionHandler: onSavedWorkLoaded(_:))
         }
+        
+        
+        Answers.logCustomEvent(withName: "WorkDetail: download",
+                               customAttributes: [
+                                "workId": wId])
 
     }
     
@@ -1269,7 +1289,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
         if let d = response.data {
             self.parseCookies(response)
-            self.downloadWork(d, workItemOld: self.workItem)
+            let _ = self.downloadWork(d, workItemOld: self.workItem)
             
         } else {
             self.hideLoadingView()
@@ -1286,12 +1306,18 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             }))
             
             deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Yes", comment: ""), style: .default, handler: { (action: UIAlertAction) in
+                
+                Answers.logCustomEvent(withName: "WorkDetail: delete from db",
+                                       customAttributes: [
+                                        "workId": self.downloadedWorkItem.workId ?? "0"])
+                
                 let appDel:AppDelegate = UIApplication.shared.delegate as! AppDelegate
                 let context:NSManagedObjectContext = appDel.managedObjectContext!
                 context.delete(self.downloadedWorkItem as NSManagedObject)
                 do {
                     try context.save()
                 } catch _ {
+                    NSLog("Cannot delete saved work")
                 }
                 
                 self.dismiss(animated: true, completion: { () -> Void in
@@ -1441,6 +1467,10 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             workId = downloadedWorkItem.value(forKey: "workId") as? String ?? "0"
         }
         
+        Answers.logCustomEvent(withName: "WorkDetail: Kudos add",
+                               customAttributes: [
+                                "workId": workId])
+        
         let requestStr = "https://archiveofourown.org/kudos.js"
         //let pseud_id = DefaultsManager.getString(DefaultsManager.PSEUD_ID)
         
@@ -1583,7 +1613,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         let finalPath = "https://archiveofourown.org" + downloadUrl
         print("download"+downloadUrl)
         
-        Answers.logCustomEvent(withName: "Download_work",
+        Answers.logCustomEvent(withName: "Work Detail: download file",
                                        customAttributes: [
                                         "url": downloadUrl])
         
@@ -1633,6 +1663,11 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         } else if (downloadedWorkItem != nil) {
             wId = downloadedWorkItem.value(forKey: "workId") as? String ?? ""
         }
+        
+        Answers.logCustomEvent(withName: "WorkDetail: browser open",
+                               customAttributes: [
+                                "workId": wId])
+        
         UIApplication.shared.openURL(NSURL(string: "https://archiveofourown.org/works/\(wId)")! as URL)
 
     }

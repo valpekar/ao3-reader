@@ -177,7 +177,7 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
             
         case 2:
             cell = (tableView.dequeueReusableCell(withIdentifier: "searchTagTextCell") as? SearchTagWithTextCell)!
-            if ((indexPath as NSIndexPath).row < labelTitlesWithText.count) {
+            if (indexPath.row < labelTitlesWithText.count) {
                 (cell as? SearchTagWithTextCell)?.label.text = labelTitlesWithText[indexPath.row]
             }
             (cell as? SearchTagWithTextCell)?.textField.delegate = self
@@ -233,8 +233,8 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
             
         case 3:
             cell = (tableView.dequeueReusableCell(withIdentifier: "serachFromToCell") as? SearchFromToCell)!
-            (cell as? SearchFromToCell)?.nameLabel.text = labelTitlesFromTo[(indexPath as NSIndexPath).row]
-            (cell as? SearchFromToCell)?.imgView.image = UIImage(named:imgTitlesFromTo[(indexPath as NSIndexPath).row])
+            (cell as? SearchFromToCell)?.nameLabel.text = labelTitlesFromTo[indexPath.row]
+            (cell as? SearchFromToCell)?.imgView.image = UIImage(named:imgTitlesFromTo[indexPath.row])
             (cell as? SearchFromToCell)?.fromTextView.delegate = self
             (cell as? SearchFromToCell)?.toTextView.delegate = self
             
@@ -435,9 +435,9 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
 //        if (indexPath.section == 0 || indexPath.section == 1) {
 //            heightForRow = 1
 //        } else
-        if ((indexPath as NSIndexPath).section == 4 || (indexPath as NSIndexPath).section == 0 || (indexPath as NSIndexPath).section == 1) {
+        if (indexPath.section == 4 || indexPath.section == 0 || indexPath.section == 1) {
                 heightForRow = 80
-            } else if ((indexPath as NSIndexPath).section == 6) {
+            } else if (indexPath.section == 6) {
                 heightForRow = 80
         }
       //  }
