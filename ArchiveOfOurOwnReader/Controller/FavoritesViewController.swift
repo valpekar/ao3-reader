@@ -196,13 +196,15 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         if let downloadedFandoms = curWork?.mutableSetValue(forKey: "fandoms").allObjects as? [DBFandom] {
         for i in 0..<downloadedFandoms.count {
             let fandom = downloadedFandoms[i]
-            fandomsStr += fandom.value(forKey: "fandomName") as! String
+            fandomsStr += fandom.value(forKey: "fandomName") as? String ?? ""
             if (i < downloadedFandoms.count - 1) {
                 fandomsStr += " | "
             }
         }
         }
         cell?.fandomsLabel.text = NSLocalizedString("Fandoms_", comment: "") + fandomsStr
+        
+        cell?.ratingLabel.text = curWork?.value(forKey: "ratingTags") as? String
         
         if (curWork?.value(forKey: "topicPreview") as? String != nil) {
             cell?.topicPreviewLabel.text = curWork?.value(forKey: "topicPreview") as? String

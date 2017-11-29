@@ -237,13 +237,8 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         }
         
         var vadult = ""
-        if let isAdult = DefaultsManager.getBool(DefaultsManager.ADULT)  {
-            if (isAdult == true) {
-                
-                params["view_adult"] = "true" as AnyObject?
-                vadult = "?view_adult=true"
-            }
-        }
+        params["view_adult"] = "true" as AnyObject?
+        vadult = "?view_adult=true"
         
         showLoadingView(msg: NSLocalizedString("LoadingWrk", comment: ""))
         
@@ -978,8 +973,10 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             var an = nameArr[1].replacingOccurrences(of: "(", with: "")
             an = an.replacingOccurrences(of: ")", with: "")
             tagUrl = "https://archiveofourown.org/users/\(an)/pseuds/\(nameArr[0])/works"
-        }
-        else {
+        } else if (authorName.contains(",")) {
+            let nameArr = authorName.characters.split{$0 == ","}.map(String.init)
+            tagUrl = "https://archiveofourown.org/users/\(nameArr[0])/works"
+        } else {
             tagUrl = "https://archiveofourown.org/users/\(authorName)/works"
         }
         performSegue(withIdentifier: "listSegue", sender: self)
@@ -1229,14 +1226,9 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         }
         
         var vadult = ""
-        if let isAdult = DefaultsManager.getBool(DefaultsManager.ADULT)  {
-            if (isAdult == true) {
-                
-                params["view_adult"] = "true" as AnyObject?
-                vadult = "?view_adult=true"
-            }
-        }
-        
+        params["view_adult"] = "true" as AnyObject?
+        vadult = "?view_adult=true"
+       
         //purchased = true
 
         if (workItem != nil) {

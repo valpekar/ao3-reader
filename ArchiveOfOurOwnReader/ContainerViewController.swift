@@ -52,8 +52,8 @@ class ContainerViewController: UIViewController, CenterViewControllerDelegate, U
         centerNavigationController.didMoveToParentViewController(self)
 */
         
-        let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(ContainerViewController.handlePanGesture(_:)))
-        centerNavigationController.view.addGestureRecognizer(panGestureRecognizer)
+   /*     let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(ContainerViewController.handlePanGesture(_:)))
+        centerNavigationController.view.addGestureRecognizer(panGestureRecognizer) */
     }
     
     // MARK: CenterViewController delegate methods

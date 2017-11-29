@@ -115,9 +115,8 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
             donated = dd
         }
         
-        if let adult = DefaultsManager.getBool(DefaultsManager.ADULT)  {
-            self.isAdult = adult
-        }
+        self.isAdult = true
+        
         if let safe = DefaultsManager.getBool(DefaultsManager.SAFE) {
            self.isSafe = safe
         }

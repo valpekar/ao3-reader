@@ -72,7 +72,7 @@ class ListViewController: UIViewController {
         }
         // cell?.completeLabel.text = curWork.complete
         // cell?.categoryLabel.text = curWork.category
-        // cell?.ratingLabel.text = curWork.rating
+         cell.ratingLabel.text = curWork.rating
         
         
         var tagsString = ""

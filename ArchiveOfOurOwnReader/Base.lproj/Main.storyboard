@@ -1593,8 +1593,8 @@ Please check your Internet connection and also make sure you are logged into you
                                                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                                     </variation>
                                                                 </label>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Label" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Df-Td-gLW">
-                                                                    <rect key="frame" x="28" y="93.999999999999986" width="362" height="77.666666666666643"/>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Label" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Df-Td-gLW">
+                                                                    <rect key="frame" x="28" y="107.66666666666669" width="362" height="64.333333333333314"/>
                                                                     <fontDescription key="fontDescription" name="HelveticaNeue-LightItalic" family="Helvetica Neue" pointSize="12"/>
                                                                     <color key="textColor" red="0.37456597219999999" green="0.37456597219999999" blue="0.37456597219999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <nil key="highlightedColor"/>
@@ -1614,14 +1614,23 @@ Please check your Internet connection and also make sure you are logged into you
                                                                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
                                                                     </variation>
                                                                 </label>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ozz-yC-3V4">
+                                                                    <rect key="frame" x="28" y="90" width="362" height="15.666666666666671"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                                    <color key="textColor" red="0.44705882352941173" green="0.74901960784313726" blue="0.90196078431372551" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
                                                             </subviews>
                                                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <constraints>
+                                                                <constraint firstAttribute="trailing" secondItem="Ozz-yC-3V4" secondAttribute="trailing" constant="8" id="0ld-be-Oxe"/>
+                                                                <constraint firstItem="Ozz-yC-3V4" firstAttribute="top" secondItem="BkA-Ru-na8" secondAttribute="bottom" id="2dt-GT-Ydp"/>
                                                                 <constraint firstItem="mQI-oU-tIp" firstAttribute="width" secondItem="YJp-dA-6Aq" secondAttribute="width" multiplier="1.7" id="2km-m8-foh"/>
-                                                                <constraint firstItem="7Df-Td-gLW" firstAttribute="top" secondItem="BkA-Ru-na8" secondAttribute="bottom" constant="4" id="3z5-V2-vGG"/>
+                                                                <constraint firstItem="Ozz-yC-3V4" firstAttribute="leading" secondItem="OJd-G7-DrW" secondAttribute="leading" constant="28" id="3AX-CV-DMx"/>
                                                                 <constraint firstItem="NQn-31-mp3" firstAttribute="top" secondItem="re7-Cz-73R" secondAttribute="bottom" constant="4" id="5ZR-QN-jzq"/>
                                                                 <constraint firstItem="3X4-6E-OzN" firstAttribute="leading" secondItem="OJd-G7-DrW" secondAttribute="leading" constant="8" id="6Z6-k4-DJg"/>
                                                                 <constraint firstItem="7Df-Td-gLW" firstAttribute="leading" secondItem="OJd-G7-DrW" secondAttribute="leadingMargin" constant="20" id="6rj-FB-lxT"/>
+                                                                <constraint firstItem="7Df-Td-gLW" firstAttribute="top" secondItem="Ozz-yC-3V4" secondAttribute="bottom" constant="2" id="9uV-iW-chl"/>
                                                                 <constraint firstItem="re7-Cz-73R" firstAttribute="top" secondItem="OJd-G7-DrW" secondAttribute="top" id="ASp-OX-zgs"/>
                                                                 <constraint firstItem="NQn-31-mp3" firstAttribute="leading" secondItem="mQI-oU-tIp" secondAttribute="trailing" constant="4" id="AgI-0x-P4f"/>
                                                                 <constraint firstAttribute="bottom" secondItem="4Nc-7G-ZQC" secondAttribute="bottom" id="ETV-ei-rdT"/>
@@ -1674,6 +1683,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                     <outlet property="hitsLabel" destination="ROX-wd-IPG" id="gHt-od-tad"/>
                                                     <outlet property="kudosLabel" destination="OB1-bt-qKc" id="sXC-pu-VpS"/>
                                                     <outlet property="languageLabel" destination="YJp-dA-6Aq" id="dJg-O4-6VE"/>
+                                                    <outlet property="ratingLabel" destination="Ozz-yC-3V4" id="Y2t-Gr-Ele"/>
                                                     <outlet property="tagsLabel" destination="7Df-Td-gLW" id="V7u-Z8-jLH"/>
                                                     <outlet property="topicLabel" destination="zRL-Oe-dO3" id="F2V-Ac-6qH"/>
                                                     <outlet property="topicPreviewLabel" destination="Ccg-wK-dqP" id="kbB-yP-rfW"/>
@@ -2372,7 +2382,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Label" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0NV-cj-fsp">
-                                                            <rect key="frame" x="28" y="86.666666666666657" width="362" height="80.999999999999972"/>
+                                                            <rect key="frame" x="28" y="100.33333333333331" width="362" height="67.666666666666686"/>
                                                             <fontDescription key="fontDescription" name="HelveticaNeue-LightItalic" family="Helvetica Neue" pointSize="12"/>
                                                             <color key="textColor" red="0.42745098040000001" green="0.42745098040000001" blue="0.42745098040000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -2386,6 +2396,12 @@ Please check your Internet connection and also make sure you are logged into you
                                                             <color key="textColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a8f-O5-BlW">
+                                                            <rect key="frame" x="28" y="84.666666666666671" width="362" height="15.666666666666657"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                            <color key="textColor" red="0.44705882352941173" green="0.74901960784313726" blue="0.90196078431372551" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
                                                     </subviews>
                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
@@ -2393,7 +2409,6 @@ Please check your Internet connection and also make sure you are logged into you
                                                         <constraint firstItem="AF7-Ms-IXY" firstAttribute="top" secondItem="Sso-2P-Wtb" secondAttribute="bottom" constant="4" id="3KD-t5-Fsb"/>
                                                         <constraint firstItem="V0u-ho-Dls" firstAttribute="top" secondItem="0NV-cj-fsp" secondAttribute="bottom" constant="4" id="7xc-TX-cSy"/>
                                                         <constraint firstItem="Huk-Kh-Qyk" firstAttribute="leading" secondItem="o5T-wg-zUJ" secondAttribute="leading" constant="28" id="8Tz-eD-nPK"/>
-                                                        <constraint firstItem="0NV-cj-fsp" firstAttribute="top" secondItem="Huk-Kh-Qyk" secondAttribute="bottom" constant="4" id="Bib-HV-wDd"/>
                                                         <constraint firstItem="DC5-c4-3Dq" firstAttribute="leading" secondItem="o5T-wg-zUJ" secondAttribute="leading" id="C2b-iS-faO"/>
                                                         <constraint firstItem="DC5-c4-3Dq" firstAttribute="top" secondItem="V0u-ho-Dls" secondAttribute="bottom" constant="2" id="DhG-Y5-qe7"/>
                                                         <constraint firstItem="BFP-BQ-ROk" firstAttribute="centerY" secondItem="6Ct-xA-QQy" secondAttribute="centerY" id="FLn-BX-YxR"/>
@@ -2401,8 +2416,10 @@ Please check your Internet connection and also make sure you are logged into you
                                                         <constraint firstItem="V0u-ho-Dls" firstAttribute="leading" secondItem="o5T-wg-zUJ" secondAttribute="leadingMargin" id="I6x-se-w4S"/>
                                                         <constraint firstItem="6Ct-xA-QQy" firstAttribute="top" secondItem="Sso-2P-Wtb" secondAttribute="bottom" constant="4" id="M9D-Z8-NlL"/>
                                                         <constraint firstItem="Huk-Kh-Qyk" firstAttribute="top" secondItem="AF7-Ms-IXY" secondAttribute="bottom" constant="4" id="NRr-Jj-rda"/>
+                                                        <constraint firstItem="a8f-O5-BlW" firstAttribute="top" secondItem="Huk-Kh-Qyk" secondAttribute="bottom" constant="2" id="OAr-cr-U7G"/>
                                                         <constraint firstAttribute="trailing" secondItem="Sso-2P-Wtb" secondAttribute="trailing" id="Osk-Z4-J0N"/>
                                                         <constraint firstItem="AF7-Ms-IXY" firstAttribute="width" secondItem="vkj-PQ-Dlx" secondAttribute="width" id="PrP-jC-UfI"/>
+                                                        <constraint firstItem="a8f-O5-BlW" firstAttribute="leading" secondItem="o5T-wg-zUJ" secondAttribute="leading" constant="28" id="SG7-Lp-sql"/>
                                                         <constraint firstAttribute="trailing" secondItem="AF7-Ms-IXY" secondAttribute="trailing" constant="8" id="StP-BZ-gp2"/>
                                                         <constraint firstItem="6Ct-xA-QQy" firstAttribute="leading" secondItem="o5T-wg-zUJ" secondAttribute="leading" constant="8" id="UU6-Mq-uRB"/>
                                                         <constraint firstItem="vkj-PQ-Dlx" firstAttribute="top" secondItem="Sso-2P-Wtb" secondAttribute="bottom" constant="3" id="ZhN-oH-flD"/>
@@ -2418,7 +2435,9 @@ Please check your Internet connection and also make sure you are logged into you
                                                         <constraint firstItem="0NV-cj-fsp" firstAttribute="leading" secondItem="o5T-wg-zUJ" secondAttribute="leadingMargin" constant="20" id="mYA-l6-hB5"/>
                                                         <constraint firstItem="vkj-PQ-Dlx" firstAttribute="leading" secondItem="6Ct-xA-QQy" secondAttribute="trailing" constant="8" id="pCh-j9-GSv"/>
                                                         <constraint firstItem="BFP-BQ-ROk" firstAttribute="width" secondItem="vkj-PQ-Dlx" secondAttribute="width" multiplier="1.7" id="q7m-Fj-2eJ"/>
+                                                        <constraint firstAttribute="trailing" secondItem="a8f-O5-BlW" secondAttribute="trailing" constant="8" id="ron-H5-gUz"/>
                                                         <constraint firstItem="0NV-cj-fsp" firstAttribute="trailing" secondItem="o5T-wg-zUJ" secondAttribute="trailingMargin" id="t9T-Ki-bvl"/>
+                                                        <constraint firstItem="0NV-cj-fsp" firstAttribute="top" secondItem="a8f-O5-BlW" secondAttribute="bottom" id="tRR-NE-qa4"/>
                                                         <constraint firstItem="V0u-ho-Dls" firstAttribute="top" secondItem="0NV-cj-fsp" secondAttribute="bottom" constant="4" id="tqF-xC-unI"/>
                                                         <constraint firstAttribute="trailing" secondItem="DC5-c4-3Dq" secondAttribute="trailing" id="v9N-a6-Kmy"/>
                                                     </constraints>
@@ -2452,10 +2471,10 @@ Please check your Internet connection and also make sure you are logged into you
                                             <outlet property="hitsLabel" destination="r8O-b7-9oe" id="0so-uR-0C7"/>
                                             <outlet property="kudosLabel" destination="LGo-tq-czb" id="LnG-Aa-cQs"/>
                                             <outlet property="languageLabel" destination="vkj-PQ-Dlx" id="44u-Ij-rIH"/>
+                                            <outlet property="ratingLabel" destination="a8f-O5-BlW" id="yjI-eL-Hlw"/>
                                             <outlet property="tagsLabel" destination="0NV-cj-fsp" id="xiO-dk-24l"/>
                                             <outlet property="topicLabel" destination="VUr-2i-RNr" id="abr-xY-Z2e"/>
                                             <outlet property="topicPreviewLabel" destination="V0u-ho-Dls" id="zol-3A-k1t"/>
-                                            <segue destination="g0F-jj-WaO" kind="show" identifier="workDetail" id="p5b-Lc-CDi"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -2483,11 +2502,12 @@ Please check your Internet connection and also make sure you are logged into you
                         <outlet property="collectionView" destination="RmA-Nc-iEP" id="qcI-Jr-Arj"/>
                         <outlet property="tableView" destination="dVv-Wb-Czg" id="0yN-JY-EZh"/>
                         <outlet property="tryAgainButton" destination="7BG-8k-w0K" id="iEU-w6-GBO"/>
+                        <segue destination="g0F-jj-WaO" kind="show" identifier="workDetail" id="pDe-8P-N2j"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7AI-Ne-Mib" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3096" y="-585"/>
+            <point key="canvasLocation" x="3095.6521739130435" y="-585.32608695652175"/>
         </scene>
         <!--Title-->
         <scene sceneID="jf8-DF-psT">
@@ -3254,6 +3274,12 @@ Please check your Internet connection and also make sure you are logged into you
                                                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
                                                             </variation>
                                                         </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v5E-Yl-adK">
+                                                            <rect key="frame" x="28" y="84.666666666666671" width="362" height="15.666666666666657"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                            <color key="textColor" red="0.44705882352941173" green="0.74901960784313726" blue="0.90196078431372551" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="17 Nov 2014" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O82-Cm-joz">
                                                             <rect key="frame" x="292.33333333333326" y="42" width="97.666666666666686" height="21"/>
                                                             <constraints>
@@ -3282,7 +3308,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                             </variation>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Label" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B4l-Od-GeY">
-                                                            <rect key="frame" x="28" y="86.666666666666657" width="362" height="80.999999999999972"/>
+                                                            <rect key="frame" x="28" y="100.33333333333331" width="362" height="66.666666666666686"/>
                                                             <fontDescription key="fontDescription" name="HelveticaNeue-LightItalic" family="Helvetica Neue" pointSize="12"/>
                                                             <color key="textColor" red="0.42745098039215684" green="0.42745098039215684" blue="0.42745098039215684" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -3312,13 +3338,15 @@ Please check your Internet connection and also make sure you are logged into you
                                                         <constraint firstItem="ELq-6D-xID" firstAttribute="width" secondItem="QIz-6y-VGT" secondAttribute="width" multiplier="1.6" id="CGc-jS-dgE"/>
                                                         <constraint firstAttribute="trailing" secondItem="YFd-IL-rpc" secondAttribute="trailing" id="CHI-hu-tXI"/>
                                                         <constraint firstItem="ELq-6D-xID" firstAttribute="centerY" secondItem="8I6-Hx-2lN" secondAttribute="centerY" id="EPp-sW-eog"/>
-                                                        <constraint firstItem="B4l-Od-GeY" firstAttribute="top" secondItem="2kE-Of-Bc8" secondAttribute="bottom" constant="4" id="Eip-sy-MTV"/>
                                                         <constraint firstItem="ELq-6D-xID" firstAttribute="top" secondItem="YFd-IL-rpc" secondAttribute="bottom" constant="3" id="LuU-8B-KCI"/>
+                                                        <constraint firstItem="v5E-Yl-adK" firstAttribute="leading" secondItem="wTQ-Yy-mOC" secondAttribute="leading" constant="28" id="MQz-9H-3iX"/>
+                                                        <constraint firstAttribute="trailing" secondItem="v5E-Yl-adK" secondAttribute="trailing" constant="8" id="Nuv-Rc-CRO"/>
                                                         <constraint firstItem="B4l-Od-GeY" firstAttribute="leading" secondItem="wTQ-Yy-mOC" secondAttribute="leadingMargin" constant="20" id="Ptl-BR-Jxx"/>
                                                         <constraint firstItem="QIz-6y-VGT" firstAttribute="centerY" secondItem="8I6-Hx-2lN" secondAttribute="centerY" id="Qmt-cl-2N3"/>
                                                         <constraint firstItem="8I6-Hx-2lN" firstAttribute="leading" secondItem="wTQ-Yy-mOC" secondAttribute="leading" constant="8" id="Ri4-nE-okM"/>
                                                         <constraint firstItem="2kE-Of-Bc8" firstAttribute="top" secondItem="O82-Cm-joz" secondAttribute="bottom" constant="4" id="TOV-N8-i9d"/>
                                                         <constraint firstItem="2kE-Of-Bc8" firstAttribute="leading" secondItem="wTQ-Yy-mOC" secondAttribute="leading" constant="28" id="UqT-tj-Z27"/>
+                                                        <constraint firstItem="B4l-Od-GeY" firstAttribute="top" secondItem="v5E-Yl-adK" secondAttribute="bottom" id="Vid-he-bGT"/>
                                                         <constraint firstItem="QIz-6y-VGT" firstAttribute="leading" secondItem="8I6-Hx-2lN" secondAttribute="trailing" constant="8" id="Zri-n1-ViE"/>
                                                         <constraint firstItem="St1-sz-id4" firstAttribute="leading" secondItem="wTQ-Yy-mOC" secondAttribute="leading" id="a5D-si-oQA"/>
                                                         <constraint firstItem="YFd-IL-rpc" firstAttribute="leading" secondItem="wTQ-Yy-mOC" secondAttribute="leading" id="aPk-lt-FZy"/>
@@ -3336,6 +3364,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                         <constraint firstItem="O82-Cm-joz" firstAttribute="centerY" secondItem="8I6-Hx-2lN" secondAttribute="centerY" id="x11-tC-9h6"/>
                                                         <constraint firstAttribute="trailing" secondItem="O82-Cm-joz" secondAttribute="trailing" constant="8" id="xJM-bl-5cS"/>
                                                         <constraint firstItem="O82-Cm-joz" firstAttribute="width" secondItem="QIz-6y-VGT" secondAttribute="width" id="ycZ-13-mVq"/>
+                                                        <constraint firstItem="v5E-Yl-adK" firstAttribute="top" secondItem="2kE-Of-Bc8" secondAttribute="bottom" constant="2" id="zI2-7Y-8qu"/>
                                                         <constraint firstAttribute="bottom" secondItem="St1-sz-id4" secondAttribute="bottom" id="zyx-kI-JNd"/>
                                                     </constraints>
                                                     <variation key="default">
@@ -3368,6 +3397,7 @@ Please check your Internet connection and also make sure you are logged into you
                                             <outlet property="hitsLabel" destination="fOb-J6-ufW" id="Vmp-Jo-pG1"/>
                                             <outlet property="kudosLabel" destination="kY2-EE-mLr" id="rmg-bY-CrQ"/>
                                             <outlet property="languageLabel" destination="QIz-6y-VGT" id="l3u-r8-Qrl"/>
+                                            <outlet property="ratingLabel" destination="v5E-Yl-adK" id="2b2-VQ-3RB"/>
                                             <outlet property="tagsLabel" destination="B4l-Od-GeY" id="Cor-uI-CH5"/>
                                             <outlet property="topicLabel" destination="ugS-IF-6Ts" id="0a9-ws-LKK"/>
                                             <outlet property="topicPreviewLabel" destination="Ijh-as-Qrd" id="rXf-Qv-9ig"/>
@@ -3987,8 +4017,8 @@ Please check your Internet connection and also make sure you are logged into you
                                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                             </variation>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Label" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5oW-a4-ug6">
-                                                            <rect key="frame" x="28" y="93.999999999999986" width="362" height="73.666666666666643"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Label" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5oW-a4-ug6">
+                                                            <rect key="frame" x="28" y="107.66666666666669" width="362" height="60.333333333333314"/>
                                                             <fontDescription key="fontDescription" name="HelveticaNeue-LightItalic" family="Helvetica Neue" pointSize="12"/>
                                                             <color key="textColor" red="0.37456597219999999" green="0.37456597219999999" blue="0.37456597219999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -4008,18 +4038,25 @@ Please check your Internet connection and also make sure you are logged into you
                                                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
                                                             </variation>
                                                         </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qdK-Qd-jga">
+                                                            <rect key="frame" x="28" y="92" width="362" height="15.666666666666671"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                            <color key="textColor" red="0.44705882352941173" green="0.74901960784313726" blue="0.90196078431372551" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
                                                     </subviews>
                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="trailingMargin" secondItem="EtU-Xl-SPN" secondAttribute="trailing" id="0pq-t4-1IQ"/>
+                                                        <constraint firstItem="qdK-Qd-jga" firstAttribute="leading" secondItem="B2Q-4y-ueW" secondAttribute="leading" constant="28" id="2CD-dy-OB1"/>
                                                         <constraint firstItem="Yro-RH-hWL" firstAttribute="width" secondItem="2n0-Ld-9Ht" secondAttribute="width" id="4NH-ed-O6x"/>
                                                         <constraint firstItem="jRB-4q-l7U" firstAttribute="leading" secondItem="B2Q-4y-ueW" secondAttribute="leading" constant="28" id="4UI-O3-US1"/>
                                                         <constraint firstAttribute="trailing" secondItem="8Hm-DA-PbH" secondAttribute="trailing" id="8K0-mp-4dd"/>
                                                         <constraint firstItem="8Hm-DA-PbH" firstAttribute="leading" secondItem="B2Q-4y-ueW" secondAttribute="leading" id="CvB-iC-J4l"/>
                                                         <constraint firstItem="8j0-jh-8fV" firstAttribute="leading" secondItem="2n0-Ld-9Ht" secondAttribute="trailing" constant="4" id="DHm-77-2oy"/>
+                                                        <constraint firstItem="qdK-Qd-jga" firstAttribute="top" secondItem="jRB-4q-l7U" secondAttribute="bottom" constant="2" id="EWs-g5-S4m"/>
                                                         <constraint firstItem="2n0-Ld-9Ht" firstAttribute="top" secondItem="8Hm-DA-PbH" secondAttribute="bottom" constant="3" id="JOe-6U-gcn"/>
                                                         <constraint firstItem="TjA-uT-EQT" firstAttribute="leading" secondItem="B2Q-4y-ueW" secondAttribute="leading" constant="8" id="JSu-su-ndS"/>
-                                                        <constraint firstItem="5oW-a4-ug6" firstAttribute="top" secondItem="jRB-4q-l7U" secondAttribute="bottom" constant="4" id="LUJ-kS-nGy"/>
                                                         <constraint firstItem="8j0-jh-8fV" firstAttribute="top" secondItem="8Hm-DA-PbH" secondAttribute="bottom" constant="3" id="Miv-F5-1Pf"/>
                                                         <constraint firstAttribute="trailing" secondItem="Yro-RH-hWL" secondAttribute="trailing" constant="8" id="MmJ-oO-bTC"/>
                                                         <constraint firstItem="jRB-4q-l7U" firstAttribute="top" secondItem="Yro-RH-hWL" secondAttribute="bottom" constant="4" id="Pj2-8F-486"/>
@@ -4029,11 +4066,13 @@ Please check your Internet connection and also make sure you are logged into you
                                                         <constraint firstItem="8Hm-DA-PbH" firstAttribute="top" secondItem="B2Q-4y-ueW" secondAttribute="top" id="WYa-IV-QM2"/>
                                                         <constraint firstItem="EtU-Xl-SPN" firstAttribute="top" secondItem="5oW-a4-ug6" secondAttribute="bottom" constant="4" id="cK0-bY-ccq"/>
                                                         <constraint firstItem="TjA-uT-EQT" firstAttribute="top" secondItem="8Hm-DA-PbH" secondAttribute="bottom" constant="4" id="cca-Mx-Adc"/>
+                                                        <constraint firstAttribute="trailing" secondItem="qdK-Qd-jga" secondAttribute="trailing" constant="8" id="dfW-3i-bvr"/>
                                                         <constraint firstItem="5oW-a4-ug6" firstAttribute="leading" secondItem="B2Q-4y-ueW" secondAttribute="leadingMargin" constant="20" id="fa8-le-uBf"/>
                                                         <constraint firstItem="KFf-wy-kZ2" firstAttribute="top" secondItem="EtU-Xl-SPN" secondAttribute="bottom" constant="2" id="gVP-cH-WH9"/>
                                                         <constraint firstItem="KFf-wy-kZ2" firstAttribute="leading" secondItem="B2Q-4y-ueW" secondAttribute="leading" id="i1x-hW-ep5"/>
                                                         <constraint firstItem="2n0-Ld-9Ht" firstAttribute="leading" secondItem="TjA-uT-EQT" secondAttribute="trailing" constant="8" id="k5M-dk-ZJq"/>
                                                         <constraint firstItem="5oW-a4-ug6" firstAttribute="trailing" secondItem="B2Q-4y-ueW" secondAttribute="trailingMargin" id="lWC-Wu-X38"/>
+                                                        <constraint firstItem="5oW-a4-ug6" firstAttribute="top" secondItem="qdK-Qd-jga" secondAttribute="bottom" id="lu9-mO-2jc"/>
                                                         <constraint firstItem="EtU-Xl-SPN" firstAttribute="leading" secondItem="B2Q-4y-ueW" secondAttribute="leadingMargin" id="n2p-qe-i6h"/>
                                                         <constraint firstAttribute="trailing" secondItem="KFf-wy-kZ2" secondAttribute="trailing" id="nw9-pE-nI2"/>
                                                         <constraint firstItem="Yro-RH-hWL" firstAttribute="leading" secondItem="2n0-Ld-9Ht" secondAttribute="trailing" constant="8" id="rpg-JT-dWi"/>
@@ -4069,6 +4108,7 @@ Please check your Internet connection and also make sure you are logged into you
                                             <outlet property="hitsLabel" destination="vlh-gM-gr1" id="A9l-E4-2NQ"/>
                                             <outlet property="kudosLabel" destination="SVu-xG-6JQ" id="b68-6O-INk"/>
                                             <outlet property="languageLabel" destination="2n0-Ld-9Ht" id="WoM-79-kvx"/>
+                                            <outlet property="ratingLabel" destination="qdK-Qd-jga" id="3tz-rS-NZa"/>
                                             <outlet property="tagsLabel" destination="5oW-a4-ug6" id="1QZ-6Y-pjA"/>
                                             <outlet property="topicLabel" destination="CbL-S4-54X" id="EvS-iT-Xoh"/>
                                             <outlet property="topicPreviewLabel" destination="EtU-Xl-SPN" id="dM6-gx-mPv"/>
@@ -4163,7 +4203,7 @@ Please check your Internet connection and also make sure you are logged into you
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="13e-vW-JxF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="421" y="1138"/>
+            <point key="canvasLocation" x="420.28985507246381" y="1137.2282608695652"/>
         </scene>
         <!--Interstitial Controller-->
         <scene sceneID="eAO-Cp-ZSn">
@@ -4273,17 +4313,33 @@ Please check your Internet connection and also make sure you are logged into you
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oYA-OO-1fX">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="72"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile" translatesAutoresizingMaskIntoConstraints="NO" id="5mc-IC-E0b">
-                                        <rect key="frame" x="190.33333333333334" y="0.0" width="34" height="34"/>
+                                        <rect key="frame" x="16" y="9" width="34" height="34"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="34" id="23r-cB-5vP"/>
                                             <constraint firstAttribute="width" constant="34" id="ycC-9F-ueJ"/>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Not Authorized" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wtc-SS-BYB">
-                                        <rect key="frame" x="159" y="34" width="96" height="17"/>
+                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ydx-2q-z32">
+                                        <rect key="frame" x="351" y="0.0" width="47" height="33"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <state key="normal" title="Log In">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <variation key="heightClass=regular-widthClass=regular">
+                                            <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                        </variation>
+                                        <connections>
+                                            <action selector="loginTouched:" destination="aAL-eX-Mdc" eventType="touchUpInside" id="x2J-AH-y6h"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Not Authorized" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="9" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wtc-SS-BYB">
+                                        <rect key="frame" x="58" y="8" width="285" height="36"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="36" id="m36-0T-DrY"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -4291,15 +4347,18 @@ Please check your Internet connection and also make sure you are logged into you
                                 </subviews>
                                 <color key="backgroundColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstItem="5mc-IC-E0b" firstAttribute="centerX" secondItem="oYA-OO-1fX" secondAttribute="centerX" id="6TQ-u4-Pzk"/>
-                                    <constraint firstItem="wtc-SS-BYB" firstAttribute="centerX" secondItem="oYA-OO-1fX" secondAttribute="centerX" id="PY1-a8-s8U"/>
-                                    <constraint firstItem="5mc-IC-E0b" firstAttribute="top" secondItem="oYA-OO-1fX" secondAttribute="top" id="W0S-wF-cez"/>
-                                    <constraint firstItem="wtc-SS-BYB" firstAttribute="top" secondItem="5mc-IC-E0b" secondAttribute="bottom" id="qlY-Wg-FTi"/>
-                                    <constraint firstAttribute="height" constant="72" id="rrh-gw-hdt"/>
+                                    <constraint firstAttribute="trailing" secondItem="ydx-2q-z32" secondAttribute="trailing" constant="16" id="Bcv-m2-Lbo"/>
+                                    <constraint firstItem="ydx-2q-z32" firstAttribute="top" secondItem="oYA-OO-1fX" secondAttribute="top" id="LbF-66-Bbz"/>
+                                    <constraint firstItem="ydx-2q-z32" firstAttribute="leading" secondItem="wtc-SS-BYB" secondAttribute="trailing" constant="8" id="Ye1-l0-mxj"/>
+                                    <constraint firstItem="5mc-IC-E0b" firstAttribute="leading" secondItem="oYA-OO-1fX" secondAttribute="leading" constant="16" id="fMH-xs-UIg"/>
+                                    <constraint firstItem="wtc-SS-BYB" firstAttribute="leading" secondItem="5mc-IC-E0b" secondAttribute="trailing" constant="8" id="lwG-kR-wO1"/>
+                                    <constraint firstItem="wtc-SS-BYB" firstAttribute="centerY" secondItem="5mc-IC-E0b" secondAttribute="centerY" id="p69-Ek-dpi"/>
+                                    <constraint firstAttribute="height" constant="50" id="rrh-gw-hdt"/>
+                                    <constraint firstItem="wtc-SS-BYB" firstAttribute="top" secondItem="oYA-OO-1fX" secondAttribute="top" constant="8" id="xNH-sf-iya"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notify about new Recommendations (Pro only)" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="unF-Y4-c6i">
-                                <rect key="frame" x="20" y="607.66666666666663" width="309" height="15.666666666666742"/>
+                                <rect key="frame" x="20" y="61.666666666666664" width="317" height="15.666666666666679"/>
                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="13"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -4308,81 +4367,15 @@ Please check your Internet connection and also make sure you are logged into you
                                 </variation>
                             </label>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QI5-Oe-bD7">
-                                <rect key="frame" x="345" y="600" width="51" height="31"/>
+                                <rect key="frame" x="345" y="54" width="51" height="31"/>
                                 <color key="onTintColor" red="0.39215686274509803" green="0.11372549019607843" blue="0.54509803921568623" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="thumbTintColor" red="1" green="1" blue="1" alpha="0.90000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
                                     <action selector="notifSwitchChanged:" destination="aAL-eX-Mdc" eventType="valueChanged" id="acg-Yt-aDq"/>
                                 </connections>
                             </switch>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Night Mode" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GDT-GK-o9g">
-                                <rect key="frame" x="20" y="645" width="309" height="15.666666666666629"/>
-                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="13"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                                <variation key="heightClass=regular-widthClass=regular">
-                                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="18"/>
-                                </variation>
-                            </label>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="snX-zl-gS3">
-                                <rect key="frame" x="345" y="637" width="51" height="31"/>
-                                <color key="onTintColor" red="0.3921568627" green="0.1137254902" blue="0.5450980392" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <color key="thumbTintColor" red="1" green="1" blue="1" alpha="0.90000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
-                                <connections>
-                                    <action selector="nightSwitchChanged:" destination="aAL-eX-Mdc" eventType="touchUpInside" id="n2s-tx-fxw"/>
-                                </connections>
-                            </switch>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Confirm you are 18 and older" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="An2-hx-brd">
-                                <rect key="frame" x="20" y="571.33333333333348" width="309" height="15.666666666666629"/>
-                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="13"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                                <variation key="heightClass=regular-widthClass=regular">
-                                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="18"/>
-                                </variation>
-                            </label>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZsP-KK-vj8">
-                                <rect key="frame" x="345" y="563" width="51" height="31"/>
-                                <color key="onTintColor" red="0.39215686274509803" green="0.11372549019607843" blue="0.54509803921568623" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <color key="thumbTintColor" red="1" green="1" blue="1" alpha="0.90000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
-                                <connections>
-                                    <action selector="adultSwitchChanged:" destination="aAL-eX-Mdc" eventType="valueChanged" id="p2p-ab-dyh"/>
-                                </connections>
-                            </switch>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="248" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="GTp-WW-u9Q">
-                                <rect key="frame" x="0.0" y="72" width="414" height="342"/>
-                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <color key="tintColor" red="0.66485564720812185" green="0.13774127008543502" blue="0.15106696591960683" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="gray" indentationWidth="10" reuseIdentifier="pseudCell" id="Pyr-TM-Taz">
-                                        <rect key="frame" x="0.0" y="55.333333333333336" width="414" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Pyr-TM-Taz" id="9sQ-0B-Fmq">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.666666666666664"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </prototypes>
-                                <connections>
-                                    <outlet property="dataSource" destination="aAL-eX-Mdc" id="cwz-ZJ-PYb"/>
-                                    <outlet property="delegate" destination="aAL-eX-Mdc" id="Gca-pn-uCw"/>
-                                </connections>
-                            </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ydx-2q-z32">
-                                <rect key="frame" x="183.66666666666666" y="420" width="47" height="33"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <state key="normal" title="Log In">
-                                    <color key="titleColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <variation key="heightClass=regular-widthClass=regular">
-                                    <fontDescription key="fontDescription" type="system" pointSize="26"/>
-                                </variation>
-                                <connections>
-                                    <action selector="loginTouched:" destination="aAL-eX-Mdc" eventType="touchUpInside" id="x2J-AH-y6h"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" text="Further app improvements rely on your support! If you find app useful, pls consider supporting it by leaving a tip!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="6" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1uP-Y7-fEC">
-                                <rect key="frame" x="0.0" y="461" width="414" height="26.333333333333371"/>
+                                <rect key="frame" x="0.0" y="89" width="414" height="26.333333333333343"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -4390,17 +4383,54 @@ Please check your Internet connection and also make sure you are logged into you
                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 </variation>
                             </label>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="248" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" rowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="GTp-WW-u9Q">
+                                <rect key="frame" x="0.0" y="154" width="414" height="518"/>
+                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="tintColor" red="0.66485564720812185" green="0.13774127008543502" blue="0.15106696591960683" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="separatorColor" red="0.70164750647668395" green="0.70164750647668395" blue="0.70164750647668395" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="MyProfileCell" selectionStyle="gray" indentationWidth="10" reuseIdentifier="pseudCell" id="Pyr-TM-Taz" customClass="MyProfileCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="55.333333333333336" width="414" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Pyr-TM-Taz" id="9sQ-0B-Fmq">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.666666666666664"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mu3-7i-zXm">
+                                                    <rect key="frame" x="24" y="12.000000000000002" width="366" height="19.666666666666671"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="mu3-7i-zXm" firstAttribute="leading" secondItem="9sQ-0B-Fmq" secondAttribute="leadingMargin" constant="16" id="1CJ-SF-IcT"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="mu3-7i-zXm" secondAttribute="bottom" constant="4" id="56W-mx-ll0"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="mu3-7i-zXm" secondAttribute="trailing" constant="16" id="HBE-OY-TlQ"/>
+                                                <constraint firstItem="mu3-7i-zXm" firstAttribute="top" secondItem="9sQ-0B-Fmq" secondAttribute="topMargin" constant="4" id="eiY-Vn-FRy"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="titleLabel" destination="mu3-7i-zXm" id="O4w-c5-euk"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="aAL-eX-Mdc" id="cwz-ZJ-PYb"/>
+                                    <outlet property="delegate" destination="aAL-eX-Mdc" id="Gca-pn-uCw"/>
+                                </connections>
+                            </tableView>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Xbx-H9-77A">
-                                <rect key="frame" x="20" y="495.33333333333337" width="374" height="30"/>
+                                <rect key="frame" x="20" y="123.33333333333336" width="374" height="28.666666666666643"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VvP-t4-Q81">
-                                        <rect key="frame" x="0.0" y="0.0" width="123.66666666666666" height="30"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="123.66666666666666" height="28.666666666666657"/>
                                         <state key="normal">
                                             <attributedString key="attributedTitle">
                                                 <fragment content="Generous Tip of $1.99">
                                                     <attributes>
                                                         <color key="NSColor" red="0.14901960784313725" green="0.61176470588235299" blue="0.058823529411764705" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        <font key="NSFont" size="15" name=".AppleSystemUIFont"/>
+                                                        <font key="NSFont" size="14" name=".AppleSystemUIFont"/>
                                                         <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                     </attributes>
                                                 </fragment>
@@ -4411,13 +4441,13 @@ Please check your Internet connection and also make sure you are logged into you
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="e3R-le-oJp">
-                                        <rect key="frame" x="131.66666666666669" y="0.0" width="117.00000000000003" height="30"/>
+                                        <rect key="frame" x="131.66666666666663" y="0.0" width="116.33333333333334" height="28.666666666666657"/>
                                         <state key="normal">
                                             <attributedString key="attributedTitle">
                                                 <fragment content="Massive Tip of $2.99">
                                                     <attributes>
                                                         <color key="NSColor" red="0.14901960784313725" green="0.61176470588235299" blue="0.058823529411764705" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        <font key="NSFont" size="15" name=".AppleSystemUIFont"/>
+                                                        <font key="NSFont" size="14" name=".AppleSystemUIFont"/>
                                                         <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                     </attributes>
                                                 </fragment>
@@ -4428,13 +4458,13 @@ Please check your Internet connection and also make sure you are logged into you
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WS0-oc-9Mj">
-                                        <rect key="frame" x="256.66666666666674" y="0.0" width="117.33333333333331" height="30"/>
+                                        <rect key="frame" x="256" y="0.0" width="118" height="28.666666666666657"/>
                                         <state key="normal">
                                             <attributedString key="attributedTitle">
                                                 <fragment content="Amazing Tip of $4.99">
                                                     <attributes>
                                                         <color key="NSColor" red="0.14901960784313725" green="0.61176470588235299" blue="0.058823529411764705" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        <font key="NSFont" size="15" name=".AppleSystemUIFont"/>
+                                                        <font key="NSFont" size="14" name=".AppleSystemUIFont"/>
                                                         <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                     </attributes>
                                                 </fragment>
@@ -4445,76 +4475,35 @@ Please check your Internet connection and also make sure you are logged into you
                                         </connections>
                                     </button>
                                 </subviews>
-                                <constraints>
-                                    <constraint firstItem="e3R-le-oJp" firstAttribute="top" secondItem="Xbx-H9-77A" secondAttribute="top" id="Ldj-Vl-Wsk"/>
-                                    <constraint firstAttribute="bottom" secondItem="WS0-oc-9Mj" secondAttribute="bottom" id="THW-tc-VaJ"/>
-                                    <constraint firstAttribute="bottom" secondItem="e3R-le-oJp" secondAttribute="bottom" id="UMC-1v-po4"/>
-                                    <constraint firstItem="VvP-t4-Q81" firstAttribute="top" secondItem="Xbx-H9-77A" secondAttribute="top" id="XyR-NA-DQH"/>
-                                    <constraint firstItem="WS0-oc-9Mj" firstAttribute="top" secondItem="Xbx-H9-77A" secondAttribute="top" id="l1i-aS-rv0"/>
-                                    <constraint firstAttribute="bottom" secondItem="VvP-t4-Q81" secondAttribute="bottom" id="rrN-pf-x3b"/>
-                                </constraints>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6IA-j4-WUw">
-                                <rect key="frame" x="141" y="533.33333333333337" width="132" height="30"/>
-                                <state key="normal" title="About Subscription">
-                                    <color key="titleColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <variation key="heightClass=regular-widthClass=regular">
-                                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                </variation>
-                                <connections>
-                                    <segue destination="fJk-6o-5Zf" kind="show" id="hHU-dl-Npl"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="ydx-2q-z32" firstAttribute="top" secondItem="GTp-WW-u9Q" secondAttribute="bottom" constant="8" id="1SC-aA-ezI"/>
+                            <constraint firstItem="km1-hb-83d" firstAttribute="top" secondItem="GTp-WW-u9Q" secondAttribute="bottom" id="10c-Qv-BHG"/>
                             <constraint firstItem="GTp-WW-u9Q" firstAttribute="leading" secondItem="J5U-fl-e6P" secondAttribute="leading" id="2YR-IG-ALM"/>
-                            <constraint firstItem="ZsP-KK-vj8" firstAttribute="leading" secondItem="An2-hx-brd" secondAttribute="trailing" constant="16" id="3Pf-QI-iYd"/>
-                            <constraint firstItem="An2-hx-brd" firstAttribute="leading" secondItem="J5U-fl-e6P" secondAttribute="leadingMargin" id="4Gx-JW-0md"/>
-                            <constraint firstItem="ydx-2q-z32" firstAttribute="top" secondItem="oYA-OO-1fX" secondAttribute="bottom" constant="68" id="55y-Hk-UsN"/>
-                            <constraint firstItem="QI5-Oe-bD7" firstAttribute="centerX" secondItem="ZsP-KK-vj8" secondAttribute="centerX" id="6Er-Mk-Cbp"/>
-                            <constraint firstItem="QI5-Oe-bD7" firstAttribute="leading" secondItem="unF-Y4-c6i" secondAttribute="trailing" constant="16" id="8Ma-xT-Jex"/>
+                            <constraint firstItem="QI5-Oe-bD7" firstAttribute="leading" secondItem="unF-Y4-c6i" secondAttribute="trailing" constant="8" id="8Ma-xT-Jex"/>
                             <constraint firstItem="oYA-OO-1fX" firstAttribute="leading" secondItem="J5U-fl-e6P" secondAttribute="leading" id="8TV-Ju-epM"/>
                             <constraint firstAttribute="trailing" secondItem="GTp-WW-u9Q" secondAttribute="trailing" id="8Yb-eb-ers"/>
                             <constraint firstAttribute="trailingMargin" secondItem="oYA-OO-1fX" secondAttribute="trailing" id="CF7-Eh-i3v"/>
-                            <constraint firstItem="An2-hx-brd" firstAttribute="top" secondItem="6IA-j4-WUw" secondAttribute="bottom" constant="8" id="Dkm-X0-CGJ"/>
-                            <constraint firstItem="6IA-j4-WUw" firstAttribute="centerX" secondItem="J5U-fl-e6P" secondAttribute="centerX" id="F9d-gN-qKh"/>
-                            <constraint firstItem="unF-Y4-c6i" firstAttribute="top" secondItem="An2-hx-brd" secondAttribute="bottom" constant="22" id="Ig1-qH-Vg9"/>
-                            <constraint firstItem="GTp-WW-u9Q" firstAttribute="top" secondItem="oYA-OO-1fX" secondAttribute="bottom" id="InI-oX-Ira"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Xbx-H9-77A" secondAttribute="trailing" id="Miv-bf-OQL"/>
-                            <constraint firstItem="unF-Y4-c6i" firstAttribute="top" secondItem="ydx-2q-z32" secondAttribute="bottom" constant="46" id="NcR-3N-xjv"/>
-                            <constraint firstItem="ydx-2q-z32" firstAttribute="centerX" secondItem="J5U-fl-e6P" secondAttribute="centerX" id="OjT-yh-pN8"/>
                             <constraint firstItem="GTp-WW-u9Q" firstAttribute="top" secondItem="DgC-t9-AVh" secondAttribute="bottom" constant="58" id="OkY-Tw-RYw"/>
-                            <constraint firstAttribute="bottom" secondItem="snX-zl-gS3" secondAttribute="bottom" constant="4" id="Q2H-ww-fOG"/>
                             <constraint firstItem="QI5-Oe-bD7" firstAttribute="leading" secondItem="unF-Y4-c6i" secondAttribute="trailing" constant="16" id="Shg-de-yO3"/>
-                            <constraint firstItem="1uP-Y7-fEC" firstAttribute="top" secondItem="ydx-2q-z32" secondAttribute="bottom" constant="8" id="SjI-um-t3R"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="ZsP-KK-vj8" secondAttribute="trailing" id="TCr-nX-cXr"/>
                             <constraint firstItem="QI5-Oe-bD7" firstAttribute="leading" secondItem="unF-Y4-c6i" secondAttribute="trailing" constant="8" id="V0A-Um-4Qt"/>
                             <constraint firstItem="QI5-Oe-bD7" firstAttribute="centerY" secondItem="unF-Y4-c6i" secondAttribute="centerY" id="Vgd-NG-mBT"/>
-                            <constraint firstItem="QI5-Oe-bD7" firstAttribute="top" secondItem="ZsP-KK-vj8" secondAttribute="bottom" constant="6" id="XVg-Pp-BeE"/>
                             <constraint firstItem="oYA-OO-1fX" firstAttribute="leading" secondItem="J5U-fl-e6P" secondAttribute="leadingMargin" id="cGJ-3u-a9e"/>
-                            <constraint firstItem="snX-zl-gS3" firstAttribute="leading" secondItem="GDT-GK-o9g" secondAttribute="trailing" constant="16" id="cGX-dH-T13"/>
-                            <constraint firstItem="ZsP-KK-vj8" firstAttribute="centerY" secondItem="An2-hx-brd" secondAttribute="centerY" id="cvW-5Z-kVl"/>
                             <constraint firstAttribute="trailing" secondItem="1uP-Y7-fEC" secondAttribute="trailing" id="fWi-Fm-bER"/>
-                            <constraint firstItem="6IA-j4-WUw" firstAttribute="top" secondItem="Xbx-H9-77A" secondAttribute="bottom" constant="8" id="gce-o3-qqY"/>
-                            <constraint firstItem="GDT-GK-o9g" firstAttribute="leading" secondItem="J5U-fl-e6P" secondAttribute="leadingMargin" id="h5A-1b-yxr"/>
-                            <constraint firstItem="ZsP-KK-vj8" firstAttribute="centerY" secondItem="An2-hx-brd" secondAttribute="centerY" id="hSi-K3-cvY"/>
                             <constraint firstItem="oYA-OO-1fX" firstAttribute="top" secondItem="DgC-t9-AVh" secondAttribute="bottom" id="i2B-xF-Be6"/>
-                            <constraint firstItem="unF-Y4-c6i" firstAttribute="top" secondItem="ydx-2q-z32" secondAttribute="bottom" constant="36" id="iT4-78-iGT"/>
                             <constraint firstAttribute="trailingMargin" secondItem="QI5-Oe-bD7" secondAttribute="trailing" id="igL-OM-AwS"/>
-                            <constraint firstItem="QI5-Oe-bD7" firstAttribute="centerX" secondItem="snX-zl-gS3" secondAttribute="centerX" id="kCd-yl-5A7"/>
+                            <constraint firstItem="1uP-Y7-fEC" firstAttribute="top" secondItem="QI5-Oe-bD7" secondAttribute="bottom" constant="4" id="kHI-MP-j2u"/>
                             <constraint firstAttribute="trailing" secondItem="QI5-Oe-bD7" secondAttribute="trailing" constant="20" id="kSU-gZ-rKd"/>
                             <constraint firstItem="1uP-Y7-fEC" firstAttribute="leading" secondItem="J5U-fl-e6P" secondAttribute="leading" id="kzi-43-8Ay"/>
-                            <constraint firstItem="snX-zl-gS3" firstAttribute="top" secondItem="QI5-Oe-bD7" secondAttribute="bottom" constant="6" id="mV2-lo-vNJ"/>
+                            <constraint firstItem="QI5-Oe-bD7" firstAttribute="top" secondItem="oYA-OO-1fX" secondAttribute="bottom" constant="4" id="nTk-6i-jKG"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="QI5-Oe-bD7" secondAttribute="trailing" id="o6o-NV-uS6"/>
                             <constraint firstItem="unF-Y4-c6i" firstAttribute="leading" secondItem="J5U-fl-e6P" secondAttribute="leadingMargin" id="ppi-1r-9HJ"/>
                             <constraint firstItem="Xbx-H9-77A" firstAttribute="leading" secondItem="J5U-fl-e6P" secondAttribute="leadingMargin" id="rwC-0a-oMc"/>
                             <constraint firstItem="Xbx-H9-77A" firstAttribute="top" secondItem="1uP-Y7-fEC" secondAttribute="bottom" constant="8" id="tpN-ta-YXU"/>
                             <constraint firstAttribute="trailingMargin" secondItem="QI5-Oe-bD7" secondAttribute="trailing" constant="24" id="uY7-Fw-1L4"/>
-                            <constraint firstItem="QI5-Oe-bD7" firstAttribute="trailing" secondItem="ZsP-KK-vj8" secondAttribute="trailing" id="ucN-gB-d9I"/>
-                            <constraint firstItem="snX-zl-gS3" firstAttribute="centerY" secondItem="GDT-GK-o9g" secondAttribute="centerY" id="xq6-tD-mLI"/>
-                            <constraint firstItem="ydx-2q-z32" firstAttribute="top" secondItem="GTp-WW-u9Q" secondAttribute="bottom" constant="6" id="yTl-uq-bZ5"/>
+                            <constraint firstItem="GTp-WW-u9Q" firstAttribute="top" secondItem="Xbx-H9-77A" secondAttribute="bottom" constant="2" id="wtT-Yv-b4s"/>
                             <constraint firstAttribute="trailing" secondItem="oYA-OO-1fX" secondAttribute="trailing" id="ymj-R8-Oz8"/>
                         </constraints>
                         <variation key="default">
@@ -4522,18 +4511,11 @@ Please check your Internet connection and also make sure you are logged into you
                                 <exclude reference="CF7-Eh-i3v"/>
                                 <exclude reference="cGJ-3u-a9e"/>
                                 <exclude reference="OkY-Tw-RYw"/>
-                                <exclude reference="1SC-aA-ezI"/>
-                                <exclude reference="55y-Hk-UsN"/>
-                                <exclude reference="Ig1-qH-Vg9"/>
-                                <exclude reference="NcR-3N-xjv"/>
-                                <exclude reference="iT4-78-iGT"/>
-                                <exclude reference="hSi-K3-cvY"/>
                                 <exclude reference="Shg-de-yO3"/>
                                 <exclude reference="V0A-Um-4Qt"/>
                                 <exclude reference="igL-OM-AwS"/>
                                 <exclude reference="kSU-gZ-rKd"/>
                                 <exclude reference="uY7-Fw-1L4"/>
-                                <exclude reference="ucN-gB-d9I"/>
                             </mask>
                         </variation>
                     </view>
@@ -4546,12 +4528,7 @@ Please check your Internet connection and also make sure you are logged into you
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="aboutButton" destination="6IA-j4-WUw" id="G6v-Vh-Qtq"/>
-                        <outlet property="adultLabel" destination="An2-hx-brd" id="7VM-JB-DAb"/>
-                        <outlet property="adultSwitch" destination="ZsP-KK-vj8" id="LM5-Os-NuL"/>
                         <outlet property="loginButton" destination="ydx-2q-z32" id="Ims-SN-A0h"/>
-                        <outlet property="nightLabel" destination="GDT-GK-o9g" id="s48-E7-Dpb"/>
-                        <outlet property="nightSwitch" destination="snX-zl-gS3" id="4H2-Dg-Mua"/>
                         <outlet property="notifLabel" destination="unF-Y4-c6i" id="rUw-av-Zzh"/>
                         <outlet property="notifSwitch" destination="QI5-Oe-bD7" id="yBs-2e-vhA"/>
                         <outlet property="pseudsTableView" destination="GTp-WW-u9Q" id="Lar-UB-GC3"/>
@@ -4563,7 +4540,7 @@ Please check your Internet connection and also make sure you are logged into you
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eN8-r1-Frw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="420" y="3540.179910044978"/>
+            <point key="canvasLocation" x="418.84057971014494" y="3539.6739130434785"/>
         </scene>
         <!--About Subscription Controller-->
         <scene sceneID="7q1-JZ-6oO">
@@ -4574,11 +4551,11 @@ Please check your Internet connection and also make sure you are logged into you
                         <viewControllerLayoutGuide type="bottom" id="dMM-nq-kek"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="HfH-pF-Tqt">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="672"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V1g-5u-7Od">
-                                <rect key="frame" x="32" y="630" width="350" height="30"/>
+                                <rect key="frame" x="32" y="694" width="350" height="30"/>
                                 <state key="normal" title="Privacy Policy and Terms of Use">
                                     <color key="titleColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
@@ -4590,7 +4567,7 @@ Please check your Internet connection and also make sure you are logged into you
                                 </connections>
                             </button>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Pp-Vi-RD4">
-                                <rect key="frame" x="20" y="8" width="374" height="606"/>
+                                <rect key="frame" x="20" y="28" width="374" height="650"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="8" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yxE-bl-Qah">
                                         <rect key="frame" x="67.333333333333314" y="0.0" width="240" height="673.33333333333337"/>
@@ -5124,6 +5101,7 @@ If you don't see a subscription but are still being charged, make sure that you'
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="N9X-Uv-a38">
                         <rect key="frame" x="0.0" y="20" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="barTintColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </navigationBar>
                     <connections>
@@ -5877,8 +5855,8 @@ Major Problems:
                                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                             </variation>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Label" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B4h-2r-oZZ">
-                                                            <rect key="frame" x="28" y="92.999999999999986" width="362" height="74.666666666666643"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Label" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B4h-2r-oZZ">
+                                                            <rect key="frame" x="28" y="106.66666666666669" width="362" height="60.333333333333314"/>
                                                             <fontDescription key="fontDescription" name="HelveticaNeue-LightItalic" family="Helvetica Neue" pointSize="12"/>
                                                             <color key="textColor" red="0.42745098039215684" green="0.42745098039215684" blue="0.42745098039215684" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -5898,6 +5876,12 @@ Major Problems:
                                                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
                                                             </variation>
                                                         </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v3N-gh-FTO">
+                                                            <rect key="frame" x="28" y="91" width="362" height="15.666666666666671"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                            <color key="textColor" red="0.44705882352941173" green="0.74901960784313726" blue="0.90196078431372551" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
                                                     </subviews>
                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
@@ -5912,10 +5896,12 @@ Major Problems:
                                                         <constraint firstAttribute="bottom" secondItem="Dms-oX-Eos" secondAttribute="bottom" id="Hrq-qb-Yec"/>
                                                         <constraint firstAttribute="trailing" secondItem="hHJ-3A-iJ2" secondAttribute="trailing" id="ISE-hL-ApC"/>
                                                         <constraint firstItem="yxf-WI-AV9" firstAttribute="top" secondItem="Dms-oX-Eos" secondAttribute="bottom" id="Icf-1x-wBP"/>
-                                                        <constraint firstItem="B4h-2r-oZZ" firstAttribute="top" secondItem="u0i-LR-414" secondAttribute="bottom" constant="4" id="LDc-PW-J2r"/>
+                                                        <constraint firstItem="v3N-gh-FTO" firstAttribute="leading" secondItem="e43-xT-xfS" secondAttribute="leading" constant="28" id="Mgk-pr-ZMs"/>
+                                                        <constraint firstItem="v3N-gh-FTO" firstAttribute="top" secondItem="u0i-LR-414" secondAttribute="bottom" constant="2" id="Nnu-hh-5Xq"/>
                                                         <constraint firstItem="u0i-LR-414" firstAttribute="leading" secondItem="e43-xT-xfS" secondAttribute="leading" constant="28" id="PLF-vE-jFR"/>
                                                         <constraint firstItem="hHJ-3A-iJ2" firstAttribute="top" secondItem="e43-xT-xfS" secondAttribute="top" id="Qra-WB-5zL"/>
                                                         <constraint firstItem="GAZ-e2-SfL" firstAttribute="leading" secondItem="e43-xT-xfS" secondAttribute="leading" constant="8" id="Qv5-ZC-qAX"/>
+                                                        <constraint firstAttribute="trailing" secondItem="v3N-gh-FTO" secondAttribute="trailing" constant="8" id="cVY-sm-uka"/>
                                                         <constraint firstItem="Dms-oX-Eos" firstAttribute="leading" secondItem="e43-xT-xfS" secondAttribute="leading" id="dLu-Cb-kce"/>
                                                         <constraint firstItem="yxf-WI-AV9" firstAttribute="top" secondItem="B4h-2r-oZZ" secondAttribute="bottom" constant="4" id="dnp-DL-uHH"/>
                                                         <constraint firstItem="h1l-gt-NVP" firstAttribute="top" secondItem="hHJ-3A-iJ2" secondAttribute="bottom" constant="3" id="emf-rA-APZ"/>
@@ -5924,6 +5910,7 @@ Major Problems:
                                                         <constraint firstItem="h1l-gt-NVP" firstAttribute="width" secondItem="X4z-9n-kqG" secondAttribute="width" multiplier="1.7" id="hcl-Kb-t0T"/>
                                                         <constraint firstItem="vLJ-ph-As1" firstAttribute="width" secondItem="X4z-9n-kqG" secondAttribute="width" id="jzm-eX-CeT"/>
                                                         <constraint firstItem="hHJ-3A-iJ2" firstAttribute="leading" secondItem="e43-xT-xfS" secondAttribute="leading" id="k0o-Wb-ZyZ"/>
+                                                        <constraint firstItem="B4h-2r-oZZ" firstAttribute="top" secondItem="v3N-gh-FTO" secondAttribute="bottom" id="kNm-TY-mPy"/>
                                                         <constraint firstAttribute="trailingMargin" secondItem="yxf-WI-AV9" secondAttribute="trailing" id="lqj-ly-iJP"/>
                                                         <constraint firstItem="X4z-9n-kqG" firstAttribute="leading" secondItem="GAZ-e2-SfL" secondAttribute="trailing" constant="8" id="mde-RD-Iv8"/>
                                                         <constraint firstAttribute="trailing" secondItem="u0i-LR-414" secondAttribute="trailing" constant="8" id="nzd-YQ-Lew"/>
@@ -5961,6 +5948,7 @@ Major Problems:
                                             <outlet property="hitsLabel" destination="6WZ-X0-Dx0" id="R0z-RQ-rvd"/>
                                             <outlet property="kudosLabel" destination="8zv-1z-prL" id="KMP-yg-ldK"/>
                                             <outlet property="languageLabel" destination="X4z-9n-kqG" id="mfT-ZX-J5H"/>
+                                            <outlet property="ratingLabel" destination="v3N-gh-FTO" id="7H4-QP-BzR"/>
                                             <outlet property="tagsLabel" destination="B4h-2r-oZZ" id="4b4-ph-r1M"/>
                                             <outlet property="topicLabel" destination="4VT-L1-fAL" id="R2j-mc-aA4"/>
                                             <outlet property="topicPreviewLabel" destination="yxf-WI-AV9" id="Yne-8F-5Zq"/>
@@ -6615,7 +6603,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                             </variation>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Label" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="68l-ue-rnj">
-                                                            <rect key="frame" x="28" y="97.999999999999986" width="362" height="69.666666666666643"/>
+                                                            <rect key="frame" x="28" y="111.66666666666669" width="362" height="56.333333333333314"/>
                                                             <fontDescription key="fontDescription" name="HelveticaNeue-LightItalic" family="Helvetica Neue" pointSize="12"/>
                                                             <color key="textColor" red="0.42745098039215684" green="0.42745098039215684" blue="0.42745098039215684" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -6635,9 +6623,16 @@ Please check your Internet connection and also make sure you are logged into you
                                                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
                                                             </variation>
                                                         </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bQ4-f1-uVg">
+                                                            <rect key="frame" x="28" y="96" width="362" height="15.666666666666671"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                            <color key="textColor" red="0.44705882352941173" green="0.74901960784313726" blue="0.90196078431372551" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
                                                     </subviews>
                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
+                                                        <constraint firstItem="bQ4-f1-uVg" firstAttribute="leading" secondItem="CWx-LG-lnX" secondAttribute="leading" constant="28" id="374-1p-IdK"/>
                                                         <constraint firstItem="68l-ue-rnj" firstAttribute="trailing" secondItem="CWx-LG-lnX" secondAttribute="trailingMargin" id="3T0-eI-6ef"/>
                                                         <constraint firstItem="ICa-g0-KHF" firstAttribute="leading" secondItem="XNO-sV-cG8" secondAttribute="trailing" constant="8" id="5s0-An-xh8"/>
                                                         <constraint firstItem="d7x-vh-kfu" firstAttribute="top" secondItem="CWx-LG-lnX" secondAttribute="top" id="5vS-oc-oaB"/>
@@ -6645,17 +6640,18 @@ Please check your Internet connection and also make sure you are logged into you
                                                         <constraint firstItem="AU5-ba-foJ" firstAttribute="top" secondItem="d7x-vh-kfu" secondAttribute="bottom" constant="3" id="EyA-u7-Lfd"/>
                                                         <constraint firstAttribute="trailing" secondItem="ICa-g0-KHF" secondAttribute="trailing" constant="8" id="Ie2-5g-FU7"/>
                                                         <constraint firstItem="SSa-LU-fFc" firstAttribute="leading" secondItem="CWx-LG-lnX" secondAttribute="leading" constant="8" id="Iug-BA-Ch2"/>
+                                                        <constraint firstAttribute="trailing" secondItem="bQ4-f1-uVg" secondAttribute="trailing" constant="8" id="Kse-yC-ST1"/>
                                                         <constraint firstItem="ICa-g0-KHF" firstAttribute="width" secondItem="XNO-sV-cG8" secondAttribute="width" id="RCv-AZ-eT3"/>
                                                         <constraint firstItem="VxR-6U-HPo" firstAttribute="leading" secondItem="CWx-LG-lnX" secondAttribute="leadingMargin" id="UVT-xA-73C"/>
                                                         <constraint firstAttribute="trailingMargin" secondItem="VxR-6U-HPo" secondAttribute="trailing" id="Xi5-eM-FBK"/>
                                                         <constraint firstItem="68l-ue-rnj" firstAttribute="leading" secondItem="CWx-LG-lnX" secondAttribute="leadingMargin" constant="20" id="YNg-ed-PeA"/>
                                                         <constraint firstAttribute="trailing" secondItem="d7x-vh-kfu" secondAttribute="trailing" id="aN3-gS-JTa"/>
-                                                        <constraint firstItem="68l-ue-rnj" firstAttribute="top" secondItem="Sfx-4U-hTM" secondAttribute="bottom" constant="4" id="dfT-OF-Zfs"/>
                                                         <constraint firstItem="SSa-LU-fFc" firstAttribute="top" secondItem="d7x-vh-kfu" secondAttribute="bottom" constant="4" id="fJT-9U-y5m"/>
                                                         <constraint firstItem="XNO-sV-cG8" firstAttribute="leading" secondItem="SSa-LU-fFc" secondAttribute="trailing" constant="8" id="hvM-jp-RRq"/>
                                                         <constraint firstItem="AU5-ba-foJ" firstAttribute="width" secondItem="XNO-sV-cG8" secondAttribute="width" multiplier="1.7" id="jWd-9I-2v2"/>
                                                         <constraint firstItem="qNG-ae-04i" firstAttribute="leading" secondItem="CWx-LG-lnX" secondAttribute="leading" id="kXZ-Vd-VdM"/>
                                                         <constraint firstItem="Sfx-4U-hTM" firstAttribute="top" secondItem="AU5-ba-foJ" secondAttribute="bottom" constant="4" id="osq-cP-szB"/>
+                                                        <constraint firstItem="68l-ue-rnj" firstAttribute="top" secondItem="bQ4-f1-uVg" secondAttribute="bottom" id="p3J-al-KE0"/>
                                                         <constraint firstItem="VxR-6U-HPo" firstAttribute="top" secondItem="68l-ue-rnj" secondAttribute="bottom" constant="4" id="pWn-9K-5pf"/>
                                                         <constraint firstItem="AU5-ba-foJ" firstAttribute="leading" secondItem="XNO-sV-cG8" secondAttribute="trailing" constant="4" id="qjR-v9-eFU"/>
                                                         <constraint firstAttribute="trailing" secondItem="qNG-ae-04i" secondAttribute="trailing" id="qlN-PP-b5F"/>
@@ -6663,6 +6659,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                         <constraint firstItem="Sfx-4U-hTM" firstAttribute="leading" secondItem="CWx-LG-lnX" secondAttribute="leading" constant="28" id="sVs-6a-Bpz"/>
                                                         <constraint firstItem="d7x-vh-kfu" firstAttribute="leading" secondItem="CWx-LG-lnX" secondAttribute="leading" id="tE8-Oz-eCM"/>
                                                         <constraint firstItem="qNG-ae-04i" firstAttribute="top" secondItem="VxR-6U-HPo" secondAttribute="bottom" constant="2" id="tF7-OL-7Wz"/>
+                                                        <constraint firstItem="bQ4-f1-uVg" firstAttribute="top" secondItem="Sfx-4U-hTM" secondAttribute="bottom" constant="2" id="uAf-wE-gIE"/>
                                                         <constraint firstItem="ICa-g0-KHF" firstAttribute="leading" secondItem="AU5-ba-foJ" secondAttribute="trailing" constant="4" id="wzd-LE-asH"/>
                                                         <constraint firstAttribute="bottom" secondItem="qNG-ae-04i" secondAttribute="bottom" id="yZN-qI-LlG"/>
                                                         <constraint firstItem="XNO-sV-cG8" firstAttribute="top" secondItem="d7x-vh-kfu" secondAttribute="bottom" constant="3" id="ydU-d9-f8M"/>
@@ -6696,6 +6693,7 @@ Please check your Internet connection and also make sure you are logged into you
                                             <outlet property="hitsLabel" destination="Aym-w0-65h" id="H3q-AO-XWE"/>
                                             <outlet property="kudosLabel" destination="YVp-AJ-IPd" id="JVI-Cp-6FB"/>
                                             <outlet property="languageLabel" destination="XNO-sV-cG8" id="6su-3w-mUg"/>
+                                            <outlet property="ratingLabel" destination="bQ4-f1-uVg" id="KVh-Cv-Lwi"/>
                                             <outlet property="tagsLabel" destination="68l-ue-rnj" id="QAa-qu-5DF"/>
                                             <outlet property="topicLabel" destination="fpZ-8Y-LTR" id="kSJ-hn-gpr"/>
                                             <outlet property="topicPreviewLabel" destination="VxR-6U-HPo" id="NtL-JJ-Q4t"/>
@@ -6794,7 +6792,7 @@ Please check your Internet connection and also make sure you are logged into you
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Twr-Yh-3WJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="428" y="1902"/>
+            <point key="canvasLocation" x="427.536231884058" y="1901.9021739130437"/>
         </scene>
         <!--History-->
         <scene sceneID="kXF-2Y-GuM">
@@ -7274,8 +7272,8 @@ Please check your Internet connection and also make sure you are logged into you
                                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                             </variation>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Label" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wUJ-2n-PrN">
-                                                            <rect key="frame" x="28" y="97.999999999999986" width="362" height="69.666666666666643"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Label" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wUJ-2n-PrN">
+                                                            <rect key="frame" x="28" y="111.66666666666669" width="362" height="56.333333333333314"/>
                                                             <fontDescription key="fontDescription" name="HelveticaNeue-LightItalic" family="Helvetica Neue" pointSize="12"/>
                                                             <color key="textColor" red="0.42745098040000001" green="0.42745098040000001" blue="0.42745098040000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -7295,6 +7293,12 @@ Please check your Internet connection and also make sure you are logged into you
                                                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
                                                             </variation>
                                                         </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IpC-d8-CHJ">
+                                                            <rect key="frame" x="28" y="96" width="362" height="15.666666666666671"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                            <color key="textColor" red="0.44705882352941173" green="0.74901960784313726" blue="0.90196078431372551" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
                                                     </subviews>
                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
@@ -7313,19 +7317,22 @@ Please check your Internet connection and also make sure you are logged into you
                                                         <constraint firstItem="SQg-IR-wxd" firstAttribute="width" secondItem="7f5-yi-WOf" secondAttribute="width" id="Rj7-Wo-ivP"/>
                                                         <constraint firstItem="IIn-gn-UuU" firstAttribute="leading" secondItem="h8G-E7-f1u" secondAttribute="leading" id="ToS-ed-ks8"/>
                                                         <constraint firstItem="ky7-ex-yjl" firstAttribute="width" secondItem="7f5-yi-WOf" secondAttribute="width" multiplier="1.7" id="WNb-Oy-KYV"/>
-                                                        <constraint firstItem="wUJ-2n-PrN" firstAttribute="top" secondItem="Kgb-E2-Ggc" secondAttribute="bottom" constant="4" id="WS5-7K-OTD"/>
                                                         <constraint firstItem="IIn-gn-UuU" firstAttribute="top" secondItem="Aro-oq-Q66" secondAttribute="bottom" constant="2" id="XoO-1k-wt6"/>
+                                                        <constraint firstItem="wUJ-2n-PrN" firstAttribute="top" secondItem="IpC-d8-CHJ" secondAttribute="bottom" id="Y8z-pf-dXe"/>
                                                         <constraint firstAttribute="trailing" secondItem="SQg-IR-wxd" secondAttribute="trailing" constant="8" id="bVf-W3-xuK"/>
+                                                        <constraint firstItem="IpC-d8-CHJ" firstAttribute="leading" secondItem="h8G-E7-f1u" secondAttribute="leading" constant="28" id="eN7-vI-OAR"/>
                                                         <constraint firstItem="ky7-ex-yjl" firstAttribute="leading" secondItem="7f5-yi-WOf" secondAttribute="trailing" constant="4" id="eTk-xT-XUR"/>
                                                         <constraint firstItem="SHv-Ri-eK1" firstAttribute="leading" secondItem="h8G-E7-f1u" secondAttribute="leading" id="flx-WU-V64"/>
                                                         <constraint firstAttribute="trailing" secondItem="SHv-Ri-eK1" secondAttribute="trailing" id="hOq-op-ydM"/>
                                                         <constraint firstAttribute="trailing" secondItem="IIn-gn-UuU" secondAttribute="trailing" id="iQU-hO-z1L"/>
                                                         <constraint firstAttribute="trailing" secondItem="Kgb-E2-Ggc" secondAttribute="trailing" constant="8" id="kKk-IG-Mf9"/>
+                                                        <constraint firstAttribute="trailing" secondItem="IpC-d8-CHJ" secondAttribute="trailing" constant="8" id="nHg-Zt-lwG"/>
                                                         <constraint firstItem="7f5-yi-WOf" firstAttribute="top" secondItem="SHv-Ri-eK1" secondAttribute="bottom" constant="3" id="olg-aM-vCu"/>
                                                         <constraint firstItem="SQg-IR-wxd" firstAttribute="leading" secondItem="ky7-ex-yjl" secondAttribute="trailing" constant="4" id="prK-J4-inp"/>
                                                         <constraint firstItem="Aro-oq-Q66" firstAttribute="top" secondItem="wUJ-2n-PrN" secondAttribute="bottom" constant="4" id="rDN-e7-5Zx"/>
                                                         <constraint firstItem="Aro-oq-Q66" firstAttribute="leading" secondItem="h8G-E7-f1u" secondAttribute="leadingMargin" id="ucR-3J-qu0"/>
                                                         <constraint firstItem="Aro-oq-Q66" firstAttribute="top" secondItem="wUJ-2n-PrN" secondAttribute="bottom" constant="4" id="uvc-fc-Xgj"/>
+                                                        <constraint firstItem="IpC-d8-CHJ" firstAttribute="top" secondItem="Kgb-E2-Ggc" secondAttribute="bottom" constant="2" id="vpR-vw-dLd"/>
                                                         <constraint firstItem="7f5-yi-WOf" firstAttribute="leading" secondItem="8CF-51-La9" secondAttribute="trailing" constant="8" id="wIH-26-jTo"/>
                                                     </constraints>
                                                     <variation key="default">
@@ -7356,6 +7363,7 @@ Please check your Internet connection and also make sure you are logged into you
                                             <outlet property="hitsLabel" destination="NHz-sV-iLU" id="Itk-Fd-Pyz"/>
                                             <outlet property="kudosLabel" destination="z7a-zd-tYx" id="UR6-lP-PSD"/>
                                             <outlet property="languageLabel" destination="7f5-yi-WOf" id="bgd-uX-6IY"/>
+                                            <outlet property="ratingLabel" destination="IpC-d8-CHJ" id="8yQ-ir-oEb"/>
                                             <outlet property="tagsLabel" destination="wUJ-2n-PrN" id="4hg-u8-ipS"/>
                                             <outlet property="topicLabel" destination="9nb-J7-hFR" id="WRV-gH-JGL"/>
                                             <outlet property="topicPreviewLabel" destination="Aro-oq-Q66" id="H4V-tn-W7H"/>
@@ -7467,7 +7475,7 @@ Please check your Internet connection and also make sure you are logged into you
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JLF-VH-HRc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="408" y="4304"/>
+            <point key="canvasLocation" x="407.24637681159425" y="4303.5326086956529"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="12c-hl-Ukc">
@@ -7897,7 +7905,7 @@ Please check your Internet connection and also make sure you are logged into you
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="5rQ-gu-17N"/>
-        <segue reference="GOa-zO-Fy6"/>
-        <segue reference="hCS-wp-Ndf"/>
+        <segue reference="YvP-vi-Pnc"/>
+        <segue reference="Zz6-01-vau"/>
     </inferredMetricsTieBreakers>
 </document>

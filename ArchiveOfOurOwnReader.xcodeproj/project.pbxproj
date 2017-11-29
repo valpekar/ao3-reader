@@ -111,6 +111,7 @@
 		3C93D4AC1F22297A00948D08 /* ButtonWithSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C93D4AB1F22297A00948D08 /* ButtonWithSection.swift */; };
 		3C93D4AE1F22330900948D08 /* DownloadedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C93D4AD1F22330900948D08 /* DownloadedCell.swift */; };
 		3C93D4B01F223AB000948D08 /* EditFoldersController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C93D4AF1F223AB000948D08 /* EditFoldersController.swift */; };
+		3C93ED5A1FCED24900F1F4D4 /* MyProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C93ED591FCED24900F1F4D4 /* MyProfileCell.swift */; };
 		3C9C87BA1CE3557D00C10410 /* RecommendationsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9C87B91CE3557D00C10410 /* RecommendationsController.swift */; };
 		3CB2A74B1F8BB237004A6F76 /* SerieViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB2A74A1F8BB237004A6F76 /* SerieViewController.swift */; };
 		3CB2A74F1F8BB4F8004A6F76 /* SerieInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB2A74E1F8BB4F8004A6F76 /* SerieInfoCell.swift */; };
@@ -299,6 +300,7 @@
 		3C93D4AB1F22297A00948D08 /* ButtonWithSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ButtonWithSection.swift; path = View/Custom/ButtonWithSection.swift; sourceTree = "<group>"; };
 		3C93D4AD1F22330900948D08 /* DownloadedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DownloadedCell.swift; path = View/Custom/Cells/DownloadedCell.swift; sourceTree = "<group>"; };
 		3C93D4AF1F223AB000948D08 /* EditFoldersController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EditFoldersController.swift; path = Controller/EditFoldersController.swift; sourceTree = "<group>"; };
+		3C93ED591FCED24900F1F4D4 /* MyProfileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileCell.swift; sourceTree = "<group>"; };
 		3C9C87B91CE3557D00C10410 /* RecommendationsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RecommendationsController.swift; path = Controller/RecommendationsController.swift; sourceTree = "<group>"; };
 		3C9C87BB1CE35D8800C10410 /* ArchiveOfOurOwnReader 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ArchiveOfOurOwnReader 2.xcdatamodel"; sourceTree = "<group>"; };
 		3CA0A7B01F7BCC7800ADEE04 /* ja */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ja; path = ja.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -595,6 +597,7 @@
 				3C93D4AD1F22330900948D08 /* DownloadedCell.swift */,
 				3CD1CE691F27731600E8AAFC /* WorkDetailTxtCell.swift */,
 				3CB2A74E1F8BB4F8004A6F76 /* SerieInfoCell.swift */,
+				3C93ED591FCED24900F1F4D4 /* MyProfileCell.swift */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -1013,6 +1016,7 @@
 				1D3476651BAC4381006AAF1A /* SearchSwitchesCell.swift in Sources */,
 				1D1AAF161B98793700927CE1 /* WorkDetailCell.swift in Sources */,
 				1D3F4BA91BBABF5100279C27 /* LoadingViewController.swift in Sources */,
+				3C93ED5A1FCED24900F1F4D4 /* MyProfileCell.swift in Sources */,
 				3C88102D1F14BED900ED6B5D /* HistoryItem+CoreDataProperties.swift in Sources */,
 				3CC888971F83CC1C0027C469 /* ListViewController.swift in Sources */,
 				3C31054A1C7F57020065256E /* FavoritesSiteController.swift in Sources */,

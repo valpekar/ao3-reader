@@ -16,14 +16,11 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
     
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var loginButton: UIButton!
-    @IBOutlet weak var aboutButton: UIButton!
     @IBOutlet weak var notifSwitch: UISwitch!
-    @IBOutlet weak var adultSwitch: UISwitch!
-    @IBOutlet weak var nightSwitch: UISwitch!
-    @IBOutlet weak var adultLabel: UILabel!
     @IBOutlet weak var notifLabel: UILabel!
-    @IBOutlet weak var nightLabel: UILabel!
     @IBOutlet weak var pseudsTableView: UITableView!
+    
+    let subTxt = "Application has Auto-Renewable Subscription (Prosub). The subscription price is 0.99$ per month. \nOnce you have purchased it, the subscription starts. Since then every week you will get digitally generated recommendations of fan fics (fan fiction works) to read. Subscription length is 1 month and it is auto-renewable. \n\nPayment will be charged to iTunes Account at confirmation of purchase. \nSubscription automatically renews unless auto-renew is turned off at least 24-hours before the end of the current period. \nAccount will be charged for renewal within 24-hours prior to the end of the current period, and identify the cost of the renewal. \nSubscriptions may be managed by the user and auto-renewal may be turned off by going to the user's Account Settings after purchase.\nNo cancellation of the current subscription is allowed during active subscription period. \n\nAny unused portion of a free trial period, if offered, will be forfeited when the user purchases a subscription to that publication. \n\nTo Unsubscribe: \n1. Go to Settings > iTunes & App Store. \n2. Tap your Apple ID at the top of the screen. \n3. Tap View Apple ID. \n4. Tap the subscription that you want to manage. \nIf you don't see a subscription but are still being charged, make sure that you're signed in with the correct Apple ID. \n5. Use the options to manage your subscription. You can tap Cancel Subscription. If you cancel, your subscription will stop at the end of the current billing cycle."
     
     var pseuds: [String:String] = [:]
     var currentPseud = ""
@@ -41,7 +38,10 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
         super.viewDidLoad()
         self.createDrawerButton()
         
-        pseudsTableView.tableFooterView = UIView()
+        self.pseudsTableView.tableFooterView = UIView()
+        
+        self.pseudsTableView.rowHeight = UITableViewAutomaticDimension
+        self.pseudsTableView.estimatedRowHeight = 44
         
         reload(false, productId: "")
         
@@ -78,18 +78,14 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
         if (theme == DefaultsManager.THEME_DAY) {
             self.pseudsTableView.backgroundColor = AppDelegate.greyLightBg
             self.notifLabel.textColor = UIColor.black
-            self.adultLabel.textColor = UIColor.black
-            self.nightLabel.textColor = UIColor.black
-            loginButton.setTitleColor(AppDelegate.redColor, for: .normal)
-            aboutButton.setTitleColor(AppDelegate.redColor, for: .normal)
+           // loginButton.setTitleColor(AppDelegate.redColor, for: .normal)
         } else {
             self.pseudsTableView.backgroundColor = AppDelegate.greyDarkBg
             self.notifLabel.textColor = AppDelegate.textLightColor
-            self.adultLabel.textColor = AppDelegate.textLightColor
-            self.nightLabel.textColor = AppDelegate.textLightColor
-            loginButton.setTitleColor(AppDelegate.purpleLightColor, for: .normal)
-            aboutButton.setTitleColor(AppDelegate.purpleLightColor, for: .normal)
+          //  loginButton.setTitleColor(AppDelegate.purpleLightColor, for: .normal)
         }
+        
+        self.pseudsTableView.reloadData()
     }
     
     //MARK: - log in / out
@@ -147,6 +143,8 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
         if (!login.isEmpty) {
             usernameLabel.text = login
             
+            self.title = login
+            
             pseuds = DefaultsManager.getObject(DefaultsManager.PSEUD_IDS) as! [String:String]
             currentPseud = DefaultsManager.getString(DefaultsManager.PSEUD_ID)
             
@@ -160,18 +158,7 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
             pseudsTableView.reloadData()
             loginButton.setTitle(NSLocalizedString("LogOut", comment: ""), for: UIControlState())
             
-            adultSwitch.isEnabled = true
             notifSwitch.isEnabled = true
-            
-            if let isAdult = DefaultsManager.getBool(DefaultsManager.ADULT)  {
-                if (isAdult == true) {
-                    adultSwitch.setOn(true, animated: true)
-                } else {
-                    adultSwitch.setOn(false, animated: true)
-                }
-            } else {
-                adultSwitch.setOn(false, animated: true)
-            }
             
             if let notify = DefaultsManager.getBool(DefaultsManager.NOTIFY) {
                 if (notify == true) {
@@ -193,20 +180,15 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
             removeAdsItem.isEnabled = false
             removeAdsItem.title = ""
         }
-        
-        if (theme == DefaultsManager.THEME_DAY) {
-            self.nightSwitch.setOn(false, animated: false)
-        } else {
-            self.nightSwitch.setOn(true, animated: false)
-        }
     }
     
     func setNotAuthorizedUI() {
         usernameLabel.text = NSLocalizedString("NotAuthorized", comment: "")
         loginButton.setTitle(NSLocalizedString("LogIn", comment: ""), for: UIControlState())
         
+        self.title = NSLocalizedString("NotAuthorized", comment: "")
+        
         notifSwitch.isEnabled = false
-        adultSwitch.isEnabled = false
     }
     
     @IBAction func notifSwitchChanged(_ sender: UISwitch) {
@@ -247,36 +229,64 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
     //Mark: - TableView
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell:UITableViewCell? = tableView.dequeueReusableCell(withIdentifier: "pseudCell")
+        let cell:MyProfileCell = tableView.dequeueReusableCell(withIdentifier: "pseudCell") as! MyProfileCell
         
         switch (indexPath.section) {
         case 0:
-            cell?.textLabel?.text = "Protect with TouchID or passcode"
-            cell?.accessoryType = .disclosureIndicator
+            cell.titleLabel.text = "Protect with TouchID or passcode"
+            cell.accessoryType = .disclosureIndicator
         case 1:
             let curKey = Array(pseuds.keys)[indexPath.row]
-            cell?.textLabel?.text = pseuds[curKey]
+            cell.titleLabel.text = pseuds[curKey]
             
             if (curKey == currentPseud) {
-                cell?.accessoryType = .checkmark
+                cell.accessoryType = .checkmark
             } else {
-                cell?.accessoryType = .none
+                cell.accessoryType = .none
             }
         case 2:
-            cell?.textLabel?.text = "My Works"
+            cell.titleLabel.text = "My Works"
+            cell.accessoryType = .none
+        case 3:
+            if (indexPath.row == 0) {
+                cell.titleLabel.text = "Night"
+                
+                if (theme == DefaultsManager.THEME_DAY) {
+                    cell.accessoryType = .none
+                } else {
+                    cell.accessoryType = .checkmark
+                }
+                
+            } else if (indexPath.row == 1) {
+                cell.titleLabel.text = "Day"
+                
+                if (theme == DefaultsManager.THEME_DAY) {
+                    cell.accessoryType = .checkmark
+                } else {
+                    cell.accessoryType = .none
+                }
+            }
+            
+        case 4:
+            cell.accessoryType = .none
+            if (indexPath.row == 0) {
+                cell.titleLabel.text = subTxt
+            } else if (indexPath.row == 1) {
+                cell.titleLabel.text = "Privacy Policy and Terms of Use"
+            }
             
         default: break
         }
         
         if (theme == DefaultsManager.THEME_DAY) {
-            cell?.backgroundColor = AppDelegate.greyLightBg
-            cell?.textLabel?.textColor = AppDelegate.redTextColor
+            cell.backgroundColor = AppDelegate.greyLightBg
+            cell.titleLabel.textColor = AppDelegate.redTextColor
         } else {
-            cell?.backgroundColor = AppDelegate.greyDarkBg
-            cell?.textLabel?.textColor = AppDelegate.textLightColor
+            cell.backgroundColor = AppDelegate.greyDarkBg
+            cell.titleLabel.textColor = AppDelegate.textLightColor
         }
         
-        return cell!
+        return cell
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -287,6 +297,10 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
             return pseuds.count
         case 2:
             return 1
+        case 3:
+            return 2
+        case 4:
+            return 2
         default: return 0
         }
     }
@@ -305,6 +319,26 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
             tableView.reloadData()
         case 2:
             self.performSegue(withIdentifier: "listSegue", sender: self)
+        case 3:
+            if (indexPath.row == 0) {
+                theme = DefaultsManager.THEME_NIGHT
+                DefaultsManager.putInt(DefaultsManager.THEME_NIGHT, key: DefaultsManager.THEME)
+                Answers.logCustomEvent(withName: "ME_Theme", customAttributes: ["theme" : "night"])
+            
+            } else if (indexPath.row == 1) {
+                
+                theme = DefaultsManager.THEME_DAY
+                DefaultsManager.putInt(DefaultsManager.THEME_DAY, key: DefaultsManager.THEME)
+                Answers.logCustomEvent(withName: "ME_Theme", customAttributes: ["theme" : "day"])
+            }
+            
+            applyTheme()
+        case 4:
+            if (indexPath.row == 1) {
+                if let url = URL(string: "http://simpleappalliance.blogspot.com/2016/05/unofficial-ao3-reader-privacy-policy.html") {
+                    UIApplication.shared.openURL(url)
+                }
+            }
         default: break
             
         }
@@ -318,6 +352,10 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
             return "Pseud for bookmarks, history etc"
         case 2:
             return "Other"
+        case 3:
+            return "Theme"
+        case 4:
+            return "About Subscription"
         default: return ""
         }
     }
@@ -327,7 +365,7 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return 5
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

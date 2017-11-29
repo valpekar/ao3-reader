@@ -319,15 +319,23 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
     
     //https://stackoverflow.com/questions/31114340/setstatusbarhidden-is-deprecated-in-ios-9-0
     func handleSingleTap(_ recognizer: UITapGestureRecognizer) {
+        self.webView.scrollView.isScrollEnabled = false
+        self.webView.stringByEvaluatingJavaScript(from: "document.documentElement.style.webkitUserSelect='none'")
+        self.webView.stringByEvaluatingJavaScript(from: "document.documentElement.style.webkitTouchCallout='none'")
+        
         if(layoutView.isHidden) {
             layoutView.isHidden = false
             self.navigationController?.setNavigationBarHidden(false, animated: true)
             UIApplication.shared.setStatusBarHidden(false, with: .fade)
             animateLayoutDown()
+            
         } else {
             layoutView.isHidden = true
             self.navigationController?.setNavigationBarHidden(true, animated: true)
             UIApplication.shared.setStatusBarHidden(true, with: .fade)
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            self.webView.scrollView.isScrollEnabled = true
         }
     }
     
@@ -418,12 +426,7 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
         
         var params:[String:AnyObject] = [String:AnyObject]()
         
-        if let isAdult = DefaultsManager.getObject(DefaultsManager.ADULT) as? Bool {
-            if (isAdult == true ) {
-                
-                params["view_adult"] = "true" as AnyObject?
-            }
-        }
+        params["view_adult"] = "true" as AnyObject?
         
 //        Alamofire.request("https://archiveofourown.org/works/" + workItem.workId + "/chapters/" + chapterId, method: .get, parameters: params)
 //            .response(completionHandler: { response in
