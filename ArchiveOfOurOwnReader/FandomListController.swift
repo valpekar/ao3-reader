@@ -1,8 +1,8 @@
 //
-//  CategoriesController.swift
+//  FandomListController.swift
 //  ArchiveOfOurOwnReader
 //
-//  Created by Valeriya Pekar on 11/29/17.
+//  Created by Valeriya Pekar on 11/30/17.
 //  Copyright © 2017 Sergei Pekar. All rights reserved.
 //
 
@@ -10,12 +10,16 @@ import UIKit
 import TSMessages
 import Alamofire
 
-class CategoriesController: LoadingViewController, UITableViewDataSource, UITableViewDelegate {
+class FandomListController: LoadingViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var tableView:UITableView!
     @IBOutlet weak var errView:UIView!
     
-    var categories: [CategoryItem] = []
+    var listUrl = ""
+    var listName = ""
+    
+    var fandomList: [String: [FandomItem]] = [:]
+    var keys: [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,6 +28,12 @@ class CategoriesController: LoadingViewController, UITableViewDataSource, UITabl
         
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 44
+        
+        self.title = listName
+        
+        if (!listUrl.contains("archiveofourown.org")) {
+            listUrl = "https://archiveofourown.org\(listUrl)"
+        }
         
         requestCategories()
     }
@@ -49,7 +59,7 @@ class CategoriesController: LoadingViewController, UITableViewDataSource, UITabl
         
         showLoadingView(msg: "\(NSLocalizedString("LoadingPage", comment: ""))")
         
-        Alamofire.request("https://archiveofourown.org/media", method: .get).response(completionHandler: { response in
+        Alamofire.request(listUrl, method: .get).response(completionHandler: { response in
             print(response.error ?? "")
             if let data = response.data {
                 self.parseCookies(response)
@@ -63,7 +73,7 @@ class CategoriesController: LoadingViewController, UITableViewDataSource, UITabl
     }
     
     func parseCategories(_ data: Data) {
-        categories.removeAll(keepingCapacity: false)
+        fandomList.removeAll()
         
         #if DEBUG
             let string1 = NSString(data: data, encoding: String.Encoding.utf8.rawValue)
@@ -71,52 +81,45 @@ class CategoriesController: LoadingViewController, UITableViewDataSource, UITabl
         #endif
         
         let doc : TFHpple = TFHpple(htmlData: data)
-        let historylist : [TFHppleElement]? = doc.search(withXPathQuery: "//ul[@class='media fandom index group']//li") as? [TFHppleElement]
-        if let workGroup = historylist {
-            
-            if (workGroup.count > 0) {
-                
-                for workListItem in workGroup {
+        if let list : [TFHppleElement] = doc.search(withXPathQuery: "//ol[@class='alphabet fandom index group ']//li") as? [TFHppleElement] {
+        
+                for workListItem in list {
                     
                     if let titleEl: [TFHppleElement] = (workListItem.search(withXPathQuery: "//h3") as? [TFHppleElement]) {
                         
-                        var item : CategoryItem = CategoryItem()
-                        
-                        if (titleEl.count > 0) {
-                            item.title = titleEl[0].content ?? ""
-                            item.isParent = true
+                        if (titleEl.count == 0) {
+                            continue
+                        }
+                        var keyword = titleEl[0].content.replacingOccurrences(of: "↑", with: "")
+                        keyword = keyword.trimmingCharacters(in: .whitespacesAndNewlines)
                             
-                            if let attributes : NSDictionary = (workListItem.search(withXPathQuery: "//a")[0] as? TFHppleElement)?.attributes as NSDictionary? {
-                                item.url = (attributes["href"] as? String ?? "")
-                            }
-                            
-                            categories.append(item)
-                            
-                            if let childEls = workListItem.search(withXPathQuery: "//ol[@class='index group']//li") as? [TFHppleElement] {
+                            if let childEls = workListItem.search(withXPathQuery: "//ul[@class='tags index group']//li") as? [TFHppleElement] {
                                 for childEl in childEls {
-                                    var childItem : CategoryItem = CategoryItem()
+                                    var childItem : FandomItem = FandomItem()
                                     
                                     childItem.title = childEl.content.condenseWhitespace()
-                                    childItem.isParent = false
                                     
                                     if let attributes : NSDictionary = (childEl.search(withXPathQuery: "//a")[0] as? TFHppleElement)?.attributes as NSDictionary? {
                                         childItem.url = (attributes["href"] as? String ?? "")
                                     }
                                     
-                                    categories.append(childItem)
+                                    var fandoms: [FandomItem] = []
+                                    if let fandomsArr = fandomList[keyword] {
+                                        fandoms = fandomsArr
+                                    }
+                                    fandoms.append(childItem)
+                                    fandomList[keyword] = fandoms
                                 }
                             }
-                        }
-                    }
                 }
-                
             }
-            
         }
+        
+        keys = fandomList.keys.sorted()
     }
     
     func showCategories() {
-        if (categories.count > 0) {
+        if (fandomList.keys.count > 0) {
             tableView.isHidden = false
             errView.isHidden = true
         } else {
@@ -132,7 +135,16 @@ class CategoriesController: LoadingViewController, UITableViewDataSource, UITabl
     //MARK: - tableview
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return categories.count
+        let curKey = keys[section]
+        return fandomList[curKey]?.count ?? 0
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return keys[section] as String
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return keys.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -140,17 +152,10 @@ class CategoriesController: LoadingViewController, UITableViewDataSource, UITabl
         
         let cell:CategoryCell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier) as! CategoryCell
         
-        let curCat:CategoryItem = categories[indexPath.row]
+        let curKey = keys[indexPath.section]
+        if let curCat: FandomItem = fandomList[curKey]?[ indexPath.row ] {
         
         cell.titleLabel.text = curCat.title.replacingOccurrences(of: "\n", with: "")
-        
-        if (curCat.isParent == true) {
-            cell.titleLabel.font = UIFont.systemFont(ofSize: 16.0, weight: UIFontWeightBold)
-            cell.accessoryType = .disclosureIndicator
-        } else {
-            cell.titleLabel.font = UIFont.systemFont(ofSize: 14.0, weight: UIFontWeightRegular)
-            cell.accessoryType = .none
-        }
         
         if (theme == DefaultsManager.THEME_DAY) {
             cell.backgroundColor = AppDelegate.greyLightBg
@@ -159,18 +164,15 @@ class CategoriesController: LoadingViewController, UITableViewDataSource, UITabl
             cell.backgroundColor = AppDelegate.greyDarkBg
             cell.titleLabel.textColor = AppDelegate.nightTextColor
         }
+        }
         
         return cell
     }
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let curCat: CategoryItem = categories[indexPath.row]
-        if (curCat.isParent == false) {
-            performSegue(withIdentifier: "workListSegue", sender: self)
-        } else {
-            performSegue(withIdentifier: "fandomListSegue", sender: self)
-        }
+        
+        performSegue(withIdentifier: "workListSegue", sender: self)
         
         tableView.deselectRow(at: indexPath, animated: true)
     }
@@ -180,28 +182,13 @@ class CategoriesController: LoadingViewController, UITableViewDataSource, UITabl
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "workListSegue") {
             if let indexPath = tableView.indexPathForSelectedRow {
-                let curCat: CategoryItem = categories[indexPath.row]
-            
+                let curKey = keys[indexPath.section]
+                let curCat: FandomItem = fandomList[curKey]![indexPath.row]
+                
                 if let cController: WorkListController = segue.destination as? WorkListController {
                     cController.tagUrl = curCat.url
                 }
             }
-        } else if (segue.identifier == "fandomListSegue") {
-            if let indexPath = tableView.indexPathForSelectedRow {
-                let curCat: CategoryItem = categories[indexPath.row]
-                
-                if let fController: FandomListController = segue.destination as? FandomListController {
-                    fController.listUrl = curCat.url
-                    fController.listName = curCat.title
-                }
-            }
         }
-    }
-}
-
-extension String {
-    func condenseWhitespace() -> String {
-        let components = self.components(separatedBy: NSCharacterSet.whitespacesAndNewlines)
-        return components.filter { !$0.isEmpty }.joined(separator: " ")
     }
 }

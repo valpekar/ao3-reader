@@ -24,7 +24,7 @@ class SubsCell : UITableViewCell {
         
         let gradient: CAGradientLayer = CAGradientLayer()
         
-        gradient.frame = CGRect(origin: CGPoint.zero, size: self.bgView.frame.size)//self.bgView.bounds
+        gradient.frame = CGRect(origin: CGPoint.zero, size: self.contentView.frame.size)// .frame.size)//self.bgView.bounds
         //gradient.startPoint = CGPoint(x: 1.0, y: 0.5)
         //gradient.endPoint = CGPoint(x: 0.0, y:0.5)
         gradient.colors = [AppDelegate.redLightColor.cgColor, AppDelegate.purpleLightColor.cgColor]

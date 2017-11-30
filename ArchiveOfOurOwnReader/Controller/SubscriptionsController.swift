@@ -177,7 +177,15 @@ class SubscriptionsViewController: LoadingViewController, UITableViewDataSource,
                                         pageItem.isCurrent = true
                                     }
                                     
-                                    pages.append(pageItem)
+                                    if (!pages.contains(where: { (pItem) -> Bool in
+                                        if (pItem.name == pageItem.name) {
+                                            return true
+                                        } else {
+                                            return false
+                                        }
+                                    })) {
+                                        pages.append(pageItem)
+                                    }
                                 }
                             }
                         }

@@ -97,6 +97,8 @@
 		3C662F081C9C40F700D1F917 /* SupportController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C662F071C9C40F700D1F917 /* SupportController.swift */; };
 		3C684E5D1F8E391500419D69 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C684E5C1F8E391500419D69 /* AuthViewController.swift */; };
 		3C728C6A1E8CBA06006D7100 /* ChoosePrefController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C728C691E8CBA06006D7100 /* ChoosePrefController.swift */; };
+		3C74C71E1FD05E67008D191B /* FandomListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C74C71D1FD05E67008D191B /* FandomListController.swift */; };
+		3C74C7201FD05F22008D191B /* FandomItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C74C71F1FD05F22008D191B /* FandomItem.swift */; };
 		3C88102C1F14BED900ED6B5D /* HistoryItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C88102A1F14BED900ED6B5D /* HistoryItem+CoreDataClass.swift */; };
 		3C88102D1F14BED900ED6B5D /* HistoryItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C88102B1F14BED900ED6B5D /* HistoryItem+CoreDataProperties.swift */; };
 		3C88E52C1BD000FB000340A3 /* ContentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C88E52B1BD000FB000340A3 /* ContentsViewController.swift */; };
@@ -287,6 +289,8 @@
 		3C662F071C9C40F700D1F917 /* SupportController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SupportController.swift; path = Controller/SupportController.swift; sourceTree = "<group>"; };
 		3C684E5C1F8E391500419D69 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AuthViewController.swift; path = Controller/AuthViewController.swift; sourceTree = "<group>"; };
 		3C728C691E8CBA06006D7100 /* ChoosePrefController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChoosePrefController.swift; sourceTree = "<group>"; };
+		3C74C71D1FD05E67008D191B /* FandomListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FandomListController.swift; sourceTree = "<group>"; };
+		3C74C71F1FD05F22008D191B /* FandomItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FandomItem.swift; sourceTree = "<group>"; };
 		3C8810291F14BE5C00ED6B5D /* ArchiveOfOurOwnReader 6.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ArchiveOfOurOwnReader 6.xcdatamodel"; sourceTree = "<group>"; };
 		3C88102A1F14BED900ED6B5D /* HistoryItem+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "HistoryItem+CoreDataClass.swift"; path = "Model/HistoryItem+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3C88102B1F14BED900ED6B5D /* HistoryItem+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "HistoryItem+CoreDataProperties.swift"; path = "Model/HistoryItem+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -429,6 +433,7 @@
 				3C3EF71B1E6D55DA000CAA1F /* ChapterOnline.swift */,
 				3C0465991F8CBD5D003B6AE7 /* SerieItem.swift */,
 				3C93ED5D1FCF12EF00F1F4D4 /* CategoryItem.swift */,
+				3C74C71F1FD05F22008D191B /* FandomItem.swift */,
 			);
 			name = Object;
 			sourceTree = "<group>";
@@ -573,6 +578,7 @@
 				3C684E5C1F8E391500419D69 /* AuthViewController.swift */,
 				3C44A7A61F8F56F100AEAE7B /* SecuritySettingsController.swift */,
 				3C93ED5B1FCF0C5D00F1F4D4 /* CategoriesController.swift */,
+				3C74C71D1FD05E67008D191B /* FandomListController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -971,6 +977,7 @@
 				3CBDC9AF1E9E265B00A97C24 /* AnalyticsItem+CoreDataClass.swift in Sources */,
 				1D1C2FED1B8DA46D0076D10C /* WorkFandom.swift in Sources */,
 				3C04659C1F8CE230003B6AE7 /* RoundImageView.swift in Sources */,
+				3C74C7201FD05F22008D191B /* FandomItem.swift in Sources */,
 				3C89958E1E95169B00D511CD /* DBCharacterItem+CoreDataClass.swift in Sources */,
 				3C88102C1F14BED900ED6B5D /* HistoryItem+CoreDataClass.swift in Sources */,
 				1D92E5FF1BAB17C500CAC9A5 /* SearchFromToCell.swift in Sources */,
@@ -1034,6 +1041,7 @@
 				3C31054A1C7F57020065256E /* FavoritesSiteController.swift in Sources */,
 				1D2CFFFF1B8C7F7F0065EB2B /* PageItem.swift in Sources */,
 				3CB992C11CF470D5004772AF /* PublishWorkController.swift in Sources */,
+				3C74C71E1FD05E67008D191B /* FandomListController.swift in Sources */,
 				3C13D2CE1CCA1D0D008B023B /* CommentCell.swift in Sources */,
 				3C89958F1E95169B00D511CD /* DBCharacterItem+CoreDataProperties.swift in Sources */,
 				3C3105481C7F3D260065256E /* LoginViewController.swift in Sources */,

@@ -2828,10 +2828,10 @@ Please check your Internet connection and also make sure you are logged into you
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2BD-to-SOv">
-                                <rect key="frame" x="10" y="10" width="394" height="662"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="672"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2VT-qZ-euH">
-                                        <rect key="frame" x="24" y="180" width="346" height="38.333333333333314"/>
+                                        <rect key="frame" x="24" y="180" width="366" height="38.333333333333314"/>
                                         <string key="text">Cannot obtain data. 
 Please check your Internet connection and also make sure you are logged into your AO3 account (try to log in again).</string>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -2842,7 +2842,7 @@ Please check your Internet connection and also make sure you are logged into you
                                         </variation>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="op4-4M-9jf">
-                                        <rect key="frame" x="40" y="258.33333333333331" width="314" height="30"/>
+                                        <rect key="frame" x="40" y="258.33333333333331" width="334" height="30"/>
                                         <state key="normal" title="Try Again 🤔">
                                             <color key="titleColor" red="0.57254901960000004" green="0.3294117647" blue="0.70588235290000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
@@ -2918,23 +2918,147 @@ Please check your Internet connection and also make sure you are logged into you
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="s6F-gY-z6y" firstAttribute="top" secondItem="Zyn-sb-mAW" secondAttribute="bottom" id="6ex-tH-BYL"/>
-                            <constraint firstAttribute="trailing" secondItem="2BD-to-SOv" secondAttribute="trailing" constant="10" id="L6x-JD-U3u"/>
-                            <constraint firstItem="2BD-to-SOv" firstAttribute="leading" secondItem="lNH-s3-bkO" secondAttribute="leading" constant="10" id="TDP-Py-H8Q"/>
+                            <constraint firstAttribute="trailing" secondItem="2BD-to-SOv" secondAttribute="trailing" id="L6x-JD-U3u"/>
+                            <constraint firstItem="2BD-to-SOv" firstAttribute="leading" secondItem="lNH-s3-bkO" secondAttribute="leading" id="TDP-Py-H8Q"/>
                             <constraint firstItem="Zyn-sb-mAW" firstAttribute="leading" secondItem="lNH-s3-bkO" secondAttribute="leading" id="X2e-Bh-Eak"/>
                             <constraint firstAttribute="bottom" secondItem="2BD-to-SOv" secondAttribute="bottom" id="YbH-9N-LQh"/>
                             <constraint firstItem="Zyn-sb-mAW" firstAttribute="top" secondItem="Ye5-K5-20M" secondAttribute="bottom" id="dRR-yi-ecs"/>
                             <constraint firstAttribute="trailing" secondItem="Zyn-sb-mAW" secondAttribute="trailing" id="oC0-lS-cHI"/>
-                            <constraint firstItem="2BD-to-SOv" firstAttribute="top" secondItem="Ye5-K5-20M" secondAttribute="bottom" constant="10" id="yyf-cm-u7B"/>
+                            <constraint firstItem="2BD-to-SOv" firstAttribute="top" secondItem="Ye5-K5-20M" secondAttribute="bottom" id="yyf-cm-u7B"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="errView" destination="2BD-to-SOv" id="5Ie-2z-sTj"/>
                         <outlet property="tableView" destination="Zyn-sb-mAW" id="QqL-K2-C9q"/>
+                        <segue destination="h60-ml-Ofy" kind="show" identifier="workListSegue" id="40v-sO-mhj"/>
+                        <segue destination="f6s-47-cMK" kind="show" identifier="fandomListSegue" id="5om-by-pKz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TmS-cM-KAX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4962" y="228"/>
+        </scene>
+        <!--Fandom List Controller-->
+        <scene sceneID="Kpu-So-qZh">
+            <objects>
+                <viewController storyboardIdentifier="FandomListController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="f6s-47-cMK" customClass="FandomListController" customModule="ArchiveOfOurOwnReader" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="UQC-2A-Moh"/>
+                        <viewControllerLayoutGuide type="bottom" id="dKu-N9-jIw"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="xZH-kv-WoN">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="672"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RL1-WX-GiQ">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="672"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JxU-RX-k9y">
+                                        <rect key="frame" x="24" y="180" width="366" height="38.333333333333314"/>
+                                        <string key="text">Cannot obtain data. 
+Please check your Internet connection and also make sure you are logged into your AO3 account (try to log in again).</string>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                        <variation key="heightClass=regular-widthClass=regular">
+                                            <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        </variation>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pni-2Q-sYG">
+                                        <rect key="frame" x="40" y="258.33333333333331" width="334" height="30"/>
+                                        <state key="normal" title="Try Again 🤔">
+                                            <color key="titleColor" red="0.57254901960000004" green="0.3294117647" blue="0.70588235290000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <variation key="heightClass=regular-widthClass=regular">
+                                            <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        </variation>
+                                        <connections>
+                                            <action selector="tryAgainTouched:" destination="A3N-gi-QBq" eventType="touchUpInside" id="yZd-C0-5eL"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="JxU-RX-k9y" firstAttribute="leading" secondItem="RL1-WX-GiQ" secondAttribute="leading" constant="24" id="3sa-dz-aKP"/>
+                                    <constraint firstItem="pni-2Q-sYG" firstAttribute="top" secondItem="JxU-RX-k9y" secondAttribute="bottom" constant="40" id="5Nv-qa-W4O"/>
+                                    <constraint firstAttribute="trailing" secondItem="JxU-RX-k9y" secondAttribute="trailing" constant="20" id="7L5-Sw-H43"/>
+                                    <constraint firstItem="JxU-RX-k9y" firstAttribute="top" secondItem="RL1-WX-GiQ" secondAttribute="top" constant="180" id="7gL-Ym-siW"/>
+                                    <constraint firstItem="pni-2Q-sYG" firstAttribute="leading" secondItem="RL1-WX-GiQ" secondAttribute="leading" constant="40" id="FxS-FV-9sQ"/>
+                                    <constraint firstAttribute="width" constant="600" id="GwU-KU-7c2"/>
+                                    <constraint firstAttribute="trailing" secondItem="pni-2Q-sYG" secondAttribute="trailing" constant="40" id="Wfy-hQ-6Gu"/>
+                                    <constraint firstItem="JxU-RX-k9y" firstAttribute="leading" secondItem="RL1-WX-GiQ" secondAttribute="leading" constant="20" id="hG9-65-xza"/>
+                                    <constraint firstItem="JxU-RX-k9y" firstAttribute="centerX" secondItem="RL1-WX-GiQ" secondAttribute="centerX" id="jFp-RR-3ot"/>
+                                    <constraint firstItem="JxU-RX-k9y" firstAttribute="centerY" secondItem="RL1-WX-GiQ" secondAttribute="centerY" id="kUm-2G-Gq9"/>
+                                    <constraint firstAttribute="height" constant="400" id="sLt-bZ-rc8"/>
+                                    <constraint firstAttribute="trailing" secondItem="JxU-RX-k9y" secondAttribute="trailing" constant="24" id="spt-4W-HhN"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="sLt-bZ-rc8"/>
+                                        <exclude reference="GwU-KU-7c2"/>
+                                        <exclude reference="7L5-Sw-H43"/>
+                                        <exclude reference="kUm-2G-Gq9"/>
+                                        <exclude reference="hG9-65-xza"/>
+                                    </mask>
+                                </variation>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="5vc-Zz-xML">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="672"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="CategoryCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="CategoryCell" id="aFN-ym-muq" customClass="CategoryCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="55.333333333333336" width="414" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="aFN-ym-muq" id="UCr-Pe-1jH">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.666666666666664"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1cq-am-hie">
+                                                    <rect key="frame" x="8" y="12.000000000000002" width="398" height="19.666666666666671"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottomMargin" secondItem="1cq-am-hie" secondAttribute="bottom" constant="4" id="Cbc-gU-NdC"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="1cq-am-hie" secondAttribute="trailing" id="Ljq-5H-U0G"/>
+                                                <constraint firstItem="1cq-am-hie" firstAttribute="top" secondItem="UCr-Pe-1jH" secondAttribute="topMargin" constant="4" id="Obf-7C-eZ4"/>
+                                                <constraint firstItem="1cq-am-hie" firstAttribute="leading" secondItem="UCr-Pe-1jH" secondAttribute="leadingMargin" id="aNq-mJ-RVA"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="titleLabel" destination="1cq-am-hie" id="o4M-TO-uke"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="f6s-47-cMK" id="dKE-vC-m6t"/>
+                                    <outlet property="delegate" destination="f6s-47-cMK" id="uN4-wT-ZoK"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="5vc-Zz-xML" firstAttribute="top" secondItem="UQC-2A-Moh" secondAttribute="bottom" id="1vp-m2-MBM"/>
+                            <constraint firstItem="dKu-N9-jIw" firstAttribute="top" secondItem="5vc-Zz-xML" secondAttribute="bottom" id="84T-TL-PaN"/>
+                            <constraint firstAttribute="trailing" secondItem="5vc-Zz-xML" secondAttribute="trailing" id="BFo-sJ-Xnd"/>
+                            <constraint firstItem="dKu-N9-jIw" firstAttribute="top" secondItem="RL1-WX-GiQ" secondAttribute="bottom" id="BJ8-e9-2BI"/>
+                            <constraint firstAttribute="trailing" secondItem="RL1-WX-GiQ" secondAttribute="trailing" id="OPX-ym-338"/>
+                            <constraint firstItem="5vc-Zz-xML" firstAttribute="leading" secondItem="xZH-kv-WoN" secondAttribute="leading" id="P7P-Gx-Tjf"/>
+                            <constraint firstItem="RL1-WX-GiQ" firstAttribute="leading" secondItem="xZH-kv-WoN" secondAttribute="leading" id="UYT-Z1-CSc"/>
+                            <constraint firstItem="RL1-WX-GiQ" firstAttribute="top" secondItem="UQC-2A-Moh" secondAttribute="bottom" id="elH-E9-FY5"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="errView" destination="RL1-WX-GiQ" id="YLn-aX-JMR"/>
+                        <outlet property="tableView" destination="5vc-Zz-xML" id="875-if-0o9"/>
+                        <segue destination="h60-ml-Ofy" kind="show" identifier="workListSegue" id="eWX-6J-Lt5"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="I0W-mH-URJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5888" y="257"/>
         </scene>
         <!--Container View Controller-->
         <scene sceneID="UkV-0j-djh">
@@ -3674,9 +3798,9 @@ Please check your Internet connection and also make sure you are logged into you
                                     <segue destination="nbw-Ly-8Cb" kind="presentation" identifier="searchSegue" id="Xdl-ie-pGJ"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem title="Item" image="categories" id="rXd-Ew-qFZ">
+                            <barButtonItem title="Item" image="categories" id="PR1-nM-YGb">
                                 <connections>
-                                    <segue destination="A3N-gi-QBq" kind="show" identifier="categoriesSegue" id="89s-Wf-Kdl"/>
+                                    <segue destination="A3N-gi-QBq" kind="show" identifier="CategoriesSegue" id="ZvV-jv-nBi"/>
                                 </connections>
                             </barButtonItem>
                         </rightBarButtonItems>
@@ -8033,8 +8157,8 @@ Please check your Internet connection and also make sure you are logged into you
         <image name="trash" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="5rQ-gu-17N"/>
-        <segue reference="YvP-vi-Pnc"/>
-        <segue reference="sOC-2j-lqm"/>
+        <segue reference="eWX-6J-Lt5"/>
+        <segue reference="hi6-p3-hy3"/>
+        <segue reference="s76-7m-Rm2"/>
     </inferredMetricsTieBreakers>
 </document>
