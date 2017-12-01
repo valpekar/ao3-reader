@@ -218,7 +218,6 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
             TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error, duration: 2.0)
         }
     }
-    
    
     
     //MARK: - feed
