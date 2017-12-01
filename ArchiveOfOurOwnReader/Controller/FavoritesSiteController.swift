@@ -17,6 +17,7 @@ class FavoritesSiteController : LoadingViewController, UITableViewDataSource, UI
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var tableView:UITableView!
     @IBOutlet weak var errView:UIView!
+    @IBOutlet weak var errLabel:UILabel!
     
     var pages : [PageItem] = [PageItem]()
     var works : [NewsFeedItem] = [NewsFeedItem]()
@@ -183,6 +184,11 @@ class FavoritesSiteController : LoadingViewController, UITableViewDataSource, UI
         hideLoadingView()
         self.navigationItem.title = boomarksAddedStr
         
+        if(boomarksAddedStr.contains("0")) {
+            errLabel.text = "Nothing found! \nTry searching something else"
+        } else {
+            errLabel.text = "Cannot obtain data. \nPlease check your Internet connection and also make sure you are logged into your AO3 account (try to log in again)."
+        }
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             if (self.tableView.numberOfSections > 0 && self.tableView.numberOfRows(inSection: 0) > 0) {
@@ -443,6 +449,8 @@ extension FavoritesSiteController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         if (searchBar.text != nil && searchBar.text?.isEmpty == false) {
             doSearch(searchBar.text!)
+            
+            self.searchBar.endEditing(true)
         } else {
             TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CannotBeEmpty", comment: ""), type: .error, duration: 2.0)
         }
@@ -463,6 +471,7 @@ extension FavoritesSiteController: UISearchBarDelegate {
         } else {
            requestFavs()
         }
+        self.searchBar.endEditing(true)
     }
     
     func doSearch(_ query: String) {
