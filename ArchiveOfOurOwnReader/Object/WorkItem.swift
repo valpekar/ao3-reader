@@ -31,7 +31,7 @@ class WorkItem : NSObject {
     var workContent = ""
     var nextChapter = ""
     var topic = ""
-    var topicPreview : String?
+    var topicPreview = ""
     var tags = ""
     var datetime = ""
     var currentChapter = ""

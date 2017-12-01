@@ -9,7 +9,7 @@
 import UIKit
 import TSMessages
 import Alamofire
-
+import Crashlytics
 
 class FavoritesSiteController : LoadingViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
@@ -20,6 +20,10 @@ class FavoritesSiteController : LoadingViewController, UITableViewDataSource, UI
     
     var pages : [PageItem] = [PageItem]()
     var works : [NewsFeedItem] = [NewsFeedItem]()
+    
+    var searched = false
+    
+    @IBOutlet weak var searchBar: UISearchBar!
     
     var refreshControl: UIRefreshControl!
     
@@ -74,6 +78,25 @@ class FavoritesSiteController : LoadingViewController, UITableViewDataSource, UI
             self.tableView.backgroundColor = AppDelegate.greyDarkBg
             self.collectionView.backgroundColor = AppDelegate.redDarkColor
         }
+        
+        if let tf = searchBar.value(forKey: "_searchField") as? UITextField {
+            addDoneButtonOnKeyboardTf(tf)
+            
+            if (theme == DefaultsManager.THEME_DAY) {
+                tf.textColor = AppDelegate.redColor
+                tf.backgroundColor = UIColor.white
+                
+            } else {
+                tf.textColor = AppDelegate.textLightColor
+                tf.backgroundColor = AppDelegate.greyBg
+            }
+        }
+    }
+    
+    
+    override func doneButtonAction() {
+        super.doneButtonAction()
+        self.searchBar.endEditing(true)
     }
     
     //MARK: - login
@@ -92,6 +115,8 @@ class FavoritesSiteController : LoadingViewController, UITableViewDataSource, UI
     //MARK: - request
     
     func requestFavs() {
+        
+        searched = false
         
         //let username = DefaultsManager.getString(DefaultsManager.LOGIN)
         
@@ -410,3 +435,101 @@ class FavoritesSiteController : LoadingViewController, UITableViewDataSource, UI
     }
 
 }
+
+//MARK: - search
+
+extension FavoritesSiteController: UISearchBarDelegate {
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        if (searchBar.text != nil && searchBar.text?.isEmpty == false) {
+            doSearch(searchBar.text!)
+        } else {
+            TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CannotBeEmpty", comment: ""), type: .error, duration: 2.0)
+        }
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.text = ""
+        self.searchBar.endEditing(true)
+        
+        if (searched == true) {
+            requestFavs()
+        }
+    }
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        if (searchBar.text != nil && searchBar.text?.isEmpty == false) {
+            doSearch(searchBar.text!)
+        } else {
+           requestFavs()
+        }
+    }
+    
+    func doSearch(_ query: String) {
+        
+        searched = true
+        
+        Answers.logCustomEvent(withName: "Bookmarks: search", customAttributes: ["query" : query])
+        
+        if let del = UIApplication.shared.delegate as? AppDelegate {
+            if (del.cookies.count > 0) {
+                guard let cStorage = Alamofire.SessionManager.default.session.configuration.httpCookieStorage else {
+                    return
+                }
+                cStorage.setCookies(del.cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
+            }
+        }
+        
+        showLoadingView(msg: NSLocalizedString("GettingBmks", comment: ""))
+        
+        let pseuds = DefaultsManager.getObject(DefaultsManager.PSEUD_IDS) as! [String:String]
+        var currentPseud = DefaultsManager.getString(DefaultsManager.PSEUD_ID)
+        
+        if (currentPseud.isEmpty) {
+            let keys = Array(pseuds.keys)
+            if (keys.count > 0) {
+                currentPseud = keys[0]
+            } else {
+                TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("LoginToViewBmks", comment: ""), type: .error)
+                showBookmarks()
+                return
+            }
+        }
+        
+        //http://archiveofourown.org/bookmarks?utf8=✓&bookmark_search%5Bsort_column%5D=created_at&bookmark_search%5Bother_tag_names%5D=&bookmark_search%5Bquery%5D=witcher&bookmark_search%5Brec%5D=0&bookmark_search%5Bwith_notes%5D=0&commit=Sort+and+Filter&user_id=ssaria
+        
+        let login = DefaultsManager.getString(DefaultsManager.LOGIN)
+
+        let urlStr = "https://archiveofourown.org/bookmarks" // + pseuds[currentPseud]! + "/bookmarks"
+        
+        var params:[String:AnyObject] = [String:AnyObject]()
+        params["utf8"] = "✓" as AnyObject?
+        params["user_id"] = login as AnyObject?
+        
+        params["bookmark_search"] = ["sort_column": "created_at",
+                                     "with_notes" : "0",
+                                     "rec" : "0",
+                                     "other_tag_names" : "",
+                                     "query" : query] as AnyObject?
+        
+        params["commit"] = "Sort and Filter" as AnyObject?
+        
+        Alamofire.request(urlStr, method: .get, parameters: params) //default is get
+            .response(completionHandler: { response in
+                print(response.request ?? "")
+                print(response.error ?? "")
+                if let d = response.data {
+                    self.parseCookies(response)
+                    (self.pages, self.works, self.boomarksAddedStr) = WorksParser.parseWorks(d, itemsCountHeading: "h2", worksElement: "bookmark")
+                    //self.parseBookmarks(d)
+                    self.showBookmarks()
+                } else {
+                    self.hideLoadingView()
+                    TSMessage.showNotification(in: self, title: "Error", subtitle: "Check your Internet connection", type: .error)
+                }
+                self.refreshControl.endRefreshing()
+            })
+    }
+}
+
+

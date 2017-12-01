@@ -521,9 +521,9 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         
         filtereddownloadedWorkds.removeAll(keepingCapacity: false)
         
-        let searchPredicate = NSPredicate(format: "topic CONTAINS[cd] %@ OR topicPreview CONTAINS[cd] %@ OR tags CONTAINS[cd] %@ OR author CONTAINS[cd] %@ OR workTitle CONTAINS[cd] %@", text, text, text, text, text)
+        let searchPredicate = NSPredicate(format: "topic CONTAINS[cd] %@ OR topicPreview CONTAINS[cd] %@ OR tags CONTAINS[cd] %@ OR author CONTAINS[cd] %@ OR workTitle CONTAINS[cd] %@ OR fandoms.fandomName CONTAINS[cd] %@", text, text, text, text, text, text)
         
-        let predicateWFolder = NSPredicate(format: "folder = nil AND (topic CONTAINS[cd] %@ OR topicPreview CONTAINS[cd] %@ OR tags CONTAINS[cd] %@ OR author CONTAINS[cd] %@ OR workTitle CONTAINS[cd] %@)", text, text, text, text, text)
+        let predicateWFolder = NSPredicate(format: "folder = nil AND (topic CONTAINS[cd] %@ OR topicPreview CONTAINS[cd] %@ OR tags CONTAINS[cd] %@ OR author CONTAINS[cd] %@ OR workTitle CONTAINS[cd] %@ OR fandoms.fandomName CONTAINS[cd] %@)", text, text, text, text, text, text)
 //        let array = (Array(downloadedWorkds.values.joined()) as NSArray).filtered(using: searchPredicate)
 //        filtereddownloadedWorkds = array as! [DBWorkItem]
         

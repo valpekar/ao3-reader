@@ -9,11 +9,14 @@
 import UIKit
 import TSMessages
 import Alamofire
+import Crashlytics
 
 class CategoriesController: LoadingViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var tableView:UITableView!
     @IBOutlet weak var errView:UIView!
+    
+    var adsShown = 0
     
     var categories: [CategoryItem] = []
     
@@ -25,7 +28,18 @@ class CategoriesController: LoadingViewController, UITableViewDataSource, UITabl
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 44
         
+        
+        Answers.logCustomEvent(withName: "Categories: open", customAttributes: [:])
+        
         requestCategories()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if (!purchased && !donated) {
+            loadAdMobInterstitial()
+        }
     }
     
     override func applyTheme() {
@@ -165,6 +179,14 @@ class CategoriesController: LoadingViewController, UITableViewDataSource, UITabl
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        if (!purchased && !donated) {
+            if (adsShown % 3 == 0) {
+                showAdMobInterstitial()
+                adsShown += 1
+            }
+        }
+        
         let curCat: CategoryItem = categories[indexPath.row]
         if (curCat.isParent == false) {
             performSegue(withIdentifier: "workListSegue", sender: self)
@@ -181,6 +203,8 @@ class CategoriesController: LoadingViewController, UITableViewDataSource, UITabl
         if (segue.identifier == "workListSegue") {
             if let indexPath = tableView.indexPathForSelectedRow {
                 let curCat: CategoryItem = categories[indexPath.row]
+                
+                Answers.logCustomEvent(withName: "Categories: select", customAttributes: ["name":curCat.title])
             
                 if let cController: WorkListController = segue.destination as? WorkListController {
                     cController.tagUrl = curCat.url

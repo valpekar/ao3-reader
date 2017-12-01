@@ -197,7 +197,7 @@ class WorksParser {
         if let userstuffArr = workListItem.search(withXPathQuery: "//blockquote[@class='userstuff summary']/p") {
             if(userstuffArr.count > 0) {
                 if let userstuff : TFHppleElement = userstuffArr[0] as? TFHppleElement {
-                    item.topicPreview = userstuff.content
+                    item.topicPreview = userstuff.text()
                 }
             }
         }
