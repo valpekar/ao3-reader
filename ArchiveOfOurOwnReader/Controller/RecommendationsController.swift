@@ -82,6 +82,8 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
                     }
                 } else {
                     TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("NotPurchased", comment: ""), type: .error)
+                    
+                    refreshControl.endRefreshing()
                 }
             }
         }
@@ -337,6 +339,8 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
     
     func showFeed() {
         
+        refreshControl.endRefreshing()
+        
         tableView.reloadData()
         collectionView.reloadData()
         
@@ -352,6 +356,8 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
         
         if (works.count == 0) {
             noFound = true
+            
+            generateNewRecs()
         }
     }
     
@@ -359,7 +365,7 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
     //MARK: - tableview
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return works.count;
+        return works.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

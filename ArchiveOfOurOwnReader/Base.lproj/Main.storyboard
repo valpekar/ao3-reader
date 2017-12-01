@@ -4634,7 +4634,7 @@ Please check your Internet connection and also make sure you are logged into you
                                     <constraint firstItem="wtc-SS-BYB" firstAttribute="top" secondItem="oYA-OO-1fX" secondAttribute="top" constant="8" id="xNH-sf-iya"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notify about new Recommendations (Pro only)" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="unF-Y4-c6i">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notify about new Recommendations (Pro only)" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumFontSize="9" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="unF-Y4-c6i">
                                 <rect key="frame" x="20" y="61.666666666666664" width="317" height="15.666666666666679"/>
                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="13"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -8191,7 +8191,7 @@ Please check your Internet connection and also make sure you are logged into you
         <image name="trash" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="5rQ-gu-17N"/>
+        <segue reference="jXE-kt-jek"/>
         <segue reference="YvP-vi-Pnc"/>
         <segue reference="QjG-hc-3tA"/>
     </inferredMetricsTieBreakers>
