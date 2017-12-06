@@ -3829,10 +3829,10 @@ Please check your Internet connection and also make sure you are logged into you
             </objects>
             <point key="canvasLocation" x="424.63768115942031" y="251.9021739130435"/>
         </scene>
-        <!--Favorites Site Controller-->
+        <!-- -->
         <scene sceneID="ea8-Z5-5lf">
             <objects>
-                <viewController storyboardIdentifier="FavoritesSiteController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ha1-Xg-SDp" customClass="FavoritesSiteController" customModule="ArchiveOfOurOwnReader" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FavoritesSiteController" title=" " useStoryboardIdentifierAsRestorationIdentifier="YES" id="ha1-Xg-SDp" customClass="FavoritesSiteController" customModule="ArchiveOfOurOwnReader" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="7mJ-UX-t5U"/>
                         <viewControllerLayoutGuide type="bottom" id="CYN-vx-gOl"/>
@@ -8192,8 +8192,8 @@ Please check your Internet connection and also make sure you are logged into you
         <image name="trash" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="jXE-kt-jek"/>
+        <segue reference="5rQ-gu-17N"/>
         <segue reference="YvP-vi-Pnc"/>
-        <segue reference="Zz6-01-vau"/>
+        <segue reference="sOC-2j-lqm"/>
     </inferredMetricsTieBreakers>
 </document>

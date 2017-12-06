@@ -470,12 +470,14 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
             }
             }
             
+            if (workItem.serieUrl?.isEmpty ?? true) {
+            
             if let seriesEl: [TFHppleElement] = workmeta[0].search(withXPathQuery: "//dd[@class='series']//span[@class='position']") as? [TFHppleElement] {
                 if(seriesEl.count > 0) {
                     let sTxt = seriesEl[0].content.replacingOccurrences(of: "\n", with:"")
                         .replacingOccurrences(of: "\\s+", with: " ", options: NSString.CompareOptions.regularExpression, range: nil)
                     if (!sTxt.isEmpty) {
-                        workItem.topicPreview = "\(sTxt) \n\n\(workItem.topicPreview ?? "")"
+                      //  workItem.topicPreview = "\(sTxt) \n\n\(workItem.topicPreview ?? "")"
                         
                         workItem.serieName = sTxt
                     }
@@ -487,6 +489,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
                         }
                     }
                 }
+            }
             }
             
             if let statsElDt: [TFHppleElement] = workmeta[0].search(withXPathQuery: "//dd[@class='stats']/dl[@class='stats']/dt") as? [TFHppleElement],

@@ -167,7 +167,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     
     func showDownloadedWork() {
         
-        let auth = downloadedWorkItem.value(forKey: "author") as? String ?? ""
+        let auth = downloadedWorkItem.author ?? ""
         authorLabel.setTitle("🔗 \(auth)", for: .normal) // = underlineAttributedString
         
         let title = downloadedWorkItem.value(forKey: "workTitle") as? String ?? ""
@@ -177,13 +177,13 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
         titleLabel.text = trimmedTitle
         
-        audienceLabel.text = downloadedWorkItem.value(forKey: "ratingTags") as? String
-        categoryLabel.text = downloadedWorkItem.value(forKey: "category") as? String
-        completeLabel.text = downloadedWorkItem.value(forKey: "complete") as? String
+        audienceLabel.text = downloadedWorkItem.ratingTags ?? ""
+        categoryLabel.text = downloadedWorkItem.category ?? ""
+        completeLabel.text = downloadedWorkItem.complete ?? ""
         
         
         warnings = [String]()
-        if let warn = downloadedWorkItem.value(forKey: "ArchiveWarnings") as? String {
+        if let warn = downloadedWorkItem.archiveWarnings {
             if (!warn.isEmpty) {
                 let str = warn.replacingOccurrences(of: "\n", with:"")
                     .replacingOccurrences(of: "\\s+", with: " ", options: NSString.CompareOptions.regularExpression, range: nil)
@@ -786,7 +786,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! WorkDetailCell
         }
         
-        if(cell == nil) {
+        if (cell == nil) {
             if (indexPath.section == 0 || indexPath.section == 1 || indexPath.section == 9) {
                 cell = WorkDetailTxtCell(style: UITableViewCellStyle.default, reuseIdentifier: "txtCell")
             } else {
@@ -824,7 +824,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             if (workItem != nil) {
                 cell.label.text = workItem.tags
             } else if (downloadedWorkItem != nil) {
-                cell.label.text = downloadedWorkItem.value(forKey: "tags") as? String ?? ""
+                cell.label.text = downloadedWorkItem.tags ?? ""
             }
         case 1:
             
@@ -916,11 +916,13 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             cell!.imgView.image = UIImage(named: "info")
             
         case 9:
+            var serieName: String = ""
             if (workItem != nil) {
-                cell.label.text = workItem.serieName
+                serieName = workItem.serieName
             } else if (downloadedWorkItem != nil) {
-                cell.label.text = downloadedWorkItem.serieName
+                serieName = downloadedWorkItem.serieName ?? ""
             }
+             cell.label.text = "View Serie (\(serieName))"
             
         default:
             break
