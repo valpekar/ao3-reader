@@ -35,6 +35,8 @@ class WorkItem : NSObject {
     var tags = ""
     var datetime = ""
     var currentChapter = ""
+    var serieUrl = ""
+    var serieName = ""
     
     var chapters: NSSet = []
     var relationshipIds: NSSet = []

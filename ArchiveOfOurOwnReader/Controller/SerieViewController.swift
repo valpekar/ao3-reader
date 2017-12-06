@@ -49,6 +49,17 @@ class SerieViewController: LoadingViewController, UITableViewDataSource, UITable
         requestSerie()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        guard let navVC = self.navigationController else {
+            return
+        }
+        navVC.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        navVC.navigationBar.shadowImage = UIImage()
+        navVC.navigationBar.isTranslucent = false
+    }
+    
     override func applyTheme() {
         super.applyTheme()
         

@@ -475,7 +475,16 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
                     let sTxt = seriesEl[0].content.replacingOccurrences(of: "\n", with:"")
                         .replacingOccurrences(of: "\\s+", with: " ", options: NSString.CompareOptions.regularExpression, range: nil)
                     if (!sTxt.isEmpty) {
-                        workItem.setValue("\(sTxt) \n\n\(workItem.topicPreview)", forKey: "topicPreview")
+                        workItem.topicPreview = "\(sTxt) \n\n\(workItem.topicPreview ?? "")"
+                        
+                        workItem.serieName = sTxt
+                    }
+                    
+                    if let attributesEl : [TFHppleElement] = seriesEl[0].search(withXPathQuery: "//a") as? [TFHppleElement] {
+                        if (attributesEl.count > 0) {
+                            let attributes: NSDictionary = (attributesEl[0] as AnyObject).attributes as NSDictionary
+                            workItem.serieUrl = (attributes["href"] as? String ?? "")
+                        }
                     }
                 }
             }

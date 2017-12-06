@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 import TSMessages
+import SafariServices
 
 class LoginViewController : LoadingViewController, UITextFieldDelegate {
     
@@ -350,13 +351,15 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
     
     @IBAction func inviteTouched(_ sender: AnyObject) {
         if let requestUrl = URL(string: "https://archiveofourown.org/invite_requests") {
-            UIApplication.shared.openURL(requestUrl)
+            let svc = SFSafariViewController(url: requestUrl)
+            self.present(svc, animated: true, completion: nil)
         }
     }
     
     @IBAction func forgotPassTouched(_ sender: AnyObject) {
         if let requestUrl = URL(string: "https://archiveofourown.org/passwords/new") {
-            UIApplication.shared.openURL(requestUrl)
+            let svc = SFSafariViewController(url: requestUrl)
+            self.present(svc, animated: true, completion: nil)
         }
         
     }

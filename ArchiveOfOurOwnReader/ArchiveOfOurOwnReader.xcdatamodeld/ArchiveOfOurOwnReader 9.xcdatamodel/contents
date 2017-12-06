@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13240" systemVersion="17B1003" minimumToolsVersion="Xcode 7.3" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="AnalyticsItem" representedClassName=".AnalyticsItem" syncable="YES">
+        <attribute name="author" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="category" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="character" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="fandom" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="relationship" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="tags" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="tags_excl" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="DBChapter" representedClassName="ArchiveOfOurOwnReader.DBChapter" syncable="YES">
+        <attribute name="chapterContent" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="chapterIndex" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="chapterName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <relationship name="workItem" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DBWorkItem" inverseName="chapters" inverseEntity="DBWorkItem" syncable="YES"/>
+    </entity>
+    <entity name="DBCharacterItem" representedClassName="ArchiveOfOurOwnReader.DBCharacterItem" syncable="YES">
+        <attribute name="characterName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="characterUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <relationship name="workItems" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DBWorkItem" inverseName="characters" inverseEntity="DBWorkItem" syncable="YES"/>
+    </entity>
+    <entity name="DBFandom" representedClassName="ArchiveOfOurOwnReader.DBFandom" syncable="YES">
+        <attribute name="fandomName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="fandomUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <relationship name="workItems" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DBWorkItem" inverseName="fandoms" inverseEntity="DBWorkItem" syncable="YES"/>
+    </entity>
+    <entity name="DBRelationship" representedClassName="ArchiveOfOurOwnReader.DBRelationship" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="relationshipName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="relationshipUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="workItems" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DBWorkItem" inverseName="relationships" inverseEntity="DBWorkItem" syncable="YES"/>
+    </entity>
+    <entity name="DBWorkItem" representedClassName="ArchiveOfOurOwnReader.DBWorkItem" syncable="YES">
+        <attribute name="archiveWarnings" attributeType="String" defaultValueString="s" syncable="YES"/>
+        <attribute name="author" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="bookmarks" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="category" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="chaptersCount" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="comments" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="complete" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="currentChapter" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="dateAdded" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="datetime" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="hits" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="kudos" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="language" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="nextChapter" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="published" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="ratingTags" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="scrollProgress" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="serieName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="serieUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="stats" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="tags" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="topic" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="topicPreview" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="updatedStr" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="words" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="workContent" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="workId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="workTitle" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="chapters" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DBChapter" inverseName="workItem" inverseEntity="DBChapter" syncable="YES"/>
+        <relationship name="characters" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DBCharacterItem" inverseName="workItems" inverseEntity="DBCharacterItem" syncable="YES"/>
+        <relationship name="fandoms" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DBFandom" inverseName="workItems" inverseEntity="DBFandom" syncable="YES"/>
+        <relationship name="folder" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Folder" inverseName="works" inverseEntity="Folder" spotlightIndexingEnabled="YES" syncable="YES"/>
+        <relationship name="relationships" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DBRelationship" inverseName="workItems" inverseEntity="DBRelationship" syncable="YES"/>
+        <relationship name="series" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Serie" inverseName="works" inverseEntity="Serie" syncable="YES"/>
+    </entity>
+    <entity name="Folder" representedClassName=".Folder" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="works" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DBWorkItem" inverseName="folder" inverseEntity="DBWorkItem" syncable="YES"/>
+    </entity>
+    <entity name="HistoryItem" representedClassName=".HistoryItem" syncable="YES">
+        <attribute name="lastChapter" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lastChapterIdx" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="scrollProgress" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="timeStamp" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="workId" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="Serie" representedClassName=".Serie" syncable="YES">
+        <attribute name="author" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="authorlink" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="desc" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="serieBegun" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="serieEnded" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="serieId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="works" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DBWorkItem" inverseName="series" inverseEntity="DBWorkItem" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="AnalyticsItem" positionX="-99" positionY="243" width="128" height="165"/>
+        <element name="DBChapter" positionX="106" positionY="189" width="128" height="120"/>
+        <element name="DBCharacterItem" positionX="-315" positionY="198" width="128" height="105"/>
+        <element name="DBFandom" positionX="-65" positionY="248" width="128" height="105"/>
+        <element name="DBRelationship" positionX="162" positionY="507" width="128" height="30"/>
+        <element name="DBWorkItem" positionX="-72" positionY="78" width="135" height="570"/>
+        <element name="Folder" positionX="-108" positionY="234" width="128" height="75"/>
+        <element name="HistoryItem" positionX="-108" positionY="234" width="128" height="120"/>
+        <element name="Serie" positionX="-108" positionY="234" width="128" height="165"/>
+    </elements>
+</model>

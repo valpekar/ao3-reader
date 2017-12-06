@@ -1134,7 +1134,7 @@
                         <outlet property="titleLabel" destination="Cyb-us-7ON" id="F1S-ZI-o8q"/>
                         <segue destination="aFH-5Z-kbf" kind="show" identifier="leaveComment" id="aEt-Fa-YHa"/>
                         <segue destination="h60-ml-Ofy" kind="push" identifier="listSegue" id="5rQ-gu-17N"/>
-                        <segue destination="UP5-M8-Ap4" kind="show" identifier="showSerie" action="showDetailViewController:sender:" id="GOa-zO-Fy6"/>
+                        <segue destination="UP5-M8-Ap4" kind="show" identifier="showSerie" id="GOa-zO-Fy6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5sT-GC-Bt4" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1920,6 +1920,7 @@ Please check your Internet connection and also make sure you are logged into you
                             <constraint firstItem="2gP-YE-8LQ" firstAttribute="top" secondItem="udP-kR-Lcm" secondAttribute="bottom" id="zhH-K3-WEK"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="jLl-wO-mx4"/>
                     <connections>
                         <outlet property="bottomButtonsConstraint" destination="8rc-iB-Ye5" id="Nvt-eJ-KyG"/>
                         <outlet property="bottomViewConstraint" destination="79Y-4f-HWK" id="Ufz-T3-pEI"/>
@@ -1932,7 +1933,7 @@ Please check your Internet connection and also make sure you are logged into you
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="b0x-y3-Ud8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1982.608695652174" y="1065.4891304347827"/>
+            <point key="canvasLocation" x="2301" y="1050"/>
         </scene>
         <!--Contents View Controller-->
         <scene sceneID="nsc-mV-Atg">
@@ -1977,7 +1978,7 @@ Please check your Internet connection and also make sure you are logged into you
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6Tg-en-pmz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2705" y="1014"/>
+            <point key="canvasLocation" x="3096" y="1021"/>
         </scene>
         <!--Work List-->
         <scene sceneID="t8o-D0-xfW">
@@ -8193,6 +8194,6 @@ Please check your Internet connection and also make sure you are logged into you
     <inferredMetricsTieBreakers>
         <segue reference="jXE-kt-jek"/>
         <segue reference="YvP-vi-Pnc"/>
-        <segue reference="QjG-hc-3tA"/>
+        <segue reference="Zz6-01-vau"/>
     </inferredMetricsTieBreakers>
 </document>

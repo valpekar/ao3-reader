@@ -400,6 +400,15 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                     .replacingOccurrences(of: "\\s+", with: " ", options: NSString.CompareOptions.regularExpression, range: nil)
                 if (!sTxt.isEmpty) {
                     workItem.topicPreview = "\(sTxt) \n\n\(workItem.topicPreview)"
+                    
+                    workItem.serieName = sTxt
+                }
+                
+                if let attributesEl : [TFHppleElement] = seriesEl[0].search(withXPathQuery: "//a") as? [TFHppleElement] {
+                    if (attributesEl.count > 0) {
+                        let attributes: NSDictionary = (attributesEl[0] as AnyObject).attributes as NSDictionary
+                        workItem.serieUrl = (attributes["href"] as? String ?? "")
+                    }
                 }
             }
             }
@@ -683,6 +692,20 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             if let cController: WorkListController = segue.destination as? WorkListController {
                 cController.tagUrl = tagUrl
             }
+        } else if (segue.identifier == "showSerie") {
+            if let cController: SerieViewController = segue.destination as? SerieViewController {
+                
+                if (workItem != nil) {
+                    cController.serieId = workItem.serieUrl
+                    
+                    Answers.logCustomEvent(withName: "WorkDetail: view serie", customAttributes: ["work" : "online", "id" : cController.serieId ])
+                    
+                } else if (downloadedWorkItem != nil) {
+                    cController.serieId = downloadedWorkItem.serieUrl ?? ""
+                    
+                    Answers.logCustomEvent(withName: "WorkDetail: view serie", customAttributes: ["work" : "downloaded", "id" : cController.serieId ])
+                }
+             }
         }
         
     }
@@ -757,14 +780,14 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell: WorkDetailCell! = nil
         
-        if (indexPath.section == 0 || indexPath.section == 1) {
+        if (indexPath.section == 0 || indexPath.section == 1 || indexPath.section == 9) {
             cell = tableView.dequeueReusableCell(withIdentifier: "txtCell") as! WorkDetailCell
         } else {
             cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! WorkDetailCell
         }
         
         if(cell == nil) {
-            if (indexPath.section == 0 || indexPath.section == 1) {
+            if (indexPath.section == 0 || indexPath.section == 1 || indexPath.section == 9) {
                 cell = WorkDetailTxtCell(style: UITableViewCellStyle.default, reuseIdentifier: "txtCell")
             } else {
                 if(cell == nil) {
@@ -888,10 +911,16 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             if (workItem != nil) {
                 cell!.label.text = workItem.stats
             } else if (downloadedWorkItem != nil) {
-                cell!.label.text = downloadedWorkItem.value(forKey: "stats") as? String ?? ""
+                cell!.label.text = downloadedWorkItem.stats ?? ""
             }
             cell!.imgView.image = UIImage(named: "info")
             
+        case 9:
+            if (workItem != nil) {
+                cell.label.text = workItem.serieName
+            } else if (downloadedWorkItem != nil) {
+                cell.label.text = downloadedWorkItem.serieName
+            }
             
         default:
             break
@@ -902,7 +931,13 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 9
+        if (workItem != nil && workItem.serieUrl.isEmpty) {
+            return 9
+        } else if (downloadedWorkItem != nil && (downloadedWorkItem.serieUrl ?? "").isEmpty) {
+            return 9
+        } else {
+            return 10
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -975,6 +1010,9 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             NSLog("link Tapped = " + tagUrl)
             
             performSegue(withIdentifier: "listSegue", sender: self)
+            
+        case 9:
+            performSegue(withIdentifier: "showSerie", sender: self)
             
         default:
             break
