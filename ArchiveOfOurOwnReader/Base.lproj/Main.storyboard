@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="yfP-Fh-r7Y">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="yfP-Fh-r7Y">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
@@ -96,7 +96,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gls-Lz-J4W">
-                                                    <rect key="frame" x="8" y="8" width="398" height="63"/>
+                                                    <rect key="frame" x="15" y="11" width="384" height="58"/>
                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <color key="tintColor" red="0.57254901960000004" green="0.3294117647" blue="0.70588235290000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -132,13 +132,13 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eiv-fZ-kA5">
-                                                    <rect key="frame" x="8" y="13" width="36" height="17"/>
+                                                    <rect key="frame" x="15" y="13" width="36" height="17"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textField opaque="NO" clipsSubviews="YES" tag="100" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="ew7-Bj-jjp">
-                                                    <rect key="frame" x="52" y="9" width="354" height="26"/>
+                                                    <rect key="frame" x="59" y="12" width="340" height="21"/>
                                                     <color key="tintColor" red="0.57254901960000004" green="0.3294117647" blue="0.70588235290000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no"/>
@@ -176,20 +176,20 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="likes" translatesAutoresizingMaskIntoConstraints="NO" id="R3Z-v4-WCk">
-                                                    <rect key="frame" x="8" y="12" width="20" height="20"/>
+                                                    <rect key="frame" x="15" y="12" width="20" height="20"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="20" id="4rH-cM-SXR"/>
                                                         <constraint firstAttribute="height" constant="20" id="NaF-Ph-gO0"/>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cDJ-a1-8DB">
-                                                    <rect key="frame" x="36" y="13" width="205" height="17"/>
+                                                    <rect key="frame" x="43" y="13" width="191" height="17"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="–" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GJw-AP-j6m">
-                                                    <rect key="frame" x="309" y="11" width="25" height="21"/>
+                                                    <rect key="frame" x="302" y="11" width="25" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="25" id="MKz-I1-aqG"/>
                                                     </constraints>
@@ -198,7 +198,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3gc-yM-zJe">
-                                                    <rect key="frame" x="338" y="7" width="60" height="30"/>
+                                                    <rect key="frame" x="331" y="7" width="60" height="30"/>
                                                     <color key="tintColor" red="0.57254901960000004" green="0.3294117647" blue="0.70588235290000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="60" id="GNQ-Tr-dv6"/>
@@ -211,7 +211,7 @@
                                                     </connections>
                                                 </textField>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CNG-4R-LoU">
-                                                    <rect key="frame" x="245" y="7" width="60" height="30"/>
+                                                    <rect key="frame" x="238" y="7" width="60" height="30"/>
                                                     <color key="tintColor" red="0.57254901960000004" green="0.3294117647" blue="0.70588235290000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="60" id="LJZ-bG-Kti"/>
@@ -394,13 +394,13 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7qH-mE-Sbp">
-                                                    <rect key="frame" x="8" y="14" width="341" height="16"/>
+                                                    <rect key="frame" x="15" y="14" width="327" height="16"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="AgE-rG-SCi">
-                                                    <rect key="frame" x="357" y="6" width="51" height="31"/>
+                                                    <rect key="frame" x="350" y="6" width="51" height="31"/>
                                                     <color key="tintColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <color key="onTintColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <color key="thumbTintColor" red="1" green="1" blue="1" alpha="0.90000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
@@ -430,13 +430,13 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NP8-7c-TSv">
-                                                    <rect key="frame" x="8" y="8" width="398" height="17"/>
+                                                    <rect key="frame" x="15" y="8" width="384" height="17"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" red="0.45657655423280419" green="0.45657655423280419" blue="0.45657655423280419" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mZ8-Zl-7qc">
-                                                    <rect key="frame" x="8" y="25" width="398" height="46"/>
+                                                    <rect key="frame" x="15" y="25" width="384" height="44"/>
                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <color key="tintColor" red="0.57254901960000004" green="0.3294117647" blue="0.70588235290000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -472,7 +472,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="94t-ZN-LIC">
-                                                    <rect key="frame" x="8" y="4" width="398" height="35"/>
+                                                    <rect key="frame" x="15" y="7" width="384" height="30"/>
                                                     <state key="normal" title="Search and Save 🔍">
                                                         <color key="titleColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -591,7 +591,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="7NC-5t-gVl">
-                                            <rect key="frame" x="20" y="0.0" width="379" height="43.666666666666664"/>
+                                            <rect key="frame" x="20" y="0.0" width="374" height="43.666666666666664"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
@@ -802,7 +802,7 @@
                                 <rect key="frame" x="20" y="50" width="374" height="560"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cyb-us-7ON">
-                                        <rect key="frame" x="8" y="38" width="348" height="19.333333333333343"/>
+                                        <rect key="frame" x="8" y="38" width="348" height="19.333333333333329"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="18" id="EJ7-x3-dZW"/>
                                             <constraint firstAttribute="height" constant="30" id="qx9-ib-aQ4"/>
@@ -821,10 +821,10 @@
                                         </variation>
                                     </label>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="xEv-cM-1DS">
-                                        <rect key="frame" x="8" y="63.333333333333343" width="358" height="15.666666666666657"/>
+                                        <rect key="frame" x="8" y="63.333333333333336" width="358" height="15.666666666666664"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Audience" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hKr-uF-seL">
-                                                <rect key="frame" x="0.0" y="0.0" width="114" height="15.666666666666657"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="0.0" height="15.666666666666666"/>
                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
                                                 <color key="textColor" red="0.20000000000000001" green="0.70980392160000005" blue="0.8980392157" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -833,7 +833,7 @@
                                                 </variation>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gen" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mQg-k9-tTr">
-                                                <rect key="frame" x="122" y="0.0" width="114" height="15.666666666666657"/>
+                                                <rect key="frame" x="-28" y="0.0" width="0.0" height="15.666666666666666"/>
                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
                                                 <color key="textColor" red="0.19215686269999999" green="0.73725490199999999" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -842,7 +842,7 @@
                                                 </variation>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Complete" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dnT-cy-sRR">
-                                                <rect key="frame" x="244" y="0.0" width="114" height="15.666666666666657"/>
+                                                <rect key="frame" x="-28" y="0.0" width="0.0" height="15.666666666666666"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="shQ-Ru-ah2"/>
                                                 </constraints>
@@ -895,7 +895,7 @@
                                                             </variation>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="None" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eks-Zk-DxT">
-                                                            <rect key="frame" x="34" y="12.000000000000002" width="324" height="19.666666666666671"/>
+                                                            <rect key="frame" x="34" y="15" width="317" height="14"/>
                                                             <fontDescription key="fontDescription" type="system" weight="light" pointSize="12"/>
                                                             <color key="textColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -952,7 +952,7 @@
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pQS-zx-buV">
-                                                            <rect key="frame" x="10" y="8" width="348" height="25.666666666666664"/>
+                                                            <rect key="frame" x="17" y="11.000000000000002" width="334" height="22.666666666666671"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <color key="textColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -1334,7 +1334,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                                                     </variation>
                                                                                 </imageView>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0jl-hn-qUA">
-                                                                                    <rect key="frame" x="22" y="11.333333333333343" width="7" height="13.333333333333314"/>
+                                                                                    <rect key="frame" x="22" y="11.333333333333343" width="7" height="13.333333333333336"/>
                                                                                     <fontDescription key="fontDescription" type="system" weight="light" pointSize="11"/>
                                                                                     <color key="textColor" red="0.31764705879999999" green="0.20392156859999999" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                                     <nil key="highlightedColor"/>
@@ -1380,7 +1380,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                                                     </variation>
                                                                                 </imageView>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OB1-bt-qKc">
-                                                                                    <rect key="frame" x="20" y="11.333333333333343" width="7" height="13.333333333333314"/>
+                                                                                    <rect key="frame" x="20" y="11.333333333333343" width="7" height="13.333333333333336"/>
                                                                                     <fontDescription key="fontDescription" type="system" weight="light" pointSize="11"/>
                                                                                     <color key="textColor" red="0.31764705879999999" green="0.20392156859999999" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                                     <nil key="highlightedColor"/>
@@ -1434,7 +1434,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                                                     </variation>
                                                                                 </imageView>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fGI-Tl-ZBt">
-                                                                                    <rect key="frame" x="22" y="11.666666666666657" width="7" height="13.333333333333343"/>
+                                                                                    <rect key="frame" x="22" y="11.666666666666657" width="7" height="13.333333333333336"/>
                                                                                     <fontDescription key="fontDescription" type="system" weight="light" pointSize="11"/>
                                                                                     <color key="textColor" red="0.31764705879999999" green="0.20392156859999999" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                                     <nil key="highlightedColor"/>
@@ -1478,7 +1478,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                                                     </variation>
                                                                                 </imageView>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ROX-wd-IPG">
-                                                                                    <rect key="frame" x="22" y="11.333333333333343" width="7" height="13.333333333333314"/>
+                                                                                    <rect key="frame" x="22" y="11.333333333333343" width="7" height="13.333333333333336"/>
                                                                                     <fontDescription key="fontDescription" type="system" weight="light" pointSize="11"/>
                                                                                     <color key="textColor" red="0.31764705879999999" green="0.20392156859999999" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                                     <nil key="highlightedColor"/>
@@ -1585,7 +1585,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                                     </variation>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Label" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ccg-wK-dqP">
-                                                                    <rect key="frame" x="8" y="175.66666666666663" width="382" height="14.333333333333343"/>
+                                                                    <rect key="frame" x="8" y="175.66666666666666" width="382" height="14.333333333333343"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <nil key="highlightedColor"/>
@@ -1700,7 +1700,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AUTHOR" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q05-Kr-oqw">
-                                                            <rect key="frame" x="8" y="8" width="398" height="18"/>
+                                                            <rect key="frame" x="15" y="11" width="384" height="18"/>
                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                                             <color key="textColor" red="0.58431372549019611" green="0.60784313725490191" blue="0.68235294117647061" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -1709,7 +1709,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                             </variation>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kn0-v9-Deo">
-                                                            <rect key="frame" x="8" y="28" width="398" height="21"/>
+                                                            <rect key="frame" x="15" y="31" width="384" height="21"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -1718,7 +1718,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                             </variation>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v5x-Pt-AlD">
-                                                            <rect key="frame" x="16" y="53" width="382" height="85"/>
+                                                            <rect key="frame" x="23" y="56" width="368" height="79"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                             <color key="textColor" red="0.5725490196078431" green="0.32941176470588235" blue="0.70588235294117641" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -1727,7 +1727,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                             </variation>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Series Begun:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ngL-Ec-5fu">
-                                                            <rect key="frame" x="16" y="166" width="382" height="18"/>
+                                                            <rect key="frame" x="23" y="163" width="368" height="18"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -1736,7 +1736,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                             </variation>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Series Ended:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cuy-BV-nfq">
-                                                            <rect key="frame" x="16" y="188" width="382" height="18"/>
+                                                            <rect key="frame" x="23" y="185" width="368" height="18"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -1745,7 +1745,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                             </variation>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Stats:" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0cd-M4-WYo">
-                                                            <rect key="frame" x="16" y="210" width="382" height="18"/>
+                                                            <rect key="frame" x="23" y="207" width="368" height="18"/>
                                                             <fontDescription key="fontDescription" type="italicSystem" pointSize="15"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -1754,7 +1754,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                             </variation>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notes" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uil-iS-NXE">
-                                                            <rect key="frame" x="16" y="142" width="382" height="18"/>
+                                                            <rect key="frame" x="23" y="139" width="368" height="18"/>
                                                             <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -1807,7 +1807,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZB5-1N-i8r">
-                                                            <rect key="frame" x="10" y="8" width="396" height="221.66666666666666"/>
+                                                            <rect key="frame" x="17" y="11" width="382" height="218.66666666666666"/>
                                                             <fontDescription key="fontDescription" type="system" weight="light" pointSize="12"/>
                                                             <color key="textColor" red="0.31764705879999999" green="0.20392156859999999" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -1867,6 +1867,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8hg-sW-Hmw">
+                                                            <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -2058,13 +2059,13 @@ Please check your Internet connection and also make sure you are logged into you
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o5T-wg-zUJ">
-                                                    <rect key="frame" x="8" y="8" width="398" height="224"/>
+                                                    <rect key="frame" x="15" y="11" width="384" height="218"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sso-2P-Wtb">
-                                                            <rect key="frame" x="0.0" y="0.0" width="398" height="40"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="384" height="40"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Topic" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumFontSize="12" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VUr-2i-RNr">
-                                                                    <rect key="frame" x="16" y="4" width="322" height="32"/>
+                                                                    <rect key="frame" x="16" y="4" width="308" height="32"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="50" id="Pu6-Us-1jx"/>
                                                                     </constraints>
@@ -2081,7 +2082,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                                     </variation>
                                                                 </label>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7l4-11-qty">
-                                                                    <rect key="frame" x="342" y="0.0" width="56" height="40"/>
+                                                                    <rect key="frame" x="328" y="0.0" width="56" height="40"/>
                                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="56" id="1QY-6J-RrC"/>
@@ -2124,7 +2125,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                             </variation>
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DC5-c4-3Dq">
-                                                            <rect key="frame" x="0.0" y="188" width="398" height="36"/>
+                                                            <rect key="frame" x="0.0" y="182" width="384" height="36"/>
                                                             <subviews>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hfu-oT-ZSc">
                                                                     <rect key="frame" x="8" y="0.0" width="33" height="36"/>
@@ -2143,7 +2144,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                                             </variation>
                                                                         </imageView>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QoC-LR-IEr">
-                                                                            <rect key="frame" x="24" y="11.333333333333343" width="7" height="13.333333333333314"/>
+                                                                            <rect key="frame" x="24" y="11.333333333333343" width="7" height="13.333333333333336"/>
                                                                             <fontDescription key="fontDescription" type="system" weight="light" pointSize="11"/>
                                                                             <color key="textColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <nil key="highlightedColor"/>
@@ -2186,7 +2187,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                                             </variation>
                                                                         </imageView>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LGo-tq-czb">
-                                                                            <rect key="frame" x="20" y="11.333333333333343" width="7" height="13.333333333333314"/>
+                                                                            <rect key="frame" x="20" y="11.333333333333343" width="7" height="13.333333333333336"/>
                                                                             <fontDescription key="fontDescription" type="system" weight="light" pointSize="11"/>
                                                                             <color key="textColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <nil key="highlightedColor"/>
@@ -2237,7 +2238,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                                             </variation>
                                                                         </imageView>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vKQ-X2-UgD">
-                                                                            <rect key="frame" x="22" y="11.333333333333343" width="7" height="13.333333333333314"/>
+                                                                            <rect key="frame" x="22" y="11.333333333333343" width="7" height="13.333333333333336"/>
                                                                             <fontDescription key="fontDescription" type="system" weight="light" pointSize="11"/>
                                                                             <color key="textColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <nil key="highlightedColor"/>
@@ -2278,7 +2279,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                                             </variation>
                                                                         </imageView>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r8O-b7-9oe">
-                                                                            <rect key="frame" x="22" y="11.333333333333343" width="7" height="13.333333333333314"/>
+                                                                            <rect key="frame" x="22" y="11.333333333333343" width="7" height="13.333333333333336"/>
                                                                             <fontDescription key="fontDescription" type="system" weight="light" pointSize="11"/>
                                                                             <color key="textColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <nil key="highlightedColor"/>
@@ -2340,7 +2341,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="English" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vkj-PQ-Dlx">
-                                                            <rect key="frame" x="34" y="43" width="94" height="21"/>
+                                                            <rect key="frame" x="33.999999999999993" y="43" width="90.333333333333314" height="21"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="21" id="Rpe-iW-GdF"/>
                                                             </constraints>
@@ -2349,7 +2350,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Fandoms: TorchWood" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Huk-Kh-Qyk">
-                                                            <rect key="frame" x="28" y="67" width="362" height="15.666666666666671"/>
+                                                            <rect key="frame" x="28" y="67" width="348" height="15.666666666666671"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="548" id="In2-Jg-Qr4"/>
                                                                 <constraint firstAttribute="height" constant="21" id="beD-ce-obb"/>
@@ -2365,7 +2366,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                             </variation>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="17 Nov 2014" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AF7-Ms-IXY">
-                                                            <rect key="frame" x="296" y="42" width="94" height="21"/>
+                                                            <rect key="frame" x="285.66666666666669" y="42" width="90.333333333333314" height="21"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="21" id="GoR-ze-LCn"/>
                                                                 <constraint firstAttribute="width" constant="120" id="hg8-i3-w18"/>
@@ -2380,19 +2381,19 @@ Please check your Internet connection and also make sure you are logged into you
                                                             </variation>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Label" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V0u-ho-Dls">
-                                                            <rect key="frame" x="8" y="171.66666666666663" width="382" height="14.333333333333343"/>
+                                                            <rect key="frame" x="8" y="165.66666666666666" width="368" height="14.333333333333343"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Label" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0NV-cj-fsp">
-                                                            <rect key="frame" x="28" y="103.66666666666669" width="362" height="64.333333333333314"/>
+                                                            <rect key="frame" x="28" y="103.66666666666667" width="348" height="58.333333333333329"/>
                                                             <fontDescription key="fontDescription" name="HelveticaNeue-LightItalic" family="Helvetica Neue" pointSize="12"/>
                                                             <color key="textColor" red="0.42745098040000001" green="0.42745098040000001" blue="0.42745098040000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BFP-BQ-ROk">
-                                                            <rect key="frame" x="132" y="43" width="160" height="21"/>
+                                                            <rect key="frame" x="128.33333333333331" y="43" width="153.33333333333331" height="21"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="21" id="L63-GD-3as"/>
                                                             </constraints>
@@ -2401,7 +2402,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a8f-O5-BlW">
-                                                            <rect key="frame" x="28" y="84.666666666666671" width="362" height="17"/>
+                                                            <rect key="frame" x="28" y="84.666666666666671" width="348" height="17"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <color key="textColor" red="0.44705882352941173" green="0.74901960784313726" blue="0.90196078431372551" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -2537,7 +2538,7 @@ Please check your Internet connection and also make sure you are logged into you
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wnZ-d8-1x3">
-                                        <rect key="frame" x="276.66666666666674" y="0.0" width="137.33333333333331" height="44"/>
+                                        <rect key="frame" x="276.66666666666669" y="0.0" width="137.33333333333331" height="44"/>
                                         <state key="normal" title="Next Chapter">
                                             <color key="titleColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -2547,7 +2548,7 @@ Please check your Internet connection and also make sure you are logged into you
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9GD-Ss-iAe">
-                                        <rect key="frame" x="138" y="0.0" width="138.66666666666669" height="44"/>
+                                        <rect key="frame" x="138" y="0.0" width="138.66666666666663" height="44"/>
                                         <state key="normal" title="Contents">
                                             <color key="titleColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -2838,7 +2839,7 @@ Please check your Internet connection and also make sure you are logged into you
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="672"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2VT-qZ-euH">
-                                        <rect key="frame" x="24" y="180" width="366" height="38.333333333333314"/>
+                                        <rect key="frame" x="24" y="180" width="366" height="38.333333333333343"/>
                                         <string key="text">Cannot obtain data. 
 Please check your Internet connection and also make sure you are logged into your AO3 account (try to log in again).</string>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -2898,7 +2899,7 @@ Please check your Internet connection and also make sure you are logged into you
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g54-sZ-Igj">
-                                                    <rect key="frame" x="8" y="12.000000000000002" width="398" height="19.666666666666671"/>
+                                                    <rect key="frame" x="15" y="15" width="384" height="14"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -2961,7 +2962,7 @@ Please check your Internet connection and also make sure you are logged into you
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="672"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JxU-RX-k9y">
-                                        <rect key="frame" x="24" y="180" width="366" height="38.333333333333314"/>
+                                        <rect key="frame" x="24" y="180" width="366" height="38.333333333333343"/>
                                         <string key="text">Cannot obtain data. 
 Please check your Internet connection and also make sure you are logged into your AO3 account (try to log in again).</string>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -3021,7 +3022,7 @@ Please check your Internet connection and also make sure you are logged into you
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1cq-am-hie">
-                                                    <rect key="frame" x="8" y="12.000000000000002" width="398" height="19.666666666666671"/>
+                                                    <rect key="frame" x="15" y="15" width="384" height="14"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -3112,13 +3113,13 @@ Please check your Internet connection and also make sure you are logged into you
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Browse" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VFd-qE-5pi">
-                                                    <rect key="frame" x="60" y="8" width="346" height="28"/>
+                                                    <rect key="frame" x="67" y="11" width="332" height="22"/>
                                                     <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
                                                     <color key="textColor" red="0.88235294117647056" green="0.88235294117647056" blue="0.80784313725490198" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="iUS-Sq-Nt3">
-                                                    <rect key="frame" x="16" y="8" width="28" height="28"/>
+                                                    <rect key="frame" x="23" y="8" width="28" height="28"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="28" id="WmZ-Et-u3k"/>
                                                         <constraint firstAttribute="width" constant="28" id="gx2-9y-KlJ"/>
@@ -3202,13 +3203,13 @@ Please check your Internet connection and also make sure you are logged into you
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wTQ-Yy-mOC">
-                                                    <rect key="frame" x="8" y="8" width="398" height="224"/>
+                                                    <rect key="frame" x="15" y="11" width="384" height="218"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YFd-IL-rpc">
-                                                            <rect key="frame" x="0.0" y="0.0" width="398" height="40"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="384" height="40"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Topic" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumFontSize="12" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ugS-IF-6Ts">
-                                                                    <rect key="frame" x="16" y="4" width="322" height="32"/>
+                                                                    <rect key="frame" x="16" y="4" width="308" height="32"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="50" id="ClB-dF-LIT"/>
                                                                     </constraints>
@@ -3225,7 +3226,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                                     </variation>
                                                                 </label>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kmD-2c-q3b">
-                                                                    <rect key="frame" x="342" y="0.0" width="56" height="40"/>
+                                                                    <rect key="frame" x="328" y="0.0" width="56" height="40"/>
                                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="56" id="z5j-Fy-0vR"/>
@@ -3269,7 +3270,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                             </variation>
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="St1-sz-id4">
-                                                            <rect key="frame" x="0.0" y="188" width="398" height="36"/>
+                                                            <rect key="frame" x="0.0" y="182" width="384" height="36"/>
                                                             <subviews>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q7s-Zv-PEi">
                                                                     <rect key="frame" x="8" y="0.0" width="33" height="36"/>
@@ -3288,7 +3289,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                                             </variation>
                                                                         </imageView>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HQ1-NE-8Xv">
-                                                                            <rect key="frame" x="24" y="11.333333333333343" width="7" height="13.333333333333314"/>
+                                                                            <rect key="frame" x="24" y="11.333333333333343" width="7" height="13.333333333333336"/>
                                                                             <fontDescription key="fontDescription" type="system" weight="light" pointSize="11"/>
                                                                             <color key="textColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <nil key="highlightedColor"/>
@@ -3334,7 +3335,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                                             </variation>
                                                                         </imageView>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kY2-EE-mLr">
-                                                                            <rect key="frame" x="20" y="11.333333333333343" width="7" height="13.333333333333314"/>
+                                                                            <rect key="frame" x="20" y="11.333333333333343" width="7" height="13.333333333333336"/>
                                                                             <fontDescription key="fontDescription" type="system" weight="light" pointSize="11"/>
                                                                             <color key="textColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <nil key="highlightedColor"/>
@@ -3388,7 +3389,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                                             </variation>
                                                                         </imageView>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cCv-tz-0zs">
-                                                                            <rect key="frame" x="22" y="11.666666666666657" width="7" height="13.333333333333343"/>
+                                                                            <rect key="frame" x="22" y="11.666666666666657" width="7" height="13.333333333333336"/>
                                                                             <fontDescription key="fontDescription" type="system" weight="light" pointSize="11"/>
                                                                             <color key="textColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <nil key="highlightedColor"/>
@@ -3432,7 +3433,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                                             </variation>
                                                                         </imageView>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fOb-J6-ufW">
-                                                                            <rect key="frame" x="22" y="11.333333333333343" width="7" height="13.333333333333314"/>
+                                                                            <rect key="frame" x="22" y="11.333333333333343" width="7" height="13.333333333333336"/>
                                                                             <fontDescription key="fontDescription" type="system" weight="light" pointSize="11"/>
                                                                             <color key="textColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <nil key="highlightedColor"/>
@@ -3496,7 +3497,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="English" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QIz-6y-VGT">
-                                                            <rect key="frame" x="34" y="43" width="97.666666666666657" height="21"/>
+                                                            <rect key="frame" x="34.000000000000007" y="43" width="93.666666666666686" height="21"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="21" id="HgX-qO-clF"/>
                                                             </constraints>
@@ -3508,7 +3509,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                             </variation>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Fandoms: TorchWood" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2kE-Of-Bc8">
-                                                            <rect key="frame" x="28" y="67" width="362" height="15.666666666666671"/>
+                                                            <rect key="frame" x="28" y="67" width="348" height="15.666666666666671"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="21" id="FSd-CZ-74I"/>
                                                                 <constraint firstAttribute="width" constant="548" id="epG-j6-TQC"/>
@@ -3527,7 +3528,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                             </variation>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v5E-Yl-adK">
-                                                            <rect key="frame" x="28" y="84.666666666666671" width="362" height="17"/>
+                                                            <rect key="frame" x="28" y="84.666666666666671" width="348" height="17"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <color key="textColor" red="0.44705882352941173" green="0.74901960784313726" blue="0.90196078431372551" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -3536,7 +3537,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                             </variation>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="17 Nov 2014" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O82-Cm-joz">
-                                                            <rect key="frame" x="292.33333333333326" y="42" width="97.666666666666686" height="21"/>
+                                                            <rect key="frame" x="282.33333333333331" y="42" width="93.666666666666686" height="21"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="120" id="3PW-gl-ZC9"/>
                                                                 <constraint firstAttribute="height" constant="21" id="y2S-kg-xei"/>
@@ -3554,7 +3555,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                             </variation>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Label" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ijh-as-Qrd">
-                                                            <rect key="frame" x="8" y="171.66666666666663" width="382" height="14.333333333333343"/>
+                                                            <rect key="frame" x="8" y="165.66666666666666" width="368" height="14.333333333333343"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -3563,7 +3564,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                             </variation>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Label" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B4l-Od-GeY">
-                                                            <rect key="frame" x="28" y="103.66666666666669" width="362" height="63.333333333333314"/>
+                                                            <rect key="frame" x="28" y="103.66666666666667" width="348" height="57.333333333333329"/>
                                                             <fontDescription key="fontDescription" name="HelveticaNeue-LightItalic" family="Helvetica Neue" pointSize="12"/>
                                                             <color key="textColor" red="0.42745098039215684" green="0.42745098039215684" blue="0.42745098039215684" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -3572,7 +3573,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                             </variation>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ELq-6D-xID">
-                                                            <rect key="frame" x="133.66666666666669" y="43" width="156.66666666666669" height="21"/>
+                                                            <rect key="frame" x="129.66666666666669" y="43" width="150.66666666666669" height="21"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="21" id="Wp2-L0-FjY"/>
                                                             </constraints>
@@ -3930,13 +3931,13 @@ Please check your Internet connection and also make sure you are logged into you
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B2Q-4y-ueW">
-                                                    <rect key="frame" x="8" y="8" width="398" height="224"/>
+                                                    <rect key="frame" x="15" y="11" width="384" height="218"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Hm-DA-PbH">
-                                                            <rect key="frame" x="0.0" y="0.0" width="398" height="40"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="384" height="40"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Topic" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumFontSize="12" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CbL-S4-54X">
-                                                                    <rect key="frame" x="16" y="4" width="270" height="32"/>
+                                                                    <rect key="frame" x="16" y="4" width="256" height="32"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="50" id="Qf3-FS-N8V"/>
                                                                     </constraints>
@@ -3953,7 +3954,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                                     </variation>
                                                                 </label>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bhA-6K-Gch">
-                                                                    <rect key="frame" x="344" y="0.0" width="54" height="40"/>
+                                                                    <rect key="frame" x="330" y="0.0" width="54" height="40"/>
                                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="54" id="EQf-H0-snO"/>
@@ -3965,7 +3966,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                                     </connections>
                                                                 </button>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dtg-fu-QcH">
-                                                                    <rect key="frame" x="288" y="0.0" width="54" height="40"/>
+                                                                    <rect key="frame" x="274" y="0.0" width="54" height="40"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="54" id="t6t-qW-WCc"/>
                                                                     </constraints>
@@ -4009,7 +4010,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                             </variation>
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KFf-wy-kZ2">
-                                                            <rect key="frame" x="0.0" y="188" width="398" height="36"/>
+                                                            <rect key="frame" x="0.0" y="182" width="384" height="36"/>
                                                             <subviews>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5gk-SQ-cSD">
                                                                     <rect key="frame" x="8" y="0.0" width="31" height="36"/>
@@ -4028,7 +4029,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                                             </variation>
                                                                         </imageView>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KHh-Cf-Hty">
-                                                                            <rect key="frame" x="22" y="11.333333333333343" width="7" height="13.333333333333314"/>
+                                                                            <rect key="frame" x="22" y="11.333333333333343" width="7" height="13.333333333333336"/>
                                                                             <fontDescription key="fontDescription" type="system" weight="light" pointSize="11"/>
                                                                             <color key="textColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <nil key="highlightedColor"/>
@@ -4074,7 +4075,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                                             </variation>
                                                                         </imageView>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SVu-xG-6JQ">
-                                                                            <rect key="frame" x="20" y="11.333333333333343" width="7" height="13.333333333333314"/>
+                                                                            <rect key="frame" x="20" y="11.333333333333343" width="7" height="13.333333333333336"/>
                                                                             <fontDescription key="fontDescription" type="system" weight="light" pointSize="11"/>
                                                                             <color key="textColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <nil key="highlightedColor"/>
@@ -4128,7 +4129,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                                             </variation>
                                                                         </imageView>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yAO-as-kET">
-                                                                            <rect key="frame" x="22" y="11.666666666666657" width="7" height="13.333333333333343"/>
+                                                                            <rect key="frame" x="22" y="11.666666666666657" width="7" height="13.333333333333336"/>
                                                                             <fontDescription key="fontDescription" type="system" weight="light" pointSize="11"/>
                                                                             <color key="textColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <nil key="highlightedColor"/>
@@ -4172,7 +4173,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                                             </variation>
                                                                         </imageView>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vlh-gM-gr1">
-                                                                            <rect key="frame" x="22" y="11.333333333333343" width="7" height="13.333333333333314"/>
+                                                                            <rect key="frame" x="22" y="11.333333333333343" width="7" height="13.333333333333336"/>
                                                                             <fontDescription key="fontDescription" type="system" weight="light" pointSize="11"/>
                                                                             <color key="textColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <nil key="highlightedColor"/>
@@ -4231,7 +4232,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="English" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2n0-Ld-9Ht">
-                                                            <rect key="frame" x="34" y="43" width="94" height="21"/>
+                                                            <rect key="frame" x="33.999999999999993" y="43" width="90.333333333333314" height="21"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="21" id="0cJ-ug-jtC"/>
                                                             </constraints>
@@ -4243,7 +4244,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                             </variation>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Fandoms: TorchWood" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jRB-4q-l7U">
-                                                            <rect key="frame" x="28" y="69" width="362" height="21"/>
+                                                            <rect key="frame" x="28" y="69" width="348" height="21"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="548" id="Sic-K5-QTg"/>
                                                                 <constraint firstAttribute="height" constant="21" id="q00-Rl-hHm"/>
@@ -4261,7 +4262,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                             </variation>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="17 Nov 2014" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yro-RH-hWL">
-                                                            <rect key="frame" x="296" y="44" width="94" height="21"/>
+                                                            <rect key="frame" x="285.66666666666669" y="44" width="90.333333333333314" height="21"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="120" id="EgI-q1-qsj"/>
                                                                 <constraint firstAttribute="height" constant="21" id="l2k-A7-zTc"/>
@@ -4279,7 +4280,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                             </variation>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Label" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EtU-Xl-SPN">
-                                                            <rect key="frame" x="8" y="171.66666666666663" width="382" height="14.333333333333343"/>
+                                                            <rect key="frame" x="8" y="165.66666666666666" width="368" height="14.333333333333343"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -4288,7 +4289,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                             </variation>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Label" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5oW-a4-ug6">
-                                                            <rect key="frame" x="28" y="111" width="362" height="57"/>
+                                                            <rect key="frame" x="28" y="111" width="348" height="51"/>
                                                             <fontDescription key="fontDescription" name="HelveticaNeue-LightItalic" family="Helvetica Neue" pointSize="12"/>
                                                             <color key="textColor" red="0.37456597219999999" green="0.37456597219999999" blue="0.37456597219999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -4297,7 +4298,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                             </variation>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8j0-jh-8fV">
-                                                            <rect key="frame" x="132" y="43" width="160" height="21"/>
+                                                            <rect key="frame" x="128.33333333333331" y="43" width="153.33333333333331" height="21"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="21" id="yOb-Yg-PaN"/>
                                                             </constraints>
@@ -4309,7 +4310,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                             </variation>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qdK-Qd-jga">
-                                                            <rect key="frame" x="28" y="92" width="362" height="17"/>
+                                                            <rect key="frame" x="28" y="92" width="348" height="17"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <color key="textColor" red="0.44705882352941173" green="0.74901960784313726" blue="0.90196078431372551" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -4636,7 +4637,7 @@ Please check your Internet connection and also make sure you are logged into you
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notify about new Recommendations (Pro only)" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumFontSize="9" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="unF-Y4-c6i">
-                                <rect key="frame" x="20" y="61.666666666666664" width="317" height="15.666666666666679"/>
+                                <rect key="frame" x="20" y="61.666666666666664" width="317" height="15.666666666666664"/>
                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="13"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -4653,7 +4654,7 @@ Please check your Internet connection and also make sure you are logged into you
                                 </connections>
                             </switch>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" text="Further app improvements rely on your support! If you find app useful, pls consider supporting it by leaving a tip!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="6" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1uP-Y7-fEC">
-                                <rect key="frame" x="0.0" y="89" width="414" height="26.333333333333343"/>
+                                <rect key="frame" x="0.0" y="89" width="414" height="26.333333333333329"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -4675,7 +4676,7 @@ Please check your Internet connection and also make sure you are logged into you
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mu3-7i-zXm">
-                                                    <rect key="frame" x="24" y="12.000000000000002" width="366" height="19.666666666666671"/>
+                                                    <rect key="frame" x="31" y="15" width="352" height="14"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -4699,10 +4700,10 @@ Please check your Internet connection and also make sure you are logged into you
                                 </connections>
                             </tableView>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Xbx-H9-77A">
-                                <rect key="frame" x="20" y="123.33333333333336" width="374" height="28.666666666666643"/>
+                                <rect key="frame" x="20" y="123.33333333333336" width="374" height="28.666666666666671"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VvP-t4-Q81">
-                                        <rect key="frame" x="0.0" y="0.0" width="123.66666666666666" height="28.666666666666657"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="123.66666666666667" height="28.666666666666668"/>
                                         <state key="normal">
                                             <attributedString key="attributedTitle">
                                                 <fragment content="Generous Tip of $1.99">
@@ -4719,7 +4720,7 @@ Please check your Internet connection and also make sure you are logged into you
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="e3R-le-oJp">
-                                        <rect key="frame" x="131.66666666666663" y="0.0" width="116.33333333333334" height="28.666666666666657"/>
+                                        <rect key="frame" x="131.66666666666666" y="0.0" width="116.33333333333334" height="28.666666666666668"/>
                                         <state key="normal">
                                             <attributedString key="attributedTitle">
                                                 <fragment content="Massive Tip of $2.99">
@@ -4736,7 +4737,7 @@ Please check your Internet connection and also make sure you are logged into you
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WS0-oc-9Mj">
-                                        <rect key="frame" x="256" y="0.0" width="118" height="28.666666666666657"/>
+                                        <rect key="frame" x="256" y="0.0" width="118" height="28.666666666666668"/>
                                         <state key="normal">
                                             <attributedString key="attributedTitle">
                                                 <fragment content="Amazing Tip of $4.99">
@@ -4959,10 +4960,10 @@ If you don't see a subscription but are still being charged, make sure that you'
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="l91-Ya-f2M">
-                                <rect key="frame" x="87" y="117.33333333333333" width="240" height="79.999999999999986"/>
+                                <rect key="frame" x="87" y="117.33333333333334" width="240" height="80"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="7jN-y2-gxM">
-                                        <rect key="frame" x="8" y="0.0" width="224" height="79.999999999999972"/>
+                                        <rect key="frame" x="8" y="0.0" width="224" height="80"/>
                                         <subviews>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Passcode" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="xwH-vJ-b34">
                                                 <rect key="frame" x="0.0" y="0.0" width="224" height="39"/>
@@ -4996,7 +4997,7 @@ If you don't see a subscription but are still being charged, make sure that you'
                                                 </constraints>
                                             </view>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Repeat Passcode" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="TRV-NP-j8b">
-                                                <rect key="frame" x="0.0" y="41" width="224" height="38.999999999999972"/>
+                                                <rect key="frame" x="0.0" y="41" width="224" height="39"/>
                                                 <color key="tintColor" red="0.59607843140000005" green="0.36862745099999999" blue="0.37254901959999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="300" id="87a-jr-3Hf"/>
@@ -5063,7 +5064,7 @@ If you don't see a subscription but are still being charged, make sure that you'
                                 </variation>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You can use TouchID to protect the app. Also please set a custom passcode for emergency case." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N9t-98-1gG">
-                                <rect key="frame" x="40" y="20" width="334" height="57.333333333333343"/>
+                                <rect key="frame" x="40" y="20.000000000000004" width="334" height="57.333333333333343"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <color key="textColor" red="0.31764705879999999" green="0.20392156859999999" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -5072,7 +5073,7 @@ If you don't see a subscription but are still being charged, make sure that you'
                                 </variation>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Protect App with TouchID or passcode" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="arv-mL-Xqe">
-                                <rect key="frame" x="20" y="301.33333333333326" width="309" height="15.666666666666686"/>
+                                <rect key="frame" x="20" y="301.33333333333331" width="309" height="15.666666666666686"/>
                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="13"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -5159,7 +5160,7 @@ If you don't see a subscription but are still being charged, make sure that you'
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="672"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sync with AO3" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="35J-U3-wfK">
-                                <rect key="frame" x="118" y="34" width="178.66666666666669" height="33.666666666666657"/>
+                                <rect key="frame" x="117.99999999999999" y="34" width="178.66666666666663" height="33.666666666666657"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="28"/>
                                 <color key="textColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -5319,7 +5320,7 @@ If you don't see a subscription but are still being charged, make sure that you'
                                 </variation>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HZM-av-tdm">
-                                <rect key="frame" x="153.66666666666669" y="308.66666666666669" width="107.00000000000006" height="29"/>
+                                <rect key="frame" x="153.66666666666666" y="308.66666666666669" width="106.99999999999997" height="29"/>
                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
                                 <size key="titleShadowOffset" width="1" height="1"/>
                                 <state key="normal" title="Forgot Password">
@@ -5500,13 +5501,13 @@ Please check your Internet connection and also make sure you are logged into you
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="71x-a9-gwE">
-                                                    <rect key="frame" x="8" y="8" width="398" height="84"/>
+                                                    <rect key="frame" x="15" y="11" width="384" height="78"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sOy-c3-Aux">
-                                                            <rect key="frame" x="0.0" y="0.0" width="398" height="84"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="384" height="78"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Topic" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="9" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Geo-6e-CAT">
-                                                                    <rect key="frame" x="16" y="4" width="322" height="76"/>
+                                                                    <rect key="frame" x="16" y="4" width="308" height="70"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="50" id="bZC-wg-4Dt"/>
                                                                     </constraints>
@@ -5523,7 +5524,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                                     </variation>
                                                                 </label>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CaE-Ge-EDS">
-                                                                    <rect key="frame" x="342" y="0.0" width="56" height="84"/>
+                                                                    <rect key="frame" x="328" y="0.0" width="56" height="78"/>
                                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="56" id="9sI-Im-F4d"/>
@@ -5786,13 +5787,13 @@ Major Problems:
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e43-xT-xfS">
-                                                    <rect key="frame" x="8" y="8" width="398" height="224"/>
+                                                    <rect key="frame" x="15" y="11" width="384" height="218"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hHJ-3A-iJ2">
-                                                            <rect key="frame" x="0.0" y="0.0" width="398" height="40"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="384" height="40"/>
                                                             <subviews>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e5T-hr-Pt6" customClass="ButtonWithSection" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
-                                                                    <rect key="frame" x="350" y="4" width="40" height="32"/>
+                                                                    <rect key="frame" x="336" y="4" width="40" height="32"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="40" id="bsl-aT-gBn"/>
                                                                     </constraints>
@@ -5802,7 +5803,7 @@ Major Problems:
                                                                     </connections>
                                                                 </button>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Topic" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumFontSize="12" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4VT-L1-fAL">
-                                                                    <rect key="frame" x="16" y="4" width="284" height="32"/>
+                                                                    <rect key="frame" x="16" y="4" width="270" height="32"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="50" id="wTJ-xF-Kqn"/>
                                                                     </constraints>
@@ -5819,7 +5820,7 @@ Major Problems:
                                                                     </variation>
                                                                 </label>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2ao-YX-uFQ" customClass="ButtonWithSection" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
-                                                                    <rect key="frame" x="308" y="5" width="36" height="30"/>
+                                                                    <rect key="frame" x="294" y="5" width="36" height="30"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="30" id="kK4-xv-1oh"/>
                                                                         <constraint firstAttribute="width" constant="36" id="t1f-1E-eB5"/>
@@ -5853,7 +5854,7 @@ Major Problems:
                                                             </variation>
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dms-oX-Eos">
-                                                            <rect key="frame" x="0.0" y="188" width="398" height="36"/>
+                                                            <rect key="frame" x="0.0" y="182" width="384" height="36"/>
                                                             <subviews>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hhx-OB-Z6f">
                                                                     <rect key="frame" x="8" y="-0.33333333333334281" width="33" height="36"/>
@@ -5872,7 +5873,7 @@ Major Problems:
                                                                             </variation>
                                                                         </imageView>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cbc-0w-Gar">
-                                                                            <rect key="frame" x="24" y="11.333333333333343" width="7" height="13.333333333333343"/>
+                                                                            <rect key="frame" x="24" y="11.333333333333343" width="7" height="13.333333333333336"/>
                                                                             <fontDescription key="fontDescription" type="system" weight="light" pointSize="11"/>
                                                                             <color key="textColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <nil key="highlightedColor"/>
@@ -5918,7 +5919,7 @@ Major Problems:
                                                                             </variation>
                                                                         </imageView>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8zv-1z-prL">
-                                                                            <rect key="frame" x="20" y="11.333333333333343" width="7" height="13.333333333333343"/>
+                                                                            <rect key="frame" x="20" y="11.333333333333343" width="7" height="13.333333333333336"/>
                                                                             <fontDescription key="fontDescription" type="system" weight="light" pointSize="11"/>
                                                                             <color key="textColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <nil key="highlightedColor"/>
@@ -5972,7 +5973,7 @@ Major Problems:
                                                                             </variation>
                                                                         </imageView>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Csm-5L-6Gp">
-                                                                            <rect key="frame" x="22" y="11.666666666666686" width="7" height="13.333333333333314"/>
+                                                                            <rect key="frame" x="22" y="11.666666666666686" width="7" height="13.333333333333336"/>
                                                                             <fontDescription key="fontDescription" type="system" weight="light" pointSize="11"/>
                                                                             <color key="textColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <nil key="highlightedColor"/>
@@ -6016,7 +6017,7 @@ Major Problems:
                                                                             </variation>
                                                                         </imageView>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6WZ-X0-Dx0">
-                                                                            <rect key="frame" x="22" y="11.333333333333343" width="7" height="13.333333333333343"/>
+                                                                            <rect key="frame" x="22" y="11.333333333333343" width="7" height="13.333333333333336"/>
                                                                             <fontDescription key="fontDescription" type="system" weight="light" pointSize="11"/>
                                                                             <color key="textColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <nil key="highlightedColor"/>
@@ -6075,7 +6076,7 @@ Major Problems:
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="English" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X4z-9n-kqG">
-                                                            <rect key="frame" x="34" y="43" width="94" height="21"/>
+                                                            <rect key="frame" x="33.999999999999993" y="43" width="90.333333333333314" height="21"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="21" id="K8k-HI-jLH"/>
                                                             </constraints>
@@ -6087,7 +6088,7 @@ Major Problems:
                                                             </variation>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Fandoms:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u0i-LR-414">
-                                                            <rect key="frame" x="28" y="68" width="362" height="21"/>
+                                                            <rect key="frame" x="28" y="68" width="348" height="21"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="21" id="568-On-Afe"/>
                                                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="21" id="MLx-sa-e7A"/>
@@ -6107,7 +6108,7 @@ Major Problems:
                                                             </variation>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="17 Nov 2014" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vLJ-ph-As1">
-                                                            <rect key="frame" x="296" y="44" width="94" height="21"/>
+                                                            <rect key="frame" x="285.66666666666669" y="44" width="90.333333333333314" height="21"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="120" id="Fq8-aT-u56"/>
                                                                 <constraint firstAttribute="height" constant="21" id="yFG-74-lQY"/>
@@ -6125,7 +6126,7 @@ Major Problems:
                                                             </variation>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Label" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yxf-WI-AV9">
-                                                            <rect key="frame" x="8" y="171.66666666666663" width="382" height="14.333333333333343"/>
+                                                            <rect key="frame" x="8" y="165.66666666666666" width="368" height="14.333333333333343"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -6134,7 +6135,7 @@ Major Problems:
                                                             </variation>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Label" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B4h-2r-oZZ">
-                                                            <rect key="frame" x="28" y="110" width="362" height="57"/>
+                                                            <rect key="frame" x="28" y="110" width="348" height="51"/>
                                                             <fontDescription key="fontDescription" name="HelveticaNeue-LightItalic" family="Helvetica Neue" pointSize="12"/>
                                                             <color key="textColor" red="0.42745098039215684" green="0.42745098039215684" blue="0.42745098039215684" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -6143,7 +6144,7 @@ Major Problems:
                                                             </variation>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h1l-gt-NVP">
-                                                            <rect key="frame" x="132" y="43" width="160" height="21"/>
+                                                            <rect key="frame" x="128.33333333333331" y="43" width="153.33333333333331" height="21"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="21" id="QjL-aq-Skn"/>
                                                             </constraints>
@@ -6155,7 +6156,7 @@ Major Problems:
                                                             </variation>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v3N-gh-FTO">
-                                                            <rect key="frame" x="28" y="91" width="362" height="17"/>
+                                                            <rect key="frame" x="28" y="91" width="348" height="17"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <color key="textColor" red="0.44705882352941173" green="0.74901960784313726" blue="0.90196078431372551" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -6334,7 +6335,7 @@ Major Problems:
                                 </variation>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What's your main fandom? ❤️" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="9" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fcf-bB-WV2">
-                                <rect key="frame" x="36" y="248.00000000000003" width="342" height="21.666666666666714"/>
+                                <rect key="frame" x="36" y="247.99999999999997" width="342" height="21.666666666666657"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <color key="textColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -6525,13 +6526,13 @@ Please check your Internet connection and also make sure you are logged into you
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CWx-LG-lnX">
-                                                    <rect key="frame" x="8" y="8" width="398" height="224"/>
+                                                    <rect key="frame" x="15" y="11" width="384" height="218"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d7x-vh-kfu">
-                                                            <rect key="frame" x="0.0" y="0.0" width="398" height="40"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="384" height="40"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Topic" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumFontSize="12" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fpZ-8Y-LTR">
-                                                                    <rect key="frame" x="16" y="4" width="270" height="32"/>
+                                                                    <rect key="frame" x="16" y="4" width="256" height="32"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="50" id="d2J-Pd-j0u"/>
                                                                     </constraints>
@@ -6548,7 +6549,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                                     </variation>
                                                                 </label>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YAD-5h-Had">
-                                                                    <rect key="frame" x="344" y="0.0" width="54" height="40"/>
+                                                                    <rect key="frame" x="330" y="0.0" width="54" height="40"/>
                                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="54" id="CLc-4t-msa"/>
@@ -6560,7 +6561,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                                     </connections>
                                                                 </button>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zed-K6-ScZ">
-                                                                    <rect key="frame" x="288" y="0.0" width="54" height="40"/>
+                                                                    <rect key="frame" x="274" y="0.0" width="54" height="40"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="54" id="SBH-05-GED"/>
                                                                     </constraints>
@@ -6604,7 +6605,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                             </variation>
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qNG-ae-04i">
-                                                            <rect key="frame" x="0.0" y="188" width="398" height="36"/>
+                                                            <rect key="frame" x="0.0" y="182" width="384" height="36"/>
                                                             <subviews>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C0A-FZ-PSX">
                                                                     <rect key="frame" x="8" y="0.0" width="31" height="36"/>
@@ -6623,7 +6624,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                                             </variation>
                                                                         </imageView>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EWF-uJ-UPo">
-                                                                            <rect key="frame" x="22" y="11.333333333333343" width="7" height="13.333333333333314"/>
+                                                                            <rect key="frame" x="22" y="11.333333333333343" width="7" height="13.333333333333336"/>
                                                                             <fontDescription key="fontDescription" type="system" weight="light" pointSize="11"/>
                                                                             <color key="textColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <nil key="highlightedColor"/>
@@ -6669,7 +6670,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                                             </variation>
                                                                         </imageView>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YVp-AJ-IPd">
-                                                                            <rect key="frame" x="20" y="11.333333333333343" width="7" height="13.333333333333314"/>
+                                                                            <rect key="frame" x="20" y="11.333333333333343" width="7" height="13.333333333333336"/>
                                                                             <fontDescription key="fontDescription" type="system" weight="light" pointSize="11"/>
                                                                             <color key="textColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <nil key="highlightedColor"/>
@@ -6723,7 +6724,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                                             </variation>
                                                                         </imageView>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4iA-ni-4qk">
-                                                                            <rect key="frame" x="22" y="11.666666666666657" width="7" height="13.333333333333343"/>
+                                                                            <rect key="frame" x="22" y="11.666666666666657" width="7" height="13.333333333333336"/>
                                                                             <fontDescription key="fontDescription" type="system" weight="light" pointSize="11"/>
                                                                             <color key="textColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <nil key="highlightedColor"/>
@@ -6767,7 +6768,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                                             </variation>
                                                                         </imageView>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Aym-w0-65h">
-                                                                            <rect key="frame" x="22" y="11.333333333333343" width="7" height="13.333333333333314"/>
+                                                                            <rect key="frame" x="22" y="11.333333333333343" width="7" height="13.333333333333336"/>
                                                                             <fontDescription key="fontDescription" type="system" weight="light" pointSize="11"/>
                                                                             <color key="textColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <nil key="highlightedColor"/>
@@ -6826,7 +6827,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="English" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XNO-sV-cG8">
-                                                            <rect key="frame" x="34" y="43" width="94" height="21"/>
+                                                            <rect key="frame" x="33.999999999999993" y="43" width="90.333333333333314" height="21"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="21" id="Jf8-8l-Pkf"/>
                                                             </constraints>
@@ -6838,7 +6839,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                             </variation>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Fandoms: TorchWood" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sfx-4U-hTM">
-                                                            <rect key="frame" x="28" y="68" width="362" height="26"/>
+                                                            <rect key="frame" x="28" y="68" width="348" height="26"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="548" id="LSr-8H-CBA"/>
                                                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="21" id="XFo-hV-zHR"/>
@@ -6857,7 +6858,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                             </variation>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="17 Nov 2014" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ICa-g0-KHF">
-                                                            <rect key="frame" x="296" y="44" width="94" height="21"/>
+                                                            <rect key="frame" x="285.66666666666669" y="44" width="90.333333333333314" height="21"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="21" id="NT6-UN-zoY"/>
                                                                 <constraint firstAttribute="width" constant="120" id="Xnj-yf-wwd"/>
@@ -6875,7 +6876,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                             </variation>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Label" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VxR-6U-HPo">
-                                                            <rect key="frame" x="8" y="171.66666666666663" width="382" height="14.333333333333343"/>
+                                                            <rect key="frame" x="8" y="165.66666666666666" width="368" height="14.333333333333343"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -6884,7 +6885,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                             </variation>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Label" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="68l-ue-rnj">
-                                                            <rect key="frame" x="28" y="113" width="362" height="55"/>
+                                                            <rect key="frame" x="28" y="113" width="348" height="49"/>
                                                             <fontDescription key="fontDescription" name="HelveticaNeue-LightItalic" family="Helvetica Neue" pointSize="12"/>
                                                             <color key="textColor" red="0.42745098039215684" green="0.42745098039215684" blue="0.42745098039215684" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -6893,7 +6894,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                             </variation>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AU5-ba-foJ">
-                                                            <rect key="frame" x="132" y="43" width="160" height="21"/>
+                                                            <rect key="frame" x="128.33333333333331" y="43" width="153.33333333333331" height="21"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="21" id="Cdx-pJ-V4F"/>
                                                             </constraints>
@@ -6905,7 +6906,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                             </variation>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bQ4-f1-uVg">
-                                                            <rect key="frame" x="28" y="96" width="362" height="17"/>
+                                                            <rect key="frame" x="28" y="96" width="348" height="17"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <color key="textColor" red="0.44705882352941173" green="0.74901960784313726" blue="0.90196078431372551" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -7178,7 +7179,7 @@ Please check your Internet connection and also make sure you are logged into you
                                 </variation>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Recommendations" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="6" baselineAdjustment="alignBaselines" minimumFontSize="8" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="juB-Iz-l0b">
-                                <rect key="frame" x="20" y="2" width="374" height="14.666666666666671"/>
+                                <rect key="frame" x="20" y="1.9999999999999991" width="374" height="14.666666666666664"/>
                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="12"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -7198,13 +7199,13 @@ Please check your Internet connection and also make sure you are logged into you
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h8G-E7-f1u">
-                                                    <rect key="frame" x="8" y="8" width="398" height="224"/>
+                                                    <rect key="frame" x="15" y="11" width="384" height="218"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SHv-Ri-eK1">
-                                                            <rect key="frame" x="0.0" y="0.0" width="398" height="40"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="384" height="40"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Topic" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumFontSize="12" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9nb-J7-hFR">
-                                                                    <rect key="frame" x="16" y="4" width="270" height="32"/>
+                                                                    <rect key="frame" x="16" y="4" width="256" height="32"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="50" id="THd-41-snF"/>
                                                                     </constraints>
@@ -7221,7 +7222,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                                     </variation>
                                                                 </label>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5gf-TD-udM">
-                                                                    <rect key="frame" x="344" y="0.0" width="54" height="40"/>
+                                                                    <rect key="frame" x="330" y="0.0" width="54" height="40"/>
                                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="54" id="7oy-Vx-1ac"/>
@@ -7233,7 +7234,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                                     </connections>
                                                                 </button>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="czr-FR-bvI">
-                                                                    <rect key="frame" x="288" y="0.0" width="54" height="40"/>
+                                                                    <rect key="frame" x="274" y="0.0" width="54" height="40"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="54" id="eFH-Iy-Ej2"/>
                                                                     </constraints>
@@ -7277,7 +7278,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                             </variation>
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IIn-gn-UuU">
-                                                            <rect key="frame" x="0.0" y="188" width="398" height="36"/>
+                                                            <rect key="frame" x="0.0" y="182" width="384" height="36"/>
                                                             <subviews>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h7y-O8-dIb">
                                                                     <rect key="frame" x="8" y="-0.66666666666665719" width="31" height="36"/>
@@ -7296,7 +7297,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                                             </variation>
                                                                         </imageView>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SUT-fl-WuF">
-                                                                            <rect key="frame" x="22" y="11.666666666666657" width="7" height="13.333333333333343"/>
+                                                                            <rect key="frame" x="22" y="11.666666666666657" width="7" height="13.333333333333336"/>
                                                                             <fontDescription key="fontDescription" type="system" weight="light" pointSize="11"/>
                                                                             <color key="textColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <nil key="highlightedColor"/>
@@ -7342,7 +7343,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                                             </variation>
                                                                         </imageView>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z7a-zd-tYx">
-                                                                            <rect key="frame" x="20" y="11.666666666666657" width="7" height="13.333333333333343"/>
+                                                                            <rect key="frame" x="20" y="11.666666666666657" width="7" height="13.333333333333336"/>
                                                                             <fontDescription key="fontDescription" type="system" weight="light" pointSize="11"/>
                                                                             <color key="textColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <nil key="highlightedColor"/>
@@ -7396,7 +7397,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                                             </variation>
                                                                         </imageView>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IfZ-dz-d0u">
-                                                                            <rect key="frame" x="22" y="11.666666666666657" width="7" height="13.333333333333343"/>
+                                                                            <rect key="frame" x="22" y="11.666666666666657" width="7" height="13.333333333333336"/>
                                                                             <fontDescription key="fontDescription" type="system" weight="light" pointSize="11"/>
                                                                             <color key="textColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <nil key="highlightedColor"/>
@@ -7440,7 +7441,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                                             </variation>
                                                                         </imageView>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NHz-sV-iLU">
-                                                                            <rect key="frame" x="22" y="11.666666666666657" width="7" height="13.333333333333343"/>
+                                                                            <rect key="frame" x="22" y="11.666666666666657" width="7" height="13.333333333333336"/>
                                                                             <fontDescription key="fontDescription" type="system" weight="light" pointSize="11"/>
                                                                             <color key="textColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <nil key="highlightedColor"/>
@@ -7499,7 +7500,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="English" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7f5-yi-WOf">
-                                                            <rect key="frame" x="34" y="43" width="94" height="21"/>
+                                                            <rect key="frame" x="33.999999999999993" y="43" width="90.333333333333314" height="21"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="21" id="R42-nL-QJq"/>
                                                             </constraints>
@@ -7511,7 +7512,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                             </variation>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Fandoms: TorchWood" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kgb-E2-Ggc">
-                                                            <rect key="frame" x="28" y="68" width="362" height="26"/>
+                                                            <rect key="frame" x="28" y="68" width="348" height="26"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="26" id="BAD-0g-Jnk"/>
                                                                 <constraint firstAttribute="width" constant="548" id="PP0-Ek-GFf"/>
@@ -7530,7 +7531,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                             </variation>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="17 Nov 2014" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SQg-IR-wxd">
-                                                            <rect key="frame" x="296" y="44" width="94" height="21"/>
+                                                            <rect key="frame" x="285.66666666666669" y="44" width="90.333333333333314" height="21"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="21" id="fqI-cZ-XeV"/>
                                                                 <constraint firstAttribute="width" constant="120" id="t4i-0i-x2h"/>
@@ -7548,7 +7549,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                             </variation>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Label" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Aro-oq-Q66">
-                                                            <rect key="frame" x="8" y="171.66666666666663" width="382" height="14.333333333333343"/>
+                                                            <rect key="frame" x="8" y="165.66666666666666" width="368" height="14.333333333333343"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -7557,7 +7558,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                             </variation>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Label" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wUJ-2n-PrN">
-                                                            <rect key="frame" x="28" y="115" width="362" height="53"/>
+                                                            <rect key="frame" x="28" y="115" width="348" height="47"/>
                                                             <fontDescription key="fontDescription" name="HelveticaNeue-LightItalic" family="Helvetica Neue" pointSize="12"/>
                                                             <color key="textColor" red="0.42745098040000001" green="0.42745098040000001" blue="0.42745098040000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -7566,7 +7567,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                             </variation>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ky7-ex-yjl">
-                                                            <rect key="frame" x="132" y="43" width="160" height="21"/>
+                                                            <rect key="frame" x="128.33333333333331" y="43" width="153.33333333333331" height="21"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="21" id="djy-sI-Cbk"/>
                                                             </constraints>
@@ -7578,7 +7579,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                             </variation>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IpC-d8-CHJ">
-                                                            <rect key="frame" x="28" y="96" width="362" height="17"/>
+                                                            <rect key="frame" x="28" y="96" width="348" height="17"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <color key="textColor" red="0.44705882352941173" green="0.74901960784313726" blue="0.90196078431372551" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>

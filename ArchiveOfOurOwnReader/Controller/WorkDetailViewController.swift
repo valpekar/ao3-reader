@@ -847,6 +847,14 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             }
             
         case 2:
+            if (workItem != nil) {
+                cell!.label.text = workItem.stats
+            } else if (downloadedWorkItem != nil) {
+                cell!.label.text = downloadedWorkItem.stats ?? ""
+            }
+            cell!.imgView.image = UIImage(named: "info")
+            
+        case 3:
             if (warnings.count > indexPath.row) {
                 cell!.label.text = warnings.joined(separator: ", ")
                 
@@ -855,7 +863,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 cell!.label.text = "None"
             }
             cell!.imgView.image = UIImage(named: "warning")
-        case 3:
+        case 4:
             if (fandoms != nil && fandoms.count > indexPath.row) {
                 cell!.label.text = fandoms[indexPath.row].fandomName
                 
@@ -867,7 +875,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 cell!.label.text = "None"
             }
             cell!.imgView.image = UIImage(named: "fandom")
-        case 4:
+        case 5:
             if (relationships != nil && relationships.count > indexPath.row) {
                 cell!.label.text = relationships[indexPath.row].relationshipName
                 
@@ -879,7 +887,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 cell!.label.text = "None"
             }
             cell!.imgView.image = UIImage(named: "heart")
-        case 5:
+        case 6:
             if (characters != nil && characters.count > indexPath.row) {
                 cell!.label.text = characters[indexPath.row].characterName
                 
@@ -891,7 +899,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 cell!.label.text = "None"
             }
             cell!.imgView.image = UIImage(named: "characters")
-        case 6:
+        case 7:
             if (workItem != nil) {
                 cell!.label.text = workItem.language
             } else if (downloadedWorkItem != nil) {
@@ -899,21 +907,13 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             }
             cell!.imgView.image = UIImage(named: "lang")
             
-        case 7:
+        case 8:
             if (workItem != nil) {
                 cell!.label.text = "\(workItem.words) \(NSLocalizedString("Words", comment: ""))"
             } else if (downloadedWorkItem != nil) {
                 cell!.label.text = downloadedWorkItem.value(forKey: "words") as? String ?? ""
             }
             cell!.imgView.image = UIImage(named: "word")
-                
-        case 8:
-            if (workItem != nil) {
-                cell!.label.text = workItem.stats
-            } else if (downloadedWorkItem != nil) {
-                cell!.label.text = downloadedWorkItem.stats ?? ""
-            }
-            cell!.imgView.image = UIImage(named: "info")
             
         case 9:
             var serieName: String = ""
@@ -947,9 +947,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         var res:Int = 1
         
         switch (section) {
-        case 2:
-            return 1 //warnings.count
-        case 3:
+        case 4:
             if (workItem != nil) {
                 if (fandoms != nil) {
                     res = fandoms.count
@@ -957,13 +955,13 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             } else if (downloadedFandoms != nil) {
                 return downloadedFandoms.count
             }
-        case 4:
+        case 5:
             if (workItem != nil && relationships != nil) {
                 res = relationships.count
             } else if (downloadedRelationships != nil) {
                 return downloadedRelationships.count
             }
-        case 5:
+        case 6:
             if (workItem != nil && characters != nil) {
                 res = characters.count
             } else if (downloadedCharacters != nil) {
@@ -983,7 +981,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         tagUrl = ""
         
         switch indexPath.section {
-        case 3:
+        case 4:
                 if (workItem != nil && fandoms != nil && fandoms.count > pos) {
                     tagUrl = fandoms[pos].fandomUrl
                 } else if (downloadedFandoms != nil && downloadedFandoms.count > pos) {
@@ -993,7 +991,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 
                 performSegue(withIdentifier: "listSegue", sender: self)
             
-        case 4:
+        case 5:
             if (workItem != nil && relationships != nil && relationships.count > pos) {
                 tagUrl = relationships[pos].relationshipUrl
             } else if (downloadedRelationships != nil && downloadedRelationships.count > pos) {
@@ -1003,7 +1001,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             
             performSegue(withIdentifier: "listSegue", sender: self)
             
-        case 5:
+        case 6:
             if (workItem != nil && characters != nil && characters.count > pos) {
                 tagUrl = characters[pos].characterUrl
             } else if (downloadedCharacters != nil && downloadedCharacters.count > pos) {
