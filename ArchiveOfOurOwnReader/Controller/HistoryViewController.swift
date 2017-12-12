@@ -337,13 +337,17 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
             }
         }
         
+        guard let curPeudId = pseuds[currentPseud] else {
+            return
+        }
+        
         var params:[String:AnyObject] = [String:AnyObject]()
         params["utf8"] = "✓" as AnyObject?
-        params["authenticity_token"] = (UIApplication.shared.delegate as! AppDelegate).token as AnyObject?
+        params["authenticity_token"] = (UIApplication.shared.delegate as? AppDelegate)?.token as AnyObject 
         params["_method"] = "delete" as AnyObject?
         params["reading"] = curWork.readingId as AnyObject?
         
-        let urlStr: String = "https://archiveofourown.org/users/" + pseuds[currentPseud]! + "/readings/" + curWork.readingId
+        let urlStr: String = "https://archiveofourown.org/users/" + curPeudId + "/readings/" + curWork.readingId
         
         Alamofire.request(urlStr, method: .post, parameters: params)
             .response(completionHandler: { response in

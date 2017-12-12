@@ -275,7 +275,7 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
             cell = FeedTableViewCell(reuseIdentifier: cellIdentifier)
         }
         
-        if (works.count == 0) {
+        if (works.count <= indexPath.row) {
             return cell
         }
         
@@ -300,6 +300,10 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
        // let cell: PageCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier(cellIdentifier, forIndexPath: indexPath) as! PageCollectionViewCell
         
     //    switch (indexPath.row) {
+        
+        if (pages.count <= indexPath.row) {
+            return cell
+        }
    
         if (pages[indexPath.row].url.isEmpty) {
             cell = fillCollCell(cell: cell as! PageCollectionViewCell, isCurrent: true)
