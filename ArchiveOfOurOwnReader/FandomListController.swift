@@ -16,6 +16,8 @@ class FandomListController: LoadingViewController, UITableViewDataSource, UITabl
     @IBOutlet weak var tableView:UITableView!
     @IBOutlet weak var errView:UIView!
     
+    @IBOutlet weak var searchBar: UISearchBar!
+    
     var listUrl = ""
     var listName = ""
     
@@ -206,3 +208,4 @@ class FandomListController: LoadingViewController, UITableViewDataSource, UITabl
         }
     }
 }
+

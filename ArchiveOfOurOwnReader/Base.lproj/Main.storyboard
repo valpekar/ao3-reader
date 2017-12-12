@@ -1921,7 +1921,9 @@ Please check your Internet connection and also make sure you are logged into you
                             <constraint firstItem="2gP-YE-8LQ" firstAttribute="top" secondItem="udP-kR-Lcm" secondAttribute="bottom" id="zhH-K3-WEK"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="jLl-wO-mx4"/>
+                    <navigationItem key="navigationItem" id="jLl-wO-mx4">
+                        <barButtonItem key="backBarButtonItem" title=" " id="bmX-iL-afq"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="bottomButtonsConstraint" destination="8rc-iB-Ye5" id="Nvt-eJ-KyG"/>
                         <outlet property="bottomViewConstraint" destination="79Y-4f-HWK" id="Ufz-T3-pEI"/>
@@ -3048,7 +3050,6 @@ Please check your Internet connection and also make sure you are logged into you
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="5vc-Zz-xML" firstAttribute="top" secondItem="UQC-2A-Moh" secondAttribute="bottom" id="1vp-m2-MBM"/>
                             <constraint firstItem="dKu-N9-jIw" firstAttribute="top" secondItem="5vc-Zz-xML" secondAttribute="bottom" id="84T-TL-PaN"/>
                             <constraint firstAttribute="trailing" secondItem="5vc-Zz-xML" secondAttribute="trailing" id="BFo-sJ-Xnd"/>
                             <constraint firstItem="dKu-N9-jIw" firstAttribute="top" secondItem="RL1-WX-GiQ" secondAttribute="bottom" id="BJ8-e9-2BI"/>
@@ -3056,6 +3057,7 @@ Please check your Internet connection and also make sure you are logged into you
                             <constraint firstItem="5vc-Zz-xML" firstAttribute="leading" secondItem="xZH-kv-WoN" secondAttribute="leading" id="P7P-Gx-Tjf"/>
                             <constraint firstItem="RL1-WX-GiQ" firstAttribute="leading" secondItem="xZH-kv-WoN" secondAttribute="leading" id="UYT-Z1-CSc"/>
                             <constraint firstItem="RL1-WX-GiQ" firstAttribute="top" secondItem="UQC-2A-Moh" secondAttribute="bottom" id="elH-E9-FY5"/>
+                            <constraint firstItem="5vc-Zz-xML" firstAttribute="top" secondItem="UQC-2A-Moh" secondAttribute="bottom" id="f2X-d8-Gw6"/>
                         </constraints>
                     </view>
                     <connections>
@@ -4469,7 +4471,7 @@ Please check your Internet connection and also make sure you are logged into you
                             </mask>
                         </variation>
                     </view>
-                    <navigationItem key="navigationItem" id="tHt-uJ-lHd"/>
+                    <navigationItem key="navigationItem" title="Bookmarks" id="tHt-uJ-lHd"/>
                     <connections>
                         <outlet property="collectionView" destination="3vt-Rc-Qv3" id="uLe-fL-pgR"/>
                         <outlet property="errLabel" destination="pg6-4D-IWv" id="7fj-fb-T33"/>
@@ -8193,8 +8195,8 @@ Please check your Internet connection and also make sure you are logged into you
         <image name="trash" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="5rQ-gu-17N"/>
+        <segue reference="eWX-6J-Lt5"/>
         <segue reference="YvP-vi-Pnc"/>
-        <segue reference="sOC-2j-lqm"/>
+        <segue reference="Zz6-01-vau"/>
     </inferredMetricsTieBreakers>
 </document>

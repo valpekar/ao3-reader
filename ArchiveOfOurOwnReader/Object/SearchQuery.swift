@@ -194,7 +194,7 @@ class SearchQuery : NSObject, NSCoding {
         }
         
         var tagStr: String = ""
-        var excludeTags: [String] = exclude_tags.characters.split {$0 == ","}.map { String($0) }
+        var excludeTags: [String] = exclude_tags.components(separatedBy:  ",").map { String($0) }
         for i in 0..<excludeTags.count {
             tagStr += "-\"" + excludeTags[i].trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) + "\""
             if (i < excludeTags.count - 1) {
@@ -202,7 +202,7 @@ class SearchQuery : NSObject, NSCoding {
             }
         }
         
-        if (tagStr.characters.count > 0) {
+        if (tagStr.count > 0) {
             tagStr += " "
         }
         
@@ -232,7 +232,7 @@ class SearchQuery : NSObject, NSCoding {
             }
         }*/
         
-        if (tagStr.characters.count > 0) {
+        if (tagStr.count > 0) {
             tagStr += " "
         }
         tagStr += tag

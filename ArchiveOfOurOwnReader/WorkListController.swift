@@ -28,6 +28,9 @@ class WorkListController: LoadingViewController, UITableViewDataSource, UITableV
     
     var refreshControl: UIRefreshControl!
     
+    var searchController: UISearchController!
+    var searched = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -42,6 +45,18 @@ class WorkListController: LoadingViewController, UITableViewDataSource, UITableV
         self.refreshControl.attributedTitle = NSAttributedString(string: NSLocalizedString("PullToRefresh", comment: ""))
         self.refreshControl.addTarget(self, action: #selector(FavoritesSiteController.refresh(_:)), for: UIControlEvents.valueChanged)
         self.tableView.addSubview(self.refreshControl)
+        
+        if (tagUrl.contains("/pseuds/") == false) {
+        
+            searchController = UISearchController(searchResultsController: nil)
+            searchController.searchResultsUpdater = self
+            searchController.searchBar.delegate = self
+            searchController.searchBar.tintColor = AppDelegate.redColor
+            searchController.dimsBackgroundDuringPresentation = false
+            definesPresentationContext = true
+        
+            self.tableView.tableHeaderView = searchController.searchBar
+        }
         
         if (!tagUrl.contains("archiveofourown.org")) {
             tagUrl = "https://archiveofourown.org\(tagUrl)"
@@ -77,10 +92,15 @@ class WorkListController: LoadingViewController, UITableViewDataSource, UITableV
     }
     
     @IBAction func tryAgainTouched(_ sender:AnyObject) {
+        self.searchController.searchBar.text = ""
+        self.searchController.searchBar.endEditing(true)
+        
         requestWorks()
     }
     
     func requestWorks() {
+        
+        searched = false
         
         self.pages.removeAll()
         self.works.removeAll()
@@ -147,18 +167,21 @@ class WorkListController: LoadingViewController, UITableViewDataSource, UITableV
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellIdentifier: String = "FeedCell"
         
-        var cell:FeedTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier) as! FeedTableViewCell
+        var cell:FeedTableViewCell? = tableView.dequeueReusableCell(withIdentifier: cellIdentifier) as? FeedTableViewCell
         
         if (cell == nil) {
             cell = FeedTableViewCell(reuseIdentifier: cellIdentifier)
         }
         
+        if (works.count > indexPath.row) {
+        
         let curWork:NewsFeedItem = works[indexPath.row]
         
-        cell = fillCell(cell: cell, curWork: curWork)
-        cell.downloadButton.tag = indexPath.row
+            cell = fillCell(cell: cell!, curWork: curWork)
+            cell?.downloadButton.tag = indexPath.row
+        }
         
-        return cell
+        return cell!
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -284,5 +307,107 @@ class WorkListController: LoadingViewController, UITableViewDataSource, UITableV
                     TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
                 }
             })
+    }
+}
+
+
+extension WorkListController: UISearchResultsUpdating, UISearchBarDelegate {
+    
+    func updateSearchResults(for searchController: UISearchController) {
+//        if let txt = searchController.searchBar.text {
+//            if (txt.isEmpty) {
+//                TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CannotBeEmpty", comment: ""), type: .error, duration: 2.0)
+//            } else {
+//                searchAndFilter(txt)
+//            }
+//        }
+    }
+    
+    
+    func searchAndFilter(_ text: String) {
+        
+        searched = true
+        
+        self.pages.removeAll()
+        self.works.removeAll()
+        self.worksStr = ""
+        
+        if let del = UIApplication.shared.delegate as? AppDelegate {
+            if (del.cookies.count > 0) {
+                guard let cStorage = Alamofire.SessionManager.default.session.configuration.httpCookieStorage else {
+                    return
+                }
+                cStorage.setCookies(del.cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
+            }
+        }
+        
+        showLoadingView(msg: NSLocalizedString("GettingWorks", comment: ""))
+        
+        //http://archiveofourown.org/works?utf8=%E2%9C%93&work_search%5Bsort_column%5D=revised_at&work_search%5Bother_tag_names%5D=&work_search%5Bquery%5D=tian&work_search%5Blanguage_id%5D=&work_search%5Bcomplete%5D=0&commit=Sort+and+Filter&tag_id=19%E5%A4%A9+-+Old%E5%85%88+%7C+19+Days+-+Old+Xian
+
+        var params:[String:Any] = [String:Any]()
+        params["utf8"] = "✓" as AnyObject
+        params["work_search"] = ["sort_column": "",
+                                 "query": text,
+                                 "revised_at": "",
+                                 "other_tag_names": "",
+                                 "language_id": "",
+                                 "complete": "0"
+                                 ]
+        let strArr = tagUrl.components(separatedBy: "/")
+        if (strArr.count > strArr.count - 2) {
+            params["tag_id"] = strArr[strArr.count - 2].removingPercentEncoding  //tag id goes before /works
+        }
+        params["commit"] = "Sort and Filter"
+        
+        Answers.logCustomEvent(withName: "WorkList_search",
+                               customAttributes: [
+                                "txt": text])
+        
+        Alamofire.request("https://archiveofourown.org/works", method: .get, parameters: params) //default is get
+            .response(completionHandler: { response in
+                #if DEBUG
+                    print(response.request ?? "")
+                    print(response.error ?? "")
+                #endif
+                if let d = response.data {
+                    self.parseCookies(response)
+                    (self.pages, self.works, self.worksStr) = WorksParser.parseWorks(d, itemsCountHeading: "h2", worksElement: "work", liWorksElement: self.worksElement)
+                    //self.parseWorks(d)
+                    self.showWorks()
+                } else {
+                    self.hideLoadingView()
+                    TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
+                }
+                self.refreshControl.endRefreshing()
+            })
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        if (searchBar.text != nil && searchBar.text?.isEmpty == false) {
+            searchAndFilter(searchBar.text!)
+
+            searchBar.endEditing(true)
+        } else {
+            TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CannotBeEmpty", comment: ""), type: .error, duration: 2.0)
+        }
+    }
+
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.text = ""
+        searchBar.endEditing(true)
+
+        if (searched == true) {
+            requestWorks()
+        }
+    }
+
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        if (searchBar.text != nil && searchBar.text?.isEmpty == false) {
+            searchAndFilter(searchBar.text!)
+        } else {
+            requestWorks()
+        }
+        searchBar.endEditing(true)
     }
 }
