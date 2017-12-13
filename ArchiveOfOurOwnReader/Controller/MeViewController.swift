@@ -43,7 +43,20 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
         self.pseudsTableView.rowHeight = UITableViewAutomaticDimension
         self.pseudsTableView.estimatedRowHeight = 44
         
-        reload(false, productId: "")
+        UserDefaults.standard.synchronize()
+        
+        if let pp = UserDefaults.standard.value(forKey: "pro") as? Bool {
+            purchased = pp
+            isPurchased = purchased
+        }
+        if let dd = UserDefaults.standard.value(forKey: "donated") as? Bool {
+            donated = dd
+        }
+        
+        
+        if (!purchased && !donated) {
+            reload(false, productId: "")
+        }
         
         NotificationCenter.default.addObserver(self, selector: #selector(MeViewController.productPurchased(_:)), name: NSNotification.Name(rawValue: IAPHelperProductPurchasedNotification), object: nil)
         //SKPaymentQueue.default().add(self)
@@ -545,6 +558,9 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
                 TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: err.localizedDescription, type: .error)
             } else {
                 TSMessage.showNotification(in: self, title: NSLocalizedString("Finished", comment: ""), subtitle: NSLocalizedString("RestoreProcess", comment: ""), type: .success)
+                
+                self.refreshUI()
+                
             }
         }
     }
@@ -631,7 +647,7 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
                     UserDefaults.standard.synchronize()
                     
                     purchased = isPurchased
-                Answers.logCustomEvent(withName: "ProSub", customAttributes: ["donated" : donated])
+                    Answers.logCustomEvent(withName: "ProSub", customAttributes: ["donated" : donated])
                     
                 } else if (product.productIdentifier == "tip.small" ||
                     product.productIdentifier == "tip.medium" ||

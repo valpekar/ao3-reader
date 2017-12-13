@@ -244,6 +244,11 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
         
         var count = 0
         
+        if (analyticsItems.count == 0) {
+            TSMessage.showNotification(in: self, title: "Not enough data", subtitle: "Please use the app at least for few hours to let it collect data to build recommendations for you!", type: .success)
+            return
+        }
+        
         let randF = Int(arc4random_uniform(UInt32(analyticsItems.count - 1)))
         let randC = Int(arc4random_uniform(UInt32(analyticsItems.count - 1)))
         let randR = Int(arc4random_uniform(UInt32(analyticsItems.count - 1)))

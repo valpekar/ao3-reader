@@ -120,8 +120,8 @@
 "SendingComment" = "Sending Comment";
 "AddingComment" = "Adding Comment";
 "Recommendations" = "Recommendations";
-"RecommendationsExplained" = "Recommendations are based on your activity inside the app and are generated every week since you first open this page. Your data is not transferred anywhere and is used only to generate recommendations. (Available for Pro users only)";
-"RecommendationsExplainedShort" = "Available for Pro users only";
+"RecommendationsExplained" = "Recommendations are based on your activity inside the app and are generated every week since you first open this page. Your data is not transferred anywhere and is used only to generate recommendations. Available for Pro users only.";
+"RecommendationsExplainedShort" = "Recommendations are based on your activity inside the app and are generated every week since you first open this page (available for Pro only)";
 "NotPurchased" = "Sorry, you have not purchased the Pro Version!";
 "SeeThem" = "See Them! 👀";
 "TimeForRecommendations" = "Hi! It's time for new recommendations! 📚";

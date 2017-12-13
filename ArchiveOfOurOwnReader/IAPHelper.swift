@@ -53,7 +53,6 @@ open class IAPHelper : NSObject  {
         super.init()
         
         SKPaymentQueue.default().add(self)
-
     }
     
     /// Gets the list of SKProducts from the Apple server calls the handler with the list of products.
@@ -125,6 +124,7 @@ extension IAPHelper: SKPaymentTransactionObserver {
     /// This is a function called by the payment queue, not to be called directly.
     /// For each transaction act accordingly, save in the purchased cache, issue notifications,
     /// mark the transaction as complete.
+    
     public func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
         for transaction in transactions  {
             switch (transaction.transactionState) {
@@ -148,6 +148,7 @@ extension IAPHelper: SKPaymentTransactionObserver {
     
     fileprivate func completeTransaction(_ transaction: SKPaymentTransaction) {
         print("completeTransaction...")
+        SKPaymentQueue.default().add(self)
         provideContentForProductIdentifier(transaction.payment.productIdentifier)
         SKPaymentQueue.default().finishTransaction(transaction)
     }
@@ -181,6 +182,7 @@ extension IAPHelper: SKPaymentTransactionObserver {
     
     public func paymentQueue(_ queue: SKPaymentQueue, restoreCompletedTransactionsFailedWithError error: Error) {
         print("restore error: \(error)")
+        SKPaymentQueue.default().add(self)
         restoreCompletionHandler?(error as NSError?)
     }
     
