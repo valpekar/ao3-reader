@@ -336,6 +336,9 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             self.webView.scrollView.isScrollEnabled = true
+            
+            self.webView.stringByEvaluatingJavaScript(from: "document.documentElement.style.webkitUserSelect='text'")
+            self.webView.stringByEvaluatingJavaScript(from: "document.documentElement.style.webkitTouchCallout='default'")
         }
     }
     
