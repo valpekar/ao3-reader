@@ -89,7 +89,7 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
                 loadCurrentTheme()
                 
                 
-                if (nextButton != nil && downloadedChapters!.count == 1 || currentChapterIndex == downloadedChapters!.count - 1) {
+                if (downloadedChapters != nil && downloadedChapters!.count == 1 || currentChapterIndex == downloadedChapters!.count - 1) {
                     nextButton.isHidden = true
                     //contentsButton.hidden = true
                 }
@@ -152,6 +152,16 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
             animateLayoutDown()
         }
         
+        scrollWorks()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        saveChanges()
+    }
+    
+    func scrollWorks() {
         if (workItem != nil) {
             self.title = workItem.workTitle
             
@@ -179,9 +189,9 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
             var title = downloadedWorkItem.value(forKey: "workTitle") as? String ?? ""
             
             if (currentChapterIndex < downloadedChapters?.count ?? 0) {
-            if let tt = downloadedChapters?[currentChapterIndex].value(forKey: "chapterName") as? String {
-                title = tt
-            }
+                if let tt = downloadedChapters?[currentChapterIndex].value(forKey: "chapterName") as? String {
+                    title = tt
+                }
             }
             
             self.title = title
@@ -192,12 +202,6 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
                 self.webView.scrollView.setContentOffset(scrollOffset, animated: true)
             }
         }
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        saveChanges()
     }
     
     func saveChanges() {
@@ -840,6 +844,8 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
     
     func changeThemeTouched() {
         
+        saveChanges()
+        
         var theme: Int
         
         if let th = DefaultsManager.getInt(DefaultsManager.THEME) {
@@ -862,6 +868,8 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
         }
         
         loadCurrentTheme()
+        
+        scrollWorks()
     }
     
     func changeTextSizeTouched() {

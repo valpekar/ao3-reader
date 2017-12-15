@@ -12,6 +12,8 @@ class DownloadedCell: UITableViewCell {
     @IBOutlet weak var bgView:UIView!
     @IBOutlet weak var ratingLabel: UILabel!
     
+    @IBOutlet weak var wordsLabel: UILabel!
+    
     @IBOutlet weak var topicLabel: UILabel!
     
     @IBOutlet weak var languageLabel: UILabel!

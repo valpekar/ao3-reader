@@ -337,7 +337,7 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
             
                 let urlStr = "https://archiveofourown.org" + page.url
             
-                Alamofire.request(urlStr)
+                Alamofire.request(urlStr, headers: headers)
                     .response(completionHandler: { response in
                         #if DEBUG
                     //  print(request)
@@ -365,9 +365,9 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         switch (indexPath.row) {
         case 0, self.collectionView(collectionView, numberOfItemsInSection: indexPath.section) - 1:
-            return CGSize(width: 120, height: 28)
+            return CGSize(width: AppDelegate.bigCollCellWidth, height: 28)
         default:
-            return CGSize(width: 50, height: 28)
+            return CGSize(width: AppDelegate.smallCollCellWidth, height: 28)
         }
     }
     

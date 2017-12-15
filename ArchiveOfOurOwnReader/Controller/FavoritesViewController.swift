@@ -204,6 +204,8 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         }
         cell?.fandomsLabel.text = NSLocalizedString("Fandoms_", comment: "") + fandomsStr
         
+        cell?.wordsLabel.text = curWork?.words ?? "-"
+        
         cell?.ratingLabel.text = curWork?.value(forKey: "ratingTags") as? String
         
         if (curWork?.value(forKey: "topicPreview") as? String != nil) {

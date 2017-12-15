@@ -26,6 +26,8 @@ class ListViewController: UIViewController {
         cell.topicLabel.text = curWork.topic.replacingOccurrences(of: "\n", with: "")
         cell.fandomsLabel.text = curWork.fandoms
         
+        cell.wordsLabel.text = curWork.words
+        
         if (curWork.topicPreview != nil) {
             cell.topicPreviewLabel.text = curWork.topicPreview
         }

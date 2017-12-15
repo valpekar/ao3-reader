@@ -309,12 +309,22 @@ class WorksParser {
             }
         }
         
+        if (item.complete.isEmpty) {
+            item.complete = "Work In Progress"
+        }
+        
         //MARK: - remove underage and rape ratings!!
         if (item.warning.contains("Underage")) {
             item.warning = item.warning.replacingOccurrences(of: "Underage", with: "Archive Warnings")
         }
         if (item.warning.contains("Rape")) {
             item.warning = item.warning.replacingOccurrences(of: "Rape", with: "Warning: Violence")
+        }
+        
+        if (item.complete.isEmpty ) {
+            if (item.chapters.contains("?")) {
+                item.complete = "Work In Progress"
+            }
         }
         
         //parse work ID

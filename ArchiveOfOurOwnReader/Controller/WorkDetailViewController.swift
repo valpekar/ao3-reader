@@ -430,9 +430,10 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             
             if (workItem.stats.contains("Completed")) {
                 workItem.complete = "Complete"
-            } else {
+            } else if (workItem.chaptersCount.contains("?")) {
                 workItem.complete = "Work In Progress"
             }
+            
             }
         }
         

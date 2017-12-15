@@ -42,6 +42,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     static var greyTransparentColor = UIColor(red: 115/255, green: 116/255, blue: 118/255, alpha: 0.9)
     static var whiteTransparentColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.9)
     
+    static var bigCollCellWidth = 70
+    static var smallCollCellWidth = 44
     
     //utf8=%E2%9C%93&authenticity_token=Ew7ritgSHINn3NyzuiPTBYjEBWyddhe%2FYmcAqQJQ8iU%3D&user_session%5Blogin%5D=SSADev&user_session%5Bpassword%5D=IsiT301-1&commit=Log+In
 
@@ -55,9 +57,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //UINavigationBar.appearance().barStyle = .Black
         
         UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName : UIColor.white], for: UIControlState())
-        UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName : UIColor.white], for: UIControlState.selected)
-        UITabBar.appearance().selectionIndicatorImage = UIImage(named:"tabbar-selected-bg")
-        
+        UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName : UIColor.white], for: UIControlState.selected)        
         
         //register local notifications
         let notificationSettings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
@@ -129,6 +129,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         do { try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient) } catch _ {}
         do { try AVAudioSession.sharedInstance().setActive(true) } catch _ {}
+        
+        
     }
 
     func applicationWillTerminate(_ application: UIApplication) {

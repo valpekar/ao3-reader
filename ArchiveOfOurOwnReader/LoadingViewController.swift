@@ -19,6 +19,10 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
     
    // var tftinterstitial: TFTInterstitial? = nil
     
+    let headers: HTTPHeaders = [
+        "User-Agent": "iPhone"
+    ]
+    
     var activityView: UIActivityIndicatorView!
     var loadingView: UIView!
     var loadingLabel: UILabel!

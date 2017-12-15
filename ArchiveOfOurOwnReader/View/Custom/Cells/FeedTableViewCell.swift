@@ -20,6 +20,8 @@ class FeedTableViewCell: UITableViewCell {
     
     @IBOutlet weak var categoryLabel: UILabel!
     
+    @IBOutlet weak var wordsLabel: UILabel!
+    
     @IBOutlet weak var completeLabel: UILabel!
     
     @IBOutlet weak var fandomsLabel: UILabel!

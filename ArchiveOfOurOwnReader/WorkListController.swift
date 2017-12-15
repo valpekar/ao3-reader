@@ -326,6 +326,8 @@ extension WorkListController: UISearchResultsUpdating, UISearchBarDelegate {
     
     func searchAndFilter(_ text: String) {
         
+        Answers.logCustomEvent(withName: "Work list: select", customAttributes: ["text": text])
+        
         searched = true
         
         self.pages.removeAll()
