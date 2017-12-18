@@ -43,7 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     static var whiteTransparentColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.9)
     
     static var bigCollCellWidth = 70
-    static var smallCollCellWidth = 44
+    static var smallCollCellWidth = 40
     
     //utf8=%E2%9C%93&authenticity_token=Ew7ritgSHINn3NyzuiPTBYjEBWyddhe%2FYmcAqQJQ8iU%3D&user_session%5Blogin%5D=SSADev&user_session%5Bpassword%5D=IsiT301-1&commit=Log+In
 
@@ -130,7 +130,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         do { try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient) } catch _ {}
         do { try AVAudioSession.sharedInstance().setActive(true) } catch _ {}
         
-        
+        let pasteboardString: String? = UIPasteboard.general.string
+        if let theString = pasteboardString {
+            print("String is \(theString)")
+            if (theString.contains("archiveofourown.org")) {
+                
+                
+                if let controller = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "WorkDetailViewController") as? WorkDetailViewController {
+                    controller.workUrl = theString
+                    
+                    if let window = self.window, let rootViewController = window.rootViewController as? ContainerViewController  {
+                        rootViewController.instantiatedControllers.first?.value.navigationController?.pushViewController(controller, animated: true)
+                        
+                        UIPasteboard.general.string = ""
+                    }
+                }
+            }
+        }
     }
 
     func applicationWillTerminate(_ application: UIApplication) {

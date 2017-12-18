@@ -231,10 +231,10 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
     
     @IBAction func nightSwitchChanged(_ sender: UISwitch) {
         if (sender.isOn) {
-            DefaultsManager.putInt(DefaultsManager.THEME_NIGHT, key: DefaultsManager.THEME)
+            DefaultsManager.putInt(DefaultsManager.THEME_NIGHT, key: DefaultsManager.THEME_APP)
             Answers.logCustomEvent(withName: "ME_Theme", customAttributes: ["theme" : "night"])
         } else {
-            DefaultsManager.putInt(DefaultsManager.THEME_DAY, key: DefaultsManager.THEME)
+            DefaultsManager.putInt(DefaultsManager.THEME_DAY, key: DefaultsManager.THEME_APP)
             Answers.logCustomEvent(withName: "ME_Theme", customAttributes: ["theme" : "day"])
         }
     }
@@ -335,13 +335,13 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
         case 3:
             if (indexPath.row == 0) {
                 theme = DefaultsManager.THEME_NIGHT
-                DefaultsManager.putInt(DefaultsManager.THEME_NIGHT, key: DefaultsManager.THEME)
+                DefaultsManager.putInt(DefaultsManager.THEME_NIGHT, key: DefaultsManager.THEME_APP)
                 Answers.logCustomEvent(withName: "ME_Theme", customAttributes: ["theme" : "night"])
             
             } else if (indexPath.row == 1) {
                 
                 theme = DefaultsManager.THEME_DAY
-                DefaultsManager.putInt(DefaultsManager.THEME_DAY, key: DefaultsManager.THEME)
+                DefaultsManager.putInt(DefaultsManager.THEME_DAY, key: DefaultsManager.THEME_APP)
                 Answers.logCustomEvent(withName: "ME_Theme", customAttributes: ["theme" : "day"])
             }
             

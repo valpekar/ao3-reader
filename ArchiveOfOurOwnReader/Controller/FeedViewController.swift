@@ -363,12 +363,12 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
     
     // MARK: - UICollectionViewDelegateFlowLayout
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        switch (indexPath.row) {
-        case 0, self.collectionView(collectionView, numberOfItemsInSection: indexPath.section) - 1:
-            return CGSize(width: AppDelegate.bigCollCellWidth, height: 28)
-        default:
+//        switch (indexPath.row) {
+//        case 0, self.collectionView(collectionView, numberOfItemsInSection: indexPath.section) - 1:
+//            return CGSize(width: AppDelegate.bigCollCellWidth, height: 28)
+//        default:
             return CGSize(width: AppDelegate.smallCollCellWidth, height: 28)
-        }
+//        }
     }
     
     // MARK: - navigation

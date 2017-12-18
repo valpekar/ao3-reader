@@ -44,6 +44,8 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     var characters: [CharacterItem]!
     var warnings: [String] = [String]()
     
+    var workUrl: String = ""
+    
     var indexesToHide: [Int]!
     
     var bookmarked = false
@@ -103,8 +105,11 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
             Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
         }
-                
-        if (workItem != nil) {
+        
+        if (workUrl.isEmpty == false) {
+            showOnlineWork(workUrl)
+            workItem = WorkItem()
+        } else if (workItem != nil) {
             showOnlineWork()
         } else if (downloadedWorkItem != nil) {
             showDownloadedWork()
@@ -216,7 +221,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         }
     }
     
-    func showOnlineWork() {
+    func showOnlineWork(_ url: String = "") {
         
 //        if let image = UIImage(named: "download-red") {
 //            downloadTrashButton.setImage(image, forState: .Normal)
@@ -242,7 +247,12 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
         showLoadingView(msg: NSLocalizedString("LoadingWrk", comment: ""))
         
-        Alamofire.request("https://archiveofourown.org/works/" + workItem.workId + vadult, method: .get, parameters: params)
+        var workUrl = url
+        if (url.isEmpty) {
+            workUrl = "https://archiveofourown.org/works/" + workItem.workId + vadult
+        }
+        
+        Alamofire.request(workUrl, method: .get, parameters: params)
             .response(completionHandler: { response in
                 // print(response.request)
                 if let d = response.data {
@@ -472,9 +482,26 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 if let nxt : [TFHppleElement] = navigationEl[0].search(withXPathQuery: "//li[@class='chapter next']") as? [TFHppleElement] {
                     if (nxt.count > 0) {
                         let attributes : NSDictionary = (nxt[0].search(withXPathQuery: "//a")[0] as AnyObject).attributes as NSDictionary
-                        workItem.nextChapter = (attributes["href"] as! String)
+                        workItem.nextChapter = (attributes["href"] as? String) ?? ""
                     }
                     NSLog("%@", workItem.nextChapter)
+                }
+                
+                if (workItem.workId.isEmpty == true) {
+                if let mark : [TFHppleElement] = navigationEl[0].search(withXPathQuery: "//li[@class='mark']") as? [TFHppleElement] {
+                    if (mark.count > 0) {
+                        let attributes : NSDictionary = (mark[0].search(withXPathQuery: "//a")[0] as AnyObject).attributes as NSDictionary
+                        let str = attributes["href"] as? String
+                        
+                        let components = str?.components(separatedBy: CharacterSet.decimalDigits.inverted)
+                        if let part = components?.joined() {
+                        
+                            workItem.workId = part
+                        }
+
+                    }
+                    NSLog("%@", workItem.workId)
+                }
                 }
             }
         }

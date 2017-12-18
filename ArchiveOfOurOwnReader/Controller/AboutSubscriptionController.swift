@@ -18,7 +18,7 @@ class AboutSubscriptionController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let th = DefaultsManager.getInt(DefaultsManager.THEME) {
+        if let th = DefaultsManager.getInt(DefaultsManager.THEME_APP) {
             theme = th
         } else {
             theme = DefaultsManager.THEME_DAY

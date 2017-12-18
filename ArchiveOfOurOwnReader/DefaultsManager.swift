@@ -42,6 +42,7 @@ class DefaultsManager {
     static var FONT_SIZE = "fsz"
     static var FONT_FAMILY = "ffam"
     static var THEME = "thm"
+    static var THEME_APP = "thm_app"
     static var LOGIN = "login"
     static var PSWD = "pswd"
     static var PSEUD_ID = "pseud"

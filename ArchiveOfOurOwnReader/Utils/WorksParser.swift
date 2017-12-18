@@ -372,12 +372,29 @@ class WorksParser {
         //parse pages
         
         var pages: [PageItem] = [PageItem]()
+        var idxGap1 = -1
+        var idxGap2 = -1
+        var idxCurrent = -1
         
                 for i in 0..<paginationArr.count {
                     let page: TFHppleElement = paginationArr[i]
                     var pageItem = PageItem()
                     
-                    pageItem.name = page.content
+                    if (page.content.contains("Previous")) {
+                        pageItem.name = "←"
+                    } else if (page.content.contains("Next")) {
+                        pageItem.name = "→"
+                    } else {
+                        pageItem.name = page.content
+                    }
+                    
+                    if (pageItem.name.contains("…")) {
+                        if (idxGap1 < 0) {
+                            idxGap1 = i
+                        } else {
+                            idxGap2 = i
+                        }
+                    }
                     
                     if let attrs = page.search(withXPathQuery: "//a") as? [TFHppleElement] {
                         if (attrs.count > 0) {
@@ -392,11 +409,35 @@ class WorksParser {
                     if let current: [TFHppleElement] = page.search(withXPathQuery: "//span") as? [TFHppleElement] {
                         if (current.count > 0) {
                             pageItem.isCurrent = true
+                            
+                            idxCurrent = i
                         }
                     }
                     
                     pages.append(pageItem)
+                    
                 }
+        
+        
+        if (idxGap1 > 0 && idxGap2 < 0 && idxCurrent < idxGap1) {
+            let size = idxGap1 - 1
+            //for j in (idxCurrent + 2)..<size {
+                pages.removeSubrange((idxCurrent + 2)..<size) //remove(at: j)
+           // }
+        } else
+            if (idxGap1 > 0 && idxGap2 < 0 && idxCurrent > idxGap1) {
+                let size = idxCurrent - 1
+                pages.removeSubrange((idxGap1 + 1)..<size)
+            } else
+                if (idxGap1 > 0 && idxGap2 < 0 && idxCurrent < idxGap2 && idxCurrent > idxGap1) {
+                    let size1 = idxCurrent - 1
+                    pages.removeSubrange((idxGap1 + 1)..<size1)
+                    
+                    let size2 = idxGap2 - 1
+                    pages.removeSubrange((idxCurrent + 1)..<size2)
+        }
+        
+        
         
         return pages
     }
