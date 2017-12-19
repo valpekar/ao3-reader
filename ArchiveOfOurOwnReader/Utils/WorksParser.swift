@@ -415,28 +415,39 @@ class WorksParser {
                     }
                     
                     pages.append(pageItem)
-                    
                 }
         
         
         if (idxGap1 > 0 && idxGap2 < 0 && idxCurrent < idxGap1) {
-            let size = idxGap1 - 1
+            let size = idxGap1
             //for j in (idxCurrent + 2)..<size {
                 pages.removeSubrange((idxCurrent + 2)..<size) //remove(at: j)
+            
+            if (idxCurrent > 3) {
+                pages[2...(idxCurrent - 2)] = [PageItem(name: "…")]
+            }
            // }
         } else
             if (idxGap1 > 0 && idxGap2 < 0 && idxCurrent > idxGap1) {
-                let size = idxCurrent - 1
+                let idxInverse = pages.count - idxCurrent
+                
+                let size = idxCurrent == pages.count - 1 ? idxCurrent - 2 : idxCurrent - 1
                 pages.removeSubrange((idxGap1 + 1)..<size)
+                
+                if (idxInverse > 4) {
+                    pages[pages.count - idxInverse + 2..<pages.count - 2] = [PageItem(name: "…")]
+                }
             } else
-                if (idxGap1 > 0 && idxGap2 < 0 && idxCurrent < idxGap2 && idxCurrent > idxGap1) {
+                if (idxGap1 > 0 && idxGap2 > 0 && idxCurrent < idxGap2 && idxCurrent > idxGap1) {
+                    
+                    let size2 = idxGap2 - 1
+                    pages.removeSubrange((idxCurrent + 2)...size2)
+                    
                     let size1 = idxCurrent - 1
                     pages.removeSubrange((idxGap1 + 1)..<size1)
                     
-                    let size2 = idxGap2 - 1
-                    pages.removeSubrange((idxCurrent + 1)..<size2)
+                   
         }
-        
         
         
         return pages

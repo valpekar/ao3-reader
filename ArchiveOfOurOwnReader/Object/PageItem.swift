@@ -15,3 +15,9 @@ struct PageItem {
     var isCurrent = false
 
 }
+
+extension PageItem {
+    init(name: String) {
+        self.name = name
+    }
+}
