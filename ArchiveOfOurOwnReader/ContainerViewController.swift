@@ -24,7 +24,7 @@ class ContainerViewController: UIViewController, CenterViewControllerDelegate, U
     var currentState: SlideOutState = .bothCollapsed
     var leftViewController: SidePanelViewController?
     
-    var viewControllers = ["FeedViewController", "FavoritesSiteController", "HistoryViewController", "SubscriptionsViewController", "FavoritesViewController", "MeViewController", "RecommendationsController", "SupportController"/*, "PublishWorkController"*/];
+    var viewControllers = ["FeedViewController", "FavoritesSiteController", "HistoryViewController", "MarkedForLaterController", "SubscriptionsViewController", "FavoritesViewController", "MeViewController", "RecommendationsController", "SupportController"/*, "PublishWorkController"*/];
     
     var instantiatedControllers: [Int: CenterViewController] = [Int: CenterViewController]()
     

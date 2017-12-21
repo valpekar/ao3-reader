@@ -96,6 +96,7 @@ class ListViewController: UIViewController {
             cell.commentsLabel.textColor = AppDelegate.redColor
             cell.bookmarksLabel.textColor = AppDelegate.redColor
             cell.hitsLabel.textColor = AppDelegate.redColor
+            cell.wordsLabel.textColor = AppDelegate.redColor
             
         } else {
             cell.backgroundColor = AppDelegate.greyDarkBg
@@ -111,6 +112,7 @@ class ListViewController: UIViewController {
             cell.commentsLabel.textColor = AppDelegate.darkerGreyColor
             cell.bookmarksLabel.textColor = AppDelegate.darkerGreyColor
             cell.hitsLabel.textColor = AppDelegate.darkerGreyColor
+            cell.wordsLabel.textColor = AppDelegate.darkerGreyColor
         }
         
         cell.fandomsLabel.textColor = AppDelegate.greenColor

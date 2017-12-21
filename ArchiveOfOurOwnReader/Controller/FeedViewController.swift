@@ -335,7 +335,7 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
             
                 showLoadingView(msg: ("\(NSLocalizedString("LoadingPage", comment: "")) \(page.name)"))
             
-                let urlStr = "https://archiveofourown.org" + page.url
+                let urlStr = AppDelegate.ao3SiteUrl + page.url
             
                 Alamofire.request(urlStr, headers: headers)
                     .response(completionHandler: { response in
@@ -427,7 +427,7 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
         }
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
+            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: AppDelegate.ao3SiteUrl), mainDocumentURL: nil)
         }
        
         showLoadingView(msg: NSLocalizedString("Searching", comment: ""))

@@ -1,19 +1,20 @@
 //
-//  HistoryViewController.swift
+//  MarkedForLaterController.swift
 //  ArchiveOfOurOwnReader
 //
-//  Created by Valeriya Pekar on 3/2/16.
-//  Copyright © 2016 Sergei Pekar. All rights reserved.
+//  Created by Valeriya Pekar on 12/21/17.
+//  Copyright © 2017 Sergei Pekar. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import Alamofire
 import TSMessages
 
-
-class HistoryViewController : LoadingViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+class MarkedForLaterController: LoadingViewController , UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
-    var boomarksAddedStr = NSLocalizedString("History", comment: "")
+    //https://medium.com/zenchef-tech-and-product/how-to-visualize-reusable-xibs-in-storyboards-using-ibdesignable-c0488c7f525d
+    
+    var boomarksAddedStr = NSLocalizedString("MarkedForLater", comment: "")
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var tableView:UITableView!
     @IBOutlet weak var errView:UIView!
@@ -28,7 +29,7 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
         
         self.createDrawerButton()
         
-        self.title = NSLocalizedString("History", comment: "")
+        self.title = NSLocalizedString("MarkedForLater", comment: "")
         
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 240
@@ -94,17 +95,21 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
         showLoadingView(msg: NSLocalizedString("GettingHistory", comment: ""))
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
+            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: AppDelegate.ao3SiteUrl), mainDocumentURL: nil)
         }
+        
         
         let urlStr: String = "https://archiveofourown.org/users/" + username + "/readings"
         
-        Alamofire.request(urlStr) //default is .get
+        var params:[String:AnyObject] = [String:AnyObject]()
+        params["show"] = "to-read" as AnyObject?
+        
+        Alamofire.request(urlStr, method: .get, parameters: params) //default is .get
             .response(completionHandler: { response in
                 #if DEBUG
-                //print(request)
-                print(response.error ?? "")
-                    #endif
+                    //print(request)
+                    print(response.error ?? "")
+                #endif
                 
                 if let d = response.data {
                     self.parseCookies(response)
@@ -132,7 +137,7 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
         collectionView.reloadData()
         
         hideLoadingView()
-        self.navigationItem.title = boomarksAddedStr
+        self.navigationItem.title = "\(NSLocalizedString("MarkedForLater", comment: ""))"
         
         if (tableView.numberOfSections > 0 && tableView.numberOfRows(inSection: 0) > 0) {
             tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
@@ -215,8 +220,8 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
             Alamofire.request("https://archiveofourown.org" + page.url, method: .get).response(completionHandler: { response in
                 
                 #if DEBUG
-                print(response.error ?? "")
-                    #endif
+                    print(response.error ?? "")
+                #endif
                 if let data = response.data {
                     self.parseCookies(response)
                     (self.pages, self.works, self.boomarksAddedStr) = WorksParser.parseWorks(data, itemsCountHeading: "h2", worksElement: "reading work")
@@ -274,9 +279,9 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
         Alamofire.request(urlStr, parameters: params) //default is get
             .response(completionHandler: { response in
                 #if DEBUG
-                print(response.request ?? "")
-                print(response.error ?? "")
-                    #endif
+                    print(response.request ?? "")
+                    print(response.error ?? "")
+                #endif
                 if let d = response.data {
                     self.parseCookies(response)
                     let _ = self.downloadWork(d, curWork: curWork)
@@ -287,7 +292,7 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
             })
         
     }
-
+    
     //MARK: - delete work from history
     
     @IBAction func deleteButtonTouched(_ sender: UIButton) {
@@ -296,7 +301,7 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
         
         deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: { (action: UIAlertAction) in
             #if DEBUG
-            print("Cancel")
+                print("Cancel")
             #endif
         }))
         
@@ -338,7 +343,7 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
         
         var params:[String:AnyObject] = [String:AnyObject]()
         params["utf8"] = "✓" as AnyObject?
-        params["authenticity_token"] = (UIApplication.shared.delegate as? AppDelegate)?.token as AnyObject 
+        params["authenticity_token"] = (UIApplication.shared.delegate as? AppDelegate)?.token as AnyObject
         params["_method"] = "delete" as AnyObject?
         params["reading"] = curWork.readingId as AnyObject?
         
@@ -347,9 +352,9 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
         Alamofire.request(urlStr, method: .post, parameters: params)
             .response(completionHandler: { response in
                 #if DEBUG
-                print(response.request ?? "")
-                print(response.error ?? "")
-                    #endif
+                    print(response.request ?? "")
+                    print(response.error ?? "")
+                #endif
                 if let d = response.data {
                     self.parseCookies(response)
                     self.parseDeleteResponse(d, curWork: curWork)
@@ -364,10 +369,10 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
     
     func parseDeleteResponse(_ data: Data, curWork: NewsFeedItem) {
         /*#if DEBUG
-            let dta = NSString(data: data, encoding: String.Encoding.utf8.rawValue)
-        print("the string is: \(dta)")
-            #endif */
-            
+         let dta = NSString(data: data, encoding: String.Encoding.utf8.rawValue)
+         print("the string is: \(dta)")
+         #endif */
+        
         let doc : TFHpple = TFHpple(htmlData: data)
         
         var noticediv: [TFHppleElement]? = doc.search(withXPathQuery: "//div[@class='flash notice']") as? [TFHppleElement]
@@ -378,7 +383,7 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
             TSMessage.showNotification(in: self, title: NSLocalizedString("DeletingFromHistory", comment: ""), subtitle: noticediv?[0].content ?? "", type: .success)
         } else {
             if let sorrydiv = doc.search(withXPathQuery: "//div[@class='flash error']") as? [TFHppleElement] {
-            
+                
                 if(sorrydiv.count>0 && sorrydiv[0].text().range(of: "Sorry") != nil) {
                     TSMessage.showNotification(in: self, title: NSLocalizedString("DeletingFromHistory", comment: ""), subtitle: sorrydiv[0].content, type: .error)
                     return

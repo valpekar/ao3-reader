@@ -21,6 +21,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var cookies: [HTTPCookie] = [HTTPCookie]()
     var token = ""
     
+    static var ao3SiteUrl = "https://archiveofourown.org"
+    
     static var redColor = UIColor(red: 81/255, green: 52/255, blue: 99/255, alpha: 1.0)
     static var redLightColor = UIColor(red: 100/255, green: 29/255, blue: 139/255, alpha: 1.0)
     static var redDarkColor = UIColor(red: 49/255, green: 28/255, blue: 59/255, alpha: 1.0)
@@ -94,8 +96,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
        // UIApplication.sharedApplication().cancelAllLocalNotifications()
         
         Appirater.setAppId("1047221122")
-        Appirater.setDaysUntilPrompt(2)
-        Appirater.setUsesUntilPrompt(4)
+        Appirater.setDaysUntilPrompt(1)
+        Appirater.setUsesUntilPrompt(3)
         Appirater.setSignificantEventsUntilPrompt(-1)
         Appirater.setTimeBeforeReminding(4)
         Appirater.setDebug(false)
