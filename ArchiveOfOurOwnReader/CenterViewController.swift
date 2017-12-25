@@ -13,10 +13,11 @@ protocol CenterViewControllerDelegate {
     func collapseSidePanels()
 }
 
-class CenterViewController: ListViewController {
+class CenterViewController: UIViewController {
 
     var delegate: CenterViewControllerDelegate?
-    
+
+    var theme: Int = DefaultsManager.THEME_DAY
     
     @IBAction func drawerClicked(_ sender: AnyObject) {
         

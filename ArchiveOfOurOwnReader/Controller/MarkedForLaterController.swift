@@ -10,17 +10,14 @@ import UIKit
 import Alamofire
 import TSMessages
 
-class MarkedForLaterController: LoadingViewController , UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+class MarkedForLaterController: ListViewController , UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     //https://medium.com/zenchef-tech-and-product/how-to-visualize-reusable-xibs-in-storyboards-using-ibdesignable-c0488c7f525d
     
-    var boomarksAddedStr = NSLocalizedString("MarkedForLater", comment: "")
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var tableView:UITableView!
     @IBOutlet weak var errView:UIView!
     
-    var pages : [PageItem] = [PageItem]()
-    var works : [NewsFeedItem] = [NewsFeedItem]()
     
     var refreshControl: UIRefreshControl!
     
@@ -28,6 +25,10 @@ class MarkedForLaterController: LoadingViewController , UITableViewDataSource, U
         super.viewDidLoad()
         
         self.createDrawerButton()
+        
+        self.worksElement = "reading work"
+        self.itemsCountHeading = "h2"
+        self.foundItems = NSLocalizedString("MarkedForLater", comment: "")
         
         self.title = NSLocalizedString("MarkedForLater", comment: "")
         
@@ -113,10 +114,10 @@ class MarkedForLaterController: LoadingViewController , UITableViewDataSource, U
                 
                 if let d = response.data {
                     self.parseCookies(response)
-                    (self.pages, self.works, self.boomarksAddedStr) = WorksParser.parseWorks(d, itemsCountHeading: "h2", worksElement: "reading work")
+                    (self.pages, self.works, self.foundItems) = WorksParser.parseWorks(d, itemsCountHeading: self.itemsCountHeading, worksElement: self.worksElement)
                     //self.parseHistory(d)
                     self.refreshControl.endRefreshing()
-                    self.showHistory()
+                    self.showWorks()
                 } else {
                     self.hideLoadingView()
                     TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
@@ -124,7 +125,7 @@ class MarkedForLaterController: LoadingViewController , UITableViewDataSource, U
             })
     }
     
-    func showHistory() {
+    override func showWorks() {
         if (works.count > 0) {
             tableView.isHidden = false
             errView.isHidden = true
@@ -195,45 +196,13 @@ class MarkedForLaterController: LoadingViewController , UITableViewDataSource, U
         
         var cell: PageCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! PageCollectionViewCell
         
-        if (pages[indexPath.row].url.isEmpty) {
-            cell = fillCollCell(cell: cell, isCurrent: true)
-        } else {
-            cell = fillCollCell(cell: cell, isCurrent: false)
-        }
-        
-        cell.titleLabel.text = pages[indexPath.row].name
+        cell = fillCollCell(cell: cell, page: pages[indexPath.row])
         
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        let page: PageItem = pages[indexPath.row]
-        if (!page.url.isEmpty) {
-            
-            if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-                Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
-            }
-            
-            showLoadingView(msg: "\(NSLocalizedString("LoadingPage", comment: "")) \(page.name)")
-            
-            Alamofire.request("https://archiveofourown.org" + page.url, method: .get).response(completionHandler: { response in
-                
-                #if DEBUG
-                    print(response.error ?? "")
-                #endif
-                if let data = response.data {
-                    self.parseCookies(response)
-                    (self.pages, self.works, self.boomarksAddedStr) = WorksParser.parseWorks(data, itemsCountHeading: "h2", worksElement: "reading work")
-                    //self.parseHistory(data)
-                    self.showHistory()
-                } else {
-                    self.hideLoadingView()
-                    TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
-                }
-            })
-            
-        }
+        selectCollCell(indexPath: indexPath, sender: self.collectionView)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

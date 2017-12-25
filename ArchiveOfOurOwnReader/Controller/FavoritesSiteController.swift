@@ -11,16 +11,12 @@ import TSMessages
 import Alamofire
 import Crashlytics
 
-class FavoritesSiteController : LoadingViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+class FavoritesSiteController : ListViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
-    var boomarksAddedStr = NSLocalizedString("Bookmarks", comment: "")
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var tableView:UITableView!
     @IBOutlet weak var errView:UIView!
     @IBOutlet weak var errLabel:UILabel!
-    
-    var pages : [PageItem] = [PageItem]()
-    var works : [NewsFeedItem] = [NewsFeedItem]()
     
     var searched = false
     
@@ -30,6 +26,9 @@ class FavoritesSiteController : LoadingViewController, UITableViewDataSource, UI
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.worksElement = "bookmark"
+        self.itemsCountHeading = "h2"
         
         self.createDrawerButton()
         
@@ -41,10 +40,12 @@ class FavoritesSiteController : LoadingViewController, UITableViewDataSource, UI
         self.refreshControl.addTarget(self, action: #selector(FavoritesSiteController.refresh(_:)), for: UIControlEvents.valueChanged)
         self.tableView.addSubview(self.refreshControl)
         
+        self.foundItems = NSLocalizedString("Bookmarks", comment: "")
+        
         self.title = NSLocalizedString("Bookmarks", comment: "")
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
+            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: AppDelegate.ao3SiteUrl), mainDocumentURL: nil)
             requestFavs()
         } else {
             openLoginController() //openLoginController()
@@ -141,7 +142,7 @@ class FavoritesSiteController : LoadingViewController, UITableViewDataSource, UI
                 currentPseud = keys[0]
             } else {
                 TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("LoginToViewBmks", comment: ""), type: .error)
-                showBookmarks()
+                showWorks()
                 return
             }
         }
@@ -158,9 +159,9 @@ class FavoritesSiteController : LoadingViewController, UITableViewDataSource, UI
                 print(response.error ?? "")
                 if let d = response.data {
                     self.parseCookies(response)
-                    (self.pages, self.works, self.boomarksAddedStr) = WorksParser.parseWorks(d, itemsCountHeading: "h2", worksElement: "bookmark")
+                    (self.pages, self.works, self.foundItems) = WorksParser.parseWorks(d, itemsCountHeading: "h2", worksElement: "bookmark")
                     //self.parseBookmarks(d)
-                    self.showBookmarks()
+                    self.showWorks()
                 } else {
                     self.hideLoadingView()
                     TSMessage.showNotification(in: self, title: "Error", subtitle: "Check your Internet connection", type: .error)
@@ -169,7 +170,7 @@ class FavoritesSiteController : LoadingViewController, UITableViewDataSource, UI
             })
         }
     
-    func showBookmarks() {
+    override func showWorks() {
         if (works.count > 0) {
             tableView.isHidden = false
             errView.isHidden = true
@@ -182,9 +183,9 @@ class FavoritesSiteController : LoadingViewController, UITableViewDataSource, UI
         collectionView.reloadData()
         
         hideLoadingView()
-        self.navigationItem.title = boomarksAddedStr
+        self.navigationItem.title = foundItems
         
-        if(boomarksAddedStr.contains("0")) {
+        if(foundItems.contains("0")) {
             errLabel.text = "Nothing found! \nTry searching something else"
         } else {
             errLabel.text = "Cannot obtain data. \nPlease check your Internet connection and also make sure you are logged into your AO3 account (try to log in again)."
@@ -228,7 +229,7 @@ class FavoritesSiteController : LoadingViewController, UITableViewDataSource, UI
             return cell
         }
         
-        let curWork:NewsFeedItem = works[(indexPath as NSIndexPath).row]
+        let curWork:NewsFeedItem = works[indexPath.row]
         
         cell = fillCell(cell: cell, curWork: curWork)
         cell?.downloadButton.tag = indexPath.row
@@ -252,42 +253,13 @@ class FavoritesSiteController : LoadingViewController, UITableViewDataSource, UI
         
         var cell: PageCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! PageCollectionViewCell
         
-        if (pages[indexPath.row].url.isEmpty) {
-            cell = fillCollCell(cell: cell, isCurrent: true)
-        } else {
-            cell = fillCollCell(cell: cell, isCurrent: false)
-        }
-        
-        cell.titleLabel.text = pages[indexPath.row].name
+        cell = fillCollCell(cell: cell, page: pages[indexPath.row])
         
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        let page: PageItem = pages[indexPath.row]
-        if (!page.url.isEmpty) {
-            
-            if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-                Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
-            }
-            
-            showLoadingView(msg: "\(NSLocalizedString("LoadingPage", comment: "")) \(page.name)")
-            
-            Alamofire.request("https://archiveofourown.org" + page.url, method: .get).response(completionHandler: { response in
-                print(response.request ?? "")
-                print(response.error ?? "")
-                if let data: Data = response.data {
-                    self.parseCookies(response)
-                    (self.pages, self.works, self.boomarksAddedStr) = WorksParser.parseWorks(data, itemsCountHeading: "h2", worksElement: "bookmark")
-                    //self.parseBookmarks(data)
-                    self.showBookmarks()
-                } else {
-                    self.hideLoadingView()
-                    TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
-                }
-            })
-        }
+        selectCollCell(indexPath: indexPath, sender: self.collectionView)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -495,7 +467,7 @@ extension FavoritesSiteController: UISearchBarDelegate {
                 currentPseud = keys[0]
             } else {
                 TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("LoginToViewBmks", comment: ""), type: .error)
-                showBookmarks()
+                showWorks()
                 return
             }
         }
@@ -524,9 +496,9 @@ extension FavoritesSiteController: UISearchBarDelegate {
                 print(response.error ?? "")
                 if let d = response.data {
                     self.parseCookies(response)
-                    (self.pages, self.works, self.boomarksAddedStr) = WorksParser.parseWorks(d, itemsCountHeading: "h2", worksElement: "bookmark")
+                    (self.pages, self.works, self.foundItems) = WorksParser.parseWorks(d, itemsCountHeading: "h2", worksElement: "bookmark")
                     //self.parseBookmarks(d)
-                    self.showBookmarks()
+                    self.showWorks()
                 } else {
                     self.hideLoadingView()
                     TSMessage.showNotification(in: self, title: "Error", subtitle: "Check your Internet connection", type: .error)

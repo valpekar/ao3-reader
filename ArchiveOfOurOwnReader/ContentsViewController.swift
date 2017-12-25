@@ -13,7 +13,20 @@ class ContentsViewController: UIViewController, UIPopoverPresentationControllerD
     var downloadedChapters: [DBChapter]! = nil
     var onlineChapters: [Int:ChapterOnline]! = nil
     var modalDelegate: ModalControllerDelegate! = nil
+    var theme = DefaultsManager.THEME_DAY
 
+    @IBOutlet weak var tableView: UITableView!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        if (theme == DefaultsManager.THEME_DAY) {
+            self.tableView.backgroundColor = AppDelegate.greyLightBg
+        } else {
+            self.tableView.backgroundColor = AppDelegate.greyDarkBg
+        }
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if (onlineChapters != nil) {
             return onlineChapters.count
@@ -40,6 +53,14 @@ class ContentsViewController: UIViewController, UIPopoverPresentationControllerD
             //let chapterNum = downloadedChapters[indexPath.row].chapterIndex.int32Value + 1
             let chapterName = downloadedChapters[indexPath.row].chapterName
             cell?.textLabel?.text = chapterName
+        }
+        
+        if (theme == DefaultsManager.THEME_DAY) {
+            cell?.backgroundColor = AppDelegate.greyLightBg
+            cell?.textLabel?.textColor = AppDelegate.redColor
+        } else {
+            cell?.backgroundColor = AppDelegate.greyDarkBg
+            cell?.textLabel?.textColor = AppDelegate.textLightColor
         }
         
         return cell!

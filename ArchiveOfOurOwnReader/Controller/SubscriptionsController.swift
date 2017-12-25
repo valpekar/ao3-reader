@@ -10,16 +10,13 @@ import UIKit
 import Alamofire
 import TSMessages
 
-class SubscriptionsViewController: LoadingViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+class SubscriptionsViewController: ListViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     var subsAddedStr = NSLocalizedString("Subscriptions", comment: "")
 
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var tableView:UITableView!
     @IBOutlet weak var errView:UIView!
-    
-    var pages : [PageItem] = [PageItem]()
-    var works : [NewsFeedItem] = [NewsFeedItem]()
     
     var refreshControl: UIRefreshControl!
     
@@ -319,11 +316,7 @@ class SubscriptionsViewController: LoadingViewController, UITableViewDataSource,
         
         var cell: PageCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! PageCollectionViewCell
         
-        if (pages[indexPath.row].url.isEmpty) {
-            cell = fillCollCell(cell: cell, isCurrent: true)
-        } else {
-            cell = fillCollCell(cell: cell, isCurrent: false)
-        }
+        cell = fillCollCell(cell: cell, page: pages[indexPath.row])
         
         cell.titleLabel.text = pages[indexPath.row].name
         

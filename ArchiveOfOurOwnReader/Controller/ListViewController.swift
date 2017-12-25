@@ -7,10 +7,18 @@
 //
 
 import Foundation
+import Alamofire
+import TSMessages
 
-class ListViewController: UIViewController {
+class ListViewController: LoadingViewController, PageSelectDelegate, UIPopoverPresentationControllerDelegate {
     
-    var theme: Int = DefaultsManager.THEME_DAY
+    var foundItems = ""
+    
+    var worksElement = "work"
+    var itemsCountHeading = "h3"
+    
+    var pages : [PageItem] = [PageItem]()
+    var works : [NewsFeedItem] = [NewsFeedItem]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -174,23 +182,27 @@ class ListViewController: UIViewController {
         }
     }
     
-    func fillCollCell(cell: PageCollectionViewCell, isCurrent: Bool) -> PageCollectionViewCell {
+    func fillCollCell(cell: PageCollectionViewCell, page: PageItem) -> PageCollectionViewCell {
+        
+        cell.setNeedsDisplay()
         
         if (theme == DefaultsManager.THEME_DAY) {
-            if (isCurrent) {
+            if (page.isCurrent && page.name != "…") {
                 cell.titleLabel.textColor = UIColor(red: 169/255, green: 164/255, blue: 164/255, alpha: 1)
             } else {
                 cell.titleLabel.textColor = UIColor.black
             }
             cell.backgroundColor = AppDelegate.greyLightBg
         } else {
-            if (isCurrent) {
+            if (page.isCurrent && page.name != "…") {
                 cell.titleLabel.textColor = AppDelegate.greyColor
             } else {
                 cell.titleLabel.textColor = UIColor.white
             }
             cell.backgroundColor = AppDelegate.redDarkColor
         }
+        
+        cell.titleLabel.text = page.name
         
         return cell
     }
@@ -200,5 +212,115 @@ class ListViewController: UIViewController {
             navController.serieId = newsItem.workId
             
         }
+    }
+    
+    func showWorks() {
+        
+    }
+    
+    func showPagesPopup(page: PageItem, sender: UIView) {
+        
+        let baseUrl = page.url
+        
+        let storyboard : UIStoryboard = UIStoryboard(
+            name: "Main",
+            bundle: nil)
+        guard let pagesViewController: PagesController = storyboard.instantiateViewController(withIdentifier: "pagesController") as? PagesController else {
+            return
+        }
+        
+        pagesViewController.modalDelegate = self
+        pagesViewController.modalPresentationStyle = .popover
+        pagesViewController.baseUrl = baseUrl
+        pagesViewController.theme = theme
+        
+        let screenSize: CGRect = UIScreen.main.bounds
+        
+        pagesViewController.preferredContentSize = CGSize(width: screenSize.width * 0.3, height: 10 * 44.0)
+        
+        let popoverMenuViewController = pagesViewController.popoverPresentationController
+        popoverMenuViewController?.permittedArrowDirections = .any
+        popoverMenuViewController?.delegate = self
+        popoverMenuViewController?.sourceView = self.view
+        popoverMenuViewController?.sourceRect = sender.frame
+//        popoverMenuViewController?.sourceRect = CGRect(
+//            x: 0,
+//            y: sender.frame.maxY,
+//            width: sender.frame.width,
+//            height: sender.frame.height)
+        
+        present(
+            pagesViewController,
+            animated: true,
+            completion: nil)
+    
+    }
+
+    func adaptivePresentationStyle(
+        for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none
+    }
+    
+    func selectCollCell(indexPath: IndexPath, sender: UIView) {
+        if (pages.count > indexPath.row) {
+            let page: PageItem = pages[indexPath.row]
+            
+            if (!page.url.isEmpty) {
+                
+                goToPage(pageUrl: page.url, name: page.name)
+                
+            } else if (pages[indexPath.row].name == AppDelegate.gapString) {
+                if (pages.count > 1) {
+                    if let page = pages.filter({ (pageItem) -> Bool in
+                        return (pageItem.url.isEmpty == false && pageItem.isCurrent == false && pageItem.name != "→")
+                    }).last {
+                    
+                        showPagesPopup(page: page, sender:  sender)
+                    }
+                }
+            }
+        }
+    }
+
+
+    func pageSelected(pageUrl: String) {
+        goToPage(pageUrl: pageUrl, name: "")
+    }
+
+    func goToPage(pageUrl: String, name: String) {
+        if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
+            
+            guard let cStorage = Alamofire.SessionManager.default.session.configuration.httpCookieStorage
+                else {
+                    return
+            }
+            cStorage.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: AppDelegate.ao3SiteUrl), mainDocumentURL: nil)
+        }
+        
+        
+        let urlStr = AppDelegate.ao3SiteUrl + pageUrl
+        
+        showLoadingView(msg: ("\(NSLocalizedString("LoadingPage", comment: "")) \(name)"))
+        
+        Alamofire.request(urlStr)
+            .response(completionHandler: { response in
+                #if DEBUG
+                    //  print(request)
+                    //  println(response)
+                    print(response.error ?? "")
+                #endif
+                
+                self.parseCookies(response)
+                
+                if let data = response.data {
+                    (self.pages, self.works, self.foundItems) = WorksParser.parseWorks(data, itemsCountHeading: self.itemsCountHeading, worksElement: self.worksElement)
+                    
+                    self.showWorks()
+                
+                } else {
+                    self.hideLoadingView()
+                    TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
+                }
+            })
     }
 }

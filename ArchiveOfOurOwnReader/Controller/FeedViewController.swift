@@ -18,7 +18,7 @@ protocol SearchControllerDelegate {
     func searchApplied(_ searchQuery:SearchQuery, shouldAddKeyword: Bool)
 }
 
-class FeedViewController: LoadingViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, SearchControllerDelegate, UIWebViewDelegate, ChoosePrefProtocol {
+class FeedViewController: ListViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, SearchControllerDelegate, UIWebViewDelegate, ChoosePrefProtocol {
     
 
     @IBOutlet weak var collectionView: UICollectionView!
@@ -29,26 +29,23 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
     
     var resultSearchController = UISearchController()
     
-    //var placer: MPTableViewAdPlacer!
-    
     var query: SearchQuery = SearchQuery()
-    var foundItems = "0 Found"
     
-    var pages : [PageItem] = [PageItem]()
-    var works : [NewsFeedItem] = [NewsFeedItem]()
     
     var i = 0 //counts page transitions, display ads every 3rd time
     var adsShown = 0
     var triedToLogin = 0
     
     var refreshControl: UIRefreshControl!
-   
-    //@IBOutlet weak var webView: UIWebView!
     
     // MARK: - UIViewController Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         self.createDrawerButton()
+        
+        self.foundItems = "0 Found"
+        self.worksElement = "work"
+        self.itemsCountHeading = "h3"
         
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 240
@@ -226,7 +223,7 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
         UIApplication.shared.openURL(URL(string: "https://twitter.com/ao3_status")!)
     }
     
-    func showFeed() {
+    override func showWorks() {
         
         tableView.reloadData()
         collectionView.reloadData()
@@ -305,56 +302,14 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
             return cell
         }
    
-        if (pages[indexPath.row].url.isEmpty) {
-            cell = fillCollCell(cell: cell as! PageCollectionViewCell, isCurrent: true)
-        } else {
-            cell = fillCollCell(cell: cell as! PageCollectionViewCell, isCurrent: false)
-        }
-        
-        (cell as! PageCollectionViewCell).titleLabel.text = pages[indexPath.row].name
+        cell = fillCollCell(cell: cell as! PageCollectionViewCell, page: pages[indexPath.row])
         
         return cell
     }
     
     // MARK: - UICollectionViewDelegate
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        if (pages.count > indexPath.row) {
-            let page: PageItem = pages[indexPath.row]
-
-            if (!page.url.isEmpty) {
-            
-                if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-                
-                    guard let cStorage = Alamofire.SessionManager.default.session.configuration.httpCookieStorage
-                        else {
-                            return
-                    }
-                    cStorage.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
-                }
-            
-                showLoadingView(msg: ("\(NSLocalizedString("LoadingPage", comment: "")) \(page.name)"))
-            
-                let urlStr = AppDelegate.ao3SiteUrl + page.url
-            
-                Alamofire.request(urlStr, headers: headers)
-                    .response(completionHandler: { response in
-                        #if DEBUG
-                    //  print(request)
-                    //  println(response)
-                        print(response.error ?? "")
-                            #endif
-                    
-                        self.parseCookies(response)
-                    
-                        if let data = response.data {
-                            (self.pages, self.works, self.foundItems) = WorksParser.parseWorks(data, itemsCountHeading: "h3", worksElement: "work")
-                            //self.getFeed(data)
-                        }
-                        self.showFeed()
-                })
-            }
-        }
+        selectCollCell(indexPath: indexPath, sender: self.collectionView)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -452,7 +407,7 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
         
         if let d = response.data {
             self.parseCookies(response)
-            (self.pages, self.works, self.foundItems) = WorksParser.parseWorks(d, itemsCountHeading: "h3", worksElement: "work")
+            (self.pages, self.works, self.foundItems) = WorksParser.parseWorks(d, itemsCountHeading: "h3", worksElement: self.worksElement)
             //self.getFeed(d)
         } else {
             self.hideLoadingView()
@@ -461,7 +416,7 @@ class FeedViewController: LoadingViewController, UITableViewDataSource, UITableV
         
         self.refreshControl.endRefreshing()
         
-        self.showFeed()
+        self.showWorks()
     }
     
     override func doneButtonAction() {

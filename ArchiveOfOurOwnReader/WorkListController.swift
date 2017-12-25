@@ -11,20 +11,16 @@ import TSMessages
 import Alamofire
 import Crashlytics
 
-class WorkListController: LoadingViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+class WorkListController: ListViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var tableView:UITableView!
     
     @IBOutlet weak var tryAgainButton:UIButton!
     
-    var pages : [PageItem] = [PageItem]()
-    var works : [NewsFeedItem] = [NewsFeedItem]()
-    
     var worksStr = NSLocalizedString("WorkList", comment: "")
     var tagUrl = ""
     var tagName = NSLocalizedString("WorkList", comment: "")
-    var worksElement = "work"
     
     var refreshControl: UIRefreshControl!
     
@@ -45,6 +41,9 @@ class WorkListController: LoadingViewController, UITableViewDataSource, UITableV
         self.refreshControl.attributedTitle = NSAttributedString(string: NSLocalizedString("PullToRefresh", comment: ""))
         self.refreshControl.addTarget(self, action: #selector(FavoritesSiteController.refresh(_:)), for: UIControlEvents.valueChanged)
         self.tableView.addSubview(self.refreshControl)
+        
+        self.worksElement = "work"
+        self.itemsCountHeading = "h2"
         
         if (tagUrl.contains("/pseuds/") == false) {
         
@@ -131,7 +130,7 @@ class WorkListController: LoadingViewController, UITableViewDataSource, UITableV
                     #endif
                 if let d = response.data {
                     self.parseCookies(response)
-                    (self.pages, self.works, self.worksStr) = WorksParser.parseWorks(d, itemsCountHeading: "h2", worksElement: "work", liWorksElement: self.worksElement)
+                    (self.pages, self.works, self.worksStr) = WorksParser.parseWorks(d, itemsCountHeading: "h2", worksElement: self.worksElement, liWorksElement: self.worksElement)
                     //self.parseWorks(d)
                     self.showWorks()
                 } else {
@@ -142,7 +141,7 @@ class WorkListController: LoadingViewController, UITableViewDataSource, UITableV
             })
     }
     
-    func showWorks() {
+    override func showWorks() {
         if (works.count > 0) {
             tableView.isHidden = false
             tryAgainButton.isHidden = true
@@ -200,46 +199,13 @@ class WorkListController: LoadingViewController, UITableViewDataSource, UITableV
         
         var cell: PageCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! PageCollectionViewCell
         
-        if (pages[indexPath.row].url.isEmpty) {
-            cell = fillCollCell(cell: cell, isCurrent: true)
-        } else {
-            cell = fillCollCell(cell: cell, isCurrent: false)
-        }
-        
-        cell.titleLabel.text = pages[indexPath.row].name
+        cell = fillCollCell(cell: cell as! PageCollectionViewCell, page: pages[indexPath.row])
         
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        let page: PageItem = pages[indexPath.row]
-        if (!page.url.isEmpty) {
-            
-            if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-                Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
-            }
-            
-            showLoadingView(msg: "Loading page \(page.name)")
-            
-            self.worksStr = NSLocalizedString("0Found", comment: "")
-            
-            Alamofire.request("https://archiveofourown.org" + page.url, method: .get).response(completionHandler: { response in
-                #if DEBUG
-                print(response.request ?? "")
-                print(response.error ?? "")
-                    #endif
-                if let data: Data = response.data {
-                    self.parseCookies(response)
-                    (self.pages, self.works, self.worksStr) = WorksParser.parseWorks(data, itemsCountHeading: "h2", worksElement: "work")
-                    //self.parseWorks(data)
-                    self.showWorks()
-                } else {
-                    self.hideLoadingView()
-                    TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
-                }
-            })
-        }
+        selectCollCell(indexPath: indexPath, sender: self.collectionView)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -369,7 +335,7 @@ extension WorkListController: UISearchResultsUpdating, UISearchBarDelegate {
                 #endif
                 if let d = response.data {
                     self.parseCookies(response)
-                    (self.pages, self.works, self.worksStr) = WorksParser.parseWorks(d, itemsCountHeading: "h2", worksElement: "work", liWorksElement: self.worksElement)
+                    (self.pages, self.works, self.worksStr) = WorksParser.parseWorks(d, itemsCountHeading: "h2", worksElement: self.worksElement, liWorksElement: self.worksElement)
                     //self.parseWorks(d)
                     self.showWorks()
                 } else {

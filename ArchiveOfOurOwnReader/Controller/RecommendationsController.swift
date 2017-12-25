@@ -12,7 +12,7 @@ import TSMessages
 import Alamofire
 import Crashlytics
 
-class RecommendationsController : LoadingViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+class RecommendationsController : ListViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var tableView:UITableView!
@@ -21,10 +21,7 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
     
     var refreshControl: UIRefreshControl!
     
-    var pages : [PageItem] = [PageItem]()
-    var works : [NewsFeedItem] = [NewsFeedItem]()
     var analyticsItems : [NSManagedObject] = [NSManagedObject]()
-    var foundItems = "0 Found"
     
     var shouldReload = true
     
@@ -34,6 +31,10 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
         super.viewDidLoad()
         
         self.createDrawerButton()
+        
+        self.foundItems = "0 Found"
+        self.worksElement = "work"
+        self.itemsCountHeading = "h3"
         
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 240
@@ -200,7 +201,7 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
                         self.parseCookies(response)
                         (self.pages, self.works, self.foundItems) = WorksParser.parseWorks(d, itemsCountHeading: "h3", worksElement: "work")
                         //self.getFeed(d)
-                        self.showFeed()
+                        self.showWorks()
                     } else {
                         self.hideLoadingView()
                         TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error, duration: 2.0)
@@ -330,7 +331,7 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
                     self.parseCookies(response)
                     (self.pages, self.works, self.foundItems) = WorksParser.parseWorks(d, itemsCountHeading: "h3", worksElement: "work")
                     //self.getFeed(d)
-                    self.showFeed()
+                    self.showWorks()
                 } else {
                     self.hideLoadingView()
                     TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error, duration: 2.0)
@@ -342,7 +343,7 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
 
     //MARK: - get and show feed
     
-    func showFeed() {
+    override func showWorks() {
         
         refreshControl.endRefreshing()
         
@@ -409,13 +410,7 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
         
         var cell: PageCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! PageCollectionViewCell
         
-        if (pages[indexPath.row].url.isEmpty) {
-            cell = fillCollCell(cell: cell, isCurrent: true)
-        } else {
-            cell = fillCollCell(cell: cell, isCurrent: false)
-        }
-        
-        cell.titleLabel.text = pages[indexPath.row].name
+        cell = fillCollCell(cell: cell as! PageCollectionViewCell, page: pages[indexPath.row])
         
         return cell
     }
@@ -425,32 +420,7 @@ class RecommendationsController : LoadingViewController, UITableViewDataSource, 
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        let page: PageItem = pages[indexPath.row]
-        if (!page.url.isEmpty) {
-            
-            if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-                Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
-            }
-            
-            showLoadingView(msg: "\(NSLocalizedString("LoadingPage", comment: "")) \(page.name)")
-            
-            Alamofire.request("https://archiveofourown.org" + page.url, method: .get).response(completionHandler: { response in
-                #if DEBUG
-                print(response.error ?? "")
-                    #endif
-                if let data = response.data {
-                    self.parseCookies(response)
-                    (self.pages, self.works, self.foundItems) = WorksParser.parseWorks(data, itemsCountHeading: "h3", worksElement: "work")
-                    //self.getFeed(data)
-                    self.showFeed()
-                } else {
-                    self.hideLoadingView()
-                    TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
-                }
-            })
-            
-        }
+        selectCollCell(indexPath: indexPath, sender: self.collectionView)
     }
     
     // MARK: - navigation

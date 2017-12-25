@@ -11,20 +11,20 @@ import Alamofire
 import TSMessages
 
 
-class HistoryViewController : LoadingViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+class HistoryViewController : ListViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     var boomarksAddedStr = NSLocalizedString("History", comment: "")
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var tableView:UITableView!
     @IBOutlet weak var errView:UIView!
     
-    var pages : [PageItem] = [PageItem]()
-    var works : [NewsFeedItem] = [NewsFeedItem]()
-    
     var refreshControl: UIRefreshControl!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.worksElement = "reading work"
+        self.itemsCountHeading = "h2"
         
         self.createDrawerButton()
         
@@ -39,7 +39,7 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
         self.tableView.addSubview(self.refreshControl)
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
+            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: AppDelegate.ao3SiteUrl), mainDocumentURL: nil)
             requestFavs()
         } else if ((UIApplication.shared.delegate as! AppDelegate).cookies.count == 0 || (UIApplication.shared.delegate as! AppDelegate).token.isEmpty) {
             
@@ -111,7 +111,7 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
                     (self.pages, self.works, self.boomarksAddedStr) = WorksParser.parseWorks(d, itemsCountHeading: "h2", worksElement: "reading work")
                     //self.parseHistory(d)
                     self.refreshControl.endRefreshing()
-                    self.showHistory()
+                    self.showWorks()
                 } else {
                     self.hideLoadingView()
                     TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
@@ -119,7 +119,7 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
             })
     }
     
-    func showHistory() {
+    override func showWorks() {
         if (works.count > 0) {
             tableView.isHidden = false
             errView.isHidden = true
@@ -190,45 +190,13 @@ class HistoryViewController : LoadingViewController, UITableViewDataSource, UITa
         
         var cell: PageCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! PageCollectionViewCell
         
-        if (pages[indexPath.row].url.isEmpty) {
-            cell = fillCollCell(cell: cell, isCurrent: true)
-        } else {
-            cell = fillCollCell(cell: cell, isCurrent: false)
-        }
-        
-        cell.titleLabel.text = pages[indexPath.row].name
+        cell = fillCollCell(cell: cell as! PageCollectionViewCell, page: pages[indexPath.row])
         
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        let page: PageItem = pages[indexPath.row]
-        if (!page.url.isEmpty) {
-            
-            if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-                Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
-            }
-            
-            showLoadingView(msg: "\(NSLocalizedString("LoadingPage", comment: "")) \(page.name)")
-            
-            Alamofire.request("https://archiveofourown.org" + page.url, method: .get).response(completionHandler: { response in
-                
-                #if DEBUG
-                print(response.error ?? "")
-                    #endif
-                if let data = response.data {
-                    self.parseCookies(response)
-                    (self.pages, self.works, self.boomarksAddedStr) = WorksParser.parseWorks(data, itemsCountHeading: "h2", worksElement: "reading work")
-                    //self.parseHistory(data)
-                    self.showHistory()
-                } else {
-                    self.hideLoadingView()
-                    TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
-                }
-            })
-            
-        }
+        selectCollCell(indexPath: indexPath, sender: self.collectionView)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

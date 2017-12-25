@@ -19,10 +19,6 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
     
    // var tftinterstitial: TFTInterstitial? = nil
     
-    let headers: HTTPHeaders = [
-        "User-Agent": "iPhone"
-    ]
-    
     var activityView: UIActivityIndicatorView!
     var loadingView: UIView!
     var loadingLabel: UILabel!
@@ -41,7 +37,6 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
     override func viewDidLoad() {
         super.viewDidLoad()
         //self.interstitialPresentationPolicy = ADInterstitialPresentationPolicy.Manual
-   
         
         notification = NotificationCenter.default.addObserver(forName: .UIApplicationWillEnterForeground, object: nil, queue: .main) {
             [unowned self] notification in

@@ -388,7 +388,7 @@ class WorksParser {
                         pageItem.name = page.content
                     }
                     
-                    if (pageItem.name.contains("…")) {
+                    if (pageItem.name.contains(AppDelegate.gapString)) {
                         if (idxGap1 < 0) {
                             idxGap1 = i
                         } else {

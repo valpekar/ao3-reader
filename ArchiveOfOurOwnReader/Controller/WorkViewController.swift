@@ -12,7 +12,7 @@ import Alamofire
 import TSMessages
 import Crashlytics
 
-class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UIWebViewDelegate, UIPopoverPresentationControllerDelegate {
+class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWebViewDelegate {
     
     @IBOutlet weak var webView: UIWebView!
     @IBOutlet weak var layoutView: UIView!
@@ -992,6 +992,7 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
                 contentsViewController.downloadedChapters = downloadedChapters
             }
             contentsViewController.modalDelegate = self
+            contentsViewController.theme = theme
             contentsViewController.modalPresentationStyle = .popover
             let screenSize: CGRect = UIScreen.main.bounds
             
@@ -1019,11 +1020,6 @@ class WorkViewController: LoadingViewController, UIGestureRecognizerDelegate, UI
             animated: true,
             completion: nil)
         }
-    }
-    
-    func adaptivePresentationStyle(
-        for controller: UIPresentationController) -> UIModalPresentationStyle {
-            return .none
     }
     
     override func controllerDidClosed() { }

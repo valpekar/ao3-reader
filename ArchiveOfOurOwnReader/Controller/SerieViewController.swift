@@ -11,7 +11,7 @@ import Alamofire
 import TSMessages
 import Crashlytics
 
-class SerieViewController: LoadingViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class SerieViewController: ListViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     var serieId: String = ""
     var serieItem: SerieItem = SerieItem()
@@ -26,8 +26,6 @@ class SerieViewController: LoadingViewController, UITableViewDataSource, UITable
     @IBOutlet weak var bottomViewConstraint: NSLayoutConstraint!
     @IBOutlet weak var bottomButtonsConstraint: NSLayoutConstraint!
     
-    var pages : [PageItem] = [PageItem]()
-    var works : [NewsFeedItem] = [NewsFeedItem]()
     
     var worksCount = ""
     
