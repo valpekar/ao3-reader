@@ -90,6 +90,7 @@
 		3C3358C41FEBEA410061AB20 /* MarkedForLaterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C3358C31FEBEA410061AB20 /* MarkedForLaterController.swift */; };
 		3C3EF71C1E6D55DA000CAA1F /* ChapterOnline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C3EF71B1E6D55DA000CAA1F /* ChapterOnline.swift */; };
 		3C44A7A71F8F56F100AEAE7B /* SecuritySettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C44A7A61F8F56F100AEAE7B /* SecuritySettingsController.swift */; };
+		3C52E9C81FF268A500134813 /* ImportWorkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C52E9C71FF268A500134813 /* ImportWorkController.swift */; };
 		3C5813CF1C6E00DB00C3FC12 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C5813CE1C6E00DB00C3FC12 /* AdSupport.framework */; };
 		3C5813D11C6E00E300C3FC12 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C5813D01C6E00E300C3FC12 /* EventKit.framework */; };
 		3C5813D31C6E00E800C3FC12 /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C5813D21C6E00E800C3FC12 /* EventKitUI.framework */; };
@@ -284,6 +285,7 @@
 		3C44A7A61F8F56F100AEAE7B /* SecuritySettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecuritySettingsController.swift; sourceTree = "<group>"; };
 		3C48CB5D1EFC00BD005B2E1B /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Main.strings; sourceTree = "<group>"; };
 		3C48CB5E1EFC00BD005B2E1B /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3C52E9C71FF268A500134813 /* ImportWorkController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ImportWorkController.swift; path = Controller/ImportWorkController.swift; sourceTree = "<group>"; };
 		3C5813CE1C6E00DB00C3FC12 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		3C5813D01C6E00E300C3FC12 /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
 		3C5813D21C6E00E800C3FC12 /* EventKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKitUI.framework; path = System/Library/Frameworks/EventKitUI.framework; sourceTree = SDKROOT; };
@@ -586,6 +588,7 @@
 				3C74C71D1FD05E67008D191B /* FandomListController.swift */,
 				3C3358C31FEBEA410061AB20 /* MarkedForLaterController.swift */,
 				3C22BBED1FED2BD60012CBA4 /* PagesController.swift */,
+				3C52E9C71FF268A500134813 /* ImportWorkController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -1024,6 +1027,7 @@
 				28B6DC541B4E47E700F34529 /* FeedViewController.swift in Sources */,
 				3CCA7B3C1EFAA1EC00590D12 /* SubscriptionsController.swift in Sources */,
 				1D8777901B99D8DC00CEA738 /* SearchTagCell.swift in Sources */,
+				3C52E9C81FF268A500134813 /* ImportWorkController.swift in Sources */,
 				1D28320F1BBD6A7200FFC887 /* Chapter.swift in Sources */,
 				3C93D4AE1F22330900948D08 /* DownloadedCell.swift in Sources */,
 				3C0465971F8CBCBA003B6AE7 /* Serie+CoreDataClass.swift in Sources */,

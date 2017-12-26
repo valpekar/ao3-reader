@@ -31,7 +31,6 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
     
     var query: SearchQuery = SearchQuery()
     
-    
     var i = 0 //counts page transitions, display ads every 3rd time
     var adsShown = 0
     var triedToLogin = 0

@@ -11,6 +11,7 @@ import UIKit
 @objc
 protocol SidePanelViewControllerDelegate {
     func selectedControllerAtIndex(_ indexPath:IndexPath)
+    func selectedActionAtIndex(_ indexPath:IndexPath)
 }
 
 class SidePanelViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
@@ -29,6 +30,10 @@ class SidePanelViewController: UIViewController, UITableViewDataSource, UITableV
                        NSLocalizedString("Recommendations", comment: ""),
                        NSLocalizedString("Support", comment: "")
         /*, "Publish"*/]
+    
+    let sections = ["", ""]
+    let secondSectionRows = ["Import From AO3"]
+    let secondSectionRowsImgs = ["import"]
     let imgs = ["shortstory", "bmk", "history" , "history", "subscriptions", "download-red", "profile", "shortstory", "support"/*, "shortstory"*/]
     
     struct TableView {
@@ -42,36 +47,55 @@ class SidePanelViewController: UIViewController, UITableViewDataSource, UITableV
         
         tableView.reloadData()
         tableView.tableFooterView = UIView()
+        
+        tableView.backgroundColor = AppDelegate.redColor
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
     }
     
     // MARK: - Table View Data Source
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return 2
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return controllers.count
+        if (section == 0) {
+            return controllers.count
+        } else {
+            return 1
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TableView.CellIdentifiers.TagCell, for: indexPath) as! TagCell
         
         let customColorView : UIView = UIView()
-        customColorView.backgroundColor = AppDelegate.redDarkColor
+        customColorView.backgroundColor = AppDelegate.redColor
         cell.selectedBackgroundView =  customColorView;
         
         cell.preservesSuperviewLayoutMargins = false
         cell.separatorInset = UIEdgeInsets.zero
         
-        cell.configureForHeader(controllers[indexPath.row], imageName: imgs[indexPath.row])
+        if (indexPath.section == 0) {
+            cell.configureForHeader(controllers[indexPath.row], imageName: imgs[indexPath.row])
+        } else {
+            cell.configureForHeader(secondSectionRows[indexPath.row], imageName: secondSectionRowsImgs[indexPath.row])
+        }
+        
         return cell
     }
     
     // MARK: - Table View Delegate
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        delegate?.selectedControllerAtIndex(indexPath)
+        if (indexPath.section == 0) {
+            delegate?.selectedControllerAtIndex(indexPath)
+        } else {
+            delegate?.selectedActionAtIndex(indexPath)
+        }
     }
     
 //    func tableView(_ tableView: UITableView, viewForFooterInSection section:Int) -> UIView?

@@ -186,6 +186,17 @@ class ContainerViewController: UIViewController, CenterViewControllerDelegate, U
                 self.centerNavigationController.setViewControllers([controller], animated: true)
         }
     }
+    
+    func selectedActionAtIndex(_ indexPath: IndexPath) {
+        self.collapseSidePanels()
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "ImportWorkController") as! ImportWorkController
+        vc.importDelegate = self
+        vc.modalTransitionStyle = .crossDissolve
+        self.present(vc, animated: true, completion: nil)
+
+    }
 }
 
 private extension UIStoryboard {
@@ -198,4 +209,21 @@ private extension UIStoryboard {
 //    class func centerViewController() -> CenterViewController? {
 //        return mainStoryboard().instantiateViewControllerWithIdentifier("ViewController") as? CenterViewController
 //    }
+}
+
+extension ContainerViewController : WorkImportDelegate {
+   
+    func linkPasted(workUrl: String) {
+        if let controller = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "WorkDetailViewController") as? WorkDetailViewController {
+            controller.workUrl = workUrl
+            
+            if let controller = self.instantiatedControllers[0] {
+                controller.navigationController?.pushViewController(controller, animated: true)
+                
+            }
+        }
+    }
+    
+    
+    
 }

@@ -133,23 +133,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         do { try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient) } catch _ {}
         do { try AVAudioSession.sharedInstance().setActive(true) } catch _ {}
         
-        let pasteboardString: String? = UIPasteboard.general.string
-        if let theString = pasteboardString {
-            print("String is \(theString)")
-            if (theString.contains("archiveofourown.org")) {
-                
-                
-                if let controller = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "WorkDetailViewController") as? WorkDetailViewController {
-                    controller.workUrl = theString
-                    
-                    if let window = self.window, let rootViewController = window.rootViewController as? ContainerViewController  {
-                        rootViewController.instantiatedControllers.first?.value.navigationController?.pushViewController(controller, animated: true)
-                        
-                        UIPasteboard.general.string = ""
-                    }
-                }
-            }
-        }
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
