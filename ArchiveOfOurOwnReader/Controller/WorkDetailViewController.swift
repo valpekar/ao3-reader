@@ -212,11 +212,17 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             downloadedCharacters = []
         }
         
-        tableView.reloadData()
         
-        let delay = 0.5 * Double(NSEC_PER_SEC)
+        
+        let delay = 0.2 * Double(NSEC_PER_SEC)
         let time = DispatchTime.now() + Double(Int64(delay)) / Double(NSEC_PER_SEC)
         DispatchQueue.main.asyncAfter(deadline: time) {
+            self.tableView.reloadData()
+        }
+        
+        let delay1 = 0.7 * Double(NSEC_PER_SEC)
+        let time1 = DispatchTime.now() + Double(Int64(delay1)) / Double(NSEC_PER_SEC)
+        DispatchQueue.main.asyncAfter(deadline: time1) {
             self.tableView.flashScrollIndicators()
         }
     }
@@ -854,6 +860,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             } else if (downloadedWorkItem != nil) {
                 cell.label.text = downloadedWorkItem.tags ?? ""
             }
+
         case 1:
             
             if (UIDevice.current.userInterfaceIdiom == .pad) {
@@ -952,6 +959,12 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             }
              cell.label.text = "View Serie (\(serieName))"
             
+            if (UIDevice.current.userInterfaceIdiom == .pad) {
+                cell.label.font = UIFont.systemFont(ofSize: 21.0, weight: UIFontWeightRegular)
+            } else {
+                cell.label.font = UIFont.systemFont(ofSize: 14.0, weight: UIFontWeightRegular)
+            }
+            
         default:
             break
         }
@@ -1013,9 +1026,11 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 if (workItem != nil && fandoms != nil && fandoms.count > pos) {
                     tagUrl = fandoms[pos].fandomUrl
                 } else if (downloadedFandoms != nil && downloadedFandoms.count > pos) {
-                    tagUrl = (downloadedFandoms[pos].value(forKey: "fandomUrl") as? String)!
+                    tagUrl = (downloadedFandoms[pos].value(forKey: "fandomUrl") as? String) ?? ""
                 }
                 NSLog("link Tapped = " + tagUrl)
+                
+                Answers.logCustomEvent(withName: "Work Detail link tap", customAttributes: ["link" : tagUrl])
                 
                 performSegue(withIdentifier: "listSegue", sender: self)
             
@@ -1023,9 +1038,11 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             if (workItem != nil && relationships != nil && relationships.count > pos) {
                 tagUrl = relationships[pos].relationshipUrl
             } else if (downloadedRelationships != nil && downloadedRelationships.count > pos) {
-                tagUrl = (downloadedRelationships[pos].value(forKey: "relationshipUrl") as? String)!
+                tagUrl = (downloadedRelationships[pos].value(forKey: "relationshipUrl") as? String) ?? ""
             }
             NSLog("link Tapped = " + tagUrl)
+            
+            Answers.logCustomEvent(withName: "Work Detail link tap", customAttributes: ["link" : tagUrl])
             
             performSegue(withIdentifier: "listSegue", sender: self)
             
@@ -1033,9 +1050,11 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             if (workItem != nil && characters != nil && characters.count > pos) {
                 tagUrl = characters[pos].characterUrl
             } else if (downloadedCharacters != nil && downloadedCharacters.count > pos) {
-                tagUrl = (downloadedCharacters[pos].value(forKey: "characterUrl") as? String)!
+                tagUrl = (downloadedCharacters[pos].value(forKey: "characterUrl") as? String) ?? ""
             }
             NSLog("link Tapped = " + tagUrl)
+            
+            Answers.logCustomEvent(withName: "Work Detail link tap", customAttributes: ["link" : tagUrl])
             
             performSegue(withIdentifier: "listSegue", sender: self)
             
@@ -1313,7 +1332,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 guard let cStorage = Alamofire.SessionManager.default.session.configuration.httpCookieStorage else {
                     return
                 }
-                cStorage.setCookies(del.cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
+                cStorage.setCookies(del.cookies, for:  URL(string: AppDelegate.ao3SiteUrl), mainDocumentURL: nil)
             }
         }
         

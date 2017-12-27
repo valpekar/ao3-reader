@@ -89,7 +89,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
                 loadCurrentTheme()
                 
                 
-                if (downloadedChapters != nil && downloadedChapters!.count == 1 || currentChapterIndex == downloadedChapters!.count - 1) {
+                if (nextButton != nil && downloadedChapters != nil && downloadedChapters!.count == 1 || currentChapterIndex == (downloadedChapters?.count ?? 0) - 1) {
                     nextButton.isHidden = true
                     //contentsButton.hidden = true
                 }

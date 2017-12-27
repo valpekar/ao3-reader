@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Crashlytics
 
 class ContentsViewController: UIViewController, UIPopoverPresentationControllerDelegate, UITableViewDataSource, UITableViewDelegate {
     
@@ -30,8 +31,11 @@ class ContentsViewController: UIViewController, UIPopoverPresentationControllerD
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if (onlineChapters != nil) {
             return onlineChapters.count
-        } else {
+        } else if (downloadedChapters != nil) {
             return downloadedChapters.count
+        } else {
+            Answers.logCustomEvent(withName: "Contents: empty", customAttributes: [:])
+            return 0
         }
     }
     

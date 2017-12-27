@@ -8,6 +8,7 @@
 
 import UIKit
 import QuartzCore
+import Crashlytics
 
 enum SlideOutState {
     case bothCollapsed
@@ -217,8 +218,10 @@ extension ContainerViewController : WorkImportDelegate {
         if let controller = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "WorkDetailViewController") as? WorkDetailViewController {
             controller.workUrl = workUrl
             
-            if let controller = self.instantiatedControllers[0] {
-                controller.navigationController?.pushViewController(controller, animated: true)
+            if let instcontroller = self.instantiatedControllers[0] {
+                Answers.logCustomEvent(withName: "Import Work Link Pasted", customAttributes: ["url" : workUrl])
+                
+                instcontroller.navigationController?.pushViewController(controller, animated: true)
                 
             }
         }

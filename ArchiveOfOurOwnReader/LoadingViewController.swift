@@ -395,8 +395,8 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
             
             if let fandomsLiArr: [TFHppleElement] = workmeta[0].search(withXPathQuery: "//dd[@class='fandom tags']/ul[@class='commas']/li") as? [TFHppleElement] {
             
-                let workFandoms = workItem.value(forKeyPath: "fandoms") as! NSMutableSet
-                workFandoms.removeAllObjects()
+                workItem.mutableSetValue(forKey: "fandoms").removeAllObjects()
+                let workFandoms = workItem.mutableSetValue(forKey: "fandoms")
 
             for i in 0..<fandomsLiArr.count {
                 let entityf =  NSEntityDescription.entity(forEntityName: "DBFandom",  in: managedContext)
@@ -423,8 +423,8 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
             // workItem.setValue(categoryStr, forKey: "category")
             
             if let relationshipsLiArr: [TFHppleElement] = workmeta[0].search(withXPathQuery: "//dd[@class='relationship tags']/ul[@class='commas']/li") as? [TFHppleElement] {
-                let workRel = workItem.value(forKeyPath: "relationships") as! NSMutableSet
-                workRel.removeAllObjects()
+                workItem.mutableSetValue(forKey: "relationships").removeAllObjects()
+                let workRel = workItem.mutableSetValue(forKey: "relationships")
             
             for i in 0..<relationshipsLiArr.count {
                 let entityr =  NSEntityDescription.entity(forEntityName: "DBRelationship",  in: managedContext)
@@ -443,8 +443,8 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
             
             if let charactersLiArr: [TFHppleElement] = workmeta[0].search(withXPathQuery: "//dd[@class='character tags']/ul[@class='commas']/li") as? [TFHppleElement] {
 
-                let workCharacters = workItem.value(forKeyPath: "characters") as! NSMutableSet
-                workCharacters.removeAllObjects()
+                workItem.mutableSetValue(forKey: "characters").removeAllObjects()
+                let workCharacters = workItem.mutableSetValue(forKey: "characters")
 
             for i in 0..<charactersLiArr.count {
                 let entityc =  NSEntityDescription.entity(forEntityName: "DBCharacterItem",  in: managedContext)
@@ -471,39 +471,102 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
             
             if (workItem.serieUrl?.isEmpty ?? true) {
             
-            if let seriesEl: [TFHppleElement] = workmeta[0].search(withXPathQuery: "//dd[@class='series']//span[@class='position']") as? [TFHppleElement] {
-                if(seriesEl.count > 0) {
-                    let sTxt = seriesEl[0].content.replacingOccurrences(of: "\n", with:"")
+                if let seriesEl: [TFHppleElement] = workmeta[0].search(withXPathQuery: "//dd[@class='series']//span[@class='position']") as? [TFHppleElement] {
+                    if(seriesEl.count > 0) {
+                        let sTxt = seriesEl[0].content.replacingOccurrences(of: "\n", with:"")
                         .replacingOccurrences(of: "\\s+", with: " ", options: NSString.CompareOptions.regularExpression, range: nil)
-                    if (!sTxt.isEmpty) {
-                      //  workItem.topicPreview = "\(sTxt) \n\n\(workItem.topicPreview ?? "")"
+                        if (!sTxt.isEmpty) {
+                            //  workItem.topicPreview = "\(sTxt) \n\n\(workItem.topicPreview ?? "")"
                         
-                        workItem.serieName = sTxt
-                    }
+                            workItem.serieName = sTxt
+                        }
                     
-                    if let attributesEl : [TFHppleElement] = seriesEl[0].search(withXPathQuery: "//a") as? [TFHppleElement] {
-                        if (attributesEl.count > 0) {
-                            let attributes: NSDictionary = (attributesEl[0] as AnyObject).attributes as NSDictionary
-                            workItem.serieUrl = (attributes["href"] as? String ?? "")
+                        if let attributesEl : [TFHppleElement] = seriesEl[0].search(withXPathQuery: "//a") as? [TFHppleElement] {
+                            if (attributesEl.count > 0) {
+                                let attributes: NSDictionary = (attributesEl[0] as AnyObject).attributes as NSDictionary
+                                workItem.serieUrl = (attributes["href"] as? String ?? "")
+                            }
                         }
                     }
                 }
             }
-            }
             
             if let statsElDt: [TFHppleElement] = workmeta[0].search(withXPathQuery: "//dd[@class='stats']/dl[@class='stats']/dt") as? [TFHppleElement],
                 let statsElDd: [TFHppleElement] = workmeta[0].search(withXPathQuery: "//dd[@class='stats']/dl[@class='stats']/dd") as? [TFHppleElement] {
-            if(statsElDt.count > 0 && statsElDd.count > 0) {
+                if(statsElDt.count > 0 && statsElDd.count > 0) {
                 
-                var statsStr = ""
-                for i in 0..<statsElDt.count {
-                    statsStr += statsElDt[i].text() + " "
-                    if ((statsElDd.count > i) && (statsElDd[i].text() != nil)) {
-                        statsStr += statsElDd[i].text() + " "
+                    var statsStr = ""
+                    for i in 0..<statsElDt.count {
+                        statsStr += statsElDt[i].text() + " "
+                        if ((statsElDd.count > i) && (statsElDd[i].text() != nil)) {
+                            statsStr += statsElDd[i].text() + " "
+                        }
+                    }
+                    workItem.setValue(statsStr, forKey: "stats")
+                }
+            }
+            
+            var stats : TFHppleElement? = nil
+            let statsEl: [TFHppleElement]? =  workmeta[0].search(withXPathQuery: "//dl[@class='stats']") as? [TFHppleElement]
+            if (statsEl?.count ?? 0 > 0) {
+                stats = statsEl?[0]
+            }
+            
+            //parse stats
+            if let langVar = stats?.search(withXPathQuery: "//dd[@class='language']") {
+                if(langVar.count > 0) {
+                    workItem.language = (langVar[0] as? TFHppleElement)?.text() ?? ""
+                }
+            }  else {
+                workItem.language = "-"
+            }
+            
+            if let wordsVar = stats?.search(withXPathQuery: "//dd[@class='words']") {
+                if(wordsVar.count > 0) {
+                    if let wordsNum: TFHppleElement = wordsVar[0] as? TFHppleElement {
+                        if (wordsNum.text() != nil) {
+                            workItem.words = wordsNum.text()
+                        }
                     }
                 }
-                workItem.setValue(statsStr, forKey: "stats")
             }
+            
+            if let chaptersVar = stats?.search(withXPathQuery: "//dd[@class='chapters']") {
+                if(chaptersVar.count > 0) {
+                    workItem.chaptersCount = (chaptersVar[0] as? TFHppleElement)?.text() ?? ""
+                }
+            }
+            
+            if let commentsVar = stats?.search(withXPathQuery: "//dd[@class='comments']") {
+                if(commentsVar.count > 0) {
+                    workItem.comments = (commentsVar[0] as? TFHppleElement)?.text() ?? ""
+                } else {
+                    workItem.comments = "0"
+                }
+            }
+            
+            if let kudosVar = stats?.search(withXPathQuery: "//dd[@class='kudos']") {
+                if(kudosVar.count > 0) {
+                    workItem.kudos = (kudosVar[0] as? TFHppleElement)?.text() ?? ""
+                } else {
+                    workItem.kudos = "0"
+                }
+            }
+            
+            if let bookmarksVar = stats?.search(withXPathQuery: "//dd[@class='bookmarks']") {
+                if(bookmarksVar.count > 0) {
+                    workItem.bookmarks = (bookmarksVar[0] as? TFHppleElement)?.text() ?? ""
+                } else {
+                    workItem.bookmarks = "0"
+                }
+            }
+            
+            if let hitsVar = stats?.search(withXPathQuery: "//dd[@class='hits']") {
+                if(hitsVar.count > 0) {
+                    workItem.hits = (hitsVar[0] as? TFHppleElement)?.text() ?? ""
+                } else {
+                    workItem.hits = "0"
+                }
             }
         }
         }
