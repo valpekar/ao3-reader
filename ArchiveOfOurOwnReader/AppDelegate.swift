@@ -46,7 +46,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     static var whiteTransparentColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.9)
     
     static var bigCollCellWidth = 70
-    static var smallCollCellWidth = 36
+    static var smallCollCellWidth = 38
     
     //utf8=%E2%9C%93&authenticity_token=Ew7ritgSHINn3NyzuiPTBYjEBWyddhe%2FYmcAqQJQ8iU%3D&user_session%5Blogin%5D=SSADev&user_session%5Bpassword%5D=IsiT301-1&commit=Log+In
 

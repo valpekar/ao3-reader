@@ -45,6 +45,10 @@ class WorkListController: ListViewController, UITableViewDataSource, UITableView
         self.worksElement = "work"
         self.itemsCountHeading = "h2"
         
+        if (liWorksElement.isEmpty == true) {
+            liWorksElement = worksElement
+        }
+        
         if (tagUrl.contains("/pseuds/") == false) {
         
             searchController = UISearchController(searchResultsController: nil)
@@ -130,7 +134,7 @@ class WorkListController: ListViewController, UITableViewDataSource, UITableView
                     #endif
                 if let d = response.data {
                     self.parseCookies(response)
-                    (self.pages, self.works, self.worksStr) = WorksParser.parseWorks(d, itemsCountHeading: "h2", worksElement: self.worksElement, liWorksElement: self.worksElement)
+                    (self.pages, self.works, self.worksStr) = WorksParser.parseWorks(d, itemsCountHeading: "h2", worksElement: self.worksElement, liWorksElement: self.liWorksElement)
                     //self.parseWorks(d)
                     self.showWorks()
                 } else {

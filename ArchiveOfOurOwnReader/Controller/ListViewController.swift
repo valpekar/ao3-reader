@@ -9,12 +9,14 @@
 import Foundation
 import Alamofire
 import TSMessages
+import Crashlytics
 
 class ListViewController: LoadingViewController, PageSelectDelegate, UIPopoverPresentationControllerDelegate {
     
     var foundItems = ""
     
     var worksElement = "work"
+    var liWorksElement = "work"
     var itemsCountHeading = "h3"
     
     var pages : [PageItem] = [PageItem]()
@@ -249,6 +251,8 @@ class ListViewController: LoadingViewController, PageSelectDelegate, UIPopoverPr
 //            width: sender.frame.width,
 //            height: sender.frame.height)
         
+        Answers.logCustomEvent(withName: "ListVC: open pages popup", customAttributes: ["baseUrl" : baseUrl])
+        
         present(
             pagesViewController,
             animated: true,
@@ -284,6 +288,8 @@ class ListViewController: LoadingViewController, PageSelectDelegate, UIPopoverPr
 
 
     func pageSelected(pageUrl: String) {
+        Answers.logCustomEvent(withName: "ListVC: selected from pages popup", customAttributes: ["pageUrl" : pageUrl])
+        
         goToPage(pageUrl: pageUrl, name: "")
     }
 

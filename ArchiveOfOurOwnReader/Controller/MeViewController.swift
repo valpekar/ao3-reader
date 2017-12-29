@@ -386,7 +386,8 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
             if let cController: WorkListController = segue.destination as? WorkListController {
                 let login = DefaultsManager.getString(DefaultsManager.LOGIN)
                 cController.tagUrl = "/users/\(login)/works"
-                cController.worksElement = "own work"
+                cController.liWorksElement = "own work"
+                cController.worksElement = "work"
             }
         }
     }
