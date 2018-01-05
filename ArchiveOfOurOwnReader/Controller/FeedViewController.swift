@@ -18,6 +18,11 @@ protocol SearchControllerDelegate {
     func searchApplied(_ searchQuery:SearchQuery, shouldAddKeyword: Bool)
 }
 
+protocol DownloadButtonDelegate {
+    func downloadTouched(rowIndex: Int)
+    func deleteTouched(rowIndex: Int)
+}
+
 class FeedViewController: ListViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, SearchControllerDelegate, UIWebViewDelegate, ChoosePrefProtocol {
     
 
@@ -277,9 +282,10 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
         
         let curWork:NewsFeedItem = works[indexPath.row]
         
-        cell = fillCell(cell: cell, curWork: curWork)
+        cell = fillCellXib(cell: cell, curWork: curWork, needsDelete: false)
         
-        cell.downloadButton.tag = indexPath.row
+        cell.workCellView.tag = indexPath.row
+        cell.workCellView.downloadButtonDelegate = self
         
         return cell
     }
@@ -585,6 +591,48 @@ extension FeedViewController : UISearchBarDelegate, UISearchResultsUpdating {
     //MARK: - UISearchResultsUpdating
     
     func updateSearchResults(for searchController: UISearchController) {
+        
+    }
+    
+}
+
+//MARK: - DownloadButtonDelegate
+
+extension FeedViewController: DownloadButtonDelegate {
+    
+    func downloadTouched(rowIndex: Int) {
+        if (rowIndex >= works.count) {
+            return
+        }
+        
+        if (purchased || donated) {
+            #if DEBUG
+                print("premium")
+            #endif
+        } else {
+            if (countWroksFromDB() > 29) {
+                TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Only30Stroies", comment: ""), type: .error, duration: 2.0)
+                
+                return
+            }
+        }
+        
+        curWork = works[rowIndex]
+        
+        showLoadingView(msg: "\(NSLocalizedString("DwnloadingWrk", comment: "")) \(curWork?.title ?? "")")
+        
+        if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
+            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
+        }
+        
+        var params:[String:AnyObject] = [String:AnyObject]()
+        params["view_adult"] = "true" as AnyObject?
+        
+        request("https://archiveofourown.org/works/" + (curWork?.workId ?? ""), method: .get, parameters: params)
+            .response(completionHandler: onSavedWorkLoaded(_:))
+    }
+    
+    func deleteTouched(rowIndex: Int) {
         
     }
 }

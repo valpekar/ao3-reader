@@ -233,9 +233,10 @@ class SerieViewController: ListViewController, UITableViewDataSource, UITableVie
             
             let curWork:NewsFeedItem = works[indexPath.row - 1]
             
-            cell = fillCell(cell: cell, curWork: curWork)
+            cell = fillCellXib(cell: cell, curWork: curWork, needsDelete: false)
             
-            cell.downloadButton.tag = indexPath.row - 1
+            cell.workCellView.tag = indexPath.row - 1
+            cell.workCellView.downloadButtonDelegate = self
             
             return cell
         }
@@ -314,4 +315,42 @@ class SerieViewController: ListViewController, UITableViewDataSource, UITableVie
     override func controllerDidClosed() {
     }
     
+}
+
+extension SerieViewController: DownloadButtonDelegate {
+    
+    func downloadTouched(rowIndex: Int) {
+       
+        let curWork:NewsFeedItem = works[rowIndex]
+        showLoadingView(msg: "\(NSLocalizedString("DwnloadingWrk", comment: "")) \(curWork.title)")
+        
+        if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
+            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
+        }
+        
+        var params:[String:AnyObject] = [String:AnyObject]()
+        params["view_adult"] = "true" as AnyObject?
+        
+        let urlStr =  "https://archiveofourown.org/works/" + curWork.workId
+        
+        Alamofire.request(urlStr, parameters: params)
+            .response(completionHandler: { response in
+                #if DEBUG
+                    print(response.request ?? "")
+                    print(response.error ?? "")
+                #endif
+                if let d = response.data {
+                    self.parseCookies(response)
+                    let _ = self.downloadWork(d, curWork: curWork)
+                    //self.saveWork()
+                } else {
+                    self.hideLoadingView()
+                    TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
+                }
+            })
+    }
+    
+    func deleteTouched(rowIndex: Int) {
+        
+    }
 }

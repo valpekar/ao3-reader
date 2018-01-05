@@ -9,6 +9,8 @@
 import UIKit
 
 class FeedTableViewCell: UITableViewCell {
+    @IBOutlet weak var workCellView: XibView!
+    
     @IBOutlet weak var bgView:UIView!
     @IBOutlet weak var ratingLabel: UILabel!
     
@@ -49,8 +51,9 @@ class FeedTableViewCell: UITableViewCell {
     }
     
     override func layoutSubviews() {
-        self.bgView.layer.cornerRadius = 5
-        
-        self.fandomsLabel.textColor = AppDelegate.greenColor
+        if (workCellView != nil) {
+            self.workCellView.bgView.layer.cornerRadius = 5
+            self.workCellView.fandomsLabel.textColor = AppDelegate.greenColor
+        }
     }
 }

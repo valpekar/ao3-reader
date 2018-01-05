@@ -130,6 +130,110 @@ class ListViewController: LoadingViewController, PageSelectDelegate, UIPopoverPr
         return cell
     }
     
+    func fillCellXib(cell: FeedTableViewCell, curWork: NewsFeedItem, needsDelete: Bool) -> FeedTableViewCell {
+        cell.workCellView.topicLabel.text = curWork.topic.replacingOccurrences(of: "\n", with: "")
+        cell.workCellView.fandomsLabel.text = curWork.fandoms
+        
+        cell.workCellView.wordsLabel.text = curWork.words
+        
+        if (curWork.topicPreview != nil) {
+            cell.workCellView.topicPreviewLabel.text = curWork.topicPreview
+        }
+        else {
+            cell.workCellView.topicPreviewLabel.text = ""
+        }
+        
+        cell.workCellView.datetimeLabel.text = curWork.dateTime
+        
+        if (curWork.language.isEmpty) {
+            cell.workCellView.languageLabel.text = "-"
+        } else {
+            cell.workCellView.languageLabel.text = curWork.language
+        }
+        
+        if (!curWork.chapters.isEmpty) {
+            cell.workCellView.chaptersLabel.text = NSLocalizedString("Chapters_", comment: "") + curWork.chapters
+        } else {
+            cell.workCellView.chaptersLabel.text = ""
+        }
+        
+        if let commentsNum: Float = Float(curWork.comments) {
+            cell.workCellView.commentsLabel.text =  commentsNum.formatUsingAbbrevation()
+        } else {
+            cell.workCellView.commentsLabel.text = curWork.comments
+        }
+        
+        if let kudosNum: Float = Float(curWork.kudos) {
+            cell.workCellView.kudosLabel.text =  kudosNum.formatUsingAbbrevation()
+        } else {
+            cell.workCellView.kudosLabel.text = curWork.kudos
+        }
+        
+        if let bookmarksNum: Float = Float(curWork.bookmarks) {
+            cell.workCellView.bookmarksLabel.text =  bookmarksNum.formatUsingAbbrevation()
+        } else {
+            cell.workCellView.bookmarksLabel.text = curWork.bookmarks
+        }
+        
+        if let hitsNum: Float = Float(curWork.hits) {
+            cell.workCellView.hitsLabel.text =  hitsNum.formatUsingAbbrevation()
+        } else {
+            cell.workCellView.hitsLabel.text = curWork.hits
+        }
+        // cell?.completeLabel.text = curWork.complete
+        // cell?.categoryLabel.text = curWork.category
+        cell.workCellView.ratingLabel.text = curWork.rating
+        
+        
+        var tagsString = ""
+        if (curWork.tags.count > 0) {
+            tagsString = curWork.tags.joined(separator: ", ")
+        }
+        cell.workCellView.tagsLabel.text = tagsString
+        
+        if (theme == DefaultsManager.THEME_DAY) {
+            cell.contentView.backgroundColor = AppDelegate.greyLightBg
+            cell.workCellView.backgroundColor = AppDelegate.greyLightBg
+            cell.workCellView.bgView.backgroundColor = UIColor.white
+            cell.workCellView.topicLabel.textColor = AppDelegate.redColor
+            cell.workCellView.languageLabel.textColor = AppDelegate.redColor
+            cell.workCellView.datetimeLabel.textColor = AppDelegate.redColor
+            cell.workCellView.chaptersLabel.textColor = AppDelegate.redColor
+            cell.workCellView.topicPreviewLabel.textColor = UIColor.black
+            cell.workCellView.tagsLabel.textColor = AppDelegate.darkerGreyColor
+            cell.workCellView.kudosLabel.textColor = AppDelegate.redColor
+            cell.workCellView.commentsLabel.textColor = AppDelegate.redColor
+            cell.workCellView.bookmarksLabel.textColor = AppDelegate.redColor
+            cell.workCellView.hitsLabel.textColor = AppDelegate.redColor
+            cell.workCellView.wordsLabel.textColor = AppDelegate.redColor
+            
+        } else {
+            cell.contentView.backgroundColor = AppDelegate.greyDarkBg
+            cell.workCellView.backgroundColor = AppDelegate.greyDarkBg
+            cell.workCellView.bgView.backgroundColor = AppDelegate.greyBg
+            cell.workCellView.topicLabel.textColor = AppDelegate.textLightColor
+            cell.workCellView.languageLabel.textColor = AppDelegate.greyLightColor
+            cell.workCellView.datetimeLabel.textColor = AppDelegate.greyLightColor
+            cell.workCellView.chaptersLabel.textColor = AppDelegate.greyLightColor
+            cell.workCellView.topicPreviewLabel.textColor = AppDelegate.textLightColor
+            cell.workCellView.tagsLabel.textColor = AppDelegate.redTextColor
+            cell.workCellView.tagsLabel.textColor = AppDelegate.greyLightColor
+            cell.workCellView.kudosLabel.textColor = AppDelegate.darkerGreyColor
+            cell.workCellView.commentsLabel.textColor = AppDelegate.darkerGreyColor
+            cell.workCellView.bookmarksLabel.textColor = AppDelegate.darkerGreyColor
+            cell.workCellView.hitsLabel.textColor = AppDelegate.darkerGreyColor
+            cell.workCellView.wordsLabel.textColor = AppDelegate.darkerGreyColor
+        }
+        
+        cell.workCellView.fandomsLabel.textColor = AppDelegate.greenColor
+        
+        if (needsDelete == false) {
+            cell.workCellView.deleteButtonWidth.constant = 0.0
+        }
+        
+        return cell
+    }
+    
     func selectCell(row: Int, works: [NewsFeedItem]) {
         if (row >= works.count) {
             return

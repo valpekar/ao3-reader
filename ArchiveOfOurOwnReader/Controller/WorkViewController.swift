@@ -83,7 +83,10 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
             if (downloadedChapters != nil && downloadedChapters!.count > 0) {
                 if (downloadedChapters!.count > 1) {
                     contentsButton.isHidden = false
+                } else {
+                    contentsButton.isHidden = true
                 }
+                
                 currentChapterIndex = downloadedWorkItem.value(forKey: "currentChapter") as? Int ?? 0
                 work = downloadedChapters?[currentChapterIndex].value(forKey: "chapterContent") as? String ?? ""
                 loadCurrentTheme()

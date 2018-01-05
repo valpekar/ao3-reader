@@ -121,6 +121,8 @@
 		3C93ED5E1FCF12EF00F1F4D4 /* CategoryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C93ED5D1FCF12EF00F1F4D4 /* CategoryItem.swift */; };
 		3C93ED601FCF140100F1F4D4 /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C93ED5F1FCF140100F1F4D4 /* CategoryCell.swift */; };
 		3C9C87BA1CE3557D00C10410 /* RecommendationsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9C87B91CE3557D00C10410 /* RecommendationsController.swift */; };
+		3CAEB2C91FFE501C00C7035C /* XibView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CAEB2C81FFE501C00C7035C /* XibView.swift */; };
+		3CAEB2CB1FFE505C00C7035C /* workCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CAEB2CA1FFE505C00C7035C /* workCell.xib */; };
 		3CB2A74B1F8BB237004A6F76 /* SerieViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB2A74A1F8BB237004A6F76 /* SerieViewController.swift */; };
 		3CB2A74F1F8BB4F8004A6F76 /* SerieInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB2A74E1F8BB4F8004A6F76 /* SerieInfoCell.swift */; };
 		3CB7735F1C847CCD00DC15C4 /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB7735E1C847CCD00DC15C4 /* ContainerViewController.swift */; };
@@ -326,6 +328,8 @@
 		3CA0A7B31F7BCC7900ADEE04 /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "pt-PT"; path = "pt-PT.lproj/LaunchScreen.xib"; sourceTree = "<group>"; };
 		3CA0A7B41F7BCC7A00ADEE04 /* ko */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ko; path = ko.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		3CA0A7B51F7BCCBC00ADEE04 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3CAEB2C81FFE501C00C7035C /* XibView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = XibView.swift; path = View/Custom/XibView.swift; sourceTree = "<group>"; };
+		3CAEB2CA1FFE505C00C7035C /* workCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = workCell.xib; path = View/workCell.xib; sourceTree = "<group>"; };
 		3CB2A74A1F8BB237004A6F76 /* SerieViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SerieViewController.swift; path = Controller/SerieViewController.swift; sourceTree = "<group>"; };
 		3CB2A74E1F8BB4F8004A6F76 /* SerieInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SerieInfoCell.swift; path = View/Custom/Cells/SerieInfoCell.swift; sourceTree = "<group>"; };
 		3CB7735E1C847CCD00DC15C4 /* ContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
@@ -548,6 +552,7 @@
 				28B6DC4F1B4E424D00F34529 /* Custom */,
 				28B6DC351B4E3F5900F34529 /* LaunchScreen.xib */,
 				28B6DC301B4E3F5900F34529 /* Main.storyboard */,
+				3CAEB2CA1FFE505C00C7035C /* workCell.xib */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -599,6 +604,7 @@
 				28B6DC501B4E425500F34529 /* Cells */,
 				3C93D4AB1F22297A00948D08 /* ButtonWithSection.swift */,
 				3C04659B1F8CE230003B6AE7 /* RoundImageView.swift */,
+				3CAEB2C81FFE501C00C7035C /* XibView.swift */,
 			);
 			name = Custom;
 			sourceTree = "<group>";
@@ -823,6 +829,7 @@
 			files = (
 				28B6DC321B4E3F5900F34529 /* Main.storyboard in Resources */,
 				28B6DC371B4E3F5900F34529 /* LaunchScreen.xib in Resources */,
+				3CAEB2CB1FFE505C00C7035C /* workCell.xib in Resources */,
 				1D7C4ED41BB182C400F4ECFA /* sortby_map.plist in Resources */,
 				1D03127F1BB57D640008027E /* sortdirection_map.plist in Resources */,
 				3C3073391EE7EB6600D1509E /* Localizable.strings in Resources */,
@@ -1050,6 +1057,7 @@
 				1D3F4BA91BBABF5100279C27 /* LoadingViewController.swift in Sources */,
 				3C93ED5A1FCED24900F1F4D4 /* MyProfileCell.swift in Sources */,
 				3C88102D1F14BED900ED6B5D /* HistoryItem+CoreDataProperties.swift in Sources */,
+				3CAEB2C91FFE501C00C7035C /* XibView.swift in Sources */,
 				3CC888971F83CC1C0027C469 /* ListViewController.swift in Sources */,
 				3C31054A1C7F57020065256E /* FavoritesSiteController.swift in Sources */,
 				1D2CFFFF1B8C7F7F0065EB2B /* PageItem.swift in Sources */,

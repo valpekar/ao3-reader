@@ -388,11 +388,10 @@ class RecommendationsController : ListViewController, UITableViewDataSource, UIT
         
         let curWork:NewsFeedItem = works[(indexPath as NSIndexPath).row]
         
-        cell = fillCell(cell: cell, curWork: curWork)
+        cell = fillCellXib(cell: cell, curWork: curWork, needsDelete: false)
         
-        cell.downloadButton.tag = indexPath.row
-        cell.deleteButton.tag = indexPath.row
-        cell.deleteButton.isHidden = true
+        cell.workCellView.tag = indexPath.row
+        cell.workCellView.downloadButtonDelegate = self
         
         return cell
     }
@@ -412,7 +411,7 @@ class RecommendationsController : ListViewController, UITableViewDataSource, UIT
         
         var cell: PageCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! PageCollectionViewCell
         
-        cell = fillCollCell(cell: cell as! PageCollectionViewCell, page: pages[indexPath.row])
+        cell = fillCollCell(cell: cell, page: pages[indexPath.row])
         
         return cell
     }
@@ -512,5 +511,44 @@ class RecommendationsController : ListViewController, UITableViewDataSource, UIT
     
     func controllerDidClosedWithChange() {
         shouldReload = false
+    }
+}
+
+extension RecommendationsController: DownloadButtonDelegate {
+    
+    func downloadTouched(rowIndex: Int) {
+        if (rowIndex >= works.count) {
+            return
+        }
+        
+        if (purchased || donated) {
+            #if DEBUG
+                print("premium")
+            #endif
+        } else {
+            if (countWroksFromDB() > 29) {
+                TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Only30Stroies", comment: ""), type: .error, duration: 2.0)
+                
+                return
+            }
+        }
+        
+        curWork = works[rowIndex]
+        
+        showLoadingView(msg: "\(NSLocalizedString("DwnloadingWrk", comment: "")) \(curWork?.title ?? "")")
+        
+        if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
+            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
+        }
+        
+        var params:[String:AnyObject] = [String:AnyObject]()
+        params["view_adult"] = "true" as AnyObject?
+        
+        request("https://archiveofourown.org/works/" + (curWork?.workId ?? ""), method: .get, parameters: params)
+            .response(completionHandler: onSavedWorkLoaded(_:))
+    }
+    
+    func deleteTouched(rowIndex: Int) {
+        
     }
 }

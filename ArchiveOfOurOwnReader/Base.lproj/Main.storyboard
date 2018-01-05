@@ -1227,8 +1227,35 @@ Please check your Internet connection and also make sure you are logged into you
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                                         <color key="backgroundColor" red="0.92000001669999998" green="0.92000001669999998" blue="0.92000001669999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <prototypes>
-                                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="FeedCell" rowHeight="240" id="eZg-yN-QHZ" customClass="FeedTableViewCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="FeedCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FeedCell" id="HvY-9I-jkq" customClass="FeedTableViewCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="22" width="375" height="240"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="HvY-9I-jkq" id="wPD-er-bbf">
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="240"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O7N-3T-1sh" customClass="XibView" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
+                                                            <rect key="frame" x="15" y="11" width="345" height="218"/>
+                                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="string" keyPath="nibName" value="workCell"/>
+                                                            </userDefinedRuntimeAttributes>
+                                                        </view>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstAttribute="trailingMargin" secondItem="O7N-3T-1sh" secondAttribute="trailing" id="57h-ic-QdX"/>
+                                                        <constraint firstAttribute="bottomMargin" secondItem="O7N-3T-1sh" secondAttribute="bottom" id="D10-ZK-2bT"/>
+                                                        <constraint firstItem="O7N-3T-1sh" firstAttribute="leading" secondItem="wPD-er-bbf" secondAttribute="leadingMargin" id="Syi-IC-vP9"/>
+                                                        <constraint firstItem="O7N-3T-1sh" firstAttribute="top" secondItem="wPD-er-bbf" secondAttribute="topMargin" id="XUH-gM-qL8"/>
+                                                    </constraints>
+                                                </tableViewCellContentView>
+                                                <color key="backgroundColor" red="0.92156862750000001" green="0.92156862750000001" blue="0.92156862750000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <connections>
+                                                    <outlet property="workCellView" destination="O7N-3T-1sh" id="SLj-WV-VDR"/>
+                                                </connections>
+                                            </tableViewCell>
+                                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="FeedCell1" rowHeight="240" id="eZg-yN-QHZ" customClass="FeedTableViewCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="262" width="375" height="240"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eZg-yN-QHZ" id="vbl-nC-HkT">
                                                     <rect key="frame" x="0.0" y="0.0" width="375" height="240"/>
@@ -1727,7 +1754,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                 </connections>
                                             </tableViewCell>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="SerieInfoCell" rowHeight="240" id="axe-Jb-Jhu" customClass="SerieInfoCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="262" width="375" height="240"/>
+                                                <rect key="frame" x="0.0" y="502" width="375" height="240"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="axe-Jb-Jhu" id="PBs-KE-E7s">
                                                     <rect key="frame" x="0.0" y="0.0" width="375" height="240"/>
@@ -1834,7 +1861,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                 </connections>
                                             </tableViewCell>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="WorkDetailTxtCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="txtCell" id="y1H-pa-Hia" customClass="WorkDetailTxtCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="502" width="375" height="240"/>
+                                                <rect key="frame" x="0.0" y="742" width="375" height="240"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="y1H-pa-Hia" id="gCB-aN-8Aq">
                                                     <rect key="frame" x="0.0" y="0.0" width="375" height="240"/>
@@ -2090,7 +2117,7 @@ Please check your Internet connection and also make sure you are logged into you
                                 <rect key="frame" x="0.0" y="20" width="375" height="603"/>
                                 <color key="backgroundColor" red="0.92000001669999998" green="0.92000001669999998" blue="0.92000001669999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="FeedCell" rowHeight="240" id="3mG-9j-QZh" customClass="FeedTableViewCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="FeedCell1" rowHeight="240" id="3mG-9j-QZh" customClass="FeedTableViewCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="22" width="375" height="240"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3mG-9j-QZh" id="sT5-Zl-Axp">
@@ -2572,6 +2599,33 @@ Please check your Internet connection and also make sure you are logged into you
                                             <outlet property="topicLabel" destination="VUr-2i-RNr" id="abr-xY-Z2e"/>
                                             <outlet property="topicPreviewLabel" destination="V0u-ho-Dls" id="zol-3A-k1t"/>
                                             <outlet property="wordsLabel" destination="57e-2G-rxT" id="qX5-N0-3sl"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="FeedCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FeedCell" id="vjm-8w-Szc" customClass="FeedTableViewCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="262" width="375" height="240"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="vjm-8w-Szc" id="pNZ-a9-xmh">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="240"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vli-tq-Otd" customClass="XibView" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
+                                                    <rect key="frame" x="15" y="11" width="345" height="218"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="nibName" value="workCell"/>
+                                                    </userDefinedRuntimeAttributes>
+                                                </view>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="Vli-tq-Otd" firstAttribute="top" secondItem="pNZ-a9-xmh" secondAttribute="topMargin" id="C5g-hY-vUQ"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="Vli-tq-Otd" secondAttribute="trailing" id="Mur-9J-Szv"/>
+                                                <constraint firstItem="Vli-tq-Otd" firstAttribute="leading" secondItem="pNZ-a9-xmh" secondAttribute="leadingMargin" id="aow-Dk-ewc"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="Vli-tq-Otd" secondAttribute="bottom" id="iOk-51-zH7"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" red="0.92156862750000001" green="0.92156862750000001" blue="0.92156862750000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <connections>
+                                            <outlet property="workCellView" destination="Vli-tq-Otd" id="Py7-9W-np5"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -3284,7 +3338,7 @@ Please check your Internet connection and also make sure you are logged into you
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="559"/>
                                 <color key="backgroundColor" red="0.92000001668930054" green="0.92000001668930054" blue="0.92000001668930054" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="FeedCell" rowHeight="240" id="DUZ-yY-D5W" customClass="FeedTableViewCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="FeedCell1" rowHeight="240" id="DUZ-yY-D5W" customClass="FeedTableViewCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="40" width="375" height="240"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="DUZ-yY-D5W" id="V6g-Ec-QQg">
@@ -3779,7 +3833,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                 <constraint firstItem="wTQ-Yy-mOC" firstAttribute="leading" secondItem="V6g-Ec-QQg" secondAttribute="leadingMargin" id="rcu-sH-Gwt"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" red="0.92000001668930054" green="0.92000001668930054" blue="0.92000001668930054" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" red="0.92156862745098034" green="0.92156862745098034" blue="0.92156862745098034" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
                                             <outlet property="bgView" destination="wTQ-Yy-mOC" id="5bW-Cy-6r7"/>
                                             <outlet property="bookmarksLabel" destination="cCv-tz-0zs" id="dco-4c-Q27"/>
@@ -3796,6 +3850,33 @@ Please check your Internet connection and also make sure you are logged into you
                                             <outlet property="topicLabel" destination="ugS-IF-6Ts" id="0a9-ws-LKK"/>
                                             <outlet property="topicPreviewLabel" destination="Ijh-as-Qrd" id="rXf-Qv-9ig"/>
                                             <outlet property="wordsLabel" destination="pN5-up-V8w" id="9l4-gy-FlU"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="FeedCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FeedCell" id="sA5-aX-5Od" customClass="FeedTableViewCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="280" width="375" height="240"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="sA5-aX-5Od" id="Mcx-ik-z02">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="240"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nZG-XH-dIC" customClass="XibView" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
+                                                    <rect key="frame" x="15" y="11" width="345" height="218"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="nibName" value="workCell"/>
+                                                    </userDefinedRuntimeAttributes>
+                                                </view>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailingMargin" secondItem="nZG-XH-dIC" secondAttribute="trailing" id="36C-w1-x9s"/>
+                                                <constraint firstItem="nZG-XH-dIC" firstAttribute="leading" secondItem="Mcx-ik-z02" secondAttribute="leadingMargin" id="6Z6-Mc-7tZ"/>
+                                                <constraint firstItem="nZG-XH-dIC" firstAttribute="top" secondItem="Mcx-ik-z02" secondAttribute="topMargin" id="WCH-5z-LeI"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="nZG-XH-dIC" secondAttribute="bottom" id="ZHI-T5-jJc"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" red="0.92156862745098034" green="0.92156862745098034" blue="0.92156862745098034" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <connections>
+                                            <outlet property="workCellView" destination="nZG-XH-dIC" id="Sc7-e3-GSq"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -3967,7 +4048,7 @@ Please check your Internet connection and also make sure you are logged into you
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="C1R-GE-i2Z" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="424.63768115942031" y="251.9021739130435"/>
+            <point key="canvasLocation" x="423.19999999999999" y="251.42428785607197"/>
         </scene>
         <!-- -->
         <scene sceneID="ea8-Z5-5lf">
@@ -4062,7 +4143,7 @@ Please check your Internet connection and also make sure you are logged into you
                                 <rect key="frame" x="0.0" y="56" width="375" height="503"/>
                                 <color key="backgroundColor" red="0.92000001668930054" green="0.92000001668930054" blue="0.92000001668930054" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="FeedCell" rowHeight="240" id="GaJ-kH-z0B" customClass="FeedTableViewCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="FeedCell1" rowHeight="240" id="GaJ-kH-z0B" customClass="FeedTableViewCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="22" width="375" height="240"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="GaJ-kH-z0B" id="1WV-tz-IX6">
@@ -4557,7 +4638,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                 <constraint firstAttribute="bottomMargin" secondItem="B2Q-4y-ueW" secondAttribute="bottom" id="x14-yW-ymY"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" red="0.92000001668930054" green="0.92000001668930054" blue="0.92000001668930054" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" red="0.92156862745098034" green="0.92156862745098034" blue="0.92156862745098034" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
                                             <outlet property="bgView" destination="B2Q-4y-ueW" id="Swx-j0-hx4"/>
                                             <outlet property="bookmarksLabel" destination="yAO-as-kET" id="BiQ-TU-0Nm"/>
@@ -4575,6 +4656,33 @@ Please check your Internet connection and also make sure you are logged into you
                                             <outlet property="topicLabel" destination="CbL-S4-54X" id="EvS-iT-Xoh"/>
                                             <outlet property="topicPreviewLabel" destination="EtU-Xl-SPN" id="dM6-gx-mPv"/>
                                             <outlet property="wordsLabel" destination="KF4-XT-Jjg" id="9wi-F4-fcK"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="FeedCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FeedCell" id="qbQ-sj-f41" customClass="FeedTableViewCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="262" width="375" height="240"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="qbQ-sj-f41" id="5c8-pq-6Fa">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="240"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C3a-lm-Y5G" customClass="XibView" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
+                                                    <rect key="frame" x="15" y="11" width="345" height="218"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="nibName" value="workCell"/>
+                                                    </userDefinedRuntimeAttributes>
+                                                </view>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailingMargin" secondItem="C3a-lm-Y5G" secondAttribute="trailing" id="4Vw-gg-jj1"/>
+                                                <constraint firstItem="C3a-lm-Y5G" firstAttribute="leading" secondItem="5c8-pq-6Fa" secondAttribute="leadingMargin" id="c0G-7A-wJb"/>
+                                                <constraint firstItem="C3a-lm-Y5G" firstAttribute="top" secondItem="5c8-pq-6Fa" secondAttribute="topMargin" id="f7Y-k8-4pa"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="C3a-lm-Y5G" secondAttribute="bottom" id="jwg-Dd-pGz"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" red="0.92156862745098034" green="0.92156862745098034" blue="0.92156862745098034" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <connections>
+                                            <outlet property="workCellView" destination="C3a-lm-Y5G" id="7Ef-2d-uMt"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -6455,7 +6563,7 @@ Major Problems:
                                                 <constraint firstAttribute="trailingMargin" secondItem="e43-xT-xfS" secondAttribute="trailing" id="kxJ-oq-ln7"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" red="0.92000001668930054" green="0.92000001668930054" blue="0.92000001668930054" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" red="0.92156862745098034" green="0.92156862745098034" blue="0.92156862745098034" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
                                             <outlet property="bgView" destination="e43-xT-xfS" id="Thk-uZ-fuP"/>
                                             <outlet property="bookmarksLabel" destination="Csm-5L-6Gp" id="2m6-xe-hxR"/>
@@ -6475,6 +6583,15 @@ Major Problems:
                                             <outlet property="wordsLabel" destination="7xe-CI-RE6" id="W50-jL-mPC"/>
                                             <segue destination="g0F-jj-WaO" kind="show" identifier="offlineWorkDetail" id="6Vy-m9-kwB"/>
                                         </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="Ao9-ic-SvS">
+                                        <rect key="frame" x="0.0" y="295.5" width="375" height="240"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Ao9-ic-SvS" id="EOR-ka-nFM">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="240"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" red="0.92156862745098034" green="0.92156862745098034" blue="0.92156862745098034" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -6757,7 +6874,7 @@ Please check your Internet connection and also make sure you are logged into you
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="559"/>
                                 <color key="backgroundColor" red="0.92000001668930054" green="0.92000001668930054" blue="0.92000001668930054" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="FeedCell" rowHeight="240" id="CE4-sy-gmS" customClass="FeedTableViewCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="FeedCell1" rowHeight="240" id="CE4-sy-gmS" customClass="FeedTableViewCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="22" width="375" height="240"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="CE4-sy-gmS" id="I5G-vc-nes">
@@ -7273,6 +7390,33 @@ Please check your Internet connection and also make sure you are logged into you
                                             <outlet property="wordsLabel" destination="Wac-zJ-ApS" id="QcD-mv-UvU"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="FeedCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FeedCell" id="oTW-0K-bBT" customClass="FeedTableViewCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="262" width="375" height="240"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="oTW-0K-bBT" id="Nqf-Ef-LJS">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="240"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sXD-qj-RBp" customClass="XibView" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
+                                                    <rect key="frame" x="15" y="11" width="345" height="218"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="nibName" value="workCell"/>
+                                                    </userDefinedRuntimeAttributes>
+                                                </view>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailingMargin" secondItem="sXD-qj-RBp" secondAttribute="trailing" id="5dq-t6-Ogp"/>
+                                                <constraint firstItem="sXD-qj-RBp" firstAttribute="top" secondItem="Nqf-Ef-LJS" secondAttribute="topMargin" id="izf-M3-t8F"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="sXD-qj-RBp" secondAttribute="bottom" id="lfe-Az-OG6"/>
+                                                <constraint firstItem="sXD-qj-RBp" firstAttribute="leading" secondItem="Nqf-Ef-LJS" secondAttribute="leadingMargin" id="zZb-6r-ff9"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" red="0.92156862750000001" green="0.92156862750000001" blue="0.92156862750000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <connections>
+                                            <outlet property="workCellView" destination="sXD-qj-RBp" id="3iV-0r-DQk"/>
+                                        </connections>
+                                    </tableViewCell>
                                 </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="k4C-kA-xzX" id="JGT-fg-gYQ"/>
@@ -7568,7 +7712,7 @@ Please check your Internet connection and also make sure you are logged into you
                                 <rect key="frame" x="0.0" y="20.5" width="375" height="538.5"/>
                                 <color key="backgroundColor" red="0.92000001668930054" green="0.92000001668930054" blue="0.92000001668930054" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="FeedCell" rowHeight="240" id="ZiY-5N-zpP" customClass="FeedTableViewCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="FeedCell1" rowHeight="240" id="ZiY-5N-zpP" customClass="FeedTableViewCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="22" width="375" height="240"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ZiY-5N-zpP" id="2vM-wk-Ej3">
@@ -8082,6 +8226,33 @@ Please check your Internet connection and also make sure you are logged into you
                                             <outlet property="topicLabel" destination="9nb-J7-hFR" id="WRV-gH-JGL"/>
                                             <outlet property="topicPreviewLabel" destination="Aro-oq-Q66" id="H4V-tn-W7H"/>
                                             <outlet property="wordsLabel" destination="xco-34-ICZ" id="Z0r-qE-6Z4"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="FeedCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FeedCell" id="W09-FO-Mmj" customClass="FeedTableViewCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="262" width="375" height="240"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="W09-FO-Mmj" id="6a7-Kn-Z6d">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="240"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lib-SF-z8i" customClass="XibView" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
+                                                    <rect key="frame" x="15" y="11" width="345" height="218"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="nibName" value="workCell"/>
+                                                    </userDefinedRuntimeAttributes>
+                                                </view>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottomMargin" secondItem="Lib-SF-z8i" secondAttribute="bottom" id="2UP-9D-7YW"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="Lib-SF-z8i" secondAttribute="trailing" id="fN7-CM-IoX"/>
+                                                <constraint firstItem="Lib-SF-z8i" firstAttribute="leading" secondItem="6a7-Kn-Z6d" secondAttribute="leadingMargin" id="hdl-Tj-a6D"/>
+                                                <constraint firstItem="Lib-SF-z8i" firstAttribute="top" secondItem="6a7-Kn-Z6d" secondAttribute="topMargin" id="rzt-2S-HkV"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" red="0.92156862750000001" green="0.92156862750000001" blue="0.92156862750000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <connections>
+                                            <outlet property="workCellView" destination="Lib-SF-z8i" id="oND-nk-Igx"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -8683,7 +8854,7 @@ Please check your Internet connection and also make sure you are logged into you
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="559"/>
                                 <color key="backgroundColor" red="0.92000001669999998" green="0.92000001669999998" blue="0.92000001669999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="FeedCell" rowHeight="240" id="58X-i9-fn3" customClass="FeedTableViewCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="FeedCell1" rowHeight="240" id="58X-i9-fn3" customClass="FeedTableViewCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="22" width="375" height="240"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="58X-i9-fn3" id="DNW-bb-pTl">
@@ -9197,6 +9368,33 @@ Please check your Internet connection and also make sure you are logged into you
                                             <outlet property="topicLabel" destination="g5s-Hl-7hV" id="wGU-BY-EUj"/>
                                             <outlet property="topicPreviewLabel" destination="lAw-uR-OGy" id="Fdw-UA-clN"/>
                                             <outlet property="wordsLabel" destination="YxI-07-ufB" id="EHC-tZ-ri4"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="FeedCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FeedCell" id="dqv-JH-1Le" customClass="FeedTableViewCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="262" width="375" height="240"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="dqv-JH-1Le" id="wXd-7e-G88">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="240"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tFf-uQ-V1I" customClass="XibView" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
+                                                    <rect key="frame" x="15" y="11" width="345" height="218"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="nibName" value="workCell"/>
+                                                    </userDefinedRuntimeAttributes>
+                                                </view>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="tFf-uQ-V1I" firstAttribute="top" secondItem="wXd-7e-G88" secondAttribute="topMargin" id="5Df-gF-5Ne"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="tFf-uQ-V1I" secondAttribute="bottom" id="9Rt-uw-6Ia"/>
+                                                <constraint firstItem="tFf-uQ-V1I" firstAttribute="leading" secondItem="wXd-7e-G88" secondAttribute="leadingMargin" id="ChQ-xM-ihB"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="tFf-uQ-V1I" secondAttribute="trailing" id="Xmc-dN-au6"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" red="0.92156862750000001" green="0.92156862750000001" blue="0.92156862750000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <connections>
+                                            <outlet property="workCellView" destination="tFf-uQ-V1I" id="qvB-5H-ooD"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

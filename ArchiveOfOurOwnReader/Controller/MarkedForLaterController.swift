@@ -173,10 +173,10 @@ class MarkedForLaterController: ListViewController , UITableViewDataSource, UITa
         
         let curWork:NewsFeedItem = works[(indexPath as NSIndexPath).row]
         
-        cell = fillCell(cell: cell, curWork: curWork)
+        cell = fillCellXib(cell: cell, curWork: curWork, needsDelete: true)
         
-        cell.downloadButton.tag = indexPath.row
-        cell.deleteButton.tag = indexPath.row
+        cell.workCellView.tag = indexPath.row
+        cell.workCellView.downloadButtonDelegate = self
         
         return cell!
     }
@@ -361,4 +361,58 @@ class MarkedForLaterController: ListViewController , UITableViewDataSource, UITa
         }
     }
     
+}
+
+extension MarkedForLaterController : DownloadButtonDelegate {
+    
+    func downloadTouched(rowIndex: Int) {
+       
+        let curWork:NewsFeedItem = works[rowIndex]
+        showLoadingView(msg: "\(NSLocalizedString("DwnloadingWrk", comment: "")) \(curWork.title)")
+        
+        if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
+            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
+        }
+        
+        var params:[String:AnyObject] = [String:AnyObject]()
+        params["view_adult"] = "true" as AnyObject?
+        
+        let urlStr: String = "https://archiveofourown.org/works/" + curWork.workId
+        
+        Alamofire.request(urlStr, parameters: params) //default is get
+            .response(completionHandler: { response in
+                #if DEBUG
+                    print(response.request ?? "")
+                    print(response.error ?? "")
+                #endif
+                if let d = response.data {
+                    self.parseCookies(response)
+                    let _ = self.downloadWork(d, curWork: curWork)
+                } else {
+                    self.hideLoadingView()
+                    TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
+                }
+            })
+    }
+    
+    func deleteTouched(rowIndex: Int) {
+        let deleteAlert = UIAlertController(title: NSLocalizedString("AreYouSure", comment: ""), message: NSLocalizedString("SureDeleteFromHistory", comment: ""), preferredStyle: UIAlertControllerStyle.alert)
+        
+        deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: { (action: UIAlertAction) in
+            #if DEBUG
+                print("Cancel")
+            #endif
+        }))
+        
+        deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Yes", comment: ""), style: .default, handler: { (action: UIAlertAction) in
+            
+            let curWork:NewsFeedItem = self.works[rowIndex]
+            self.deleteItemFromHistory(curWork)
+            
+            self.dismiss(animated: true, completion: { () -> Void in
+            })
+        }))
+        
+        present(deleteAlert, animated: true, completion: nil)
+    }
 }
