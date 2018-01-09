@@ -14,6 +14,7 @@ class WorkItem : NSObject {
     var workId = ""
     var ratingTags = ""
     var archiveWarnings = ""
+    var freeform = ""
     var category = ""
     var language = ""
     var published = ""

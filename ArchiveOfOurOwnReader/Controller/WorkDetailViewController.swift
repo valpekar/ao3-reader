@@ -381,6 +381,13 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 }
             }
             
+            if let freeformLiArr: [TFHppleElement] = workmeta[0].search(withXPathQuery: "//dd[@class='freeform tags']/ul/li") as? [TFHppleElement] {
+                workItem.freeform = ""
+                for i in 0..<freeformLiArr.count {
+                    workItem.freeform += freeformLiArr[i].content.trimmingCharacters(in: .whitespacesAndNewlines) + " "
+                }
+            }
+            
             var relationshipsLiArr: [TFHppleElement] = workmeta[0].search(withXPathQuery: "//dd[@class='relationship tags']/ul[@class='commas']/li") as! [TFHppleElement]
             relationships = [Relationship]()
             
@@ -564,7 +571,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         if (workItem != nil) {
             wid = workItem.workId
         } else if (downloadedWorkItem != nil) {
-            wid = downloadedWorkItem.value(forKey: "workId") as? String ?? ""
+            wid = downloadedWorkItem.workId ?? ""
         }
         
         Alamofire.request("https://archiveofourown.org/works/" + wid + vadult + "#bookmark-form", method: .get, parameters: params)
@@ -927,7 +934,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 cell!.label.text = characters[indexPath.row].characterName
                 
             } else if (downloadedCharacters != nil && downloadedCharacters.count > indexPath.row) {
-                cell!.label.text = downloadedCharacters[indexPath.row].value(forKey: "characterName") as? String
+                cell!.label.text = downloadedCharacters[indexPath.row].characterName ?? ""
                 
             } else {
                 indexesToHide.append(3)
@@ -1167,7 +1174,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             
             
             if ( fandoms != nil && relationships != nil && fandoms.count > 0 && relationships.count > 0) {
-                saveToAnalytics(workItem.value(forKey: "author") as? String ?? "", category: workItem.value(forKey: "category") as? String ?? "", mainFandom: fandoms[0].fandomName, mainRelationship: relationships[0].relationshipName)
+                saveToAnalytics(workItem.value(forKey: "author") as? String ?? "", category: workItem.category, mainFandom: fandoms[0].fandomName, mainRelationship: relationships[0].relationshipName)
             }
             
         } else if (downloadedWorkItem != nil) {

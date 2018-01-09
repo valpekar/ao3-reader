@@ -605,21 +605,21 @@
                         <viewControllerLayoutGuide type="bottom" id="eb4-ON-vEz"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="rnr-VF-upb">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7bU-sj-Io5" customClass="UIScrollView">
-                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OGW-bT-jr5">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                                         <subviews>
                                             <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U2o-2W-hDy">
-                                                <rect key="frame" x="0.0" y="0.0" width="375" height="451"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="407"/>
                                                 <color key="backgroundColor" red="0.28958413004875183" green="0.31462949514389038" blue="0.32950475811958313" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </webView>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="onDrag" translatesAutoresizingMaskIntoConstraints="NO" id="Tub-7u-x9f">
-                                                <rect key="frame" x="20" y="503" width="335" height="100"/>
+                                                <rect key="frame" x="20" y="459" width="335" height="100"/>
                                                 <color key="backgroundColor" red="0.99310782068062831" green="0.99310782068062831" blue="0.99310782068062831" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="100" id="CsP-nN-m1L"/>
@@ -628,7 +628,7 @@
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ibn-K2-prA">
-                                                <rect key="frame" x="20" y="603" width="335" height="40"/>
+                                                <rect key="frame" x="20" y="559" width="335" height="40"/>
                                                 <color key="backgroundColor" red="0.39215686274509803" green="0.11372549019607843" blue="0.54509803921568623" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="9zR-dv-d0E"/>
@@ -655,7 +655,7 @@
                                                 </connections>
                                             </button>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="BvH-fm-6Yj">
-                                                <rect key="frame" x="0.0" y="451" width="375" height="44"/>
+                                                <rect key="frame" x="0.0" y="407" width="375" height="44"/>
                                                 <color key="backgroundColor" red="0.92000001669999998" green="0.92000001669999998" blue="0.92000001669999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="44" id="R4a-rn-kGl"/>
@@ -765,7 +765,7 @@
                         <viewControllerLayoutGuide type="bottom" id="RvI-P4-Jsq"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="cdF-HD-3HJ">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1uf-cP-mwU">
@@ -783,7 +783,7 @@
                                 </variation>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JVy-x2-Pai">
-                                <rect key="frame" x="16" y="70" width="343" height="535"/>
+                                <rect key="frame" x="16" y="50" width="343" height="491"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cyb-us-7ON">
                                         <rect key="frame" x="8" y="38" width="317" height="19.5"/>
@@ -845,7 +845,7 @@
                                         </subviews>
                                     </stackView>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="FbH-Ta-u8Z">
-                                        <rect key="frame" x="0.0" y="87.5" width="335" height="447.5"/>
+                                        <rect key="frame" x="0.0" y="87.5" width="335" height="403.5"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <prototypes>
                                             <tableViewCell contentMode="scaleToFill" selectionStyle="gray" indentationWidth="10" reuseIdentifier="cell" id="zrD-0Z-lBk" customClass="WorkDetailCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
@@ -1032,7 +1032,7 @@
                                 </variation>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DFN-f7-SBP" customClass="GADBannerView">
-                                <rect key="frame" x="27.5" y="20" width="320" height="50"/>
+                                <rect key="frame" x="27.5" y="0.0" width="320" height="50"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="hAO-nD-7DA"/>
@@ -1040,7 +1040,7 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BZH-PI-909">
-                                <rect key="frame" x="16" y="615" width="343" height="42"/>
+                                <rect key="frame" x="16" y="551" width="343" height="42"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.85999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="42" id="LKz-oN-kpU"/>
@@ -1868,7 +1868,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZB5-1N-i8r">
-                                                            <rect key="frame" x="17" y="11" width="343" height="218.5"/>
+                                                            <rect key="frame" x="10" y="11" width="357" height="218.5"/>
                                                             <fontDescription key="fontDescription" type="system" weight="light" pointSize="12"/>
                                                             <color key="textColor" red="0.31764705879999999" green="0.20392156859999999" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -2056,11 +2056,11 @@ Please check your Internet connection and also make sure you are logged into you
                         <viewControllerLayoutGuide type="bottom" id="Yoc-3C-4q5"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="7oc-1t-9bM">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7BG-8k-w0K">
-                                <rect key="frame" x="133" y="316.5" width="109" height="34"/>
+                                <rect key="frame" x="133" y="284.5" width="109" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <state key="normal" title="Try Again  🤔">
                                     <color key="titleColor" red="0.70196078429999997" green="0.27450980390000002" blue="0.27450980390000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -2070,7 +2070,7 @@ Please check your Internet connection and also make sure you are logged into you
                                 </connections>
                             </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="RmA-Nc-iEP">
-                                <rect key="frame" x="0.0" y="623" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="559" width="375" height="44"/>
                                 <color key="backgroundColor" red="0.92000001669999998" green="0.92000001669999998" blue="0.92000001669999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="K3h-4G-MaI"/>
@@ -2114,7 +2114,7 @@ Please check your Internet connection and also make sure you are logged into you
                                 </connections>
                             </collectionView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="240" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="dVv-Wb-Czg">
-                                <rect key="frame" x="0.0" y="20" width="375" height="603"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="559"/>
                                 <color key="backgroundColor" red="0.92000001669999998" green="0.92000001669999998" blue="0.92000001669999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="FeedCell1" rowHeight="240" id="3mG-9j-QZh" customClass="FeedTableViewCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
@@ -2669,16 +2669,16 @@ Please check your Internet connection and also make sure you are logged into you
                         <viewControllerLayoutGuide type="bottom" id="7u2-7t-GEs"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="qtN-uh-88S">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ey9-JX-1ZK">
-                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                                 <color key="backgroundColor" red="0.19607843137254902" green="0.20392156862745098" blue="0.22352941176470587" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <dataDetectorType key="dataDetectorTypes"/>
                             </webView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QBX-yq-43c">
-                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wnZ-d8-1x3">
                                         <rect key="frame" x="250" y="0.0" width="125" height="44"/>
@@ -4951,8 +4951,8 @@ Please check your Internet connection and also make sure you are logged into you
                                 </connections>
                             </switch>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" text="Further app improvements rely on your support! If you find app useful, pls consider supporting it by leaving a tip!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="6" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1uP-Y7-fEC">
-                                <rect key="frame" x="0.0" y="89" width="375" height="26.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                <rect key="frame" x="0.0" y="89" width="375" height="29"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="heightClass=regular-widthClass=regular">
@@ -4960,7 +4960,7 @@ Please check your Internet connection and also make sure you are logged into you
                                 </variation>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="248" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" rowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="GTp-WW-u9Q">
-                                <rect key="frame" x="0.0" y="154" width="375" height="449"/>
+                                <rect key="frame" x="0.0" y="156.5" width="375" height="446.5"/>
                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="tintColor" red="0.66485564720812185" green="0.13774127008543502" blue="0.15106696591960683" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="separatorColor" red="0.70164750647668395" green="0.70164750647668395" blue="0.70164750647668395" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -4997,7 +4997,7 @@ Please check your Internet connection and also make sure you are logged into you
                                 </connections>
                             </tableView>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Xbx-H9-77A">
-                                <rect key="frame" x="16" y="123.5" width="343" height="28.5"/>
+                                <rect key="frame" x="16" y="126" width="343" height="28.5"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VvP-t4-Q81">
                                         <rect key="frame" x="0.0" y="0.0" width="113.5" height="28.5"/>
@@ -5112,6 +5112,7 @@ Please check your Internet connection and also make sure you are logged into you
                         <outlet property="usernameLabel" destination="wtc-SS-BYB" id="4RP-Gn-djJ"/>
                         <segue destination="wuj-9H-jLa" kind="show" identifier="securitySegue" id="hDT-Sp-VS7"/>
                         <segue destination="h60-ml-Ofy" kind="show" identifier="listSegue" id="jXE-kt-jek"/>
+                        <segue destination="nxK-nh-NqP" kind="show" identifier="inboxSegue" id="nQf-CM-ay7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eN8-r1-Frw" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -5215,6 +5216,50 @@ If you don't see a subscription but are still being charged, make sure that you'
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rhx-n9-NDe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1192.5" y="3549.2957746478874"/>
+        </scene>
+        <!--Inbox Controller-->
+        <scene sceneID="lFM-xC-bx8">
+            <objects>
+                <viewController id="nxK-nh-NqP" customClass="InboxController" customModule="ArchiveOfOurOwnReader" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="0BL-6r-BX0"/>
+                        <viewControllerLayoutGuide type="bottom" id="zMr-uj-ZYL"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="UGz-n9-NT3">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="RRb-Sh-f1Q">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="rFA-T7-2t9">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="rFA-T7-2t9" id="Wzp-Hb-TlS">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="nxK-nh-NqP" id="2LS-AH-KVF"/>
+                                    <outlet property="delegate" destination="nxK-nh-NqP" id="EWa-0S-pUe"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="zMr-uj-ZYL" firstAttribute="top" secondItem="RRb-Sh-f1Q" secondAttribute="bottom" id="TUf-t1-u7W"/>
+                            <constraint firstAttribute="trailing" secondItem="RRb-Sh-f1Q" secondAttribute="trailing" id="V3r-V1-DoJ"/>
+                            <constraint firstItem="RRb-Sh-f1Q" firstAttribute="top" secondItem="0BL-6r-BX0" secondAttribute="bottom" id="tYj-cB-5Fz"/>
+                            <constraint firstItem="RRb-Sh-f1Q" firstAttribute="leading" secondItem="UGz-n9-NT3" secondAttribute="leading" id="wu2-jv-guP"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qEt-c8-eAU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1275" y="4271"/>
         </scene>
         <!--Security Settings Controller-->
         <scene sceneID="GJC-8M-WYD">
@@ -9582,7 +9627,7 @@ Please check your Internet connection and also make sure you are logged into you
         <image name="word" width="56" height="56"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="5rQ-gu-17N"/>
+        <segue reference="jXE-kt-jek"/>
         <segue reference="YvP-vi-Pnc"/>
         <segue reference="pDe-8P-N2j"/>
     </inferredMetricsTieBreakers>

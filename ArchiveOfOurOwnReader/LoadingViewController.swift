@@ -387,10 +387,16 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
             
             if let archiveWarnings: [TFHppleElement] = workmeta[0].search(withXPathQuery: "//dd[@class='warning tags']/ul[@class='commas']/li") as? [TFHppleElement] {
             var warnings = [String]()
-            for i in 0..<archiveWarnings.count {
-                warnings.append(archiveWarnings[i].content)
-                //workItem.archiveWarnings = archiveWarnings[0].content
+                for i in 0..<archiveWarnings.count {
+                    warnings.append(archiveWarnings[i].content)
+                    //workItem.archiveWarnings = archiveWarnings[0].content
+                }
             }
+            
+            if let freeformTags: [TFHppleElement] = workmeta[0].search(withXPathQuery: "//dd[@class='freeform tags']/ul[@class='commas']/li") as? [TFHppleElement] {
+                if (freeformTags.count > 0) {
+                    workItem.freeform = freeformTags[0].content
+                }
             }
             
             if let fandomsLiArr: [TFHppleElement] = workmeta[0].search(withXPathQuery: "//dd[@class='fandom tags']/ul[@class='commas']/li") as? [TFHppleElement] {

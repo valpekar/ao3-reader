@@ -258,7 +258,11 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
                 cell.accessoryType = .none
             }
         case 2:
-            cell.titleLabel.text = "My Works"
+            if (indexPath.row == 0) {
+                cell.titleLabel.text = "My Works"
+            } else {
+                cell.titleLabel.text = "Inbox"
+            }
             cell.accessoryType = .none
         case 3:
             if (indexPath.row == 0) {
@@ -309,7 +313,7 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
         case 1:
             return pseuds.count
         case 2:
-            return 1
+            return 2
         case 3:
             return 2
         case 4:
@@ -331,7 +335,11 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
             
             tableView.reloadData()
         case 2:
-            self.performSegue(withIdentifier: "listSegue", sender: self)
+            if (indexPath.row == 0) {
+                self.performSegue(withIdentifier: "listSegue", sender: self)
+            } else {
+                self.performSegue(withIdentifier: "inboxSegue", sender: self)
+            }
         case 3:
             if (indexPath.row == 0) {
                 theme = DefaultsManager.THEME_NIGHT

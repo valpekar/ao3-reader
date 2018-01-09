@@ -206,10 +206,10 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         
         cell?.wordsLabel.text = curWork?.words ?? "-"
         
-        cell?.ratingLabel.text = curWork?.value(forKey: "ratingTags") as? String
+        cell?.ratingLabel.text = curWork?.ratingTags ?? ""
         
-        if (curWork?.value(forKey: "topicPreview") as? String != nil) {
-            cell?.topicPreviewLabel.text = curWork?.value(forKey: "topicPreview") as? String
+        if (curWork?.topicPreview != nil) {
+            cell?.topicPreviewLabel.text = curWork?.topicPreview
         }
         else {
             cell?.topicPreviewLabel.text = ""
@@ -249,7 +249,44 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         cell?.categoryLabel.text = curWork.valueForKey("category") as? String
         cell?.ratingLabel.text = curWork.valueForKey("ratingTags") as? String*/
         
-        cell?.tagsLabel.text = curWork?.value(forKey: "tags") as? String
+        if let tags = curWork?.tags, tags.isEmpty == false {
+            cell?.tagsLabel.text = tags
+        } else {
+            var allTags = curWork?.archiveWarnings ?? ""
+            if (allTags.isEmpty == false) {
+                allTags.append(", ")
+            }
+            
+            if let rels = curWork?.relationships {
+                for case let rel as DBRelationship in rels  {
+                    if let relName = rel.relationshipName, relName.isEmpty == false {
+                        allTags.append(relName)
+                        allTags.append(", ")
+                    }
+                }
+            }
+            
+            if let characters = curWork?.characters {
+                for case let character as DBCharacterItem in characters  {
+                    if let charName = character.characterName, charName.isEmpty == false {
+                        allTags.append(charName)
+                        allTags.append(", ")
+                    }
+                }
+            }
+            
+            if let freeTags = curWork?.freeform, freeTags.isEmpty == false {
+                allTags.append(freeTags)
+            }
+            
+            let lastChars = allTags.suffix(2)
+            if lastChars == ", " {
+                let index = allTags.index(allTags.endIndex, offsetBy: -2)
+                allTags = allTags.substring(to: index)
+            }
+            
+            cell?.tagsLabel.text = allTags
+        }
         
         cell?.deleteButton.btnIndexPath = indexPath
         cell?.folderButton.btnIndexPath = indexPath

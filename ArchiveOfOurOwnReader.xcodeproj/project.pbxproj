@@ -121,6 +121,7 @@
 		3C93ED5E1FCF12EF00F1F4D4 /* CategoryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C93ED5D1FCF12EF00F1F4D4 /* CategoryItem.swift */; };
 		3C93ED601FCF140100F1F4D4 /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C93ED5F1FCF140100F1F4D4 /* CategoryCell.swift */; };
 		3C9C87BA1CE3557D00C10410 /* RecommendationsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9C87B91CE3557D00C10410 /* RecommendationsController.swift */; };
+		3C9DFC362004B62500AE15AD /* InboxController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9DFC352004B62500AE15AD /* InboxController.swift */; };
 		3CAEB2C91FFE501C00C7035C /* XibView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CAEB2C81FFE501C00C7035C /* XibView.swift */; };
 		3CAEB2CB1FFE505C00C7035C /* workCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CAEB2CA1FFE505C00C7035C /* workCell.xib */; };
 		3CB2A74B1F8BB237004A6F76 /* SerieViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB2A74A1F8BB237004A6F76 /* SerieViewController.swift */; };
@@ -322,6 +323,9 @@
 		3C93ED5F1FCF140100F1F4D4 /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CategoryCell.swift; path = View/Custom/Cells/CategoryCell.swift; sourceTree = "<group>"; };
 		3C9C87B91CE3557D00C10410 /* RecommendationsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RecommendationsController.swift; path = Controller/RecommendationsController.swift; sourceTree = "<group>"; };
 		3C9C87BB1CE35D8800C10410 /* ArchiveOfOurOwnReader 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ArchiveOfOurOwnReader 2.xcdatamodel"; sourceTree = "<group>"; };
+		3C9DFC352004B62500AE15AD /* InboxController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = InboxController.swift; path = Controller/InboxController.swift; sourceTree = "<group>"; };
+		3C9DFC372004B7DA00AE15AD /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3C9DFC382004D5AA00AE15AD /* ArchiveOfOurOwnReader 10.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ArchiveOfOurOwnReader 10.xcdatamodel"; sourceTree = "<group>"; };
 		3CA0A7B01F7BCC7800ADEE04 /* ja */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ja; path = ja.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		3CA0A7B11F7BCC7800ADEE04 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "zh-Hant"; path = "zh-Hant.lproj/LaunchScreen.xib"; sourceTree = "<group>"; };
 		3CA0A7B21F7BCC7800ADEE04 /* th */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = th; path = th.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -594,6 +598,7 @@
 				3C3358C31FEBEA410061AB20 /* MarkedForLaterController.swift */,
 				3C22BBED1FED2BD60012CBA4 /* PagesController.swift */,
 				3C52E9C71FF268A500134813 /* ImportWorkController.swift */,
+				3C9DFC352004B62500AE15AD /* InboxController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -984,6 +989,7 @@
 				3C0A80931C85D14200BBCF2B /* MeViewController.swift in Sources */,
 				1D7BDD371B5E755F0017C346 /* TFHppleElement.m in Sources */,
 				28B6DC561B4E47FC00F34529 /* SearchViewController.swift in Sources */,
+				3C9DFC362004B62500AE15AD /* InboxController.swift in Sources */,
 				3C89958B1E95169B00D511CD /* DBFandom+CoreDataProperties.swift in Sources */,
 				3C684E5D1F8E391500419D69 /* AuthViewController.swift in Sources */,
 				3CB2A74B1F8BB237004A6F76 /* SerieViewController.swift in Sources */,
@@ -1136,6 +1142,7 @@
 				3C30733F1EE7EB7D00D1509E /* pt-PT */,
 				3C48CB5E1EFC00BD005B2E1B /* ko */,
 				3CA0A7B51F7BCCBC00ADEE04 /* en */,
+				3C9DFC372004B7DA00AE15AD /* Base */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -1394,6 +1401,7 @@
 		28B6DC2B1B4E3F5900F34529 /* ArchiveOfOurOwnReader.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				3C9DFC382004D5AA00AE15AD /* ArchiveOfOurOwnReader 10.xcdatamodel */,
 				3C5A579B1FD817C60010E2A9 /* ArchiveOfOurOwnReader 9.xcdatamodel */,
 				3C0465941F8CBA79003B6AE7 /* ArchiveOfOurOwnReader 8.xcdatamodel */,
 				3C082A501F20E10100CA717D /* ArchiveOfOurOwnReader 7.xcdatamodel */,
@@ -1404,7 +1412,7 @@
 				3C9C87BB1CE35D8800C10410 /* ArchiveOfOurOwnReader 2.xcdatamodel */,
 				28B6DC2C1B4E3F5900F34529 /* ArchiveOfOurOwnReader.xcdatamodel */,
 			);
-			currentVersion = 3C5A579B1FD817C60010E2A9 /* ArchiveOfOurOwnReader 9.xcdatamodel */;
+			currentVersion = 3C9DFC382004D5AA00AE15AD /* ArchiveOfOurOwnReader 10.xcdatamodel */;
 			path = ArchiveOfOurOwnReader.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
