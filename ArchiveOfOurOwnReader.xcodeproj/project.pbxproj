@@ -130,6 +130,8 @@
 		3CB773611C847D6100DC15C4 /* SidePanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB773601C847D6100DC15C4 /* SidePanelViewController.swift */; };
 		3CB773631C8480C300DC15C4 /* CenterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB773621C8480C300DC15C4 /* CenterViewController.swift */; };
 		3CB992C11CF470D5004772AF /* PublishWorkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB992C01CF470D5004772AF /* PublishWorkController.swift */; };
+		3CBC35BD2004EA7400A115EC /* InboxItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CBC35BC2004EA7400A115EC /* InboxItem.swift */; };
+		3CBC35BF2004EC8F00A115EC /* InboxItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CBC35BE2004EC8F00A115EC /* InboxItemCell.swift */; };
 		3CBDC9AB1E9E244500A97C24 /* DBChapter+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CBDC9A91E9E244500A97C24 /* DBChapter+CoreDataClass.swift */; };
 		3CBDC9AC1E9E244500A97C24 /* DBChapter+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CBDC9AA1E9E244500A97C24 /* DBChapter+CoreDataProperties.swift */; };
 		3CBDC9AF1E9E265B00A97C24 /* AnalyticsItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CBDC9AD1E9E265B00A97C24 /* AnalyticsItem+CoreDataClass.swift */; };
@@ -341,6 +343,8 @@
 		3CB773621C8480C300DC15C4 /* CenterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CenterViewController.swift; sourceTree = "<group>"; };
 		3CB992C01CF470D5004772AF /* PublishWorkController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PublishWorkController.swift; path = Controller/PublishWorkController.swift; sourceTree = "<group>"; };
 		3CBB44E81F052D2300F09AB6 /* ArchiveOfOurOwnReader 5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ArchiveOfOurOwnReader 5.xcdatamodel"; sourceTree = "<group>"; };
+		3CBC35BC2004EA7400A115EC /* InboxItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = InboxItem.swift; path = Object/InboxItem.swift; sourceTree = "<group>"; };
+		3CBC35BE2004EC8F00A115EC /* InboxItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = InboxItemCell.swift; path = View/Custom/Cells/InboxItemCell.swift; sourceTree = "<group>"; };
 		3CBDC9A91E9E244500A97C24 /* DBChapter+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "DBChapter+CoreDataClass.swift"; path = "Model/DBChapter+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3CBDC9AA1E9E244500A97C24 /* DBChapter+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "DBChapter+CoreDataProperties.swift"; path = "Model/DBChapter+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3CBDC9AD1E9E265B00A97C24 /* AnalyticsItem+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "AnalyticsItem+CoreDataClass.swift"; path = "Model/AnalyticsItem+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -449,6 +453,7 @@
 				3C0465991F8CBD5D003B6AE7 /* SerieItem.swift */,
 				3C93ED5D1FCF12EF00F1F4D4 /* CategoryItem.swift */,
 				3C74C71F1FD05F22008D191B /* FandomItem.swift */,
+				3CBC35BC2004EA7400A115EC /* InboxItem.swift */,
 			);
 			name = Object;
 			sourceTree = "<group>";
@@ -634,6 +639,7 @@
 				3CB2A74E1F8BB4F8004A6F76 /* SerieInfoCell.swift */,
 				3C93ED591FCED24900F1F4D4 /* MyProfileCell.swift */,
 				3C93ED5F1FCF140100F1F4D4 /* CategoryCell.swift */,
+				3CBC35BE2004EC8F00A115EC /* InboxItemCell.swift */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -1034,6 +1040,7 @@
 				28B6DC2D1B4E3F5900F34529 /* ArchiveOfOurOwnReader.xcdatamodeld in Sources */,
 				3C3EF71C1E6D55DA000CAA1F /* ChapterOnline.swift in Sources */,
 				3C8995911E95169B00D511CD /* DBWorkItem+CoreDataProperties.swift in Sources */,
+				3CBC35BF2004EC8F00A115EC /* InboxItemCell.swift in Sources */,
 				3C93ED5E1FCF12EF00F1F4D4 /* CategoryItem.swift in Sources */,
 				28B6DC601B4E4B3C00F34529 /* PageCollectionViewCell.swift in Sources */,
 				3C0465981F8CBCBA003B6AE7 /* Serie+CoreDataProperties.swift in Sources */,
@@ -1083,6 +1090,7 @@
 				3C0448FA1C63745C005DCE5F /* HRToast+UIView.swift in Sources */,
 				28E1C7131B8D9246001E2E5A /* WorkDetailViewController.swift in Sources */,
 				1D8582D11BB4238E0005B05B /* ButtonCell.swift in Sources */,
+				3CBC35BD2004EA7400A115EC /* InboxItem.swift in Sources */,
 				3CC6A2881E66800F005D1255 /* Reachability.swift in Sources */,
 				3C13D2CC1CCA149A008B023B /* CommentViewController.swift in Sources */,
 			);

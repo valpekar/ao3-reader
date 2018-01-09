@@ -863,9 +863,86 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             }
             
             if (workItem != nil) {
-                cell.label.text = workItem.tags
+                
+                if workItem.tags.isEmpty == false {
+                    cell.label.text = workItem.tags
+                } else {
+                    var allTags = workItem.archiveWarnings
+                    if (allTags.isEmpty == false) {
+                        allTags.append(", ")
+                    }
+                    
+                    if let rels = relationships {
+                        for case let rel in rels  {
+                            if rel.relationshipName.isEmpty == false {
+                                allTags.append(rel.relationshipName)
+                                allTags.append(", ")
+                            }
+                        }
+                    }
+                    
+                    if let chrs = characters {
+                        for case let character in chrs  {
+                            if character.characterName.isEmpty == false {
+                                allTags.append(character.characterName)
+                                allTags.append(", ")
+                            }
+                        }
+                    }
+                    
+                    let freeTags = workItem.freeform
+                    if freeTags.isEmpty == false {
+                        allTags.append(freeTags)
+                    }
+                    
+                    let lastChars = allTags.suffix(2)
+                    if lastChars == ", " {
+                        let index = allTags.index(allTags.endIndex, offsetBy: -2)
+                        allTags = allTags.substring(to: index)
+                    }
+                    
+                    cell.label.text = allTags
+                }
+                
             } else if (downloadedWorkItem != nil) {
-                cell.label.text = downloadedWorkItem.tags ?? ""
+                if let tags = downloadedWorkItem?.tags, tags.isEmpty == false {
+                    cell.label.text = downloadedWorkItem?.tags
+                } else {
+                    var allTags = downloadedWorkItem?.archiveWarnings ?? ""
+                    if (allTags.isEmpty == false) {
+                        allTags.append(", ")
+                    }
+                    
+                    if let rels = downloadedWorkItem?.relationships {
+                        for case let rel as DBRelationship in rels  {
+                            if let relName = rel.relationshipName, relName.isEmpty == false {
+                                allTags.append(relName)
+                                allTags.append(", ")
+                            }
+                        }
+                    }
+                    
+                    if let characters = downloadedWorkItem?.characters {
+                        for case let character as DBCharacterItem in characters  {
+                            if let charName = character.characterName, charName.isEmpty == false {
+                                allTags.append(charName)
+                                allTags.append(", ")
+                            }
+                        }
+                    }
+                    
+                    if let freeTags = downloadedWorkItem?.freeform, freeTags.isEmpty == false {
+                        allTags.append(freeTags)
+                    }
+                    
+                    let lastChars = allTags.suffix(2)
+                    if lastChars == ", " {
+                        let index = allTags.index(allTags.endIndex, offsetBy: -2)
+                        allTags = allTags.substring(to: index)
+                    }
+                    
+                    cell.label.text = allTags
+                }
             }
 
         case 1:

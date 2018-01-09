@@ -33,7 +33,7 @@ class SubscriptionsViewController: ListViewController, UITableViewDataSource, UI
         self.tableView.addSubview(self.refreshControl)
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
+            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: AppDelegate.ao3SiteUrl), mainDocumentURL: nil)
             requestFavs()
         } else if ((UIApplication.shared.delegate as! AppDelegate).cookies.count == 0 || (UIApplication.shared.delegate as! AppDelegate).token.isEmpty) {
             
@@ -73,8 +73,6 @@ class SubscriptionsViewController: ListViewController, UITableViewDataSource, UI
     
     //MARK: - login
     
-    
-    
     @IBAction func loginTouched(_ sender: AnyObject) {
         openLoginController()
     }
@@ -87,7 +85,7 @@ class SubscriptionsViewController: ListViewController, UITableViewDataSource, UI
         showLoadingView(msg: NSLocalizedString("GettingSubs", comment: ""))
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
+            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: AppDelegate.ao3SiteUrl), mainDocumentURL: nil)
         }
         
         let urlStr: String = "https://archiveofourown.org/users/" + username + "/subscriptions"
@@ -145,7 +143,8 @@ class SubscriptionsViewController: ListViewController, UITableViewDataSource, UI
                         }
                         
                             works.append(item)
-                            
+                        
+                }
                             //parse pages
                         if let paginationActions = doc.search(withXPathQuery: "//ol[@class='pagination actions']") {
                             if(paginationActions.count > 0) {
@@ -157,7 +156,13 @@ class SubscriptionsViewController: ListViewController, UITableViewDataSource, UI
                                     let page: TFHppleElement = paginationArr[i] as! TFHppleElement
                                     var pageItem: PageItem = PageItem()
                                     
-                                    pageItem.name = page.content
+                                    if (page.content.contains("Previous")) {
+                                        pageItem.name = "←"
+                                    } else if (page.content.contains("Next")) {
+                                        pageItem.name = "→"
+                                    } else {
+                                        pageItem.name = page.content
+                                    }
                                     
                                     var attrs = page.search(withXPathQuery: "//a") as! [TFHppleElement]
                                     
@@ -187,7 +192,6 @@ class SubscriptionsViewController: ListViewController, UITableViewDataSource, UI
                             }
                         }
                     
-                }
             }
         }
     }
@@ -257,7 +261,7 @@ class SubscriptionsViewController: ListViewController, UITableViewDataSource, UI
                 print(response.error ?? "")
                 self.parseCookies(response)
                 if let d = response.data {
-                    self.downloadWork(d, curWork: curWork)
+                    let _ = self.downloadWork(d, curWork: curWork)
                     self.hideLoadingView()
                 } else {
                     TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CannotDwnldWrk", comment: ""), type: .error, duration: 2.0)
@@ -286,7 +290,7 @@ class SubscriptionsViewController: ListViewController, UITableViewDataSource, UI
             cell = SubsCell(reuseIdentifier: cellIdentifier)
         }
         
-        let curWork:NewsFeedItem = works[(indexPath as NSIndexPath).row]
+        let curWork:NewsFeedItem = works[indexPath.row]
         
         cell?.topicLabel.text = curWork.topic.replacingOccurrences(of: "\n", with: "")
         cell?.downloadButton.tag = indexPath.row
@@ -303,7 +307,6 @@ class SubscriptionsViewController: ListViewController, UITableViewDataSource, UI
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectCell(row: indexPath.row, works: works)
     }
-    
     
     //MARK: - collectionview
     

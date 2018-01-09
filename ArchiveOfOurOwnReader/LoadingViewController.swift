@@ -386,16 +386,22 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
             }
             
             if let archiveWarnings: [TFHppleElement] = workmeta[0].search(withXPathQuery: "//dd[@class='warning tags']/ul[@class='commas']/li") as? [TFHppleElement] {
-            var warnings = [String]()
+                workItem.archiveWarnings = ""
                 for i in 0..<archiveWarnings.count {
-                    warnings.append(archiveWarnings[i].content)
-                    //workItem.archiveWarnings = archiveWarnings[0].content
+                    workItem.archiveWarnings?.append(archiveWarnings[i].content)
+                    if (i < archiveWarnings.count - 1) {
+                        workItem.archiveWarnings?.append(", ")
+                    }
                 }
             }
             
             if let freeformTags: [TFHppleElement] = workmeta[0].search(withXPathQuery: "//dd[@class='freeform tags']/ul[@class='commas']/li") as? [TFHppleElement] {
-                if (freeformTags.count > 0) {
-                    workItem.freeform = freeformTags[0].content
+                workItem.freeform = ""
+                for i in 0..<freeformTags.count {
+                    workItem.freeform?.append(freeformTags[i].content)
+                    if (i < freeformTags.count - 1) {
+                        workItem.freeform?.append(", ")
+                    }
                 }
             }
             
