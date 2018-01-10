@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import AlamofireImage
 import TSMessages
 
 class InboxController : ListViewController  {
@@ -209,10 +210,36 @@ class InboxController : ListViewController  {
                     if (linkStr.contains("/users/") && linkEl.raw.contains("img") == false && linkStr.contains("reply") == false) {
                         item.userUrl = linkStr
                         item.userName = linkEl.content
+                    } else if (linkStr.contains("/users/") && linkEl.raw.contains("img") == true) {
+                        
+                        if let imgEls = linkEl.search(withXPathQuery: "//img[@class='icon']") as? [TFHppleElement] {
+                            if (imgEls.count > 0) {
+                                if let imgAttributes : NSDictionary = imgEls[0].attributes as NSDictionary? {
+                                    if let imgAttr: String = imgAttributes["src"] as? String, imgAttr.isEmpty == false {
+                                        item.userpicUrl = imgAttr
+                                    }
+                                }
+                            }
+                        }
+                        
                     } else if (linkStr.contains("works")) {
-                        item.workUrl = linkStr
+                        item.commentUrl = linkStr
                         item.workName = linkEl.content
+                        
+                        if let index = linkStr.index(of: "/comments") {
+                            let wurl = linkStr.substring(to: index)
+                            item.workUrl = wurl
+                        }
                     }
+                }
+            }
+        }
+        
+        if let dateSpans = commentItem.search(withXPathQuery: "//span[@class='posted datetime']") as? [TFHppleElement] {
+            if (dateSpans.count > 0) {
+                if let spanStr = dateSpans[0].content {
+                    item.date = spanStr.replacingOccurrences(of: "\n", with: "").trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+                        .replacingOccurrences(of: "\\s+", with: " ", options: NSString.CompareOptions.regularExpression, range: nil)
                 }
             }
         }
@@ -259,6 +286,27 @@ class InboxController : ListViewController  {
         
         tableView.setContentOffset(CGPoint.zero, animated:true)
     }
+    
+    func markItem(asRead: Bool) {
+        
+    }
+    
+    func deleteItem() {
+        
+    }
+    
+    func replyToItem() {
+        
+    }
+    
+    func approveItem() {
+        
+    }
+    
+    func declineItem() {
+        
+    }
+    
 }
 
 //MARK: - tableview
@@ -305,18 +353,32 @@ extension InboxController: UITableViewDataSource, UITableViewDelegate {
         cell.dateLabel.text = "\(curItem.date)"
         cell.contentLabel.text = "\(curItem.text)"
         
+        cell.userImg.image = UIImage(named: "profile")
+        
+        var url = curItem.userpicUrl
+        if (url.contains("http") == false) {
+            url = "\(AppDelegate.ao3SiteUrl)\(url)"
+        }
+        
+        cell.userImg.af_setImage(
+            withURL: URL(string: url)!,
+            placeholderImage: UIImage(named: "profile"),
+            filter: AspectScaledToFillSizeFilter(size: CGSize(width: 38, height: 38)),
+            imageTransition: .crossDissolve(0.2)
+        )
+        
         cell.tag = indexPath.row
         
         if (theme == DefaultsManager.THEME_DAY) {
             cell.backgroundColor = AppDelegate.greyLightBg
             cell.titleLabel.textColor = UIColor.black
             cell.dateLabel.textColor = UIColor.black
-            cell.titleLabel.textColor = UIColor.black
+            cell.contentLabel.textColor = UIColor.black
         } else {
             cell.backgroundColor = AppDelegate.greyDarkBg
             cell.titleLabel.textColor = AppDelegate.nightTextColor
             cell.dateLabel.textColor = AppDelegate.nightTextColor
-            cell.titleLabel.textColor = AppDelegate.nightTextColor
+            cell.contentLabel.textColor = AppDelegate.nightTextColor
         }
         
         return cell
@@ -328,11 +390,11 @@ extension InboxController: UITableViewDataSource, UITableViewDelegate {
         switch(indexPath.section) {
         case 0:
             if (indexPath.row < inboxItemsUnread.count) {
-                selectItem(inboxItem: inboxItemsUnread[indexPath.row])
+                selectItem(inboxItem: inboxItemsUnread[indexPath.row], isRead: false, view: tableView.cellForRow(at: indexPath)!)
             }
         case 1:
             if (indexPath.row < inboxItemsRead.count) {
-                selectItem(inboxItem: inboxItemsRead[indexPath.row])
+                selectItem(inboxItem: inboxItemsRead[indexPath.row], isRead: true, view: tableView.cellForRow(at: indexPath)!)
             }
             
         default: break
@@ -340,8 +402,63 @@ extension InboxController: UITableViewDataSource, UITableViewDelegate {
         
     }
     
-    func selectItem(inboxItem: InboxItem) {
+    func selectItem(inboxItem: InboxItem, isRead: Bool, view: UIView) {
+        let optionMenu = UIAlertController(title: nil, message: NSLocalizedString("Options", comment: ""), preferredStyle: .actionSheet)
+        optionMenu.view.tintColor = AppDelegate.redColor
         
+        if (isRead == true) {
+            let unreadAction = UIAlertAction(title: NSLocalizedString("MarkAsUnread", comment: ""), style: .default, handler: {
+                (alert: UIAlertAction!) -> Void in
+                self.markItem(asRead: false)
+            })
+            optionMenu.addAction(unreadAction)
+        } else {
+            let readAction = UIAlertAction(title: NSLocalizedString("MarkAsRead", comment: ""), style: .default, handler: {
+                (alert: UIAlertAction!) -> Void in
+                self.markItem(asRead: false)
+            })
+            optionMenu.addAction(readAction)
+        }
+        
+        let deleteAction = UIAlertAction(title: NSLocalizedString("DeleteFromInbox", comment: ""), style: .default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            self.deleteItem()
+        })
+        optionMenu.addAction(deleteAction)
+        
+        let replyAction = UIAlertAction(title: NSLocalizedString("Reply", comment: ""), style: .default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            self.replyToItem()
+        })
+        optionMenu.addAction(replyAction)
+        
+        if (inboxItem.approved == false) {
+            let approveAction = UIAlertAction(title: NSLocalizedString("Approve", comment: ""), style: .default, handler: {
+                (alert: UIAlertAction!) -> Void in
+                self.approveItem()
+            })
+            optionMenu.addAction(approveAction)
+            
+            let declineAction = UIAlertAction(title: NSLocalizedString("Decline", comment: ""), style: .default, handler: {
+                (alert: UIAlertAction!) -> Void in
+                self.declineItem()
+            })
+            optionMenu.addAction(declineAction)
+        }
+        
+        //
+        let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: {
+            (alert: UIAlertAction!) -> Void in
+            print("Cancelled")
+        })
+        optionMenu.addAction(cancelAction)
+        
+        optionMenu.popoverPresentationController?.sourceView =  view
+        optionMenu.popoverPresentationController?.sourceRect = CGRect(x: view.bounds.size.width / 2.0, y: view.bounds.size.height / 2.0, width: 1.0, height: 1.0)
+        
+        optionMenu.view.tintColor = AppDelegate.redColor
+        
+        self.present(optionMenu, animated: true, completion: nil)
     }
 }
 
@@ -395,3 +512,5 @@ extension InboxController: UICollectionViewDataSource, UICollectionViewDelegate,
         return CGSize(width: AppDelegate.smallCollCellWidth, height: 28)
     }
 }
+
+

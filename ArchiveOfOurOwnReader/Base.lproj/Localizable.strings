@@ -151,4 +151,11 @@
 "MarkedForLater" = "Marked For Later";
 "CheckLink" = "Cannot get work! Please check if the link is correct!";
 "GettingInbox" = "Getting Inbox";
+"Options" = "Options";
+"MarkAsUnread" = "Mark As Unread";
+"MarkAsRead" = "Mark As Read";
+"DeleteFromInbox" = "Delete From Inbox";
+"Reply" = "Reply";
+"Approve" = "Approve";
+"Decline" = "Decline";
 

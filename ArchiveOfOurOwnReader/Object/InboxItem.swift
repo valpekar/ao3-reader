@@ -19,4 +19,5 @@ struct InboxItem {
     var date = ""
     var commentId = ""
     var commentUrl = ""
+    var approved = true
 }

@@ -5290,11 +5290,11 @@ Please check your Internet connection and also make sure you are logged into you
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
-                                        <exclude reference="t0f-ja-Y0Z"/>
                                         <exclude reference="9sm-Rh-jPj"/>
+                                        <exclude reference="t0f-ja-Y0Z"/>
+                                        <exclude reference="46T-a7-idH"/>
                                         <exclude reference="R4F-iF-Pfj"/>
                                         <exclude reference="xbr-np-QI2"/>
-                                        <exclude reference="46T-a7-idH"/>
                                         <exclude reference="GSh-L6-YTg"/>
                                     </mask>
                                 </variation>
@@ -5319,20 +5319,20 @@ Please check your Internet connection and also make sure you are logged into you
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yeH-Vj-UGd">
-                                                    <rect key="frame" x="50" y="4" width="317" height="17"/>
+                                                    <rect key="frame" x="52" y="4" width="315" height="17"/>
                                                     <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dk5-vf-JiF">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dk5-vf-JiF">
                                                     <rect key="frame" x="8" y="46" width="359" height="27.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HQS-77-RSC">
-                                                    <rect key="frame" x="50" y="23" width="302" height="17"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="thin" pointSize="14"/>
+                                                    <rect key="frame" x="52" y="23" width="300" height="14.5"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="thin" pointSize="12"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -5345,10 +5345,10 @@ Please check your Internet connection and also make sure you are logged into you
                                                 <constraint firstAttribute="trailing" secondItem="Dk5-vf-JiF" secondAttribute="trailing" constant="8" id="ReG-jS-8lk"/>
                                                 <constraint firstItem="QmD-Xz-4l5" firstAttribute="leading" secondItem="Wzp-Hb-TlS" secondAttribute="leading" constant="8" id="UcP-lJ-QOQ"/>
                                                 <constraint firstItem="yeH-Vj-UGd" firstAttribute="top" secondItem="Wzp-Hb-TlS" secondAttribute="top" constant="4" id="dhz-WK-4Ti"/>
-                                                <constraint firstItem="yeH-Vj-UGd" firstAttribute="leading" secondItem="QmD-Xz-4l5" secondAttribute="trailing" constant="4" id="gM9-Hf-cAr"/>
+                                                <constraint firstItem="yeH-Vj-UGd" firstAttribute="leading" secondItem="QmD-Xz-4l5" secondAttribute="trailing" constant="6" id="gM9-Hf-cAr"/>
                                                 <constraint firstAttribute="trailing" secondItem="yeH-Vj-UGd" secondAttribute="trailing" constant="8" id="itu-5R-2IJ"/>
                                                 <constraint firstItem="Dk5-vf-JiF" firstAttribute="leading" secondItem="Wzp-Hb-TlS" secondAttribute="leading" constant="8" id="kGy-vV-19z"/>
-                                                <constraint firstItem="HQS-77-RSC" firstAttribute="leading" secondItem="QmD-Xz-4l5" secondAttribute="trailing" constant="4" id="oQS-o7-LdK"/>
+                                                <constraint firstItem="HQS-77-RSC" firstAttribute="leading" secondItem="QmD-Xz-4l5" secondAttribute="trailing" constant="6" id="oQS-o7-LdK"/>
                                                 <constraint firstAttribute="bottom" secondItem="Dk5-vf-JiF" secondAttribute="bottom" constant="6" id="tiY-aQ-QT0"/>
                                             </constraints>
                                         </tableViewCellContentView>
