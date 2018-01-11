@@ -159,10 +159,11 @@
 "Approve" = "Approve";
 "Decline" = "Decline";
 "CouldNotReply" = "Could Not Reply";
+"CannotMarkItem" = "Could Not Mark Item";
 "SendingReply" = "Sending Reply";
-"CommentCreated" = "Comment Created!";
-"CannotSendComment" = "CannotSendComment";
-"GettingInbox" = "GettingInbox";
+"CommentCreated" = "Your Comment Was Sent!";
+"CannotSendComment" = "Could Not Send Comment";
+"GettingInbox" = "Getting Inbox";
 "InboxUpdated" = "Inbox successfully updated!";
 "MarkItem" = "Mark Item";
 

@@ -279,6 +279,7 @@ class InboxController : ListViewController  {
                     if (val.isEmpty == false && val.contains("reply")) {
                         item.replyUrl = val
                     } else if (val.contains("approve")) {
+                        item.approveUrl = val
                         item.approved = false
                     }
                 }
@@ -330,8 +331,8 @@ class InboxController : ListViewController  {
         self.present(vc, animated: true, completion: nil)
     }
     
-    func approveItem() {
-        
+    func approveItem(approveUrl: String) {
+        sendItemApprove(approveUrl: approveUrl)
     }
     
     func declineItem() {
@@ -414,7 +415,7 @@ extension InboxController: UITableViewDataSource, UITableViewDelegate {
             cell.backgroundColor = AppDelegate.greyDarkBg
             
             if (curItem.approved == false) {
-                cell.titleLabel.textColor = AppDelegate.redTxtColor
+                cell.titleLabel.textColor = AppDelegate.redBrightTextColor
             } else {
                 cell.titleLabel.textColor = AppDelegate.nightTextColor
             }
@@ -471,7 +472,7 @@ extension InboxController: UITableViewDataSource, UITableViewDelegate {
         if (inboxItem.approved == false) {
             let approveAction = UIAlertAction(title: NSLocalizedString("Approve", comment: ""), style: .default, handler: {
                 (alert: UIAlertAction!) -> Void in
-                self.approveItem()
+                self.approveItem(approveUrl: inboxItem.approveUrl)
             })
             optionMenu.addAction(approveAction)
         } else {
@@ -605,14 +606,14 @@ extension InboxController {
                         
                     } else {
                         self.hideLoadingView()
-                        TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
+                        TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CannotMarkItem", comment: ""), type: .error)
                     }
                 })
             
         } else {
             
             self.hideLoadingView()
-            TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
+            TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CannotMarkItem", comment: ""), type: .error)
         }
     }
     
@@ -637,4 +638,49 @@ extension InboxController {
     }
 }
 
+//MARK: - mark approved
 
+extension InboxController {
+    
+    func sendItemApprove(approveUrl: String) {
+        
+        showLoadingView(msg: NSLocalizedString("MarkItem", comment: ""))
+        
+        var urlStr: String = approveUrl
+        if (urlStr.contains("http") == false) {
+            urlStr = "\(AppDelegate.ao3SiteUrl)\(urlStr)"
+        }
+        
+        if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
+            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: AppDelegate.ao3SiteUrl), mainDocumentURL: nil)
+        }
+        
+        if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
+            Alamofire.request(urlStr, method: .put, parameters: [:], encoding:URLEncoding.queryString)
+                .response(completionHandler: { response in
+                    #if DEBUG
+                        print(response.request ?? "")
+                        // print(response.response ?? "")
+                        print(response.error ?? "")
+                    #endif
+                    
+                    if let _ = response.data, response.response?.statusCode == 200 {
+                        self.parseCookies(response)
+                        //self.parseMarkRequest(d)
+                        self.hideLoadingView()
+                        self.refresh(self.tableView)
+                        
+                    } else {
+                        self.hideLoadingView()
+                        TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: response.error?.localizedDescription, type: .error)
+                    }
+                })
+            
+        } else {
+            
+            self.hideLoadingView()
+            TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CannotMarkItem", comment: ""), type: .error)
+        }
+    }
+    
+}

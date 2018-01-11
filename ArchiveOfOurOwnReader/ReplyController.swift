@@ -217,7 +217,7 @@ class ReplyController: LoadingViewController {
         let doc : TFHpple = TFHpple(htmlData: data)
         
         if let noticeEls = doc.search(withXPathQuery: "//div[@class='flash comment_notice']") as? [TFHppleElement], noticeEls.count > 0,
-            let noticeStr = noticeEls[0].content, noticeStr.contains("created") {
+            let noticeStr = noticeEls[0].content, (noticeStr.contains("created") || noticeStr.contains("received")) {
                     TSMessage.showNotification(in: self, title: NSLocalizedString("Success", comment: ""), subtitle: NSLocalizedString("CommentCreated", comment: ""), type: .success)
             
             let delayTime = DispatchTime.now() + Double(Int64(1.5 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
