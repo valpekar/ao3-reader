@@ -158,4 +158,5 @@
 "Reply" = "Reply";
 "Approve" = "Approve";
 "Decline" = "Decline";
-
+"CouldNotReply" = "Could Not Reply";
+"CommentCreated" = "Comment Created!";

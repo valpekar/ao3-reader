@@ -10,6 +10,7 @@ import UIKit
 import Alamofire
 import AlamofireImage
 import TSMessages
+import Crashlytics
 
 class InboxController : ListViewController  {
     
@@ -47,6 +48,8 @@ class InboxController : ListViewController  {
             
             openLoginController()
         }
+        
+        Answers.logCustomEvent(withName: "Inbox: Opened", customAttributes: [:])
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -62,6 +65,10 @@ class InboxController : ListViewController  {
     
     @IBAction func tryAgainTouched(_ sender:AnyObject) {
         requestInbox()
+    }
+    
+    @IBAction func loginTouched(_ sender: AnyObject) {
+        openLoginController()
     }
     
     override func applyTheme() {
@@ -186,6 +193,9 @@ class InboxController : ListViewController  {
             }
         }
         
+        
+        Answers.logCustomEvent(withName: "Inbox: Parse", customAttributes: ["pages_count": pages.count])
+        
     }
     
     func parseItem(_ commentItem: TFHppleElement) {
@@ -262,6 +272,19 @@ class InboxController : ListViewController  {
             }
         }
         
+        if let replyEls = commentItem.search(withXPathQuery: "//ul[@class='actions']//li//a") as? [TFHppleElement] {
+            for replyEl in replyEls {
+                if let attributes : NSDictionary = replyEl.attributes as NSDictionary? {
+                    let val = (attributes["href"] as? String ?? "")
+                    if (val.isEmpty == false && val.contains("reply")) {
+                        item.replyUrl = val
+                    } else if (val.contains("approve")) {
+                        item.approved = false
+                    }
+                }
+            }
+        }
+                
         if (isRead == true) {
             inboxItemsRead.append(item)
         } else {
@@ -287,16 +310,24 @@ class InboxController : ListViewController  {
         tableView.setContentOffset(CGPoint.zero, animated:true)
     }
     
-    func markItem(asRead: Bool) {
-        
+    func markItem(asRead: Bool, commentId: String) {
+        sendMarkItem(asRead, commentId: commentId)
     }
     
     func deleteItem() {
         
     }
     
-    func replyToItem() {
+    func replyToItem(replyUrl: String, commentId: String) {
+        Answers.logCustomEvent(withName: "Inbox: Reply Touched", customAttributes: [:])
         
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "ReplyController") as! ReplyController
+        vc.replyDelegate = self
+        vc.replyUrl = replyUrl
+        vc.commentId = commentId
+        vc.modalTransitionStyle = .crossDissolve
+        self.present(vc, animated: true, completion: nil)
     }
     
     func approveItem() {
@@ -371,15 +402,26 @@ extension InboxController: UITableViewDataSource, UITableViewDelegate {
         
         if (theme == DefaultsManager.THEME_DAY) {
             cell.backgroundColor = AppDelegate.greyLightBg
-            cell.titleLabel.textColor = UIColor.black
+            
+            if (curItem.approved == false) {
+                cell.titleLabel.textColor = AppDelegate.redBrightTextColor
+            } else {
+                cell.titleLabel.textColor = UIColor.black
+            }
             cell.dateLabel.textColor = UIColor.black
             cell.contentLabel.textColor = UIColor.black
         } else {
             cell.backgroundColor = AppDelegate.greyDarkBg
-            cell.titleLabel.textColor = AppDelegate.nightTextColor
+            
+            if (curItem.approved == false) {
+                cell.titleLabel.textColor = AppDelegate.redTxtColor
+            } else {
+                cell.titleLabel.textColor = AppDelegate.nightTextColor
+            }
             cell.dateLabel.textColor = AppDelegate.nightTextColor
             cell.contentLabel.textColor = AppDelegate.nightTextColor
         }
+        
         
         return cell
     }
@@ -409,9 +451,9 @@ extension InboxController: UITableViewDataSource, UITableViewDelegate {
         if (isRead == true) {
             let unreadAction = UIAlertAction(title: NSLocalizedString("MarkAsUnread", comment: ""), style: .default, handler: {
                 (alert: UIAlertAction!) -> Void in
-                self.markItem(asRead: false)
+                self.markItem(asRead: false, commentId: inboxItem.commentId)
             })
-            optionMenu.addAction(unreadAction)
+            optionMenu.addAction(unreadAction, commentId: inboxItem.commentId)
         } else {
             let readAction = UIAlertAction(title: NSLocalizedString("MarkAsRead", comment: ""), style: .default, handler: {
                 (alert: UIAlertAction!) -> Void in
@@ -426,24 +468,18 @@ extension InboxController: UITableViewDataSource, UITableViewDelegate {
         })
         optionMenu.addAction(deleteAction)
         
-        let replyAction = UIAlertAction(title: NSLocalizedString("Reply", comment: ""), style: .default, handler: {
-            (alert: UIAlertAction!) -> Void in
-            self.replyToItem()
-        })
-        optionMenu.addAction(replyAction)
-        
         if (inboxItem.approved == false) {
             let approveAction = UIAlertAction(title: NSLocalizedString("Approve", comment: ""), style: .default, handler: {
                 (alert: UIAlertAction!) -> Void in
                 self.approveItem()
             })
             optionMenu.addAction(approveAction)
-            
-            let declineAction = UIAlertAction(title: NSLocalizedString("Decline", comment: ""), style: .default, handler: {
+        } else {
+            let replyAction = UIAlertAction(title: NSLocalizedString("Reply", comment: ""), style: .default, handler: {
                 (alert: UIAlertAction!) -> Void in
-                self.declineItem()
+                self.replyToItem(replyUrl: inboxItem.replyUrl, commentId: inboxItem.commentId)
             })
-            optionMenu.addAction(declineAction)
+            optionMenu.addAction(replyAction)
         }
         
         //
@@ -510,6 +546,43 @@ extension InboxController: UICollectionViewDataSource, UICollectionViewDelegate,
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: AppDelegate.smallCollCellWidth, height: 28)
+    }
+}
+
+//MARK: - reply delegate
+
+extension InboxController: ReplyDelegate {
+    
+    func replySent() {
+        
+    }
+}
+
+//MARK: - mark read/unread
+
+extension InboxController {
+    
+    func sendMarkItem(_ asRead: Bool, commentId: String) {
+        let username = DefaultsManager.getString(DefaultsManager.LOGIN)
+        
+        showLoadingView(msg: NSLocalizedString("GettingInbox", comment: ""))
+        
+        if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
+            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: AppDelegate.ao3SiteUrl), mainDocumentURL: nil)
+        }
+        
+        let urlStr: String = "https://archiveofourown.org/users/" + username + "/inbox"
+        
+        var params:[String:Any] = [String:Any]()
+        params["utf8"] = "✓" as AnyObject
+        params["authenticity_token"] = (UIApplication.shared.delegate as! AppDelegate).token as AnyObject?
+        params["inbox_comments"] = ["": commentId
+        ]
+        
+        if (asRead == true) {
+            params["read"] = "Mark Read"
+        }
+        
     }
 }
 

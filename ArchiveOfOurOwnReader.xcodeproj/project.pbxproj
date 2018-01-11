@@ -90,6 +90,7 @@
 		3C3358C41FEBEA410061AB20 /* MarkedForLaterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C3358C31FEBEA410061AB20 /* MarkedForLaterController.swift */; };
 		3C3EF71C1E6D55DA000CAA1F /* ChapterOnline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C3EF71B1E6D55DA000CAA1F /* ChapterOnline.swift */; };
 		3C44A7A71F8F56F100AEAE7B /* SecuritySettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C44A7A61F8F56F100AEAE7B /* SecuritySettingsController.swift */; };
+		3C4FAC0B2007800400BABB17 /* ReplyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C4FAC0A2007800400BABB17 /* ReplyController.swift */; };
 		3C52E9C81FF268A500134813 /* ImportWorkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C52E9C71FF268A500134813 /* ImportWorkController.swift */; };
 		3C5813CF1C6E00DB00C3FC12 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C5813CE1C6E00DB00C3FC12 /* AdSupport.framework */; };
 		3C5813D11C6E00E300C3FC12 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C5813D01C6E00E300C3FC12 /* EventKit.framework */; };
@@ -291,6 +292,7 @@
 		3C44A7A61F8F56F100AEAE7B /* SecuritySettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecuritySettingsController.swift; sourceTree = "<group>"; };
 		3C48CB5D1EFC00BD005B2E1B /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Main.strings; sourceTree = "<group>"; };
 		3C48CB5E1EFC00BD005B2E1B /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3C4FAC0A2007800400BABB17 /* ReplyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplyController.swift; sourceTree = "<group>"; };
 		3C52E9C71FF268A500134813 /* ImportWorkController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ImportWorkController.swift; path = Controller/ImportWorkController.swift; sourceTree = "<group>"; };
 		3C5813CE1C6E00DB00C3FC12 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		3C5813D01C6E00E300C3FC12 /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
@@ -606,6 +608,7 @@
 				3C22BBED1FED2BD60012CBA4 /* PagesController.swift */,
 				3C52E9C71FF268A500134813 /* ImportWorkController.swift */,
 				3C9DFC352004B62500AE15AD /* InboxController.swift */,
+				3C4FAC0A2007800400BABB17 /* ReplyController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -1078,6 +1081,7 @@
 				3CAEB2C91FFE501C00C7035C /* XibView.swift in Sources */,
 				3CC888971F83CC1C0027C469 /* ListViewController.swift in Sources */,
 				3C31054A1C7F57020065256E /* FavoritesSiteController.swift in Sources */,
+				3C4FAC0B2007800400BABB17 /* ReplyController.swift in Sources */,
 				1D2CFFFF1B8C7F7F0065EB2B /* PageItem.swift in Sources */,
 				3CB992C11CF470D5004772AF /* PublishWorkController.swift in Sources */,
 				3C74C71E1FD05E67008D191B /* FandomListController.swift in Sources */,

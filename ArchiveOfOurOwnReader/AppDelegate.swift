@@ -37,6 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     static var textLightColor = UIColor(red: 247/255, green: 245/255, blue: 247/255, alpha: 1.0)
     static var greyLightColor = UIColor(red: 188/255, green: 186/255, blue: 188/255, alpha: 1.0)
     static var redTextColor = UIColor(red: 108/255, green: 93/255, blue: 93/255, alpha: 1.0)
+    static var redBrightTextColor = UIColor(red: 208/255, green: 93/255, blue: 93/255, alpha: 1.0)
     static var darkerGreyColor = UIColor(red: 170/255, green: 170/255, blue: 170/255, alpha: 1.0)
     static var nightTextColor = UIColor(red: 225/255, green: 225/255, blue: 206/255, alpha: 1.0)
     static var dayTextColor = UIColor(red: 2/255, green: 20/255, blue: 57/255, alpha: 1.0)
