@@ -47,9 +47,11 @@ class ReplyController: LoadingViewController {
         if (theme == DefaultsManager.THEME_NIGHT) {
             bgView.backgroundColor = AppDelegate.redDarkColor
             label.textColor = AppDelegate.textLightColor
+            leftLabel.textColor = AppDelegate.textLightColor
         } else {
             bgView.backgroundColor = UIColor.white
             label.textColor = AppDelegate.redColor
+            leftLabel.textColor = UIColor.black
         }
         
 //        let gestureRec = UITapGestureRecognizer()
@@ -85,10 +87,10 @@ class ReplyController: LoadingViewController {
     }
     
     @IBAction func replyTouched(_ sender: AnyObject) {
-        if let txt: String = textView.text, txt.isEmpty == false {
+        if let txt: String = textView.text, txt.isEmpty == false, (commentLimit - textView.text.count) >= 0 {
             self.sendReply(text: txt)
         } else {
-            TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckLink", comment: ""), type: .error, duration: 2.0)
+            TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CannotSendComment", comment: ""), type: .error, duration: 2.0)
         }
     }
     

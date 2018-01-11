@@ -453,11 +453,11 @@ extension InboxController: UITableViewDataSource, UITableViewDelegate {
                 (alert: UIAlertAction!) -> Void in
                 self.markItem(asRead: false, commentId: inboxItem.commentId)
             })
-            optionMenu.addAction(unreadAction, commentId: inboxItem.commentId)
+            optionMenu.addAction(unreadAction)
         } else {
             let readAction = UIAlertAction(title: NSLocalizedString("MarkAsRead", comment: ""), style: .default, handler: {
                 (alert: UIAlertAction!) -> Void in
-                self.markItem(asRead: false)
+                self.markItem(asRead: true, commentId: inboxItem.commentId)
             })
             optionMenu.addAction(readAction)
         }
@@ -565,24 +565,75 @@ extension InboxController {
     func sendMarkItem(_ asRead: Bool, commentId: String) {
         let username = DefaultsManager.getString(DefaultsManager.LOGIN)
         
-        showLoadingView(msg: NSLocalizedString("GettingInbox", comment: ""))
-        
-        if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: AppDelegate.ao3SiteUrl), mainDocumentURL: nil)
-        }
+        showLoadingView(msg: NSLocalizedString("MarkItem", comment: ""))
         
         let urlStr: String = "https://archiveofourown.org/users/" + username + "/inbox"
         
         var params:[String:Any] = [String:Any]()
         params["utf8"] = "✓" as AnyObject
+        params["_method"] = "put" as AnyObject
         params["authenticity_token"] = (UIApplication.shared.delegate as! AppDelegate).token as AnyObject?
-        params["inbox_comments"] = ["": commentId
-        ]
+        params["inbox_comments"] = [ "": commentId ]
         
         if (asRead == true) {
             params["read"] = "Mark Read"
+        } else {
+            params["unread"] = "Mark Unread"
         }
         
+        let headers = [
+            "Content-Type": "application/x-www-form-urlencoded"
+        ]
+        
+        if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
+            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: AppDelegate.ao3SiteUrl), mainDocumentURL: nil)
+        }
+        
+        if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
+            Alamofire.request(urlStr, method: .post, parameters: params, encoding:URLEncoding.httpBody, headers: headers)
+                .response(completionHandler: { response in
+                    #if DEBUG
+                        print(response.request ?? "")
+                        // print(response.response ?? "")
+                        print(response.error ?? "")
+                    #endif
+                    
+                    if let d = response.data {
+                        self.parseCookies(response)
+                        self.parseMarkRequest(d)
+                        self.hideLoadingView()
+                        
+                    } else {
+                        self.hideLoadingView()
+                        TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
+                    }
+                })
+            
+        } else {
+            
+            self.hideLoadingView()
+            TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
+        }
+    }
+    
+    func parseMarkRequest(_ data: Data) {
+        
+        #if DEBUG
+            let string1 = NSString(data: data, encoding: String.Encoding.utf8.rawValue)
+            print(string1 ?? "")
+        #endif
+        
+        let doc : TFHpple = TFHpple(htmlData: data)
+        
+        if let noticeEls = doc.search(withXPathQuery: "//div[@class='flash notice']") as? [TFHppleElement], noticeEls.count > 0,
+            let noticeStr = noticeEls[0].content, noticeStr.contains("successfully") {
+            TSMessage.showNotification(in: self, title: NSLocalizedString("Success", comment: ""), subtitle: NSLocalizedString("InboxUpdated", comment: ""), type: .success)
+            
+            self.refresh(self.tableView)
+        } else {
+            
+            TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CouldNotReply", comment: ""), type: .error)
+        }
     }
 }
 
