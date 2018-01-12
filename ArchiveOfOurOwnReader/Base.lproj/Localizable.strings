@@ -166,4 +166,9 @@
 "GettingInbox" = "Getting Inbox";
 "InboxUpdated" = "Inbox successfully updated!";
 "MarkItem" = "Mark Item";
+"DeletingFromInox" = "Deleting From Inox";
+"CommentApproved" = "Comment Successfully Approved!";
+"CouldNotDelete" = "Could Not Delete!";
+"SureDeleteItem" = "You want to delete this item?";
+"ItemDeleted" = "Item Successfully Deleted";
 

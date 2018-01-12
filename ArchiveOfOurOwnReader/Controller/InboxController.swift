@@ -23,6 +23,8 @@ class InboxController : ListViewController  {
     var inboxItemsRead: [InboxItem] = [InboxItem]()
     var inboxItemsUnread: [InboxItem] = [InboxItem]()
     
+    var xcsrfToken = ""
+    
     var refreshControl: UIRefreshControl!
     
     override func viewDidLoad() {
@@ -135,6 +137,16 @@ class InboxController : ListViewController  {
             }
         }
         
+        if let xTokenEls: [TFHppleElement] = doc.search(withXPathQuery: "//meta[@name='csrf-token']") as? [TFHppleElement] {
+            if (xTokenEls.count > 0) {
+                if let attrs = xTokenEls[0].attributes as NSDictionary? {
+                    if let tokenStr = attrs["content"] as? String, tokenStr.isEmpty == false {
+                        xcsrfToken = tokenStr
+                    }
+                }
+            }
+        }
+        
         if let inboxlist : [TFHppleElement] = doc.search(withXPathQuery: "//ol[@class='comment index group']//li") as? [TFHppleElement] {
             
             if (inboxlist.count > 0) {
@@ -211,6 +223,7 @@ class InboxController : ListViewController  {
         } else {
             return
         }
+        
         
         if let linkEls = commentItem.search(withXPathQuery: "//a") as? [TFHppleElement] {
             for linkEl in linkEls {
@@ -315,8 +328,8 @@ class InboxController : ListViewController  {
         sendMarkItem(asRead, commentId: commentId)
     }
     
-    func deleteItem() {
-        
+    func deleteItem(commentId: String) {
+        showSureDelete(commentId: commentId)
     }
     
     func replyToItem(replyUrl: String, commentId: String) {
@@ -332,6 +345,8 @@ class InboxController : ListViewController  {
     }
     
     func approveItem(approveUrl: String) {
+        Answers.logCustomEvent(withName: "Inbox: Approve Touched", customAttributes: [:])
+        
         sendItemApprove(approveUrl: approveUrl)
     }
     
@@ -465,7 +480,11 @@ extension InboxController: UITableViewDataSource, UITableViewDelegate {
         
         let deleteAction = UIAlertAction(title: NSLocalizedString("DeleteFromInbox", comment: ""), style: .default, handler: {
             (alert: UIAlertAction!) -> Void in
-            self.deleteItem()
+            
+            let delayTime = DispatchTime.now() + Double(Int64(0.3 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+            DispatchQueue.main.asyncAfter(deadline: delayTime) {
+                self.deleteItem(commentId: inboxItem.commentId)
+            }
         })
         optionMenu.addAction(deleteAction)
         
@@ -651,12 +670,19 @@ extension InboxController {
             urlStr = "\(AppDelegate.ao3SiteUrl)\(urlStr)"
         }
         
+        var headers: HTTPHeaders = HTTPHeaders()
+        headers["X-Requested-With"] = "XMLHttpRequest"
+        headers["X-CSRF-Token"] = xcsrfToken
+        
+        var params:[String:Any] = [String:Any]()
+        params["approved_from"] = "inbox"
+        
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
             Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: AppDelegate.ao3SiteUrl), mainDocumentURL: nil)
         }
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-            Alamofire.request(urlStr, method: .put, parameters: [:], encoding:URLEncoding.queryString)
+            Alamofire.request(urlStr, method: .put, parameters: [:], encoding: URLEncoding.queryString, headers: headers)
                 .response(completionHandler: { response in
                     #if DEBUG
                         print(response.request ?? "")
@@ -664,10 +690,13 @@ extension InboxController {
                         print(response.error ?? "")
                     #endif
                     
-                    if let _ = response.data, response.response?.statusCode == 200 {
+                    if let _ = response.data, response.response?.statusCode == 200 || response.response?.statusCode == 302 || response.response?.statusCode == 301 {
                         self.parseCookies(response)
                         //self.parseMarkRequest(d)
                         self.hideLoadingView()
+                        
+                        TSMessage.showNotification(in: self, title: NSLocalizedString("Success", comment: ""), subtitle: NSLocalizedString("CommentApproved", comment: ""), type: .success)
+                        
                         self.refresh(self.tableView)
                         
                     } else {
@@ -683,4 +712,98 @@ extension InboxController {
         }
     }
     
+}
+
+//MARK: - delete
+
+extension InboxController {
+    
+    func showSureDelete(commentId: String) {
+        
+        let deleteAlert = UIAlertController(title: NSLocalizedString("AreYouSure", comment: ""), message: NSLocalizedString("SureDeleteItem", comment: ""), preferredStyle: UIAlertControllerStyle.alert)
+        
+        deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .default, handler: { (action: UIAlertAction) in
+            print("Cancel")
+        }))
+        
+        deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Yes", comment: ""), style: .default, handler: { (action: UIAlertAction) in
+            
+            Answers.logCustomEvent(withName: "Inbox: Delete Touched", customAttributes: [:])
+            
+            self.sendDeleteItem(commentId: commentId)
+        }))
+        
+        deleteAlert.view.tintColor = AppDelegate.redColor
+        self.present(deleteAlert, animated: true, completion: nil)
+    }
+    
+    func sendDeleteItem(commentId: String) {
+        showLoadingView(msg: NSLocalizedString("DeletingFromInox", comment: ""))
+        
+        let username = DefaultsManager.getString(DefaultsManager.LOGIN)
+        let urlStr: String = "https://archiveofourown.org/users/" + username + "/inbox"
+        
+        var params:[String:Any] = [String:Any]()
+        params["utf8"] = "✓" as AnyObject
+        params["authenticity_token"] = (UIApplication.shared.delegate as! AppDelegate).token as AnyObject?
+        params["inbox_comments"] = ["": commentId
+        ]
+        params["delete"] = "Delete From Inbox"
+        
+        if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
+            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
+        }
+        
+        if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
+            Alamofire.request(urlStr, method: .put, parameters: params, encoding:URLEncoding.httpBody)
+                .response(completionHandler: { response in
+                    #if DEBUG
+                        print(response.request ?? "")
+                        // print(response.response ?? "")
+                        print(response.error ?? "")
+                    #endif
+                    
+                    if (response.response?.statusCode == 302) {
+                        self.hideLoadingView()
+                        TSMessage.showNotification(in: self, title: NSLocalizedString("Success", comment: ""), subtitle: NSLocalizedString("ItemDeleted", comment: ""), type: .success)
+                        
+                        self.refresh(self.tableView)
+                        
+                    } else if let d = response.data {
+                        self.parseCookies(response)
+                        self.parseSendDelete(d)
+                        self.hideLoadingView()
+                        
+                        self.refresh(self.tableView)
+                        
+                    } else {
+                        self.hideLoadingView()
+                        TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CouldNotDelete", comment: ""), type: .error)
+                    }
+                })
+            
+        } else {
+            
+            self.hideLoadingView()
+            TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CouldNotDelete", comment: ""), type: .error)
+        }
+    }
+    
+    func parseSendDelete(_ data: Data) {
+        #if DEBUG
+            let string1 = NSString(data: data, encoding: String.Encoding.utf8.rawValue)
+            print(string1 ?? "")
+        #endif
+        
+        let doc : TFHpple = TFHpple(htmlData: data)
+        
+        if let noticeEls = doc.search(withXPathQuery: "//div[@class='flash notice']") as? [TFHppleElement], noticeEls.count > 0,
+            let noticeStr = noticeEls[0].content, (noticeStr.contains("successfully")) {
+            TSMessage.showNotification(in: self, title: NSLocalizedString("Success", comment: ""), subtitle: NSLocalizedString("ItemDeleted", comment: ""), type: .success)
+            
+        } else {
+            
+            TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CouldNotDelete", comment: ""), type: .error)
+        }
+    }
 }

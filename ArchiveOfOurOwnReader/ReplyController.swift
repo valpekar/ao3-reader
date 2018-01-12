@@ -159,7 +159,7 @@ class ReplyController: LoadingViewController {
     }
     
     func sendReply(text: String) {
-        showLoadingView(msg: "SendingReply")
+        showLoadingView(msg: NSLocalizedString("SendingReply", comment: ""))
         
         var urlStr: String = sendReplyUrl
         if (urlStr.contains("http") == false) {
