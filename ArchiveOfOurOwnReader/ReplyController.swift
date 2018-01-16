@@ -9,6 +9,7 @@
 import UIKit
 import TSMessages
 import Alamofire
+import Crashlytics
 
 class ReplyController: LoadingViewController {
     
@@ -67,6 +68,8 @@ class ReplyController: LoadingViewController {
             
             openLoginController()
         }
+        
+        Answers.logCustomEvent(withName: "Reply: Opened", customAttributes: [:])
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -88,6 +91,9 @@ class ReplyController: LoadingViewController {
     
     @IBAction func replyTouched(_ sender: AnyObject) {
         if let txt: String = textView.text, txt.isEmpty == false, (commentLimit - textView.text.count) >= 0 {
+            
+            Answers.logCustomEvent(withName: "Reply: Reply Touched", customAttributes: ["txtLength":txt.count])
+            
             self.sendReply(text: txt)
         } else {
             TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CannotSendComment", comment: ""), type: .error, duration: 2.0)
@@ -197,14 +203,14 @@ class ReplyController: LoadingViewController {
                         
                     } else {
                         self.hideLoadingView()
-                        TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
+                        TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CouldNotReply", comment: ""), type: .error)
                     }
                 })
             
         } else {
             
             self.hideLoadingView()
-            TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
+            TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CouldNotReply", comment: ""), type: .error)
         }
     }
     
@@ -229,6 +235,9 @@ class ReplyController: LoadingViewController {
         } else {
         
             TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CouldNotReply", comment: ""), type: .error)
+            
+            let string1 = NSString(data: data, encoding: String.Encoding.utf8.rawValue)
+            Answers.logCustomEvent(withName: "Reply: Reply Error", customAttributes: ["doc":string1 ?? "data empty"])
         }
     }
     

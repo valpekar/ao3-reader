@@ -11,10 +11,11 @@ import CoreData
 import Alamofire
 import TSMessages
 import Crashlytics
+import WebKit
 
 class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWebViewDelegate {
     
-    @IBOutlet weak var webView: UIWebView!
+    @IBOutlet weak var webView: WKWebView!
     @IBOutlet weak var layoutView: UIView!
     @IBOutlet weak var prevButton: UIButton!
     @IBOutlet weak var nextButton: UIButton!
@@ -35,7 +36,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
     var downloadedChapters: [DBChapter]?
     
     var work: String = ""
-    var fontSize: Int = 100
+    var fontSize: Int = 175
     var fontFamily: String = "Verdana"
     
     var onlineChapters = [Int:ChapterOnline]()
@@ -50,7 +51,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
         addNavItems()
         
         prevButton.isHidden = true
-        webView.delegate = self
+        //webView.delegate = self
         
         NotificationCenter.default.addObserver(self, selector: #selector(willResignActive), name: .UIApplicationWillResignActive, object: nil)
         
@@ -327,8 +328,12 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
     //https://stackoverflow.com/questions/31114340/setstatusbarhidden-is-deprecated-in-ios-9-0
     func handleSingleTap(_ recognizer: UITapGestureRecognizer) {
         self.webView.scrollView.isScrollEnabled = false
-        self.webView.stringByEvaluatingJavaScript(from: "document.documentElement.style.webkitUserSelect='none'")
-        self.webView.stringByEvaluatingJavaScript(from: "document.documentElement.style.webkitTouchCallout='none'")
+        self.webView.evaluateJavaScript("document.documentElement.style.webkitUserSelect='none'") { (res, error) in
+            print(error)
+        }
+        self.webView.evaluateJavaScript("document.documentElement.style.webkitTouchCallout='none'", completionHandler: { (res, error) in
+            print(error)
+        })
         
         if(layoutView.isHidden) {
             layoutView.isHidden = false
@@ -344,8 +349,12 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             self.webView.scrollView.isScrollEnabled = true
             
-            self.webView.stringByEvaluatingJavaScript(from: "document.documentElement.style.webkitUserSelect='text'")
-            self.webView.stringByEvaluatingJavaScript(from: "document.documentElement.style.webkitTouchCallout='default'")
+            self.webView.evaluateJavaScript("document.documentElement.style.webkitUserSelect='text'") { (res, error) in
+                print(error)
+            }
+            self.webView.evaluateJavaScript("document.documentElement.style.webkitTouchCallout='default'", completionHandler: { (res, error) in
+                print(error)
+            })
         }
     }
     
@@ -411,9 +420,12 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
         }
         
         if (downloadedWorkItem != nil && downloadedChapters != nil && chapterIndex < downloadedChapters!.count) {
-            work = downloadedChapters?[chapterIndex].chapterContent ?? ""
+            let chapter = downloadedChapters?[chapterIndex]
+            work = chapter?.chapterContent ?? ""
+            
             loadCurrentTheme()
             downloadedWorkItem.setValue(NSNumber(value: chapterIndex as Int), forKey: "currentChapter")
+            chapter?.setValue(NSNumber(value: 1), forKey: "unread")
             
             //favWork.setCurrentChapter(String.valueOf(chapterIndex));
             //saveFavWorkChanges();
@@ -798,12 +810,11 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
     //Theme and Font changes
     
     func loadCurrentTheme() {
-        var theme: Int
         
         if let th = DefaultsManager.getInt(DefaultsManager.THEME) {
-            theme = th
+            self.theme = th
         } else {
-            theme = DefaultsManager.THEME_DAY
+            self.theme = DefaultsManager.THEME_DAY
         }
         
         if let fs = DefaultsManager.getInt(DefaultsManager.FONT_SIZE) {
@@ -839,7 +850,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
                 break
         }
         
-        let _ = webView(wview: webView, enableGL: false)
+       // let _ = webView(wview: webView, enableGL: false)
         
         webView.reload()
         webView.loadHTMLString(worktext, baseURL: nil)
@@ -880,10 +891,10 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
         alert.addAction(UIAlertAction(title: "+", style: UIAlertActionStyle.default, handler: { action in
             switch action.style{
             case .default:
-                if (self.fontSize < 400) {
+                if (self.fontSize < 450) {
                     self.fontSize += 25
                 } else {
-                    self.fontSize = 400
+                    self.fontSize = 450
                 }
                 DefaultsManager.putInt(self.fontSize, key: DefaultsManager.FONT_SIZE)
             default:
@@ -896,10 +907,10 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
         alert.addAction(UIAlertAction(title: "-", style: UIAlertActionStyle.default, handler: { action in
             switch action.style{
             case .default:
-                if (self.fontSize > 25) {
+                if (self.fontSize > 50) {
                     self.fontSize -= 25
                 } else {
-                    self.fontSize = 25
+                    self.fontSize = 50
                 }
                 DefaultsManager.putInt(self.fontSize, key: DefaultsManager.FONT_SIZE)
             default:
@@ -1039,7 +1050,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
     //typedef void (*CallFuc)(id, SEL, BOOL)
     //typedef BOOL (*GetFuc)(id, SEL)
     
-    func webView(wview: UIWebView, enableGL: Bool) -> Bool {
+    func webView(wview: WKWebView, enableGL: Bool) -> Bool {
         var bRet: Bool = false
         repeat
         {

@@ -419,6 +419,7 @@
                             <constraints>
                                 <constraint firstAttribute="width" constant="548" id="J58-yE-7vq"/>
                                 <constraint firstAttribute="height" constant="21" id="atH-VC-8A9"/>
+                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="16" id="mCp-hQ-5rs"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

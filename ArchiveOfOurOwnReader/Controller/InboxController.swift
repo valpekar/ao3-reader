@@ -325,6 +325,8 @@ class InboxController : ListViewController  {
     }
     
     func markItem(asRead: Bool, commentId: String) {
+        Answers.logCustomEvent(withName: "Inbox: Mark Item", customAttributes: ["asRead":asRead])
+        
         sendMarkItem(asRead, commentId: commentId)
     }
     

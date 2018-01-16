@@ -107,7 +107,7 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
         
         loadDefaults()
         
-        if let th = DefaultsManager.getInt(DefaultsManager.THEME) {
+        if let th = DefaultsManager.getInt(DefaultsManager.THEME_APP) {
             theme = th
         } else {
             theme = DefaultsManager.THEME_DAY

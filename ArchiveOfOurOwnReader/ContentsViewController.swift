@@ -48,23 +48,35 @@ class ContentsViewController: UIViewController, UIPopoverPresentationControllerD
             cell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: cellIdentifier)
         }
         
+        var chapterIsRead = false
+        
         if (onlineChapters != nil) {
-            
             let chapterNum = onlineChapters[indexPath.row]
             cell?.textLabel?.text = chapterNum?.url
         } else {
             
-            //let chapterNum = downloadedChapters[indexPath.row].chapterIndex.int32Value + 1
-            let chapterName = downloadedChapters[indexPath.row].chapterName
+            let chapter = downloadedChapters[indexPath.row]
+            
+            chapterIsRead = Bool(chapter.unread ?? 0)
+
+            let chapterName = chapter.chapterName
             cell?.textLabel?.text = chapterName
         }
         
         if (theme == DefaultsManager.THEME_DAY) {
-            cell?.backgroundColor = AppDelegate.greyLightBg
             cell?.textLabel?.textColor = AppDelegate.redColor
+            if (chapterIsRead == false) {
+                cell?.backgroundColor = AppDelegate.greyLightBg
+            } else {
+                cell?.backgroundColor = AppDelegate.greyColor
+            }
         } else {
-            cell?.backgroundColor = AppDelegate.greyDarkBg
             cell?.textLabel?.textColor = AppDelegate.textLightColor
+            if (chapterIsRead == false) {
+                cell?.backgroundColor = AppDelegate.greyDarkBg
+            } else {
+                cell?.backgroundColor = AppDelegate.greyColor
+            }
         }
         
         return cell!

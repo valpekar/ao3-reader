@@ -608,7 +608,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
             
             //var error:NSErrorPointer = NSErrorPointer()
             let regex:NSRegularExpression = try! NSRegularExpression(pattern: "<a href=\"[^\"]+\">([^<]+)</a>", options: NSRegularExpression.Options.caseInsensitive)
-            workContentStr = regex.stringByReplacingMatches(in: workContentStr, options: NSRegularExpression.MatchingOptions.withoutAnchoringBounds, range: NSRange(location: 0, length: workContentStr.characters.count), withTemplate: "$1")
+            workContentStr = regex.stringByReplacingMatches(in: workContentStr, options: NSRegularExpression.MatchingOptions.withoutAnchoringBounds, range: NSRange(location: 0, length: workContentStr.count), withTemplate: "$1")
             
             workItem.setValue(workContentStr, forKey: "workContent")
             
@@ -731,6 +731,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
                     chapter.setValue(curworkItem, forKey: "workItem")
                     chapter.setValue(chapters[i].content, forKey: "chapterContent")
                     chapter.setValue(chapters[i].url, forKey: "chapterName")
+                    chapter.setValue(NSNumber(value: 0), forKey: "unread")
             
                     workChapters.add(chapter)
             
