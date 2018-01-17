@@ -446,58 +446,6 @@ class RecommendationsController : ListViewController, UITableViewDataSource, UIT
     
     //MARK: - SAVE WORK TO DB
     
-    var curWork:NewsFeedItem?
-    
-    @IBAction func downloadButtonTouched(_ sender: UIButton) {
-        
-        if (sender.tag >= works.count) {
-            return
-        }
-        
-        if (purchased || donated) {
-            #if DEBUG
-                print("premium")
-            #endif
-        } else {
-            if (countWroksFromDB() > 29) {
-                TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Only30Stroies", comment: ""), type: .error, duration: 2.0)
-                
-                return
-            }
-        }
-        
-        curWork = works[sender.tag]
-        
-        showLoadingView(msg: "\(NSLocalizedString("DwnloadingWrk", comment: "")) \(curWork?.title ?? "")")
-        
-        if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
-        }
-        
-        var params:[String:AnyObject] = [String:AnyObject]()
-        params["view_adult"] = "true" as AnyObject?
-        
-        request("https://archiveofourown.org/works/" + (curWork?.workId ?? ""), method: .get, parameters: params)
-            .response(completionHandler: onSavedWorkLoaded(_:))
-    }
-    
-    func onSavedWorkLoaded(_ response: DefaultDataResponse) {
-        #if DEBUG
-            print(response.request ?? "")
-            //  println(response)
-            print(response.error ?? "")
-        #endif
-        self.parseCookies(response)
-        if let d = response.data {
-            let _ = self.downloadWork(d, curWork: curWork)
-            self.hideLoadingView()
-        } else {
-            TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CannotDwnldWrk", comment: ""), type: .error, duration: 2.0)
-            self.hideLoadingView()
-        }
-        
-        curWork = nil
-    }
     
     func saveWork() {
         hideLoadingView()
@@ -511,44 +459,5 @@ class RecommendationsController : ListViewController, UITableViewDataSource, UIT
     
     func controllerDidClosedWithChange() {
         shouldReload = false
-    }
-}
-
-extension RecommendationsController: DownloadButtonDelegate {
-    
-    func downloadTouched(rowIndex: Int) {
-        if (rowIndex >= works.count) {
-            return
-        }
-        
-        if (purchased || donated) {
-            #if DEBUG
-                print("premium")
-            #endif
-        } else {
-            if (countWroksFromDB() > 29) {
-                TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Only30Stroies", comment: ""), type: .error, duration: 2.0)
-                
-                return
-            }
-        }
-        
-        curWork = works[rowIndex]
-        
-        showLoadingView(msg: "\(NSLocalizedString("DwnloadingWrk", comment: "")) \(curWork?.title ?? "")")
-        
-        if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
-        }
-        
-        var params:[String:AnyObject] = [String:AnyObject]()
-        params["view_adult"] = "true" as AnyObject?
-        
-        request("https://archiveofourown.org/works/" + (curWork?.workId ?? ""), method: .get, parameters: params)
-            .response(completionHandler: onSavedWorkLoaded(_:))
-    }
-    
-    func deleteTouched(rowIndex: Int) {
-        
     }
 }

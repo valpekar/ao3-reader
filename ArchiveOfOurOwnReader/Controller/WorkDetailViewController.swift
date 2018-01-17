@@ -1509,12 +1509,11 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                     try context.save()
                 } catch _ {
                     NSLog("Cannot delete saved work")
+                    
+                    TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CannotDeleteWrk", comment: ""), type: .error)
                 }
                 
-                self.dismiss(animated: true, completion: { () -> Void in
-                    self.modalDelegate?.controllerDidClosed()
-                    NSLog("Read completed")
-                })
+                TSMessage.showNotification(in: self, title: NSLocalizedString("Success", comment: ""), subtitle: NSLocalizedString("WorkDeletedFromDownloads", comment: ""), type: .success)
             }))
             
             deleteAlert.view.tintColor = AppDelegate.redColor

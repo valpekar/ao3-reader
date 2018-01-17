@@ -29,6 +29,9 @@ struct NewsFeedItem {
      var complete = "" 
      var workId = ""
      var readingId = ""
+    
+    var isDownloaded = false
+    var needReload = false
    
 }
 

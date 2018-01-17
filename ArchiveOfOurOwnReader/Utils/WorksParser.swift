@@ -11,7 +11,7 @@ import Foundation
 
 class WorksParser {
     
-    class func parseWorks(_ data: Data, itemsCountHeading: String, worksElement: String, liWorksElement: String? = "") -> ([PageItem], [NewsFeedItem], String) {
+    class func parseWorks(_ data: Data, itemsCountHeading: String, worksElement: String, liWorksElement: String? = "", downloadedCheckItems: [CheckDownloadItem]? = nil) -> ([PageItem], [NewsFeedItem], String) {
         var pages : [PageItem] = [PageItem]()
         var works : [NewsFeedItem] = [NewsFeedItem]()
         var worksCountStr = ""
@@ -38,7 +38,7 @@ class WorksParser {
                 worksCountStr = itemsCount[0].content.trimmingCharacters(
                     in: CharacterSet.whitespacesAndNewlines
                 )
-                if let idx = worksCountStr.characters.index(of: "d") {
+                if let idx = worksCountStr.index(of: "d") {
                     worksCountStr = worksCountStr.substring(to: worksCountStr.index(after: idx))
                 }
             }
@@ -51,7 +51,7 @@ class WorksParser {
                         
                         autoreleasepool { [unowned workListItem] in
                             
-                            let item: NewsFeedItem = parseWorkItem(workListItem: workListItem)
+                            let item: NewsFeedItem = parseWorkItem(workListItem: workListItem, downloadedCheckItems:  downloadedCheckItems)
                             works.append(item)
                         }
                     }
@@ -75,7 +75,7 @@ class WorksParser {
         return (pages, works, worksCountStr)
     }
     
-    class func parseSerie(_ data: Data) -> ([PageItem], [NewsFeedItem], SerieItem) {
+    class func parseSerie(_ data: Data, downloadedCheckItems: [CheckDownloadItem]? = nil) -> ([PageItem], [NewsFeedItem], SerieItem) {
         var pages : [PageItem] = [PageItem]()
         var works : [NewsFeedItem] = [NewsFeedItem]()
         var serieItem: SerieItem = SerieItem()
@@ -151,7 +151,7 @@ class WorksParser {
                         
                         autoreleasepool { [unowned workListItem] in
                             
-                            let item: NewsFeedItem = parseWorkItem(workListItem: workListItem)
+                            let item: NewsFeedItem = parseWorkItem(workListItem: workListItem, downloadedCheckItems: downloadedCheckItems)
                             works.append(item)
                         }
                     }
@@ -171,7 +171,7 @@ class WorksParser {
         return (pages, works, serieItem)
     }
     
-    class func parseWorkItem(workListItem: TFHppleElement) -> NewsFeedItem {
+    class func parseWorkItem(workListItem: TFHppleElement, downloadedCheckItems: [CheckDownloadItem]? = nil) -> NewsFeedItem {
         var item : NewsFeedItem = NewsFeedItem()
         
         if let header : [TFHppleElement] = workListItem.search(withXPathQuery: "//div[@class='header module']") as? [TFHppleElement] {
@@ -341,6 +341,18 @@ class WorksParser {
             }
         }
         
+        if let downloadedItems = downloadedCheckItems {
+            for downloadedItem in downloadedItems {
+                if (downloadedItem.workId == item.workId) {
+                    item.isDownloaded = true
+                    
+                    if (downloadedItem.date != item.dateTime) {
+                        item.needReload = true
+                    }
+                }
+            }
+        }
+        
         if let readingIdGroup = workListItem.search(withXPathQuery: "//ul[@class='actions']//li") as? [TFHppleElement] {
             if (readingIdGroup.count > 0) {
                 if let readingIdInput = readingIdGroup[0].search(withXPathQuery: "//input[@id='reading']") as? [TFHppleElement] {
@@ -452,4 +464,5 @@ class WorksParser {
         
         return pages
     }
+    
 }

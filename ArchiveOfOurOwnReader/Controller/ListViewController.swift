@@ -10,6 +10,7 @@ import Foundation
 import Alamofire
 import TSMessages
 import Crashlytics
+import CoreData
 
 class ListViewController: LoadingViewController, PageSelectDelegate, UIPopoverPresentationControllerDelegate {
     
@@ -22,6 +23,9 @@ class ListViewController: LoadingViewController, PageSelectDelegate, UIPopoverPr
     var pages : [PageItem] = [PageItem]()
     var works : [NewsFeedItem] = [NewsFeedItem]()
     
+    var curWork:NewsFeedItem?
+    var curRow = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -29,6 +33,10 @@ class ListViewController: LoadingViewController, PageSelectDelegate, UIPopoverPr
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+        
+    }
+    
+    func reload(row: Int) {
         
     }
     
@@ -184,12 +192,21 @@ class ListViewController: LoadingViewController, PageSelectDelegate, UIPopoverPr
         // cell?.categoryLabel.text = curWork.category
         cell.workCellView.ratingLabel.text = curWork.rating
         
-        
         var tagsString = ""
         if (curWork.tags.count > 0) {
             tagsString = curWork.tags.joined(separator: ", ")
         }
         cell.workCellView.tagsLabel.text = tagsString
+        
+        if (curWork.isDownloaded == true) {
+            if (curWork.needReload == true) {
+                cell.workCellView.downloadButton.setImage(UIImage(named: "ic_refresh"), for: .normal)
+            } else {
+                cell.workCellView.downloadButton.setImage(UIImage(named: "ic_yes"), for: .normal)
+            }
+        } else {
+            cell.workCellView.downloadButton.setImage(UIImage(named: "download-100"), for: .normal)
+        }
         
         if (theme == DefaultsManager.THEME_DAY) {
             cell.contentView.backgroundColor = AppDelegate.greyLightBg
@@ -432,5 +449,154 @@ class ListViewController: LoadingViewController, PageSelectDelegate, UIPopoverPr
                     TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
                 }
             })
+    }
+}
+
+//MARK: - DownloadButtonDelegate
+
+extension ListViewController: DownloadButtonDelegate {
+    
+    func downloadTouched(rowIndex: Int) {
+        if (rowIndex >= works.count) {
+            return
+        }
+        
+        curWork = works[rowIndex]
+        
+        if (curWork?.isDownloaded == true) {
+            let optionMenu = UIAlertController(title: nil, message: NSLocalizedString("WrkOptions", comment: ""), preferredStyle: .actionSheet)
+            optionMenu.view.tintColor = AppDelegate.redColor
+            
+            let deleteAction = UIAlertAction(title: NSLocalizedString("DeleteWrk", comment: ""), style: .default, handler: {
+                (alert: UIAlertAction!) -> Void in
+                self.doDeleteWork()
+                self.curRow = rowIndex
+                self.reload(row: rowIndex)
+            })
+            optionMenu.addAction(deleteAction)
+            
+            let reloadAction = UIAlertAction(title: NSLocalizedString("ReloadWrk", comment: ""), style: .default, handler: {
+                (alert: UIAlertAction!) -> Void in
+                self.curRow = rowIndex
+                self.doDownloadWork()
+            })
+            optionMenu.addAction(reloadAction)
+            
+            optionMenu.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .default, handler: { (action: UIAlertAction) in
+                print("Cancel")
+            }))
+            
+            optionMenu.popoverPresentationController?.sourceView =  self.view
+            optionMenu.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.size.width / 2.0, y: self.view.bounds.size.height / 2.0, width: 1.0, height: 1.0)
+            
+            optionMenu.view.tintColor = AppDelegate.redColor
+            
+            self.present(optionMenu, animated: true, completion: nil)
+        } else {
+        
+        if (purchased || donated) {
+            #if DEBUG
+                print("premium")
+            #endif
+        } else {
+            if (countWroksFromDB() > 29) {
+                TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Only30Stroies", comment: ""), type: .error, duration: 2.0)
+                
+                return
+            }
+        }
+        
+            doDownloadWork()
+        }
+    }
+    
+    func deleteTouched(rowIndex: Int) {
+        
+    }
+    
+    func doDownloadWork() {
+        curWork?.isDownloaded = true
+        
+        showLoadingView(msg: "\(NSLocalizedString("DwnloadingWrk", comment: "")) \(curWork?.title ?? "")")
+        
+        if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
+            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
+        }
+        
+        var params:[String:AnyObject] = [String:AnyObject]()
+        params["view_adult"] = "true" as AnyObject?
+        
+        request("https://archiveofourown.org/works/" + (curWork?.workId ?? ""), method: .get, parameters: params)
+            .response(completionHandler: onSavedWorkLoaded(_:))
+    }
+    
+    func onSavedWorkLoaded(_ response: DefaultDataResponse) {
+        #if DEBUG
+            print(response.request ?? "")
+            //  println(response)
+            print(response.error ?? "")
+        #endif
+        self.parseCookies(response)
+        if let d = response.data {
+            let _ = self.downloadWork(d, curWork: curWork)
+            self.hideLoadingView()
+            if (self.works.count > curRow) {
+                self.works[curRow].isDownloaded = true
+            }
+            self.reload(row: curRow)
+        } else {
+            TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CannotDwnldWrk", comment: ""), type: .error, duration: 2.0)
+            self.hideLoadingView()
+        }
+        
+        curWork = nil
+    }
+    
+    func doDeleteWork() {
+        var res: DBWorkItem?
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let managedContext = appDelegate.managedObjectContext!
+        let fetchRequest: NSFetchRequest <NSFetchRequestResult> = NSFetchRequest(entityName:"DBWorkItem")
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "dateAdded", ascending: false)]
+        fetchRequest.fetchLimit = 1
+        let searchPredicate: NSPredicate = NSPredicate(format: "workId = %@", curWork?.workId ?? "")
+        
+        fetchRequest.predicate = searchPredicate
+        
+        do {
+            let fetchedResults = try managedContext.fetch(fetchRequest) as? [DBWorkItem]
+            
+            if let results = fetchedResults {
+                res = results.first
+            }
+        } catch {
+            #if DEBUG
+                print("cannot fetch favorites.")
+            #endif
+        }
+        
+        if let res = res {
+            managedContext.delete(res)
+            do {
+                try managedContext.save()
+            } catch _ {
+                NSLog("Cannot delete saved work")
+                TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CannotDeleteWrk", comment: ""), type: .error)
+            }
+            
+            curWork?.isDownloaded = false
+            curWork?.needReload = false
+            
+            if (self.works.count > curRow) {
+                self.works[curRow].isDownloaded = false
+                self.works[curRow].needReload = false
+            }
+            
+            TSMessage.showNotification(in: self, title: NSLocalizedString("Success", comment: ""), subtitle: NSLocalizedString("WorkDeletedFromDownloads", comment: ""), type: .success)
+        
+        } else {
+            TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CannotFindWrk", comment: ""), type: .error)
+        }
     }
 }

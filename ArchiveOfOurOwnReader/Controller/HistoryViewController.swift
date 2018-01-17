@@ -357,39 +357,9 @@ class HistoryViewController : ListViewController, UITableViewDataSource, UITable
     
 }
 
-extension HistoryViewController: DownloadButtonDelegate {
+extension HistoryViewController {
     
-    func downloadTouched(rowIndex: Int) {
-       
-        let curWork:NewsFeedItem = works[rowIndex]
-        showLoadingView(msg: "\(NSLocalizedString("DwnloadingWrk", comment: "")) \(curWork.title)")
-        
-        if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
-        }
-        
-        var params:[String:AnyObject] = [String:AnyObject]()
-        params["view_adult"] = "true" as AnyObject?
-        
-        let urlStr: String = "https://archiveofourown.org/works/" + curWork.workId
-        
-        Alamofire.request(urlStr, parameters: params) //default is get
-            .response(completionHandler: { response in
-                #if DEBUG
-                    print(response.request ?? "")
-                    print(response.error ?? "")
-                #endif
-                if let d = response.data {
-                    self.parseCookies(response)
-                    let _ = self.downloadWork(d, curWork: curWork)
-                } else {
-                    self.hideLoadingView()
-                    TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
-                }
-            })
-    }
-    
-    func deleteTouched(rowIndex: Int) {
+    override func deleteTouched(rowIndex: Int) {
         let deleteAlert = UIAlertController(title: NSLocalizedString("AreYouSure", comment: ""), message: NSLocalizedString("SureDeleteFromHistory", comment: ""), preferredStyle: UIAlertControllerStyle.alert)
         
         deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: { (action: UIAlertAction) in

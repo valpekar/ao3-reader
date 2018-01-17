@@ -224,30 +224,6 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
 //        }
  //   }
     
-    // MARK: - ADInterstitialViewDelegate methods
-    
-    // When this method is invoked, the application should remove the view from the screen and tear it down.
-    // The content will be unloaded shortly after this method is called and no new content will be loaded in that view.
-    // This may occur either when the user dismisses the interstitial view via the dismiss button or
-    // if the content in the view has expired.
-    func interstitialAdDidUnload(_ interstitialAd: ADInterstitialAd!) {
-        NSLog("interstitialAdDidUnload")
-        //self.cycleInterstitial()
-    }
-    
-    // This method will be invoked when an error has occurred attempting to get advertisement content.
-    // The ADError enum lists the possible error codes.
-    func interstitialAd(_ interstitialAd: ADInterstitialAd, didFailWithError:NSError) {
-        //self.cycleInterstitial()
-    }
-    
-    func interstitialAdDidLoad(_ interstitialAd: ADInterstitialAd!) {
-        NSLog("Loaded interstitial")
-    }
-    
-    func interstitialAdActionDidFinish(_ interstitialAd: ADInterstitialAd!) {
-    }
-    
     // MARK: - Downloading work
     
     var chapters: [ChapterOnline] = [ChapterOnline]()
@@ -766,7 +742,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         
             //var error:NSErrorPointer = NSErrorPointer()
             let regex:NSRegularExpression = try! NSRegularExpression(pattern: "<a href=\"[^\"]+\">([^<]+)</a>", options: NSRegularExpression.Options.caseInsensitive)
-            workContentStr = regex.stringByReplacingMatches(in: workContentStr, options: NSRegularExpression.MatchingOptions.withoutAnchoringBounds, range: NSRange(location: 0, length: workContentStr.characters.count), withTemplate: "$1")
+            workContentStr = regex.stringByReplacingMatches(in: workContentStr, options: NSRegularExpression.MatchingOptions.withoutAnchoringBounds, range: NSRange(location: 0, length: workContentStr.count), withTemplate: "$1")
         
             var chptName = ""
             if let chapterNameEl = doc.search(withXPathQuery: "//h3[@class='title']") as? [TFHppleElement] {
@@ -854,6 +830,36 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
             #endif
 
             }
+    }
+    
+    func getDownloadedStats() -> [CheckDownloadItem] {
+        
+        var result: [CheckDownloadItem] = []
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let managedContext = appDelegate.managedObjectContext!
+        let fetchRequest: NSFetchRequest <NSFetchRequestResult> = NSFetchRequest(entityName:"DBWorkItem")
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "dateAdded", ascending: false)]
+        
+        do {
+            let fetchedResults = try managedContext.fetch(fetchRequest) as? [DBWorkItem]
+            
+            if let downloadedWorks = fetchedResults {
+                for downloadedWork in downloadedWorks {
+                    var item = CheckDownloadItem()
+                    item.date = downloadedWork.datetime ?? ""
+                    item.workId = downloadedWork.workId ?? ""
+                    
+                    result.append(item)
+                }
+            }
+        } catch {
+            #if DEBUG
+                print("cannot fetch favorites.")
+            #endif
+        }
+        
+        return result
     }
     
     

@@ -412,7 +412,8 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
         
         if let d = response.data {
             self.parseCookies(response)
-            (self.pages, self.works, self.foundItems) = WorksParser.parseWorks(d, itemsCountHeading: "h3", worksElement: self.worksElement)
+            let checkItems = self.getDownloadedStats()
+            (self.pages, self.works, self.foundItems) = WorksParser.parseWorks(d, itemsCountHeading: "h3", worksElement: self.worksElement, downloadedCheckItems: checkItems)
             //self.getFeed(d)
         } else {
             self.hideLoadingView()
@@ -435,60 +436,14 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
         super.drawerClicked(sender)
     }
     
+    override func reload(row: Int) {
+        self.tableView.reloadRows(at: [ IndexPath(row: row, section: 0)], with: UITableViewRowAnimation.automatic)
+    }
+    
+    
     //MARK: - SAVE WORK TO DB
     
-    var curWork:NewsFeedItem?
-    
-    @IBAction func downloadButtonTouched(_ sender: UIButton) {
-        
-       if (sender.tag >= works.count) {
-            return
-        }
-        
-        if (purchased || donated) {
-            #if DEBUG
-            print("premium")
-            #endif
-        } else {
-            if (countWroksFromDB() > 29) {
-                TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Only30Stroies", comment: ""), type: .error, duration: 2.0)
 
-                return
-            }
-        }
-        
-        curWork = works[sender.tag]
-        
-        showLoadingView(msg: "\(NSLocalizedString("DwnloadingWrk", comment: "")) \(curWork?.title ?? "")")
-        
-        if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
-        }
-        
-        var params:[String:AnyObject] = [String:AnyObject]()
-        params["view_adult"] = "true" as AnyObject?
-        
-        request("https://archiveofourown.org/works/" + (curWork?.workId ?? ""), method: .get, parameters: params)
-            .response(completionHandler: onSavedWorkLoaded(_:))
-    }
-    
-    func onSavedWorkLoaded(_ response: DefaultDataResponse) {
-        #if DEBUG
-        print(response.request ?? "")
-        //  println(response)
-        print(response.error ?? "")
-            #endif
-        self.parseCookies(response)
-        if let d = response.data {
-            let _ = self.downloadWork(d, curWork: curWork)
-            self.hideLoadingView()
-        } else {
-            TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CannotDwnldWrk", comment: ""), type: .error, duration: 2.0)
-            self.hideLoadingView()
-        }
-        
-        curWork = nil
-    }
     
     func saveWork() {
         hideLoadingView()
@@ -540,7 +495,9 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
         
         refreshAlert.addAction(UIAlertAction(title: NSLocalizedString("MoreDetails", comment: ""), style: .default, handler: { (action: UIAlertAction!) in
             if let url: URL = URL(string: "https://www.tumblr.com/blog/unofficialao3app") {
-                UIApplication.shared.openURL(url)
+                UIApplication.shared.open(url, options: [ : ], completionHandler: { (result) in
+                    print("Tumblr opened")
+                })
             }
         }))
         
@@ -596,45 +553,5 @@ extension FeedViewController : UISearchBarDelegate, UISearchResultsUpdating {
     
 }
 
-//MARK: - DownloadButtonDelegate
-
-extension FeedViewController: DownloadButtonDelegate {
-    
-    func downloadTouched(rowIndex: Int) {
-        if (rowIndex >= works.count) {
-            return
-        }
-        
-        if (purchased || donated) {
-            #if DEBUG
-                print("premium")
-            #endif
-        } else {
-            if (countWroksFromDB() > 29) {
-                TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Only30Stroies", comment: ""), type: .error, duration: 2.0)
-                
-                return
-            }
-        }
-        
-        curWork = works[rowIndex]
-        
-        showLoadingView(msg: "\(NSLocalizedString("DwnloadingWrk", comment: "")) \(curWork?.title ?? "")")
-        
-        if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
-        }
-        
-        var params:[String:AnyObject] = [String:AnyObject]()
-        params["view_adult"] = "true" as AnyObject?
-        
-        request("https://archiveofourown.org/works/" + (curWork?.workId ?? ""), method: .get, parameters: params)
-            .response(completionHandler: onSavedWorkLoaded(_:))
-    }
-    
-    func deleteTouched(rowIndex: Int) {
-        
-    }
-}
 
 

@@ -509,7 +509,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
                 workContentStr = workContentEl[0].raw ?? ""
             
                 let regex:NSRegularExpression = try! NSRegularExpression(pattern: "<a href=\"[^\"]+\">([^<]+)</a>", options: NSRegularExpression.Options.caseInsensitive)
-                workContentStr = regex.stringByReplacingMatches(in: workContentStr, options: NSRegularExpression.MatchingOptions.withoutAnchoringBounds, range: NSRange(location: 0, length: workContentStr.characters.count), withTemplate: "$1")
+                workContentStr = regex.stringByReplacingMatches(in: workContentStr, options: NSRegularExpression.MatchingOptions.withoutAnchoringBounds, range: NSRange(location: 0, length: workContentStr.count), withTemplate: "$1")
             
                 workContentStr = workContentStr.replacingOccurrences(of: "(?i)<strike\\b[^<]*>\\s*</strike>", with: "", options: .regularExpression, range: nil)
                 //workContentStr = workContentStr.replacingOccurrences(of: "<strike/>", with: "")
@@ -736,7 +736,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
           //  work = work.stringByReplacingOccurrencesOfString("</a>", withString: "")
          //   var error:NSErrorPointer = NSErrorPointer()
             if let regex:NSRegularExpression = try? NSRegularExpression(pattern: "<a href=\"[^\"]+\">([^<]+)</a>", options: NSRegularExpression.Options.caseInsensitive) {
-                work = regex.stringByReplacingMatches(in: work, options: NSRegularExpression.MatchingOptions.withoutAnchoringBounds, range: NSRange(location: 0, length: work.characters.count), withTemplate: "$1")
+                work = regex.stringByReplacingMatches(in: work, options: NSRegularExpression.MatchingOptions.withoutAnchoringBounds, range: NSRange(location: 0, length: work.count), withTemplate: "$1")
             } else {
                 work = ""
             }
@@ -1094,7 +1094,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
     
             let selector: Selector = NSSelectorFromString("_setWebGLEnabled:")
             
-            if let anyObj: AnyObject = webView as? AnyObject {
+            if let anyObj = webView as? AnyObject {
                 let impSet: IMP = anyObj.method(for: selector)
                 
                 typealias ClosureType = @convention(c) (AnyObject, Selector, Bool) -> Void

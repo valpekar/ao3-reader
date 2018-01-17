@@ -152,6 +152,7 @@
 		3CD808541D804F310099F778 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3CD808531D804F310099F778 /* GoogleService-Info.plist */; };
 		3CDC4A2C1E825F5100D9438E /* AboutSubscriptionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CDC4A2B1E825F5100D9438E /* AboutSubscriptionController.swift */; };
 		3CDF1FAB1F39AA57004D858F /* WorksParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CDF1FAA1F39AA57004D858F /* WorksParser.swift */; };
+		3CEAA530200F7975003FEFDE /* CheckDownloadItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEAA52F200F7975003FEFDE /* CheckDownloadItem.swift */; };
 		3CF1D00E1C87182300D219B2 /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF1D00D1C87182300D219B2 /* HistoryViewController.swift */; };
 		3CFD2A631CB55A0F0072FEC5 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CFD2A621CB55A0F0072FEC5 /* Twitter.framework */; };
 		3CFD2A651CB55A2F0072FEC5 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CFD2A641CB55A2F0072FEC5 /* MessageUI.framework */; };
@@ -368,6 +369,7 @@
 		3CD8F8CE1CE4808F00C3D5BB /* ArchiveOfOurOwnReader 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ArchiveOfOurOwnReader 3.xcdatamodel"; sourceTree = "<group>"; };
 		3CDC4A2B1E825F5100D9438E /* AboutSubscriptionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AboutSubscriptionController.swift; path = Controller/AboutSubscriptionController.swift; sourceTree = "<group>"; };
 		3CDF1FAA1F39AA57004D858F /* WorksParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WorksParser.swift; path = Utils/WorksParser.swift; sourceTree = "<group>"; };
+		3CEAA52F200F7975003FEFDE /* CheckDownloadItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CheckDownloadItem.swift; path = Object/CheckDownloadItem.swift; sourceTree = "<group>"; };
 		3CF1D00D1C87182300D219B2 /* HistoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HistoryViewController.swift; path = Controller/HistoryViewController.swift; sourceTree = "<group>"; };
 		3CFD2A621CB55A0F0072FEC5 /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
 		3CFD2A641CB55A2F0072FEC5 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
@@ -458,6 +460,7 @@
 				3C93ED5D1FCF12EF00F1F4D4 /* CategoryItem.swift */,
 				3C74C71F1FD05F22008D191B /* FandomItem.swift */,
 				3CBC35BC2004EA7400A115EC /* InboxItem.swift */,
+				3CEAA52F200F7975003FEFDE /* CheckDownloadItem.swift */,
 			);
 			name = Object;
 			sourceTree = "<group>";
@@ -1051,6 +1054,7 @@
 				3CBC35BF2004EC8F00A115EC /* InboxItemCell.swift in Sources */,
 				3C93ED5E1FCF12EF00F1F4D4 /* CategoryItem.swift in Sources */,
 				28B6DC601B4E4B3C00F34529 /* PageCollectionViewCell.swift in Sources */,
+				3CEAA530200F7975003FEFDE /* CheckDownloadItem.swift in Sources */,
 				3C0465981F8CBCBA003B6AE7 /* Serie+CoreDataProperties.swift in Sources */,
 				28B6DC541B4E47E700F34529 /* FeedViewController.swift in Sources */,
 				3CCA7B3C1EFAA1EC00590D12 /* SubscriptionsController.swift in Sources */,

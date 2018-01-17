@@ -509,40 +509,9 @@ extension FavoritesSiteController: UISearchBarDelegate {
     }
 }
 
-extension FavoritesSiteController: DownloadButtonDelegate {
+extension FavoritesSiteController {
     
-    func downloadTouched(rowIndex: Int) {
-        let curWork:NewsFeedItem = works[rowIndex]
-        showLoadingView(msg: "\(NSLocalizedString("DwnloadingWrk", comment: "")) \(curWork.title)")
-        
-        if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
-        }
-        
-        var params:[String:AnyObject] = [String:AnyObject]()
-        params["view_adult"] = "true" as AnyObject?
-        
-        let urlStr =  "https://archiveofourown.org/works/" + curWork.workId
-        
-        Alamofire.request(urlStr, parameters: params)
-            .response(completionHandler: { response in
-                #if DEBUG
-                    print(response.request ?? "")
-                    //  println(response ?? "")
-                    print(response.error ?? "")
-                #endif
-                if let d = response.data {
-                    self.parseCookies(response)
-                    let _ = self.downloadWork(d, curWork: curWork)
-                    //self.saveWork()
-                } else {
-                    self.hideLoadingView()
-                    TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
-                }
-            })
-    }
-    
-    func deleteTouched(rowIndex: Int) {
+    override func deleteTouched(rowIndex: Int) {
         let deleteAlert = UIAlertController(title: NSLocalizedString("AreYouSure", comment: ""), message: NSLocalizedString("SureDeleteWrkFromBmks", comment: ""), preferredStyle: UIAlertControllerStyle.alert)
         
         deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .default, handler: { (action: UIAlertAction) in
