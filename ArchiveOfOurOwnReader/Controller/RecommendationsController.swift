@@ -201,7 +201,8 @@ class RecommendationsController : ListViewController, UITableViewDataSource, UIT
                         #endif
                     if let d = response.data {
                         self.parseCookies(response)
-                        (self.pages, self.works, self.foundItems) = WorksParser.parseWorks(d, itemsCountHeading: "h3", worksElement: "work")
+                        let checkItems = self.getDownloadedStats()
+                        (self.pages, self.works, self.foundItems) = WorksParser.parseWorks(d, itemsCountHeading: "h3", worksElement: "work", downloadedCheckItems: checkItems)
                         //self.getFeed(d)
                         self.showWorks()
                     } else {
@@ -331,7 +332,8 @@ class RecommendationsController : ListViewController, UITableViewDataSource, UIT
                     #endif
                 if let d = response.data {
                     self.parseCookies(response)
-                    (self.pages, self.works, self.foundItems) = WorksParser.parseWorks(d, itemsCountHeading: "h3", worksElement: "work")
+                    let checkItems = self.getDownloadedStats()
+                    (self.pages, self.works, self.foundItems) = WorksParser.parseWorks(d, itemsCountHeading: "h3", worksElement: "work", downloadedCheckItems: checkItems)
                     //self.getFeed(d)
                     self.showWorks()
                 } else {
@@ -388,7 +390,7 @@ class RecommendationsController : ListViewController, UITableViewDataSource, UIT
         
         let curWork:NewsFeedItem = works[(indexPath as NSIndexPath).row]
         
-        cell = fillCellXib(cell: cell, curWork: curWork, needsDelete: false)
+        cell = fillCellXib(cell: cell, curWork: curWork, needsDelete: false, index: indexPath.row)
         
         cell.workCellView.tag = indexPath.row
         cell.workCellView.downloadButtonDelegate = self

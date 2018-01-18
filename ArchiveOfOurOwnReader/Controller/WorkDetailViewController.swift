@@ -110,7 +110,16 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             showOnlineWork(workUrl)
             workItem = WorkItem()
         } else if (workItem != nil) {
-            showOnlineWork()
+            if (workItem.isDownloaded == true) {
+                if let downloadedWork = getWorkById(workId: workItem.workId) {
+                    self.downloadedWorkItem = downloadedWork
+                    self.workItem = nil
+                     showDownloadedWork()
+                }
+                
+            } else {
+                showOnlineWork()
+            }
         } else if (downloadedWorkItem != nil) {
             showDownloadedWork()
         }
@@ -211,7 +220,6 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         } else {
             downloadedCharacters = []
         }
-        
         
         
         let delay = 0.2 * Double(NSEC_PER_SEC)
@@ -1169,7 +1177,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             an = an.replacingOccurrences(of: ")", with: "")
             tagUrl = "https://archiveofourown.org/users/\(an)/pseuds/\(nameArr[0])/works"
         } else if (authorName.contains(",")) {
-            let nameArr = authorName.characters.split{$0 == ","}.map(String.init)
+            let nameArr = authorName.split{$0 == ","}.map(String.init)
             tagUrl = "https://archiveofourown.org/users/\(nameArr[0])/works"
         } else {
             tagUrl = "https://archiveofourown.org/users/\(authorName)/works"

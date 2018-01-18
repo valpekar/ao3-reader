@@ -39,6 +39,9 @@ class WorkItem : NSObject {
     var serieUrl = ""
     var serieName = ""
     
+    var isDownloaded = false
+    var needReload = false
+    
     var chapters: NSSet = []
     var relationshipIds: NSSet = []
     var characterIds: NSSet = []

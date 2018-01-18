@@ -114,7 +114,8 @@ class MarkedForLaterController: ListViewController , UITableViewDataSource, UITa
                 
                 if let d = response.data {
                     self.parseCookies(response)
-                    (self.pages, self.works, self.foundItems) = WorksParser.parseWorks(d, itemsCountHeading: self.itemsCountHeading, worksElement: self.worksElement)
+                    let checkItems = self.getDownloadedStats()
+                    (self.pages, self.works, self.foundItems) = WorksParser.parseWorks(d, itemsCountHeading: self.itemsCountHeading, worksElement: self.worksElement, downloadedCheckItems: checkItems)
                     //self.parseHistory(d)
                     self.refreshControl.endRefreshing()
                     self.showWorks()
@@ -173,7 +174,7 @@ class MarkedForLaterController: ListViewController , UITableViewDataSource, UITa
         
         let curWork:NewsFeedItem = works[(indexPath as NSIndexPath).row]
         
-        cell = fillCellXib(cell: cell, curWork: curWork, needsDelete: true)
+        cell = fillCellXib(cell: cell, curWork: curWork, needsDelete: true, index: indexPath.row)
         
         cell.workCellView.tag = indexPath.row
         cell.workCellView.downloadButtonDelegate = self

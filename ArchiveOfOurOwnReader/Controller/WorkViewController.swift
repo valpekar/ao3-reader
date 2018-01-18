@@ -42,7 +42,6 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
     var onlineChapters = [Int:ChapterOnline]()
     
     var viewLaidoutSubviews = false // <-- variable to prevent the viewDidLayoutSubviews code from happening more than once
-
     
     override func viewDidLoad() {
         
@@ -138,7 +137,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
     func willResignActive(_ notification: Notification) {
         saveChanges()
     }
-
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -148,12 +147,31 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
         self.navigationController!.navigationBar.shadowImage = UIImage()
         self.navigationController!.navigationBar.isTranslucent = false
         
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
+        
         if (workItem != nil) { 
             self.title = workItem.workTitle
         }
         
         if (!nextChapter.isEmpty || !prevChapter.isEmpty) {
             animateLayoutDown()
+        }
+        
+        // iterate over all subviews of the WKWebView's scrollView
+        for subview in self.webView.scrollView.subviews {
+            // iterate over recognizers of subview
+            for recognizer in subview.gestureRecognizers ?? [] {
+                // check the recognizer is  a UITapGestureRecognizer
+                if recognizer.isKind(of: UITapGestureRecognizer.self) {
+                    // cast the UIGestureRecognizer as UITapGestureRecognizer
+                    let tapRecognizer = recognizer as! UITapGestureRecognizer
+                    // check if it is a 1-finger double-tap
+                    if tapRecognizer.numberOfTapsRequired == 2 && tapRecognizer.numberOfTouchesRequired == 1 {
+                        // remove the recognizer
+                        subview.removeGestureRecognizer(recognizer)
+                    }
+                }
+            }
         }
         
         scrollWorks()
@@ -329,31 +347,31 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
     func handleSingleTap(_ recognizer: UITapGestureRecognizer) {
         self.webView.scrollView.isScrollEnabled = false
         self.webView.evaluateJavaScript("document.documentElement.style.webkitUserSelect='none'") { (res, error) in
-            print(error)
+            print(error.debugDescription)
         }
         self.webView.evaluateJavaScript("document.documentElement.style.webkitTouchCallout='none'", completionHandler: { (res, error) in
-            print(error)
+            print(error.debugDescription)
         })
         
         if(layoutView.isHidden) {
             layoutView.isHidden = false
             self.navigationController?.setNavigationBarHidden(false, animated: true)
-            UIApplication.shared.setStatusBarHidden(false, with: .fade)
+            UIApplication.shared.isStatusBarHidden = false //.setStatusBarHidden(false, with: .fade)
             animateLayoutDown()
             
         } else {
             layoutView.isHidden = true
             self.navigationController?.setNavigationBarHidden(true, animated: true)
-            UIApplication.shared.setStatusBarHidden(true, with: .fade)
+            UIApplication.shared.isStatusBarHidden = true //.setStatusBarHidden(true, with: .fade)
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
             self.webView.scrollView.isScrollEnabled = true
             
             self.webView.evaluateJavaScript("document.documentElement.style.webkitUserSelect='text'") { (res, error) in
-                print(error)
+                print(error.debugDescription)
             }
             self.webView.evaluateJavaScript("document.documentElement.style.webkitTouchCallout='default'", completionHandler: { (res, error) in
-                print(error)
+                print(error.debugDescription)
             })
         }
     }

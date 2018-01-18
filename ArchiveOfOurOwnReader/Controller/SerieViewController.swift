@@ -233,7 +233,7 @@ class SerieViewController: ListViewController, UITableViewDataSource, UITableVie
             
             let curWork:NewsFeedItem = works[indexPath.row - 1]
             
-            cell = fillCellXib(cell: cell, curWork: curWork, needsDelete: false)
+            cell = fillCellXib(cell: cell, curWork: curWork, needsDelete: false, index: indexPath.row)
             
             cell.workCellView.tag = indexPath.row - 1
             cell.workCellView.downloadButtonDelegate = self

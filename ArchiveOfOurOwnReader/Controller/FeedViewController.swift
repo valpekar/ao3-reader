@@ -246,10 +246,13 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
             tryAgainButton.isHidden = true
             checkStatusButton.isHidden = true
             
-            if (tableView.numberOfSections > 0 && tableView.numberOfRows(inSection: 0) > 0) {
-                tableView.setContentOffset( CGPoint(x: 0, y: 0) , animated: true)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                
+                if (self.tableView.numberOfSections > 0 && self.tableView.numberOfRows(inSection: 0) > 0) {
+                    self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+                }
+                self.collectionView.flashScrollIndicators()
             }
-            collectionView.flashScrollIndicators()
         }
     }
     
@@ -282,7 +285,7 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
         
         let curWork:NewsFeedItem = works[indexPath.row]
         
-        cell = fillCellXib(cell: cell, curWork: curWork, needsDelete: false)
+        cell = fillCellXib(cell: cell, curWork: curWork, needsDelete: false, index: indexPath.row)
         
         cell.workCellView.tag = indexPath.row
         cell.workCellView.downloadButtonDelegate = self
@@ -542,6 +545,8 @@ extension FeedViewController : UISearchBarDelegate, UISearchResultsUpdating {
                                     "txt": txt])
             
             searchApplied(query, shouldAddKeyword: false)
+            
+            resultSearchController.isActive = false
         }
     }
     

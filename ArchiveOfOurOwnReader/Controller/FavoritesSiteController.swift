@@ -159,7 +159,8 @@ class FavoritesSiteController : ListViewController, UITableViewDataSource, UITab
                 print(response.error ?? "")
                 if let d = response.data {
                     self.parseCookies(response)
-                    (self.pages, self.works, self.foundItems) = WorksParser.parseWorks(d, itemsCountHeading: "h2", worksElement: "bookmark")
+                    let checkItems = self.getDownloadedStats()
+                    (self.pages, self.works, self.foundItems) = WorksParser.parseWorks(d, itemsCountHeading: "h2", worksElement: "bookmark", downloadedCheckItems: checkItems)
                     //self.parseBookmarks(d)
                     self.showWorks()
                 } else {
@@ -231,7 +232,7 @@ class FavoritesSiteController : ListViewController, UITableViewDataSource, UITab
         
         let curWork:NewsFeedItem = works[indexPath.row]
         
-        cell = fillCellXib(cell: cell, curWork: curWork, needsDelete: true)
+        cell = fillCellXib(cell: cell, curWork: curWork, needsDelete: true, index: indexPath.row)
         
         cell.workCellView.tag = indexPath.row
         cell.workCellView.downloadButtonDelegate = self
@@ -497,7 +498,8 @@ extension FavoritesSiteController: UISearchBarDelegate {
                 print(response.error ?? "")
                 if let d = response.data {
                     self.parseCookies(response)
-                    (self.pages, self.works, self.foundItems) = WorksParser.parseWorks(d, itemsCountHeading: "h2", worksElement: "bookmark")
+                    let checkItems = self.getDownloadedStats()
+                    (self.pages, self.works, self.foundItems) = WorksParser.parseWorks(d, itemsCountHeading: "h2", worksElement: "bookmark", downloadedCheckItems: checkItems)
                     //self.parseBookmarks(d)
                     self.showWorks()
                 } else {

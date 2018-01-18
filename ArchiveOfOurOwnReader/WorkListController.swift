@@ -134,7 +134,8 @@ class WorkListController: ListViewController, UITableViewDataSource, UITableView
                     #endif
                 if let d = response.data {
                     self.parseCookies(response)
-                    (self.pages, self.works, self.worksStr) = WorksParser.parseWorks(d, itemsCountHeading: "h2", worksElement: self.worksElement, liWorksElement: self.liWorksElement)
+                    let checkItems = self.getDownloadedStats()
+                    (self.pages, self.works, self.worksStr) = WorksParser.parseWorks(d, itemsCountHeading: "h2", worksElement: self.worksElement, liWorksElement: self.liWorksElement, downloadedCheckItems: checkItems)
                     //self.parseWorks(d)
                     self.showWorks()
                 } else {
@@ -180,7 +181,7 @@ class WorkListController: ListViewController, UITableViewDataSource, UITableView
         
         let curWork:NewsFeedItem = works[indexPath.row]
         
-            cell = fillCellXib(cell: cell!, curWork: curWork, needsDelete: false)
+            cell = fillCellXib(cell: cell!, curWork: curWork, needsDelete: false, index: indexPath.row)
             
             cell?.workCellView.tag = indexPath.row
             cell?.workCellView.downloadButtonDelegate = self
@@ -341,7 +342,8 @@ extension WorkListController: UISearchResultsUpdating, UISearchBarDelegate {
                 #endif
                 if let d = response.data {
                     self.parseCookies(response)
-                    (self.pages, self.works, self.worksStr) = WorksParser.parseWorks(d, itemsCountHeading: "h2", worksElement: self.worksElement, liWorksElement: self.worksElement)
+                    let checkItems = self.getDownloadedStats()
+                    (self.pages, self.works, self.worksStr) = WorksParser.parseWorks(d, itemsCountHeading: "h2", worksElement: self.worksElement, liWorksElement: self.worksElement, downloadedCheckItems: checkItems)
                     //self.parseWorks(d)
                     self.showWorks()
                 } else {

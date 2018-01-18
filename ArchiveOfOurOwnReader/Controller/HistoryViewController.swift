@@ -108,7 +108,8 @@ class HistoryViewController : ListViewController, UITableViewDataSource, UITable
                 
                 if let d = response.data {
                     self.parseCookies(response)
-                    (self.pages, self.works, self.boomarksAddedStr) = WorksParser.parseWorks(d, itemsCountHeading: "h2", worksElement: "reading work")
+                    let checkItems = self.getDownloadedStats()
+                    (self.pages, self.works, self.boomarksAddedStr) = WorksParser.parseWorks(d, itemsCountHeading: "h2", worksElement: "reading work", downloadedCheckItems: checkItems)
                     //self.parseHistory(d)
                     self.refreshControl.endRefreshing()
                     self.showWorks()
@@ -167,7 +168,7 @@ class HistoryViewController : ListViewController, UITableViewDataSource, UITable
         
         let curWork:NewsFeedItem = works[(indexPath as NSIndexPath).row]
         
-        cell = fillCellXib(cell: cell, curWork: curWork, needsDelete: true)
+        cell = fillCellXib(cell: cell, curWork: curWork, needsDelete: true, index: indexPath.row)
         
         cell.workCellView.tag = indexPath.row
         cell.workCellView.downloadButtonDelegate = self

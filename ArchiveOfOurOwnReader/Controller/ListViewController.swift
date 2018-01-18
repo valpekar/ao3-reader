@@ -138,7 +138,9 @@ class ListViewController: LoadingViewController, PageSelectDelegate, UIPopoverPr
         return cell
     }
     
-    func fillCellXib(cell: FeedTableViewCell, curWork: NewsFeedItem, needsDelete: Bool) -> FeedTableViewCell {
+    func fillCellXib(cell: FeedTableViewCell, curWork: NewsFeedItem, needsDelete: Bool, index: Int) -> FeedTableViewCell {
+        cell.workCellView.rowIndex = index
+        
         cell.workCellView.topicLabel.text = curWork.topic.replacingOccurrences(of: "\n", with: "")
         cell.workCellView.fandomsLabel.text = curWork.fandoms
         
@@ -298,7 +300,8 @@ class ListViewController: LoadingViewController, PageSelectDelegate, UIPopoverPr
             currentWorkItem.category = newsItem.category
             currentWorkItem.complete = newsItem.complete
             currentWorkItem.workId = newsItem.workId
-        
+            currentWorkItem.isDownloaded = newsItem.isDownloaded
+            currentWorkItem.needReload = newsItem.needReload
             
             workDetail.workItem = currentWorkItem
             workDetail.modalDelegate = modalDelegate
@@ -440,7 +443,8 @@ class ListViewController: LoadingViewController, PageSelectDelegate, UIPopoverPr
                 self.parseCookies(response)
                 
                 if let data = response.data {
-                    (self.pages, self.works, self.foundItems) = WorksParser.parseWorks(data, itemsCountHeading: self.itemsCountHeading, worksElement: self.worksElement)
+                    let checkItems = self.getDownloadedStats()
+                    (self.pages, self.works, self.foundItems) = WorksParser.parseWorks(data, itemsCountHeading: self.itemsCountHeading, worksElement: self.worksElement, downloadedCheckItems: checkItems)
                     
                     self.showWorks()
                 
@@ -462,6 +466,7 @@ extension ListViewController: DownloadButtonDelegate {
         }
         
         curWork = works[rowIndex]
+        self.curRow = rowIndex
         
         if (curWork?.isDownloaded == true) {
             let optionMenu = UIAlertController(title: nil, message: NSLocalizedString("WrkOptions", comment: ""), preferredStyle: .actionSheet)
@@ -470,19 +475,17 @@ extension ListViewController: DownloadButtonDelegate {
             let deleteAction = UIAlertAction(title: NSLocalizedString("DeleteWrk", comment: ""), style: .default, handler: {
                 (alert: UIAlertAction!) -> Void in
                 self.doDeleteWork()
-                self.curRow = rowIndex
                 self.reload(row: rowIndex)
             })
             optionMenu.addAction(deleteAction)
             
             let reloadAction = UIAlertAction(title: NSLocalizedString("ReloadWrk", comment: ""), style: .default, handler: {
                 (alert: UIAlertAction!) -> Void in
-                self.curRow = rowIndex
                 self.doDownloadWork()
             })
             optionMenu.addAction(reloadAction)
             
-            optionMenu.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .default, handler: { (action: UIAlertAction) in
+            optionMenu.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: { (action: UIAlertAction) in
                 print("Cancel")
             }))
             
@@ -494,17 +497,17 @@ extension ListViewController: DownloadButtonDelegate {
             self.present(optionMenu, animated: true, completion: nil)
         } else {
         
-        if (purchased || donated) {
-            #if DEBUG
-                print("premium")
-            #endif
-        } else {
-            if (countWroksFromDB() > 29) {
-                TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Only30Stroies", comment: ""), type: .error, duration: 2.0)
+            if (purchased || donated) {
+                #if DEBUG
+                    print("premium")
+                #endif
+            } else {
+                if (countWroksFromDB() > 29) {
+                    TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Only30Stroies", comment: ""), type: .error, duration: 2.0)
                 
-                return
+                    return
+                }
             }
-        }
         
             doDownloadWork()
         }

@@ -862,6 +862,31 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         return result
     }
     
+    func getWorkById(workId: String) -> DBWorkItem? {
+        var res: DBWorkItem?
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let managedContext = appDelegate.managedObjectContext!
+        let fetchRequest: NSFetchRequest <NSFetchRequestResult> = NSFetchRequest(entityName:"DBWorkItem")
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "dateAdded", ascending: false)]
+        fetchRequest.fetchLimit = 1
+        let searchPredicate: NSPredicate = NSPredicate(format: "workId = %@", workId)
+        
+        fetchRequest.predicate = searchPredicate
+        
+        do {
+            let fetchedResults = try managedContext.fetch(fetchRequest) as? [DBWorkItem]
+            
+            if let results = fetchedResults {
+                res = results.first
+            }
+        } catch {
+            #if DEBUG
+                print("cannot fetch favorites.")
+            #endif
+        }
+        return res
+    }
     
     func queryComponents(_ key: String, value: AnyObject) -> [(String, String)] {
         var components: [(String, String)] = []

@@ -273,7 +273,7 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
                     let regex:NSRegularExpression = try! NSRegularExpression(pattern: "<.*?>", options: NSRegularExpression.Options.caseInsensitive)
                     
                     
-                    let range = NSMakeRange(0, optionE.raw.characters.count)
+                    let range = NSMakeRange(0, optionE.raw.count)
                     let htmlLessString :String = regex.stringByReplacingMatches(in: optionE.raw,
                                                                                         options: [],
                                                                                         range:range ,
