@@ -101,6 +101,10 @@ class FavoritesSiteController : ListViewController, UITableViewDataSource, UITab
         self.searchBar.endEditing(true)
     }
     
+    override func reload(row: Int) {
+        self.tableView.reloadRows(at: [ IndexPath(row: row, section: 0)], with: UITableViewRowAnimation.automatic)
+    }
+    
     //MARK: - login
     
     override func openLoginController() {
@@ -313,7 +317,7 @@ class FavoritesSiteController : ListViewController, UITableViewDataSource, UITab
                     #endif
                 if let d = response.data {
                     self.parseCookies(response)
-                    self.downloadWork(d, curWork: curWork)
+                    let _ = self.downloadWork(d, curWork: curWork)
                     //self.saveWork()
                 } else {
                     self.hideLoadingView()

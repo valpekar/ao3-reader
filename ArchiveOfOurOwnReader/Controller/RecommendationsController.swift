@@ -346,6 +346,10 @@ class RecommendationsController : ListViewController, UITableViewDataSource, UIT
             })
         
     }
+    
+    override func reload(row: Int) {
+        self.tableView.reloadRows(at: [ IndexPath(row: row, section: 0)], with: UITableViewRowAnimation.automatic)
+    }
 
     //MARK: - get and show feed
     

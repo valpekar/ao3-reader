@@ -545,6 +545,7 @@ extension ListViewController: DownloadButtonDelegate {
             self.hideLoadingView()
             if (self.works.count > curRow) {
                 self.works[curRow].isDownloaded = true
+                self.works[curRow].needReload = false
             }
             self.reload(row: curRow)
         } else {
@@ -559,7 +560,7 @@ extension ListViewController: DownloadButtonDelegate {
         var res: DBWorkItem?
         
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate, let managedContext = appDelegate.managedObjectContext else {
-            return 
+            return
         }
         
         let fetchRequest: NSFetchRequest <NSFetchRequestResult> = NSFetchRequest(entityName:"DBWorkItem")

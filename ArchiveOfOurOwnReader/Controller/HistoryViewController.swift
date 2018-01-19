@@ -120,6 +120,10 @@ class HistoryViewController : ListViewController, UITableViewDataSource, UITable
             })
     }
     
+    override func reload(row: Int) {
+        self.tableView.reloadRows(at: [ IndexPath(row: row, section: 0)], with: UITableViewRowAnimation.automatic)
+    }
+    
     override func showWorks() {
         if (works.count > 0) {
             tableView.isHidden = false

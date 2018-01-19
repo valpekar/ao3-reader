@@ -111,6 +111,10 @@ class SubscriptionsViewController: ListViewController, UITableViewDataSource, UI
             })
     }
     
+    override func reload(row: Int) {
+        self.tableView.reloadRows(at: [ IndexPath(row: row, section: 0)], with: UITableViewRowAnimation.automatic)
+    }
+    
     func parseSubs(_ data: Data) {
         works.removeAll(keepingCapacity: false)
         pages.removeAll(keepingCapacity: false)

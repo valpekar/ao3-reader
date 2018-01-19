@@ -159,13 +159,17 @@ class SerieViewController: ListViewController, UITableViewDataSource, UITableVie
                     #endif
                 if let d = response.data {
                     self.parseCookies(response)
-                    self.downloadWork(d, curWork: curWork)
+                    let _ = self.downloadWork(d, curWork: curWork)
                     //self.saveWork()
                 } else {
                     self.hideLoadingView()
                     TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
                 }
             })
+    }
+    
+    override func reload(row: Int) {
+        self.tableView.reloadRows(at: [ IndexPath(row: row, section: 0)], with: UITableViewRowAnimation.automatic)
     }
     
     //MARK: - tableview
