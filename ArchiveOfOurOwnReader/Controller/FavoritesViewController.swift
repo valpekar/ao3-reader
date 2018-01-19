@@ -351,8 +351,9 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
     func loadWroksFromDB(predicate: NSPredicate?, predicateWFolder: NSPredicate) {
         folders.removeAll()
         
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let managedContext = appDelegate.managedObjectContext!
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate, let managedContext = appDelegate.managedObjectContext else {
+            return
+        }
         let fetchRequest: NSFetchRequest <NSFetchRequestResult> = NSFetchRequest(entityName:"DBWorkItem")
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "dateAdded", ascending: false)]
         var searchPredicate: NSPredicate? = nil

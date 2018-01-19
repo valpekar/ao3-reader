@@ -73,7 +73,7 @@
 "WrkOptions" = "Work Options";
 "DeleteWrk" = "Delete Work";
 "DownloadWrk" = "Download Work";
-"ReloadWrk" = "Reload Work";
+"ReloadWrk" = "Reload/Update Work";
 "ViewComments" = "View Comments";
 "LeaveKudos" = "Leave Kudos";
 "LeavingKudos" = "Leaving Kudos";
@@ -171,4 +171,6 @@
 "CouldNotDelete" = "Could Not Delete!";
 "SureDeleteItem" = "You want to delete this item?";
 "ItemDeleted" = "Item Successfully Deleted";
+"Update" = "Update";
+"UpdateAvail" = "Update is available for this work (Settings -> Reload/Update)!";
 

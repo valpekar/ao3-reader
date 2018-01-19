@@ -568,7 +568,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         }
         }
         
-        if let bylineHeadingEl = doc.search(withXPathQuery: "//div[@id='workskin']/div[@class='preface group']/h3[@class='byline heading']") as? [TFHppleElement] {
+        if let bylineHeadingEl = doc.search(withXPathQuery: "//div[@id='workskin']//div[@class='preface group']/h3[@class='byline heading']") as? [TFHppleElement] {
         if (bylineHeadingEl.count > 0) {
             let authorStr = bylineHeadingEl[0].content.replacingOccurrences(of: "\n", with:"")
                 .trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
@@ -671,8 +671,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         print("save chapters begin")
             #endif
         
-        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-            let managedContext = appDelegate.managedObjectContext!
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate, let managedContext = appDelegate.managedObjectContext {
         
             var err: NSError?
         
@@ -836,8 +835,9 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         
         var result: [CheckDownloadItem] = []
         
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let managedContext = appDelegate.managedObjectContext!
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate, let managedContext = appDelegate.managedObjectContext else {
+            return result
+        }
         let fetchRequest: NSFetchRequest <NSFetchRequestResult> = NSFetchRequest(entityName:"DBWorkItem")
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "dateAdded", ascending: false)]
         
@@ -865,8 +865,10 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
     func getWorkById(workId: String) -> DBWorkItem? {
         var res: DBWorkItem?
         
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let managedContext = appDelegate.managedObjectContext!
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate, let managedContext = appDelegate.managedObjectContext else {
+            return res
+        }
+        
         let fetchRequest: NSFetchRequest <NSFetchRequestResult> = NSFetchRequest(entityName:"DBWorkItem")
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "dateAdded", ascending: false)]
         fetchRequest.fetchLimit = 1
@@ -1050,8 +1052,10 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
     }
     
     func countWroksFromDB() -> Int {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let managedContext = appDelegate.managedObjectContext!
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate, let managedContext = appDelegate.managedObjectContext else {
+            return 0
+        }
+        
         let fetchRequest: NSFetchRequest <NSFetchRequestResult> = NSFetchRequest(entityName:"DBWorkItem")
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "dateAdded", ascending: false)]
         

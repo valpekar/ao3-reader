@@ -49,6 +49,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     var indexesToHide: [Int]!
     
     var bookmarked = false
+    var needReload = false
     var bookmarkId = ""
     var changedSmth = false
     
@@ -111,10 +112,12 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             workItem = WorkItem()
         } else if (workItem != nil) {
             if (workItem.isDownloaded == true) {
+                
                 if let downloadedWork = getWorkById(workId: workItem.workId) {
                     self.downloadedWorkItem = downloadedWork
+                    self.updateWork(workItem: workItem)
                     self.workItem = nil
-                     showDownloadedWork()
+                    self.showDownloadedWork()
                 }
                 
             } else {
@@ -124,7 +127,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             showDownloadedWork()
         }
         
-        checkBookmark()
+        self.checkBookmarkAndUpdate()
         
     }
     
@@ -459,6 +462,28 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 }
             }
             
+            if let statsDD = workmeta[0].search(withXPathQuery: "//dd[@class='stats']") as? [TFHppleElement], statsDD.count > 0 {
+                if let dateTimeVar = workmeta[0].search(withXPathQuery: "//dd[@class='status']") as? [TFHppleElement], dateTimeVar.count > 0 {
+                    if (self.downloadedWorkItem != nil) {
+                        let dateFormatter1 = DateFormatter()
+                        dateFormatter1.dateFormat = "dd MMM yyyy"
+                        
+                        let dDate = dateFormatter1.date(from: self.downloadedWorkItem.datetime ?? "")
+                        
+                        let dateFormatter2 = DateFormatter()
+                        dateFormatter2.dateFormat = "yyyy-MM-dd"
+                        
+                        let nDate = dateFormatter2.date(from: dateTimeVar[0].text() ?? "")
+                        
+                        if (dDate != nDate) {
+                            self.needReload = true
+                        } else {
+                            self.needReload = false
+                        }
+                    }
+                }
+            }
+            
             if (workItem.stats.contains("Completed")) {
                 workItem.complete = "Complete"
             } else if (workItem.chaptersCount.contains("?")) {
@@ -553,7 +578,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
     }
     
-    func checkBookmark() {
+    func checkBookmarkAndUpdate() {
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
             Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
@@ -587,16 +612,24 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 // print(response.request)
                 if let d = response.data {
                     self.parseCookies(response)
-                    self.parseCheckBookmark(d)
+                    self.parseCheckBookmarkAndUpdate(d)
                     //self.showWork()
                     //self.hideLoadingView()
+                    
+                    if (self.needReload) {
+                        let delay = 0.2 * Double(NSEC_PER_SEC)
+                        let time = DispatchTime.now() + Double(Int64(delay)) / Double(NSEC_PER_SEC)
+                        DispatchQueue.main.asyncAfter(deadline: time) {
+                            TSMessage.showNotification(in: self, title: NSLocalizedString("Update", comment: ""), subtitle: NSLocalizedString("UpdateAvail", comment: ""), type: TSMessageNotificationType.success, duration: 2.0, canBeDismissedByUser: true)
+                        }
+                    }
                 }
             })
         
        
     }
     
-    func parseCheckBookmark(_ data: Data) {
+    func parseCheckBookmarkAndUpdate(_ data: Data) {
         downloadUrls.removeAll()
         
         let doc : TFHpple = TFHpple(htmlData: data)
@@ -638,6 +671,28 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 }
             }
         }
+        
+        if let dateTimeVar = doc.search(withXPathQuery: "//div[@class='work']//dd[@class='stats']//dd[@class='status']") as? [TFHppleElement] {
+            if(dateTimeVar.count > 0) {
+                if (self.downloadedWorkItem != nil) {
+                    let dateFormatter1 = DateFormatter()
+                    dateFormatter1.dateFormat = "dd MMM yyyy"
+                    
+                    let dDate = dateFormatter1.date(from: self.downloadedWorkItem.datetime ?? "")
+                    
+                    let dateFormatter2 = DateFormatter()
+                    dateFormatter2.dateFormat = "yyyy-MM-dd"
+                    
+                    let nDate = dateFormatter2.date(from: dateTimeVar[0].text() ?? "")
+                    
+                    if (dDate != nDate) {
+                        self.needReload = true
+                    } else {
+                        self.needReload = false
+                    }
+                }
+            }
+        }
     }
     
     func parseAddBookmarkResponse(_ data: Data) {
@@ -670,6 +725,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     }
     
     //MARK: - show work
+    
     func showWork() {
         
         authorLabel.setTitle("🔗 \(workItem.author)", for: .normal)
@@ -1172,7 +1228,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                                 "author": authorName])
         
         if (authorName.contains(" ") && !authorName.contains(",")) {
-            let nameArr = authorName.characters.split{$0 == " "}.map(String.init)
+            let nameArr = authorName.split{$0 == " "}.map(String.init)
             var an = nameArr[1].replacingOccurrences(of: "(", with: "")
             an = an.replacingOccurrences(of: ")", with: "")
             tagUrl = "https://archiveofourown.org/users/\(an)/pseuds/\(nameArr[0])/works"
@@ -1316,7 +1372,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                         self.parseAddBookmarkResponse(d)
                         self.hideLoadingView()
                         
-                        self.checkBookmark()
+                        self.checkBookmarkAndUpdate()
                         
                     } else {
                         self.hideLoadingView()
@@ -1764,6 +1820,39 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     
     }
     
+    //MARK: - update work
+    
+    func updateWork(workItem: WorkItem) {
+        self.downloadedWorkItem.words = workItem.words
+        self.downloadedWorkItem.chaptersCount = workItem.chaptersCount
+        self.downloadedWorkItem.hits = workItem.hits
+        self.downloadedWorkItem.kudos = workItem.kudos
+        self.downloadedWorkItem.bookmarks = workItem.bookmarks
+        self.downloadedWorkItem.comments = workItem.comments
+        
+        saveChanges()
+        
+        if (workItem.needReload) {
+            let delay = 0.2 * Double(NSEC_PER_SEC)
+            let time = DispatchTime.now() + Double(Int64(delay)) / Double(NSEC_PER_SEC)
+            DispatchQueue.main.asyncAfter(deadline: time) {
+                TSMessage.showNotification(in: self, title: NSLocalizedString("Update", comment: ""), subtitle: NSLocalizedString("UpdateAvail", comment: ""), type: TSMessageNotificationType.success, duration: 2.0, canBeDismissedByUser: true)
+            }
+        }
+    }
+    
+    func saveChanges() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate, let managedContext = appDelegate.managedObjectContext else {
+            return
+        }
+        
+        do {
+            try managedContext.save()
+        } catch _ {
+            print("updateWork: Cannot save")
+        }
+    }
+    
     //MARK: - Banner
     
 //   func bannerViewWillLoadAd(banner: ADBannerView) {
@@ -1816,7 +1905,9 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                                         "url": downloadUrl])
         
         if let url = URL(string: finalPath) {
-            UIApplication.shared.openURL(url)
+            UIApplication.shared.open(url, options: [ : ], completionHandler: { (res) in
+                print(res)
+            })
         }
         
         //http://stackoverflow.com/questions/27959023/swift-how-to-open-local-pdf-from-my-app-to-ibooks
@@ -1866,7 +1957,9 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                                customAttributes: [
                                 "workId": wId])
         
-        UIApplication.shared.openURL(NSURL(string: "https://archiveofourown.org/works/\(wId)")! as URL)
+        UIApplication.shared.open(URL(string: "https://archiveofourown.org/works/\(wId)")!, options: [ : ], completionHandler: { (res) in
+            print("open url \(res)")
+        })
 
     }
    

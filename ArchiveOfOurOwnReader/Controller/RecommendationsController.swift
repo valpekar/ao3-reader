@@ -214,8 +214,10 @@ class RecommendationsController : ListViewController, UITableViewDataSource, UIT
     }
     
     func loadAnalyticsFromDB() {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let managedContext = appDelegate.managedObjectContext!
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate, let managedContext = appDelegate.managedObjectContext else {
+            return 
+        }
+        
         let fetchRequest: NSFetchRequest <NSFetchRequestResult> = NSFetchRequest(entityName:"AnalyticsItem")
         fetchRequest.fetchLimit = 20
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
