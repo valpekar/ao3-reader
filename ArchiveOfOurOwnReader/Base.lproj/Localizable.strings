@@ -5,6 +5,7 @@
  Created by Valeriya Pekar on 6/7/17.
  Copyright © 2017 Sergei Pekar. All rights reserved.
  */
+"CFBundleDisplayName" = "Fanfic Pocket Library";
 "0Found" = "0 Found";
 "LoadingPage" = "Loading Page";
 "LoadingChapter" = "Loading Chapter";

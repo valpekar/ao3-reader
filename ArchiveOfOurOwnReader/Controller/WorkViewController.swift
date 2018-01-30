@@ -12,12 +12,13 @@ import Alamofire
 import TSMessages
 import Crashlytics
 import WebKit
+import Spring
 
 class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWebViewDelegate {
     
     @IBOutlet weak var webView: WKWebView!
-    @IBOutlet weak var layoutView: UIView!
-    @IBOutlet weak var layoutBottomView: UIView!
+    @IBOutlet weak var layoutView: SpringView!
+    @IBOutlet weak var layoutBottomView: SpringView!
     @IBOutlet weak var prevButton: UIButton!
     @IBOutlet weak var nextButton: UIButton!
     
@@ -357,20 +358,28 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
             print(error.debugDescription)
         })
         
-        if(layoutView.isHidden) {
-            layoutView.isHidden = false
-            layoutBottomView.isHidden = false
+        if (self.layoutView.tag == 1) {
             self.navigationController?.setNavigationBarHidden(false, animated: true)
             UIApplication.shared.isStatusBarHidden = false //.setStatusBarHidden(false, with: .fade)
             animateLayoutDown()
             
+            self.layoutView.tag = 0
+            
         } else {
-            layoutView.isHidden = true
-            layoutBottomView.isHidden = true
+            self.layoutView.animation = "fadeOut"
+            self.layoutView.animate()
+            
+            if (self.layoutBottomView != nil) {
+                self.layoutBottomView.animation = "fadeOut"
+                self.layoutBottomView.animate()
+            }
             self.navigationController?.setNavigationBarHidden(true, animated: true)
             UIApplication.shared.isStatusBarHidden = true //.setStatusBarHidden(true, with: .fade)
+            
+            self.layoutView.tag = 1
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+            
             self.webView.scrollView.isScrollEnabled = true
             
             self.webView.evaluateJavaScript("document.documentElement.style.webkitUserSelect='text'") { (res, error) in
@@ -383,34 +392,16 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
     }
     
     func animateLayoutDown() {
-        UIView.animate(withDuration: 0.4, delay: 0, options: UIViewAnimationOptions.curveEaseIn, animations: {
-            
-            if (!self.prevChapter.isEmpty || !self.nextChapter.isEmpty || (self.downloadedChapters != nil && self.downloadedChapters!.count > 0)) {
-                
-                var basketTopFrame = self.layoutView.frame
-                basketTopFrame.origin.y = basketTopFrame.size.height - 44
-                if (self.layoutView != nil) {
-                    self.layoutView.frame = basketTopFrame
-                }
-            }
-            
-            if let navigationController = self.navigationController {
-                var nbTopFrame = navigationController.navigationBar.frame
-                nbTopFrame.origin.y = nbTopFrame.size.height - 24
-                navigationController.navigationBar.frame = nbTopFrame
-            }
-            
-            if (self.layoutBottomView != nil) {
-                var nbTopFrame = self.layoutBottomView.frame
-                nbTopFrame.origin.y = nbTopFrame.size.height - 44
-                self.layoutBottomView.frame = nbTopFrame
-            }
-            
-            }, completion: { finished in
-                #if DEBUG
-                print("animation done")
-                #endif
-        })
+        
+        if (self.layoutBottomView != nil) {
+            self.layoutBottomView.animation = "fadeIn"
+            self.layoutBottomView.animate()
+        }
+        
+        if (!self.prevChapter.isEmpty || !self.nextChapter.isEmpty || (self.downloadedChapters != nil && self.downloadedChapters!.count > 0)) {
+            self.layoutView.animation = "fadeIn"
+            self.layoutView.animate()
+        }
     }
     
     
@@ -677,6 +668,11 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
         return nil
     }
     
+    @IBAction func kudosButtonTouched(_ sender: AnyObject) {
+    
+    
+    }
+    
     //MARK: - chapter next/prev
     
     @IBAction func nextButtonTouched(_ sender: AnyObject) {
@@ -864,14 +860,14 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
                 webView.isOpaque = false
                 
                 let fontStr = "font-size: " + String(format:"%d", fontSize) + "%; font-family: \"\(fontFamily)\";"
-                worktext = String(format:"<style>body { color: #021439; %@ }</style>%@", fontStr, work)
+                worktext = String(format:"<style>body { color: #021439; %@; padding:5em 1.5em 4em 1.5em; text-align: justify; text-indent: 2em; } p {margin-bottom:1.1em}</style>%@", fontStr, work)
                 
             case DefaultsManager.THEME_NIGHT :
                 self.webView.backgroundColor = AppDelegate.nightBgColor
                 self.webView.isOpaque = false
                 
                 let fontStr = "font-size: " + String(format:"%d", fontSize) + "%; font-family: \"\(fontFamily)\";"
-                worktext = String(format:"<style>body { color: #e1e1ce; %@ }</style>%@", fontStr, work)
+                worktext = String(format:"<style>body { color: #e1e1ce; %@; padding:5em 1.5em 4em 1.5em; text-align: justify; text-indent: 2em; } p {margin-bottom:1.1em} </style>%@", fontStr, work)
                 
             default:
                 break

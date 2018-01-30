@@ -2010,7 +2010,7 @@ Please check your Internet connection and also make sure you are logged into you
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="lgX-y3-XZJ">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="lgX-y3-XZJ">
                                 <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
@@ -2018,7 +2018,7 @@ Please check your Internet connection and also make sure you are logged into you
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gRg-rT-74j" id="elt-5H-Aaf">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -2675,13 +2675,13 @@ Please check your Internet connection and also make sure you are logged into you
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                                 <color key="backgroundColor" red="0.19607843137254902" green="0.20392156862745098" blue="0.22352941176470587" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="tintColor" red="0.8653129940597053" green="0.89898474554477892" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <wkWebViewConfiguration key="configuration">
+                                <wkWebViewConfiguration key="configuration" allowsInlineMediaPlayback="YES">
                                     <dataDetectorTypes key="dataDetectorTypes" none="YES"/>
-                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" audio="YES" video="YES"/>
                                     <wkPreferences key="preferences"/>
                                 </wkWebViewConfiguration>
                             </wkWebView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QBX-yq-43c">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QBX-yq-43c" customClass="SpringView" customModule="Spring">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wnZ-d8-1x3">
@@ -2740,7 +2740,7 @@ Please check your Internet connection and also make sure you are logged into you
                                     </mask>
                                 </variation>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bAf-8o-obo">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bAf-8o-obo" customClass="SpringView" customModule="Spring">
                                 <rect key="frame" x="0.0" y="559" width="375" height="44"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="osv-SJ-mU7">
@@ -2765,7 +2765,7 @@ Please check your Internet connection and also make sure you are logged into you
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oni-ev-Gdr">
                                         <rect key="frame" x="0.0" y="0.0" width="125" height="44"/>
-                                        <state key="normal" image="likes">
+                                        <state key="normal" image="heart">
                                             <color key="titleColor" red="0.31764705879999999" green="0.20392156859999999" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
@@ -9873,13 +9873,14 @@ Please check your Internet connection and also make sure you are logged into you
         <image name="download-100" width="33" height="33"/>
         <image name="download-red" width="33" height="33"/>
         <image name="empty_filter" width="31" height="31"/>
-        <image name="folder" width="85" height="85"/>
-        <image name="hits" width="56" height="56"/>
+        <image name="folder" width="60" height="60"/>
+        <image name="heart" width="18" height="18"/>
+        <image name="hits" width="74" height="74"/>
         <image name="icon-download" width="32" height="32"/>
         <image name="lang" width="18" height="18"/>
         <image name="likes" width="18" height="18"/>
         <image name="pref_bg" width="360" height="240"/>
-        <image name="profile" width="60" height="60"/>
+        <image name="profile" width="20" height="20"/>
         <image name="settings" width="33" height="33"/>
         <image name="shortstory" width="32" height="32"/>
         <image name="transp" width="96" height="96"/>
@@ -9888,7 +9889,7 @@ Please check your Internet connection and also make sure you are logged into you
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="5rQ-gu-17N"/>
-        <segue reference="YvP-vi-Pnc"/>
+        <segue reference="GOa-zO-Fy6"/>
         <segue reference="5tW-cF-vbk"/>
     </inferredMetricsTieBreakers>
 </document>

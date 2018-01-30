@@ -24,6 +24,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     static var ao3SiteUrl = "https://archiveofourown.org"
     static var gapString = "…"
     
+    static var smallCornerRadius: CGFloat = 10.0
+    
     static var redColor = UIColor(red: 81/255, green: 52/255, blue: 99/255, alpha: 1.0)
     static var redLightColor = UIColor(red: 100/255, green: 29/255, blue: 139/255, alpha: 1.0)
     static var redDarkColor = UIColor(red: 49/255, green: 28/255, blue: 59/255, alpha: 1.0)

@@ -1068,10 +1068,10 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
     }
     
     func makeRoundButton(button: UIButton) {
-         button.layer.cornerRadius = 4.0
+         button.layer.cornerRadius = AppDelegate.smallCornerRadius
     }
     func makeRoundView(view: UIView) {
-        view.layer.cornerRadius = 4.0
+        view.layer.cornerRadius = AppDelegate.smallCornerRadius
     }
 }
 

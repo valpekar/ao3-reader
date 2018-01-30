@@ -103,6 +103,9 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 64
         
+        self.readButton.layer.cornerRadius = AppDelegate.smallCornerRadius
+        self.bgView.layer.cornerRadius = AppDelegate.smallCornerRadius
+        
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
             Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
         }

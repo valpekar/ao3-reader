@@ -119,11 +119,11 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
         
         tryAgainButton.layer.borderWidth = 1.0
         tryAgainButton.layer.borderColor = AppDelegate.redColor.cgColor
-        tryAgainButton.layer.cornerRadius = 5.0
+        tryAgainButton.layer.cornerRadius = AppDelegate.smallCornerRadius
         
         checkStatusButton.layer.borderWidth = 1.0
         checkStatusButton.layer.borderColor = AppDelegate.redColor.cgColor
-        checkStatusButton.layer.cornerRadius = 5.0
+        checkStatusButton.layer.cornerRadius = AppDelegate.smallCornerRadius
         
 //        let shown: Bool = DefaultsManager.getBool(DefaultsManager.CONTENT_SHOWSN) ?? false
 //        if (shown == false) {
