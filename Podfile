@@ -16,6 +16,7 @@ pod 'Firebase/Analytics'
 pod 'Alamofire'
 pod 'AlamofireImage'
 pod 'Appirater'
+pod 'Spring', :git => 'https://github.com/MengTo/Spring.git'
 
   target 'ArchiveOfOurOwnReaderTests' do
     inherit! :search_paths

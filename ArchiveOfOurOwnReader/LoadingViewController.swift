@@ -799,8 +799,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
     
     func saveToAnalytics(_ author: String, category: String, mainFandom: String, mainRelationship: String) {
        
-        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-            guard let managedContext = appDelegate.managedObjectContext else {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate, let managedContext = appDelegate.managedObjectContext else {
                 return
             }
         
@@ -822,7 +821,6 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
                     print("Could not save \(String(describing: err)), \(String(describing: err?.userInfo))")
                     #endif
                 }
-            }
             } else {
             #if DEBUG
                 print("Could not save AppDel = nil")

@@ -17,10 +17,13 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
     
     @IBOutlet weak var webView: WKWebView!
     @IBOutlet weak var layoutView: UIView!
+    @IBOutlet weak var layoutBottomView: UIView!
     @IBOutlet weak var prevButton: UIButton!
     @IBOutlet weak var nextButton: UIButton!
     
     @IBOutlet weak var contentsButton: UIButton!
+    
+    @IBOutlet weak var kudosButton: UIButton!
     
     var prevChapter: String = ""
     var nextChapter: String = ""
@@ -29,10 +32,10 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
     var currentOnlineChapter = ""
     var currentOnlineChapterIdx = 0
     
-    var workItem: WorkItem! = nil
+    var workItem: WorkItem?
     var workChapters: [Chapter] = [Chapter]()
     
-    var downloadedWorkItem: NSManagedObject! = nil
+    var downloadedWorkItem: DBWorkItem?
     var downloadedChapters: [DBChapter]?
     
     var work: String = ""
@@ -54,7 +57,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
         
         NotificationCenter.default.addObserver(self, selector: #selector(willResignActive), name: .UIApplicationWillResignActive, object: nil)
         
-        if (workItem != nil) {
+        if  let workItem = self.workItem {
             if (onlineChapters.count == 0 || onlineChapters.count == 1) {
                 contentsButton.isHidden = true
             }
@@ -75,24 +78,25 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
             
             
             
-        } else if (downloadedWorkItem != nil) {
-            downloadedChapters = downloadedWorkItem.mutableSetValue(forKey: "chapters").allObjects as? [DBChapter]
-            downloadedChapters?.sort(by: { (a:DBChapter, b: DBChapter) -> Bool in
-                return b.value(forKey: "chapterIndex") as! Int > a.value(forKey: "chapterIndex") as! Int
+        } else if let downloadedWork = self.downloadedWorkItem,
+            let downloadedChapters = downloadedWork.mutableSetValue(forKey: "chapters").allObjects as? [DBChapter] {
+            
+            self.downloadedChapters = downloadedChapters.sorted(by: { (a:DBChapter, b: DBChapter) -> Bool in
+                return b.value(forKey: "chapterIndex") as? Int ?? -1 > a.value(forKey: "chapterIndex") as? Int ?? 0
             })
-            if (downloadedChapters != nil && downloadedChapters!.count > 0) {
-                if (downloadedChapters!.count > 1) {
+            if (downloadedChapters.count > 0) {
+                if (downloadedChapters.count > 1) {
                     contentsButton.isHidden = false
                 } else {
                     contentsButton.isHidden = true
                 }
                 
-                currentChapterIndex = downloadedWorkItem.value(forKey: "currentChapter") as? Int ?? 0
-                work = downloadedChapters?[currentChapterIndex].value(forKey: "chapterContent") as? String ?? ""
+                currentChapterIndex = downloadedWork.currentChapter?.intValue ?? 0
+                work = downloadedChapters[currentChapterIndex].value(forKey: "chapterContent") as? String ?? ""
                 loadCurrentTheme()
                 
                 
-                if (nextButton != nil && downloadedChapters != nil && downloadedChapters!.count == 1 || currentChapterIndex == (downloadedChapters?.count ?? 0) - 1) {
+                if (nextButton != nil && (downloadedChapters.count == 1 || currentChapterIndex == downloadedChapters.count - 1)) {
                     nextButton.isHidden = true
                     //contentsButton.hidden = true
                 }
@@ -149,7 +153,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
         
         self.navigationController?.setNavigationBarHidden(false, animated: false)
         
-        if (workItem != nil) { 
+        if let workItem = self.workItem {
             self.title = workItem.workTitle
         }
         
@@ -184,7 +188,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
     }
     
     func scrollWorks() {
-        if (workItem != nil) {
+        if let workItem = self.workItem {
             self.title = workItem.workTitle
             
             if let historyItem: HistoryItem = self.getHistoryItem(workId: workItem.workId) {
@@ -207,11 +211,11 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
                 }
             }
             
-        }  else if (downloadedWorkItem != nil) {
-            var title = downloadedWorkItem.value(forKey: "workTitle") as? String ?? ""
+        }  else if let downloadedWorkItem = downloadedWorkItem {
+            var title = downloadedWorkItem.workTitle ?? ""
             
             if (currentChapterIndex < downloadedChapters?.count ?? 0) {
-                if let tt = downloadedChapters?[currentChapterIndex].value(forKey: "chapterName") as? String {
+                if let tt = downloadedChapters?[currentChapterIndex].chapterName, tt.isEmpty == false {
                     title = tt
                 }
             }
@@ -230,7 +234,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
         
         if (downloadedWorkItem != nil) {
             saveWorkChanged()
-        } else if (workItem != nil) {
+        } else if let workItem = self.workItem {
             //            DefaultsManager.putString(NSStringFromCGPoint(webView.scrollView.contentOffset), key: DefaultsManager.LASTWRKSCROLL)
             //            DefaultsManager.putString(workItem.workId, key: DefaultsManager.LASTWRKID)
             //            DefaultsManager.putString(currentOnlineChapter, key: DefaultsManager.LASTWRKCHAPTER)
@@ -242,7 +246,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
     func lockScreen() {
         if (downloadedWorkItem != nil) {
             saveWorkChanged()
-        } else if (workItem != nil) {
+        } else if let workItem = self.workItem {
             DefaultsManager.putString(NSStringFromCGPoint(webView.scrollView.contentOffset), key: DefaultsManager.LASTWRKSCROLL)
             DefaultsManager.putString(workItem.workId, key: DefaultsManager.LASTWRKID)
             DefaultsManager.putString(currentOnlineChapter, key: DefaultsManager.LASTWRKCHAPTER)
@@ -355,12 +359,14 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
         
         if(layoutView.isHidden) {
             layoutView.isHidden = false
+            layoutBottomView.isHidden = false
             self.navigationController?.setNavigationBarHidden(false, animated: true)
             UIApplication.shared.isStatusBarHidden = false //.setStatusBarHidden(false, with: .fade)
             animateLayoutDown()
             
         } else {
             layoutView.isHidden = true
+            layoutBottomView.isHidden = true
             self.navigationController?.setNavigationBarHidden(true, animated: true)
             UIApplication.shared.isStatusBarHidden = true //.setStatusBarHidden(true, with: .fade)
         }
@@ -392,6 +398,12 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
                 var nbTopFrame = navigationController.navigationBar.frame
                 nbTopFrame.origin.y = nbTopFrame.size.height - 24
                 navigationController.navigationBar.frame = nbTopFrame
+            }
+            
+            if (self.layoutBottomView != nil) {
+                var nbTopFrame = self.layoutBottomView.frame
+                nbTopFrame.origin.y = nbTopFrame.size.height - 44
+                self.layoutBottomView.frame = nbTopFrame
             }
             
             }, completion: { finished in
@@ -437,19 +449,21 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
             contentsButton.isHidden = true
         }
         
-        if (downloadedWorkItem != nil && downloadedChapters != nil && chapterIndex < downloadedChapters!.count) {
-            let chapter = downloadedChapters?[chapterIndex]
-            work = chapter?.chapterContent ?? ""
+        if let downloadedWorkItem = self.downloadedWorkItem,
+            let downloadedChapters = self.downloadedChapters, chapterIndex < downloadedChapters.count {
+            
+            let chapter = downloadedChapters[chapterIndex]
+            self.work = chapter.chapterContent ?? ""
             
             loadCurrentTheme()
             downloadedWorkItem.setValue(NSNumber(value: chapterIndex as Int), forKey: "currentChapter")
-            chapter?.setValue(NSNumber(value: 1), forKey: "unread")
+            chapter.setValue(NSNumber(value: 1), forKey: "unread")
             
-            //favWork.setCurrentChapter(String.valueOf(chapterIndex));
-            //saveFavWorkChanges();
-            saveWorkChanged()
+                //favWork.setCurrentChapter(String.valueOf(chapterIndex));
+                //saveFavWorkChanges();
+                saveWorkChanged()
             
-            self.title = downloadedChapters![chapterIndex].chapterName
+            self.title = downloadedChapters[chapterIndex].chapterName
         }
     }
     
@@ -461,7 +475,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
         showLoadingView(msg: NSLocalizedString("LoadingChapter", comment: ""))
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
+            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: AppDelegate.ao3SiteUrl), mainDocumentURL: nil)
         }
         
         var params:[String:AnyObject] = [String:AnyObject]()
@@ -488,7 +502,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
         
         var strUrl = chapterId
         if (!strUrl.contains("/works/")) {
-            strUrl = "/works/" + workItem.workId + "/chapters/" + chapterId
+            strUrl = "/works/" + (self.workItem?.workId ?? "") + "/chapters/" + chapterId
         }
         Alamofire.request("https://archiveofourown.org" + strUrl, method: .get, parameters: params)
             .response(completionHandler: onWorksLoaded(_:))
@@ -569,14 +583,9 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
     }
     
     func saveWorkChanged() {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            return
-        }
-        guard let managedContext = appDelegate.managedObjectContext else {
-            return
-        }
-        
-        guard let workId = downloadedWorkItem.value(forKey: "workId") as? String else {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,
+            let managedContext = appDelegate.managedObjectContext,
+            let workId = downloadedWorkItem?.value(forKey: "workId") as? String else {
             return
         }
         

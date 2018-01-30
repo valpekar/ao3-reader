@@ -60,7 +60,7 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
         self.tableView.addSubview(self.refreshControl)
         
         let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.white]
-        self.navigationController!.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
+        self.navigationController?.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
         
         self.resultSearchController = ({
             let controller = UISearchController(searchResultsController: nil)
@@ -96,7 +96,7 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
         
        // let pseud_id = DefaultsManager.getString(DefaultsManager.PSEUD_ID)
         #if DEBUG
-        print((UIApplication.shared.delegate as! AppDelegate).cookies)
+            print((UIApplication.shared.delegate as? AppDelegate)?.cookies ?? "")
             #endif
         
        /* if (purchased /*&& !pseud_id.isEmpty*/ && (UIApplication.shared.delegate as! AppDelegate).cookies.count == 0) {
