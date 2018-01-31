@@ -25,6 +25,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
     @IBOutlet weak var contentsButton: UIButton!
     
     @IBOutlet weak var kudosButton: UIButton!
+    @IBOutlet weak var downloadButton: UIButton!
     
     var prevChapter: String = ""
     var nextChapter: String = ""
@@ -58,54 +59,14 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
         
         NotificationCenter.default.addObserver(self, selector: #selector(willResignActive), name: .UIApplicationWillResignActive, object: nil)
         
-        if  let workItem = self.workItem {
-            if (onlineChapters.count == 0 || onlineChapters.count == 1) {
-                contentsButton.isHidden = true
-            }
+        if let workItem = self.workItem {
             
-            if (!workItem.nextChapter.isEmpty) {
-                nextChapter = workItem.nextChapter;
-            } else {
-                nextButton.isHidden = true
-            }
-            
-            if (workItem.chapters.count > 0) {
-                work = workItem.chapters.allObjects[0] as? String ?? ""
-                loadCurrentTheme()
-            } else if (!workItem.workContent.isEmpty) {
-                work = workItem.workContent.replacingOccurrences(of: "\n", with: "<p></p>")
-                loadCurrentTheme()
-            }
-            
-            
+            showOnlineWork(workItem: workItem)
             
         } else if let downloadedWork = self.downloadedWorkItem,
             let downloadedChapters = downloadedWork.mutableSetValue(forKey: "chapters").allObjects as? [DBChapter] {
             
-            self.downloadedChapters = downloadedChapters.sorted(by: { (a:DBChapter, b: DBChapter) -> Bool in
-                return b.value(forKey: "chapterIndex") as? Int ?? -1 > a.value(forKey: "chapterIndex") as? Int ?? 0
-            })
-            if (downloadedChapters.count > 0) {
-                if (downloadedChapters.count > 1) {
-                    contentsButton.isHidden = false
-                } else {
-                    contentsButton.isHidden = true
-                }
-                
-                currentChapterIndex = downloadedWork.currentChapter?.intValue ?? 0
-                work = downloadedChapters[currentChapterIndex].value(forKey: "chapterContent") as? String ?? ""
-                loadCurrentTheme()
-                
-                
-                if (nextButton != nil && (downloadedChapters.count == 1 || currentChapterIndex == downloadedChapters.count - 1)) {
-                    nextButton.isHidden = true
-                    //contentsButton.hidden = true
-                }
-                
-                if (prevButton != nil && currentChapterIndex > 0) {
-                    prevButton.isHidden = false
-                }
-            }
+            showDownloadedWork(downloadedWork: downloadedWork, downloadedChapters: downloadedChapters)
         }
         
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(WorkViewController.handleSingleTap(_:)))
@@ -119,6 +80,57 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
         
         if (DefaultsManager.getBool("featuresShown") ?? false == false) {
             showContentAlert()
+        }
+    }
+    
+    func showOnlineWork(workItem: WorkItem) {
+        downloadButton.setImage(UIImage(named: "download-100"), for: .normal)
+        
+        if (onlineChapters.count == 0 || onlineChapters.count == 1) {
+            contentsButton.isHidden = true
+        }
+        
+        if (!workItem.nextChapter.isEmpty) {
+            nextChapter = workItem.nextChapter;
+        } else {
+            nextButton.isHidden = true
+        }
+        
+        if (workItem.chapters.count > 0) {
+            work = workItem.chapters.allObjects[0] as? String ?? ""
+            loadCurrentTheme()
+        } else if (!workItem.workContent.isEmpty) {
+            work = workItem.workContent.replacingOccurrences(of: "\n", with: "<p></p>")
+            loadCurrentTheme()
+        }
+    }
+    
+    func showDownloadedWork(downloadedWork: DBWorkItem, downloadedChapters: [DBChapter]) {
+        downloadButton.setImage(UIImage(named: "ic_refresh"), for: .normal)
+        
+        self.downloadedChapters = downloadedChapters.sorted(by: { (a:DBChapter, b: DBChapter) -> Bool in
+            return b.value(forKey: "chapterIndex") as? Int ?? -1 > a.value(forKey: "chapterIndex") as? Int ?? 0
+        })
+        if (downloadedChapters.count > 0) {
+            if (downloadedChapters.count > 1) {
+                contentsButton.isHidden = false
+            } else {
+                contentsButton.isHidden = true
+            }
+            
+            currentChapterIndex = downloadedWork.currentChapter?.intValue ?? 0
+            work = downloadedChapters[currentChapterIndex].value(forKey: "chapterContent") as? String ?? ""
+            loadCurrentTheme()
+            
+            
+            if (nextButton != nil && (downloadedChapters.count == 1 || currentChapterIndex == downloadedChapters.count - 1)) {
+                nextButton.isHidden = true
+                //contentsButton.hidden = true
+            }
+            
+            if (prevButton != nil && currentChapterIndex > 0) {
+                prevButton.isHidden = false
+            }
         }
     }
     
@@ -670,7 +682,64 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
     
     @IBAction func kudosButtonTouched(_ sender: AnyObject) {
     
+        var workId = ""
+        
+        if let workItem = self.workItem {
+            workId = workItem.workId
+        } else if let downloadedWorkItem = self.downloadedWorkItem {
+            workId = downloadedWorkItem.workId ?? "0"
+        }
+        
+        Answers.logCustomEvent(withName: "WorkView: Kudos add",
+                               customAttributes: [
+                                "workId": workId])
+        
+        doLeaveKudos(workId: workId)
     
+    }
+    
+    @IBAction func downloadButtonTouched(_ sender: AnyObject) {
+        var workId = ""
+        var isOnline = true
+        
+        if let workItem = self.workItem {
+            workId = workItem.workId
+            isOnline = true
+        } else if let downloadedWorkItem = self.downloadedWorkItem {
+            workId = downloadedWorkItem.workId ?? "0"
+            isOnline = false
+        }
+        
+        Answers.logCustomEvent(withName: "WorkView: Download touched",
+                               customAttributes: [
+                                "workId": workId])
+        
+        doDownloadWork(wId: workId, isOnline: isOnline)
+    }
+    
+    var commentsForEntireWork = true
+    @IBAction func commentButtonTouched() {
+        
+        Answers.logCustomEvent(withName: "WorkView: Comments touched",
+                               customAttributes: [:])
+        
+        let alert = UIAlertController(title: NSLocalizedString("Comments", comment: ""), message: "View Comments For:", preferredStyle: UIAlertControllerStyle.actionSheet)
+        alert.addAction(UIAlertAction(title: "Entire Work", style: UIAlertActionStyle.default, handler: { action in
+            self.commentsForEntireWork = true
+            self.performSegue(withIdentifier: "leaveComment", sender: self)
+        }))
+        alert.addAction(UIAlertAction(title: "Current Chapter", style: UIAlertActionStyle.default, handler: { action in
+            self.commentsForEntireWork = false
+            self.performSegue(withIdentifier: "leaveComment", sender: self)
+        }))
+        
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: UIAlertActionStyle.cancel, handler: nil))
+        
+        alert.popoverPresentationController?.sourceView = self.view
+        alert.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.size.width / 2.0, y: self.view.bounds.size.height / 2.0, width: 1.0, height: 1.0)
+        
+        self.present(alert, animated: true, completion: nil)
+        
     }
     
     //MARK: - chapter next/prev
@@ -738,6 +807,33 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
             currentChapterIndex -= 1
             turnOnChapter(currentChapterIndex)
         }
+    }
+    
+    override func onSavedWorkLoaded(_ response: DefaultDataResponse) {
+        
+        saveChanges()
+        
+        #if DEBUG
+            print(response.request ?? "")
+            
+            print(response.error ?? "")
+        #endif
+        
+        if let d = response.data {
+            self.parseCookies(response)
+            if let dd = self.downloadWork(d, workItemToReload: self.downloadedWorkItem),
+                let downloadedChapters = dd.chapters?.allObjects as? [DBChapter] {
+                self.downloadedWorkItem = dd
+                self.showDownloadedWork(downloadedWork: self.downloadedWorkItem!, downloadedChapters: downloadedChapters)
+            }
+        } else {
+            self.hideLoadingView()
+            TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
+        }
+    }
+    
+    override func onOnlineWorkLoaded(_ response: DefaultDataResponse) {
+        
     }
     
     func downloadFullWork(_ data: Data) -> String {
@@ -854,13 +950,19 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
         Answers.logCustomEvent(withName: "Work: Theme Load", customAttributes: ["font_family" : fontFamily,
                                                                                 "font_size" : fontSize])
         
+        var bgColor: UIColor = AppDelegate.greyLightColor
+        var txtColor = AppDelegate.redColor
+        
         switch (theme) {
             case DefaultsManager.THEME_DAY :
-                webView.backgroundColor = AppDelegate.dayBgColor
+                webView.backgroundColor = AppDelegate.greyLightBg
                 webView.isOpaque = false
                 
                 let fontStr = "font-size: " + String(format:"%d", fontSize) + "%; font-family: \"\(fontFamily)\";"
                 worktext = String(format:"<style>body { color: #021439; %@; padding:5em 1.5em 4em 1.5em; text-align: justify; text-indent: 2em; } p {margin-bottom:1.1em}</style>%@", fontStr, work)
+            
+                bgColor = AppDelegate.greyLightColor
+                txtColor = AppDelegate.redColor
                 
             case DefaultsManager.THEME_NIGHT :
                 self.webView.backgroundColor = AppDelegate.nightBgColor
@@ -868,12 +970,22 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
                 
                 let fontStr = "font-size: " + String(format:"%d", fontSize) + "%; font-family: \"\(fontFamily)\";"
                 worktext = String(format:"<style>body { color: #e1e1ce; %@; padding:5em 1.5em 4em 1.5em; text-align: justify; text-indent: 2em; } p {margin-bottom:1.1em} </style>%@", fontStr, work)
+            
+                bgColor = AppDelegate.greyDarkBg
+                txtColor = AppDelegate.textLightColor
                 
             default:
                 break
         }
         
        // let _ = webView(wview: webView, enableGL: false)
+        
+        layoutView.backgroundColor = bgColor
+        layoutBottomView.backgroundColor = bgColor
+        
+        prevButton.setTitleColor(txtColor, for: .normal)
+        contentsButton.setTitleColor(txtColor, for: .normal)
+        nextButton.setTitleColor(txtColor, for: .normal)
         
         webView.reload()
         webView.loadHTMLString(worktext, baseURL: nil)
@@ -1139,6 +1251,38 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
         } while(false)
     
         return bRet
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "leaveComment") {
+            let cController: CommentViewController = segue.destination as! CommentViewController
+            
+            var workId = ""
+            var chapterId = ""
+            
+            if let workItem = self.workItem {
+                workId = workItem.workId
+                if commentsForEntireWork == false && onlineChapters.count > 0 && currentOnlineChapterIdx < onlineChapters.count {
+                    chapterId = onlineChapters[currentOnlineChapterIdx]?.chapterId ?? ""
+                }
+                
+            } else if let downloadedWorkItem = self.downloadedWorkItem {
+                workId = downloadedWorkItem.workId ?? "0"
+                if let downloadedChapters = self.downloadedChapters,
+                    commentsForEntireWork == false,
+                    downloadedChapters.count > 0,
+                    currentChapterIndex < downloadedChapters.count {
+                    chapterId = downloadedChapters[currentChapterIndex].chapterIndex?.stringValue ?? ""
+                }
+            }
+            
+            cController.workId = workId
+            
+            if (chapterId.isEmpty == false) {
+                cController.chapterId = chapterId
+            }
+            
+        }
     }
     
 }

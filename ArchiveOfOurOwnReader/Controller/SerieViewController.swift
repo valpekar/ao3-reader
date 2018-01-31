@@ -308,8 +308,8 @@ class SerieViewController: ListViewController, UITableViewDataSource, UITableVie
         if(segue.identifier == "workDetail") {
             
             if let row = tableView.indexPathForSelectedRow?.row {
-                if (row < works.count) {
-                    selectedWorkDetail(segue: segue, row: row, modalDelegate: self, newsItem: works[row])
+                if (row - 1 < works.count) {
+                    selectedWorkDetail(segue: segue, row: row, modalDelegate: self, newsItem: works[row - 1])
                 }
             }
             

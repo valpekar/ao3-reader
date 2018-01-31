@@ -9,12 +9,13 @@
 import UIKit
 import Alamofire
 import TSMessages
+import WebKit
 
-class CommentViewController: LoadingViewController, UITableViewDelegate, UITableViewDataSource, UIWebViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+class CommentViewController: LoadingViewController, UITableViewDelegate, UITableViewDataSource, WKNavigationDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     @IBOutlet weak var commentTv: UITextView!
     @IBOutlet weak var sendBtn: UIButton!
-    @IBOutlet weak var commentsWebView: UIWebView!
+    @IBOutlet weak var commentsWebView: WKWebView!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -25,6 +26,7 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
     var htmlStr = NSLocalizedString("NoComments", comment: "")
     var fontSize: Int = 100
     var workId = ""
+    var chapterId = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,7 +39,7 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
         commentTv.layer.borderColor = UIColor.purple.cgColor
         commentTv.layer.borderWidth = 1
         
-        commentsWebView.delegate = self
+       // commentsWebView.delegate = self
         
         NotificationCenter.default.addObserver(self, selector: #selector(CommentViewController.keyboardWillShow(_:)), name:NSNotification.Name.UIKeyboardWillShow, object: nil);
         NotificationCenter.default.addObserver(self, selector: #selector(CommentViewController.keyboardWillHide(_:)), name:NSNotification.Name.UIKeyboardWillHide, object: nil);
@@ -76,7 +78,12 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
     
     func getAllComments() {
         //https://archiveofourown.org/works/6107953?show_comments=true&view_full_work=true#comments
-        let requestStr = "https://archiveofourown.org/works/" + workId + "?show_comments=true&view_full_work=true#comments"
+        var requestStr = ""
+        if (chapterId.isEmpty == true) {
+            requestStr = "https://archiveofourown.org/works/" + workId + "?show_comments=true&view_full_work=true#comments"
+        } else {
+            requestStr = "https://archiveofourown.org/comments/show_comments?" + "chapter_id=\(chapterId)"
+        }
         
         showLoadingView(msg: NSLocalizedString("GettingComments", comment: ""))
         
@@ -133,10 +140,10 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
                     if let content = liEl.content {
                         var c = content.replacingOccurrences(of: "\n", with: "")
                         c = c.replacingOccurrences(of: " ", with: "")
-                        if (c.characters.count > 0) {
+                        if (c.count > 0) {
                             let raw:String = liEl.raw
             
-                            htmlStr.append(regex.stringByReplacingMatches(in: raw, options: .reportCompletion, range: NSRange(location: 0, length: raw.characters.count), withTemplate: ""))
+                            htmlStr.append(regex.stringByReplacingMatches(in: raw, options: .reportCompletion, range: NSRange(location: 0, length: raw.count), withTemplate: ""))
                         }
                     }
                 } catch {
@@ -146,7 +153,7 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
             //htmlStr.appendContentsOf(liEl.raw.stringByReplacingOccurrencesOfString("<ul class='actions' role='menu' id='navigation_for_comment_[1-9]+'>(.|\n)*?</ul>", withString: "", options: NSStringCompareOptions.RegularExpressionSearch, range: nil))
             }
         }
-        if (htmlStr.characters.count == 16) { //"<html><body><ol>"
+        if (htmlStr.count == 16) { //"<html><body><ol>"
             htmlStr.append("<h2 align=\"center\">")
             htmlStr.append(NSLocalizedString("NoComments", comment: ""))
             htmlStr.append("</h2>")
@@ -174,10 +181,10 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
                     if let attrs = page.search(withXPathQuery: "//a") as? [TFHppleElement] {
                     
                         if (attrs.count > 0) {
-                        if let attributesh : NSDictionary? = attrs[0].attributes as? NSDictionary  {
-                            pageItem.url = attributesh!["href"] as? String ?? ""
+                            if let attributesh = attrs[0].attributes as? NSDictionary  {
+                                pageItem.url = attributesh["href"] as? String ?? ""
+                            }
                         }
-                    }
                     }
                     
                     if let current = page.search(withXPathQuery: "//span") as? [TFHppleElement] {
@@ -254,6 +261,10 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
         webView.scrollView.flashScrollIndicators()
     }
     
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        
+    }
+    
     //MARK: - move textview on keyboard
     
     func keyboardWillShow(_ sender: Notification) {
@@ -285,7 +296,7 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
     }
     
     @IBAction func sendCommentTouched(_ sender: AnyObject) {
-        if(commentTv.text != nil && commentTv.text.characters.count > 0) {
+        if(commentTv.text != nil && commentTv.text.count > 0) {
             sendComment()
         } else {
             TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("PleaseWriteComment", comment: ""), type: .error)
@@ -295,7 +306,8 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
     func sendComment() {
         showLoadingView(msg: NSLocalizedString("SendingComment", comment: ""))
         
-        let requestStr = "https://archiveofourown.org/works/" + workId + "/comments"
+        //https://archiveofourown.org/chapters/31047816?show_comments=true&view_full_work=false#comment_147517083
+        var requestStr = ""
         var pseud_id = DefaultsManager.getString(DefaultsManager.PSEUD_ID)
         
         if(pseud_id.isEmpty) {
@@ -314,8 +326,18 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
                               
         ] as AnyObject?
         
-        params["controller_name"] = "works" as AnyObject?
-        params["view_full_work"] = "true" as AnyObject?
+        if (chapterId.isEmpty == true) {
+            params["controller_name"] = "works" as AnyObject?
+            params["view_full_work"] = "true" as AnyObject?
+            
+            requestStr = "https://archiveofourown.org/works/" + workId + "/comments"
+            
+        } else {
+            params["controller_name"] = "chapters" as AnyObject?
+            params["view_full_work"] = "false" as AnyObject?
+            
+            requestStr = "https://archiveofourown.org/" + "chapters/\(chapterId)/comments"
+        }
         params["commit"] = "Comment" as AnyObject?
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {

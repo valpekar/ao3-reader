@@ -530,10 +530,10 @@ extension ListViewController: DownloadButtonDelegate {
         params["view_adult"] = "true" as AnyObject?
         
         request("https://archiveofourown.org/works/" + (curWork?.workId ?? ""), method: .get, parameters: params)
-            .response(completionHandler: onSavedWorkLoaded(_:))
+            .response(completionHandler: onSavedWorkDownloaded(_:))
     }
     
-    func onSavedWorkLoaded(_ response: DefaultDataResponse) {
+    func onSavedWorkDownloaded(_ response: DefaultDataResponse) {
         #if DEBUG
             print(response.request ?? "")
             //  println(response)
@@ -605,4 +605,6 @@ extension ListViewController: DownloadButtonDelegate {
             TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CannotFindWrk", comment: ""), type: .error)
         }
     }
+    
 }
+

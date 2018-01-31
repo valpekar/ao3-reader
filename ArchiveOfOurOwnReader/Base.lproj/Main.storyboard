@@ -604,21 +604,25 @@
                         <viewControllerLayoutGuide type="bottom" id="eb4-ON-vEz"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="rnr-VF-upb">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7bU-sj-Io5" customClass="UIScrollView">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OGW-bT-jr5">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                                         <subviews>
-                                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U2o-2W-hDy">
-                                                <rect key="frame" x="0.0" y="0.0" width="375" height="407"/>
-                                                <color key="backgroundColor" red="0.28958413004875183" green="0.31462949514389038" blue="0.32950475811958313" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            </webView>
+                                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y4u-Ry-RvA">
+                                                <rect key="frame" x="8" y="0.0" width="359" height="447"/>
+                                                <color key="backgroundColor" red="0.29019607843137252" green="0.31372549019607843" blue="0.32941176470588235" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <wkWebViewConfiguration key="configuration">
+                                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                                    <wkPreferences key="preferences"/>
+                                                </wkWebViewConfiguration>
+                                            </wkWebView>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="onDrag" translatesAutoresizingMaskIntoConstraints="NO" id="Tub-7u-x9f">
-                                                <rect key="frame" x="20" y="459" width="335" height="100"/>
+                                                <rect key="frame" x="20" y="499" width="335" height="100"/>
                                                 <color key="backgroundColor" red="0.99310782068062831" green="0.99310782068062831" blue="0.99310782068062831" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="100" id="CsP-nN-m1L"/>
@@ -627,7 +631,7 @@
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ibn-K2-prA">
-                                                <rect key="frame" x="20" y="559" width="335" height="40"/>
+                                                <rect key="frame" x="20" y="603" width="335" height="40"/>
                                                 <color key="backgroundColor" red="0.39215686274509803" green="0.11372549019607843" blue="0.54509803921568623" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="9zR-dv-d0E"/>
@@ -654,7 +658,7 @@
                                                 </connections>
                                             </button>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="BvH-fm-6Yj">
-                                                <rect key="frame" x="0.0" y="407" width="375" height="44"/>
+                                                <rect key="frame" x="0.0" y="447" width="375" height="44"/>
                                                 <color key="backgroundColor" red="0.92000001669999998" green="0.92000001669999998" blue="0.92000001669999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="44" id="R4a-rn-kGl"/>
@@ -703,22 +707,20 @@
                                             <constraint firstAttribute="trailing" secondItem="Tub-7u-x9f" secondAttribute="trailing" constant="20" id="7Vb-60-fjF"/>
                                             <constraint firstAttribute="trailing" secondItem="ibn-K2-prA" secondAttribute="trailing" constant="20" id="7jU-86-gP8"/>
                                             <constraint firstItem="Tub-7u-x9f" firstAttribute="top" secondItem="BvH-fm-6Yj" secondAttribute="bottom" constant="8" id="8Wb-P3-5Wq"/>
-                                            <constraint firstItem="U2o-2W-hDy" firstAttribute="leading" secondItem="OGW-bT-jr5" secondAttribute="leading" id="CIK-KY-Slq"/>
-                                            <constraint firstItem="U2o-2W-hDy" firstAttribute="top" secondItem="OGW-bT-jr5" secondAttribute="top" id="IrP-Rw-gEB"/>
+                                            <constraint firstItem="BvH-fm-6Yj" firstAttribute="top" secondItem="Y4u-Ry-RvA" secondAttribute="bottom" id="Evz-RQ-KIr"/>
                                             <constraint firstAttribute="bottom" secondItem="ibn-K2-prA" secondAttribute="bottom" constant="4" id="N55-X4-kb4"/>
+                                            <constraint firstAttribute="trailing" secondItem="Y4u-Ry-RvA" secondAttribute="trailing" constant="8" id="O0l-m0-iiW"/>
                                             <constraint firstItem="ibn-K2-prA" firstAttribute="leading" secondItem="OGW-bT-jr5" secondAttribute="leading" constant="20" id="PB6-fD-jpR"/>
-                                            <constraint firstItem="BvH-fm-6Yj" firstAttribute="top" secondItem="U2o-2W-hDy" secondAttribute="bottom" id="Y7U-U8-qby"/>
+                                            <constraint firstItem="Y4u-Ry-RvA" firstAttribute="top" secondItem="OGW-bT-jr5" secondAttribute="top" id="YPU-sN-WxO"/>
                                             <constraint firstAttribute="trailing" secondItem="BvH-fm-6Yj" secondAttribute="trailing" id="cvH-qM-qeS"/>
-                                            <constraint firstItem="ibn-K2-prA" firstAttribute="top" secondItem="Tub-7u-x9f" secondAttribute="bottom" id="d3M-dc-JwW"/>
+                                            <constraint firstItem="ibn-K2-prA" firstAttribute="top" secondItem="Tub-7u-x9f" secondAttribute="bottom" constant="4" id="d3M-dc-JwW"/>
+                                            <constraint firstItem="Y4u-Ry-RvA" firstAttribute="leading" secondItem="OGW-bT-jr5" secondAttribute="leading" constant="8" id="jnE-Ne-nDl"/>
                                             <constraint firstItem="Tub-7u-x9f" firstAttribute="leading" secondItem="OGW-bT-jr5" secondAttribute="leading" constant="20" id="kGM-TK-Tnk"/>
-                                            <constraint firstAttribute="trailing" secondItem="U2o-2W-hDy" secondAttribute="trailing" id="mS4-lz-b7K"/>
                                             <constraint firstItem="BvH-fm-6Yj" firstAttribute="leading" secondItem="OGW-bT-jr5" secondAttribute="leading" id="pul-MH-oMO"/>
-                                            <constraint firstItem="U2o-2W-hDy" firstAttribute="leading" secondItem="OGW-bT-jr5" secondAttribute="leading" constant="-20" id="tVU-FO-jFa"/>
                                             <constraint firstItem="ibn-K2-prA" firstAttribute="top" secondItem="Tub-7u-x9f" secondAttribute="bottom" id="wvy-az-yTd"/>
                                         </constraints>
                                         <variation key="default">
                                             <mask key="constraints">
-                                                <exclude reference="tVU-FO-jFa"/>
                                                 <exclude reference="wvy-az-yTd"/>
                                             </mask>
                                         </variation>
@@ -746,7 +748,7 @@
                     <connections>
                         <outlet property="collectionView" destination="BvH-fm-6Yj" id="jBB-aj-6Wf"/>
                         <outlet property="commentTv" destination="Tub-7u-x9f" id="Pob-Z6-Cf9"/>
-                        <outlet property="commentsWebView" destination="U2o-2W-hDy" id="jwH-HY-snf"/>
+                        <outlet property="commentsWebView" destination="Y4u-Ry-RvA" id="Zlp-Fy-GCM"/>
                         <outlet property="scrollView" destination="7bU-sj-Io5" id="fmM-Kf-huo"/>
                         <outlet property="sendBtn" destination="ibn-K2-prA" id="mK3-yf-hDb"/>
                     </connections>
@@ -764,7 +766,7 @@
                         <viewControllerLayoutGuide type="bottom" id="RvI-P4-Jsq"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="cdF-HD-3HJ">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1uf-cP-mwU">
@@ -782,7 +784,7 @@
                                 </variation>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JVy-x2-Pai">
-                                <rect key="frame" x="16" y="50" width="343" height="491"/>
+                                <rect key="frame" x="16" y="70" width="343" height="535"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cyb-us-7ON">
                                         <rect key="frame" x="8" y="38" width="317" height="19.5"/>
@@ -844,7 +846,7 @@
                                         </subviews>
                                     </stackView>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="FbH-Ta-u8Z">
-                                        <rect key="frame" x="0.0" y="87.5" width="335" height="403.5"/>
+                                        <rect key="frame" x="0.0" y="87.5" width="335" height="447.5"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <prototypes>
                                             <tableViewCell contentMode="scaleToFill" selectionStyle="gray" indentationWidth="10" reuseIdentifier="cell" id="zrD-0Z-lBk" customClass="WorkDetailCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
@@ -1031,7 +1033,7 @@
                                 </variation>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DFN-f7-SBP" customClass="GADBannerView">
-                                <rect key="frame" x="27.5" y="0.0" width="320" height="50"/>
+                                <rect key="frame" x="27.5" y="20" width="320" height="50"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="hAO-nD-7DA"/>
@@ -1039,13 +1041,13 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BZH-PI-909">
-                                <rect key="frame" x="16" y="551" width="343" height="42"/>
+                                <rect key="frame" x="16" y="615" width="343" height="42"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.85999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="42" id="LKz-oN-kpU"/>
                                     <constraint firstAttribute="height" constant="90" id="oOJ-LH-91D"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
                                 <state key="normal" title="Read 📖">
                                     <color key="titleColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1056,7 +1058,7 @@
                                     </mask>
                                 </variation>
                                 <variation key="heightClass=regular-widthClass=regular">
-                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="30"/>
+                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="32"/>
                                     <mask key="constraints">
                                         <exclude reference="LKz-oN-kpU"/>
                                         <include reference="oOJ-LH-91D"/>
@@ -1133,7 +1135,7 @@
                         <viewControllerLayoutGuide type="bottom" id="2gP-YE-8LQ"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="ldM-cd-Ww9">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Rm7-tC-aCz">
@@ -1151,7 +1153,7 @@
                                 </variation>
                             </imageView>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LWg-kn-n5O">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tW5-tf-pMf">
                                         <rect key="frame" x="24" y="180" width="327" height="76.5"/>
@@ -1220,10 +1222,10 @@ Please check your Internet connection and also make sure you are logged into you
                                 </variation>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y5e-59-w9r">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="240" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Zqd-4u-mNa">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                         <color key="backgroundColor" red="0.92000001669999998" green="0.92000001669999998" blue="0.92000001669999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="FeedCell" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="FeedCell" id="HvY-9I-jkq" customClass="FeedTableViewCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
@@ -1909,7 +1911,7 @@ Please check your Internet connection and also make sure you are logged into you
                                 </variation>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="udP-kR-Lcm">
-                                <rect key="frame" x="0.0" y="603" width="375" height="0.0"/>
+                                <rect key="frame" x="0.0" y="667" width="375" height="0.0"/>
                                 <subviews>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="4Bp-cP-ZSE">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="0.0"/>
@@ -2055,11 +2057,11 @@ Please check your Internet connection and also make sure you are logged into you
                         <viewControllerLayoutGuide type="bottom" id="Yoc-3C-4q5"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="7oc-1t-9bM">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7BG-8k-w0K">
-                                <rect key="frame" x="133" y="284.5" width="109" height="34"/>
+                                <rect key="frame" x="133" y="316.5" width="109" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <state key="normal" title="Try Again  🤔">
                                     <color key="titleColor" red="0.70196078429999997" green="0.27450980390000002" blue="0.27450980390000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -2069,7 +2071,7 @@ Please check your Internet connection and also make sure you are logged into you
                                 </connections>
                             </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="RmA-Nc-iEP">
-                                <rect key="frame" x="0.0" y="559" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="623" width="375" height="44"/>
                                 <color key="backgroundColor" red="0.92000001669999998" green="0.92000001669999998" blue="0.92000001669999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="K3h-4G-MaI"/>
@@ -2113,7 +2115,7 @@ Please check your Internet connection and also make sure you are logged into you
                                 </connections>
                             </collectionView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="240" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="dVv-Wb-Czg">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="559"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="603"/>
                                 <color key="backgroundColor" red="0.92000001669999998" green="0.92000001669999998" blue="0.92000001669999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="FeedCell1" rowHeight="240" id="3mG-9j-QZh" customClass="FeedTableViewCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
@@ -2668,11 +2670,11 @@ Please check your Internet connection and also make sure you are logged into you
                         <viewControllerLayoutGuide type="bottom" id="7u2-7t-GEs"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="qtN-uh-88S">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iGS-U8-np2">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <color key="backgroundColor" red="0.19607843137254902" green="0.20392156862745098" blue="0.22352941176470587" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="tintColor" red="0.8653129940597053" green="0.89898474554477892" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <wkWebViewConfiguration key="configuration" allowsInlineMediaPlayback="YES">
@@ -2682,7 +2684,7 @@ Please check your Internet connection and also make sure you are logged into you
                                 </wkWebViewConfiguration>
                             </wkWebView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QBX-yq-43c" customClass="SpringView" customModule="Spring">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wnZ-d8-1x3">
                                         <rect key="frame" x="250" y="0.0" width="125" height="44"/>
@@ -2741,26 +2743,26 @@ Please check your Internet connection and also make sure you are logged into you
                                 </variation>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bAf-8o-obo" customClass="SpringView" customModule="Spring">
-                                <rect key="frame" x="0.0" y="559" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="623" width="375" height="44"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="osv-SJ-mU7">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="osv-SJ-mU7">
                                         <rect key="frame" x="250" y="0.0" width="125" height="44"/>
-                                        <state key="normal">
+                                        <state key="normal" image="comments">
                                             <color key="titleColor" red="0.31764705879999999" green="0.20392156859999999" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
-                                            <action selector="nextButtonTouched:" destination="4yv-UH-kjf" eventType="touchUpInside" id="BCY-hO-Zvq"/>
+                                            <action selector="commentButtonTouched" destination="4yv-UH-kjf" eventType="touchUpInside" id="f8t-2Z-7o2"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zBK-0U-jaH">
-                                        <rect key="frame" x="125" y="0.0" width="125" height="44"/>
-                                        <state key="normal">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zBK-0U-jaH">
+                                        <rect key="frame" x="125" y="0.5" width="125" height="44"/>
+                                        <state key="normal" image="download-100">
                                             <color key="titleColor" red="0.31764705879999999" green="0.20392156859999999" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
-                                            <action selector="contentsClicked:" destination="4yv-UH-kjf" eventType="touchUpInside" id="nv0-ig-FOU"/>
+                                            <action selector="downloadButtonTouched:" destination="4yv-UH-kjf" eventType="touchUpInside" id="fHP-9O-jw2"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oni-ev-Gdr">
@@ -2770,7 +2772,7 @@ Please check your Internet connection and also make sure you are logged into you
                                             <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
-                                            <action selector="prevButtonTouched:" destination="4yv-UH-kjf" eventType="touchUpInside" id="Ren-wV-Se3"/>
+                                            <action selector="kudosButtonTouched:" destination="4yv-UH-kjf" eventType="touchUpInside" id="AS3-ud-UYg"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -2817,12 +2819,14 @@ Please check your Internet connection and also make sure you are logged into you
                     <navigationItem key="navigationItem" id="TXe-Al-hA5"/>
                     <connections>
                         <outlet property="contentsButton" destination="9GD-Ss-iAe" id="KpC-iD-HWX"/>
+                        <outlet property="downloadButton" destination="zBK-0U-jaH" id="HRe-qt-b8E"/>
                         <outlet property="kudosButton" destination="oni-ev-Gdr" id="MES-S3-Eeh"/>
                         <outlet property="layoutBottomView" destination="bAf-8o-obo" id="ziQ-Af-Si8"/>
                         <outlet property="layoutView" destination="QBX-yq-43c" id="VxP-WM-xpU"/>
                         <outlet property="nextButton" destination="wnZ-d8-1x3" id="bIb-Fh-uzQ"/>
                         <outlet property="prevButton" destination="z5B-7o-XaX" id="qTT-qk-NHP"/>
                         <outlet property="webView" destination="iGS-U8-np2" id="XSg-93-Go0"/>
+                        <segue destination="aFH-5Z-kbf" kind="show" identifier="leaveComment" id="b3W-0z-TKl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aox-L7-d85" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -9869,7 +9873,7 @@ Please check your Internet connection and also make sure you are logged into you
         <image name="book_bg" width="360" height="640"/>
         <image name="bookmark" width="56" height="56"/>
         <image name="categories" width="48" height="48"/>
-        <image name="comments" width="56" height="56"/>
+        <image name="comments" width="18" height="18"/>
         <image name="download-100" width="33" height="33"/>
         <image name="download-red" width="33" height="33"/>
         <image name="empty_filter" width="31" height="31"/>
@@ -9890,6 +9894,7 @@ Please check your Internet connection and also make sure you are logged into you
     <inferredMetricsTieBreakers>
         <segue reference="5rQ-gu-17N"/>
         <segue reference="GOa-zO-Fy6"/>
-        <segue reference="5tW-cF-vbk"/>
+        <segue reference="Zz6-01-vau"/>
+        <segue reference="aEt-Fa-YHa"/>
     </inferredMetricsTieBreakers>
 </document>

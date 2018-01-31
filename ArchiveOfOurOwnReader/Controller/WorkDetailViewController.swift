@@ -61,7 +61,6 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     var commentsUrl = ""
     var tagUrl = ""
     
-    var triedTo = -1
     var isSensitive = false
     
     var downloadUrls: [String:String] = [:]
@@ -1464,54 +1463,18 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     
     func downloadWorkAction() {
         
-        if (purchased || donated) {
-            #if DEBUG
-         print("premium")
-            #endif
-        } else {
-            if (countWroksFromDB() > 29) {
-                TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Only30Stroies", comment: ""), type: .error, duration: 2.0)
-                
-                return
-            }
-        }
-        
-        showLoadingView(msg: NSLocalizedString("DwnloadingWrk", comment: ""))
-        
-        if let del = UIApplication.shared.delegate as? AppDelegate {
-            if (del.cookies.count > 0) {
-                guard let cStorage = Alamofire.SessionManager.default.session.configuration.httpCookieStorage else {
-                    return
-                }
-                cStorage.setCookies(del.cookies, for:  URL(string: AppDelegate.ao3SiteUrl), mainDocumentURL: nil)
-            }
-        }
-        
-        var params:[String:AnyObject] = [String:AnyObject]()
-        
-        UserDefaults.standard.synchronize()
-        if let pp = UserDefaults.standard.value(forKey: "pro") as? Bool {
-            purchased = pp
-        }
-        
-        var vadult = ""
-        params["view_adult"] = "true" as AnyObject?
-        vadult = "?view_adult=true"
-       
-        //purchased = true
-        
         var wId = ""
-
-        if (workItem != nil) {
+        var isOnline = true
+        
+        if let workItem = self.workItem {
             wId = workItem.workId
-            Alamofire.request("https://archiveofourown.org/works/" + workItem.workId + vadult, method: .get, parameters: params)
-                .response(completionHandler: onOnlineWorkLoaded(_:))
-        } else if (downloadedWorkItem != nil) {
-            wId = downloadedWorkItem.value(forKey: "workId") as? String ?? "0"
-            Alamofire.request("https://archiveofourown.org/works/" + (downloadedWorkItem.value(forKey: "workId") as? String ?? "0"), method: .get, parameters: params)
-                .response(completionHandler: onSavedWorkLoaded(_:))
+            isOnline = true
+        } else if let downloadedWorkItem = self.downloadedWorkItem {
+            wId = downloadedWorkItem.workId ?? "0"
+            isOnline = false
         }
         
+        doDownloadWork(wId: wId, isOnline: isOnline)
         
         Answers.logCustomEvent(withName: "WorkDetail: download",
                                customAttributes: [
@@ -1519,7 +1482,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
 
     }
     
-    func onSavedWorkLoaded(_ response: DefaultDataResponse) {
+   override func onSavedWorkLoaded(_ response: DefaultDataResponse) {
         #if DEBUG
         print(response.request ?? "")
         
@@ -1538,7 +1501,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         }
     }
     
-    func onOnlineWorkLoaded(_ response: DefaultDataResponse) {
+    override func onOnlineWorkLoaded(_ response: DefaultDataResponse) {
         #if DEBUG
         print(response.request ?? "")
         
@@ -1707,15 +1670,6 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     }
     
     func leaveKudos() {
-        
-        if ((UIApplication.shared.delegate as! AppDelegate).cookies.count == 0 || (UIApplication.shared.delegate as! AppDelegate).token.isEmpty) {
-            triedTo = 0
-            openLoginController() //openLoginController()
-            return
-        }
-        
-        showLoadingView(msg: NSLocalizedString("LeavingKudos", comment: ""))
-        
         var workId = ""
         
         if (workItem != nil) {
@@ -1728,100 +1682,11 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                                customAttributes: [
                                 "workId": workId])
         
-        let requestStr = "https://archiveofourown.org/kudos.js"
-        //let pseud_id = DefaultsManager.getString(DefaultsManager.PSEUD_ID)
+        doLeaveKudos(workId: workId)
         
-        var params:[String:Any] = [String:Any]()
-        params["utf8"] = "✓" as AnyObject?
-        params["authenticity_token"] = (UIApplication.shared.delegate as! AppDelegate).token as AnyObject?
-        
-        params["kudo"] = ["commentable_id": workId,
-                             "commentable_type": "Work",
-                             
-        ]
-        
-        
-        if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
-        }
-        
-        if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-            Alamofire.request(requestStr, method: .post, parameters: params, encoding:URLEncoding.queryString /*ParameterEncoding.Custom(encodeParams)*/)
-                .response(completionHandler: { response in
-                    #if DEBUG
-                    print(response.request ?? "")
-                    // print(response.response ?? "")
-                    print(response.error ?? "")
-                        #endif
-                    
-                    if let d = response.data {
-                        self.parseCookies(response)
-                        self.parseAddKudosResponse(d)
-                        self.hideLoadingView()
-                        
-                    } else {
-                        self.hideLoadingView()
-                        TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
-                    }
-                })
-            
-        } else {
-            
-             self.hideLoadingView()
-            TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
-        }
     }
     
-    func parseAddKudosResponse(_ data: Data) {
-        guard let dta = NSString(data: data, encoding: String.Encoding.utf8.rawValue) else {
-            return
-        }
-        //print("the string is: \(dta)")
-        
-        if (dta.contains("errors") == true) {
-            TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("LeftKudosAlready", comment: ""), type: .error)
-        } else if (dta.contains("#kudos") == true) {
-            TSMessage.showNotification(in: self, title: NSLocalizedString("Kudos", comment: ""), subtitle: NSLocalizedString("KudosAdded", comment: ""), type: .success)
-            
-            var author = ""
-            var category = ""
-            var fandom = ""
-            var relationship = ""
-            
-            if (workItem != nil) {
-                author = workItem.author
-                category = workItem.category
-                
-                if (fandoms != nil && fandoms.count > 0) {
-                    fandom = fandoms[0].fandomName
-                }
-                
-                if (relationships != nil && relationships.count > 0) {
-                    relationship = relationships[0].relationshipName
-                }
-            } else if (downloadedWorkItem != nil) {
-                
-                author = downloadedWorkItem.value(forKey: "author") as? String ?? ""
-                category = downloadedWorkItem.value(forKey: "category") as? String ?? ""
-                
-                if (downloadedFandoms != nil && downloadedFandoms.count > 0) {
-                    fandom = downloadedFandoms[0].fandomName ?? ""
-                }
-                
-                if (downloadedRelationships != nil && downloadedRelationships.count > 0) {
-                    relationship = downloadedRelationships[0].relationshipName ?? ""
-                }
-            }
-            
-            saveToAnalytics(author, category: category, mainFandom: fandom, mainRelationship: relationship)
-            
-            if (workItem != nil) {
-                self.hideLoadingView()
-                showOnlineWork()
-            }
-        }
     
-    }
     
     //MARK: - update work
     
@@ -1964,6 +1829,45 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             print("open url \(res)")
         })
 
+    }
+    
+    override func kudosToAnalytics() {
+        var author = ""
+        var category = ""
+        var fandom = ""
+        var relationship = ""
+        
+        if (workItem != nil) {
+            author = workItem.author
+            category = workItem.category
+            
+            if (fandoms != nil && fandoms.count > 0) {
+                fandom = fandoms[0].fandomName
+            }
+            
+            if (relationships != nil && relationships.count > 0) {
+                relationship = relationships[0].relationshipName
+            }
+        } else if (downloadedWorkItem != nil) {
+            
+            author = downloadedWorkItem.value(forKey: "author") as? String ?? ""
+            category = downloadedWorkItem.value(forKey: "category") as? String ?? ""
+            
+            if (downloadedFandoms != nil && downloadedFandoms.count > 0) {
+                fandom = downloadedFandoms[0].fandomName ?? ""
+            }
+            
+            if (downloadedRelationships != nil && downloadedRelationships.count > 0) {
+                relationship = downloadedRelationships[0].relationshipName ?? ""
+            }
+        }
+        
+        saveToAnalytics(author, category: category, mainFandom: fandom, mainRelationship: relationship)
+        
+        if (workItem != nil) {
+            self.hideLoadingView()
+            showOnlineWork()
+        }
     }
    
 }

@@ -37,7 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     static var greyDarkBg = UIColor(red: 54/255, green: 45/255, blue: 62/255, alpha: 1.0)
     static var greenColor = UIColor(red: 110/255, green: 177/255, blue: 157/255, alpha: 1.0)
     static var textLightColor = UIColor(red: 247/255, green: 245/255, blue: 247/255, alpha: 1.0)
-    static var greyLightColor = UIColor(red: 188/255, green: 186/255, blue: 188/255, alpha: 1.0)
+    static var greyLightColor = UIColor(red: 198/255, green: 196/255, blue: 198/255, alpha: 1.0)
     static var redTextColor = UIColor(red: 108/255, green: 93/255, blue: 93/255, alpha: 1.0)
     static var redBrightTextColor = UIColor(red: 208/255, green: 93/255, blue: 93/255, alpha: 1.0)
     static var darkerGreyColor = UIColor(red: 170/255, green: 170/255, blue: 170/255, alpha: 1.0)

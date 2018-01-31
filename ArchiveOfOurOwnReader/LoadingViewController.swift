@@ -32,6 +32,8 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
     var purchased = false
     var donated = false
     
+    var triedTo = -1
+    
     private var notification: NSObjectProtocol?
     
     override func viewDidLoad() {
@@ -1073,8 +1075,148 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
     func makeRoundView(view: UIView) {
         view.layer.cornerRadius = AppDelegate.smallCornerRadius
     }
+    
+    
+    
+    func doDownloadWork(wId: String, isOnline: Bool) {
+        if (purchased || donated) {
+            #if DEBUG
+                print("premium")
+            #endif
+        } else {
+            if (countWroksFromDB() > 29) {
+                TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Only30Stroies", comment: ""), type: .error, duration: 2.0)
+                
+                return
+            }
+        }
+        
+        showLoadingView(msg: NSLocalizedString("DwnloadingWrk", comment: ""))
+        
+        if let del = UIApplication.shared.delegate as? AppDelegate {
+            if (del.cookies.count > 0) {
+                guard let cStorage = Alamofire.SessionManager.default.session.configuration.httpCookieStorage else {
+                    return
+                }
+                cStorage.setCookies(del.cookies, for:  URL(string: AppDelegate.ao3SiteUrl), mainDocumentURL: nil)
+            }
+        }
+        
+        var params:[String:AnyObject] = [String:AnyObject]()
+        
+        UserDefaults.standard.synchronize()
+        if let pp = UserDefaults.standard.value(forKey: "pro") as? Bool {
+            purchased = pp
+        }
+        
+        var vadult = ""
+        params["view_adult"] = "true" as AnyObject?
+        vadult = "?view_adult=true"
+        
+        //purchased = true
+        
+        
+        if (isOnline == true) {
+            Alamofire.request("https://archiveofourown.org/works/" + wId + vadult, method: .get, parameters: params)
+                .response(completionHandler: onOnlineWorkLoaded(_:))
+        } else {
+            
+            Alamofire.request("https://archiveofourown.org/works/" + wId + vadult, method: .get, parameters: params)
+                .response(completionHandler: onSavedWorkLoaded(_:))
+        }
+        
+    }
+    
+    func onSavedWorkLoaded(_ response: DefaultDataResponse) {
+        
+    }
+    
+    func onOnlineWorkLoaded(_ response: DefaultDataResponse) {
+        
+    }
 }
 
+ 
+ 
+ //MARK: - kudos
+ 
+ extension LoadingViewController {
+    
+    func doLeaveKudos(workId: String) {
+        if ((UIApplication.shared.delegate as? AppDelegate)?.cookies.count == 0 || ((UIApplication.shared.delegate as? AppDelegate)?.token ?? "").isEmpty) {
+            triedTo = 0
+            openLoginController() //openLoginController()
+            return
+        }
+        
+        showLoadingView(msg: NSLocalizedString("LeavingKudos", comment: ""))
+        
+        let requestStr = "https://archiveofourown.org/kudos.js"
+        //let pseud_id = DefaultsManager.getString(DefaultsManager.PSEUD_ID)
+        
+        var params:[String:Any] = [String:Any]()
+        params["utf8"] = "✓" as AnyObject?
+        params["authenticity_token"] = (UIApplication.shared.delegate as! AppDelegate).token as AnyObject?
+        
+        params["kudo"] = ["commentable_id": workId,
+                          "commentable_type": "Work",
+                          
+        ]
+        
+        if let cookies = (UIApplication.shared.delegate as? AppDelegate)?.cookies,
+            cookies.count > 0 {
+            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies(cookies, for:  URL(string: AppDelegate.ao3SiteUrl), mainDocumentURL: nil)
+        }
+        
+        if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
+            Alamofire.request(requestStr, method: .post, parameters: params, encoding:URLEncoding.queryString /*ParameterEncoding.Custom(encodeParams)*/)
+                .response(completionHandler: { response in
+                    #if DEBUG
+                        print(response.request ?? "")
+                        // print(response.response ?? "")
+                        print(response.error ?? "")
+                    #endif
+                    
+                    if let d = response.data {
+                        self.parseCookies(response)
+                        self.parseAddKudosResponse(d)
+                        self.hideLoadingView()
+                        
+                    } else {
+                        self.hideLoadingView()
+                        TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
+                    }
+                })
+            
+        } else {
+            
+            self.hideLoadingView()
+            TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
+        }
+    }
+    
+    func parseAddKudosResponse(_ data: Data) {
+        guard let dta = NSString(data: data, encoding: String.Encoding.utf8.rawValue) else {
+            return
+        }
+        //print("the string is: \(dta)")
+        
+        if (dta.contains("errors") == true) {
+            TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("LeftKudosAlready", comment: ""), type: .error)
+        } else if (dta.contains("#kudos") == true) {
+            TSMessage.showNotification(in: self, title: NSLocalizedString("Kudos", comment: ""), subtitle: NSLocalizedString("KudosAdded", comment: ""), type: .success)
+            
+            self.kudosToAnalytics()
+        }
+        
+    }
+    
+    func kudosToAnalytics() {
+        
+    }
+    
+    
+ }
 
 extension String: ParameterEncoding {
     
