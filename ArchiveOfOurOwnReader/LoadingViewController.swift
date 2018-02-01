@@ -682,9 +682,9 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
             var workChapters = NSMutableSet()
             if let wc = curworkItem.value(forKeyPath: "chapters") as? NSMutableSet {
                 workChapters = wc
-            } else {
+            } /*else {
                 curworkItem.setValue(workChapters, forKey: "chapters")
-            }
+            }*/
         
             if (workChapters.count > 0) {
                 workChapters.removeAllObjects()

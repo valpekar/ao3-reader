@@ -76,6 +76,14 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
         tapRecognizer.delaysTouchesEnded = true
         webView.addGestureRecognizer(tapRecognizer)
         
+        let swipeRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(WorkViewController.handleSwipe(_:)))
+        swipeRecognizer.direction = UISwipeGestureRecognizerDirection.left
+        self.webView.addGestureRecognizer(swipeRecognizer)
+        
+        let swipeRecognizerR = UISwipeGestureRecognizer(target: self, action: #selector(WorkViewController.handleSwipe(_:)))
+        swipeRecognizerR.direction = UISwipeGestureRecognizerDirection.right
+        self.webView.addGestureRecognizer(swipeRecognizerR)
+        
         NotificationCenter.default.addObserver(self, selector: #selector(WorkViewController.lockScreen), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
         
         if (DefaultsManager.getBool("featuresShown") ?? false == false) {
@@ -138,7 +146,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
     }
     
     func showContentAlert() {
-        let refreshAlert = UIAlertController(title: NSLocalizedString("Attention", comment: ""), message: "Enter/Leave Fullscreen mode with 2 taps", preferredStyle: UIAlertControllerStyle.alert)
+        let refreshAlert = UIAlertController(title: NSLocalizedString("Attention", comment: ""), message: "Enter/Leave Fullscreen mode with 2 taps; swipe to switch Next/Previous chapter", preferredStyle: UIAlertControllerStyle.alert)
         
         refreshAlert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { (action: UIAlertAction!) in
             DefaultsManager.putBool(true, key: "featuresShown")
@@ -403,6 +411,15 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
             self.webView.evaluateJavaScript("document.documentElement.style.webkitTouchCallout='default'", completionHandler: { (res, error) in
                 print(error.debugDescription)
             })
+        }
+    }
+    
+    func handleSwipe(_ recognizer: UISwipeGestureRecognizer) {
+        if recognizer.direction == UISwipeGestureRecognizerDirection.right {
+            prevButtonTouched(prevButton)
+        }
+        else if recognizer.direction == UISwipeGestureRecognizerDirection.left {
+            nextButtonTouched(nextButton)
         }
     }
     

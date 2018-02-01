@@ -19,7 +19,7 @@ class XibView : UIView {
     var rowIndex = 0
     
     @IBOutlet weak var bgView:UIView!
-    @IBOutlet weak var ratingLabel: UILabel!
+    @IBOutlet weak var ratingImg: UIImageView!
     
     @IBOutlet weak var topicLabel: UILabel!
     

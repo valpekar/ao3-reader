@@ -92,6 +92,7 @@ class ListViewController: LoadingViewController, PageSelectDelegate, UIPopoverPr
         }
         // cell?.completeLabel.text = curWork.complete
         // cell?.categoryLabel.text = curWork.category
+        
          cell.ratingLabel.text = curWork.rating
         
         
@@ -192,7 +193,18 @@ class ListViewController: LoadingViewController, PageSelectDelegate, UIPopoverPr
         }
         // cell?.completeLabel.text = curWork.complete
         // cell?.categoryLabel.text = curWork.category
-        cell.workCellView.ratingLabel.text = curWork.rating
+        switch curWork.rating.trimmingCharacters(in: .whitespacesAndNewlines) {
+        case "General Audiences":
+            cell.workCellView.ratingImg.image = UIImage(named: "G")
+        case "Teen And Up Audiences":
+            cell.workCellView.ratingImg.image = UIImage(named: "PG13")
+        case "Mature":
+            cell.workCellView.ratingImg.image = UIImage(named: "NC17")
+        case "Explicit":
+            cell.workCellView.ratingImg.image = UIImage(named: "R")
+        default:
+            cell.workCellView.ratingImg.image = UIImage(named: "NotRated")
+        }
         
         var tagsString = ""
         if (curWork.tags.count > 0) {
