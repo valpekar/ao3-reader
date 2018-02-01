@@ -614,7 +614,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                                         <subviews>
                                             <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y4u-Ry-RvA">
-                                                <rect key="frame" x="8" y="0.0" width="359" height="447"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="447"/>
                                                 <color key="backgroundColor" red="0.29019607843137252" green="0.31372549019607843" blue="0.32941176470588235" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <wkWebViewConfiguration key="configuration">
                                                     <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
@@ -709,12 +709,12 @@
                                             <constraint firstItem="Tub-7u-x9f" firstAttribute="top" secondItem="BvH-fm-6Yj" secondAttribute="bottom" constant="8" id="8Wb-P3-5Wq"/>
                                             <constraint firstItem="BvH-fm-6Yj" firstAttribute="top" secondItem="Y4u-Ry-RvA" secondAttribute="bottom" id="Evz-RQ-KIr"/>
                                             <constraint firstAttribute="bottom" secondItem="ibn-K2-prA" secondAttribute="bottom" constant="4" id="N55-X4-kb4"/>
-                                            <constraint firstAttribute="trailing" secondItem="Y4u-Ry-RvA" secondAttribute="trailing" constant="8" id="O0l-m0-iiW"/>
+                                            <constraint firstAttribute="trailing" secondItem="Y4u-Ry-RvA" secondAttribute="trailing" id="O0l-m0-iiW"/>
                                             <constraint firstItem="ibn-K2-prA" firstAttribute="leading" secondItem="OGW-bT-jr5" secondAttribute="leading" constant="20" id="PB6-fD-jpR"/>
                                             <constraint firstItem="Y4u-Ry-RvA" firstAttribute="top" secondItem="OGW-bT-jr5" secondAttribute="top" id="YPU-sN-WxO"/>
                                             <constraint firstAttribute="trailing" secondItem="BvH-fm-6Yj" secondAttribute="trailing" id="cvH-qM-qeS"/>
                                             <constraint firstItem="ibn-K2-prA" firstAttribute="top" secondItem="Tub-7u-x9f" secondAttribute="bottom" constant="4" id="d3M-dc-JwW"/>
-                                            <constraint firstItem="Y4u-Ry-RvA" firstAttribute="leading" secondItem="OGW-bT-jr5" secondAttribute="leading" constant="8" id="jnE-Ne-nDl"/>
+                                            <constraint firstItem="Y4u-Ry-RvA" firstAttribute="leading" secondItem="OGW-bT-jr5" secondAttribute="leading" id="jnE-Ne-nDl"/>
                                             <constraint firstItem="Tub-7u-x9f" firstAttribute="leading" secondItem="OGW-bT-jr5" secondAttribute="leading" constant="20" id="kGM-TK-Tnk"/>
                                             <constraint firstItem="BvH-fm-6Yj" firstAttribute="leading" secondItem="OGW-bT-jr5" secondAttribute="leading" id="pul-MH-oMO"/>
                                             <constraint firstItem="ibn-K2-prA" firstAttribute="top" secondItem="Tub-7u-x9f" secondAttribute="bottom" id="wvy-az-yTd"/>

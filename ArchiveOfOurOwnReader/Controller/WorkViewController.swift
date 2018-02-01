@@ -103,6 +103,8 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
             work = workItem.workContent.replacingOccurrences(of: "\n", with: "<p></p>")
             loadCurrentTheme()
         }
+        
+        self.scrollWorks()
     }
     
     func showDownloadedWork(downloadedWork: DBWorkItem, downloadedChapters: [DBChapter]) {
@@ -119,9 +121,8 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
             }
             
             currentChapterIndex = downloadedWork.currentChapter?.intValue ?? 0
-            work = downloadedChapters[currentChapterIndex].value(forKey: "chapterContent") as? String ?? ""
+            work = self.downloadedChapters?[currentChapterIndex].chapterContent ?? ""
             loadCurrentTheme()
-            
             
             if (nextButton != nil && (downloadedChapters.count == 1 || currentChapterIndex == downloadedChapters.count - 1)) {
                 nextButton.isHidden = true
@@ -132,6 +133,8 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
                 prevButton.isHidden = false
             }
         }
+        
+        self.scrollWorks()
     }
     
     func showContentAlert() {
@@ -170,10 +173,6 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
             self.title = workItem.workTitle
         }
         
-        if (!nextChapter.isEmpty || !prevChapter.isEmpty) {
-            animateLayoutDown()
-        }
-        
         // iterate over all subviews of the WKWebView's scrollView
         for subview in self.webView.scrollView.subviews {
             // iterate over recognizers of subview
@@ -191,7 +190,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
             }
         }
         
-        scrollWorks()
+     //   scrollWorks()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -235,10 +234,14 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
             
             self.title = title
             
-            if let offset: String = downloadedWorkItem.value(forKey: "scrollProgress") as? String,
-                let _ = self.webView {
-                let scrollOffset:CGPoint = CGPointFromString(offset)
-                self.webView.scrollView.setContentOffset(scrollOffset, animated: true)
+            if let offset: String = downloadedWorkItem.scrollProgress,
+                let _ = self.webView,
+                offset.isEmpty == false {
+                let delayTime = DispatchTime.now() + Double(Int64(1.0 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+                DispatchQueue.main.asyncAfter(deadline: delayTime) {
+                    let scrollOffset:CGPoint = CGPointFromString(offset)
+                    self.webView.scrollView.setContentOffset(scrollOffset, animated: true)
+                }
             }
         }
     }
@@ -588,7 +591,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
     func saveWorkChanged() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,
             let managedContext = appDelegate.managedObjectContext,
-            let workId = downloadedWorkItem?.value(forKey: "workId") as? String else {
+            let workId = downloadedWorkItem?.workId else {
             return
         }
         
@@ -606,6 +609,19 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
             } catch _ {
             }
         }
+        }
+    }
+    
+    func currentWorkSaveChanges() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,
+            let managedContext = appDelegate.managedObjectContext else {
+                return
+        }
+        
+        do {
+            try managedContext.save()
+        } catch _ {
+            print("cannot save current work after download")
         }
     }
     
@@ -698,17 +714,24 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
     
     }
     
+    var beforeDownloadChapter = -1
+    var beforeDownloadOffset = ""
+    
     @IBAction func downloadButtonTouched(_ sender: AnyObject) {
         var workId = ""
         var isOnline = true
         
         if let workItem = self.workItem {
             workId = workItem.workId
+            beforeDownloadChapter = currentOnlineChapterIdx
             isOnline = true
         } else if let downloadedWorkItem = self.downloadedWorkItem {
             workId = downloadedWorkItem.workId ?? "0"
+            beforeDownloadChapter = currentChapterIndex
             isOnline = false
         }
+        
+        beforeDownloadOffset = NSStringFromCGPoint(webView.scrollView.contentOffset)
         
         Answers.logCustomEvent(withName: "WorkView: Download touched",
                                customAttributes: [
@@ -811,8 +834,6 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
     
     override func onSavedWorkLoaded(_ response: DefaultDataResponse) {
         
-        saveChanges()
-        
         #if DEBUG
             print(response.request ?? "")
             
@@ -824,8 +845,21 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
             if let dd = self.downloadWork(d, workItemToReload: self.downloadedWorkItem),
                 let downloadedChapters = dd.chapters?.allObjects as? [DBChapter] {
                 self.downloadedWorkItem = dd
+                if (self.beforeDownloadChapter >= 0) {
+                    self.downloadedWorkItem?.currentChapter = NSNumber(value: self.beforeDownloadChapter)
+                    self.beforeDownloadChapter = -1
+                }
+                if (self.beforeDownloadOffset.isEmpty == false) {
+                    self.downloadedWorkItem?.scrollProgress = self.beforeDownloadOffset
+                    self.beforeDownloadOffset = ""
+                }
+                currentWorkSaveChanges()
+                
                 self.showDownloadedWork(downloadedWork: self.downloadedWorkItem!, downloadedChapters: downloadedChapters)
+
             }
+            self.hideLoadingView()
+            
         } else {
             self.hideLoadingView()
             TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
@@ -833,7 +867,41 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
     }
     
     override func onOnlineWorkLoaded(_ response: DefaultDataResponse) {
+        #if DEBUG
+            print(response.request ?? "")
+            
+            print(response.error ?? "")
+        #endif
         
+        if let d = response.data {
+            self.parseCookies(response)
+            if let dd = self.downloadWork(d, workItemOld: self.workItem),
+                let downloadedChapters = dd.chapters?.allObjects as? [DBChapter] {
+                
+                self.downloadedWorkItem = dd
+                if (self.beforeDownloadChapter >= 0) {
+                    self.downloadedWorkItem?.currentChapter = NSNumber(value: self.beforeDownloadChapter)
+                    self.beforeDownloadChapter = -1
+                }
+                if (self.beforeDownloadOffset.isEmpty == false) {
+                    self.downloadedWorkItem?.scrollProgress = self.beforeDownloadOffset
+                    self.beforeDownloadOffset = ""
+                }
+                
+                currentWorkSaveChanges()
+                
+                self.workItem = nil
+                
+                self.showDownloadedWork(downloadedWork: self.downloadedWorkItem!, downloadedChapters: downloadedChapters)
+                
+            }
+            
+            self.hideLoadingView()
+            
+        } else {
+            self.hideLoadingView()
+            TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
+        }
     }
     
     func downloadFullWork(_ data: Data) -> String {

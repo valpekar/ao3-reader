@@ -233,10 +233,8 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
     func downloadWork(_ data: Data, curWork: NewsFeedItem? = nil, workItemOld: WorkItem? = nil, workItemToReload: DBWorkItem? = nil) -> DBWorkItem? {
         
         var workItem : DBWorkItem! = nil
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            return workItemToReload
-        }
-        guard let managedContext = appDelegate.managedObjectContext else {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,
+        let managedContext = appDelegate.managedObjectContext else {
             return workItemToReload
         }
         
@@ -660,11 +658,15 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
             TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: "Could not save \(String(describing: err?.userInfo))", type: .error)
         }
         
-        saveToAnalytics(workItem.value(forKey: "author") as? String ?? "", category: workItem.value(forKey: "category") as? String ?? "", mainFandom: firstFandom, mainRelationship: firstRelationship)
+        saveToAnalytics(workItem.author ?? "", category: workItem.value(forKey: "category") as? String ?? "", mainFandom: firstFandom, mainRelationship: firstRelationship)
         
         TSMessage.showNotification(in: self, title: NSLocalizedString("Success", comment: ""), subtitle: "Work has been downloaded! You can access if from Downloaded screen", type: .success)
         
-        return workItemToReload
+        if let wRl = workItemToReload {
+            return wRl
+        } else {
+            return workItem
+        }
     }
     
     func saveChapters(_ curworkItem: NSManagedObject) {
