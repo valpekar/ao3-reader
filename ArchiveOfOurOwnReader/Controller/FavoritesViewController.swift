@@ -206,7 +206,18 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         
         cell?.wordsLabel.text = curWork?.words ?? "-"
         
-        cell?.ratingLabel.text = curWork?.ratingTags ?? ""
+        switch (curWork?.ratingTags ?? "").trimmingCharacters(in: .whitespacesAndNewlines) {
+        case "General Audiences":
+            cell?.ratingImg.image = UIImage(named: "G")
+        case "Teen And Up Audiences":
+            cell?.ratingImg.image = UIImage(named: "PG13")
+        case "Mature":
+            cell?.ratingImg.image = UIImage(named: "NC17")
+        case "Explicit":
+            cell?.ratingImg.image = UIImage(named: "R")
+        default:
+            cell?.ratingImg.image = UIImage(named: "NotRated")
+        }
         
         if (curWork?.topicPreview != nil) {
             cell?.topicPreviewLabel.text = curWork?.topicPreview

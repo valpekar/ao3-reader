@@ -75,7 +75,7 @@
                                     </connections>
                                 </button>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Fandoms: TorchWood" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cYy-WQ-5oG">
-                                    <rect key="frame" x="8" y="8" width="227" height="16"/>
+                                    <rect key="frame" x="8" y="8" width="235" height="16"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="548" id="J58-yE-7vq"/>
                                         <constraint firstAttribute="height" constant="21" id="atH-VC-8A9"/>
@@ -140,7 +140,7 @@
                                 <constraint firstItem="zQW-d4-Cgd" firstAttribute="leading" secondItem="lBo-Pc-xB4" secondAttribute="leading" constant="8" id="Avk-nY-TBi"/>
                                 <constraint firstItem="cYy-WQ-5oG" firstAttribute="top" secondItem="lBo-Pc-xB4" secondAttribute="top" constant="8" id="G3a-pf-I8H"/>
                                 <constraint firstItem="Bxs-C3-ncj" firstAttribute="leading" secondItem="lBo-Pc-xB4" secondAttribute="leading" id="HlH-Ae-E5T"/>
-                                <constraint firstItem="QPU-Gj-3uM" firstAttribute="leading" secondItem="cYy-WQ-5oG" secondAttribute="trailing" constant="8" id="MJS-y3-CcE"/>
+                                <constraint firstItem="QPU-Gj-3uM" firstAttribute="leading" secondItem="cYy-WQ-5oG" secondAttribute="trailing" id="MJS-y3-CcE"/>
                                 <constraint firstAttribute="trailing" secondItem="Bxs-C3-ncj" secondAttribute="trailing" constant="4" id="P7z-Lr-zgr"/>
                                 <constraint firstItem="Bxs-C3-ncj" firstAttribute="leading" secondItem="lBo-Pc-xB4" secondAttribute="leadingMargin" constant="4" id="QJF-x4-kjs"/>
                                 <constraint firstItem="H4p-O2-RSh" firstAttribute="centerY" secondItem="G4g-a4-SLg" secondAttribute="centerY" id="SSS-Gt-LU3"/>
@@ -475,6 +475,7 @@
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Topic" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumFontSize="12" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yuk-ho-zcD">
                             <rect key="frame" x="52" y="50" width="295" height="19.5"/>
                             <constraints>
+                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="19.5" id="aQC-HO-JRr"/>
                                 <constraint firstAttribute="height" constant="50" id="c1p-gA-caZ"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
