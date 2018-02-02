@@ -452,7 +452,9 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         return res
     }
     
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
         if(segue.identifier == "offlineWorkDetail") {
     
             let workDetail: WorkDetailViewController = segue.destination as! WorkDetailViewController
@@ -486,6 +488,8 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
             editController.editFoldersProtocol = self
             editController.folders = folders
         }
+        
+        searchBarCancelButtonClicked(self.resultSearchController.searchBar)
     }
     
     @IBAction func deleteButtonTouched(_ sender: UIButton) {

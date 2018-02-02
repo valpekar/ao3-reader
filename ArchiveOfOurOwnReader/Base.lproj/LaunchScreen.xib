@@ -16,18 +16,18 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Copyright, Developed by Valeriya Pekar info.catapps@gmail.com" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="8ie-xW-0ye">
-                    <rect key="frame" x="20" y="419" width="441" height="21"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <rect key="frame" x="20" y="401.5" width="441" height="38.5"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </label>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="middleTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kId-c2-rCX">
-                    <rect key="frame" x="20" y="208.5" width="441" height="63.5"/>
+                    <rect key="frame" x="20" y="208" width="441" height="65"/>
                     <attributedString key="attributedText">
                         <fragment content="Unofficial">
                             <attributes>
                                 <color key="NSColor" red="0.92996035012759048" green="1" blue="0.98041193680227057" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <font key="NSFont" size="14" name="HelveticaNeue"/>
+                                <font key="NSFont" size="15" name="HelveticaNeue"/>
                                 <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
                             </attributes>
                         </fragment>
@@ -44,7 +44,7 @@ IAo
                         <fragment content="AO3 Reader">
                             <attributes>
                                 <color key="NSColor" red="0.92996035012759048" green="1" blue="0.98041193680227057" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <font key="NSFont" size="18" name="HelveticaNeue-Medium"/>
+                                <font key="NSFont" size="19" name="HelveticaNeue-Medium"/>
                                 <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
                             </attributes>
                         </fragment>
@@ -52,8 +52,8 @@ IAo
                     <color key="highlightedColor" red="0.57299165575916233" green="0.23633784539719954" blue="0.25634551073872264" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Fanfic Pocket Library" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qFF-0j-APJ">
-                    <rect key="frame" x="20" y="171.5" width="440" height="29"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                    <rect key="frame" x="20" y="166.5" width="440" height="33.5"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="28"/>
                     <color key="textColor" red="0.90931737590717276" green="0.87890909843008402" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>

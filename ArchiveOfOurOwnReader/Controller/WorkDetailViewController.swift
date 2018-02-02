@@ -21,16 +21,20 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     
     @IBOutlet weak var bgImage: UIImageView!
     @IBOutlet weak var authorImage: RoundImageView!
-    @IBOutlet weak var authorLabel: UIButton!
+    @IBOutlet weak var authorLabel: UILabel!
+    @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var readButton: UIButton!
     @IBOutlet weak var titleLabel: UILabel!
     
-    @IBOutlet weak var audienceLabel: UILabel!
+    @IBOutlet weak var langLabel: UILabel!
     @IBOutlet weak var categoryLabel: UILabel!
     @IBOutlet weak var completeLabel: UILabel!
     
+    @IBOutlet weak var ratingImg: UIImageView!
+    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var bgView: UIView!
+    @IBOutlet weak var authorView: UIView!
      @IBOutlet weak var bannerView: GADBannerView!
     
     var downloadedWorkItem: DBWorkItem! = nil
@@ -104,6 +108,14 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
         self.readButton.layer.cornerRadius = AppDelegate.smallCornerRadius
         self.bgView.layer.cornerRadius = AppDelegate.smallCornerRadius
+        self.authorView.layer.cornerRadius = AppDelegate.smallCornerRadius
+        
+        self.authorView.layer.shadowRadius = AppDelegate.smallCornerRadius
+        self.authorView.layer.shadowOffset = CGSize(width: 2.0, height: 1.5)
+        self.authorView.layer.shadowOpacity = 0.7
+        self.authorView.layer.shadowColor = AppDelegate.darkerGreyColor.cgColor
+        
+        self.authorView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.authorTouched(_:))))
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
             Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
@@ -155,15 +167,21 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         if (theme == DefaultsManager.THEME_DAY) {
             tableView.separatorColor = AppDelegate.greyLightColor
             bgView.backgroundColor = AppDelegate.whiteTransparentColor
+            authorView.backgroundColor = AppDelegate.whiteTransparentColor
             readButton.backgroundColor = AppDelegate.whiteTransparentColor
             readButton.setTitleColor(AppDelegate.redColor, for: .normal)
-            authorLabel.setTitleColor(AppDelegate.greyColor, for: .normal)
+            authorLabel.textColor = AppDelegate.greyColor
+            dateLabel.textColor = AppDelegate.greyColor
+            authorView.layer.shadowColor = AppDelegate.darkerGreyColor.cgColor
         } else {
             tableView.separatorColor = AppDelegate.greyBg
             bgView.backgroundColor = AppDelegate.greyTransparentColor
+            authorView.backgroundColor = AppDelegate.greyTransparentColor
             readButton.backgroundColor = AppDelegate.greyTransparentColor
             readButton.setTitleColor(UIColor.white, for: .normal)
-            authorLabel.setTitleColor(AppDelegate.nightTextColor, for: .normal)
+            authorLabel.textColor = AppDelegate.nightTextColor
+            dateLabel.textColor = AppDelegate.nightTextColor
+            authorView.layer.shadowColor = AppDelegate.redColor.cgColor
         }
         
     }
@@ -187,18 +205,32 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     func showDownloadedWork() {
         
         let auth = downloadedWorkItem.author ?? ""
-        authorLabel.setTitle("🔗 \(auth)", for: .normal) // = underlineAttributedString
+        authorLabel.text = "\(auth)" // = underlineAttributedString
+        langLabel.text = downloadedWorkItem.language ?? "-"
+        dateLabel.text = downloadedWorkItem.datetime ?? ""
         
-        let title = downloadedWorkItem.value(forKey: "workTitle") as? String ?? ""
+        let title = downloadedWorkItem.workTitle ?? ""
         let trimmedTitle = title.trimmingCharacters(
             in: CharacterSet.whitespacesAndNewlines
         )
         
         titleLabel.text = trimmedTitle
         
-        audienceLabel.text = downloadedWorkItem.ratingTags ?? ""
         categoryLabel.text = downloadedWorkItem.category ?? ""
         completeLabel.text = downloadedWorkItem.complete ?? ""
+        
+        switch (downloadedWorkItem.ratingTags ?? "").trimmingCharacters(in: .whitespacesAndNewlines) {
+        case "General Audiences":
+            ratingImg.image = UIImage(named: "G")
+        case "Teen And Up Audiences":
+            ratingImg.image = UIImage(named: "PG13")
+        case "Mature":
+            ratingImg.image = UIImage(named: "NC17")
+        case "Explicit":
+            ratingImg.image = UIImage(named: "R")
+        default:
+            ratingImg.image = UIImage(named: "NotRated")
+        }
         
         
         warnings = [String]()
@@ -521,6 +553,9 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         let regex:NSRegularExpression = try! NSRegularExpression(pattern: "<a href=\"[^\"]+\">([^<]+)</a>", options: NSRegularExpression.Options.caseInsensitive)
         workItem.workContent = regex.stringByReplacingMatches(in: workItem.workContent, options: NSRegularExpression.MatchingOptions.withoutAnchoringBounds, range: NSRange(location: 0, length: workItem.workContent.count), withTemplate: "$1")
         
+        let regex1:NSRegularExpression = try! NSRegularExpression(pattern: "<a href=.*/>", options: NSRegularExpression.Options.caseInsensitive)
+        workItem.workContent = regex1.stringByReplacingMatches(in: workItem.workContent, options: NSRegularExpression.MatchingOptions.withoutAnchoringBounds, range: NSRange(location: 0, length: workItem.workContent.count), withTemplate: "$1")
+        
        // stringByReplacingMatchesInString:string options:0 range:NSMakeRange(0, [string length]) withTemplate:@"$1"];
         //workItem.workContent = workItem.workContent.stringByReplacingOccurrencesOfString("<a.*\"\\s*>", withString:"")
         //workItem.workContent = workItem.workContent.stringByReplacingOccurrencesOfString("</a>", withString:"");
@@ -730,13 +765,26 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     
     func showWork() {
         
-        authorLabel.setTitle("🔗 \(workItem.author)", for: .normal)
-        
+        authorLabel.text = "\(workItem.author)"
+        dateLabel.text = workItem.datetime
         titleLabel.text = workItem.workTitle
+        langLabel.text = workItem.language
         
-        audienceLabel.text = workItem.ratingTags
         categoryLabel.text = workItem.category
         completeLabel.text = workItem.complete
+        
+        switch workItem.ratingTags.trimmingCharacters(in: .whitespacesAndNewlines) {
+        case "General Audiences":
+            ratingImg.image = UIImage(named: "G")
+        case "Teen And Up Audiences":
+            ratingImg.image = UIImage(named: "PG13")
+        case "Mature":
+            ratingImg.image = UIImage(named: "NC17")
+        case "Explicit":
+            ratingImg.image = UIImage(named: "R")
+        default:
+            ratingImg.image = UIImage(named: "NotRated")
+        }
         
         tableView.reloadData()
         
@@ -1084,15 +1132,15 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 cell!.label.text = "None"
             }
             cell!.imgView.image = UIImage(named: "characters")
-        case 7:
-            if (workItem != nil) {
-                cell!.label.text = workItem.language
-            } else if (downloadedWorkItem != nil) {
-                cell!.label.text = downloadedWorkItem.value(forKey: "language") as? String ?? ""
-            }
-            cell!.imgView.image = UIImage(named: "lang")
+//        case 7:
+//            if (workItem != nil) {
+//                cell!.label.text = workItem.language
+//            } else if (downloadedWorkItem != nil) {
+//                cell!.label.text = downloadedWorkItem.value(forKey: "language") as? String ?? ""
+//            }
+//            cell!.imgView.image = UIImage(named: "lang")
             
-        case 8:
+        case 7:
             if (workItem != nil) {
                 cell!.label.text = "\(workItem.words) \(NSLocalizedString("Words", comment: ""))"
             } else if (downloadedWorkItem != nil) {
@@ -1100,7 +1148,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             }
             cell!.imgView.image = UIImage(named: "word")
             
-        case 9:
+        case 8:
             var serieName: String = ""
             if (workItem != nil) {
                 serieName = workItem.serieName
@@ -1125,11 +1173,11 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     
     func numberOfSections(in tableView: UITableView) -> Int {
         if (workItem != nil && workItem.serieUrl.isEmpty) {
-            return 9
+            return 8
         } else if (downloadedWorkItem != nil && (downloadedWorkItem.serieUrl ?? "").isEmpty) {
-            return 9
+            return 8
         } else {
-            return 10
+            return 9
         }
     }
     
@@ -1208,7 +1256,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             
             performSegue(withIdentifier: "listSegue", sender: self)
             
-        case 9:
+        case 8:
             performSegue(withIdentifier: "showSerie", sender: self)
             
         default:
@@ -1216,7 +1264,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         }
     }
     
-    @IBAction func authorTouched(_sender: AnyObject) {
+    func authorTouched(_ sender: UITapGestureRecognizer) {
         var authorName = ""
         
         if(workItem != nil) {

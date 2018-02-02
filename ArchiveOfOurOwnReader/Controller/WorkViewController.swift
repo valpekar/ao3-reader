@@ -14,7 +14,7 @@ import Crashlytics
 import WebKit
 import Spring
 
-class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWebViewDelegate {
+class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWebViewDelegate, WKNavigationDelegate {
     
     @IBOutlet weak var webView: WKWebView!
     @IBOutlet weak var layoutView: SpringView!
@@ -55,7 +55,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
         addNavItems()
         
         prevButton.isHidden = true
-        //webView.delegate = self
+        self.webView.navigationDelegate = self
         
         NotificationCenter.default.addObserver(self, selector: #selector(willResignActive), name: .UIApplicationWillResignActive, object: nil)
         
@@ -129,6 +129,9 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
             }
             
             currentChapterIndex = downloadedWork.currentChapter?.intValue ?? 0
+            if (currentChapterIndex >= self.downloadedChapters?.count ?? 0) {
+                currentChapterIndex = 0
+            }
             work = self.downloadedChapters?[currentChapterIndex].chapterContent ?? ""
             loadCurrentTheme()
             
@@ -450,6 +453,10 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
         webView.scrollView.flashScrollIndicators()
     }
     
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        self.webView.scrollView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0)
+    }
+    
     func turnOnChapter(_ chapterIndex: Int) {
         
         currentChapterIndex = chapterIndex
@@ -565,6 +572,9 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
             
                 let regex:NSRegularExpression = try! NSRegularExpression(pattern: "<a href=\"[^\"]+\">([^<]+)</a>", options: NSRegularExpression.Options.caseInsensitive)
                 workContentStr = regex.stringByReplacingMatches(in: workContentStr, options: NSRegularExpression.MatchingOptions.withoutAnchoringBounds, range: NSRange(location: 0, length: workContentStr.count), withTemplate: "$1")
+                
+                let regex1:NSRegularExpression = try! NSRegularExpression(pattern: "<a href=.*/>", options: NSRegularExpression.Options.caseInsensitive)
+                workContentStr = regex1.stringByReplacingMatches(in: workContentStr, options: NSRegularExpression.MatchingOptions.withoutAnchoringBounds, range: NSRange(location: 0, length: workContentStr.count), withTemplate: "$1")
             
                 workContentStr = workContentStr.replacingOccurrences(of: "(?i)<strike\\b[^<]*>\\s*</strike>", with: "", options: .regularExpression, range: nil)
                 //workContentStr = workContentStr.replacingOccurrences(of: "<strike/>", with: "")
@@ -941,6 +951,9 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
          //   var error:NSErrorPointer = NSErrorPointer()
             if let regex:NSRegularExpression = try? NSRegularExpression(pattern: "<a href=\"[^\"]+\">([^<]+)</a>", options: NSRegularExpression.Options.caseInsensitive) {
                 work = regex.stringByReplacingMatches(in: work, options: NSRegularExpression.MatchingOptions.withoutAnchoringBounds, range: NSRange(location: 0, length: work.count), withTemplate: "$1")
+                
+                let regex1:NSRegularExpression = try! NSRegularExpression(pattern: "<a href=.*/>", options: NSRegularExpression.Options.caseInsensitive)
+                work = regex1.stringByReplacingMatches(in: work, options: NSRegularExpression.MatchingOptions.withoutAnchoringBounds, range: NSRange(location: 0, length: work.count), withTemplate: "$1")
             } else {
                 work = ""
             }
@@ -1007,10 +1020,6 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
         }
     }
     
-    func showDownloadedWork() {
-        
-    }
-    
     //Theme and Font changes
     
     func loadCurrentTheme() {
@@ -1053,7 +1062,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
                 self.webView.backgroundColor = AppDelegate.nightBgColor
                 self.webView.isOpaque = false
                 
-                let fontStr = "font-size: " + String(format:"%d", fontSize) + "%; font-family: \"\(fontFamily)\";"
+                let fontStr = "font-size: " + String(format:"%d", fontSize) + "%; font-family: \"\(fontFamily)\""
                 worktext = String(format:"<style>body { color: #e1e1ce; %@; padding:5em 1.5em 4em 1.5em; text-align: justify; text-indent: 2em; } p {margin-bottom:1.1em} </style>%@", fontStr, work)
             
                 bgColor = AppDelegate.greyDarkBg

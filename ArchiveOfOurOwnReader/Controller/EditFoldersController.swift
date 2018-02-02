@@ -33,6 +33,8 @@ class EditFoldersController: UITableViewController {
         } else {
             self.tableView.backgroundColor = AppDelegate.greyDarkBg
         }
+        
+        self.tableView.tableFooterView = UIView()
     }
     
     //MARK: - tableview
