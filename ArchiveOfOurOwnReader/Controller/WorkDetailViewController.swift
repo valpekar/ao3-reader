@@ -1230,7 +1230,9 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 
                 Answers.logCustomEvent(withName: "Work Detail link tap", customAttributes: ["link" : tagUrl])
                 
-                performSegue(withIdentifier: "listSegue", sender: self)
+                if (tagUrl.isEmpty == false) {
+                    performSegue(withIdentifier: "listSegue", sender: self)
+                }
             
         case 5:
             if (workItem != nil && relationships != nil && relationships.count > pos) {
@@ -1242,7 +1244,9 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             
             Answers.logCustomEvent(withName: "Work Detail link tap", customAttributes: ["link" : tagUrl])
             
-            performSegue(withIdentifier: "listSegue", sender: self)
+            if (tagUrl.isEmpty == false) {
+                performSegue(withIdentifier: "listSegue", sender: self)
+            }
             
         case 6:
             if (workItem != nil && characters != nil && characters.count > pos) {
@@ -1254,7 +1258,9 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             
             Answers.logCustomEvent(withName: "Work Detail link tap", customAttributes: ["link" : tagUrl])
             
-            performSegue(withIdentifier: "listSegue", sender: self)
+            if (tagUrl.isEmpty == false) {
+                performSegue(withIdentifier: "listSegue", sender: self)
+            }
             
         case 8:
             performSegue(withIdentifier: "showSerie", sender: self)

@@ -786,9 +786,9 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         let vvv = UITableViewHeaderFooterView()
         vvv.tag = section
         
-                let tap = UITapGestureRecognizer(target: self, action: #selector(FavoritesViewController.tapFunction))
-                vvv.isUserInteractionEnabled = true
-                vvv.addGestureRecognizer(tap)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(FavoritesViewController.tapFunction))
+        vvv.isUserInteractionEnabled = true
+        vvv.addGestureRecognizer(tap)
         
         return vvv
     }
@@ -800,8 +800,10 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         var folderName = ""
         if (section == 0) {
             folderName = uncategorized
+        } else if (section - 1 < folders.count) {
+            folderName = folders[section - 1].name ?? "No Name"
         } else {
-         folderName = folders[section - 1].name ?? "No Name"
+            return
         }
         let count = downloadedWorkds[folderName]?.count ?? 0
         let indexPaths = (0..<count).map { i in return IndexPath(item: i, section: section)  }

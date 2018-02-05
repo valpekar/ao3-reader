@@ -99,7 +99,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
         }
         
         if (!workItem.nextChapter.isEmpty) {
-            nextChapter = workItem.nextChapter;
+            nextChapter = workItem.nextChapter
         } else {
             nextButton.isHidden = true
         }
@@ -116,6 +116,9 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
     }
     
     func showDownloadedWork(downloadedWork: DBWorkItem, downloadedChapters: [DBChapter]) {
+        if (downloadButton == nil) { //user left to another screen
+            return
+        }
         downloadButton.setImage(UIImage(named: "ic_refresh"), for: .normal)
         
         self.downloadedChapters = downloadedChapters.sorted(by: { (a:DBChapter, b: DBChapter) -> Bool in
@@ -180,9 +183,11 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
         
         self.navigationController?.setNavigationBarHidden(false, animated: false)
         
-        if let workItem = self.workItem {
-            self.title = workItem.workTitle
-        }
+        self.title = ""
+        
+//        if let workItem = self.workItem {
+//            self.title = workItem.workTitle
+//        }
         
         // iterate over all subviews of the WKWebView's scrollView
         for subview in self.webView.scrollView.subviews {
@@ -212,7 +217,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
     
     func scrollWorks() {
         if let workItem = self.workItem {
-            self.title = workItem.workTitle
+            //self.title = workItem.workTitle
             
             if let historyItem: HistoryItem = self.getHistoryItem(workId: workItem.workId) {
                 if let nxtChapter = historyItem.lastChapter,
@@ -243,7 +248,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
                 }
             }
             
-            self.title = title
+           // self.title = title
             
             if let offset: String = downloadedWorkItem.scrollProgress,
                 let _ = self.webView,
@@ -493,7 +498,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
                 //saveFavWorkChanges();
                 saveWorkChanged()
             
-            self.title = downloadedChapters[chapterIndex].chapterName
+           // self.title = downloadedChapters[chapterIndex].chapterName
         }
     }
     
@@ -700,10 +705,8 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
     }
     
     func getHistoryItem(workId: String) -> HistoryItem? {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            return nil
-        }
-        guard let managedContext = appDelegate.managedObjectContext else {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,
+            let managedContext = appDelegate.managedObjectContext else {
             return nil
         }
         
@@ -797,6 +800,10 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
     @IBAction func nextButtonTouched(_ sender: AnyObject) {
         
         if (workItem != nil) {
+            if (nextChapter.isEmpty) {
+                return
+            }
+            
             showLoadingView(msg: NSLocalizedString("LoadingNxtChapter", comment: ""))
             
             currentOnlineChapter = nextChapter
@@ -823,6 +830,9 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
             })
             
         } else {
+            if (currentChapterIndex == (downloadedChapters?.count ?? 0) - 1) {
+                return
+            }
             currentChapterIndex += 1
             turnOnChapter(currentChapterIndex)
         }
@@ -831,6 +841,10 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
     @IBAction func prevButtonTouched(_ sender: AnyObject) {
         
         if (workItem != nil) {
+            if (prevChapter.isEmpty) {
+                return
+            }
+            
             showLoadingView(msg: NSLocalizedString("LoadingPrevChapter", comment: ""))
             
             currentOnlineChapter = prevChapter
@@ -854,6 +868,9 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
                     }
                 })
         } else {
+            if (currentChapterIndex == 0) {
+                return
+            }
             currentChapterIndex -= 1
             turnOnChapter(currentChapterIndex)
         }
@@ -1015,9 +1032,9 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
             animateLayoutDown()
         }
         
-        if (!title.isEmpty) {
-            self.title = title
-        }
+//        if (!title.isEmpty) {
+//            self.title = title
+//        }
     }
     
     //Theme and Font changes
@@ -1076,6 +1093,8 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
         
         layoutView.backgroundColor = bgColor
         layoutBottomView.backgroundColor = bgColor
+        
+        self.view.backgroundColor = bgColor
         
         prevButton.setTitleColor(txtColor, for: .normal)
         contentsButton.setTitleColor(txtColor, for: .normal)
