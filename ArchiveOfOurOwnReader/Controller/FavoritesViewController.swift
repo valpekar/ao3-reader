@@ -26,6 +26,9 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
     
     var resultSearchController = UISearchController()
     
+    var sortBy = "dateAdded"
+    var sortOrderAscendic = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.createDrawerButton()
@@ -72,6 +75,9 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+        sortBy = DefaultsManager.getString(DefaultsManager.SORT_DWNLD_BY)
+        sortOrderAscendic = DefaultsManager.getBool(DefaultsManager.SORT_DWNLD_ASC) ?? false
         
         loadWroksFromDB(predicate: nil, predicateWFolder: NSPredicate(format: "folder = nil"))
         
@@ -383,8 +389,13 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate, let managedContext = appDelegate.managedObjectContext else {
             return
         }
+        if (sortBy.isEmpty == true) {
+            sortBy = "dateAdded"
+            sortOrderAscendic = false
+        }
+        
         let fetchRequest: NSFetchRequest <NSFetchRequestResult> = NSFetchRequest(entityName:"DBWorkItem")
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "dateAdded", ascending: false)]
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: sortBy, ascending: sortOrderAscendic)]
         var searchPredicate: NSPredicate? = nil
         
         if ( predicate != nil) {
@@ -627,6 +638,67 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         super.drawerClicked(sender)
         
         self.resultSearchController.dismiss(animated: true, completion: nil)
+    }
+    
+    func saveSortOptionsAndReload() {
+        DefaultsManager.putBool(self.sortOrderAscendic, key: DefaultsManager.SORT_DWNLD_ASC)
+        DefaultsManager.putString(self.sortBy, key: DefaultsManager.SORT_DWNLD_BY)
+        
+        self.loadWroksFromDB(predicate: nil, predicateWFolder: NSPredicate(format: "folder = nil"))
+        self.tableView.reloadData()
+    }
+    
+    @IBAction func sortClicked(_ sender: AnyObject) {
+        let optionMenu = UIAlertController(title: nil, message: NSLocalizedString("Sort Options", comment: ""), preferredStyle: .actionSheet)
+        optionMenu.view.tintColor = AppDelegate.redColor
+        
+        let azAction = UIAlertAction(title: NSLocalizedString("Alphabetically", comment: ""), style: .default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            self.sortBy = "workTitle"
+            self.sortOrderAscendic = true
+            
+            self.saveSortOptionsAndReload()
+        })
+        optionMenu.addAction(azAction)
+        
+        let dateAction = UIAlertAction(title: NSLocalizedString("By Date Added", comment: ""), style: .default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            self.sortBy = "dateAdded"
+            self.sortOrderAscendic = false
+            
+            self.saveSortOptionsAndReload()
+        })
+        optionMenu.addAction(dateAction)
+        
+        let authorAction = UIAlertAction(title: NSLocalizedString("By Author", comment: ""), style: .default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            self.sortBy = "author"
+            self.sortOrderAscendic = true
+            
+            self.saveSortOptionsAndReload()
+        })
+        optionMenu.addAction(authorAction)
+        
+        //!!!!https://stackoverflow.com/questions/23005107/sort-descriptors-not-sorting-numbers-in-the-form-of-string-iphone !!!
+        let kudosAction = UIAlertAction(title: NSLocalizedString("Kudos Count", comment: ""), style: .default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            self.sortBy = "kudos"
+            self.sortOrderAscendic = true
+            
+            self.saveSortOptionsAndReload()
+        })
+        optionMenu.addAction(kudosAction)
+        
+        let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: {
+            (alert: UIAlertAction!) -> Void in
+            print("Cancelled")
+        })
+        optionMenu.addAction(cancelAction)
+        
+        optionMenu.popoverPresentationController?.sourceView =  self.view
+        optionMenu.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.size.width / 2.0, y: self.view.bounds.size.height / 2.0, width: 1.0, height: 1.0)
+        
+        self.present(optionMenu, animated: true, completion: nil)
     }
     
     //MARK: - folders

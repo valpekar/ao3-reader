@@ -500,7 +500,6 @@
 				28B6DC4E1B4E3F9700F34529 /* Controller */,
 				28B6DC331B4E3F5900F34529 /* Images.xcassets */,
 				28B6DC271B4E3F5900F34529 /* Supporting Files */,
-				1D8777911B99EDF600CEA738 /* DefaultsManager.swift */,
 			);
 			path = ArchiveOfOurOwnReader;
 			sourceTree = "<group>";
@@ -658,6 +657,7 @@
 				3C00E9C21D9C05FA00B0BBDF /* CustomEncoding.swift */,
 				3CC6A2871E66800F005D1255 /* Reachability.swift */,
 				3CDF1FAA1F39AA57004D858F /* WorksParser.swift */,
+				1D8777911B99EDF600CEA738 /* DefaultsManager.swift */,
 				3C8FF85520063BE8006C01DF /* ExtensionsHelper.swift */,
 			);
 			name = Utils;

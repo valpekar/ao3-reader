@@ -6842,6 +6842,11 @@ Major Problems:
                                     <action selector="addFolder:" destination="gZt-Yz-NNP" id="F7F-iq-X0X"/>
                                 </connections>
                             </barButtonItem>
+                            <barButtonItem image="ic_sort" id="37j-qy-QrS">
+                                <connections>
+                                    <action selector="sortClicked:" destination="gZt-Yz-NNP" id="kvV-Fl-n64"/>
+                                </connections>
+                            </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
@@ -9897,6 +9902,7 @@ Please check your Internet connection and also make sure you are logged into you
         <image name="folder" width="60" height="60"/>
         <image name="heart" width="18" height="18"/>
         <image name="hits" width="74" height="74"/>
+        <image name="ic_sort" width="31" height="31"/>
         <image name="icon-download" width="32" height="32"/>
         <image name="lang" width="18" height="18"/>
         <image name="likes" width="23" height="23"/>

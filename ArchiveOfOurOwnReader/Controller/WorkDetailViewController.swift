@@ -532,6 +532,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             let title = h2El.first?.raw.replacingOccurrences(of: "\n", with:"")
                 .replacingOccurrences(of: "\\s+", with: " ", options: NSString.CompareOptions.regularExpression, range: nil) ?? ""
             workItem.workTitle = title.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
+            workItem.workTitle = workItem.workTitle.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
             }
         }
         

@@ -314,7 +314,7 @@ class ListViewController: LoadingViewController, PageSelectDelegate, UIPopoverPr
             currentWorkItem.id = Int64(work_id)
             
             currentWorkItem.archiveWarnings = newsItem.warning
-            currentWorkItem.workTitle = newsItem.title
+            currentWorkItem.workTitle = newsItem.title.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
             currentWorkItem.topic = newsItem.topic
             
             if (newsItem.topicPreview != nil) {
