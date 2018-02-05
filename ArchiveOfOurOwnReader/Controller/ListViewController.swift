@@ -212,15 +212,7 @@ class ListViewController: LoadingViewController, PageSelectDelegate, UIPopoverPr
         }
         cell.workCellView.tagsLabel.text = tagsString
         
-        if (curWork.isDownloaded == true) {
-            if (curWork.needReload == true) {
-                cell.workCellView.downloadButton.setImage(UIImage(named: "ic_refresh"), for: .normal)
-            } else {
-                cell.workCellView.downloadButton.setImage(UIImage(named: "ic_yes"), for: .normal)
-            }
-        } else {
-            cell.workCellView.downloadButton.setImage(UIImage(named: "download-100"), for: .normal)
-        }
+        
         
         if (theme == DefaultsManager.THEME_DAY) {
             cell.contentView.backgroundColor = AppDelegate.greyLightBg
@@ -238,6 +230,22 @@ class ListViewController: LoadingViewController, PageSelectDelegate, UIPopoverPr
             cell.workCellView.hitsLabel.textColor = AppDelegate.redColor
             cell.workCellView.wordsLabel.textColor = AppDelegate.redColor
             
+            cell.workCellView.wordImg.image = UIImage(named: "word")
+            cell.workCellView.commentsImg.image = UIImage(named: "comments")
+            cell.workCellView.kudosImg.image = UIImage(named: "likes")
+            cell.workCellView.bmkImg.image = UIImage(named: "bookmark")
+            cell.workCellView.hitsImg.image = UIImage(named: "hits")
+            
+            if (curWork.isDownloaded == true) {
+                if (curWork.needReload == true) {
+                    cell.workCellView.downloadButton.setImage(UIImage(named: "ic_refresh"), for: .normal)
+                } else {
+                    cell.workCellView.downloadButton.setImage(UIImage(named: "ic_yes"), for: .normal)
+                }
+            } else {
+                cell.workCellView.downloadButton.setImage(UIImage(named: "download-100"), for: .normal)
+            }
+            
         } else {
             cell.contentView.backgroundColor = AppDelegate.greyDarkBg
             cell.workCellView.backgroundColor = AppDelegate.greyDarkBg
@@ -254,6 +262,22 @@ class ListViewController: LoadingViewController, PageSelectDelegate, UIPopoverPr
             cell.workCellView.bookmarksLabel.textColor = AppDelegate.darkerGreyColor
             cell.workCellView.hitsLabel.textColor = AppDelegate.darkerGreyColor
             cell.workCellView.wordsLabel.textColor = AppDelegate.darkerGreyColor
+            
+            cell.workCellView.wordImg.image = UIImage(named: "word_light")
+            cell.workCellView.commentsImg.image = UIImage(named: "comments_light")
+            cell.workCellView.kudosImg.image = UIImage(named: "likes_light")
+            cell.workCellView.bmkImg.image = UIImage(named: "bookmark_light")
+            cell.workCellView.hitsImg.image = UIImage(named: "hits_light")
+            
+            if (curWork.isDownloaded == true) {
+                if (curWork.needReload == true) {
+                    cell.workCellView.downloadButton.setImage(UIImage(named: "ic_refresh_light"), for: .normal)
+                } else {
+                    cell.workCellView.downloadButton.setImage(UIImage(named: "ic_yes_light"), for: .normal)
+                }
+            } else {
+                cell.workCellView.downloadButton.setImage(UIImage(named: "download-100_light"), for: .normal)
+            }
         }
         
         cell.workCellView.fandomsLabel.textColor = AppDelegate.greenColor

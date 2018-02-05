@@ -160,7 +160,7 @@
                                             <outlet property="textField" destination="ew7-Bj-jjp" id="Zvg-y8-GzS"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" misplaced="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="serachFromToCell" id="2Mw-s9-ERA" customClass="SearchFromToCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="serachFromToCell" id="2Mw-s9-ERA" customClass="SearchFromToCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="179.33333333333334" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2Mw-s9-ERA" id="rXm-m7-xdR">
@@ -604,17 +604,17 @@
                         <viewControllerLayoutGuide type="bottom" id="eb4-ON-vEz"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="rnr-VF-upb">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="724"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7bU-sj-Io5" customClass="UIScrollView">
-                                <rect key="frame" x="0.0" y="44" width="375" height="734"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="690"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OGW-bT-jr5">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="734"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="690"/>
                                         <subviews>
                                             <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y4u-Ry-RvA">
-                                                <rect key="frame" x="0.0" y="0.0" width="375" height="534"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="490"/>
                                                 <color key="backgroundColor" red="0.29019607843137252" green="0.31372549019607843" blue="0.32941176470588235" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <wkWebViewConfiguration key="configuration">
                                                     <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
@@ -622,7 +622,7 @@
                                                 </wkWebViewConfiguration>
                                             </wkWebView>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="onDrag" translatesAutoresizingMaskIntoConstraints="NO" id="Tub-7u-x9f">
-                                                <rect key="frame" x="20" y="586" width="335" height="100"/>
+                                                <rect key="frame" x="20" y="542" width="335" height="100"/>
                                                 <color key="backgroundColor" red="0.99310782068062831" green="0.99310782068062831" blue="0.99310782068062831" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="100" id="CsP-nN-m1L"/>
@@ -631,7 +631,7 @@
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ibn-K2-prA">
-                                                <rect key="frame" x="20" y="690" width="335" height="40"/>
+                                                <rect key="frame" x="20" y="646" width="335" height="40"/>
                                                 <color key="backgroundColor" red="0.39215686274509803" green="0.11372549019607843" blue="0.54509803921568623" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="9zR-dv-d0E"/>
@@ -658,7 +658,7 @@
                                                 </connections>
                                             </button>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="BvH-fm-6Yj">
-                                                <rect key="frame" x="0.0" y="534" width="375" height="44"/>
+                                                <rect key="frame" x="0.0" y="490" width="375" height="44"/>
                                                 <color key="backgroundColor" red="0.92000001669999998" green="0.92000001669999998" blue="0.92000001669999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="44" id="R4a-rn-kGl"/>
@@ -766,7 +766,7 @@
                         <viewControllerLayoutGuide type="bottom" id="RvI-P4-Jsq"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="cdF-HD-3HJ">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="724"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1uf-cP-mwU">
@@ -784,7 +784,7 @@
                                 </variation>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JVy-x2-Pai">
-                                <rect key="frame" x="16" y="94" width="343" height="622"/>
+                                <rect key="frame" x="16" y="50" width="343" height="578"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XP6-7U-ZU0">
                                         <rect key="frame" x="8" y="8" width="279" height="50"/>
@@ -834,7 +834,7 @@
                                         <rect key="frame" x="8" y="101.33333333333334" width="327" height="15.666666666666671"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="English" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="spY-lh-ZPS">
-                                                <rect key="frame" x="0.0" y="0.0" width="0.0" height="15.666666666666666"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="45.333333333333336" height="15.666666666666666"/>
                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
                                                 <color key="textColor" red="0.44705882352941173" green="0.74901960784313726" blue="0.90196078431372551" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -863,7 +863,7 @@
                                         </subviews>
                                     </stackView>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="FbH-Ta-u8Z">
-                                        <rect key="frame" x="0.0" y="125" width="335" height="497"/>
+                                        <rect key="frame" x="0.0" y="125" width="335" height="453"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <prototypes>
                                             <tableViewCell contentMode="scaleToFill" selectionStyle="gray" indentationWidth="10" reuseIdentifier="cell" id="zrD-0Z-lBk" customClass="WorkDetailCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
@@ -1051,7 +1051,7 @@
                                 </variation>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DFN-f7-SBP" customClass="GADBannerView">
-                                <rect key="frame" x="27.666666666666657" y="44" width="320" height="50"/>
+                                <rect key="frame" x="27.666666666666657" y="0.0" width="320" height="50"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="hAO-nD-7DA"/>
@@ -1059,7 +1059,7 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BZH-PI-909">
-                                <rect key="frame" x="16" y="726" width="343" height="42"/>
+                                <rect key="frame" x="16" y="638" width="343" height="42"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.85999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="42" id="LKz-oN-kpU"/>
@@ -1155,7 +1155,7 @@
                         <viewControllerLayoutGuide type="bottom" id="2gP-YE-8LQ"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="ldM-cd-Ww9">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="724"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Rm7-tC-aCz">
@@ -1173,7 +1173,7 @@
                                 </variation>
                             </imageView>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LWg-kn-n5O">
-                                <rect key="frame" x="0.0" y="44" width="375" height="734"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="690"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tW5-tf-pMf">
                                         <rect key="frame" x="24" y="180" width="327" height="76.666666666666686"/>
@@ -1242,10 +1242,10 @@ Please check your Internet connection and also make sure you are logged into you
                                 </variation>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y5e-59-w9r">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="778"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="690"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="240" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Zqd-4u-mNa">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="778"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="690"/>
                                         <color key="backgroundColor" red="0.92000001669999998" green="0.92000001669999998" blue="0.92000001669999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="FeedCell" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="FeedCell" id="HvY-9I-jkq" customClass="FeedTableViewCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
@@ -1256,7 +1256,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O7N-3T-1sh" customClass="XibView" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
-                                                            <rect key="frame" x="15" y="11" width="384" height="218"/>
+                                                            <rect key="frame" x="15" y="11" width="345" height="218"/>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <userDefinedRuntimeAttributes>
                                                                 <userDefinedRuntimeAttribute type="string" keyPath="nibName" value="workCell"/>
@@ -1283,13 +1283,13 @@ Please check your Internet connection and also make sure you are logged into you
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OJd-G7-DrW">
-                                                            <rect key="frame" x="8" y="8" width="398" height="228"/>
+                                                            <rect key="frame" x="8" y="8" width="359" height="228"/>
                                                             <subviews>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="re7-Cz-73R">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="398" height="40"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="359" height="40"/>
                                                                     <subviews>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Topic" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumFontSize="12" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zRL-Oe-dO3">
-                                                                            <rect key="frame" x="16" y="4" width="324" height="32"/>
+                                                                            <rect key="frame" x="16" y="4" width="285" height="32"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="50" id="MOu-1J-0Vq"/>
                                                                             </constraints>
@@ -1306,7 +1306,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                                             </variation>
                                                                         </label>
                                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gj0-J1-faQ">
-                                                                            <rect key="frame" x="344" y="0.0" width="54" height="40"/>
+                                                                            <rect key="frame" x="305" y="0.0" width="54" height="40"/>
                                                                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="width" constant="54" id="ob1-XO-PCh"/>
@@ -1347,7 +1347,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                                     </variation>
                                                                 </view>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Nc-7G-ZQC">
-                                                                    <rect key="frame" x="0.0" y="192" width="398" height="36"/>
+                                                                    <rect key="frame" x="0.0" y="192" width="359" height="36"/>
                                                                     <subviews>
                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UCH-JX-6Rx">
                                                                             <rect key="frame" x="8" y="0.0" width="33" height="36"/>
@@ -1618,7 +1618,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                                     </constraints>
                                                                 </imageView>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="English" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YJp-dA-6Aq">
-                                                                    <rect key="frame" x="33.999999999999993" y="43" width="94.333333333333314" height="21"/>
+                                                                    <rect key="frame" x="34.000000000000007" y="43" width="83.666666666666686" height="21"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="21" id="ve3-j2-sTv"/>
                                                                     </constraints>
@@ -1630,7 +1630,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                                     </variation>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Fandoms: TorchWood" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BkA-Ru-na8">
-                                                                    <rect key="frame" x="28" y="69" width="362" height="21"/>
+                                                                    <rect key="frame" x="28" y="69" width="323" height="21"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="548" id="431-L4-eUv"/>
                                                                         <constraint firstAttribute="height" constant="21" id="7I2-Nk-ZfQ"/>
@@ -1648,7 +1648,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                                     </variation>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="17 Nov 2014" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NQn-31-mp3">
-                                                                    <rect key="frame" x="296" y="44" width="94" height="21"/>
+                                                                    <rect key="frame" x="267.66666666666669" y="44" width="83.333333333333314" height="21"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="120" id="cDW-OK-i9n"/>
                                                                         <constraint firstAttribute="height" constant="21" id="nZP-5K-Un8"/>
@@ -1666,7 +1666,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                                     </variation>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Label" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ccg-wK-dqP">
-                                                                    <rect key="frame" x="8" y="175.66666666666666" width="382" height="14.333333333333343"/>
+                                                                    <rect key="frame" x="8" y="175.66666666666666" width="343" height="14.333333333333343"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <nil key="highlightedColor"/>
@@ -1675,7 +1675,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                                     </variation>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Label" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Df-Td-gLW">
-                                                                    <rect key="frame" x="28" y="111" width="362" height="61"/>
+                                                                    <rect key="frame" x="28" y="111" width="323" height="61"/>
                                                                     <fontDescription key="fontDescription" name="HelveticaNeue-LightItalic" family="Helvetica Neue" pointSize="12"/>
                                                                     <color key="textColor" red="0.37456597219999999" green="0.37456597219999999" blue="0.37456597219999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <nil key="highlightedColor"/>
@@ -1684,7 +1684,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                                     </variation>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mQI-oU-tIp">
-                                                                    <rect key="frame" x="132.33333333333337" y="43" width="159.66666666666663" height="21"/>
+                                                                    <rect key="frame" x="121.66666666666666" y="43" width="141.99999999999997" height="21"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="21" id="Fmj-Wg-r9h"/>
                                                                     </constraints>
@@ -1696,7 +1696,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                                     </variation>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ozz-yC-3V4">
-                                                                    <rect key="frame" x="28" y="92" width="362" height="17"/>
+                                                                    <rect key="frame" x="28" y="92" width="323" height="17"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                     <color key="textColor" red="0.44705882352941173" green="0.74901960784313726" blue="0.90196078431372551" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <nil key="highlightedColor"/>
@@ -1931,7 +1931,7 @@ Please check your Internet connection and also make sure you are logged into you
                                 </variation>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="udP-kR-Lcm">
-                                <rect key="frame" x="0.0" y="778" width="375" height="0.0"/>
+                                <rect key="frame" x="0.0" y="690" width="375" height="0.0"/>
                                 <subviews>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="4Bp-cP-ZSE">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="0.0"/>
@@ -2076,11 +2076,11 @@ Please check your Internet connection and also make sure you are logged into you
                         <viewControllerLayoutGuide type="bottom" id="Yoc-3C-4q5"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="7oc-1t-9bM">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="724"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7BG-8k-w0K">
-                                <rect key="frame" x="133" y="389" width="109" height="34"/>
+                                <rect key="frame" x="133" y="345" width="109" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <state key="normal" title="Try Again  🤔">
                                     <color key="titleColor" red="0.70196078429999997" green="0.27450980390000002" blue="0.27450980390000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -2090,7 +2090,7 @@ Please check your Internet connection and also make sure you are logged into you
                                 </connections>
                             </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="RmA-Nc-iEP">
-                                <rect key="frame" x="0.0" y="734" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="646" width="375" height="44"/>
                                 <color key="backgroundColor" red="0.92000001669999998" green="0.92000001669999998" blue="0.92000001669999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="K3h-4G-MaI"/>
@@ -2134,10 +2134,10 @@ Please check your Internet connection and also make sure you are logged into you
                                 </connections>
                             </collectionView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="240" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="dVv-Wb-Czg">
-                                <rect key="frame" x="0.0" y="44" width="375" height="690"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="646"/>
                                 <color key="backgroundColor" red="0.92000001669999998" green="0.92000001669999998" blue="0.92000001669999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" misplaced="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="FeedCell1" rowHeight="240" id="3mG-9j-QZh" customClass="FeedTableViewCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="FeedCell1" rowHeight="240" id="3mG-9j-QZh" customClass="FeedTableViewCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="22" width="375" height="240"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3mG-9j-QZh" id="sT5-Zl-Axp">
@@ -2621,7 +2621,7 @@ Please check your Internet connection and also make sure you are logged into you
                                             <outlet property="wordsLabel" destination="57e-2G-rxT" id="qX5-N0-3sl"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" restorationIdentifier="FeedCell" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="FeedCell" id="vjm-8w-Szc" customClass="FeedTableViewCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="FeedCell" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="FeedCell" id="vjm-8w-Szc" customClass="FeedTableViewCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="262" width="375" height="240"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="vjm-8w-Szc" id="pNZ-a9-xmh">
@@ -2689,11 +2689,11 @@ Please check your Internet connection and also make sure you are logged into you
                         <viewControllerLayoutGuide type="bottom" id="7u2-7t-GEs"/>
                     </layoutGuides>
                     <view key="view" opaque="NO" contentMode="scaleToFill" id="qtN-uh-88S">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="724"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iGS-U8-np2">
-                                <rect key="frame" x="0.0" y="44" width="375" height="734"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="690"/>
                                 <color key="backgroundColor" red="0.19607843137254902" green="0.20392156862745098" blue="0.22352941176470587" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="tintColor" red="0.8653129940597053" green="0.89898474554477892" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <wkWebViewConfiguration key="configuration" allowsInlineMediaPlayback="YES">
@@ -2703,7 +2703,7 @@ Please check your Internet connection and also make sure you are logged into you
                                 </wkWebViewConfiguration>
                             </wkWebView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QBX-yq-43c" customClass="SpringView" customModule="Spring">
-                                <rect key="frame" x="0.0" y="44" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wnZ-d8-1x3">
                                         <rect key="frame" x="250" y="0.0" width="125" height="44"/>
@@ -2762,7 +2762,7 @@ Please check your Internet connection and also make sure you are logged into you
                                 </variation>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bAf-8o-obo" customClass="SpringView" customModule="Spring">
-                                <rect key="frame" x="0.0" y="734" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="646" width="375" height="44"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="osv-SJ-mU7">
                                         <rect key="frame" x="250" y="0.0" width="125" height="44"/>
@@ -3399,7 +3399,7 @@ Please check your Internet connection and also make sure you are logged into you
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="646"/>
                                 <color key="backgroundColor" red="0.92000001668930054" green="0.92000001668930054" blue="0.92000001668930054" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" misplaced="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="FeedCell1" rowHeight="240" id="DUZ-yY-D5W" customClass="FeedTableViewCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="FeedCell1" rowHeight="240" id="DUZ-yY-D5W" customClass="FeedTableViewCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="40" width="375" height="240"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="DUZ-yY-D5W" id="V6g-Ec-QQg">
@@ -3913,7 +3913,7 @@ Please check your Internet connection and also make sure you are logged into you
                                             <outlet property="wordsLabel" destination="pN5-up-V8w" id="9l4-gy-FlU"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" restorationIdentifier="FeedCell" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="FeedCell" id="sA5-aX-5Od" customClass="FeedTableViewCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="FeedCell" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="FeedCell" id="sA5-aX-5Od" customClass="FeedTableViewCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="280" width="375" height="240"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="sA5-aX-5Od" id="Mcx-ik-z02">
@@ -4204,7 +4204,7 @@ Please check your Internet connection and also make sure you are logged into you
                                 <rect key="frame" x="0.0" y="56" width="375" height="590"/>
                                 <color key="backgroundColor" red="0.92000001668930054" green="0.92000001668930054" blue="0.92000001668930054" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" misplaced="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="FeedCell1" rowHeight="240" id="GaJ-kH-z0B" customClass="FeedTableViewCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="FeedCell1" rowHeight="240" id="GaJ-kH-z0B" customClass="FeedTableViewCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="22" width="375" height="240"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="GaJ-kH-z0B" id="1WV-tz-IX6">
@@ -4719,7 +4719,7 @@ Please check your Internet connection and also make sure you are logged into you
                                             <outlet property="wordsLabel" destination="KF4-XT-Jjg" id="9wi-F4-fcK"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" restorationIdentifier="FeedCell" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="FeedCell" id="qbQ-sj-f41" customClass="FeedTableViewCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="FeedCell" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="FeedCell" id="qbQ-sj-f41" customClass="FeedTableViewCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="262" width="375" height="240"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="qbQ-sj-f41" id="5c8-pq-6Fa">
@@ -6302,7 +6302,7 @@ Major Problems:
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="690"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" misplaced="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="FeedCell" rowHeight="240" id="2lf-xe-t6k" customClass="DownloadedCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="FeedCell" rowHeight="240" id="2lf-xe-t6k" customClass="DownloadedCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="55.333333333333336" width="375" height="240"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2lf-xe-t6k" id="f6J-rP-IgG">
@@ -6469,14 +6469,14 @@ Major Problems:
                                                                     </variation>
                                                                 </view>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hhx-OB-Z6f">
-                                                                    <rect key="frame" x="51" y="-0.33333333333334281" width="33" height="36"/>
+                                                                    <rect key="frame" x="51" y="-0.33333333333334281" width="35" height="36"/>
                                                                     <subviews>
                                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="comments" translatesAutoresizingMaskIntoConstraints="NO" id="LUX-OQ-ADq">
-                                                                            <rect key="frame" x="4" y="10" width="16" height="16"/>
+                                                                            <rect key="frame" x="4" y="9" width="18" height="18"/>
                                                                             <constraints>
-                                                                                <constraint firstAttribute="width" constant="16" id="5sp-Ne-8gd"/>
+                                                                                <constraint firstAttribute="width" constant="18" id="5sp-Ne-8gd"/>
                                                                                 <constraint firstAttribute="width" secondItem="LUX-OQ-ADq" secondAttribute="height" multiplier="1:1" id="Ohe-2Q-QY3"/>
-                                                                                <constraint firstAttribute="height" constant="16" id="ssj-8V-la1"/>
+                                                                                <constraint firstAttribute="height" constant="18" id="ssj-8V-la1"/>
                                                                             </constraints>
                                                                             <variation key="default">
                                                                                 <mask key="constraints">
@@ -6485,7 +6485,7 @@ Major Problems:
                                                                             </variation>
                                                                         </imageView>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cbc-0w-Gar">
-                                                                            <rect key="frame" x="24" y="11.333333333333343" width="7" height="13.666666666666664"/>
+                                                                            <rect key="frame" x="26" y="11.333333333333343" width="7" height="13.666666666666664"/>
                                                                             <fontDescription key="fontDescription" type="system" weight="light" pointSize="11"/>
                                                                             <color key="textColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <nil key="highlightedColor"/>
@@ -6515,14 +6515,14 @@ Major Problems:
                                                                     </variation>
                                                                 </view>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xah-Qx-dAu">
-                                                                    <rect key="frame" x="94" y="-0.33333333333334281" width="29" height="36"/>
+                                                                    <rect key="frame" x="96" y="-0.33333333333334281" width="31" height="36"/>
                                                                     <subviews>
                                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="236" verticalHuggingPriority="251" image="likes" translatesAutoresizingMaskIntoConstraints="NO" id="wJF-nJ-dDf">
-                                                                            <rect key="frame" x="0.0" y="10" width="16" height="16"/>
+                                                                            <rect key="frame" x="0.0" y="9" width="18" height="18"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="width" secondItem="wJF-nJ-dDf" secondAttribute="height" multiplier="1:1" id="Hcj-kV-jya"/>
-                                                                                <constraint firstAttribute="width" constant="16" id="QR3-D9-dNJ"/>
-                                                                                <constraint firstAttribute="height" constant="16" id="pCk-OR-znH"/>
+                                                                                <constraint firstAttribute="width" constant="18" id="QR3-D9-dNJ"/>
+                                                                                <constraint firstAttribute="height" constant="18" id="pCk-OR-znH"/>
                                                                             </constraints>
                                                                             <variation key="default">
                                                                                 <mask key="constraints">
@@ -6531,7 +6531,7 @@ Major Problems:
                                                                             </variation>
                                                                         </imageView>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8zv-1z-prL">
-                                                                            <rect key="frame" x="20" y="11.333333333333343" width="7" height="13.666666666666664"/>
+                                                                            <rect key="frame" x="22" y="11.333333333333343" width="7" height="13.666666666666664"/>
                                                                             <fontDescription key="fontDescription" type="system" weight="light" pointSize="11"/>
                                                                             <color key="textColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <nil key="highlightedColor"/>
@@ -6569,7 +6569,7 @@ Major Problems:
                                                                     </variation>
                                                                 </view>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dir-7T-e5j">
-                                                                    <rect key="frame" x="133" y="-0.33333333333334281" width="31" height="36"/>
+                                                                    <rect key="frame" x="137" y="-0.33333333333334281" width="31" height="36"/>
                                                                     <subviews>
                                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="237" verticalHuggingPriority="251" image="bookmark" translatesAutoresizingMaskIntoConstraints="NO" id="ceh-ts-rzH">
                                                                             <rect key="frame" x="2" y="10" width="16" height="16"/>
@@ -6613,7 +6613,7 @@ Major Problems:
                                                                     </variation>
                                                                 </view>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z1X-dJ-WeV">
-                                                                    <rect key="frame" x="174" y="-0.33333333333334281" width="31" height="36"/>
+                                                                    <rect key="frame" x="178" y="-0.33333333333334281" width="31" height="36"/>
                                                                     <subviews>
                                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hits" translatesAutoresizingMaskIntoConstraints="NO" id="xko-yV-FYt">
                                                                             <rect key="frame" x="2" y="10" width="16" height="16"/>
@@ -6783,20 +6783,25 @@ Major Problems:
                                         <color key="backgroundColor" red="0.92156862745098034" green="0.92156862745098034" blue="0.92156862745098034" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
                                             <outlet property="bgView" destination="e43-xT-xfS" id="Thk-uZ-fuP"/>
+                                            <outlet property="bmkImg" destination="ceh-ts-rzH" id="hM0-oL-gTm"/>
                                             <outlet property="bookmarksLabel" destination="Csm-5L-6Gp" id="2m6-xe-hxR"/>
                                             <outlet property="chaptersLabel" destination="h1l-gt-NVP" id="xe8-FY-02I"/>
+                                            <outlet property="commentsImg" destination="LUX-OQ-ADq" id="KEd-Qu-dfR"/>
                                             <outlet property="commentsLabel" destination="cbc-0w-Gar" id="LTN-qZ-9A0"/>
                                             <outlet property="datetimeLabel" destination="vLJ-ph-As1" id="qhi-6F-xJR"/>
                                             <outlet property="deleteButton" destination="e5T-hr-Pt6" id="4JF-7r-Nfh"/>
                                             <outlet property="fandomsLabel" destination="u0i-LR-414" id="o5W-t0-QTO"/>
                                             <outlet property="folderButton" destination="2ao-YX-uFQ" id="YF2-iD-hUp"/>
+                                            <outlet property="hitsImg" destination="xko-yV-FYt" id="RiU-dI-aFU"/>
                                             <outlet property="hitsLabel" destination="6WZ-X0-Dx0" id="R0z-RQ-rvd"/>
+                                            <outlet property="kudosImg" destination="wJF-nJ-dDf" id="0Lk-I8-18o"/>
                                             <outlet property="kudosLabel" destination="8zv-1z-prL" id="KMP-yg-ldK"/>
                                             <outlet property="languageLabel" destination="X4z-9n-kqG" id="mfT-ZX-J5H"/>
                                             <outlet property="ratingImg" destination="kcb-0Y-sjL" id="pvt-0x-Ldy"/>
                                             <outlet property="tagsLabel" destination="B4h-2r-oZZ" id="4b4-ph-r1M"/>
                                             <outlet property="topicLabel" destination="4VT-L1-fAL" id="R2j-mc-aA4"/>
                                             <outlet property="topicPreviewLabel" destination="yxf-WI-AV9" id="Yne-8F-5Zq"/>
+                                            <outlet property="wordImg" destination="5Dw-0H-wYd" id="NxI-NL-uLg"/>
                                             <outlet property="wordsLabel" destination="7xe-CI-RE6" id="W50-jL-mPC"/>
                                             <segue destination="g0F-jj-WaO" kind="show" identifier="offlineWorkDetail" id="6Vy-m9-kwB"/>
                                         </connections>
@@ -7091,7 +7096,7 @@ Please check your Internet connection and also make sure you are logged into you
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="646"/>
                                 <color key="backgroundColor" red="0.92000001668930054" green="0.92000001668930054" blue="0.92000001668930054" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" misplaced="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="FeedCell1" rowHeight="240" id="CE4-sy-gmS" customClass="FeedTableViewCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="FeedCell1" rowHeight="240" id="CE4-sy-gmS" customClass="FeedTableViewCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="22" width="375" height="240"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="CE4-sy-gmS" id="I5G-vc-nes">
@@ -7607,7 +7612,7 @@ Please check your Internet connection and also make sure you are logged into you
                                             <outlet property="wordsLabel" destination="Wac-zJ-ApS" id="QcD-mv-UvU"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" restorationIdentifier="FeedCell" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="FeedCell" id="oTW-0K-bBT" customClass="FeedTableViewCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="FeedCell" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="FeedCell" id="oTW-0K-bBT" customClass="FeedTableViewCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="262" width="375" height="240"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="oTW-0K-bBT" id="Nqf-Ef-LJS">
@@ -7929,7 +7934,7 @@ Please check your Internet connection and also make sure you are logged into you
                                 <rect key="frame" x="0.0" y="20.666666666666686" width="375" height="625.33333333333326"/>
                                 <color key="backgroundColor" red="0.92000001668930054" green="0.92000001668930054" blue="0.92000001668930054" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" misplaced="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="FeedCell1" rowHeight="240" id="ZiY-5N-zpP" customClass="FeedTableViewCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="FeedCell1" rowHeight="240" id="ZiY-5N-zpP" customClass="FeedTableViewCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="22" width="375" height="240"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ZiY-5N-zpP" id="2vM-wk-Ej3">
@@ -8445,7 +8450,7 @@ Please check your Internet connection and also make sure you are logged into you
                                             <outlet property="wordsLabel" destination="xco-34-ICZ" id="Z0r-qE-6Z4"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" restorationIdentifier="FeedCell" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="FeedCell" id="W09-FO-Mmj" customClass="FeedTableViewCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="FeedCell" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="FeedCell" id="W09-FO-Mmj" customClass="FeedTableViewCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="262" width="375" height="240"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="W09-FO-Mmj" id="6a7-Kn-Z6d">
@@ -9072,7 +9077,7 @@ Please check your Internet connection and also make sure you are logged into you
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="646"/>
                                 <color key="backgroundColor" red="0.92000001669999998" green="0.92000001669999998" blue="0.92000001669999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" misplaced="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="FeedCell1" rowHeight="240" id="58X-i9-fn3" customClass="FeedTableViewCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="FeedCell1" rowHeight="240" id="58X-i9-fn3" customClass="FeedTableViewCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="22" width="375" height="240"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="58X-i9-fn3" id="DNW-bb-pTl">
@@ -9588,7 +9593,7 @@ Please check your Internet connection and also make sure you are logged into you
                                             <outlet property="wordsLabel" destination="YxI-07-ufB" id="EHC-tZ-ri4"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" restorationIdentifier="FeedCell" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="FeedCell" id="dqv-JH-1Le" customClass="FeedTableViewCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="FeedCell" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="FeedCell" id="dqv-JH-1Le" customClass="FeedTableViewCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="262" width="375" height="240"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="dqv-JH-1Le" id="wXd-7e-G88">
@@ -9884,7 +9889,7 @@ Please check your Internet connection and also make sure you are logged into you
         <image name="book_bg" width="360" height="640"/>
         <image name="bookmark" width="56" height="56"/>
         <image name="categories" width="48" height="48"/>
-        <image name="comments" width="18" height="18"/>
+        <image name="comments" width="24" height="24"/>
         <image name="disclosure" width="32" height="52"/>
         <image name="download-100" width="33" height="33"/>
         <image name="download-red" width="33" height="33"/>
@@ -9894,7 +9899,7 @@ Please check your Internet connection and also make sure you are logged into you
         <image name="hits" width="74" height="74"/>
         <image name="icon-download" width="32" height="32"/>
         <image name="lang" width="18" height="18"/>
-        <image name="likes" width="18" height="18"/>
+        <image name="likes" width="23" height="23"/>
         <image name="pref_bg" width="360" height="240"/>
         <image name="profile" width="20" height="20"/>
         <image name="settings" width="33" height="33"/>
@@ -9906,7 +9911,7 @@ Please check your Internet connection and also make sure you are logged into you
     <inferredMetricsTieBreakers>
         <segue reference="5rQ-gu-17N"/>
         <segue reference="GOa-zO-Fy6"/>
-        <segue reference="pDe-8P-N2j"/>
+        <segue reference="6Vy-m9-kwB"/>
         <segue reference="b3W-0z-TKl"/>
     </inferredMetricsTieBreakers>
 </document>

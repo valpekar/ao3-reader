@@ -21,6 +21,12 @@ class XibView : UIView {
     @IBOutlet weak var bgView:UIView!
     @IBOutlet weak var ratingImg: UIImageView!
     
+    @IBOutlet weak var hitsImg: UIImageView!
+    @IBOutlet weak var bmkImg: UIImageView!
+    @IBOutlet weak var commentsImg: UIImageView!
+    @IBOutlet weak var kudosImg: UIImageView!
+    @IBOutlet weak var wordImg: UIImageView!
+    
     @IBOutlet weak var topicLabel: UILabel!
     
     @IBOutlet weak var languageLabel: UILabel!

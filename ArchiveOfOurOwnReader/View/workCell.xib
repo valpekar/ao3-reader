@@ -19,21 +19,26 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="XibView" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
             <connections>
                 <outlet property="bgView" destination="vOd-Qt-9ND" id="ta2-Xa-HC0"/>
+                <outlet property="bmkImg" destination="Njo-W5-haB" id="DbJ-RI-JPl"/>
                 <outlet property="bookmarksLabel" destination="955-Gs-4rh" id="iuh-ew-l55"/>
                 <outlet property="chaptersLabel" destination="XpP-8U-EwS" id="9f2-C6-orN"/>
+                <outlet property="commentsImg" destination="OLt-h7-beN" id="tEI-Yv-syl"/>
                 <outlet property="commentsLabel" destination="ftv-zd-eMy" id="lKP-Cf-und"/>
                 <outlet property="datetimeLabel" destination="H4p-O2-RSh" id="ueU-MN-p41"/>
                 <outlet property="deleteButton" destination="QPU-Gj-3uM" id="zIU-oq-fmI"/>
                 <outlet property="deleteButtonWidth" destination="t4h-TT-d6X" id="4hH-Mf-xox"/>
                 <outlet property="downloadButton" destination="Bxs-C3-ncj" id="Sqv-Bs-uZa"/>
                 <outlet property="fandomsLabel" destination="cYy-WQ-5oG" id="IAd-aS-nhy"/>
+                <outlet property="hitsImg" destination="Sag-CU-3LI" id="F7s-Vi-SCe"/>
                 <outlet property="hitsLabel" destination="flR-Kx-gll" id="ejS-uy-itY"/>
+                <outlet property="kudosImg" destination="4F7-yr-PQo" id="p5f-cu-oXy"/>
                 <outlet property="kudosLabel" destination="HzM-9T-REW" id="cfG-93-TKU"/>
                 <outlet property="languageLabel" destination="G4g-a4-SLg" id="v7Q-5y-ErW"/>
                 <outlet property="ratingImg" destination="QcH-NK-jJn" id="IzN-BF-gKP"/>
                 <outlet property="tagsLabel" destination="W0U-yb-aer" id="H8E-Pi-X2K"/>
                 <outlet property="topicLabel" destination="yuk-ho-zcD" id="slP-cZ-Uvv"/>
                 <outlet property="topicPreviewLabel" destination="NHo-ld-Q2V" id="21L-jn-V2w"/>
+                <outlet property="wordImg" destination="Fbh-00-jWQ" id="dUY-VL-YJO"/>
                 <outlet property="wordsLabel" destination="TDJ-tS-a4l" id="HUF-nR-FpE"/>
             </connections>
         </placeholder>
@@ -213,14 +218,14 @@
                                     </variation>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I3v-J0-0FK">
-                                    <rect key="frame" x="51" y="0.0" width="33" height="36"/>
+                                    <rect key="frame" x="51" y="0.0" width="35" height="36"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="comments" translatesAutoresizingMaskIntoConstraints="NO" id="OLt-h7-beN">
-                                            <rect key="frame" x="4" y="10" width="16" height="16"/>
+                                            <rect key="frame" x="4" y="9" width="18" height="18"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="16" id="7Jf-bQ-DPk"/>
+                                                <constraint firstAttribute="height" constant="18" id="7Jf-bQ-DPk"/>
                                                 <constraint firstAttribute="width" secondItem="OLt-h7-beN" secondAttribute="height" multiplier="1:1" id="EbT-V6-ZSY"/>
-                                                <constraint firstAttribute="width" constant="16" id="J75-ye-hTZ"/>
+                                                <constraint firstAttribute="width" constant="18" id="J75-ye-hTZ"/>
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
@@ -229,7 +234,7 @@
                                             </variation>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ftv-zd-eMy">
-                                            <rect key="frame" x="24" y="11.5" width="7" height="13"/>
+                                            <rect key="frame" x="26" y="11.5" width="7" height="13"/>
                                             <fontDescription key="fontDescription" type="system" weight="light" pointSize="11"/>
                                             <color key="textColor" red="0.31764705879999999" green="0.20392156859999999" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
@@ -259,13 +264,13 @@
                                     </variation>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BBJ-21-9Eh">
-                                    <rect key="frame" x="94" y="0.0" width="29" height="36"/>
+                                    <rect key="frame" x="96" y="0.0" width="31" height="36"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="236" verticalHuggingPriority="251" image="likes" translatesAutoresizingMaskIntoConstraints="NO" id="4F7-yr-PQo">
-                                            <rect key="frame" x="0.0" y="10" width="16" height="16"/>
+                                            <rect key="frame" x="0.0" y="9" width="18" height="18"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="16" id="TFK-Yb-Oof"/>
-                                                <constraint firstAttribute="height" constant="16" id="c7a-8Y-Jcm"/>
+                                                <constraint firstAttribute="width" constant="18" id="TFK-Yb-Oof"/>
+                                                <constraint firstAttribute="height" constant="18" id="c7a-8Y-Jcm"/>
                                                 <constraint firstAttribute="width" secondItem="4F7-yr-PQo" secondAttribute="height" multiplier="1:1" id="cuU-lz-Xzn"/>
                                             </constraints>
                                             <variation key="default">
@@ -275,7 +280,7 @@
                                             </variation>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HzM-9T-REW">
-                                            <rect key="frame" x="20" y="11.5" width="7" height="13"/>
+                                            <rect key="frame" x="22" y="11.5" width="7" height="13"/>
                                             <fontDescription key="fontDescription" type="system" weight="light" pointSize="11"/>
                                             <color key="textColor" red="0.31764705879999999" green="0.20392156859999999" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
@@ -313,7 +318,7 @@
                                     </variation>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z3R-o5-MbJ">
-                                    <rect key="frame" x="133" y="0.0" width="31" height="36"/>
+                                    <rect key="frame" x="137" y="0.0" width="31" height="36"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="237" verticalHuggingPriority="251" image="bookmark" translatesAutoresizingMaskIntoConstraints="NO" id="Njo-W5-haB">
                                             <rect key="frame" x="2" y="10" width="16" height="16"/>
@@ -357,7 +362,7 @@
                                     </variation>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gYN-FM-CLO">
-                                    <rect key="frame" x="174" y="0.0" width="31" height="36"/>
+                                    <rect key="frame" x="178" y="0.0" width="31" height="36"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hits" translatesAutoresizingMaskIntoConstraints="NO" id="Sag-CU-3LI">
                                             <rect key="frame" x="2" y="10" width="16" height="16"/>
@@ -539,11 +544,11 @@
     <resources>
         <image name="NotRated" width="38" height="38"/>
         <image name="bookmark" width="56" height="56"/>
-        <image name="comments" width="18" height="18"/>
+        <image name="comments" width="24" height="24"/>
         <image name="download-100" width="33" height="33"/>
         <image name="hits" width="74" height="74"/>
         <image name="lang" width="18" height="18"/>
-        <image name="likes" width="18" height="18"/>
+        <image name="likes" width="23" height="23"/>
         <image name="trash" width="32" height="32"/>
         <image name="word" width="56" height="56"/>
     </resources>

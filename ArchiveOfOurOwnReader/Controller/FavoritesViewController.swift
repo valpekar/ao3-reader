@@ -317,6 +317,15 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
             cell.hitsLabel.textColor = AppDelegate.redColor
             cell.wordsLabel.textColor = AppDelegate.redColor
             
+            cell.wordImg.image = UIImage(named: "word")
+            cell.commentsImg.image = UIImage(named: "comments")
+            cell.kudosImg.image = UIImage(named: "likes")
+            cell.bmkImg.image = UIImage(named: "bookmark")
+            cell.hitsImg.image = UIImage(named: "hits")
+            
+            cell.deleteButton.setImage(UIImage(named: "trash"), for: .normal)
+            cell.folderButton.setImage(UIImage(named: "folder"), for: .normal)
+            
         } else {
             cell.backgroundColor = AppDelegate.greyDarkBg
             cell.bgView.backgroundColor = AppDelegate.greyBg
@@ -332,6 +341,15 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
             cell.bookmarksLabel.textColor = AppDelegate.darkerGreyColor
             cell.hitsLabel.textColor = AppDelegate.darkerGreyColor
             cell.wordsLabel.textColor = AppDelegate.darkerGreyColor
+            
+            cell.wordImg.image = UIImage(named: "word_light")
+            cell.commentsImg.image = UIImage(named: "comments_light")
+            cell.kudosImg.image = UIImage(named: "likes_light")
+            cell.bmkImg.image = UIImage(named: "bookmark_light")
+            cell.hitsImg.image = UIImage(named: "hits_light")
+            
+            cell.deleteButton.setImage(UIImage(named: "trash_light"), for: .normal)
+            cell.folderButton.setImage(UIImage(named: "folder_light"), for: .normal)
         }
         
         cell.fandomsLabel.textColor = AppDelegate.greenColor
