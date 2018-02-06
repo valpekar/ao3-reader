@@ -18,12 +18,12 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="XibView" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
             <connections>
+                <outlet property="authorLabel" destination="XpP-8U-EwS" id="mr5-oD-TsH"/>
                 <outlet property="bgView" destination="vOd-Qt-9ND" id="ta2-Xa-HC0"/>
                 <outlet property="bmkImg" destination="Njo-W5-haB" id="DbJ-RI-JPl"/>
                 <outlet property="bookmarksLabel" destination="955-Gs-4rh" id="iuh-ew-l55"/>
-                <outlet property="chaptersLabel" destination="XpP-8U-EwS" id="9f2-C6-orN"/>
-                <outlet property="commentsImg" destination="OLt-h7-beN" id="tEI-Yv-syl"/>
-                <outlet property="commentsLabel" destination="ftv-zd-eMy" id="lKP-Cf-und"/>
+                <outlet property="chaptersImg" destination="OLt-h7-beN" id="fUv-hD-1sz"/>
+                <outlet property="chaptersLabel" destination="ftv-zd-eMy" id="c0p-Wy-Ms7"/>
                 <outlet property="datetimeLabel" destination="H4p-O2-RSh" id="ueU-MN-p41"/>
                 <outlet property="deleteButton" destination="QPU-Gj-3uM" id="zIU-oq-fmI"/>
                 <outlet property="deleteButtonWidth" destination="t4h-TT-d6X" id="4hH-Mf-xox"/>
@@ -220,7 +220,7 @@
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I3v-J0-0FK">
                                     <rect key="frame" x="51" y="0.0" width="35" height="36"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="comments" translatesAutoresizingMaskIntoConstraints="NO" id="OLt-h7-beN">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chapters" translatesAutoresizingMaskIntoConstraints="NO" id="OLt-h7-beN">
                                             <rect key="frame" x="4" y="9" width="18" height="18"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="18" id="7Jf-bQ-DPk"/>
@@ -450,7 +450,7 @@
                             </variation>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Label" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W0U-yb-aer">
-                            <rect key="frame" x="8" y="96.5" width="339" height="117.5"/>
+                            <rect key="frame" x="8" y="92" width="339" height="122"/>
                             <fontDescription key="fontDescription" name="HelveticaNeue-LightItalic" family="Helvetica Neue" pointSize="12"/>
                             <color key="textColor" red="0.42745098040000001" green="0.42745098040000001" blue="0.42745098040000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
@@ -459,15 +459,15 @@
                             </variation>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XpP-8U-EwS">
-                            <rect key="frame" x="52" y="69.5" width="295" height="21"/>
+                            <rect key="frame" x="52" y="69.5" width="295" height="14.5"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="21" id="NWP-Ko-h8J"/>
+                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="14.5" id="ErO-n1-Mre"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" weight="light" pointSize="11"/>
+                            <fontDescription key="fontDescription" type="system" weight="light" pointSize="12"/>
                             <color key="textColor" red="0.31764705879999999" green="0.20392156859999999" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                             <variation key="heightClass=regular-widthClass=regular">
-                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
+                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="16"/>
                             </variation>
                         </label>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NotRated" translatesAutoresizingMaskIntoConstraints="NO" id="QcH-NK-jJn">
@@ -480,7 +480,7 @@
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Topic" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumFontSize="12" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yuk-ho-zcD">
                             <rect key="frame" x="52" y="50" width="295" height="19.5"/>
                             <constraints>
-                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="19.5" id="aQC-HO-JRr"/>
+                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="19" id="aQC-HO-JRr"/>
                                 <constraint firstAttribute="height" constant="50" id="c1p-gA-caZ"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -499,7 +499,6 @@
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="trailingMargin" secondItem="NHo-ld-Q2V" secondAttribute="trailing" id="49d-8Q-GoN"/>
-                        <constraint firstItem="W0U-yb-aer" firstAttribute="top" secondItem="XpP-8U-EwS" secondAttribute="bottom" constant="6" id="4RO-eT-VOE"/>
                         <constraint firstItem="NHo-ld-Q2V" firstAttribute="top" secondItem="W0U-yb-aer" secondAttribute="bottom" constant="4" id="BkH-c2-sES"/>
                         <constraint firstItem="lBo-Pc-xB4" firstAttribute="top" secondItem="vOd-Qt-9ND" secondAttribute="top" id="CTb-sb-WaL"/>
                         <constraint firstItem="NHo-ld-Q2V" firstAttribute="leading" secondItem="vOd-Qt-9ND" secondAttribute="leadingMargin" id="Cyw-cL-XZM"/>
@@ -509,6 +508,7 @@
                         <constraint firstItem="QcH-NK-jJn" firstAttribute="top" secondItem="lBo-Pc-xB4" secondAttribute="bottom" constant="8" id="Uq2-yl-yjd"/>
                         <constraint firstItem="yuk-ho-zcD" firstAttribute="top" secondItem="lBo-Pc-xB4" secondAttribute="bottom" constant="6" id="XbG-0T-cXY"/>
                         <constraint firstItem="W0U-yb-aer" firstAttribute="leading" secondItem="vOd-Qt-9ND" secondAttribute="leading" constant="8" id="XqJ-6c-xPj"/>
+                        <constraint firstItem="W0U-yb-aer" firstAttribute="top" secondItem="XpP-8U-EwS" secondAttribute="bottom" constant="8" id="Xsp-lP-gnt"/>
                         <constraint firstAttribute="trailing" secondItem="itN-oV-giU" secondAttribute="trailing" id="a39-jF-rBI"/>
                         <constraint firstItem="itN-oV-giU" firstAttribute="leading" secondItem="vOd-Qt-9ND" secondAttribute="leading" id="gV4-q4-PTG"/>
                         <constraint firstItem="XpP-8U-EwS" firstAttribute="leading" secondItem="QcH-NK-jJn" secondAttribute="trailing" constant="8" id="h3S-Iw-AHN"/>
@@ -544,7 +544,7 @@
     <resources>
         <image name="NotRated" width="38" height="38"/>
         <image name="bookmark" width="56" height="56"/>
-        <image name="comments" width="24" height="24"/>
+        <image name="chapters" width="24" height="24"/>
         <image name="download-100" width="33" height="33"/>
         <image name="hits" width="74" height="74"/>
         <image name="lang" width="18" height="18"/>

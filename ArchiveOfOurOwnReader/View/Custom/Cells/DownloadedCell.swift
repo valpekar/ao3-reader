@@ -14,13 +14,15 @@ class DownloadedCell: UITableViewCell {
     
     @IBOutlet weak var hitsImg: UIImageView!
     @IBOutlet weak var bmkImg: UIImageView!
-    @IBOutlet weak var commentsImg: UIImageView!
+    @IBOutlet weak var chaptersImg: UIImageView!
     @IBOutlet weak var kudosImg: UIImageView!
     @IBOutlet weak var wordImg: UIImageView!
     
     @IBOutlet weak var wordsLabel: UILabel!
     
     @IBOutlet weak var topicLabel: UILabel!
+    
+    @IBOutlet weak var authorLabel: UILabel!
     
     @IBOutlet weak var languageLabel: UILabel!
     
@@ -37,8 +39,6 @@ class DownloadedCell: UITableViewCell {
     @IBOutlet weak var topicPreviewLabel: UILabel!
     
     @IBOutlet weak var chaptersLabel: UILabel!
-    
-    @IBOutlet weak var commentsLabel: UILabel!
     
     @IBOutlet weak var kudosLabel: UILabel!
     

@@ -12,7 +12,8 @@ struct NewsFeedItem {
     
      var title = ""
      var topic = ""
-     var topicPreview:String? = ""
+     var author = ""
+     var topicPreview = ""
      var fandoms = ""
      var tags = [String]()
      var dateTime = ""

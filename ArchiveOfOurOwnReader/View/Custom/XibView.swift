@@ -23,7 +23,8 @@ class XibView : UIView {
     
     @IBOutlet weak var hitsImg: UIImageView!
     @IBOutlet weak var bmkImg: UIImageView!
-    @IBOutlet weak var commentsImg: UIImageView!
+   // @IBOutlet weak var commentsImg: UIImageView!
+    @IBOutlet weak var chaptersImg: UIImageView!
     @IBOutlet weak var kudosImg: UIImageView!
     @IBOutlet weak var wordImg: UIImageView!
     
@@ -32,6 +33,8 @@ class XibView : UIView {
     @IBOutlet weak var languageLabel: UILabel!
     
     @IBOutlet weak var datetimeLabel: UILabel!
+    
+     @IBOutlet weak var authorLabel: UILabel!
     
     @IBOutlet weak var categoryLabel: UILabel!
     
@@ -47,7 +50,7 @@ class XibView : UIView {
     
     @IBOutlet weak var chaptersLabel: UILabel!
     
-    @IBOutlet weak var commentsLabel: UILabel!
+   // @IBOutlet weak var commentsLabel: UILabel!
     
     @IBOutlet weak var kudosLabel: UILabel!
     

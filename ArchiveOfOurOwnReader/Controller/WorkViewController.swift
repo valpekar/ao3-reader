@@ -26,6 +26,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
     
     @IBOutlet weak var kudosButton: UIButton!
     @IBOutlet weak var downloadButton: UIButton!
+    @IBOutlet weak var commentsButton: UIButton!
     
     var prevChapter: String = ""
     var nextChapter: String = ""
@@ -53,6 +54,12 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
         super.viewDidLoad()
         
         addNavItems()
+        
+        if let th = DefaultsManager.getInt(DefaultsManager.THEME) {
+            self.theme = th
+        } else {
+            self.theme = DefaultsManager.THEME_DAY
+        }
         
         prevButton.isHidden = true
         self.webView.navigationDelegate = self
@@ -92,7 +99,11 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
     }
     
     func showOnlineWork(workItem: WorkItem) {
-        downloadButton.setImage(UIImage(named: "download-100"), for: .normal)
+        if (self.theme == DefaultsManager.THEME_DAY) {
+            downloadButton.setImage(UIImage(named: "download-100"), for: .normal)
+        } else {
+            downloadButton.setImage(UIImage(named: "download-100_light"), for: .normal)
+        }
         
         if (onlineChapters.count == 0 || onlineChapters.count == 1) {
             contentsButton.isHidden = true
@@ -119,7 +130,11 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
         if (downloadButton == nil) { //user left to another screen
             return
         }
-        downloadButton.setImage(UIImage(named: "ic_refresh"), for: .normal)
+        if (self.theme == DefaultsManager.THEME_DAY) {
+            downloadButton.setImage(UIImage(named: "ic_refresh"), for: .normal)
+        } else {
+            downloadButton.setImage(UIImage(named: "ic_refresh_light"), for: .normal)
+        }
         
         self.downloadedChapters = downloadedChapters.sorted(by: { (a:DBChapter, b: DBChapter) -> Bool in
             return b.value(forKey: "chapterIndex") as? Int ?? -1 > a.value(forKey: "chapterIndex") as? Int ?? 0
@@ -1074,6 +1089,9 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
             
                 bgColor = AppDelegate.greyLightColor
                 txtColor = AppDelegate.redColor
+            
+                commentsButton.setImage(UIImage(named: "comments"), for: UIControlState.normal)
+                kudosButton.setImage(UIImage(named: "likes"), for: UIControlState.normal)
                 
             case DefaultsManager.THEME_NIGHT :
                 self.webView.backgroundColor = AppDelegate.nightBgColor
@@ -1084,6 +1102,9 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
             
                 bgColor = AppDelegate.greyDarkBg
                 txtColor = AppDelegate.textLightColor
+            
+                commentsButton.setImage(UIImage(named: "comments_light"), for: UIControlState.normal)
+                kudosButton.setImage(UIImage(named: "likes_light"), for: UIControlState.normal)
                 
             default:
                 break

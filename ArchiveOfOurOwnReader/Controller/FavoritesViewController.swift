@@ -34,7 +34,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         self.createDrawerButton()
         
         self.tableView.rowHeight = UITableViewAutomaticDimension
-        self.tableView.estimatedRowHeight = 240
+        self.tableView.estimatedRowHeight = 220
         
         UserDefaults.standard.synchronize()
         if let pp = UserDefaults.standard.value(forKey: "pro") as? Bool {
@@ -188,15 +188,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
             }
         }
         
-        if let wTitle = curWork?.value(forKey: "workTitle") as? String {
-            if let wAuthor = curWork?.value(forKey: "author") as? String {
-                cell?.topicLabel.text = wTitle + " \(NSLocalizedString("by", comment: "")) " + wAuthor
-            } else {
-                cell?.topicLabel.text = ""
-            }
-        } else {
-            cell?.topicLabel.text = ""
-        }
+        cell?.topicLabel.text = curWork?.workTitle ?? "-"
         
         var fandomsStr = ""
         if let downloadedFandoms = curWork?.mutableSetValue(forKey: "fandoms").allObjects as? [DBFandom] {
@@ -232,17 +224,11 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
             cell?.topicPreviewLabel.text = ""
         }
         
-        let chaptersCountStr = (curWork?.value(forKey: "chaptersCount") as? String) ?? ""
+        cell?.authorLabel.text = curWork?.author ?? "-"
         
         cell?.datetimeLabel.text = curWork?.value(forKey: "datetime") as? String
         cell?.languageLabel.text = curWork?.value(forKey: "language") as? String
-        cell?.chaptersLabel.text = "\(NSLocalizedString("Chapters_", comment: "")) \(chaptersCountStr)"
-        
-        if let commentsNum: Float = Float(curWork?.value(forKey: "comments") as? String ?? "0") {
-            cell?.commentsLabel.text =  commentsNum.formatUsingAbbrevation()
-        } else {
-            cell?.commentsLabel.text = curWork?.value(forKey: "comments") as? String
-        }
+        cell?.chaptersLabel.text = curWork?.chaptersCount ?? "-"
         
         if let kudosNum: Float = Float(curWork?.value(forKey: "kudos") as? String ?? "0") {
             cell?.kudosLabel.text =  kudosNum.formatUsingAbbrevation()
@@ -315,16 +301,17 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
             cell.languageLabel.textColor = AppDelegate.redColor
             cell.datetimeLabel.textColor = AppDelegate.redColor
             cell.chaptersLabel.textColor = AppDelegate.redColor
+            cell.authorLabel.textColor = AppDelegate.redColor
             cell.topicPreviewLabel.textColor = UIColor.black
             cell.tagsLabel.textColor = AppDelegate.darkerGreyColor
             cell.kudosLabel.textColor = AppDelegate.redColor
-            cell.commentsLabel.textColor = AppDelegate.redColor
+            cell.chaptersLabel.textColor = AppDelegate.redColor
             cell.bookmarksLabel.textColor = AppDelegate.redColor
             cell.hitsLabel.textColor = AppDelegate.redColor
             cell.wordsLabel.textColor = AppDelegate.redColor
             
             cell.wordImg.image = UIImage(named: "word")
-            cell.commentsImg.image = UIImage(named: "comments")
+            cell.chaptersImg.image = UIImage(named: "chapters")
             cell.kudosImg.image = UIImage(named: "likes")
             cell.bmkImg.image = UIImage(named: "bookmark")
             cell.hitsImg.image = UIImage(named: "hits")
@@ -339,17 +326,18 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
             cell.languageLabel.textColor = AppDelegate.greyLightColor
             cell.datetimeLabel.textColor = AppDelegate.greyLightColor
             cell.chaptersLabel.textColor = AppDelegate.greyLightColor
+            cell.authorLabel.textColor = AppDelegate.greyLightColor
             cell.topicPreviewLabel.textColor = AppDelegate.textLightColor
             cell.tagsLabel.textColor = AppDelegate.redTextColor
             cell.tagsLabel.textColor = AppDelegate.greyLightColor
             cell.kudosLabel.textColor = AppDelegate.darkerGreyColor
-            cell.commentsLabel.textColor = AppDelegate.darkerGreyColor
+            cell.chaptersLabel.textColor = AppDelegate.darkerGreyColor
             cell.bookmarksLabel.textColor = AppDelegate.darkerGreyColor
             cell.hitsLabel.textColor = AppDelegate.darkerGreyColor
             cell.wordsLabel.textColor = AppDelegate.darkerGreyColor
             
             cell.wordImg.image = UIImage(named: "word_light")
-            cell.commentsImg.image = UIImage(named: "comments_light")
+            cell.chaptersImg.image = UIImage(named: "chapters_light")
             cell.kudosImg.image = UIImage(named: "likes_light")
             cell.bmkImg.image = UIImage(named: "bookmark_light")
             cell.hitsImg.image = UIImage(named: "hits_light")
@@ -395,7 +383,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         }
         
         let fetchRequest: NSFetchRequest <NSFetchRequestResult> = NSFetchRequest(entityName:"DBWorkItem")
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: sortBy, ascending: sortOrderAscendic)]
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: sortBy, ascending: sortOrderAscendic, selector: #selector(NSString.localizedStandardCompare(_:)))]
         var searchPredicate: NSPredicate? = nil
         
         if ( predicate != nil) {
@@ -646,6 +634,8 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         
         self.loadWroksFromDB(predicate: nil, predicateWFolder: NSPredicate(format: "folder = nil"))
         self.tableView.reloadData()
+        
+        Answers.logCustomEvent(withName: "Downloaded: Sort", customAttributes: ["sortBy" : self.sortBy])
     }
     
     @IBAction func sortClicked(_ sender: AnyObject) {

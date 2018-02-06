@@ -180,9 +180,29 @@ class WorksParser {
                 if let topicEl: [TFHppleElement] = header[0].search(withXPathQuery: "//h4[@class='heading']") as? [TFHppleElement] {
                     if (topicEl.count > 0) {
                         let topic : TFHppleElement? = topicEl[0]
+                        if let titleEl = topic?.search(withXPathQuery: "//a") as? [TFHppleElement],
+                            titleEl.count > 0 {
+                            
+                            item.topic = titleEl[0].content.replacingOccurrences(of: "\n", with:"").trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+                                .replacingOccurrences(of: "\\s+", with: " ", options: NSString.CompareOptions.regularExpression, range: nil)
+                            item.title = item.topic
+                            
+                        }
                         
-                        item.topic = topic?.content.replacingOccurrences(of: "\n", with:"").trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
-                            .replacingOccurrences(of: "\\s+", with: " ", options: NSString.CompareOptions.regularExpression, range: nil) ?? ""
+                        item.author = ""
+                        if let authorEl = topic?.search(withXPathQuery: "//a[@rel='author']") as? [TFHppleElement],
+                            authorEl.count > 0 {
+                            for i in 0..<authorEl.count {
+                                item.author += authorEl[i].content.replacingOccurrences(of: "\n", with:"").trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+                                    .replacingOccurrences(of: "\\s+", with: " ", options: NSString.CompareOptions.regularExpression, range: nil)
+                                if (i < authorEl.count - 1) {
+                                    item.author += ", "
+                                }
+                            }
+                        }
+                        
+                       // item.topic = topic?.content.replacingOccurrences(of: "\n", with:"").trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+                       //     .replacingOccurrences(of: "\\s+", with: " ", options: NSString.CompareOptions.regularExpression, range: nil) ?? ""
                     }
                 }
             }

@@ -170,7 +170,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             authorView.backgroundColor = AppDelegate.whiteTransparentColor
             readButton.backgroundColor = AppDelegate.whiteTransparentColor
             readButton.setTitleColor(AppDelegate.redColor, for: .normal)
-            authorLabel.textColor = AppDelegate.greyColor
+            authorLabel.textColor = AppDelegate.darkerGreyColor
             dateLabel.textColor = AppDelegate.greyColor
             authorView.layer.shadowColor = AppDelegate.darkerGreyColor.cgColor
         } else {
@@ -179,7 +179,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             authorView.backgroundColor = AppDelegate.greyTransparentColor
             readButton.backgroundColor = AppDelegate.greyTransparentColor
             readButton.setTitleColor(UIColor.white, for: .normal)
-            authorLabel.textColor = AppDelegate.nightTextColor
+            authorLabel.textColor = UIColor.white
             dateLabel.textColor = AppDelegate.nightTextColor
             authorView.layer.shadowColor = AppDelegate.redColor.cgColor
         }
