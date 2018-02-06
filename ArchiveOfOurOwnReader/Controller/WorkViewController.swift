@@ -191,7 +191,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
         super.viewDidAppear(animated)
         
         UIApplication.shared.isIdleTimerDisabled = true
-        
+                
         self.navigationController!.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         self.navigationController!.navigationBar.shadowImage = UIImage()
         self.navigationController!.navigationBar.isTranslucent = false
@@ -1054,6 +1054,10 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
     
     //Theme and Font changes
     
+    override func applyTheme() {
+        //do nothing
+    }
+    
     func loadCurrentTheme() {
         
         if let th = DefaultsManager.getInt(DefaultsManager.THEME) {
@@ -1092,6 +1096,8 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
             
                 commentsButton.setImage(UIImage(named: "comments"), for: UIControlState.normal)
                 kudosButton.setImage(UIImage(named: "likes"), for: UIControlState.normal)
+            
+                self.view.backgroundColor = AppDelegate.greyLightBg
                 
             case DefaultsManager.THEME_NIGHT :
                 self.webView.backgroundColor = AppDelegate.nightBgColor
@@ -1105,6 +1111,8 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
             
                 commentsButton.setImage(UIImage(named: "comments_light"), for: UIControlState.normal)
                 kudosButton.setImage(UIImage(named: "likes_light"), for: UIControlState.normal)
+            
+                self.view.backgroundColor = AppDelegate.redDarkColor
                 
             default:
                 break
