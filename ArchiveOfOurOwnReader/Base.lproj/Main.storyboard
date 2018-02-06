@@ -802,7 +802,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Liu-QH-sOe">
-                                                <rect key="frame" x="55.999999999999993" y="24" width="30.666666666666664" height="14.333333333333336"/>
+                                                <rect key="frame" x="56.999999999999993" y="23" width="30.666666666666664" height="14.333333333333336"/>
                                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="12"/>
                                                 <color key="textColor" red="0.40784313725490196" green="0.40784313725490196" blue="0.40784313725490196" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -816,7 +816,7 @@
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstItem="Liu-QH-sOe" firstAttribute="leading" secondItem="S5n-qc-z6T" secondAttribute="trailing" constant="6" id="60Z-iA-9O4"/>
+                                            <constraint firstItem="Liu-QH-sOe" firstAttribute="leading" secondItem="S5n-qc-z6T" secondAttribute="trailing" constant="7" id="60Z-iA-9O4"/>
                                             <constraint firstItem="prt-Lk-KNG" firstAttribute="top" secondItem="XP6-7U-ZU0" secondAttribute="top" constant="4" id="BA4-4r-lbj"/>
                                             <constraint firstAttribute="bottom" secondItem="S5n-qc-z6T" secondAttribute="bottom" id="DOm-lb-ScK"/>
                                             <constraint firstItem="pmu-U3-RWR" firstAttribute="top" secondItem="XP6-7U-ZU0" secondAttribute="top" constant="6" id="MOB-Wh-Yyg"/>
@@ -826,7 +826,7 @@
                                             <constraint firstItem="S5n-qc-z6T" firstAttribute="leading" secondItem="XP6-7U-ZU0" secondAttribute="leading" id="wXL-44-zl7"/>
                                             <constraint firstAttribute="bottom" secondItem="pmu-U3-RWR" secondAttribute="bottom" constant="6" id="wby-Q0-o0c"/>
                                             <constraint firstItem="S5n-qc-z6T" firstAttribute="top" secondItem="XP6-7U-ZU0" secondAttribute="top" id="xi9-rC-UtB"/>
-                                            <constraint firstItem="Liu-QH-sOe" firstAttribute="top" secondItem="prt-Lk-KNG" secondAttribute="bottom" constant="2" id="zJ8-2f-niv"/>
+                                            <constraint firstItem="Liu-QH-sOe" firstAttribute="top" secondItem="prt-Lk-KNG" secondAttribute="bottom" constant="1" id="zJ8-2f-niv"/>
                                             <constraint firstAttribute="height" constant="50" id="zss-CJ-MuO"/>
                                         </constraints>
                                     </view>
@@ -834,7 +834,7 @@
                                         <rect key="frame" x="8" y="101.33333333333334" width="327" height="15.666666666666671"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="English" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="spY-lh-ZPS">
-                                                <rect key="frame" x="0.0" y="0.0" width="0.0" height="15.666666666666666"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="45.333333333333336" height="15.666666666666666"/>
                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
                                                 <color key="textColor" red="0.44705882352941173" green="0.74901960784313726" blue="0.90196078431372551" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -4971,7 +4971,7 @@ Please check your Internet connection and also make sure you are logged into you
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="248" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" rowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="GTp-WW-u9Q">
                                 <rect key="frame" x="0.0" y="156.33333333333331" width="375" height="533.66666666666674"/>
                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <color key="tintColor" red="0.66485564720812185" green="0.13774127008543502" blue="0.15106696591960683" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="tintColor" red="0.39215686274509803" green="0.11372549019607843" blue="0.54509803921568623" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="separatorColor" red="0.70164750647668395" green="0.70164750647668395" blue="0.70164750647668395" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="MyProfileCell" selectionStyle="gray" indentationWidth="10" reuseIdentifier="pseudCell" id="Pyr-TM-Taz" customClass="MyProfileCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
@@ -4995,6 +4995,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                 <constraint firstItem="mu3-7i-zXm" firstAttribute="top" secondItem="9sQ-0B-Fmq" secondAttribute="topMargin" constant="4" id="eiY-Vn-FRy"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="tintColor" red="0.39215686274509803" green="0.11372549019607843" blue="0.54509803921568623" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
                                             <outlet property="titleLabel" destination="mu3-7i-zXm" id="O4w-c5-euk"/>
                                         </connections>
@@ -6346,7 +6347,7 @@ Major Problems:
                                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="21" id="MLx-sa-e7A"/>
                                                                         <constraint firstAttribute="width" constant="548" id="OI9-Fw-9p6"/>
                                                                     </constraints>
-                                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
+                                                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
                                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <nil key="highlightedColor"/>
                                                                     <variation key="default">
@@ -6729,7 +6730,7 @@ Major Problems:
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h1l-gt-NVP">
-                                                            <rect key="frame" x="52" y="69.666666666666671" width="285" height="14.333333333333329"/>
+                                                            <rect key="frame" x="53" y="69.666666666666671" width="284" height="14.333333333333329"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="14.5" id="aCT-ZK-E2O"/>
                                                             </constraints>
@@ -6752,7 +6753,7 @@ Major Problems:
                                                         <constraint firstItem="Dms-oX-Eos" firstAttribute="top" secondItem="yxf-WI-AV9" secondAttribute="bottom" constant="2" id="Erj-el-uGr"/>
                                                         <constraint firstItem="yxf-WI-AV9" firstAttribute="top" secondItem="B4h-2r-oZZ" secondAttribute="bottom" constant="4" id="HQl-a6-934"/>
                                                         <constraint firstAttribute="bottom" secondItem="Dms-oX-Eos" secondAttribute="bottom" id="Hrq-qb-Yec"/>
-                                                        <constraint firstItem="h1l-gt-NVP" firstAttribute="leading" secondItem="kcb-0Y-sjL" secondAttribute="trailing" constant="8" id="I58-85-dkX"/>
+                                                        <constraint firstItem="h1l-gt-NVP" firstAttribute="leading" secondItem="kcb-0Y-sjL" secondAttribute="trailing" constant="9" id="I58-85-dkX"/>
                                                         <constraint firstAttribute="trailing" secondItem="hHJ-3A-iJ2" secondAttribute="trailing" id="ISE-hL-ApC"/>
                                                         <constraint firstItem="yxf-WI-AV9" firstAttribute="top" secondItem="Dms-oX-Eos" secondAttribute="bottom" id="Icf-1x-wBP"/>
                                                         <constraint firstItem="h1l-gt-NVP" firstAttribute="top" secondItem="4VT-L1-fAL" secondAttribute="bottom" id="JSL-eJ-v1c"/>
@@ -9918,9 +9919,9 @@ Please check your Internet connection and also make sure you are logged into you
         <image name="word" width="56" height="56"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="5rQ-gu-17N"/>
+        <segue reference="jXE-kt-jek"/>
         <segue reference="GOa-zO-Fy6"/>
-        <segue reference="6Vy-m9-kwB"/>
+        <segue reference="hCS-wp-Ndf"/>
         <segue reference="aEt-Fa-YHa"/>
     </inferredMetricsTieBreakers>
 </document>

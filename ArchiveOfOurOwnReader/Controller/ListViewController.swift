@@ -46,12 +46,7 @@ class ListViewController: LoadingViewController, PageSelectDelegate, UIPopoverPr
         
         cell.wordsLabel.text = curWork.words
         
-        if (curWork.topicPreview != nil) {
-            cell.topicPreviewLabel.text = curWork.topicPreview
-        }
-        else {
-            cell.topicPreviewLabel.text = ""
-        }
+        cell.topicPreviewLabel.text = curWork.topicPreview
         
         cell.datetimeLabel.text = curWork.dateTime
         

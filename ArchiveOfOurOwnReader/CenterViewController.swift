@@ -28,7 +28,7 @@ class CenterViewController: UIViewController {
         if (theme == DefaultsManager.THEME_DAY) {
             self.view.backgroundColor = AppDelegate.greyLightBg
         } else {
-            self.view.backgroundColor = AppDelegate.greyDarkBg
+            self.view.backgroundColor = AppDelegate.redDarkColor
         }
     }
         

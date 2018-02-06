@@ -33,7 +33,7 @@ class SerieViewController: ListViewController, UITableViewDataSource, UITableVie
         super.viewDidLoad()
         
         self.tableView.rowHeight = UITableViewAutomaticDimension
-        self.tableView.estimatedRowHeight = 240
+        self.tableView.estimatedRowHeight = 200
         
         self.refreshControl = UIRefreshControl()
         self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")

@@ -34,7 +34,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         self.createDrawerButton()
         
         self.tableView.rowHeight = UITableViewAutomaticDimension
-        self.tableView.estimatedRowHeight = 220
+        self.tableView.estimatedRowHeight = 200
         
         UserDefaults.standard.synchronize()
         if let pp = UserDefaults.standard.value(forKey: "pro") as? Bool {
