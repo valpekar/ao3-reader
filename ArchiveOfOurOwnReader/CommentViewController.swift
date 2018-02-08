@@ -48,6 +48,11 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
         
         getAllComments()
         //loadCurrentTheme()
+        
+        if ((UIApplication.shared.delegate as! AppDelegate).cookies.count == 0 || (UIApplication.shared.delegate as! AppDelegate).token.isEmpty) {
+            
+            openLoginController()
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {

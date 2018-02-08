@@ -214,18 +214,16 @@ class WorksParser {
             stats = statsEl?[0]
         }
         
-        if let userstuffArr = workListItem.search(withXPathQuery: "//blockquote[@class='userstuff summary']/p") {
-            if(userstuffArr.count > 0) {
+        if let userstuffArr = workListItem.search(withXPathQuery: "//blockquote[@class='userstuff summary']/p"), userstuffArr.count > 0  {
                 if let userstuff : TFHppleElement = userstuffArr[0] as? TFHppleElement {
-                    item.topicPreview = userstuff.text()
+                    item.topicPreview = userstuff.content
                 }
-            }
         }
         
         if let seriesNum: [TFHppleElement] = workListItem.search(withXPathQuery: "//ul[@class='series']") as? [TFHppleElement] {
             if (seriesNum.count > 0) {
                 let sNum: String = seriesNum[0].content.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
-                item.topicPreview = "\(sNum) \n\n\(item.topicPreview ?? "")"
+                item.topicPreview = "\(sNum) \n\n\(item.topicPreview)"
             }
         }
         

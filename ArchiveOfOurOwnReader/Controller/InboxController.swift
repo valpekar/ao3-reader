@@ -714,6 +714,10 @@ extension InboxController {
         }
     }
     
+    func controllerDidClosedWithLogin() {
+        requestInbox()
+    }
+    
 }
 
 //MARK: - delete

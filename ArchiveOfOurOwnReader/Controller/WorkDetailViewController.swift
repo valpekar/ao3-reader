@@ -1149,7 +1149,11 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             } else if (downloadedWorkItem != nil) {
                 cell!.label.text = downloadedWorkItem.value(forKey: "words") as? String ?? ""
             }
-            cell!.imgView.image = UIImage(named: "word")
+            if (theme == DefaultsManager.THEME_DAY) {
+                cell!.imgView.image = UIImage(named: "word")
+            } else {
+                cell!.imgView.image = UIImage(named: "word_light")
+            }
             
         case 8:
             var serieName: String = ""

@@ -28,6 +28,8 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
     @IBOutlet weak var downloadButton: UIButton!
     @IBOutlet weak var commentsButton: UIButton!
     
+    var tapRecognizer: UITapGestureRecognizer! = nil
+    
     var prevChapter: String = ""
     var nextChapter: String = ""
     
@@ -76,7 +78,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
             showDownloadedWork(downloadedWork: downloadedWork, downloadedChapters: downloadedChapters)
         }
         
-        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(WorkViewController.handleSingleTap(_:)))
+        tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(WorkViewController.handleSingleTap(_:)))
         tapRecognizer.numberOfTapsRequired = 2
         tapRecognizer.delegate = self
         tapRecognizer.delaysTouchesBegan = true
@@ -254,8 +256,13 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
                 }
             }
             
+            let delayTime = DispatchTime.now() + Double(Int64(2.5 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+            DispatchQueue.main.asyncAfter(deadline: delayTime) {
+                self.handleSingleTap(self.tapRecognizer)
+            }
+            
         }  else if let downloadedWorkItem = downloadedWorkItem {
-            var title = downloadedWorkItem.workTitle ?? ""
+            //var title = downloadedWorkItem.workTitle ?? ""
             
             if (currentChapterIndex < downloadedChapters?.count ?? 0) {
                 if let tt = downloadedChapters?[currentChapterIndex].chapterName, tt.isEmpty == false {
@@ -273,6 +280,10 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
                     let scrollOffset:CGPoint = CGPointFromString(offset)
                     self.webView.scrollView.setContentOffset(scrollOffset, animated: true)
                 }
+            }
+            let delayTime = DispatchTime.now() + Double(Int64(2.5 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+            DispatchQueue.main.asyncAfter(deadline: delayTime) {
+                self.handleSingleTap(self.tapRecognizer)
             }
         }
     }
@@ -413,10 +424,12 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
             
         } else {
             self.layoutView.animation = "fadeOut"
+            self.layoutView.duration = 2.0
             self.layoutView.animate()
             
             if (self.layoutBottomView != nil) {
                 self.layoutBottomView.animation = "fadeOut"
+                self.layoutBottomView.duration = 2.0
                 self.layoutBottomView.animate()
             }
             self.navigationController?.setNavigationBarHidden(true, animated: true)

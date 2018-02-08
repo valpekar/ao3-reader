@@ -834,7 +834,7 @@
                                         <rect key="frame" x="8" y="101.33333333333334" width="327" height="15.666666666666671"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="English" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="spY-lh-ZPS">
-                                                <rect key="frame" x="0.0" y="0.0" width="0.0" height="15.666666666666666"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="45.333333333333336" height="15.666666666666666"/>
                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
                                                 <color key="textColor" red="0.44705882352941173" green="0.74901960784313726" blue="0.90196078431372551" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -9895,10 +9895,10 @@ Please check your Internet connection and also make sure you are logged into you
         <image name="NotRated" width="38" height="38"/>
         <image name="bmk" width="32" height="32"/>
         <image name="book_bg" width="360" height="640"/>
-        <image name="bookmark" width="56" height="56"/>
+        <image name="bookmark" width="32" height="32"/>
         <image name="categories" width="48" height="48"/>
         <image name="chapters" width="24" height="24"/>
-        <image name="comments" width="24" height="24"/>
+        <image name="comments" width="32" height="32"/>
         <image name="disclosure" width="32" height="52"/>
         <image name="download-100" width="33" height="33"/>
         <image name="download-red" width="33" height="33"/>
@@ -9909,14 +9909,14 @@ Please check your Internet connection and also make sure you are logged into you
         <image name="ic_sort" width="31" height="31"/>
         <image name="icon-download" width="32" height="32"/>
         <image name="lang" width="18" height="18"/>
-        <image name="likes" width="23" height="23"/>
+        <image name="likes" width="32" height="32"/>
         <image name="pref_bg" width="360" height="240"/>
         <image name="profile" width="20" height="20"/>
         <image name="settings" width="33" height="33"/>
         <image name="shortstory" width="32" height="32"/>
         <image name="transp" width="96" height="96"/>
         <image name="trash" width="32" height="32"/>
-        <image name="word" width="56" height="56"/>
+        <image name="word" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="jXE-kt-jek"/>

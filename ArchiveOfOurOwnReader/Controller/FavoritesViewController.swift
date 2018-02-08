@@ -383,7 +383,12 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         }
         
         let fetchRequest: NSFetchRequest <NSFetchRequestResult> = NSFetchRequest(entityName:"DBWorkItem")
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: sortBy, ascending: sortOrderAscendic, selector: #selector(NSString.localizedStandardCompare(_:)))]
+        
+        if (sortBy == "dateAdded") {
+            fetchRequest.sortDescriptors = [NSSortDescriptor(key: sortBy, ascending: sortOrderAscendic, selector: #selector(NSString.localizedStandardCompare(_:)))]
+        } else {
+            fetchRequest.sortDescriptors = [NSSortDescriptor(key: sortBy, ascending: sortOrderAscendic)]
+        }
         var searchPredicate: NSPredicate? = nil
         
         if ( predicate != nil) {

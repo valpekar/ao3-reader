@@ -95,8 +95,10 @@ class WorkListController: ListViewController, UITableViewDataSource, UITableView
     }
     
     @IBAction func tryAgainTouched(_ sender:AnyObject) {
-        self.searchController.searchBar.text = ""
-        self.searchController.searchBar.endEditing(true)
+        if (self.searchController != nil) {
+            self.searchController.searchBar.text = ""
+            self.searchController.searchBar.endEditing(true)
+        }
         
         requestWorks()
     }
