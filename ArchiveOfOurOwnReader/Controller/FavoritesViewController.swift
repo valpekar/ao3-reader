@@ -384,7 +384,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         
         let fetchRequest: NSFetchRequest <NSFetchRequestResult> = NSFetchRequest(entityName:"DBWorkItem")
         
-        if (sortBy == "dateAdded") {
+        if (sortBy != "dateAdded") {
             fetchRequest.sortDescriptors = [NSSortDescriptor(key: sortBy, ascending: sortOrderAscendic, selector: #selector(NSString.localizedStandardCompare(_:)))]
         } else {
             fetchRequest.sortDescriptors = [NSSortDescriptor(key: sortBy, ascending: sortOrderAscendic)]
@@ -479,8 +479,10 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         
         if(segue.identifier == "offlineWorkDetail") {
     
-            let workDetail: WorkDetailViewController = segue.destination as! WorkDetailViewController
-            let indexPath = tableView.indexPathForSelectedRow! as IndexPath
+            guard let workDetail: WorkDetailViewController = segue.destination as? WorkDetailViewController,
+                let indexPath = tableView.indexPathForSelectedRow as? IndexPath else {
+                    return
+            }
             
             var curWork: DBWorkItem?
             
@@ -511,6 +513,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
             editController.folders = folders
         }
         
+        self.resultSearchController.isActive = false
         searchBarCancelButtonClicked(self.resultSearchController.searchBar)
     }
     
@@ -581,7 +584,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
     //MARK: - UISearchBarDelegate
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-//        filtereddownloadedWorkds = downloadedWorkds
+        filtereddownloadedWorkds = downloadedWorkds
     }
     
     //MARK: - UISearchResultsUpdating delegate
@@ -890,7 +893,9 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         } else {
             return
         }
-        let count = downloadedWorkds[folderName]?.count ?? 0
+        guard let count = downloadedWorkds[folderName]?.count else {
+            return
+        }
         let indexPaths = (0..<count).map { i in return IndexPath(item: i, section: section)  }
         
         hidden[section] = !hidden[section]
