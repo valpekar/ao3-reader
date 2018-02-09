@@ -110,9 +110,9 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
     
     func interstitialDidReceiveAd(_ ad: GADInterstitial) {
         print("Ad Received")
-        if ad.isReady && (self.donated == false && self.purchased == false) {
-            interstitial?.present(fromRootViewController: self)
-        }
+//        if ad.isReady && (self.donated == false && self.purchased == false) {
+//            interstitial?.present(fromRootViewController: self)
+//        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

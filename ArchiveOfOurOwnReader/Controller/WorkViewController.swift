@@ -772,6 +772,10 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
     
     }
     
+     func controllerDidClosedWithLogin() {
+        
+    }
+    
     var beforeDownloadChapter = -1
     var beforeDownloadOffset = ""
     

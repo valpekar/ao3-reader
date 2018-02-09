@@ -1074,12 +1074,16 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             
             if (workItem != nil) {
                 if (!isSensitive) {
-                    cell!.label.text = workItem.topicPreview
+                    if (workItem.topicPreview.isEmpty == false) {
+                        cell!.label.text = workItem.topicPreview
+                    } else {
+                        cell!.label.text = "No Preview"
+                    }
                 } else {
                     cell!.label.text = NSLocalizedString("SensitiveContent", comment: "")
                 }
             } else if (downloadedWorkItem != nil) {
-                cell!.label.text = downloadedWorkItem.value(forKey: "topicPreview") as? String ?? ""
+                cell!.label.text = downloadedWorkItem.topicPreview ?? "No Preview"
             }
             
         case 2:

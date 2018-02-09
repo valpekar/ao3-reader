@@ -150,10 +150,10 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
         
         //
         
-        if (!purchased && !donated) {
+        if (purchased == false && donated == false) {
             print("not purchased")
             //self.setupAdPlacer()
-            if (i % 5 == 0) {
+            if (i % 4 == 0) {
                 loadAdMobInterstitial()
                 //adsShown += 1
             }
@@ -344,6 +344,15 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
                 }
             }
             
+            let backItem = UIBarButtonItem()
+            backItem.title = " "
+            navigationItem.backBarButtonItem = backItem
+                        
+            if (i % 5 == 0 && (purchased == false && donated == false)) {
+                showAdMobInterstitial()
+                adsShown += 1
+            }
+            
         } else if (segue.identifier == "serieDetail") {
             if let row = tableView.indexPathForSelectedRow?.row {
                 
@@ -351,6 +360,11 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
                     selectedSerieDetail(segue: segue, row: row, newsItem: works[row])
                 }
             }
+            
+            let backItem = UIBarButtonItem()
+            backItem.title = " "
+            navigationItem.backBarButtonItem = backItem
+            
         } else if(segue.identifier == "searchSegue") {
             if let searchController: SearchViewController = segue.destination as? SearchViewController {
                 searchController.delegate = self
@@ -363,7 +377,9 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
             if let choosePref: UINavigationController = segue.destination as? UINavigationController {
                 (choosePref.topViewController as! ChoosePrefController).chosenDelegate = self
             }
-        } 
+        }
+        
+        i += 1
     }
 
     
@@ -459,12 +475,7 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
        //     showWvInterstitial()
        // }
         
-        if (i % 5 == 0 && (!purchased && !donated)) {
-            showAdMobInterstitial()
-            adsShown += 1
-        }
         
-        i += 1
     }
     
     func controllerDidClosedWithLogin() {
