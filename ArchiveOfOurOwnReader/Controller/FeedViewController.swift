@@ -153,9 +153,9 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
         if (!purchased && !donated) {
             print("not purchased")
             //self.setupAdPlacer()
-            if (adsShown % 3 == 0) {
+            if (i % 5 == 0) {
                 loadAdMobInterstitial()
-                adsShown += 1
+                //adsShown += 1
             }
         }
         

@@ -687,6 +687,15 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         })
         optionMenu.addAction(kudosAction)
         
+        let chaptersAction = UIAlertAction(title: NSLocalizedString("Word Count", comment: ""), style: .default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            self.sortBy = "words"
+            self.sortOrderAscendic = true
+            
+            self.saveSortOptionsAndReload()
+        })
+        optionMenu.addAction(chaptersAction)
+        
         let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: {
             (alert: UIAlertAction!) -> Void in
             print("Cancelled")

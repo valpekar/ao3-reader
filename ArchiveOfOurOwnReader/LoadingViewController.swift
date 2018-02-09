@@ -11,9 +11,10 @@ import iAd
 import CoreData
 import GoogleMobileAds
 import Alamofire
- import TSMessages
+import TSMessages
+import RSLoadingView
 
-class LoadingViewController: CenterViewController, ModalControllerDelegate, AuthProtocol, UIAlertViewDelegate {
+class LoadingViewController: CenterViewController, ModalControllerDelegate, AuthProtocol, UIAlertViewDelegate, GADInterstitialDelegate {
     
    // var interstitial: ADInterstitialAd! = nil
     
@@ -23,6 +24,9 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
     var loadingView: UIView!
     var loadingLabel: UILabel!
     var interstitial: GADInterstitial?
+    
+    var rloadingView: RSLoadingView!
+    
    // var interstitial: MPInterstitialAdController =
    //     MPInterstitialAdController(forAdUnitId: "24f81f4beba548248fc64cfcf5d4d8f5")
     
@@ -89,6 +93,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
     
     func loadAdMobInterstitial() {
         interstitial = GADInterstitial(adUnitID: "ca-app-pub-8760316520462117/1282893180")
+        interstitial?.delegate = self
         let request = GADRequest()
         interstitial?.load(request)
     }
@@ -100,6 +105,13 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
             #if DEBUG
             print("Ad wasn't ready")
             #endif
+        }
+    }
+    
+    func interstitialDidReceiveAd(_ ad: GADInterstitial) {
+        print("Ad Received")
+        if ad.isReady && (self.donated == false && self.purchased == false) {
+            interstitial?.present(fromRootViewController: self)
         }
     }
     
@@ -141,23 +153,30 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
             hideLoadingView()
         }
         
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        
         let screenSize: CGRect = UIScreen.main.bounds
         let screenWidth = screenSize.width
         let screenHeight = screenSize.height
         
-        loadingView = UIView(frame:CGRect(x: screenWidth/2 - 170/2, y: screenHeight/2 - 170, width: 170, height: 170))
-        loadingView.backgroundColor = UIColor(red:0, green:0, blue:0, alpha:0.5)
+        loadingView = UIView(frame:CGRect(x: screenWidth/2 - 170/2, y: screenHeight/2 - 60, width: 170, height: 170))
+        loadingView.backgroundColor = UIColor.clear
         loadingView.clipsToBounds = true
-        loadingView.layer.cornerRadius = 10.0
+       // loadingView.layer.cornerRadius = 10.0
         
-        activityView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.whiteLarge)
+       // activityView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.whiteLarge)
         
-        guard let aView = activityView else {
-            return
-        }
+//        guard let aView = activityView else {
+//            return
+//        }
         
-        activityView?.frame = CGRect(x: 65, y: 40, width: aView.bounds.size.width, height: aView.bounds.size.height)
-        loadingView.addSubview(activityView!)
+//        activityView?.frame = CGRect(x: 65, y: 40, width: aView.bounds.size.width, height: aView.bounds.size.height)
+//        loadingView.addSubview(activityView!)
+        
+        
+        rloadingView = RSLoadingView(effectType: RSLoadingView.Effect.twins)
+       // rloadingView.shouldDimBackground = false
+        rloadingView.show(on: self.view)
         
         loadingLabel = UILabel(frame:CGRect(x: 20, y: 115, width: 130, height: 22))
         loadingLabel.backgroundColor = UIColor.clear
@@ -168,16 +187,20 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         loadingView.addSubview(loadingLabel)
         
         self.view.addSubview(loadingView)
-        activityView?.startAnimating()
+       // activityView?.startAnimating()
     }
     
     func hideLoadingView() {
         #if DEBUG
         print("hide loading view")
             #endif
-        if (activityView != nil && activityView.isAnimating) {
-            activityView.stopAnimating()
-        }
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
+        
+        RSLoadingView.hide(from: self.view)
+        
+//        if (activityView != nil && activityView.isAnimating) {
+//            activityView.stopAnimating()
+//        }
         if (loadingView != nil && loadingView.superview != nil) {
             loadingView.removeFromSuperview()
             loadingView = nil
