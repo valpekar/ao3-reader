@@ -81,15 +81,15 @@ class AuthViewController: UIViewController {
             // If the security policy cannot be evaluated then show a short message depending on the error.
             switch error!.code{
                 
-            case LAError.touchIDNotEnrolled.rawValue:
-                TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("TouchID is not enrolled", comment: ""), type: .error, duration: 2.0)
+            case LAError.biometryNotEnrolled.rawValue:
+                TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Touch/Face is not enrolled", comment: ""), type: .error, duration: 2.0)
                 
             case LAError.passcodeNotSet.rawValue:
                 TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("A passcode has not been set", comment: ""), type: .error, duration: 2.0)
                 
             default:
                 // The LAError.TouchIDNotAvailable case.
-                TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("TouchID not available", comment: ""), type: .error, duration: 2.0)
+                TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Touch/Face ID not available", comment: ""), type: .error, duration: 2.0)
             }
             
             // Optionally the error description can be displayed on the console.

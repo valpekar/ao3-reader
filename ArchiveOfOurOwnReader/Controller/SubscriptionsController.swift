@@ -378,5 +378,7 @@ class SubscriptionsViewController: ListViewController, UITableViewDataSource, UI
             }
             
         }
+        
+        hideBackTitle()
     }
 }

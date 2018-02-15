@@ -49,6 +49,12 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
             
             self.checkAuth()
         }
+        
+        if let th = DefaultsManager.getInt(DefaultsManager.THEME_APP) {
+            theme = th
+        } else {
+            theme = DefaultsManager.THEME_DAY
+        }
     }
     
     func checkAuth() {
@@ -68,7 +74,9 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
     }
     
     func authFinished(success: Bool) {
-        
+//        if (success == true) {
+//            loadAfterAuth()
+//        }
     }
     
     func loadAfterAuth() {
@@ -100,7 +108,9 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
 
     func showAdMobInterstitial() {
         if interstitial?.isReady ?? false {
-            interstitial?.present(fromRootViewController: self)
+            if (purchased == false && donated == false) {
+                interstitial?.present(fromRootViewController: self)
+            }
         } else {
             #if DEBUG
             print("Ad wasn't ready")
@@ -184,6 +194,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         loadingLabel.adjustsFontSizeToFitWidth = true
         loadingLabel.textAlignment = .center
         loadingLabel.text = msg
+        loadingLabel.backgroundColor = UIColor.clear
         loadingView.addSubview(loadingLabel)
         
         self.view.addSubview(loadingView)

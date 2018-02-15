@@ -232,6 +232,8 @@ class MarkedForLaterController: ListViewController , UITableViewDataSource, UITa
                 }
             }
         }
+        
+        hideBackTitle()
     }
     
     //MARK: - SAVE WORK TO DB

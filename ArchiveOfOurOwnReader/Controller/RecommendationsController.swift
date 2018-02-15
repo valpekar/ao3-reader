@@ -450,6 +450,8 @@ class RecommendationsController : ListViewController, UITableViewDataSource, UIT
                 }
             }
         }
+        
+        hideBackTitle()
     }
     
     //MARK: - SAVE WORK TO DB

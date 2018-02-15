@@ -100,6 +100,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
         }
     }
     
+    
     func showOnlineWork(workItem: WorkItem) {
         if (self.theme == DefaultsManager.THEME_DAY) {
             downloadButton.setImage(UIImage(named: "download-100"), for: .normal)
@@ -179,6 +180,10 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
     }
     
     deinit {
+        
+        webView.navigationDelegate = nil
+        webView.stopLoading()
+        
         #if DEBUG
             print("Work view controller deinit")
         #endif

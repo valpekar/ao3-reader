@@ -85,6 +85,12 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
         refreshUI()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        SKPaymentQueue.default().remove(self)
+    }
+    
     override func applyTheme() {
         super.applyTheme()
         
@@ -153,12 +159,12 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
         let login = DefaultsManager.getString(DefaultsManager.LOGIN)
        // let pass = DefaultsManager.getString(DefaultsManager.PSWD)
         
-        if (!login.isEmpty) {
+        if (login.isEmpty == false) {
             usernameLabel.text = login
             
             self.title = login
             
-            pseuds = DefaultsManager.getObject(DefaultsManager.PSEUD_IDS) as! [String:String]
+            pseuds = DefaultsManager.getObject(DefaultsManager.PSEUD_IDS) as? [String:String] ?? [:]
             currentPseud = DefaultsManager.getString(DefaultsManager.PSEUD_ID)
             
             if (currentPseud.isEmpty) {
@@ -187,7 +193,7 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
             setNotAuthorizedUI()
         }
         
-        if (!purchased && !donated) {
+        if (purchased == false && donated == false) {
             print("not purchased")
         } else {
             removeAdsItem.isEnabled = false

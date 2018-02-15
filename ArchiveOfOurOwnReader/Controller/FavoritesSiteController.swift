@@ -290,6 +290,8 @@ class FavoritesSiteController : ListViewController, UITableViewDataSource, UITab
                 }
             }
         }
+        
+        hideBackTitle()
     }
     
     //MARK: - SAVE WORK TO DB

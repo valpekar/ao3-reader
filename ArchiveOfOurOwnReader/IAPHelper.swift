@@ -154,7 +154,12 @@ extension IAPHelper: SKPaymentTransactionObserver {
     }
     
     fileprivate func restoreTransaction(_ transaction: SKPaymentTransaction) {
-        let productIdentifier = transaction.original!.payment.productIdentifier
+        var productIdentifier: String = ""
+        if let pID = transaction.original?.payment.productIdentifier {
+            productIdentifier = pID
+        } else {
+            productIdentifier = transaction.payment.productIdentifier
+        }
         print("restoreTransaction... \(productIdentifier)")
         provideContentForProductIdentifier(productIdentifier)
         SKPaymentQueue.default().finishTransaction(transaction)

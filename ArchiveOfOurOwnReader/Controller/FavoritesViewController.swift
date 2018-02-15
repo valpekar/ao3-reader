@@ -45,7 +45,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
             donated = dd
         }
         
-        if (!purchased || !donated) {
+        if (purchased == false && donated == false) {
             loadAdMobInterstitial()
         }
         
@@ -476,11 +476,11 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
+                
         if(segue.identifier == "offlineWorkDetail") {
     
             guard let workDetail: WorkDetailViewController = segue.destination as? WorkDetailViewController,
-                let indexPath = tableView.indexPathForSelectedRow as? IndexPath else {
+                let indexPath = tableView.indexPathForSelectedRow else {
                     return
             }
             
@@ -512,6 +512,8 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
             editController.editFoldersProtocol = self
             editController.folders = folders
         }
+        
+        hideBackTitle()
         
         self.resultSearchController.isActive = false
         searchBarCancelButtonClicked(self.resultSearchController.searchBar)

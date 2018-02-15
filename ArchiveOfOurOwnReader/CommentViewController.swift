@@ -63,6 +63,10 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
         self.navigationController!.navigationBar.isTranslucent = false
     }
     
+    func controllerDidClosedWithLogin() {
+        //TODO: 
+    }
+    
     //MARK: tableview
     
     func numberOfSections(in tableView: UITableView) -> Int {

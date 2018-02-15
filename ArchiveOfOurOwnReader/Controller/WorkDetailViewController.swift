@@ -170,6 +170,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             authorView.backgroundColor = AppDelegate.whiteTransparentColor
             readButton.backgroundColor = AppDelegate.whiteTransparentColor
             readButton.setTitleColor(AppDelegate.redColor, for: .normal)
+            downloadTrashButton.setImage(UIImage(named: "settings"), for: UIControlState.normal)
             titleLabel.textColor = UIColor.black
             authorLabel.textColor = AppDelegate.darkerGreyColor
             dateLabel.textColor = AppDelegate.greyColor
@@ -181,6 +182,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             readButton.backgroundColor = AppDelegate.greyTransparentColor
             titleLabel.textColor = UIColor.white
             readButton.setTitleColor(UIColor.white, for: .normal)
+            downloadTrashButton.setImage(UIImage(named: "settings_light"), for: UIControlState.normal)
             authorLabel.textColor = UIColor.white
             dateLabel.textColor = AppDelegate.nightTextColor
             authorView.layer.shadowColor = AppDelegate.redColor.cgColor
@@ -1174,6 +1176,8 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 cell.label.font = UIFont.systemFont(ofSize: 14.0, weight: UIFontWeightRegular)
             }
             
+            cell!.imgView.image = nil
+            
         default:
             break
         }
@@ -1239,8 +1243,6 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 }
                 NSLog("link Tapped = " + tagUrl)
                 
-                Answers.logCustomEvent(withName: "Work Detail link tap", customAttributes: ["link" : tagUrl])
-                
                 if (tagUrl.isEmpty == false) {
                     performSegue(withIdentifier: "listSegue", sender: self)
                 }
@@ -1253,8 +1255,6 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             }
             NSLog("link Tapped = " + tagUrl)
             
-            Answers.logCustomEvent(withName: "Work Detail link tap", customAttributes: ["link" : tagUrl])
-            
             if (tagUrl.isEmpty == false) {
                 performSegue(withIdentifier: "listSegue", sender: self)
             }
@@ -1266,9 +1266,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 tagUrl = (downloadedCharacters[pos].value(forKey: "characterUrl") as? String) ?? ""
             }
             NSLog("link Tapped = " + tagUrl)
-            
-            Answers.logCustomEvent(withName: "Work Detail link tap", customAttributes: ["link" : tagUrl])
-            
+                        
             if (tagUrl.isEmpty == false) {
                 performSegue(withIdentifier: "listSegue", sender: self)
             }

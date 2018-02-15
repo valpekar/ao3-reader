@@ -183,14 +183,14 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
     
     override func authFinished(success: Bool) {
         if (success == true) {
-            refresh(tableView)
+            loadAfterAuth()
         }
     }
     
     override func loadAfterAuth() {
         if (query.isEmpty()) {
             self.performSegue(withIdentifier: "choosePref", sender: self)
-        } else {
+        } else if (works.count == 0 ){
             refresh(tableView)
         }
     }
@@ -224,7 +224,11 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
     //MARK: - feed
     
     @IBAction func checkStatusTouched(_ sender: AnyObject) {
-        UIApplication.shared.openURL(URL(string: "https://twitter.com/ao3_status")!)
+        if let url = URL(string: "https://twitter.com/ao3_status") {
+            UIApplication.shared.open(url, options: [ : ], completionHandler: { (res) in
+                "open twitter status"
+            })
+        }
     }
     
     override func showWorks() {
@@ -343,10 +347,6 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
                     selectedWorkDetail(segue: segue, row: row, modalDelegate: self, newsItem: works[row])
                 }
             }
-            
-            let backItem = UIBarButtonItem()
-            backItem.title = " "
-            navigationItem.backBarButtonItem = backItem
                         
             if (i % 5 == 0 && (purchased == false && donated == false)) {
                 showAdMobInterstitial()
@@ -380,6 +380,8 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
         }
         
         i += 1
+        
+        hideBackTitle()
     }
 
     

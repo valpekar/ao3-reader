@@ -314,6 +314,8 @@ class SerieViewController: ListViewController, UITableViewDataSource, UITableVie
             }
             
         }
+        
+        hideBackTitle()
     }
     
     override func controllerDidClosed() {

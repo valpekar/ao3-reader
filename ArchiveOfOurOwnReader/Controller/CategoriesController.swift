@@ -37,7 +37,7 @@ class CategoriesController: LoadingViewController, UITableViewDataSource, UITabl
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        if (!purchased && !donated) {
+        if (purchased == false && donated == false) {
             loadAdMobInterstitial()
         }
     }
@@ -220,6 +220,8 @@ class CategoriesController: LoadingViewController, UITableViewDataSource, UITabl
                 }
             }
         }
+        
+        hideBackTitle()
     }
 }
 

@@ -226,6 +226,8 @@ class HistoryViewController : ListViewController, UITableViewDataSource, UITable
                 }
             }
         }
+        
+        hideBackTitle()
     }
     
     //MARK: - SAVE WORK TO DB

@@ -4115,7 +4115,7 @@ Please check your Internet connection and also make sure you are logged into you
                         <rect key="frame" x="0.0" y="0.0" width="375" height="724"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="XLu-IY-4gk">
+                            <searchBar contentMode="redraw" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XLu-IY-4gk">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
                                 <color key="tintColor" red="0.5725490196078431" green="0.32941176470588235" blue="0.70588235294117641" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -5597,7 +5597,7 @@ Please check your Internet connection and also make sure you are logged into you
                                     <fontDescription key="fontDescription" type="system" weight="light" pointSize="18"/>
                                 </variation>
                             </label>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4G5-5K-OdJ">
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="4G5-5K-OdJ">
                                 <rect key="frame" x="310" y="293.33333333333331" width="51" height="31"/>
                                 <color key="onTintColor" red="0.3921568627" green="0.1137254902" blue="0.5450980392" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="thumbTintColor" red="1" green="1" blue="1" alpha="0.90000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
@@ -9910,8 +9910,8 @@ Please check your Internet connection and also make sure you are logged into you
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="5rQ-gu-17N"/>
-        <segue reference="GOa-zO-Fy6"/>
-        <segue reference="hCS-wp-Ndf"/>
+        <segue reference="YvP-vi-Pnc"/>
+        <segue reference="sOC-2j-lqm"/>
         <segue reference="aEt-Fa-YHa"/>
     </inferredMetricsTieBreakers>
 </document>

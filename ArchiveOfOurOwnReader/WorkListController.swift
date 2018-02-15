@@ -54,9 +54,23 @@ class WorkListController: ListViewController, UITableViewDataSource, UITableView
             searchController = UISearchController(searchResultsController: nil)
             searchController.searchResultsUpdater = self
             searchController.searchBar.delegate = self
-            searchController.searchBar.tintColor = AppDelegate.redColor
+            searchController.searchBar.tintColor = AppDelegate.purpleLightColor
+            searchController.searchBar.backgroundImage = UIImage()
             searchController.dimsBackgroundDuringPresentation = false
             definesPresentationContext = true
+            
+            if let tf = searchController.searchBar.value(forKey: "_searchField") as? UITextField {
+                addDoneButtonOnKeyboardTf(tf)
+                
+                if (theme == DefaultsManager.THEME_DAY) {
+                    tf.textColor = AppDelegate.redColor
+                    tf.backgroundColor = UIColor.white
+                    
+                } else {
+                    tf.textColor = AppDelegate.textLightColor
+                    tf.backgroundColor = AppDelegate.greyBg
+                }
+            }
         
             self.tableView.tableHeaderView = searchController.searchBar
         }
@@ -68,6 +82,8 @@ class WorkListController: ListViewController, UITableViewDataSource, UITableView
         #if DEBUG
         print(tagUrl)
             #endif
+        
+        Answers.logCustomEvent(withName: "Work List Open", customAttributes: ["link" : tagUrl])
         
         requestWorks()
     }
@@ -243,6 +259,8 @@ class WorkListController: ListViewController, UITableViewDataSource, UITableView
                 }
             }
         }
+        
+        hideBackTitle()
     }
     
     func controllerDidClosedWithChange() {

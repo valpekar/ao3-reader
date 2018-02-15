@@ -37,7 +37,9 @@ class AboutSubscriptionController: UIViewController {
     
      @IBAction func aboutSubsTouched(_ sender: AnyObject) {
         if let url = URL(string: "http://simpleappalliance.blogspot.com/2016/05/unofficial-ao3-reader-privacy-policy.html") {
-            UIApplication.shared.openURL(url)
+            UIApplication.shared.open(url, options: [ : ], completionHandler: { (res) in
+                print("opened privacy policy")
+            })
         }
     }
 }
