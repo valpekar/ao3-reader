@@ -194,8 +194,9 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
         }
         
         if (purchased == false && donated == false) {
-            print("not purchased")
+            print("refreshUI: not purchased")
         } else {
+            print("refreshUI: purchased = \(purchased), donated = \(donated)")
             removeAdsItem.isEnabled = false
             removeAdsItem.title = ""
         }
