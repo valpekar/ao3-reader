@@ -181,8 +181,10 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
     
     deinit {
         
-        webView.navigationDelegate = nil
-        webView.stopLoading()
+        if (webView != nil) {
+            webView.navigationDelegate = nil
+            webView.stopLoading()
+        }
         
         #if DEBUG
             print("Work view controller deinit")
