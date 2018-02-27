@@ -2811,6 +2811,47 @@ Please check your Internet connection and also make sure you are logged into you
                                     </mask>
                                 </variation>
                             </view>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iXh-gl-Lcm" customClass="SpringView" customModule="Spring">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="70"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4YJ-Cm-pnq">
+                                        <rect key="frame" x="239" y="12" width="44" height="44"/>
+                                        <color key="backgroundColor" white="0.5" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="E7a-sK-RHz"/>
+                                            <constraint firstAttribute="width" constant="44" id="XEi-sS-zo8"/>
+                                        </constraints>
+                                        <state key="normal" title="Aa-">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="fontSizeMinusTouched:" destination="4yv-UH-kjf" eventType="touchUpInside" id="7wi-ua-v7K"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qc6-DB-2IT">
+                                        <rect key="frame" x="287" y="12" width="44" height="44"/>
+                                        <color key="backgroundColor" white="0.5" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="44" id="ihc-sH-WFm"/>
+                                            <constraint firstAttribute="height" constant="44" id="jN5-cP-aUb"/>
+                                        </constraints>
+                                        <state key="normal" title="Aa+">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="fontSizeAddTouched:" destination="4yv-UH-kjf" eventType="touchUpInside" id="qID-IK-FUa"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="4YJ-Cm-pnq" firstAttribute="top" secondItem="iXh-gl-Lcm" secondAttribute="top" constant="12" id="Dbc-Uj-xmw"/>
+                                    <constraint firstAttribute="height" constant="70" id="EtK-gv-tDi"/>
+                                    <constraint firstItem="Qc6-DB-2IT" firstAttribute="top" secondItem="iXh-gl-Lcm" secondAttribute="top" constant="12" id="NPl-vA-YCO"/>
+                                    <constraint firstAttribute="trailing" secondItem="Qc6-DB-2IT" secondAttribute="trailing" constant="44" id="PST-Ed-a13"/>
+                                    <constraint firstItem="Qc6-DB-2IT" firstAttribute="leading" secondItem="4YJ-Cm-pnq" secondAttribute="trailing" constant="4" id="ZAJ-6Q-O8G"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -2820,10 +2861,13 @@ Please check your Internet connection and also make sure you are logged into you
                             <constraint firstItem="QBX-yq-43c" firstAttribute="top" secondItem="fvP-35-xPI" secondAttribute="bottom" id="JGY-Dv-HFu"/>
                             <constraint firstItem="iGS-U8-np2" firstAttribute="top" secondItem="fvP-35-xPI" secondAttribute="bottom" id="PzN-8N-Ywg"/>
                             <constraint firstAttribute="trailing" secondItem="iGS-U8-np2" secondAttribute="trailing" id="VLe-hQ-8cc"/>
+                            <constraint firstItem="iXh-gl-Lcm" firstAttribute="top" secondItem="fvP-35-xPI" secondAttribute="bottom" id="X2e-Hd-0e1"/>
                             <constraint firstItem="bAf-8o-obo" firstAttribute="leading" secondItem="qtN-uh-88S" secondAttribute="leading" id="kt3-z2-eAG"/>
                             <constraint firstAttribute="trailing" secondItem="QBX-yq-43c" secondAttribute="trailing" id="mvA-3S-EPw"/>
                             <constraint firstItem="7u2-7t-GEs" firstAttribute="top" secondItem="bAf-8o-obo" secondAttribute="bottom" id="mzF-LH-WlW"/>
+                            <constraint firstAttribute="trailing" secondItem="iXh-gl-Lcm" secondAttribute="trailing" id="ooA-AL-jsU"/>
                             <constraint firstItem="QBX-yq-43c" firstAttribute="leading" secondItem="qtN-uh-88S" secondAttribute="leading" id="rhR-jo-Sn7"/>
+                            <constraint firstItem="iXh-gl-Lcm" firstAttribute="leading" secondItem="qtN-uh-88S" secondAttribute="leading" id="vg8-A6-BdY"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="TXe-Al-hA5"/>
@@ -2836,6 +2880,7 @@ Please check your Internet connection and also make sure you are logged into you
                         <outlet property="layoutView" destination="QBX-yq-43c" id="VxP-WM-xpU"/>
                         <outlet property="nextButton" destination="wnZ-d8-1x3" id="bIb-Fh-uzQ"/>
                         <outlet property="prevButton" destination="z5B-7o-XaX" id="qTT-qk-NHP"/>
+                        <outlet property="settingsView" destination="iXh-gl-Lcm" id="ddj-nQ-0bw"/>
                         <outlet property="webView" destination="iGS-U8-np2" id="XSg-93-Go0"/>
                         <segue destination="aFH-5Z-kbf" kind="show" identifier="leaveComment" id="b3W-0z-TKl"/>
                     </connections>
@@ -9912,6 +9957,6 @@ Please check your Internet connection and also make sure you are logged into you
         <segue reference="5rQ-gu-17N"/>
         <segue reference="YvP-vi-Pnc"/>
         <segue reference="sOC-2j-lqm"/>
-        <segue reference="aEt-Fa-YHa"/>
+        <segue reference="b3W-0z-TKl"/>
     </inferredMetricsTieBreakers>
 </document>

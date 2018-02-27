@@ -19,6 +19,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
     @IBOutlet weak var webView: WKWebView!
     @IBOutlet weak var layoutView: SpringView!
     @IBOutlet weak var layoutBottomView: SpringView!
+    @IBOutlet weak var settingsView: SpringView!
     @IBOutlet weak var prevButton: UIButton!
     @IBOutlet weak var nextButton: UIButton!
     
@@ -263,7 +264,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
                 }
             }
             
-            let delayTime = DispatchTime.now() + Double(Int64(2.5 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+            let delayTime = DispatchTime.now() + Double(Int64(2.0 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
             DispatchQueue.main.asyncAfter(deadline: delayTime) {
                 self.handleSingleTap(self.tapRecognizer)
             }
@@ -288,7 +289,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
                     self.webView.scrollView.setContentOffset(scrollOffset, animated: true)
                 }
             }
-            let delayTime = DispatchTime.now() + Double(Int64(2.5 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+            let delayTime = DispatchTime.now() + Double(Int64(2.0 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
             DispatchQueue.main.asyncAfter(deadline: delayTime) {
                 self.handleSingleTap(self.tapRecognizer)
             }
@@ -431,14 +432,24 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
             
         } else {
             self.layoutView.animation = "fadeOut"
-            self.layoutView.duration = 2.0
+            self.layoutView.duration = 1.5
             self.layoutView.animate()
             
             if (self.layoutBottomView != nil) {
                 self.layoutBottomView.animation = "fadeOut"
-                self.layoutBottomView.duration = 2.0
+                self.layoutBottomView.duration = 1.5
                 self.layoutBottomView.animate()
             }
+            
+            self.settingsView.animation = "fadeOut"
+            self.settingsView.duration = 0.8
+            self.settingsView.animate()
+            
+            let delayTime = DispatchTime.now() + Double(Int64(0.8 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+            DispatchQueue.main.asyncAfter(deadline: delayTime) {
+                self.settingsView.isHidden = true
+            }
+            
             self.navigationController?.setNavigationBarHidden(true, animated: true)
             UIApplication.shared.isStatusBarHidden = true //.setStatusBarHidden(true, with: .fade)
             
@@ -1113,7 +1124,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
                 webView.isOpaque = false
                 
                 let fontStr = "font-size: " + String(format:"%d", fontSize) + "%; font-family: \"\(fontFamily)\";"
-                worktext = String(format:"<style>body { color: #021439; %@; padding:5em 1.5em 4em 1.5em; text-align: justify; text-indent: 2em; } p {margin-bottom:1.1em}</style>%@", fontStr, work)
+                worktext = String(format:"<style>body { color: #021439; %@; padding:5em 1.5em 4em 1.5em; text-align: left; text-indent: 1.2em; } p {margin-bottom:1.0em}</style>%@", fontStr, work)
             
                 bgColor = AppDelegate.greyLightColor
                 txtColor = AppDelegate.redColor
@@ -1128,7 +1139,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
                 self.webView.isOpaque = false
                 
                 let fontStr = "font-size: " + String(format:"%d", fontSize) + "%; font-family: \"\(fontFamily)\""
-                worktext = String(format:"<style>body { color: #e1e1ce; %@; padding:5em 1.5em 4em 1.5em; text-align: justify; text-indent: 2em; } p {margin-bottom:1.1em} </style>%@", fontStr, work)
+                worktext = String(format:"<style>body { color: #e1e1ce; %@; padding:5em 1.5em 4em 1.5em; text-align: left; text-indent: 1.2em; } p {margin-bottom:1.0em} </style>%@", fontStr, work)
             
                 bgColor = AppDelegate.greyDarkBg
                 txtColor = AppDelegate.textLightColor
@@ -1146,6 +1157,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
         
         layoutView.backgroundColor = bgColor
         layoutBottomView.backgroundColor = bgColor
+        settingsView.backgroundColor = bgColor
         
         self.view.backgroundColor = bgColor
         
@@ -1187,8 +1199,47 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
         scrollWorks()
     }
     
+    @IBAction func fontSizeAddTouched(_ sender: AnyObject) {
+        if (self.fontSize < 450) {
+            self.fontSize += 25
+        } else {
+            self.fontSize = 450
+        }
+        DefaultsManager.putInt(self.fontSize, key: DefaultsManager.FONT_SIZE)
+        
+        self.loadCurrentTheme()
+    }
+    
+    @IBAction func fontSizeMinusTouched(_ sender: AnyObject) {
+        if (self.fontSize > 50) {
+            self.fontSize -= 25
+        } else {
+            self.fontSize = 50
+        }
+        DefaultsManager.putInt(self.fontSize, key: DefaultsManager.FONT_SIZE)
+        
+        self.loadCurrentTheme()
+    }
+    
     func changeTextSizeTouched() {
-        let alert = UIAlertController(title: NSLocalizedString("FontSize", comment: ""), message: String(format: "%d", fontSize) + "%", preferredStyle: UIAlertControllerStyle.actionSheet)
+        if (settingsView.isHidden == true) {
+            
+            settingsView.isHidden = false
+            self.settingsView.animation = "fadeIn"
+            self.settingsView.duration = 0.8
+            self.settingsView.animate()
+        } else {
+            self.settingsView.animation = "fadeOut"
+            self.settingsView.duration = 0.8
+            self.settingsView.animate()
+            
+            let delayTime = DispatchTime.now() + Double(Int64(0.8 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+            DispatchQueue.main.asyncAfter(deadline: delayTime) {
+                self.settingsView.isHidden = true
+            }
+        }
+        
+       /* let alert = UIAlertController(title: NSLocalizedString("FontSize", comment: ""), message: String(format: "%d", fontSize) + "%", preferredStyle: UIAlertControllerStyle.actionSheet)
         alert.addAction(UIAlertAction(title: "+", style: UIAlertActionStyle.default, handler: { action in
             switch action.style{
             case .default:
@@ -1227,7 +1278,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
         alert.popoverPresentationController?.sourceView = self.view
         alert.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.size.width / 2.0, y: self.view.bounds.size.height / 2.0, width: 1.0, height: 1.0)
         
-        self.present(alert, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil) */
     }
     
     func changeTextFamilyTouched() {
