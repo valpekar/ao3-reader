@@ -87,7 +87,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             DefaultsManager.putBool(true, key: DefaultsManager.ADULT)
         }
         
-        if (!purchased && !donated) {
+        if (purchased == false && donated == false) {
             //loadAdMobInterstitial()
             bannerView.adUnitID = "ca-app-pub-8760316520462117/1990583589"
             bannerView.rootViewController = self
@@ -852,6 +852,11 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             if let cController: WorkListController = segue.destination as? WorkListController {
                 cController.tagUrl = tagUrl
             }
+        } else if (segue.identifier == "authorSegue") {
+            if let cController: AuthorViewController = segue.destination as? AuthorViewController {
+                cController.authorName = tagUrl
+            }
+            
         } else if (segue.identifier == "showSerie") {
             if let cController: SerieViewController = segue.destination as? SerieViewController {
                 
@@ -1296,14 +1301,14 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             let nameArr = authorName.split{$0 == " "}.map(String.init)
             var an = nameArr[1].replacingOccurrences(of: "(", with: "")
             an = an.replacingOccurrences(of: ")", with: "")
-            tagUrl = "https://archiveofourown.org/users/\(an)/pseuds/\(nameArr[0])/works"
+            tagUrl = an //"https://archiveofourown.org/users/\(an)/pseuds/\(nameArr[0])/works"
         } else if (authorName.contains(",")) {
             let nameArr = authorName.split{$0 == ","}.map(String.init)
-            tagUrl = "https://archiveofourown.org/users/\(nameArr[0])/works"
+            tagUrl = nameArr[0] //"https://archiveofourown.org/users/\(nameArr[0])/works"
         } else {
-            tagUrl = "https://archiveofourown.org/users/\(authorName)/works"
+            tagUrl = authorName //"https://archiveofourown.org/users/\(authorName)/works"
         }
-        performSegue(withIdentifier: "listSegue", sender: self)
+        performSegue(withIdentifier: "authorSegue", sender: self)
     }
     
     @IBAction func closeClicked(_ sender: AnyObject) {

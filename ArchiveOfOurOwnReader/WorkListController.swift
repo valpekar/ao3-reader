@@ -49,7 +49,7 @@ class WorkListController: ListViewController, UITableViewDataSource, UITableView
             liWorksElement = worksElement
         }
         
-        if (tagUrl.contains("/pseuds/") == false) {
+        if (tagUrl.contains("/pseuds/") == false && tagUrl.contains("/users/") == false) {
         
             searchController = UISearchController(searchResultsController: nil)
             searchController.searchResultsUpdater = self
@@ -73,6 +73,7 @@ class WorkListController: ListViewController, UITableViewDataSource, UITableView
             }
         
             self.tableView.tableHeaderView = searchController.searchBar
+        
         }
         
         if (!tagUrl.contains("archiveofourown.org")) {
@@ -106,11 +107,11 @@ class WorkListController: ListViewController, UITableViewDataSource, UITableView
         }
     }
     
-    func refresh(_ sender:AnyObject) {
+    func refresh(_ sender: AnyObject) {
         requestWorks()
     }
     
-    @IBAction func tryAgainTouched(_ sender:AnyObject) {
+    @IBAction func tryAgainTouched(_ sender: AnyObject) {
         if (self.searchController != nil) {
             self.searchController.searchBar.text = ""
             self.searchController.searchBar.endEditing(true)
@@ -132,7 +133,7 @@ class WorkListController: ListViewController, UITableViewDataSource, UITableView
                 guard let cStorage = Alamofire.SessionManager.default.session.configuration.httpCookieStorage else {
                     return
                 }
-                cStorage.setCookies(del.cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
+                cStorage.setCookies(del.cookies, for:  URL(string: AppDelegate.ao3SiteUrl), mainDocumentURL: nil)
             }
         }
         

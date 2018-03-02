@@ -47,7 +47,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     static var dayBgColor = UIColor(red: 231/255, green: 234/255, blue: 238/255, alpha: 1.0)
     static var greyTransparentColor = UIColor(red: 115/255, green: 116/255, blue: 118/255, alpha: 0.9)
     static var whiteTransparentColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.9)
-    
+
     static var bigCollCellWidth = 70
     static var smallCollCellWidth = 38
     

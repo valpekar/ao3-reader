@@ -353,6 +353,8 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
                 adsShown += 1
             }
             
+            hideBackTitle()
+            
         } else if (segue.identifier == "serieDetail") {
             if let row = tableView.indexPathForSelectedRow?.row {
                 
@@ -361,9 +363,7 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
                 }
             }
             
-            let backItem = UIBarButtonItem()
-            backItem.title = " "
-            navigationItem.backBarButtonItem = backItem
+            hideBackTitle()
             
         } else if(segue.identifier == "searchSegue") {
             if let searchController: SearchViewController = segue.destination as? SearchViewController {

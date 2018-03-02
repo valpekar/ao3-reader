@@ -45,7 +45,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
     var downloadedChapters: [DBChapter]?
     
     var work: String = ""
-    var fontSize: Int = 175
+    var fontSize: Int = 200
     var fontFamily: String = "Verdana"
     
     var onlineChapters = [Int:ChapterOnline]()
@@ -1124,7 +1124,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
                 webView.isOpaque = false
                 
                 let fontStr = "font-size: " + String(format:"%d", fontSize) + "%; font-family: \"\(fontFamily)\";"
-                worktext = String(format:"<style>body { color: #021439; %@; padding:5em 1.5em 4em 1.5em; text-align: left; text-indent: 1.2em; } p {margin-bottom:1.0em}</style>%@", fontStr, work)
+                worktext = String(format:"<style>body { color: #021439; %@; padding:5em 1.5em 4em 1.5em; text-align: left; line-height: 1.5em; } p {margin-bottom:1.0em}</style>%@", fontStr, work)
             
                 bgColor = AppDelegate.greyLightColor
                 txtColor = AppDelegate.redColor
@@ -1139,7 +1139,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
                 self.webView.isOpaque = false
                 
                 let fontStr = "font-size: " + String(format:"%d", fontSize) + "%; font-family: \"\(fontFamily)\""
-                worktext = String(format:"<style>body { color: #e1e1ce; %@; padding:5em 1.5em 4em 1.5em; text-align: left; text-indent: 1.2em; } p {margin-bottom:1.0em} </style>%@", fontStr, work)
+                worktext = String(format:"<style>body { color: #e1e1ce; %@; padding:5em 1.5em 4em 1.5em; text-align: left; line-height: 1.5em; } p {margin-bottom:1.0em} </style>%@", fontStr, work)
             
                 bgColor = AppDelegate.greyDarkBg
                 txtColor = AppDelegate.textLightColor

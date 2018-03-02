@@ -18,7 +18,6 @@ class MarkedForLaterController: ListViewController , UITableViewDataSource, UITa
     @IBOutlet weak var tableView:UITableView!
     @IBOutlet weak var errView:UIView!
     
-    
     var refreshControl: UIRefreshControl!
     
     override func viewDidLoad() {
@@ -163,7 +162,7 @@ class MarkedForLaterController: ListViewController , UITableViewDataSource, UITa
     //MARK: - tableview
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return works.count;
+        return works.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

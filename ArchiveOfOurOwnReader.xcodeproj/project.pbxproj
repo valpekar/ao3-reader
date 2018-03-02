@@ -124,6 +124,7 @@
 		3C93ED601FCF140100F1F4D4 /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C93ED5F1FCF140100F1F4D4 /* CategoryCell.swift */; };
 		3C9C87BA1CE3557D00C10410 /* RecommendationsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9C87B91CE3557D00C10410 /* RecommendationsController.swift */; };
 		3C9DFC362004B62500AE15AD /* InboxController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9DFC352004B62500AE15AD /* InboxController.swift */; };
+		3C9FEDCB2048357000D8C91E /* AuthorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9FEDCA2048357000D8C91E /* AuthorViewController.swift */; };
 		3CAEB2C91FFE501C00C7035C /* XibView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CAEB2C81FFE501C00C7035C /* XibView.swift */; };
 		3CAEB2CB1FFE505C00C7035C /* workCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CAEB2CA1FFE505C00C7035C /* workCell.xib */; };
 		3CB2A74B1F8BB237004A6F76 /* SerieViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB2A74A1F8BB237004A6F76 /* SerieViewController.swift */; };
@@ -334,6 +335,7 @@
 		3C9DFC352004B62500AE15AD /* InboxController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = InboxController.swift; path = Controller/InboxController.swift; sourceTree = "<group>"; };
 		3C9DFC372004B7DA00AE15AD /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3C9DFC382004D5AA00AE15AD /* ArchiveOfOurOwnReader 10.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ArchiveOfOurOwnReader 10.xcdatamodel"; sourceTree = "<group>"; };
+		3C9FEDCA2048357000D8C91E /* AuthorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorViewController.swift; sourceTree = "<group>"; };
 		3CA0A7B01F7BCC7800ADEE04 /* ja */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ja; path = ja.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		3CA0A7B11F7BCC7800ADEE04 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "zh-Hant"; path = "zh-Hant.lproj/LaunchScreen.xib"; sourceTree = "<group>"; };
 		3CA0A7B21F7BCC7800ADEE04 /* th */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = th; path = th.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -613,6 +615,7 @@
 				3C52E9C71FF268A500134813 /* ImportWorkController.swift */,
 				3C9DFC352004B62500AE15AD /* InboxController.swift */,
 				3C4FAC0A2007800400BABB17 /* ReplyController.swift */,
+				3C9FEDCA2048357000D8C91E /* AuthorViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -1075,6 +1078,7 @@
 				1D28320F1BBD6A7200FFC887 /* Chapter.swift in Sources */,
 				3C93D4AE1F22330900948D08 /* DownloadedCell.swift in Sources */,
 				3C0465971F8CBCBA003B6AE7 /* Serie+CoreDataClass.swift in Sources */,
+				3C9FEDCB2048357000D8C91E /* AuthorViewController.swift in Sources */,
 				3C89958A1E95169B00D511CD /* DBFandom+CoreDataClass.swift in Sources */,
 				28B6DC2A1B4E3F5900F34529 /* AppDelegate.swift in Sources */,
 				3C89958D1E95169B00D511CD /* DBRelationship+CoreDataProperties.swift in Sources */,
