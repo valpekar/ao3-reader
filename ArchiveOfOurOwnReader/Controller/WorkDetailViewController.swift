@@ -761,7 +761,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         }
         
         if (data.isEmpty) {
-            TSMessage.showNotification(in: self, title: NSLocalizedString("AddingBmk", comment: ""), subtitle: NSLocalizedString("CannotAddBmk", comment: ""), type: .error)
+            TSMessage.showNotification(in: self, title: NSLocalizedString("CannotAddBmk", comment: ""), subtitle: "Response Is Empty", type: .error)
         }
         return
     }

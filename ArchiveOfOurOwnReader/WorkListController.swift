@@ -17,6 +17,7 @@ class WorkListController: ListViewController, UITableViewDataSource, UITableView
     @IBOutlet weak var tableView:UITableView!
     
     @IBOutlet weak var tryAgainButton:UIButton!
+    @IBOutlet weak var notFoundLabel:UILabel!
     
     var worksStr = NSLocalizedString("WorkList", comment: "")
     var tagUrl = ""
@@ -42,7 +43,9 @@ class WorkListController: ListViewController, UITableViewDataSource, UITableView
         self.refreshControl.addTarget(self, action: #selector(FavoritesSiteController.refresh(_:)), for: UIControlEvents.valueChanged)
         self.tableView.addSubview(self.refreshControl)
         
-        self.worksElement = "work"
+        if (self.worksElement.isEmpty == true) {
+            self.worksElement = "work"
+        }
         self.itemsCountHeading = "h2"
         
         if (liWorksElement.isEmpty == true) {
@@ -101,9 +104,13 @@ class WorkListController: ListViewController, UITableViewDataSource, UITableView
         if (theme == DefaultsManager.THEME_DAY) {
             self.tableView.backgroundColor = AppDelegate.greyLightBg
             self.collectionView.backgroundColor = AppDelegate.greyLightBg
+            self.tryAgainButton.setTitleColor(AppDelegate.redColor, for: UIControlState.normal)
+            self.notFoundLabel.textColor = AppDelegate.redColor
         } else {
             self.tableView.backgroundColor = AppDelegate.greyDarkBg
             self.collectionView.backgroundColor = AppDelegate.redDarkColor
+            self.tryAgainButton.setTitleColor(AppDelegate.purpleLightColor, for: UIControlState.normal)
+            self.notFoundLabel.textColor = AppDelegate.nightTextColor
         }
     }
     
@@ -173,9 +180,11 @@ class WorkListController: ListViewController, UITableViewDataSource, UITableView
         if (works.count > 0) {
             tableView.isHidden = false
             tryAgainButton.isHidden = true
+            notFoundLabel.isHidden = true
         } else {
             tableView.isHidden = true
             tryAgainButton.isHidden = false
+            notFoundLabel.isHidden = false
         }
         
         tableView.reloadData()

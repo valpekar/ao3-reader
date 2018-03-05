@@ -18,6 +18,7 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
     @IBOutlet weak var commentsWebView: WKWebView!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var bgView: UIView!
     
     var pages : [PageItem] = [PageItem]()
     
@@ -190,7 +191,7 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
                     if let attrs = page.search(withXPathQuery: "//a") as? [TFHppleElement] {
                     
                         if (attrs.count > 0) {
-                            if let attributesh = attrs[0].attributes as? NSDictionary  {
+                            if let attributesh = attrs[0].attributes as NSDictionary?  {
                                 pageItem.url = attributesh["href"] as? String ?? ""
                             }
                         }
@@ -225,13 +226,21 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
         
         switch (theme) {
         case DefaultsManager.THEME_DAY :
-            commentsWebView.backgroundColor = UIColor.clear
-            commentsWebView.isOpaque = false
+            self.bgView.backgroundColor = AppDelegate.greyLightBg
+            self.collectionView.backgroundColor = AppDelegate.greyLightBg
+            self.commentTv.textColor = AppDelegate.dayTextColor
+            
+            self.commentsWebView.backgroundColor = UIColor.clear
+            self.commentsWebView.isOpaque = false
             
             let fontStr = "font-size: " + String(format:"%d", fontSize) + "%;"
             worktext = String(format:"<style>body { color: #021439; %@ }</style>%@", fontStr, htmlStr)
             
         case DefaultsManager.THEME_NIGHT :
+            self.bgView.backgroundColor = AppDelegate.redDarkColor
+            self.collectionView.backgroundColor = AppDelegate.redDarkColor
+            self.commentTv.textColor = AppDelegate.nightTextColor
+            
             self.commentsWebView.backgroundColor = UIColor(red: 50/255, green: 52/255, blue: 57/255, alpha: 1)
             self.commentsWebView.isOpaque = false
             
@@ -319,6 +328,9 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
         var requestStr = ""
         var pseud_id = DefaultsManager.getString(DefaultsManager.PSEUD_ID)
         
+        let txt = commentTv.text ?? ""
+        print("Commenting: \(txt)")
+        
         if(pseud_id.isEmpty) {
             if let pseuds = DefaultsManager.getObject(DefaultsManager.PSEUD_IDS) as? [String : String] {
                 pseud_id = pseuds.first?.value ?? ""
@@ -331,7 +343,7 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
         params["authenticity_token"] = (UIApplication.shared.delegate as! AppDelegate).token as AnyObject?
         
         params["comment"] = ["pseud_id": pseud_id,
-                              "content": commentTv.text,
+                              "content": txt,
                               
         ] as AnyObject?
         

@@ -54,7 +54,7 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
         }
         
         
-        if (!purchased && !donated) {
+        if (purchased == false && donated == false) {
             reload(false, productId: "")
         }
         

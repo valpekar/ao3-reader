@@ -623,7 +623,8 @@
                                             </wkWebView>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="onDrag" translatesAutoresizingMaskIntoConstraints="NO" id="Tub-7u-x9f">
                                                 <rect key="frame" x="20" y="586" width="335" height="100"/>
-                                                <color key="backgroundColor" red="0.99310782068062831" green="0.99310782068062831" blue="0.99310782068062831" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="tintColor" red="0.62233597773068505" green="0.21402894812323781" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="100" id="CsP-nN-m1L"/>
                                                 </constraints>
@@ -746,6 +747,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="bgView" destination="OGW-bT-jr5" id="3LM-Lu-6sQ"/>
                         <outlet property="collectionView" destination="BvH-fm-6Yj" id="jBB-aj-6Wf"/>
                         <outlet property="commentTv" destination="Tub-7u-x9f" id="Pob-Z6-Cf9"/>
                         <outlet property="commentsWebView" destination="Y4u-Ry-RvA" id="Zlp-Fy-GCM"/>
@@ -835,7 +837,7 @@
                                         <rect key="frame" x="8" y="101.33333333333334" width="327" height="15.666666666666671"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="English" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="spY-lh-ZPS">
-                                                <rect key="frame" x="0.0" y="0.0" width="45.333333333333336" height="15.666666666666666"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="0.0" height="15.666666666666666"/>
                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
                                                 <color key="textColor" red="0.44705882352941173" green="0.74901960784313726" blue="0.90196078431372551" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -2071,6 +2073,12 @@ Please check your Internet connection and also make sure you are logged into you
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nothing Found" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="etO-j1-oPB">
+                                <rect key="frame" x="36" y="328" width="303" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7BG-8k-w0K">
                                 <rect key="frame" x="133" y="389" width="109" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
@@ -2649,23 +2657,28 @@ Please check your Internet connection and also make sure you are logged into you
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="7BG-8k-w0K" firstAttribute="top" secondItem="etO-j1-oPB" secondAttribute="bottom" constant="40" id="6AQ-a0-0oX"/>
                             <constraint firstAttribute="trailing" secondItem="RmA-Nc-iEP" secondAttribute="trailing" id="GXi-Lh-v47"/>
                             <constraint firstItem="7BG-8k-w0K" firstAttribute="centerY" secondItem="7oc-1t-9bM" secondAttribute="centerY" id="GaP-Dk-esp"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="etO-j1-oPB" secondAttribute="trailing" constant="20" id="VFG-j6-vGP"/>
                             <constraint firstItem="7BG-8k-w0K" firstAttribute="centerX" secondItem="7oc-1t-9bM" secondAttribute="centerX" id="WCK-Ae-13R"/>
                             <constraint firstItem="dVv-Wb-Czg" firstAttribute="top" secondItem="nXI-Uu-5un" secondAttribute="bottom" id="YSf-DK-KBP"/>
                             <constraint firstItem="dVv-Wb-Czg" firstAttribute="leading" secondItem="7oc-1t-9bM" secondAttribute="leading" id="fWY-Jb-q6F"/>
                             <constraint firstItem="RmA-Nc-iEP" firstAttribute="top" secondItem="dVv-Wb-Czg" secondAttribute="bottom" id="j4k-j1-NUP"/>
                             <constraint firstAttribute="trailing" secondItem="dVv-Wb-Czg" secondAttribute="trailing" id="mAo-P5-H7D"/>
                             <constraint firstItem="Yoc-3C-4q5" firstAttribute="top" secondItem="RmA-Nc-iEP" secondAttribute="bottom" id="nA7-rt-eDP"/>
+                            <constraint firstItem="etO-j1-oPB" firstAttribute="leading" secondItem="7oc-1t-9bM" secondAttribute="leadingMargin" constant="20" id="pwk-V8-98C"/>
                             <constraint firstItem="RmA-Nc-iEP" firstAttribute="leading" secondItem="7oc-1t-9bM" secondAttribute="leading" id="v9d-Tr-3J7"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Title" id="B7Y-8Z-ywV"/>
                     <connections>
                         <outlet property="collectionView" destination="RmA-Nc-iEP" id="qcI-Jr-Arj"/>
+                        <outlet property="notFoundLabel" destination="etO-j1-oPB" id="Uhn-XD-lqs"/>
                         <outlet property="tableView" destination="dVv-Wb-Czg" id="0yN-JY-EZh"/>
                         <outlet property="tryAgainButton" destination="7BG-8k-w0K" id="iEU-w6-GBO"/>
                         <segue destination="g0F-jj-WaO" kind="show" identifier="workDetail" id="pDe-8P-N2j"/>
+                        <segue destination="UP5-M8-Ap4" kind="show" identifier="serieDetail" id="MlO-FU-stp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7AI-Ne-Mib" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -7886,7 +7899,7 @@ Please check your Internet connection and also make sure you are logged into you
                                 </constraints>
                             </imageView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="2j0-R9-1bd">
-                                <rect key="frame" x="0.0" y="215" width="375" height="563"/>
+                                <rect key="frame" x="0.0" y="216" width="375" height="562"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="pseudCell" id="Fi8-go-aQj" customClass="MyProfileCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
@@ -7920,8 +7933,8 @@ Please check your Internet connection and also make sure you are logged into you
                                     <outlet property="delegate" destination="DQz-ru-iJG" id="xni-fc-1gu"/>
                                 </connections>
                             </tableView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zkd-U1-2h2">
-                                <rect key="frame" x="24" y="183.33333333333334" width="327" height="15.666666666666657"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zkd-U1-2h2" customClass="ExpandableLabel" customModule="ExpandableLabel">
+                                <rect key="frame" x="24" y="184.33333333333334" width="327" height="15.666666666666657"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -7929,8 +7942,8 @@ Please check your Internet connection and also make sure you are logged into you
                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 </variation>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="42T-Uj-baC">
-                                <rect key="frame" x="36" y="152" width="303" height="19.333333333333343"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="42T-Uj-baC">
+                                <rect key="frame" x="36" y="152" width="303" height="20.333333333333343"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -10055,7 +10068,7 @@ Please check your Internet connection and also make sure you are logged into you
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="VGm-jG-lPh"/>
-        <segue reference="GOa-zO-Fy6"/>
+        <segue reference="MlO-FU-stp"/>
         <segue reference="pDe-8P-N2j"/>
         <segue reference="aEt-Fa-YHa"/>
     </inferredMetricsTieBreakers>

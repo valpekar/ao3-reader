@@ -174,4 +174,5 @@
 "ItemDeleted" = "Item Successfully Deleted";
 "Update" = "Update";
 "UpdateAvail" = "Update is available for this work (Settings -> Reload/Update)!";
+"GettingAuthorInfo" = "Getting Author Info";
 

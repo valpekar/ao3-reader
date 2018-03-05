@@ -18,6 +18,7 @@ pod 'AlamofireImage'
 pod 'Appirater'
 pod 'Spring', :git => 'https://github.com/MengTo/Spring.git'
 pod 'RSLoadingView'
+pod 'ExpandableLabel'
 
   target 'ArchiveOfOurOwnReaderTests' do
     inherit! :search_paths

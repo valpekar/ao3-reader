@@ -231,6 +231,13 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
             }
         }
         
+        let tapRecognizer1 = UITapGestureRecognizer(target: self, action: #selector(WorkViewController.handleHideTap(_:)))
+        tapRecognizer1.numberOfTapsRequired = 1
+        tapRecognizer1.delegate = self
+        tapRecognizer1.delaysTouchesBegan = true
+        tapRecognizer1.delaysTouchesEnded = true
+        self.webView.addGestureRecognizer(tapRecognizer1)
+        
      //   scrollWorks()
     }
     
@@ -411,6 +418,19 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
         let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace, target: nil, action: nil)
         
         self.navigationItem.rightBarButtonItems = [ searchButton, igButton, ffButton, flexSpace]
+    }
+    
+    func handleHideTap(_ recognizer: UITapGestureRecognizer) {
+        if (self.settingsView.isHidden == false) {
+            self.settingsView.animation = "fadeOut"
+            self.settingsView.duration = 0.8
+            self.settingsView.animate()
+            
+            let delayTime = DispatchTime.now() + Double(Int64(0.8 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+            DispatchQueue.main.asyncAfter(deadline: delayTime) {
+                self.settingsView.isHidden = true
+            }
+        }
     }
     
     //https://stackoverflow.com/questions/31114340/setstatusbarhidden-is-deprecated-in-ios-9-0

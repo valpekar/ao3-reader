@@ -33,6 +33,12 @@ class WorksParser {
             }
         }
         
+        var olLiteral = "ol"
+        
+        if (worksElement == "series" && liWorksElement == "series") {
+            olLiteral = "ul"
+        }
+        
         if let itemsCount: [TFHppleElement] = doc.search(withXPathQuery: "//\(itemsCountHeading)[@class='heading']") as? [TFHppleElement] {
             if (itemsCount.count > 0) {
                 worksCountStr = itemsCount[0].content.trimmingCharacters(
@@ -43,16 +49,30 @@ class WorksParser {
                 }
             }
         }
-        if let workGroup = doc.search(withXPathQuery: "//ol[@class='\(worksElement) index group']") as? [TFHppleElement] {
+        if let workGroup = doc.search(withXPathQuery: "//\(olLiteral)[@class='\(worksElement) index group']") as? [TFHppleElement] {
             if (workGroup.count > 0) {
                 if let worksList : [TFHppleElement] = workGroup[0].search(withXPathQuery: "//li[@class='\(liEl) blurb group']") as? [TFHppleElement] {
                 
-                    for workListItem in worksList {
-                        
-                        autoreleasepool { [unowned workListItem] in
+                    //sometimes they have extra space " " after group ("group ") >.<
+                    if (worksList.count == 0) {
+                        if let newList: [TFHppleElement] = workGroup[0].search(withXPathQuery: "//li[@class='\(liEl) blurb group ']") as? [TFHppleElement] {
+                           
+                            for workListItem in newList {
+                                autoreleasepool { [unowned workListItem] in
+                                    
+                                    let item: NewsFeedItem = parseWorkItem(workListItem: workListItem, downloadedCheckItems:  downloadedCheckItems)
+                                    works.append(item)
+                                }
+                            }
+                        }
+                    } else {
+                    
+                        for workListItem in worksList {
+                            autoreleasepool { [unowned workListItem] in
                             
-                            let item: NewsFeedItem = parseWorkItem(workListItem: workListItem, downloadedCheckItems:  downloadedCheckItems)
-                            works.append(item)
+                                let item: NewsFeedItem = parseWorkItem(workListItem: workListItem, downloadedCheckItems:  downloadedCheckItems)
+                                works.append(item)
+                            }
                         }
                     }
                     

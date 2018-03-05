@@ -11,12 +11,13 @@ import Crashlytics
 import Alamofire
 import AlamofireImage
 import TSMessages
+import ExpandableLabel
 
 class AuthorViewController: LoadingViewController {
     
     @IBOutlet weak var tableView:UITableView!
     
-    @IBOutlet weak var bioLabel: UILabel!
+    @IBOutlet weak var bioLabel: ExpandableLabel!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var picImg: UIImageView!
     
@@ -24,6 +25,10 @@ class AuthorViewController: LoadingViewController {
     var imgUrl: String = ""
     var tagUrl: String = ""
     var mainEl = "works"
+    
+    var bmkCount = "0"
+    var worksCount = "0"
+    var seriesCount = "0"
     
     var bio: String = ""
     
@@ -37,6 +42,10 @@ class AuthorViewController: LoadingViewController {
         self.tableView.tableFooterView = UIView()
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 44
+        
+        self.bioLabel.collapsedAttributedLink = NSAttributedString(string: "More")
+        //self.bioLabel.expandedAttributedLink = NSAttributedString(string: "Less")
+        self.bioLabel.numberOfLines = 5
         
         getUserProfile()
     }
@@ -121,6 +130,24 @@ class AuthorViewController: LoadingViewController {
                 }
             }
         }
+        
+        if let navDiv: [TFHppleElement] = doc.search(withXPathQuery: "//div[@id='dashboard']//ul[@class='navigation actions']//li") as? [TFHppleElement] {
+            for liEl in navDiv {
+                if (liEl.content.contains("Works")) {
+                    if let number = Int(liEl.content.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()) {
+                        self.worksCount = "\(number)"
+                    }
+                } else if (liEl.content.contains("Series")) {
+                    if let number = Int(liEl.content.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()) {
+                        self.seriesCount = "\(number)"
+                    }
+                } else if (liEl.content.contains("Bookmarks")) {
+                    if let number = Int(liEl.content.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()) {
+                        self.bmkCount = "\(number)"
+                    }
+                }
+            }
+        }
     }
     
     func showProfile() {
@@ -135,6 +162,8 @@ class AuthorViewController: LoadingViewController {
             imageTransition: .crossDissolve(0.2)
         )
         }
+        
+        self.tableView.reloadData()
     }
     
     func authorWorksTouched(uri: String) {
@@ -196,13 +225,13 @@ extension AuthorViewController: UITableViewDelegate, UITableViewDataSource {
         
         switch (indexPath.row) {
         case 0:
-            cell.titleLabel.text = "Works"
+            cell.titleLabel.text = "Works (\(self.worksCount))"
             cell.accessoryType = .disclosureIndicator
         case 1:
-            cell.titleLabel.text = "Series"
+            cell.titleLabel.text = "Series (\(self.seriesCount))"
             cell.accessoryType = .disclosureIndicator
         case 2:
-            cell.titleLabel.text = "Bookmarks"
+            cell.titleLabel.text = "Bookmarks (\(self.bmkCount))"
             cell.accessoryType = .disclosureIndicator
             
         default: break
