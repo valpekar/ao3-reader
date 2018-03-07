@@ -1144,7 +1144,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
                 webView.isOpaque = false
                 
                 let fontStr = "font-size: " + String(format:"%d", fontSize) + "%; font-family: \"\(fontFamily)\";"
-                worktext = String(format:"<style>body { color: #021439; %@; padding:5em 1.5em 4em 1.5em; text-align: left; line-height: 1.5em; } p {margin-bottom:1.0em}</style>%@", fontStr, work)
+                worktext = String(format:"<style>body, table { color: #021439; %@; padding:5em 1.5em 4em 1.5em; text-align: left; line-height: 1.5em; } p {margin-bottom:1.0em}</style>%@", fontStr, work)
             
                 bgColor = AppDelegate.greyLightColor
                 txtColor = AppDelegate.redColor
@@ -1159,7 +1159,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
                 self.webView.isOpaque = false
                 
                 let fontStr = "font-size: " + String(format:"%d", fontSize) + "%; font-family: \"\(fontFamily)\""
-                worktext = String(format:"<style>body { color: #e1e1ce; %@; padding:5em 1.5em 4em 1.5em; text-align: left; line-height: 1.5em; } p {margin-bottom:1.0em} </style>%@", fontStr, work)
+                worktext = String(format:"<style>body, table { color: #e1e1ce; %@; padding:5em 1.5em 4em 1.5em; text-align: left; line-height: 1.5em; } p {margin-bottom:1.0em} </style>%@", fontStr, work)
             
                 bgColor = AppDelegate.greyDarkBg
                 txtColor = AppDelegate.textLightColor

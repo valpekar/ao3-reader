@@ -240,7 +240,7 @@ class SubscriptionsViewController: ListViewController, UITableViewDataSource, UI
             print("premium")
             #endif
         } else {
-            if (countWroksFromDB() > 29) {
+            if (countWroksFromDB() > 49) {
                 TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Only30Stroies", comment: ""), type: .error, duration: 2.0)
                 
                 return

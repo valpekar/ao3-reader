@@ -16,7 +16,7 @@
 "Error" = "Error 👻";
 "CannotBeEmpty" = "Please type something!";
 "CheckInternet" = "Check your Internet connection";
-"Only30Stroies" = "You can only download 30 stories. Please, upgrade to download more.";
+"Only30Stroies" = "You can only download 50 stories. Please, upgrade to download more.";
 "DwnloadingWrk" = "Downloading Work";
 "CannotDwnldWrk" = "Cannot Download Work!";
 "CannotAddBmk" = "Cannot Add Bookmark!";
@@ -172,6 +172,7 @@
 "CouldNotDelete" = "Could Not Delete!";
 "SureDeleteItem" = "You want to delete this item?";
 "ItemDeleted" = "Item Successfully Deleted";
+"WorkDeletedFromDownloads" = "Work Has Been Deleted From Downloads";
 "Update" = "Update";
 "UpdateAvail" = "Update is available for this work (Settings -> Reload/Update)!";
 "GettingAuthorInfo" = "Getting Author Info";
