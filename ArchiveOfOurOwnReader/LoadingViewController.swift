@@ -13,6 +13,7 @@ import GoogleMobileAds
 import Alamofire
 import TSMessages
 import RSLoadingView
+import CoreTelephony
 
 class LoadingViewController: CenterViewController, ModalControllerDelegate, AuthProtocol, UIAlertViewDelegate, GADInterstitialDelegate {
     
@@ -1123,7 +1124,9 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
     
     
     func doDownloadWork(wId: String, isOnline: Bool) {
-        if (purchased || donated) {
+        let cC = self.getCountryCode()
+        
+        if (purchased || donated || cC.contains("IR")) {
             #if DEBUG
                 print("premium")
             #endif
@@ -1257,9 +1260,17 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
     
     func kudosToAnalytics() {
         
+    }    
+    
+    
+    func getCountryCode() -> String {
+        if let countryCode = (NSLocale.current as NSLocale).object(forKey: .countryCode) as? String {
+            print("country code = \(countryCode)")
+            return countryCode
+        } else {
+            return ""
+        }
     }
-    
-    
  }
 
 extension String: ParameterEncoding {
@@ -1306,5 +1317,4 @@ extension String: ParameterEncoding {
         
         return numFormatter.string(from: NSNumber (value:value)) ?? ""
     }
-    
  }

@@ -524,7 +524,9 @@ extension ListViewController: DownloadButtonDelegate {
             self.present(optionMenu, animated: true, completion: nil)
         } else {
         
-            if (purchased || donated) {
+            let cC = self.getCountryCode()
+            
+            if (purchased || donated || cC.contains("IR")) {
                 #if DEBUG
                     print("premium")
                 #endif

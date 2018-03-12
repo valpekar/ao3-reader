@@ -53,6 +53,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     var indexesToHide: [Int]!
     
     var bookmarked = false
+    var markedForLater = false
     var needReload = false
     var bookmarkId = ""
     var changedSmth = false
@@ -594,16 +595,25 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             }
         }
         
-        let editBookmarkEl = doc.search(withXPathQuery: "//a[@class='bookmark_form_placement_open']") as! [TFHppleElement]
+        if let editBookmarkEl = doc.search(withXPathQuery: "//a[@class='bookmark_form_placement_open']") as? [TFHppleElement] {
         if (editBookmarkEl.count > 0) {
             if (editBookmarkEl[0].raw.contains("Edit")) {
-                bookmarked = true
+                self.bookmarked = true
             }
         }
+        }
         
-        var chaptersEl: [TFHppleElement]? = doc.search(withXPathQuery: "//ul[@id='chapter_index']") as? [TFHppleElement]
-        if (chaptersEl != nil && chaptersEl!.count > 0) {
-            if let optionsEl: [TFHppleElement] = chaptersEl?[0].search(withXPathQuery: "//select/option") as? [TFHppleElement] {
+        if let markForLaterEl = doc.search(withXPathQuery: "//ul[@class='work navigation actions']//li[@class='mark']") as? [TFHppleElement] {
+        if (markForLaterEl.count > 0) {
+            if (markForLaterEl[0].raw.contains("Mark as Read")) {
+                self.markedForLater = true
+            }
+        }
+        }
+        
+        if var chaptersEl: [TFHppleElement] = doc.search(withXPathQuery: "//ul[@id='chapter_index']") as? [TFHppleElement] {
+        if (chaptersEl.count > 0) {
+            if let optionsEl: [TFHppleElement] = chaptersEl[0].search(withXPathQuery: "//select/option") as? [TFHppleElement] {
             for i in 0..<optionsEl.count {
                 var chptOnline: ChapterOnline = ChapterOnline()
                 chptOnline.url = optionsEl[i].text()
@@ -613,8 +623,8 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             }
             }
         }
-        
-        chaptersEl = nil
+           // chaptersEl = nil
+        }
         
         saveToAnalytics(workItem.author, category: workItem.category, mainFandom: firstFandom, mainRelationship: firstRelationship)
         
@@ -692,10 +702,19 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         if (editBookmarkEl.count > 0) {
             if let _ : NSDictionary = editBookmarkEl[0].attributes as NSDictionary? {
             if (editBookmarkEl[0].raw.contains("Edit")) {
-                bookmarked = true
+                self.bookmarked = true
                 }
             }
         }
+        }
+        
+        self.markedForLater = false
+        if let markForLaterEl = doc.search(withXPathQuery: "//ul[@class='work navigation actions']//li[@class='mark']") as? [TFHppleElement] {
+            if (markForLaterEl.count > 0) {
+                if (markForLaterEl[0].raw.contains("Mark as Read")) {
+                    self.markedForLater = true
+                }
+            }
         }
         
         if let downloadEl = doc.search(withXPathQuery: "//li[@class='download']") as? [TFHppleElement] {
@@ -1328,6 +1347,213 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         })
     }
     
+    //MARK: - mark for later
+    
+    func markForLaterWorkAction() {
+        let pseud_id = DefaultsManager.getString(DefaultsManager.PSEUD_ID)
+        if (pseud_id.isEmpty || ((UIApplication.shared.delegate as! AppDelegate).cookies.count == 0 || (UIApplication.shared.delegate as! AppDelegate).token.isEmpty)) {
+            openLoginController()
+            triedTo = 3
+        } else {
+            self.sendMarkForLaterRequest()
+        }
+    }
+    
+    func markAsReadWorkAction() {
+        self.sendMarkAsReadRequest()
+    }
+    
+    func sendMarkAsReadRequest() {
+        
+        if ((UIApplication.shared.delegate as! AppDelegate).cookies.count == 0 || (UIApplication.shared.delegate as! AppDelegate).token.isEmpty) {
+            
+            triedTo = 4
+            openLoginController() //openLoginController()
+            return
+        }
+        
+        showLoadingView(msg: NSLocalizedString("MarkingForLater", comment: ""))
+        
+        var requestStr = "https://archiveofourown.org/works/"
+        var bid = ""
+        var pseud_id = DefaultsManager.getString(DefaultsManager.PSEUD_ID)
+        
+        if(pseud_id.isEmpty) {
+            if let pseuds = DefaultsManager.getObject(DefaultsManager.PSEUD_IDS) as? [String : String] {
+                pseud_id = pseuds.first?.value ?? ""
+                
+                DefaultsManager.putString(pseud_id, key: DefaultsManager.PSEUD_ID)
+            }
+        }
+        
+        if (workItem != nil) {
+            bid = workItem.workId
+            requestStr += bid + "/mark_as_read"
+            
+            
+            if ( fandoms != nil && relationships != nil && fandoms.count > 0 && relationships.count > 0) {
+                saveToAnalytics(workItem.value(forKey: "author") as? String ?? "", category: workItem.category, mainFandom: fandoms[0].fandomName, mainRelationship: relationships[0].relationshipName)
+            }
+            
+        } else if (downloadedWorkItem != nil) {
+            guard let bd = (downloadedWorkItem.value(forKey: "workId") as? String) else {
+                return
+            }
+            bid = bd
+            requestStr += bid + "/mark_as_read"
+            
+            if (downloadedFandoms.count > 0 && downloadedRelationships.count > 0) {
+                saveToAnalytics(downloadedWorkItem.value(forKey: "author") as? String ?? "", category: downloadedWorkItem.value(forKey: "category") as? String ?? "", mainFandom: downloadedFandoms[0].fandomName ?? "", mainRelationship: downloadedRelationships[0].relationshipName ?? "")
+            }
+        }
+        
+        Answers.logCustomEvent(withName: "WorkDetail: MarkAsRead",
+                               customAttributes: [
+                                "workId": bid])
+        
+        
+        if let del = UIApplication.shared.delegate as? AppDelegate {
+            if (del.cookies.count > 0) {
+                guard let cStorage = Alamofire.SessionManager.default.session.configuration.httpCookieStorage else {
+                    return
+                }
+                cStorage.setCookies(del.cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
+            }
+            
+            if (del.cookies.count > 0) {
+                Alamofire.request(requestStr, method: .get, parameters: [:], encoding: URLEncoding.queryString /*ParameterEncoding.Custom(encodeParams)*/)
+                    .response(completionHandler: { response in
+                        #if DEBUG
+                            print(response.request ?? "")
+                            // print(response)
+                            print(response.error ?? "")
+                        #endif
+                        
+                        if let d = response.data {
+                            self.parseCookies(response)
+                            self.parseMarkForLaterResponse(d)
+                            self.hideLoadingView()
+                            
+                            self.checkBookmarkAndUpdate()
+                            
+                        } else {
+                            self.hideLoadingView()
+                            TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
+                        }
+                    })
+            }
+        }
+    }
+    
+    func parseMarkForLaterResponse(_ data: Data) {
+        #if DEBUG
+            let dta = NSString(data: data, encoding: String.Encoding.utf8.rawValue)
+            print("the string is: \(String(describing: dta))")
+        #endif
+        let doc : TFHpple = TFHpple(htmlData: data)
+        
+        if let noticediv: [TFHppleElement] = doc.search(withXPathQuery: "//div[@class='flash notice']") as? [TFHppleElement] {
+            if(noticediv.count > 0) {
+                TSMessage.showNotification(in: self, title: NSLocalizedString("MarkingForLater", comment: ""), subtitle: noticediv[0].content, type: .success)
+            }
+        }
+        
+        if let sorrydiv = doc.search(withXPathQuery: "//div[@class='flash error']") {
+            
+            if(sorrydiv.count>0 && (sorrydiv[0] as! TFHppleElement).text().range(of: "Sorry") != nil) {
+                TSMessage.showNotification(in: self, title: NSLocalizedString("MarkingForLater", comment: ""), subtitle: (sorrydiv[0] as AnyObject).content, type: .error)
+                return
+            }
+        }
+        
+        if (data.isEmpty) {
+            TSMessage.showNotification(in: self, title: NSLocalizedString("CannotMark", comment: ""), subtitle: "Response Is Empty", type: .error)
+        }
+        return
+    }
+    
+    func sendMarkForLaterRequest() {
+        
+        if ((UIApplication.shared.delegate as! AppDelegate).cookies.count == 0 || (UIApplication.shared.delegate as! AppDelegate).token.isEmpty) {
+            
+            triedTo = 3
+            openLoginController() //openLoginController()
+            return
+        }
+        
+        showLoadingView(msg: NSLocalizedString("MarkingForLater", comment: ""))
+        
+        var requestStr = "https://archiveofourown.org/works/"
+        var bid = ""
+        var pseud_id = DefaultsManager.getString(DefaultsManager.PSEUD_ID)
+        
+        if(pseud_id.isEmpty) {
+            if let pseuds = DefaultsManager.getObject(DefaultsManager.PSEUD_IDS) as? [String : String] {
+                pseud_id = pseuds.first?.value ?? ""
+                
+                DefaultsManager.putString(pseud_id, key: DefaultsManager.PSEUD_ID)
+            }
+        }
+        
+        if (workItem != nil) {
+            bid = workItem.workId
+            requestStr += bid + "/mark_for_later"
+            
+            
+            if ( fandoms != nil && relationships != nil && fandoms.count > 0 && relationships.count > 0) {
+                saveToAnalytics(workItem.value(forKey: "author") as? String ?? "", category: workItem.category, mainFandom: fandoms[0].fandomName, mainRelationship: relationships[0].relationshipName)
+            }
+            
+        } else if (downloadedWorkItem != nil) {
+            guard let bd = (downloadedWorkItem.value(forKey: "workId") as? String) else {
+                return
+            }
+            bid = bd
+            requestStr += bid + "/mark_for_later"
+            
+            if (downloadedFandoms.count > 0 && downloadedRelationships.count > 0) {
+                saveToAnalytics(downloadedWorkItem.value(forKey: "author") as? String ?? "", category: downloadedWorkItem.value(forKey: "category") as? String ?? "", mainFandom: downloadedFandoms[0].fandomName ?? "", mainRelationship: downloadedRelationships[0].relationshipName ?? "")
+            }
+        }
+        
+        Answers.logCustomEvent(withName: "WorkDetail: MarkForLater add",
+                               customAttributes: [
+                                "workId": bid])
+        
+        
+        if let del = UIApplication.shared.delegate as? AppDelegate {
+            if (del.cookies.count > 0) {
+                guard let cStorage = Alamofire.SessionManager.default.session.configuration.httpCookieStorage else {
+                    return
+                }
+                cStorage.setCookies(del.cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
+            }
+            
+            if (del.cookies.count > 0) {
+                Alamofire.request(requestStr, method: .get, parameters: [:], encoding: URLEncoding.queryString /*ParameterEncoding.Custom(encodeParams)*/)
+                    .response(completionHandler: { response in
+                        #if DEBUG
+                            print(response.request ?? "")
+                            // print(response)
+                            print(response.error ?? "")
+                        #endif
+                        
+                        if let d = response.data {
+                            self.parseCookies(response)
+                            self.parseMarkForLaterResponse(d)
+                            self.hideLoadingView()
+                            
+                            self.checkBookmarkAndUpdate()
+                            
+                        } else {
+                            self.hideLoadingView()
+                            TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
+                        }
+                    })
+            }
+        }
+    }
+    
     //MARK: - bookmarks
     
     func bookmarkWorkAction() {
@@ -1680,6 +1906,20 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             optionMenu.addAction(bookmarkAction)
         }
         
+        if (self.markedForLater == false) {
+            let markForLaterAction = UIAlertAction(title: NSLocalizedString("MarkForLater", comment: ""), style: .default, handler: {
+                (alert: UIAlertAction!) -> Void in
+                self.markForLaterWorkAction()
+            })
+            optionMenu.addAction(markForLaterAction)
+        } else {
+            let markAsReadAction = UIAlertAction(title: NSLocalizedString("MarkAsRead", comment: ""), style: .default, handler: {
+                (alert: UIAlertAction!) -> Void in
+                self.markAsReadWorkAction()
+            })
+            optionMenu.addAction(markAsReadAction)
+        }
+        
         if (downloadUrls.count > 0 && !isSensitive) {
             let downloadAction = UIAlertAction(title: NSLocalizedString("DownloadFile", comment: ""), style: .default, handler: {
                 (alert: UIAlertAction!) -> Void in
@@ -1827,6 +2067,10 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             sendAddBookmarkRequest()
         case 2:
             sendDeleteBookmarkRequest()
+        case 3:
+            sendMarkForLaterRequest()
+        case 4:
+            sendMarkAsReadRequest()
         default: break
         }
         triedTo = -1

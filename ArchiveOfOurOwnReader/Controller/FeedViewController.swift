@@ -226,7 +226,7 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
     @IBAction func checkStatusTouched(_ sender: AnyObject) {
         if let url = URL(string: "https://twitter.com/ao3_status") {
             UIApplication.shared.open(url, options: [ : ], completionHandler: { (res) in
-                "open twitter status"
+                print("open twitter status")
             })
         }
     }

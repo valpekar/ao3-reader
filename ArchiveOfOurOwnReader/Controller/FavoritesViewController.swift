@@ -72,9 +72,9 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         // Reload the table
         //self.tableView.reloadData()
         
-        if (hasOldSaves() == true) {
-            showOldAlert()
-        }
+//        if (hasOldSaves() == true) {
+//            showOldAlert()
+//        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
