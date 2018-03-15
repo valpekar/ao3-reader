@@ -1185,6 +1185,12 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
     func kudosToAnalytics() {
         
     }
+}
+
+ //MARK: - remote notifications
+ 
+ extension LoadingViewController {
+    
     
     func saveWorkNotifItem(workId: String, wasDeleted: NSNumber) {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,
@@ -1219,18 +1225,51 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         }
     }
     
+    func deleteWorkNotifItemById(workId: String) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,
+            let managedContext = appDelegate.managedObjectContext else {
+                return
+        }
+        
+        let fetchRequest: NSFetchRequest <NSFetchRequestResult> = NSFetchRequest(entityName:"DBWorkNotifItem")
+        
+        let searchPredicate = NSPredicate(format: "workId == %@ ", workId)
+        fetchRequest.predicate = searchPredicate
+        fetchRequest.fetchLimit = 1
+        
+        var notifItem: NSManagedObject?
+        
+        do {
+            if let fetchedResults = try managedContext.fetch(fetchRequest) as? [NSManagedObject], fetchedResults.count > 0  {
+                notifItem = fetchedResults.first
+            }
+        } catch {
+            #if DEBUG
+                print("cannot fetch favorites.")
+            #endif
+        }
+        
+        if let nI = notifItem {
+            managedContext.delete(nI)
+        }
+        do {
+            try managedContext.save()
+        } catch _ {
+            NSLog("Cannot delete notif item")
+        }
+    }
+    
     func getAllWorkNotifItems(areDeleted: NSNumber) -> [DBWorkNotifItem] {
         var res: [DBWorkNotifItem] = []
         
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,
             let managedContext = appDelegate.managedObjectContext else {
-            return res
+                return res
         }
         
         let fetchRequest: NSFetchRequest <NSFetchRequestResult> = NSFetchRequest(entityName:"DBWorkNotifItem")
         
         let searchPredicate = NSPredicate(format: "isItemDeleted == %@ ", areDeleted)
-        
         fetchRequest.predicate = searchPredicate
         
         do {
@@ -1245,8 +1284,30 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         
         return res
     }
-}
+    
+    func sendRequestWorkDownloadedForNotif(workIds: [String]) {
+        // Alamofire.request
+    }
+    
+    func sendRequestWorkDeletedForNotif() {
+        // Alamofire.request
+    }
 
+    func sendAllNotSentForNotif() {
+        let notSentDownloadedWorks: [DBWorkNotifItem] = getAllWorkNotifItems(areDeleted: NSNumber(booleanLiteral: false))
+        
+        var workIds: [String] = []
+        let deviceToken = DefaultsManager.getString(DefaultsManager.NOTIF_DEVICE_TOKEN)
+        
+        for notSentDownloadedWork in notSentDownloadedWorks {
+            if let wId = notSentDownloadedWork.workId {
+                workIds.append(wId)
+            }
+        }
+        
+       
+    }
+ }
  
  
  //MARK: - kudos
