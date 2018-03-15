@@ -59,8 +59,8 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
         self.refreshControl.addTarget(self, action: #selector(FeedViewController.refresh(_:)), for: UIControlEvents.valueChanged)
         self.tableView.addSubview(self.refreshControl)
         
-        let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.white]
-        self.navigationController?.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
+        let titleDict: [NSAttributedStringKey : Any] = [NSAttributedStringKey.foregroundColor: UIColor.white]
+        self.navigationController?.navigationBar.titleTextAttributes = titleDict
         
         self.resultSearchController = ({
             let controller = UISearchController(searchResultsController: nil)
@@ -199,7 +199,7 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
         refresh(tableView)
     }
     
-    func refresh(_ sender:AnyObject) {
+    @objc func refresh(_ sender:AnyObject) {
         searchApplied(self.query, shouldAddKeyword: true)
         
         if (Reachability.isConnectedToNetwork()) {

@@ -13,9 +13,10 @@ import Crashlytics
 import Firebase
 import AVFoundation
 import Appirater
+import UserNotifications
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
 
     var window: UIWindow?
     var cookies: [HTTPCookie] = [HTTPCookie]()
@@ -64,12 +65,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
         //UINavigationBar.appearance().barStyle = .Black
         
-        UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName : UIColor.white], for: UIControlState())
-        UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName : UIColor.white], for: UIControlState.selected)        
+        UITabBarItem.appearance().setTitleTextAttributes([NSAttributedStringKey.foregroundColor : UIColor.white], for: UIControlState())
+        UITabBarItem.appearance().setTitleTextAttributes([NSAttributedStringKey.foregroundColor : UIColor.white], for: UIControlState.selected)        
         
-        //register local notifications
-        let notificationSettings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
-        UIApplication.shared.registerUserNotificationSettings(notificationSettings)
+        //create the notificationCenter
+        let center  = UNUserNotificationCenter.current()
+        center.delegate = self
+        // set the type as sound or badge
+        center.requestAuthorization(options: [.sound,.alert,.badge]) { (granted, error) in
+            // Enable or disable features based on authorization
+            if granted {
+                UIApplication.shared.registerForRemoteNotifications()
+            }
+        }
         
         application.applicationIconBadgeNumber = 0
         
@@ -109,12 +117,50 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Appirater.setDebug(false)
         Appirater.appLaunched(true)
         
+        // Check if launched from notification
+        if let notification = launchOptions?[.remoteNotification] as? [String: AnyObject] {
+          //  let aps = notification["aps"] as! [String: AnyObject] = NewsItem.makeNewsItem(aps)
+         //   if (notification.count == 0) {
+            if let currentViewController: ContainerViewController = self.window?.rootViewController as? ContainerViewController {
+                currentViewController.selectedControllerAtIndex(IndexPath(row: 4, section: 0))
+            }
+         //   }
+        }
+        
         return true
     }
     
-    func application(_ application: UIApplication, didReceive notification: UILocalNotification) {
-        application.applicationIconBadgeNumber = 0
-        //self.navigationController?.popToRootViewControllerAnimated(true)
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        
+        UIApplication.shared.applicationIconBadgeNumber = 0
+        print("AppDelegate: willPresent notification")
+        
+        Answers.logCustomEvent(withName: "WillPresent_notification",
+                               customAttributes: [:])
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        print("AppDelegate: didReceive UNNotificationResponse")
+        
+        if let currentViewController: ContainerViewController = self.window?.rootViewController as? ContainerViewController {
+            currentViewController.selectedControllerAtIndex(IndexPath(row: 7, section: 0))
+        }
+        
+    }
+    
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        let tokenParts = deviceToken.map { data -> String in
+            return String(format: "%02.2hhx", data)
+        }
+        
+        let token = tokenParts.joined()
+        print("Device Token: \(token)")
+        
+        DefaultsManager.putString(token, key: DefaultsManager.NOTIF_DEVICE_TOKEN)
+    }
+    
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        print("Failed to register: \(error)")
     }
     
     //MARK: - UIApplicationDelegate
@@ -198,13 +244,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // The persistent store coordinator for the application. This implementation creates and return a coordinator, having added the store for the application to it. This property is optional since there are legitimate error conditions that could cause the creation of the store to fail.
         // Create the coordinator and store
         
+        let mOptions = [NSMigratePersistentStoresAutomaticallyOption: true,
+                        NSInferMappingModelAutomaticallyOption: true] as [String : Any]
         
         var coordinator: NSPersistentStoreCoordinator? = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
         let url = self.applicationDocumentsDirectory.appendingPathComponent("ArchiveOfOurOwnReader.sqlite")
         var error: NSError? = nil
         var failureReason = "There was an error creating or loading the application's saved data."
         do {
-            try coordinator!.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: url, options: nil)
+            try coordinator!.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: url, options: mOptions)
         } catch var error1 as NSError {
             error = error1
             coordinator = nil

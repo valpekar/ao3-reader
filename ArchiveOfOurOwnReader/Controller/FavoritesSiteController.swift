@@ -62,7 +62,7 @@ class FavoritesSiteController : ListViewController, UITableViewDataSource, UITab
         showNav()
     }
     
-    func refresh(_ sender:AnyObject) {
+    @objc func refresh(_ sender:AnyObject) {
         requestFavs()
     }
     
@@ -414,6 +414,25 @@ class FavoritesSiteController : ListViewController, UITableViewDataSource, UITab
             }
         }
     }
+    
+    override func deleteTouched(rowIndex: Int) {
+        let deleteAlert = UIAlertController(title: NSLocalizedString("AreYouSure", comment: ""), message: NSLocalizedString("SureDeleteWrkFromBmks", comment: ""), preferredStyle: UIAlertControllerStyle.alert)
+        
+        deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .default, handler: { (action: UIAlertAction) in
+            print("Cancel")
+        }))
+        
+        deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Yes", comment: ""), style: .default, handler: { (action: UIAlertAction) in
+            
+            let curWork:NewsFeedItem = self.works[rowIndex]
+            self.deleteItemFromBookmarks(curWork)
+            
+            self.dismiss(animated: true, completion: { () -> Void in
+            })
+        }))
+        
+        present(deleteAlert, animated: true, completion: nil)
+    }
 
 }
 
@@ -514,28 +533,6 @@ extension FavoritesSiteController: UISearchBarDelegate {
                 }
                 self.refreshControl.endRefreshing()
             })
-    }
-}
-
-extension FavoritesSiteController {
-    
-    override func deleteTouched(rowIndex: Int) {
-        let deleteAlert = UIAlertController(title: NSLocalizedString("AreYouSure", comment: ""), message: NSLocalizedString("SureDeleteWrkFromBmks", comment: ""), preferredStyle: UIAlertControllerStyle.alert)
-        
-        deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .default, handler: { (action: UIAlertAction) in
-            print("Cancel")
-        }))
-        
-        deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Yes", comment: ""), style: .default, handler: { (action: UIAlertAction) in
-            
-            let curWork:NewsFeedItem = self.works[rowIndex]
-            self.deleteItemFromBookmarks(curWork)
-            
-            self.dismiss(animated: true, completion: { () -> Void in
-            })
-        }))
-        
-        present(deleteAlert, animated: true, completion: nil)
     }
 }
 

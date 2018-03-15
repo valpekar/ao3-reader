@@ -367,9 +367,6 @@ class MarkedForLaterController: ListViewController , UITableViewDataSource, UITa
         }
     }
     
-}
-
-extension MarkedForLaterController  {
     
     override func deleteTouched(rowIndex: Int) {
         let deleteAlert = UIAlertController(title: NSLocalizedString("AreYouSure", comment: ""), message: NSLocalizedString("SureDeleteFromHistory", comment: ""), preferredStyle: UIAlertControllerStyle.alert)
@@ -392,3 +389,4 @@ extension MarkedForLaterController  {
         present(deleteAlert, animated: true, completion: nil)
     }
 }
+

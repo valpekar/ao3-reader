@@ -716,9 +716,9 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
         
         if (textFieldFrom.text != nil && textFieldTo.text != nil && textFieldFrom.text!.characters.count > 0 && textFieldTo.text!.characters.count > 0) {
             res = textFieldFrom.text! + "-" + textFieldTo.text!
-        } else  if (textFieldFrom.text!.characters.count == 0 && textFieldTo.text!.characters.count > 0) {
+        } else  if (textFieldFrom.text!.count == 0 && textFieldTo.text!.characters.count > 0) {
             res = "<" + textFieldTo.text!
-        } else  if (textFieldFrom.text!.characters.count == 0 && textFieldTo.text!.characters.count == 0) {
+        } else  if (textFieldFrom.text!.count == 0 && textFieldTo.text!.characters.count == 0) {
             res = ""
         } else {
             res = ">" + textFieldFrom.text!

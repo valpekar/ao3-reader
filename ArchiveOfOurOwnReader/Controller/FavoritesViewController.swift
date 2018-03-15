@@ -72,9 +72,9 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         // Reload the table
         //self.tableView.reloadData()
         
-//        if (hasOldSaves() == true) {
-//            showOldAlert()
-//        }
+        if (hasOldSaves() == true) {
+            showOldAlert()
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -96,8 +96,8 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
        // tableView.reloadData()
         reloadTableView()
         
-        let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.white]
-        self.navigationController!.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
+        let titleDict: [NSAttributedStringKey : Any] = [NSAttributedStringKey.foregroundColor: UIColor.white]
+        self.navigationController!.navigationBar.titleTextAttributes = titleDict
         self.title = String(downloadedWorkds.values.joined().count) + " " + NSLocalizedString("Downloaded", comment: "")
         
     }
@@ -289,7 +289,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
             let lastChars = allTags.suffix(2)
             if lastChars == ", " {
                 let index = allTags.index(allTags.endIndex, offsetBy: -2)
-                allTags = allTags.substring(to: index)
+                allTags = String(allTags[..<index])
             }
             
             cell?.tagsLabel.text = allTags
@@ -1079,7 +1079,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         return vvv
     }
     
-    func tapFunction(sender:UITapGestureRecognizer) {
+    @objc func tapFunction(sender:UITapGestureRecognizer) {
         guard let section = sender.view?.tag else {
             return
         }

@@ -60,11 +60,11 @@ class ImportWorkController : UIViewController {
          NotificationCenter.default.removeObserver(self)
     }
     
-    func viewTapped() {
+    @objc func viewTapped() {
         self.dismiss(animated: true, completion: nil)
     }
     
-    func applicationWillEnter(notification: NSNotification) {
+    @objc func applicationWillEnter(notification: NSNotification) {
         checkPasteboard()
     }
     

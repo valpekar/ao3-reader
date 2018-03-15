@@ -285,7 +285,7 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
     
     //MARK: - move textview on keyboard
     
-    func keyboardWillShow(_ sender: Notification) {
+    @objc func keyboardWillShow(_ sender: Notification) {
         let info: NSDictionary = (sender as NSNotification).userInfo! as NSDictionary
         let kbSize: CGSize = (info.object(forKey: UIKeyboardFrameBeginUserInfoKey)! as AnyObject).cgRectValue.size
         let contentInsets: UIEdgeInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0)
@@ -302,7 +302,7 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
         }
     }
     
-    func keyboardWillHide(_ sender: Notification) {
+    @objc func keyboardWillHide(_ sender: Notification) {
         let contentInsets: UIEdgeInsets = UIEdgeInsets.zero
         scrollView.contentInset = contentInsets
         scrollView.scrollIndicatorInsets = contentInsets

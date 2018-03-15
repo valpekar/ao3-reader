@@ -103,6 +103,8 @@
 		3C728C6A1E8CBA06006D7100 /* ChoosePrefController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C728C691E8CBA06006D7100 /* ChoosePrefController.swift */; };
 		3C74C71E1FD05E67008D191B /* FandomListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C74C71D1FD05E67008D191B /* FandomListController.swift */; };
 		3C74C7201FD05F22008D191B /* FandomItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C74C71F1FD05F22008D191B /* FandomItem.swift */; };
+		3C80880E205A945800B172B3 /* DBWorkNotifItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C80880C205A945800B172B3 /* DBWorkNotifItem+CoreDataClass.swift */; };
+		3C80880F205A945800B172B3 /* DBWorkNotifItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C80880D205A945800B172B3 /* DBWorkNotifItem+CoreDataProperties.swift */; };
 		3C88102C1F14BED900ED6B5D /* HistoryItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C88102A1F14BED900ED6B5D /* HistoryItem+CoreDataClass.swift */; };
 		3C88102D1F14BED900ED6B5D /* HistoryItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C88102B1F14BED900ED6B5D /* HistoryItem+CoreDataProperties.swift */; };
 		3C88E52C1BD000FB000340A3 /* ContentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C88E52B1BD000FB000340A3 /* ContentsViewController.swift */; };
@@ -309,6 +311,9 @@
 		3C728C691E8CBA06006D7100 /* ChoosePrefController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChoosePrefController.swift; sourceTree = "<group>"; };
 		3C74C71D1FD05E67008D191B /* FandomListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FandomListController.swift; sourceTree = "<group>"; };
 		3C74C71F1FD05F22008D191B /* FandomItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FandomItem.swift; sourceTree = "<group>"; };
+		3C808807205A8D3100B172B3 /* ArchiveOfOurOwnReader 11.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ArchiveOfOurOwnReader 11.xcdatamodel"; sourceTree = "<group>"; };
+		3C80880C205A945800B172B3 /* DBWorkNotifItem+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "DBWorkNotifItem+CoreDataClass.swift"; path = "Model/DBWorkNotifItem+CoreDataClass.swift"; sourceTree = "<group>"; };
+		3C80880D205A945800B172B3 /* DBWorkNotifItem+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "DBWorkNotifItem+CoreDataProperties.swift"; path = "Model/DBWorkNotifItem+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3C8810291F14BE5C00ED6B5D /* ArchiveOfOurOwnReader 6.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ArchiveOfOurOwnReader 6.xcdatamodel"; sourceTree = "<group>"; };
 		3C88102A1F14BED900ED6B5D /* HistoryItem+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "HistoryItem+CoreDataClass.swift"; path = "Model/HistoryItem+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3C88102B1F14BED900ED6B5D /* HistoryItem+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "HistoryItem+CoreDataProperties.swift"; path = "Model/HistoryItem+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -541,6 +546,8 @@
 		28B6DC4C1B4E3F8900F34529 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				3C80880C205A945800B172B3 /* DBWorkNotifItem+CoreDataClass.swift */,
+				3C80880D205A945800B172B3 /* DBWorkNotifItem+CoreDataProperties.swift */,
 				3C0465951F8CBCBA003B6AE7 /* Serie+CoreDataClass.swift */,
 				3C0465961F8CBCBA003B6AE7 /* Serie+CoreDataProperties.swift */,
 				3C082A511F20E21100CA717D /* Folder+CoreDataClass.swift */,
@@ -808,7 +815,7 @@
 					28B6DC231B4E3F5900F34529 = {
 						CreatedOnToolsVersion = 6.4;
 						DevelopmentTeam = DL7Z77P4W8;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0920;
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.InAppPurchase = {
@@ -825,7 +832,7 @@
 					28B6DC3B1B4E3F5A00F34529 = {
 						CreatedOnToolsVersion = 6.4;
 						DevelopmentTeam = DL7Z77P4W8;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0920;
 						TestTargetID = 28B6DC231B4E3F5900F34529;
 					};
 				};
@@ -1064,6 +1071,7 @@
 				3CB2A74F1F8BB4F8004A6F76 /* SerieInfoCell.swift in Sources */,
 				3CDF1FAB1F39AA57004D858F /* WorksParser.swift in Sources */,
 				3CBDC9AC1E9E244500A97C24 /* DBChapter+CoreDataProperties.swift in Sources */,
+				3C80880F205A945800B172B3 /* DBWorkNotifItem+CoreDataProperties.swift in Sources */,
 				3CF1D00E1C87182300D219B2 /* HistoryViewController.swift in Sources */,
 				28B6DC2D1B4E3F5900F34529 /* ArchiveOfOurOwnReader.xcdatamodeld in Sources */,
 				3C3EF71C1E6D55DA000CAA1F /* ChapterOnline.swift in Sources */,
@@ -1108,6 +1116,7 @@
 				3CB992C11CF470D5004772AF /* PublishWorkController.swift in Sources */,
 				3C74C71E1FD05E67008D191B /* FandomListController.swift in Sources */,
 				3C13D2CE1CCA1D0D008B023B /* CommentCell.swift in Sources */,
+				3C80880E205A945800B172B3 /* DBWorkNotifItem+CoreDataClass.swift in Sources */,
 				3C89958F1E95169B00D511CD /* DBCharacterItem+CoreDataProperties.swift in Sources */,
 				3C3105481C7F3D260065256E /* LoginViewController.swift in Sources */,
 				3C8FF85620063BE8006C01DF /* ExtensionsHelper.swift in Sources */,
@@ -1324,7 +1333,8 @@
 				PROVISIONING_PROFILE_SPECIFIER = "Unofficial Reader for AO3 Development";
 				STRIP_INSTALLED_PRODUCT = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "./ArchiveOfOurOwnReader/Swift-HTML-Parser-Bridging-Header.h";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1364,7 +1374,8 @@
 				PROVISIONING_PROFILE_SPECIFIER = "Unofficial Reader for AO3 Distribution Profile";
 				STRIP_INSTALLED_PRODUCT = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "./ArchiveOfOurOwnReader/Swift-HTML-Parser-Bridging-Header.h";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -1386,7 +1397,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "sergei.pekar.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ArchiveOfOurOwnReader.app/ArchiveOfOurOwnReader";
 			};
 			name = Debug;
@@ -1404,7 +1416,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "sergei.pekar.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ArchiveOfOurOwnReader.app/ArchiveOfOurOwnReader";
 			};
 			name = Release;
@@ -1445,6 +1458,7 @@
 		28B6DC2B1B4E3F5900F34529 /* ArchiveOfOurOwnReader.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				3C808807205A8D3100B172B3 /* ArchiveOfOurOwnReader 11.xcdatamodel */,
 				3C9DFC382004D5AA00AE15AD /* ArchiveOfOurOwnReader 10.xcdatamodel */,
 				3C5A579B1FD817C60010E2A9 /* ArchiveOfOurOwnReader 9.xcdatamodel */,
 				3C0465941F8CBA79003B6AE7 /* ArchiveOfOurOwnReader 8.xcdatamodel */,
@@ -1456,7 +1470,7 @@
 				3C9C87BB1CE35D8800C10410 /* ArchiveOfOurOwnReader 2.xcdatamodel */,
 				28B6DC2C1B4E3F5900F34529 /* ArchiveOfOurOwnReader.xcdatamodel */,
 			);
-			currentVersion = 3C9DFC382004D5AA00AE15AD /* ArchiveOfOurOwnReader 10.xcdatamodel */;
+			currentVersion = 3C808807205A8D3100B172B3 /* ArchiveOfOurOwnReader 11.xcdatamodel */;
 			path = ArchiveOfOurOwnReader.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

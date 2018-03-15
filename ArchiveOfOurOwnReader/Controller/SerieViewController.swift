@@ -70,7 +70,7 @@ class SerieViewController: ListViewController, UITableViewDataSource, UITableVie
         }
     }
     
-    func refresh(_ sender:AnyObject) {
+    @objc func refresh(_ sender:AnyObject) {
         requestSerie()
     }
     

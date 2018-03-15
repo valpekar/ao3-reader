@@ -65,7 +65,7 @@ class ChoosePrefController : LoadingViewController {
         textField.resignFirstResponder()
     }
     
-    func keyboardWillShow(notification: NSNotification) {
+    @objc func keyboardWillShow(notification: NSNotification) {
         let info = notification.userInfo
         //let _: CGRect = (info[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
         self.ipadHeightLayoutConstraint?.constant = 1
@@ -76,7 +76,7 @@ class ChoosePrefController : LoadingViewController {
         })
     }
     
-    func keyboardWillHide(notification: NSNotification) {
+    @objc func keyboardWillHide(notification: NSNotification) {
         let info = notification.userInfo
         //var _: CGRect = (info[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
         self.ipadHeightLayoutConstraint?.constant = 420

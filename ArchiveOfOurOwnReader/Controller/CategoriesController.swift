@@ -159,10 +159,10 @@ class CategoriesController: LoadingViewController, UITableViewDataSource, UITabl
         cell.titleLabel.text = curCat.title.replacingOccurrences(of: "\n", with: "")
         
         if (curCat.isParent == true) {
-            cell.titleLabel.font = UIFont.systemFont(ofSize: 16.0, weight: UIFontWeightBold)
+            cell.titleLabel.font = UIFont.systemFont(ofSize: 16.0, weight: UIFont.Weight.bold)
             cell.accessoryType = .disclosureIndicator
         } else {
-            cell.titleLabel.font = UIFont.systemFont(ofSize: 14.0, weight: UIFontWeightRegular)
+            cell.titleLabel.font = UIFont.systemFont(ofSize: 14.0, weight: UIFont.Weight.regular)
             cell.accessoryType = .none
         }
         

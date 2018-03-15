@@ -238,7 +238,7 @@ class WorkListController: ListViewController, UITableViewDataSource, UITableView
         
         var cell: PageCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! PageCollectionViewCell
         
-        cell = fillCollCell(cell: cell as! PageCollectionViewCell, page: pages[indexPath.row])
+        cell = fillCollCell(cell: cell , page: pages[indexPath.row])
         
         return cell
     }

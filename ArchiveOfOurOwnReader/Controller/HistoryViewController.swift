@@ -57,7 +57,7 @@ class HistoryViewController : ListViewController, UITableViewDataSource, UITable
         showNav()
     }
     
-    func refresh(_ sender:AnyObject) {
+    @objc func refresh(_ sender:AnyObject) {
         requestFavs()
     }
     
@@ -195,7 +195,7 @@ class HistoryViewController : ListViewController, UITableViewDataSource, UITable
         
         var cell: PageCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! PageCollectionViewCell
         
-        cell = fillCollCell(cell: cell as! PageCollectionViewCell, page: pages[indexPath.row])
+        cell = fillCollCell(cell: cell , page: pages[indexPath.row])
         
         return cell
     }
@@ -362,9 +362,6 @@ class HistoryViewController : ListViewController, UITableViewDataSource, UITable
         }
     }
     
-}
-
-extension HistoryViewController {
     
     override func deleteTouched(rowIndex: Int) {
         let deleteAlert = UIAlertController(title: NSLocalizedString("AreYouSure", comment: ""), message: NSLocalizedString("SureDeleteFromHistory", comment: ""), preferredStyle: UIAlertControllerStyle.alert)

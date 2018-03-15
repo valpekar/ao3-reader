@@ -11,6 +11,7 @@ import CoreData
 import TSMessages
 import Alamofire
 import Crashlytics
+import UserNotifications
 
 class RecommendationsController : ListViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
@@ -48,7 +49,7 @@ class RecommendationsController : ListViewController, UITableViewDataSource, UIT
         descLabel.text = NSLocalizedString("RecommendationsExplainedShort", comment: "")
         
         //test!
-        //generateRecommendations()
+        scheduleLocal()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -71,7 +72,7 @@ class RecommendationsController : ListViewController, UITableViewDataSource, UIT
         shouldReload = true
     }
     
-    func refresh(_ sender: AnyObject) {
+    @objc func refresh(_ sender: AnyObject) {
         if (shouldReload || noFound) {
             UserDefaults.standard.synchronize()
             if let pp = UserDefaults.standard.value(forKey: "pro") as? Bool {
@@ -116,24 +117,43 @@ class RecommendationsController : ListViewController, UITableViewDataSource, UIT
     
     func scheduleLocal() {
         
-        guard let settings = UIApplication.shared.currentUserNotificationSettings else { return }
+        let needsNotifications = DefaultsManager.getBool(DefaultsManager.NOTIFY) ?? true
         
-        if settings.types == UIUserNotificationType() {
-           /* let ac = UIAlertController(title: "Can't schedule", message: "Either we don't have permission to schedule notifications, or we haven't asked yet.", preferredStyle: .Alert)
-            ac.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-            presentViewController(ac, animated: true, completion: nil) */
+        if (needsNotifications == false) {
             return
         }
         
-        let notification = UILocalNotification()
-        notification.fireDate = Date(timeIntervalSinceNow: 84600 * 7)
-        notification.alertBody = NSLocalizedString("SeeThem", comment: "")
-        notification.alertAction = NSLocalizedString("TimeForRecommendations", comment: "")
-        notification.applicationIconBadgeNumber = UIApplication.shared.applicationIconBadgeNumber + 1
-        notification.soundName = UILocalNotificationDefaultSoundName
-        notification.repeatInterval = .weekOfMonth // .WeekOfMonth //Minute
-        //notification.userInfo = ["CustomField1": "w00t"]
-        UIApplication.shared.scheduleLocalNotification(notification)
+        let content = UNMutableNotificationContent()
+        content.title = NSString.localizedUserNotificationString(forKey: NSLocalizedString("TimeForRecommendations", comment: ""), arguments: nil)
+        content.body = NSString.localizedUserNotificationString(forKey: NSLocalizedString("SeeThem", comment: ""),
+                                                                arguments: nil)
+        
+        var dateInfo = DateComponents()
+        dateInfo.hour = 16
+        dateInfo.minute = 29
+        dateInfo.weekday = 5
+        let trigger = UNCalendarNotificationTrigger(dateMatching: dateInfo, repeats: true)
+        
+        // Create the request object.
+        let request = UNNotificationRequest(identifier: "UserRecommendations", content: content, trigger: trigger)
+        
+        // Schedule the request.
+        let center = UNUserNotificationCenter.current()
+        center.add(request) { (error : Error?) in
+            if let theError = error {
+                print(theError.localizedDescription)
+            }
+        }
+        
+//        let notification = UILocalNotification()
+//        notification.fireDate = Date(timeIntervalSinceNow: 84600 * 7)
+//        notification.alertBody = NSLocalizedString("SeeThem", comment: "")
+//        notification.alertAction = NSLocalizedString("TimeForRecommendations", comment: "")
+//        notification.applicationIconBadgeNumber = UIApplication.shared.applicationIconBadgeNumber + 1
+//        notification.soundName = UILocalNotificationDefaultSoundName
+//        notification.repeatInterval = .weekOfMonth // .WeekOfMonth //Minute
+//        //notification.userInfo = ["CustomField1": "w00t"]
+//        UIApplication.shared.scheduleLocalNotification(notification)
     }
     
     
@@ -149,7 +169,8 @@ class RecommendationsController : ListViewController, UITableViewDataSource, UIT
             descLabel.text = "\(NSLocalizedString("RecommendationsExplainedShort", comment: "")) \(NSLocalizedString("LastUpdate_", comment: "")) \(dateFormatter.string(from:  Date()))"
             
             
-            UIApplication.shared.cancelAllLocalNotifications()
+            //UIApplication.shared.cancelAllLocalNotifications()
+            UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
             scheduleLocal()
             
             return
@@ -164,7 +185,8 @@ class RecommendationsController : ListViewController, UITableViewDataSource, UIT
             generateNewRecs()
             DefaultsManager.putObject(Date() as AnyObject, key: DefaultsManager.LAST_DATE)
             
-            UIApplication.shared.cancelAllLocalNotifications()
+           // UIApplication.shared.cancelAllLocalNotifications()
+            UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
             scheduleLocal()
             
         } else {

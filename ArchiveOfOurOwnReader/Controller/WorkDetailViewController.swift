@@ -133,6 +133,8 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                     self.updateWork(workItem: workItem)
                     self.workItem = nil
                     self.showDownloadedWork()
+                } else {
+                    showOnlineWork()
                 }
                 
             } else {
@@ -534,7 +536,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
         if let h2El = doc.search(withXPathQuery: "//h2[@class='title heading']") as? [TFHppleElement] {
         if (h2El.count > 0) {
-            let title = h2El.first?.raw.replacingOccurrences(of: "\n", with:"")
+            let title = h2El.first?.content.replacingOccurrences(of: "\n", with:"")
                 .replacingOccurrences(of: "\\s+", with: " ", options: NSString.CompareOptions.regularExpression, range: nil) ?? ""
             workItem.workTitle = title.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
             workItem.workTitle = workItem.workTitle.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
@@ -1041,7 +1043,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                     let lastChars = allTags.suffix(2)
                     if lastChars == ", " {
                         let index = allTags.index(allTags.endIndex, offsetBy: -2)
-                        allTags = allTags.substring(to: index)
+                        allTags = String(allTags[..<index])
                     }
                     
                     cell.label.text = allTags
@@ -1081,7 +1083,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                     let lastChars = allTags.suffix(2)
                     if lastChars == ", " {
                         let index = allTags.index(allTags.endIndex, offsetBy: -2)
-                        allTags = allTags.substring(to: index)
+                        allTags = String(allTags[..<index])
                     }
                     
                     cell.label.text = allTags
@@ -1091,9 +1093,9 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         case 1:
             
             if (UIDevice.current.userInterfaceIdiom == .pad) {
-                cell.label.font = UIFont.systemFont(ofSize: 21.0, weight: UIFontWeightRegular)
+                cell.label.font = UIFont.systemFont(ofSize: 21.0, weight: UIFont.Weight.regular)
             } else {
-                cell.label.font = UIFont.systemFont(ofSize: 14.0, weight: UIFontWeightRegular)
+                cell.label.font = UIFont.systemFont(ofSize: 14.0, weight: UIFont.Weight.regular)
             }
             
             cell.label.textColor = txtColor
@@ -1195,9 +1197,9 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
              cell.label.text = "View Serie (\(serieName))"
             
             if (UIDevice.current.userInterfaceIdiom == .pad) {
-                cell.label.font = UIFont.systemFont(ofSize: 21.0, weight: UIFontWeightRegular)
+                cell.label.font = UIFont.systemFont(ofSize: 21.0, weight: UIFont.Weight.regular)
             } else {
-                cell.label.font = UIFont.systemFont(ofSize: 14.0, weight: UIFontWeightRegular)
+                cell.label.font = UIFont.systemFont(ofSize: 14.0, weight: UIFont.Weight.regular)
             }
             
             cell!.imgView.image = nil
@@ -1303,7 +1305,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         }
     }
     
-    func authorTouched(_ sender: UITapGestureRecognizer) {
+    @objc func authorTouched(_ sender: UITapGestureRecognizer) {
         var authorName = ""
         
         if(workItem != nil) {

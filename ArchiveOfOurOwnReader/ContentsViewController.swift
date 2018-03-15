@@ -63,7 +63,7 @@ class ContentsViewController: UIViewController, UIPopoverPresentationControllerD
             cell?.textLabel?.text = chapterName
         }
         
-        cell?.textLabel?.font = UIFont.systemFont(ofSize: 14.0, weight: UIFontWeightLight)
+        cell?.textLabel?.font = UIFont.systemFont(ofSize: 14.0, weight: UIFont.Weight.light)
         
         if (theme == DefaultsManager.THEME_DAY) {
             cell?.textLabel?.textColor = AppDelegate.redColor

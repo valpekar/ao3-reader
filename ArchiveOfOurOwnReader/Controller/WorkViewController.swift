@@ -193,7 +193,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
         NotificationCenter.default.removeObserver(self)
     }
     
-    func willResignActive(_ notification: Notification) {
+    @objc func willResignActive(_ notification: Notification) {
         saveChanges()
     }
     
@@ -255,7 +255,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
                 if let nxtChapter = historyItem.lastChapter,
                     let nxtChapterIdx = historyItem.lastChapterIdx {
                     nextChapter = nxtChapter
-                    turnOnlineChapter(nextChapter, index: Int(nxtChapterIdx))
+                    turnOnlineChapter(nextChapter, index: Int(truncating: nxtChapterIdx))
                     //nextButtonTouched(self.view)
                 }
                 
@@ -316,7 +316,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
         }
     }
     
-    func lockScreen() {
+    @objc func lockScreen() {
         if (downloadedWorkItem != nil) {
             saveWorkChanged()
         } else if let workItem = self.workItem {
@@ -420,7 +420,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
         self.navigationItem.rightBarButtonItems = [ searchButton, igButton, ffButton, flexSpace]
     }
     
-    func handleHideTap(_ recognizer: UITapGestureRecognizer) {
+    @objc func handleHideTap(_ recognizer: UITapGestureRecognizer) {
         if (self.settingsView.isHidden == false) {
             self.settingsView.animation = "fadeOut"
             self.settingsView.duration = 0.8
@@ -434,7 +434,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
     }
     
     //https://stackoverflow.com/questions/31114340/setstatusbarhidden-is-deprecated-in-ios-9-0
-    func handleSingleTap(_ recognizer: UITapGestureRecognizer) {
+    @objc func handleSingleTap(_ recognizer: UITapGestureRecognizer) {
         self.webView.scrollView.isScrollEnabled = false
         self.webView.evaluateJavaScript("document.documentElement.style.webkitUserSelect='none'") { (res, error) in
             print(error.debugDescription)
@@ -488,7 +488,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
         }
     }
     
-    func handleSwipe(_ recognizer: UISwipeGestureRecognizer) {
+    @objc func handleSwipe(_ recognizer: UISwipeGestureRecognizer) {
         if recognizer.direction == UISwipeGestureRecognizerDirection.right {
             prevButtonTouched(prevButton)
         }
@@ -1189,7 +1189,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
         webView.loadHTMLString(worktext, baseURL: nil)
     }
     
-    func changeThemeTouched() {
+    @objc func changeThemeTouched() {
         
         saveChanges()
         
@@ -1241,7 +1241,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
         self.loadCurrentTheme()
     }
     
-    func changeTextSizeTouched() {
+    @objc func changeTextSizeTouched() {
         if (settingsView.isHidden == true) {
             
             settingsView.isHidden = false
@@ -1301,7 +1301,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
         self.present(alert, animated: true, completion: nil) */
     }
     
-    func changeTextFamilyTouched() {
+    @objc func changeTextFamilyTouched() {
         let alert = UIAlertController(title: NSLocalizedString("FontFamily", comment: ""), message: "Select font family (\(fontFamily)", preferredStyle: UIAlertControllerStyle.actionSheet)
         alert.addAction(UIAlertAction(title: "Verdana (default)", style: UIAlertActionStyle.default, handler: { action in
         

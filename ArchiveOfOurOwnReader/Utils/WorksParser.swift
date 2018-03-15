@@ -45,7 +45,7 @@ class WorksParser {
                     in: CharacterSet.whitespacesAndNewlines
                 )
                 if let idx = worksCountStr.index(of: "d") {
-                    worksCountStr = worksCountStr.substring(to: worksCountStr.index(after: idx))
+                    worksCountStr = String(worksCountStr[..<worksCountStr.index(after: idx)])
                 }
             }
         }

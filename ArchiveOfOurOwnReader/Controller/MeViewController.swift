@@ -364,7 +364,9 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
         case 4:
             if (indexPath.row == 1) {
                 if let url = URL(string: "http://simpleappalliance.blogspot.com/2016/05/unofficial-ao3-reader-privacy-policy.html") {
-                    UIApplication.shared.openURL(url)
+                    UIApplication.shared.open(url, options: [:], completionHandler: { (res) in
+                        print("open url simpleappalliance.blogspot.com")
+                    })
                 }
             }
         default: break
@@ -651,7 +653,7 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
     }
     
     // When a product is purchased, this notification fires, redraw the correct row
-    func productPurchased(_ notification: Notification) {
+    @objc func productPurchased(_ notification: Notification) {
         let productIdentifier = notification.object as! String
         for (_, product) in products.enumerated() {
             if product.productIdentifier == productIdentifier {

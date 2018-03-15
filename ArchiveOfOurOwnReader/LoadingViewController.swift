@@ -1093,7 +1093,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         
     }
     
-    func doneButtonAction() {
+    @objc func doneButtonAction() {
     }
     
     func countWroksFromDB() -> Int {
@@ -1181,6 +1181,70 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
     func onOnlineWorkLoaded(_ response: DefaultDataResponse) {
         
     }
+    
+    func kudosToAnalytics() {
+        
+    }
+    
+    func saveWorkNotifItem(workId: String, wasDeleted: NSNumber) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,
+            let managedContext = appDelegate.managedObjectContext else {
+                return
+        }
+        guard let entity = NSEntityDescription.entity(forEntityName: "DBWorkNotifItem",  in: managedContext) else {
+            return
+        }
+        let nItem = DBWorkNotifItem(entity: entity, insertInto:managedContext)
+        nItem.workId = workId
+        nItem.isItemDeleted = wasDeleted
+        
+        do {
+            try managedContext.save()
+        } catch let error as NSError {
+            print("Could not save \(String(describing: error.userInfo))")
+        }
+    }
+    
+    func deleteWorkNotifItem(notifItem: DBWorkNotifItem) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,
+            let managedContext = appDelegate.managedObjectContext else {
+                return
+        }
+        
+        managedContext.delete(notifItem as NSManagedObject)
+        do {
+            try managedContext.save()
+        } catch _ {
+            NSLog("Cannot delete notif item")
+        }
+    }
+    
+    func getAllWorkNotifItems(areDeleted: NSNumber) -> [DBWorkNotifItem] {
+        var res: [DBWorkNotifItem] = []
+        
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,
+            let managedContext = appDelegate.managedObjectContext else {
+            return res
+        }
+        
+        let fetchRequest: NSFetchRequest <NSFetchRequestResult> = NSFetchRequest(entityName:"DBWorkNotifItem")
+        
+        let searchPredicate = NSPredicate(format: "isItemDeleted == %@ ", areDeleted)
+        
+        fetchRequest.predicate = searchPredicate
+        
+        do {
+            if let fetchedResults = try managedContext.fetch(fetchRequest) as? [DBWorkNotifItem]  {
+                res = fetchedResults
+            }
+        } catch {
+            #if DEBUG
+                print("cannot fetch favorites.")
+            #endif
+        }
+        
+        return res
+    }
 }
 
  
@@ -1257,10 +1321,6 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         }
         
     }
-    
-    func kudosToAnalytics() {
-        
-    }    
     
     
     func getCountryCode() -> String {

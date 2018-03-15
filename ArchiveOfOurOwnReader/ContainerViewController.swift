@@ -183,8 +183,10 @@ class ContainerViewController: UIViewController, CenterViewControllerDelegate, U
                 self.instantiatedControllers[indexPath.row] = controller
                 controller.delegate = self
                 controller.applyTheme()
-                
+            
+            if (self.centerNavigationController != nil) { //can happen on notification tap!!
                 self.centerNavigationController.setViewControllers([controller], animated: true)
+            }
         }
     }
     

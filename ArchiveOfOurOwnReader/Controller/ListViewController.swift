@@ -12,7 +12,7 @@ import TSMessages
 import Crashlytics
 import CoreData
 
-class ListViewController: LoadingViewController, PageSelectDelegate, UIPopoverPresentationControllerDelegate {
+class ListViewController: LoadingViewController, PageSelectDelegate, UIPopoverPresentationControllerDelegate, DownloadButtonDelegate {
     
     var foundItems = ""
     
@@ -481,11 +481,12 @@ class ListViewController: LoadingViewController, PageSelectDelegate, UIPopoverPr
                 }
             })
     }
-}
-
-//MARK: - DownloadButtonDelegate
-
-extension ListViewController: DownloadButtonDelegate {
+    
+    //MARK: - DownloadButtonDelegate
+    
+    func deleteTouched(rowIndex: Int) {
+        
+    }
     
     func downloadTouched(rowIndex: Int) {
         if (rowIndex >= works.count) {
@@ -540,10 +541,6 @@ extension ListViewController: DownloadButtonDelegate {
         
             doDownloadWork()
         }
-    }
-    
-    func deleteTouched(rowIndex: Int) {
-        
     }
     
     func doDownloadWork() {
