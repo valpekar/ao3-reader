@@ -14,7 +14,7 @@ import Crashlytics
 import WebKit
 import Spring
 
-class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWebViewDelegate, WKNavigationDelegate {
+class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWebViewDelegate, WKNavigationDelegate, UIScrollViewDelegate {
     
     @IBOutlet weak var webView: WKWebView!
     @IBOutlet weak var layoutView: SpringView!
@@ -28,6 +28,8 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
     @IBOutlet weak var kudosButton: UIButton!
     @IBOutlet weak var downloadButton: UIButton!
     @IBOutlet weak var commentsButton: UIButton!
+    
+    @IBOutlet weak var scrollingSlider: UISlider!
     
     var tapRecognizer: UITapGestureRecognizer! = nil
     
@@ -99,6 +101,8 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
         if (DefaultsManager.getBool("featuresShown") ?? false == false) {
             showContentAlert()
         }
+        
+        self.webView.scrollView.delegate = self
     }
     
     
@@ -519,13 +523,21 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
         return true
     }
     
-    func webViewDidFinishLoad(_ webView: UIWebView) {
-        //webView.stringByEvaluatingJavaScriptFromString("var links = document.getElementsByTagName('a');for (var i = 0; i < links.length; ++i) {links[i].style = 'text-decoration:none;color:#000;';} alert('a');")
-        webView.scrollView.flashScrollIndicators()
-    }
-    
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         self.webView.scrollView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0)
+        
+        let delayTime = DispatchTime.now() + Double(Int64(0.2 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+        DispatchQueue.main.asyncAfter(deadline: delayTime) {
+            self.scrollingSlider.minimumValue = 0.0
+            self.scrollingSlider.maximumValue = Float(self.webView.scrollView.contentSize.height - self.webView.scrollView.bounds.height )
+        }
+       // if (self.scrollingSlider.maximumValue == 1.0) {
+//            self.webView.evaluateJavaScript("document.body.scrollHeight;", completionHandler: { (res, error) in
+//                if let resFloat = res as? Float {
+//                    self.scrollingSlider.maximumValue = resFloat
+//                }
+//            })
+   //     }
     }
     
     func turnOnChapter(_ chapterIndex: Int) {
@@ -1144,7 +1156,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
                 webView.isOpaque = false
                 
                 let fontStr = "font-size: " + String(format:"%d", fontSize) + "%; font-family: \"\(fontFamily)\";"
-                worktext = String(format:"<style>body, table { color: #021439; %@; padding:5em 1.5em 4em 1.5em; text-align: left; line-height: 1.5em; } p {margin-bottom:1.0em}</style>%@", fontStr, work)
+                worktext = String(format:"<style>body, table { color: #021439; %@; padding:5em 1.5em 4em 1.5em; text-align: left; line-height: 1.5em;  overflow-y: scroll; -webkit-overflow-scrolling: touch; } p {margin-bottom:1.0em}</style>%@", fontStr, work)
             
                 bgColor = AppDelegate.greyLightColor
                 txtColor = AppDelegate.redColor
@@ -1159,7 +1171,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
                 self.webView.isOpaque = false
                 
                 let fontStr = "font-size: " + String(format:"%d", fontSize) + "%; font-family: \"\(fontFamily)\""
-                worktext = String(format:"<style>body, table { color: #e1e1ce; %@; padding:5em 1.5em 4em 1.5em; text-align: left; line-height: 1.5em; } p {margin-bottom:1.0em} </style>%@", fontStr, work)
+                worktext = String(format:"<style>body, table { color: #e1e1ce; %@; padding:5em 1.5em 4em 1.5em; text-align: left; line-height: 1.5em; overflow-y: scroll; -webkit-overflow-scrolling: touch; } p {margin-bottom:1.0em} </style>%@", fontStr, work)
             
                 bgColor = AppDelegate.greyDarkBg
                 txtColor = AppDelegate.textLightColor
@@ -1522,4 +1534,37 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
         }
     }
     
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        //TODO: - https://stackoverflow.com/questions/3719753/iphone-uiscrollview-speed-check
+        
+        self.scrollingSlider.removeTarget(self, action: #selector(self.scrollingSliderValueChanged(_:)), for: UIControlEvents.valueChanged)
+        self.scrollingSlider.value = Float(scrollView.contentOffset.y)
+        
+        let delayTime = DispatchTime.now() + Double(Int64(0.0 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+        DispatchQueue.main.asyncAfter(deadline: delayTime) {
+            self.scrollingSlider.addTarget(self, action: #selector(self.scrollingSliderValueChanged(_:)), for: UIControlEvents.valueChanged)
+        }
+    }
+    
+}
+
+//MARK: - scrolling slider
+
+extension WorkViewController {
+    
+    @IBAction func scrollingSliderValueChanged(_ sender: UISlider) {
+        let newValue: Float = sender.value
+        if (newValue < 0) {
+            return
+        }
+        self.webView.scrollView.delegate = nil
+        
+        let scrollOffset:CGPoint? = CGPoint(x: 0.0, y: Double(newValue))
+        if let position:CGPoint = scrollOffset {
+            self.webView.scrollView.setContentOffset(position, animated: false)
+            //self.webView.scrollView.flashScrollIndicators()
+        }
+        
+        self.webView.scrollView.delegate = self
+    }
 }
