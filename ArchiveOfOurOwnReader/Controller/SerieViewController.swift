@@ -84,6 +84,8 @@ class SerieViewController: ListViewController, UITableViewDataSource, UITableVie
             }
         }
         
+        let checkItems = self.getDownloadedStats()
+        
         showLoadingView(msg: NSLocalizedString("GettingWorks", comment: ""))
         
         let urlStr = "https://archiveofourown.org\(serieId)"
@@ -94,7 +96,8 @@ class SerieViewController: ListViewController, UITableViewDataSource, UITableVie
                 print(response.error ?? "")
                 if let d = response.data {
                     self.parseCookies(response)
-                    (self.pages, self.works, self.serieItem) = WorksParser.parseSerie(d)
+                    
+                    (self.pages, self.works, self.serieItem) = WorksParser.parseSerie(d, downloadedCheckItems: checkItems)
                     self.showSerie()
                 } else {
                     self.hideLoadingView()
@@ -138,6 +141,9 @@ class SerieViewController: ListViewController, UITableViewDataSource, UITableVie
     }
     
     @IBAction func downloadButtonTouched(_ sender: UIButton) {
+        if (sender.tag >= works.count) {
+            return
+        }
         
         let curWork:NewsFeedItem = works[sender.tag]
         showLoadingView(msg: "\(NSLocalizedString("DwnloadingWrk", comment: "")) \(curWork.title)")
@@ -166,6 +172,10 @@ class SerieViewController: ListViewController, UITableViewDataSource, UITableVie
                     TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
                 }
             })
+    }
+    
+    override func downloadTouched(rowIndex: Int) {
+        super.downloadTouched(rowIndex: rowIndex - 1)
     }
     
     override func reload(row: Int) {
@@ -282,6 +292,8 @@ class SerieViewController: ListViewController, UITableViewDataSource, UITableVie
                 Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
             }
             
+            let checkItems = self.getDownloadedStats()
+            
             showLoadingView(msg: "\(NSLocalizedString("GettingWorks", comment: "")) \(page.name)")
             
             Alamofire.request("https://archiveofourown.org" + page.url, method: .get).response(completionHandler: { response in
@@ -289,7 +301,7 @@ class SerieViewController: ListViewController, UITableViewDataSource, UITableVie
                 print(response.error ?? "")
                 if let d: Data = response.data {
                     self.parseCookies(response)
-                    (self.pages, self.works, self.serieItem) = WorksParser.parseSerie(d)
+                    (self.pages, self.works, self.serieItem) = WorksParser.parseSerie(d, downloadedCheckItems: checkItems)
                     self.showSerie()
                 } else {
                     self.hideLoadingView()
