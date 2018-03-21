@@ -275,9 +275,11 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
                 }
             }
             
-            let delayTime = DispatchTime.now() + Double(Int64(2.0 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+            let delayTime = DispatchTime.now() + Double(Int64(1.5 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
             DispatchQueue.main.asyncAfter(deadline: delayTime) {
                 self.handleSingleTap(self.tapRecognizer)
+                
+                self.shouldStartTrackVelocity = true
             }
             
         }  else if let downloadedWorkItem = downloadedWorkItem {
@@ -300,9 +302,11 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
                     self.webView.scrollView.setContentOffset(scrollOffset, animated: true)
                 }
             }
-            let delayTime = DispatchTime.now() + Double(Int64(2.0 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+            let delayTime = DispatchTime.now() + Double(Int64(1.5 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
             DispatchQueue.main.asyncAfter(deadline: delayTime) {
                 self.handleSingleTap(self.tapRecognizer)
+                
+                self.shouldStartTrackVelocity = true
             }
         }
     }
@@ -455,29 +459,8 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
             self.layoutView.tag = 0
             
         } else {
-            self.layoutView.animation = "fadeOut"
-            self.layoutView.duration = 1.5
-            self.layoutView.animate()
+           hideAllBars()
             
-            if (self.layoutBottomView != nil) {
-                self.layoutBottomView.animation = "fadeOut"
-                self.layoutBottomView.duration = 1.5
-                self.layoutBottomView.animate()
-            }
-            
-            self.settingsView.animation = "fadeOut"
-            self.settingsView.duration = 0.8
-            self.settingsView.animate()
-            
-            let delayTime = DispatchTime.now() + Double(Int64(0.8 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
-            DispatchQueue.main.asyncAfter(deadline: delayTime) {
-                self.settingsView.isHidden = true
-            }
-            
-            self.navigationController?.setNavigationBarHidden(true, animated: true)
-            UIApplication.shared.isStatusBarHidden = true //.setStatusBarHidden(true, with: .fade)
-            
-            self.layoutView.tag = 1
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
             
@@ -490,6 +473,32 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
                 print(error.debugDescription)
             })
         }
+    }
+    
+    func hideAllBars() {
+        self.layoutView.animation = "fadeOut"
+        self.layoutView.duration = 1.5
+        self.layoutView.animate()
+        
+        if (self.layoutBottomView != nil) {
+            self.layoutBottomView.animation = "fadeOut"
+            self.layoutBottomView.duration = 1.5
+            self.layoutBottomView.animate()
+        }
+        
+        self.settingsView.animation = "fadeOut"
+        self.settingsView.duration = 0.8
+        self.settingsView.animate()
+        
+        let delayTime = DispatchTime.now() + Double(Int64(0.8 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+        DispatchQueue.main.asyncAfter(deadline: delayTime) {
+            self.settingsView.isHidden = true
+        }
+        
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
+        UIApplication.shared.isStatusBarHidden = true //.setStatusBarHidden(true, with: .fade)
+        
+        self.layoutView.tag = 1
     }
     
     @objc func handleSwipe(_ recognizer: UISwipeGestureRecognizer) {
@@ -1534,8 +1543,21 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
         }
     }
     
+    var previousScrollMoment: Date = Date()
+    var previousScrollX: CGFloat = 0
+    var shouldStartTrackVelocity = false
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         //TODO: - https://stackoverflow.com/questions/3719753/iphone-uiscrollview-speed-check
+        
+        let d = Date()
+        let x = scrollView.contentOffset.y
+        let elapsed = Date().timeIntervalSince(previousScrollMoment)
+        let distance = (x - previousScrollX)
+        let velocity = (elapsed == 0) ? 0 : fabs(distance / CGFloat(elapsed))
+        previousScrollMoment = d
+        previousScrollX = x
+        print("scrolling velocity \(velocity)")
         
         self.scrollingSlider.removeTarget(self, action: #selector(self.scrollingSliderValueChanged(_:)), for: UIControlEvents.valueChanged)
         self.scrollingSlider.value = Float(scrollView.contentOffset.y)
@@ -1543,6 +1565,10 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
         let delayTime = DispatchTime.now() + Double(Int64(0.0 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
         DispatchQueue.main.asyncAfter(deadline: delayTime) {
             self.scrollingSlider.addTarget(self, action: #selector(self.scrollingSliderValueChanged(_:)), for: UIControlEvents.valueChanged)
+        }
+        
+        if (velocity > 2000 && shouldStartTrackVelocity == true && self.layoutView.tag == 0) {
+            hideAllBars()
         }
     }
     
