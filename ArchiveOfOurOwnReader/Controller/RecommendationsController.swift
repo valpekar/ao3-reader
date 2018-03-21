@@ -129,9 +129,9 @@ class RecommendationsController : ListViewController, UITableViewDataSource, UIT
                                                                 arguments: nil)
         
         var dateInfo = DateComponents()
-        dateInfo.hour = 16
-        dateInfo.minute = 29
-        dateInfo.weekday = 5
+        dateInfo.hour = 19
+        dateInfo.minute = 00
+        dateInfo.weekday = 6 //friday = 6, sunday = 1
         let trigger = UNCalendarNotificationTrigger(dateMatching: dateInfo, repeats: true)
         
         // Create the request object.

@@ -1286,10 +1286,24 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
     }
     
     func sendRequestWorkDownloadedForNotif(workIds: [String]) {
+        let deviceToken = DefaultsManager.getString(DefaultsManager.NOTIF_DEVICE_TOKEN)
+        let localTimeZoneName = TimeZone.current.identifier
+        
+        var params:[String:Any] = [String:Any]()
+        params["OS"] = "i"
+        params["deviceToken"] = deviceToken
+        params["timeZone"] = localTimeZoneName
+        
         // Alamofire.request
     }
     
-    func sendRequestWorkDeletedForNotif() {
+    func sendRequestWorkDeletedForNotif(workIds: [String]) {
+        let deviceToken = DefaultsManager.getString(DefaultsManager.NOTIF_DEVICE_TOKEN)
+        
+        var params:[String:Any] = [String:Any]()
+        params["OS"] = "i"
+        params["deviceToken"] = deviceToken
+        
         // Alamofire.request
     }
 
@@ -1297,7 +1311,6 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         let notSentDownloadedWorks: [DBWorkNotifItem] = getAllWorkNotifItems(areDeleted: NSNumber(booleanLiteral: false))
         
         var workIds: [String] = []
-        let deviceToken = DefaultsManager.getString(DefaultsManager.NOTIF_DEVICE_TOKEN)
         
         for notSentDownloadedWork in notSentDownloadedWorks {
             if let wId = notSentDownloadedWork.workId {
@@ -1305,7 +1318,33 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
             }
         }
         
-       
+       sendRequestWorkDownloadedForNotif(workIds: workIds)
+    }
+    
+    func sendAllNotSentForDelete() {
+        let notSentDownloadedWorks: [DBWorkNotifItem] = getAllWorkNotifItems(areDeleted: NSNumber(booleanLiteral: true))
+        
+        var workIds: [String] = []
+        
+        for notSentDownloadedWork in notSentDownloadedWorks {
+            if let wId = notSentDownloadedWork.workId {
+                workIds.append(wId)
+            }
+        }
+        
+        sendRequestWorkDeletedForNotif(workIds: workIds)
+    }
+    
+    func parseNotifWorkResponse(_ data: Data) {
+        let jsonWithObjectRoot = try? JSONSerialization.jsonObject(with: data, options: [])
+        if let dictionary = jsonWithObjectRoot as? [String: Any] {
+            if let result = dictionary["result"] as? String,
+                let workId = dictionary["workId"] as? String {
+                if (result == "ok") {
+                    self.deleteWorkNotifItemById(workId: workId)
+                }
+            }
+        }
     }
  }
  

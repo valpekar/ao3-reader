@@ -119,7 +119,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         // Check if launched from notification
         if let notification = launchOptions?[.remoteNotification] as? [String: AnyObject] {
-          //  let aps = notification["aps"] as! [String: AnyObject] = NewsItem.makeNewsItem(aps)
+            if let workId = notification["workId"] as? String {
+                openWorkDetailController(workId: workId)
+            }
          //   if (notification.count == 0) {
             if let currentViewController: ContainerViewController = self.window?.rootViewController as? ContainerViewController {
                 currentViewController.selectedControllerAtIndex(IndexPath(row: 4, section: 0))
@@ -128,6 +130,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         }
         
         return true
+    }
+    
+    func openWorkDetailController(workId: String) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc: WorkDetailViewController = storyboard.instantiateViewController(withIdentifier: "WorkDetailViewController") as! WorkDetailViewController
+        let item: WorkItem = WorkItem()
+        item.workId = DefaultsManager.getString(DefaultsManager.LASTWRKID)
+        vc.workItem = item
+        
+        if let currentViewController: ContainerViewController = self.window?.rootViewController as? ContainerViewController {
+            currentViewController.navigationController?.pushViewController(vc, animated: true)
+        }
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
