@@ -837,7 +837,7 @@
                                         <rect key="frame" x="8" y="101.33333333333334" width="327" height="15.666666666666671"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="English" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="spY-lh-ZPS">
-                                                <rect key="frame" x="0.0" y="0.0" width="0.0" height="15.666666666666666"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="45.333333333333336" height="15.666666666666666"/>
                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
                                                 <color key="textColor" red="0.44705882352941173" green="0.74901960784313726" blue="0.90196078431372551" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -6977,7 +6977,7 @@ Major Problems:
                                 </variation>
                             </imageView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Star Wars, Futurama" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="kq4-KC-Xs7">
-                                <rect key="frame" x="32" y="285.66666666666669" width="311" height="30"/>
+                                <rect key="frame" x="32" y="340.66666666666669" width="311" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" spellCheckingType="no"/>
@@ -6995,7 +6995,7 @@ Major Problems:
                                 </variation>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tKS-fA-gQ9">
-                                <rect key="frame" x="137.66666666666666" y="357.66666666666669" width="100" height="40"/>
+                                <rect key="frame" x="137.66666666666666" y="378.66666666666669" width="100" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="4oz-fH-FLr"/>
                                     <constraint firstAttribute="width" constant="100" id="Omx-GP-ekb"/>
@@ -7025,21 +7025,34 @@ Major Problems:
                                     <action selector="nextTouchedWithSender:" destination="kPo-bY-CYz" eventType="touchUpInside" id="mzZ-xD-Szl"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jxV-TH-Bzb">
+                                <rect key="frame" x="16" y="278" width="343" height="46.666666666666686"/>
+                                <string key="text">I need to know it so I can give you first portion of fics you might like. You can always choose anything else on  Search screen.</string>
+                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="13"/>
+                                <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="heightClass=regular-widthClass=regular">
+                                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="16"/>
+                                </variation>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="kq4-KC-Xs7" firstAttribute="top" secondItem="fcf-bB-WV2" secondAttribute="bottom" constant="24" id="4Jj-vG-HhF"/>
                             <constraint firstAttribute="trailingMargin" secondItem="kq4-KC-Xs7" secondAttribute="trailing" constant="16" id="52b-A2-dtq"/>
-                            <constraint firstItem="kq4-KC-Xs7" firstAttribute="top" secondItem="fcf-bB-WV2" secondAttribute="bottom" constant="16" id="FD9-Yw-mWL"/>
+                            <constraint firstItem="jxV-TH-Bzb" firstAttribute="leading" secondItem="Yu6-Fg-Zof" secondAttribute="leadingMargin" id="9Rx-2y-fLP"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="jxV-TH-Bzb" secondAttribute="trailing" id="Gdf-78-csf"/>
                             <constraint firstItem="fcf-bB-WV2" firstAttribute="top" secondItem="WJQ-w5-lf7" secondAttribute="bottom" constant="28" id="HI0-mX-r1a"/>
                             <constraint firstItem="kq4-KC-Xs7" firstAttribute="leading" secondItem="Yu6-Fg-Zof" secondAttribute="leadingMargin" constant="16" id="HYf-h6-pWl"/>
                             <constraint firstItem="WJQ-w5-lf7" firstAttribute="leading" secondItem="Yu6-Fg-Zof" secondAttribute="leading" id="N43-Ou-7yS"/>
                             <constraint firstItem="WJQ-w5-lf7" firstAttribute="top" secondItem="Yu6-Fg-Zof" secondAttribute="top" id="N9f-X3-L8j"/>
+                            <constraint firstItem="tKS-fA-gQ9" firstAttribute="top" secondItem="kq4-KC-Xs7" secondAttribute="bottom" constant="8" id="aEo-Se-cc2"/>
+                            <constraint firstItem="jxV-TH-Bzb" firstAttribute="top" secondItem="fcf-bB-WV2" secondAttribute="bottom" constant="8" id="bAd-CG-wpF"/>
                             <constraint firstAttribute="trailingMargin" secondItem="fcf-bB-WV2" secondAttribute="trailing" constant="16" id="dSB-oL-Lz0"/>
                             <constraint firstAttribute="trailing" secondItem="WJQ-w5-lf7" secondAttribute="trailing" id="ewz-ez-CW1"/>
                             <constraint firstItem="tKS-fA-gQ9" firstAttribute="centerX" secondItem="Yu6-Fg-Zof" secondAttribute="centerX" id="j3s-bU-Q2W"/>
+                            <constraint firstItem="kq4-KC-Xs7" firstAttribute="top" secondItem="jxV-TH-Bzb" secondAttribute="bottom" constant="16" id="lCB-Wo-cc3"/>
                             <constraint firstItem="fcf-bB-WV2" firstAttribute="leading" secondItem="Yu6-Fg-Zof" secondAttribute="leadingMargin" constant="16" id="lhm-Hl-AXq"/>
-                            <constraint firstItem="tKS-fA-gQ9" firstAttribute="top" secondItem="kq4-KC-Xs7" secondAttribute="bottom" constant="42" id="yqn-DN-IlN"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
@@ -7049,7 +7062,6 @@ Major Problems:
                         <variation key="heightClass=regular-widthClass=regular">
                             <mask key="constraints">
                                 <include reference="4Jj-vG-HhF"/>
-                                <exclude reference="FD9-Yw-mWL"/>
                             </mask>
                         </variation>
                     </view>
