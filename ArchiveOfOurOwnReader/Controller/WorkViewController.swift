@@ -423,9 +423,13 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
         ffButton.tintColor = UIColor.white
       //  ffButton.imageInsets = UIEdgeInsetsMake(0.0, 0.0, 0, -60);
         
+        let imageQ = UIImage(named: "quotes") as UIImage?
+        let qButton = UIBarButtonItem(image : imageQ, style: .plain, target: self, action: #selector(WorkViewController.quoteTouched) );
+        qButton.tintColor = UIColor.white
+        
         let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace, target: nil, action: nil)
         
-        self.navigationItem.rightBarButtonItems = [ searchButton, igButton, ffButton, flexSpace]
+        self.navigationItem.rightBarButtonItems = [ searchButton, igButton, ffButton, qButton, flexSpace]
     }
     
     @objc func handleHideTap(_ recognizer: UITapGestureRecognizer) {
@@ -1592,5 +1596,59 @@ extension WorkViewController {
         }
         
         self.webView.scrollView.delegate = self
+    }
+}
+
+//MARK: - selecting quote
+
+extension WorkViewController {
+
+    @objc func quoteTouched() {
+        self.webView.evaluateJavaScript("window.getSelection().toString()") { (result, error) in
+            if let selectedString = result as? String {
+                self.saveQuote(text: selectedString)
+            } else {
+                TSMessage.showNotification(in: self, title: "Empty Selection", subtitle: "Please select any text to save it as quote.", type: TSMessageNotificationType.warning)
+            }
+        }
+
+    }
+    
+    func saveQuote(text: String) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,
+            let managedContext = appDelegate.managedObjectContext else {
+                return
+        }
+        guard let entity = NSEntityDescription.entity(forEntityName: "DBHighlightItem",  in: managedContext) else {
+            return
+        }
+        
+        var workId = ""
+        var workName = ""
+        var authorName = ""
+        
+        if let workItem = self.workItem {
+            workId = workItem.workId
+            workName = workItem.workTitle
+            authorName = workItem.author
+        } else if let downloadedWorkItem = self.downloadedWorkItem {
+            workId = downloadedWorkItem.workId ?? "0"
+            workName = downloadedWorkItem.workTitle ?? "None"
+            authorName = downloadedWorkItem.author ?? "None"
+        }
+        
+        let nItem = DBHighlightItem(entity: entity, insertInto: managedContext)
+        nItem.workId = workId
+        nItem.workName = workName
+        nItem.author = authorName
+        nItem.content = text
+        
+        do {
+            try managedContext.save()
+        } catch let error as NSError {
+            print("Could not save \(String(describing: error.userInfo))")
+        }
+        
+        TSMessage.showNotification(in: self, title: "Success", subtitle: "Highlight was successfully saved!", type: TSMessageNotificationType.success)
     }
 }

@@ -267,8 +267,10 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
         case 2:
             if (indexPath.row == 0) {
                 cell.titleLabel.text = "My Works"
-            } else {
+            } else if (indexPath.row == 1) {
                 cell.titleLabel.text = "Inbox"
+            } else {
+                cell.titleLabel.text = "My Highlights"
             }
             cell.accessoryType = .none
         case 3:
@@ -320,7 +322,7 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
         case 1:
             return pseuds.count
         case 2:
-            return 2
+            return 3
         case 3:
             return 2
         case 4:
@@ -344,8 +346,10 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
         case 2:
             if (indexPath.row == 0) {
                 self.performSegue(withIdentifier: "listSegue", sender: self)
-            } else {
+            } else if (indexPath.row == 1) {
                 self.performSegue(withIdentifier: "inboxSegue", sender: self)
+            } else {
+                self.performSegue(withIdentifier: "showHighlightsSegue", sender: self)
             }
         case 3:
             if (indexPath.row == 0) {

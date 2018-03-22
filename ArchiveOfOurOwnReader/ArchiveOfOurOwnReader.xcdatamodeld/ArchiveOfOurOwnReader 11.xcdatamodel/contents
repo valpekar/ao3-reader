@@ -30,6 +30,13 @@
         <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
         <relationship name="workItems" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DBWorkItem" inverseName="fandoms" inverseEntity="DBWorkItem" syncable="YES"/>
     </entity>
+    <entity name="DBHighlightItem" representedClassName=".DBHighlightItem" syncable="YES">
+        <attribute name="author" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="content" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="workId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="workName" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="DBRelationship" representedClassName="ArchiveOfOurOwnReader.DBRelationship" syncable="YES">
         <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="relationshipName" optional="YES" attributeType="String" syncable="YES"/>
@@ -107,9 +114,10 @@
         <element name="DBFandom" positionX="-65" positionY="248" width="128" height="105"/>
         <element name="DBRelationship" positionX="162" positionY="507" width="128" height="30"/>
         <element name="DBWorkItem" positionX="-72" positionY="78" width="135" height="600"/>
+        <element name="DBWorkNotifItem" positionX="-108" positionY="234" width="128" height="75"/>
         <element name="Folder" positionX="-108" positionY="234" width="128" height="75"/>
         <element name="HistoryItem" positionX="-108" positionY="234" width="128" height="120"/>
         <element name="Serie" positionX="-108" positionY="234" width="128" height="165"/>
-        <element name="DBWorkNotifItem" positionX="-108" positionY="234" width="128" height="75"/>
+        <element name="DBHighlightItem" positionX="-108" positionY="234" width="128" height="120"/>
     </elements>
 </model>

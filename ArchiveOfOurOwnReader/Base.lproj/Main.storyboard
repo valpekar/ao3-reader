@@ -837,7 +837,7 @@
                                         <rect key="frame" x="8" y="101.33333333333334" width="327" height="15.666666666666671"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="English" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="spY-lh-ZPS">
-                                                <rect key="frame" x="0.0" y="0.0" width="45.333333333333336" height="15.666666666666666"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="0.0" height="15.666666666666666"/>
                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
                                                 <color key="textColor" red="0.44705882352941173" green="0.74901960784313726" blue="0.90196078431372551" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -2070,17 +2070,17 @@ Please check your Internet connection and also make sure you are logged into you
                         <viewControllerLayoutGuide type="bottom" id="Yoc-3C-4q5"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="7oc-1t-9bM">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="724"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nothing Found" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="etO-j1-oPB">
-                                <rect key="frame" x="36" y="328" width="303" height="21"/>
+                                <rect key="frame" x="36" y="284" width="303" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7BG-8k-w0K">
-                                <rect key="frame" x="133" y="389" width="109" height="34"/>
+                                <rect key="frame" x="133" y="345" width="109" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <state key="normal" title="Try Again  🤔">
                                     <color key="titleColor" red="0.70196078429999997" green="0.27450980390000002" blue="0.27450980390000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -2090,7 +2090,7 @@ Please check your Internet connection and also make sure you are logged into you
                                 </connections>
                             </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="RmA-Nc-iEP">
-                                <rect key="frame" x="0.0" y="734" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="646" width="375" height="44"/>
                                 <color key="backgroundColor" red="0.92000001669999998" green="0.92000001669999998" blue="0.92000001669999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="K3h-4G-MaI"/>
@@ -2134,7 +2134,7 @@ Please check your Internet connection and also make sure you are logged into you
                                 </connections>
                             </collectionView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="240" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="dVv-Wb-Czg">
-                                <rect key="frame" x="0.0" y="44" width="375" height="690"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="646"/>
                                 <color key="backgroundColor" red="0.92000001669999998" green="0.92000001669999998" blue="0.92000001669999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="FeedCell1" rowHeight="240" id="3mG-9j-QZh" customClass="FeedTableViewCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
@@ -3009,7 +3009,7 @@ Please check your Internet connection and also make sure you are logged into you
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
                                 <color key="tintColor" red="0.57254901960000004" green="0.3294117647" blue="0.70588235290000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <state key="normal" title="Open with TouchID">
+                                <state key="normal" title="Open with Biometric ID">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <variation key="default">
@@ -5186,6 +5186,7 @@ Please check your Internet connection and also make sure you are logged into you
                         <segue destination="wuj-9H-jLa" kind="show" identifier="securitySegue" id="hDT-Sp-VS7"/>
                         <segue destination="h60-ml-Ofy" kind="show" identifier="listSegue" id="jXE-kt-jek"/>
                         <segue destination="nxK-nh-NqP" kind="show" identifier="inboxSegue" id="nQf-CM-ay7"/>
+                        <segue destination="iJU-qH-kN5" kind="show" identifier="showHighlightsSegue" id="cyn-vj-4wU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eN8-r1-Frw" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -10078,6 +10079,80 @@ Please check your Internet connection and also make sure you are logged into you
             </objects>
             <point key="canvasLocation" x="2125.5999999999999" y="4350.6746626686663"/>
         </scene>
+        <!--Highlights Controller-->
+        <scene sceneID="rSm-YM-BMs">
+            <objects>
+                <viewController storyboardIdentifier="HighlightsController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="iJU-qH-kN5" customClass="HighlightsController" customModule="ArchiveOfOurOwnReader" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="GJP-Jq-D9U"/>
+                        <viewControllerLayoutGuide type="bottom" id="nT3-fq-FJY"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="45d-nS-qwo">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="724"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="DNy-QF-IOZ">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="690"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="HighlightCell" rowHeight="100" id="xI4-5J-nAq" customClass="HighlightCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="100"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="xI4-5J-nAq" id="DXZ-7E-yh5">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="99.666666666666671"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fDZ-rr-csu">
+                                                    <rect key="frame" x="15" y="15" width="345" height="45"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HHM-rR-3ED">
+                                                    <rect key="frame" x="35" y="68" width="325" height="17"/>
+                                                    <fontDescription key="fontDescription" type="italicSystem" pointSize="14"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottomMargin" secondItem="HHM-rR-3ED" secondAttribute="bottom" constant="4" id="40H-uB-ywQ"/>
+                                                <constraint firstItem="HHM-rR-3ED" firstAttribute="leading" secondItem="DXZ-7E-yh5" secondAttribute="leadingMargin" constant="20" id="6Sz-mL-gNr"/>
+                                                <constraint firstItem="fDZ-rr-csu" firstAttribute="top" secondItem="DXZ-7E-yh5" secondAttribute="topMargin" constant="4" id="7hq-N8-R9e"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="HHM-rR-3ED" secondAttribute="trailing" id="XoB-IW-gWA"/>
+                                                <constraint firstItem="fDZ-rr-csu" firstAttribute="leading" secondItem="DXZ-7E-yh5" secondAttribute="leadingMargin" id="afH-dr-PFL"/>
+                                                <constraint firstItem="HHM-rR-3ED" firstAttribute="top" secondItem="fDZ-rr-csu" secondAttribute="bottom" constant="8" id="xgf-G1-r08"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="fDZ-rr-csu" secondAttribute="trailing" id="zMV-gN-wjK"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="authorLabel" destination="HHM-rR-3ED" id="qx2-2s-leu"/>
+                                            <outlet property="contentLabel" destination="fDZ-rr-csu" id="dcG-XU-2uB"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="iJU-qH-kN5" id="5aU-tK-iQJ"/>
+                                    <outlet property="delegate" destination="iJU-qH-kN5" id="I8c-0G-zJG"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="DNy-QF-IOZ" firstAttribute="top" secondItem="GJP-Jq-D9U" secondAttribute="bottom" id="Vda-0j-xn0"/>
+                            <constraint firstItem="nT3-fq-FJY" firstAttribute="top" secondItem="DNy-QF-IOZ" secondAttribute="bottom" id="f20-4n-kHo"/>
+                            <constraint firstItem="DNy-QF-IOZ" firstAttribute="leading" secondItem="45d-nS-qwo" secondAttribute="leading" id="gIh-Xn-JQy"/>
+                            <constraint firstAttribute="trailing" secondItem="DNy-QF-IOZ" secondAttribute="trailing" id="s4p-9b-r8j"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="DNy-QF-IOZ" id="n30-ZT-OFD"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eu4-kc-XKS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3011" y="4214"/>
+        </scene>
     </scenes>
     <resources>
         <image name="NotRated" width="38" height="38"/>
@@ -10107,7 +10182,7 @@ Please check your Internet connection and also make sure you are logged into you
         <image name="word" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="5rQ-gu-17N"/>
+        <segue reference="eWX-6J-Lt5"/>
         <segue reference="GOa-zO-Fy6"/>
         <segue reference="Zz6-01-vau"/>
         <segue reference="b3W-0z-TKl"/>
