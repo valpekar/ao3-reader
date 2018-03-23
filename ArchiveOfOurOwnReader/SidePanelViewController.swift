@@ -83,7 +83,7 @@ class SidePanelViewController: UIViewController, UITableViewDataSource, UITableV
         if (indexPath.section == 0) {
             if (indexPath.row == 5) {
                 let downloadedCount = getDownloadedWorksCount()
-                cell.configureForHeader("\(controllers[indexPath.row]) (\(downloadedCount))", imageName: imgs[indexPath.row])
+                cell.configureForHeader("\(controllers[indexPath.row])  (\(downloadedCount))", imageName: imgs[indexPath.row])
             } else {
                 cell.configureForHeader(controllers[indexPath.row], imageName: imgs[indexPath.row])
             }
