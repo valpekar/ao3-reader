@@ -170,7 +170,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         let screenWidth = screenSize.width
         let screenHeight = screenSize.height
         
-        loadingView = UIView(frame:CGRect(x: screenWidth/2 - 170/2, y: screenHeight/2 - 60, width: 170, height: 170))
+        loadingView = UIView(frame:CGRect(x: screenWidth/2 - 170/2, y: screenHeight/2 - 60, width: 180, height: 170))
         loadingView.backgroundColor = UIColor.clear
         loadingView.clipsToBounds = true
        // loadingView.layer.cornerRadius = 10.0
@@ -189,10 +189,11 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
        // rloadingView.shouldDimBackground = false
         rloadingView.show(on: self.view)
         
-        loadingLabel = UILabel(frame:CGRect(x: 20, y: 115, width: 130, height: 22))
+        loadingLabel = UILabel(frame:CGRect(x: 20, y: 110, width: 140, height: 44))
         loadingLabel.backgroundColor = UIColor.clear
         loadingLabel.textColor = UIColor.white
         loadingLabel.adjustsFontSizeToFitWidth = true
+        loadingLabel.numberOfLines = 2
         loadingLabel.textAlignment = .center
         loadingLabel.text = msg
         loadingLabel.backgroundColor = UIColor.clear
@@ -697,6 +698,11 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         }
         
         saveToAnalytics(workItem.author ?? "", category: workItem.value(forKey: "category") as? String ?? "", mainFandom: firstFandom, mainRelationship: firstRelationship)
+        
+        if let wId = workItem.workId {
+            self.saveWorkNotifItem(workId: wId, wasDeleted: NSNumber(booleanLiteral: false))
+            self.sendAllNotSentForNotif()
+        }
         
         TSMessage.showNotification(in: self, title: NSLocalizedString("Success", comment: ""), subtitle: "Work has been downloaded! You can access if from Downloaded screen", type: .success)
         
@@ -1249,8 +1255,8 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
             #endif
         }
         
-        if let nI = notifItem {
-            managedContext.delete(nI)
+        if let _ = notifItem {
+            managedContext.delete(notifItem!)
         }
         do {
             try managedContext.save()
@@ -1286,29 +1292,93 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
     }
     
     func sendRequestWorkDownloadedForNotif(workIds: [String]) {
-        let deviceToken = DefaultsManager.getString(DefaultsManager.NOTIF_DEVICE_TOKEN)
-        let localTimeZoneName = TimeZone.current.identifier
+        let deviceToken = DefaultsManager.getString(DefaultsManager.REQ_DEVICE_TOKEN)
         
         var params:[String:Any] = [String:Any]()
-        params["OS"] = "i"
-        params["deviceToken"] = deviceToken
-        params["timeZone"] = localTimeZoneName
+        params["works"] = workIds
         
-        // Alamofire.request
+        var headers:[String:String] = [String:String]()
+        headers["auth"] = deviceToken
+        
+        Alamofire.request("https://fanfic-pocket-reader.herokuapp.com/api/downloads",
+                          method: .post,
+                          parameters: params,
+                          encoding: URLEncoding.default,
+                          headers: headers).response(completionHandler: { (response) in
+            
+                            switch(response.response?.statusCode ?? 0) {
+                            case 200:
+                                if let data = response.data, let responseString = String(data: data, encoding: .utf8) {
+                                    print(responseString)
+                                    
+                                    for workId in workIds {
+                                        self.deleteWorkNotifItemById(workId: workId)
+                                    }
+                                }
+                                break
+                                
+                            default:
+                                print(response.error?.localizedDescription ?? "")
+                                if let data = response.data, let responseString = String(data: data, encoding: .utf8) {
+                                    print(responseString)
+                                }
+                                
+                                break
+                                
+                            }
+        })
     }
     
     func sendRequestWorkDeletedForNotif(workIds: [String]) {
-        let deviceToken = DefaultsManager.getString(DefaultsManager.NOTIF_DEVICE_TOKEN)
+        let deviceToken = DefaultsManager.getString(DefaultsManager.REQ_DEVICE_TOKEN)
         
-        var params:[String:Any] = [String:Any]()
-        params["OS"] = "i"
-        params["deviceToken"] = deviceToken
+        var headers:[String:String] = [String:String]()
+        headers["auth"] = deviceToken
         
-        // Alamofire.request
+        var urlStr = "https://fanfic-pocket-reader.herokuapp.com/api/downloads"
+        var count = 0
+        for workId in workIds {
+            urlStr.append(workId)
+            if (count < workIds.count - 1) {
+               urlStr.append(",")
+            }
+            count = count + 1
+        }
+        
+        Alamofire.request("https://fanfic-pocket-reader.herokuapp.com/api/downloads", method: HTTPMethod.delete, headers: headers).response(completionHandler: { (response) in
+            
+            switch(response.response?.statusCode ?? 0) {
+            case 200:
+                if let data = response.data, let responseString = String(data: data, encoding: .utf8) {
+                    print(responseString)
+                    
+                    for workId in workIds {
+                        self.deleteWorkNotifItemById(workId: workId)
+                    }
+                }
+                break
+                
+            default:
+                print(response.error?.localizedDescription ?? "")
+                if let data = response.data, let responseString = String(data: data, encoding: .utf8) {
+                    print(responseString)
+                }
+                break
+                
+            }
+            
+            if let err = response.error {
+                print(err.localizedDescription)
+            } else {
+                for workId in workIds {
+                    self.deleteWorkNotifItemById(workId: workId)
+                }
+            }
+        })
     }
 
     func sendAllNotSentForNotif() {
-        let notSentDownloadedWorks: [DBWorkNotifItem] = getAllWorkNotifItems(areDeleted: NSNumber(booleanLiteral: false))
+        var notSentDownloadedWorks: [DBWorkNotifItem] = getAllWorkNotifItems(areDeleted: NSNumber(booleanLiteral: false))
         
         var workIds: [String] = []
         
@@ -1318,11 +1388,15 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
             }
         }
         
-       sendRequestWorkDownloadedForNotif(workIds: workIds)
+        notSentDownloadedWorks = []
+        
+        if (workIds.count > 0) {
+            sendRequestWorkDownloadedForNotif(workIds: workIds)
+        }
     }
     
     func sendAllNotSentForDelete() {
-        let notSentDownloadedWorks: [DBWorkNotifItem] = getAllWorkNotifItems(areDeleted: NSNumber(booleanLiteral: true))
+        var notSentDownloadedWorks: [DBWorkNotifItem] = getAllWorkNotifItems(areDeleted: NSNumber(booleanLiteral: true))
         
         var workIds: [String] = []
         
@@ -1332,7 +1406,11 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
             }
         }
         
-        sendRequestWorkDeletedForNotif(workIds: workIds)
+        notSentDownloadedWorks = []
+        
+        if (workIds.count > 0) {
+            sendRequestWorkDeletedForNotif(workIds: workIds)
+        }
     }
     
     func parseNotifWorkResponse(_ data: Data) {

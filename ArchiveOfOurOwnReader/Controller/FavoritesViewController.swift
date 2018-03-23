@@ -744,6 +744,8 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
             curWork = (downloadedWorkds[curFolderName])?[indexPath.row]
         }
         
+        let wId = curWork?.workId ?? "0"
+        
         if let c = curWork {
             context.delete(c)
             //downloadedWorkds.remove(at: index)
@@ -752,6 +754,9 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
                 try context.save()
             } catch _ {
             }
+            
+            self.saveWorkNotifItem(workId: wId, wasDeleted: NSNumber(booleanLiteral: true))
+            self.sendAllNotSentForDelete()
             
             loadWroksFromDB(predicate: nil, predicateWFolder: NSPredicate(format: "folder = nil"))
             

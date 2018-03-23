@@ -131,6 +131,9 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
 //        }
       
         checkAuth()
+        
+        self.sendAllNotSentForNotif()
+        self.sendAllNotSentForDelete()
     }
     
     override func viewDidAppear(_ animated: Bool) {

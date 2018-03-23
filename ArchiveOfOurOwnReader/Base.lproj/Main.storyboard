@@ -837,7 +837,7 @@
                                         <rect key="frame" x="8" y="101.33333333333334" width="327" height="15.666666666666671"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="English" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="spY-lh-ZPS">
-                                                <rect key="frame" x="0.0" y="0.0" width="0.0" height="15.666666666666666"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="45.333333333333336" height="15.666666666666666"/>
                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
                                                 <color key="textColor" red="0.44705882352941173" green="0.74901960784313726" blue="0.90196078431372551" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -5034,7 +5034,6 @@ Please check your Internet connection and also make sure you are logged into you
                                 <rect key="frame" x="0.0" y="156.33333333333331" width="375" height="533.66666666666674"/>
                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="tintColor" red="0.39215686274509803" green="0.11372549019607843" blue="0.54509803921568623" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <color key="separatorColor" red="0.70164750647668395" green="0.70164750647668395" blue="0.70164750647668395" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="MyProfileCell" selectionStyle="gray" indentationWidth="10" reuseIdentifier="pseudCell" id="Pyr-TM-Taz" customClass="MyProfileCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="55.333333333333336" width="375" height="44"/>
@@ -6996,7 +6995,7 @@ Major Problems:
                                 </variation>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tKS-fA-gQ9">
-                                <rect key="frame" x="137.66666666666666" y="378.66666666666669" width="100" height="40"/>
+                                <rect key="frame" x="137.66666666666666" y="390.66666666666669" width="100" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="4oz-fH-FLr"/>
                                     <constraint firstAttribute="width" constant="100" id="Omx-GP-ekb"/>
@@ -7047,7 +7046,7 @@ Major Problems:
                             <constraint firstItem="kq4-KC-Xs7" firstAttribute="leading" secondItem="Yu6-Fg-Zof" secondAttribute="leadingMargin" constant="16" id="HYf-h6-pWl"/>
                             <constraint firstItem="WJQ-w5-lf7" firstAttribute="leading" secondItem="Yu6-Fg-Zof" secondAttribute="leading" id="N43-Ou-7yS"/>
                             <constraint firstItem="WJQ-w5-lf7" firstAttribute="top" secondItem="Yu6-Fg-Zof" secondAttribute="top" id="N9f-X3-L8j"/>
-                            <constraint firstItem="tKS-fA-gQ9" firstAttribute="top" secondItem="kq4-KC-Xs7" secondAttribute="bottom" constant="8" id="aEo-Se-cc2"/>
+                            <constraint firstItem="tKS-fA-gQ9" firstAttribute="top" secondItem="kq4-KC-Xs7" secondAttribute="bottom" constant="20" id="aEo-Se-cc2"/>
                             <constraint firstItem="jxV-TH-Bzb" firstAttribute="top" secondItem="fcf-bB-WV2" secondAttribute="bottom" constant="8" id="bAd-CG-wpF"/>
                             <constraint firstAttribute="trailingMargin" secondItem="fcf-bB-WV2" secondAttribute="trailing" constant="16" id="dSB-oL-Lz0"/>
                             <constraint firstAttribute="trailing" secondItem="WJQ-w5-lf7" secondAttribute="trailing" id="ewz-ez-CW1"/>
@@ -10079,7 +10078,7 @@ Please check your Internet connection and also make sure you are logged into you
             </objects>
             <point key="canvasLocation" x="2125.5999999999999" y="4350.6746626686663"/>
         </scene>
-        <!--Highlights Controller-->
+        <!--Highlights-->
         <scene sceneID="rSm-YM-BMs">
             <objects>
                 <viewController storyboardIdentifier="HighlightsController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="iJU-qH-kN5" customClass="HighlightsController" customModule="ArchiveOfOurOwnReader" customModuleProvider="target" sceneMemberID="viewController">
@@ -10091,9 +10090,36 @@ Please check your Internet connection and also make sure you are logged into you
                         <rect key="frame" x="0.0" y="0.0" width="375" height="724"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iJt-jm-h0S">
+                                <rect key="frame" x="32" y="16" width="311" height="658"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You don't have any quotes yet. \nDo add a highlight: \n   open any work, select text and touch quotes icon. " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="myu-dZ-NKg">
+                                        <rect key="frame" x="0.0" y="0.0" width="311" height="50.333333333333336"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="252" image="highlights_explained" translatesAutoresizingMaskIntoConstraints="NO" id="lFV-u5-mLt">
+                                        <rect key="frame" x="0.0" y="66.333333333333343" width="311" height="200.00000000000003"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="200" id="5gw-ea-DVb"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="lFV-u5-mLt" firstAttribute="top" secondItem="myu-dZ-NKg" secondAttribute="bottom" constant="16" id="6NO-9Z-pxq"/>
+                                    <constraint firstAttribute="trailing" secondItem="myu-dZ-NKg" secondAttribute="trailing" id="GvV-KS-oCt"/>
+                                    <constraint firstItem="myu-dZ-NKg" firstAttribute="leading" secondItem="iJt-jm-h0S" secondAttribute="leading" id="Uyf-EV-Ioc"/>
+                                    <constraint firstItem="myu-dZ-NKg" firstAttribute="top" secondItem="iJt-jm-h0S" secondAttribute="top" id="ecZ-Im-wFH"/>
+                                    <constraint firstItem="lFV-u5-mLt" firstAttribute="leading" secondItem="iJt-jm-h0S" secondAttribute="leading" id="fob-WK-jY6"/>
+                                    <constraint firstAttribute="trailing" secondItem="lFV-u5-mLt" secondAttribute="trailing" id="q5L-u3-KcR"/>
+                                </constraints>
+                            </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="DNy-QF-IOZ">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="690"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="separatorColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="HighlightCell" rowHeight="100" id="xI4-5J-nAq" customClass="HighlightCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="100"/>
@@ -10139,13 +10165,26 @@ Please check your Internet connection and also make sure you are logged into you
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="iJt-jm-h0S" secondAttribute="trailing" constant="16" id="2i8-Pd-eEE"/>
+                            <constraint firstItem="nT3-fq-FJY" firstAttribute="top" secondItem="iJt-jm-h0S" secondAttribute="bottom" constant="16" id="O82-xD-ogo"/>
+                            <constraint firstItem="iJt-jm-h0S" firstAttribute="top" secondItem="GJP-Jq-D9U" secondAttribute="bottom" constant="16" id="UOm-dg-hQ0"/>
                             <constraint firstItem="DNy-QF-IOZ" firstAttribute="top" secondItem="GJP-Jq-D9U" secondAttribute="bottom" id="Vda-0j-xn0"/>
                             <constraint firstItem="nT3-fq-FJY" firstAttribute="top" secondItem="DNy-QF-IOZ" secondAttribute="bottom" id="f20-4n-kHo"/>
                             <constraint firstItem="DNy-QF-IOZ" firstAttribute="leading" secondItem="45d-nS-qwo" secondAttribute="leading" id="gIh-Xn-JQy"/>
+                            <constraint firstItem="iJt-jm-h0S" firstAttribute="leading" secondItem="45d-nS-qwo" secondAttribute="leadingMargin" constant="16" id="nzb-H8-iHl"/>
                             <constraint firstAttribute="trailing" secondItem="DNy-QF-IOZ" secondAttribute="trailing" id="s4p-9b-r8j"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="Highlights" id="Om1-72-gYR">
+                        <barButtonItem key="rightBarButtonItem" systemItem="trash" id="k7I-sV-7yn">
+                            <connections>
+                                <action selector="deleteAllHighlights:" destination="iJU-qH-kN5" id="6mP-0V-vOV"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
+                        <outlet property="messageLabel" destination="myu-dZ-NKg" id="4vM-H3-8p6"/>
+                        <outlet property="messageView" destination="iJt-jm-h0S" id="nW9-Ts-e7Y"/>
                         <outlet property="tableView" destination="DNy-QF-IOZ" id="n30-ZT-OFD"/>
                     </connections>
                 </viewController>
@@ -10167,6 +10206,7 @@ Please check your Internet connection and also make sure you are logged into you
         <image name="download-red" width="33" height="33"/>
         <image name="empty_filter" width="31" height="31"/>
         <image name="folder" width="60" height="60"/>
+        <image name="highlights_explained" width="726" height="262"/>
         <image name="hits" width="74" height="74"/>
         <image name="ic_sort" width="31" height="31"/>
         <image name="icon-download" width="32" height="32"/>
@@ -10182,7 +10222,7 @@ Please check your Internet connection and also make sure you are logged into you
         <image name="word" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="eWX-6J-Lt5"/>
+        <segue reference="jXE-kt-jek"/>
         <segue reference="GOa-zO-Fy6"/>
         <segue reference="Zz6-01-vau"/>
         <segue reference="b3W-0z-TKl"/>

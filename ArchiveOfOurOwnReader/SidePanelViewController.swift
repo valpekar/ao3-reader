@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 @objc
 protocol SidePanelViewControllerDelegate {
@@ -80,12 +81,40 @@ class SidePanelViewController: UIViewController, UITableViewDataSource, UITableV
         cell.separatorInset = UIEdgeInsets.zero
         
         if (indexPath.section == 0) {
-            cell.configureForHeader(controllers[indexPath.row], imageName: imgs[indexPath.row])
+            if (indexPath.row == 5) {
+                let downloadedCount = getDownloadedWorksCount()
+                cell.configureForHeader("\(controllers[indexPath.row]) (\(downloadedCount))", imageName: imgs[indexPath.row])
+            } else {
+                cell.configureForHeader(controllers[indexPath.row], imageName: imgs[indexPath.row])
+            }
         } else {
             cell.configureForHeader(secondSectionRows[indexPath.row], imageName: secondSectionRowsImgs[indexPath.row])
         }
         
         return cell
+    }
+    
+    func getDownloadedWorksCount() -> Int {
+        var res = 0
+        
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,
+            let managedContext = appDelegate.managedObjectContext else {
+                return res
+        }
+        
+        let fetchRequest: NSFetchRequest <NSFetchRequestResult> = NSFetchRequest(entityName:"DBWorkItem")
+        do {
+            let countReq = try managedContext.count(for: fetchRequest)
+            if countReq != NSNotFound {
+                res = countReq
+            }
+        } catch {
+            #if DEBUG
+                print("cannot count favorites.")
+            #endif
+        }
+        
+        return res
     }
     
     // MARK: - Table View Delegate

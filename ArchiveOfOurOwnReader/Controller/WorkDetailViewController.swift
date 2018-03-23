@@ -1571,7 +1571,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     func deletebookmarkWorkAction() {
         let deleteAlert = UIAlertController(title: NSLocalizedString("AreYouSure", comment: ""), message: NSLocalizedString("SureDeleteWrkFromBmks", comment: ""), preferredStyle: UIAlertControllerStyle.alert)
         
-        deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .default, handler: { (action: UIAlertAction) in
+        deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: { (action: UIAlertAction) in
             print("Cancel")
         }))
         
@@ -1824,6 +1824,8 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             
             deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Yes", comment: ""), style: .default, handler: { (action: UIAlertAction) in
                 
+                let wId = self.downloadedWorkItem.workId ?? "0"
+                
                 Answers.logCustomEvent(withName: "WorkDetail: delete from db",
                                        customAttributes: [
                                         "workId": self.downloadedWorkItem.workId ?? "0"])
@@ -1838,6 +1840,9 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                     
                     TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CannotDeleteWrk", comment: ""), type: .error)
                 }
+                
+                self.saveWorkNotifItem(workId: wId, wasDeleted: NSNumber(booleanLiteral: true))
+                self.sendAllNotSentForDelete()
                 
                 TSMessage.showNotification(in: self, title: NSLocalizedString("Success", comment: ""), subtitle: NSLocalizedString("WorkDeletedFromDownloads", comment: ""), type: .success)
             }))

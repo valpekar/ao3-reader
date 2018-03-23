@@ -14,6 +14,7 @@ import Firebase
 import AVFoundation
 import Appirater
 import UserNotifications
+import Alamofire
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
@@ -48,8 +49,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     static var dayTextColor = UIColor(red: 2/255, green: 20/255, blue: 57/255, alpha: 1.0)
     static var nightBgColor = UIColor(red: 39/255, green: 40/255, blue: 43/255, alpha: 1.0)
     static var dayBgColor = UIColor(red: 231/255, green: 234/255, blue: 238/255, alpha: 1.0)
-    static var greyTransparentColor = UIColor(red: 115/255, green: 116/255, blue: 118/255, alpha: 0.9)
-    static var whiteTransparentColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.9)
+    static var greyTransparentColor = UIColor(red: 115/255, green: 116/255, blue: 118/255, alpha: 0.95)
+    static var whiteTransparentColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.95)
 
     static var bigCollCellWidth = 70
     static var smallCollCellWidth = 38
@@ -75,7 +76,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         center.requestAuthorization(options: [.sound,.alert,.badge]) { (granted, error) in
             // Enable or disable features based on authorization
             if granted {
-                UIApplication.shared.registerForRemoteNotifications()
+                DispatchQueue.main.async(execute: {
+                    UIApplication.shared.registerForRemoteNotifications()
+                })
             }
         }
         
@@ -171,10 +174,78 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         print("Device Token: \(token)")
         
         DefaultsManager.putString(token, key: DefaultsManager.NOTIF_DEVICE_TOKEN)
+        
+        let reqToken = DefaultsManager.getString(DefaultsManager.REQ_DEVICE_TOKEN)
+        if (reqToken.isEmpty == true) {
+            self.sendRequestRegisterForPushes()
+        } else {
+            self.sendRequestUpdateForPushes()
+        }
     }
     
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
         print("Failed to register: \(error)")
+    }
+    
+    //MARK: - send register for pushes on our server
+    
+    func sendRequestRegisterForPushes() {
+        let deviceToken = DefaultsManager.getString(DefaultsManager.NOTIF_DEVICE_TOKEN)
+        let localTimeZoneName = TimeZone.current.identifier
+        
+        var params:[String:Any] = [String:Any]()
+        params["os"] = "i"
+        params["token"] = deviceToken
+        params["timezone"] = localTimeZoneName
+        
+        if (deviceToken.isEmpty == false) {
+            Alamofire.request("https://fanfic-pocket-reader.herokuapp.com/api/devices", method: HTTPMethod.post, parameters: params).response(completionHandler: { (response) in
+                print(response.error ?? "")
+                
+                if let data = response.data {
+                    self.parseReqNotifWorkResponse(data)
+                }
+            })
+        }
+    }
+    
+    func sendRequestUpdateForPushes() {
+        let deviceToken = DefaultsManager.getString(DefaultsManager.NOTIF_DEVICE_TOKEN)
+        let reqDeviceToken = DefaultsManager.getString(DefaultsManager.REQ_DEVICE_TOKEN)
+        let localTimeZoneName = TimeZone.current.identifier
+        
+        var params:[String:Any] = [String:Any]()
+        params["token"] = deviceToken
+        params["timezone"] = localTimeZoneName
+        
+        var headers:[String:String] = [String:String]()
+        headers["auth"] = reqDeviceToken
+        headers["Content-Type"] = "application/x-www-form-urlencoded"
+        
+        if (deviceToken.isEmpty == false) {
+            Alamofire.request("https://fanfic-pocket-reader.herokuapp.com/api/devices", method: HTTPMethod.put, parameters: params, headers: headers).response(completionHandler: { (response) in
+                print(response.error ?? "")
+                
+                if let data = response.data, let responseString = String(data: data, encoding: .utf8) {
+                    print(responseString)
+                }
+                
+                if (response.response?.statusCode == 200) {
+                    print("device token ok")
+                }
+            })
+        }
+    }
+    
+    func parseReqNotifWorkResponse(_ data: Data) {
+        let jsonWithObjectRoot = try? JSONSerialization.jsonObject(with: data, options: [])
+        if let dictionary = jsonWithObjectRoot as? [String: Any] {
+            if let result = dictionary["token"] as? String {
+                if (result.isEmpty == false) {
+                    DefaultsManager.putString(result, key: DefaultsManager.REQ_DEVICE_TOKEN)
+                }
+            }
+        }
     }
     
     //MARK: - UIApplicationDelegate

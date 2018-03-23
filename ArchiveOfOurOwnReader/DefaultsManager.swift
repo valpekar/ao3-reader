@@ -65,6 +65,7 @@ class DefaultsManager {
     static var SORT_DWNLD_BY = "sort_by"
     static var SORT_DWNLD_ASC = "sort_by_asc"
     static var NOTIF_DEVICE_TOKEN = "notifdtkn"
+    static var REQ_DEVICE_TOKEN = "reqdtkn"
     static var THEME_DAY : Int = 0
     static var THEME_NIGHT : Int = 1
     

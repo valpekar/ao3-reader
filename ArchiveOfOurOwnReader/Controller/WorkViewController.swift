@@ -1606,12 +1606,27 @@ extension WorkViewController {
     @objc func quoteTouched() {
         self.webView.evaluateJavaScript("window.getSelection().toString()") { (result, error) in
             if let selectedString = result as? String {
-                self.saveQuote(text: selectedString)
+                self.showQuoteDialog(text: selectedString)
             } else {
                 TSMessage.showNotification(in: self, title: "Empty Selection", subtitle: "Please select any text to save it as quote.", type: TSMessageNotificationType.warning)
             }
         }
 
+    }
+    
+    func showQuoteDialog(text: String) {
+        let deleteAlert = UIAlertController(title: NSLocalizedString("AreYouSure", comment: ""), message: NSLocalizedString("You want to save this lines to your Highlights?", comment: ""), preferredStyle: UIAlertControllerStyle.alert)
+        
+        deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: { (action: UIAlertAction) in
+            print("Cancel")
+        }))
+        
+        deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Yes", comment: ""), style: .default, handler: { (action: UIAlertAction) in
+            self.saveQuote(text: text)
+        }))
+        
+        deleteAlert.view.tintColor = AppDelegate.redColor
+        present(deleteAlert, animated: true, completion: nil)
     }
     
     func saveQuote(text: String) {
@@ -1642,6 +1657,8 @@ extension WorkViewController {
         nItem.workName = workName
         nItem.author = authorName
         nItem.content = text
+        
+        Answers.logCustomEvent(withName: "Work: save highlight", customAttributes: ["workName" : workName, "content": text])
         
         do {
             try managedContext.save()
