@@ -121,16 +121,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         Appirater.appLaunched(true)
         
         // Check if launched from notification
-        if let notification = launchOptions?[.remoteNotification] as? [String: AnyObject] {
-            if let workId = notification["workId"] as? String {
-                openWorkDetailController(workId: workId)
-            }
-         //   if (notification.count == 0) {
-            if let currentViewController: ContainerViewController = self.window?.rootViewController as? ContainerViewController {
-                currentViewController.selectedControllerAtIndex(IndexPath(row: 4, section: 0))
-            }
-         //   }
-        }
+//        if let notification = launchOptions?[.remoteNotification] as? [String: AnyObject] {
+//            if let workId = notification["workId"] as? String {
+//                openWorkDetailController(workId: workId)
+//            }
+//         //   if (notification.count == 0) {
+////            if let currentViewController: ContainerViewController = self.window?.rootViewController as? ContainerViewController {
+////                currentViewController.selectedControllerAtIndex(IndexPath(row: 4, section: 0))
+////            }
+//         //   }
+//        }
         
         return true
     }
@@ -149,7 +149,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         
-        UIApplication.shared.applicationIconBadgeNumber = 0
+        UIApplication.shared.applicationIconBadgeNumber = UIApplication.shared.applicationIconBadgeNumber + 1
         print("AppDelegate: willPresent notification")
         
         Answers.logCustomEvent(withName: "WillPresent_notification",
@@ -159,8 +159,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         print("AppDelegate: didReceive UNNotificationResponse")
         
+        UIApplication.shared.applicationIconBadgeNumber = 0
+        
+         let notification = response.notification.request.content.userInfo
+            if let workId = notification["workId"] as? String {
+                openWorkDetailController(workId: workId)
+            }
+            //   if (notification.count == 0) {
+            //            if let currentViewController: ContainerViewController = self.window?.rootViewController as? ContainerViewController {
+            //                currentViewController.selectedControllerAtIndex(IndexPath(row: 4, section: 0))
+            //            }
+            //   }
+            else {
+        
         if let currentViewController: ContainerViewController = self.window?.rootViewController as? ContainerViewController {
             currentViewController.selectedControllerAtIndex(IndexPath(row: 7, section: 0))
+        }
         }
         
     }

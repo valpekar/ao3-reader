@@ -75,19 +75,15 @@ class RecommendationsController : ListViewController, UITableViewDataSource, UIT
     @objc func refresh(_ sender: AnyObject) {
         if (shouldReload || noFound) {
             UserDefaults.standard.synchronize()
-            if let pp = UserDefaults.standard.value(forKey: "pro") as? Bool {
-                if (pp) {
+            if let pp = UserDefaults.standard.value(forKey: "pro") as? Bool, pp == true {
                     generateRecommendations()
-                } else if let dd = UserDefaults.standard.value(forKey: "donated") as? Bool {
-                    if (dd) {
+                } else if let dd = UserDefaults.standard.value(forKey: "donated") as? Bool , dd == true {
                         generateRecommendations()
-                    }
                 } else {
                     TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("NotPurchased", comment: ""), type: .error)
                     
                     refreshControl.endRefreshing()
                 }
-            }
         }
     }
     
