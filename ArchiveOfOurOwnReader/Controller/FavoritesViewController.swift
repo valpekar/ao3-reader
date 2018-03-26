@@ -762,7 +762,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
             
             self.tableView.reloadData()
             // self.tableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: .Fade)
-            self.title = String(downloadedWorkds.count) + " " + NSLocalizedString("Downloaded", comment: "")
+            self.title = String(downloadedWorkds.values.joined().count) + " " + NSLocalizedString("Downloaded", comment: "")
         }
     }
     

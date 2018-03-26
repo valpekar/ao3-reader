@@ -1335,7 +1335,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         var headers:[String:String] = [String:String]()
         headers["auth"] = deviceToken
         
-        var urlStr = "https://fanfic-pocket-reader.herokuapp.com/api/downloads"
+        var urlStr = "https://fanfic-pocket-reader.herokuapp.com/api/downloads/"
         var count = 0
         for workId in workIds {
             urlStr.append(workId)
@@ -1345,7 +1345,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
             count = count + 1
         }
         
-        Alamofire.request("https://fanfic-pocket-reader.herokuapp.com/api/downloads", method: HTTPMethod.delete, headers: headers).response(completionHandler: { (response) in
+        Alamofire.request(urlStr, method: HTTPMethod.delete, headers: headers).response(completionHandler: { (response) in
             
             switch(response.response?.statusCode ?? 0) {
             case 200:
