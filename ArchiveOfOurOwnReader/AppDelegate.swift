@@ -132,18 +132,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 //         //   }
 //        }
         
+//        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(300)) {
+//            self.openWorkDetailController(workId: "1")
+//        }
+        
         return true
     }
     
     func openWorkDetailController(workId: String) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc: WorkDetailViewController = storyboard.instantiateViewController(withIdentifier: "WorkDetailViewController") as! WorkDetailViewController
-        let item: WorkItem = WorkItem()
-        item.workId = DefaultsManager.getString(DefaultsManager.LASTWRKID)
-        vc.workItem = item
+        //let item: WorkItem = WorkItem()
+        vc.workUrl = "https://archiveofourown.org/works/\(workId)" //DefaultsManager.getString(DefaultsManager.LASTWRKID)
+        //vc.workItem = item
         
-        if let currentViewController: ContainerViewController = self.window?.rootViewController as? ContainerViewController {
-            currentViewController.navigationController?.pushViewController(vc, animated: true)
+        if let currentViewController: ContainerViewController = self.window?.rootViewController as? ContainerViewController, currentViewController.instantiatedControllers.count > 0 {
+            currentViewController.instantiatedControllers[0]?.navigationController?.pushViewController(vc, animated: true)
         }
     }
     
@@ -159,24 +163,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         print("AppDelegate: didReceive UNNotificationResponse")
         
-        UIApplication.shared.applicationIconBadgeNumber = 0
+       // UIApplication.shared.applicationIconBadgeNumber = 0
         
          let notification = response.notification.request.content.userInfo
-            if let workId = notification["workId"] as? String {
-                openWorkDetailController(workId: workId)
+        if let workId = notification["workId"] as? String {
+            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(300)) {
+                self.openWorkDetailController(workId: workId)
             }
+        }
             //   if (notification.count == 0) {
             //            if let currentViewController: ContainerViewController = self.window?.rootViewController as? ContainerViewController {
             //                currentViewController.selectedControllerAtIndex(IndexPath(row: 4, section: 0))
             //            }
             //   }
-            else {
+        else {
         
-        if let currentViewController: ContainerViewController = self.window?.rootViewController as? ContainerViewController {
-            currentViewController.selectedControllerAtIndex(IndexPath(row: 7, section: 0))
+            if let currentViewController: ContainerViewController = self.window?.rootViewController as? ContainerViewController {
+                currentViewController.selectedControllerAtIndex(IndexPath(row: 7, section: 0))
+            }
         }
-        }
-        
+         UIApplication.shared.applicationIconBadgeNumber = 0
     }
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {

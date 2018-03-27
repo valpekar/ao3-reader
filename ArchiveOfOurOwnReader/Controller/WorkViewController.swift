@@ -1641,6 +1641,8 @@ extension WorkViewController {
         var workId = ""
         var workName = ""
         var authorName = ""
+       // var fandom = ""
+       // var relationship = ""
         
         if let workItem = self.workItem {
             workId = workItem.workId
@@ -1657,6 +1659,7 @@ extension WorkViewController {
         nItem.workName = workName
         nItem.author = authorName
         nItem.content = text
+        nItem.date = NSDate()
         
         Answers.logCustomEvent(withName: "Work: save highlight", customAttributes: ["workName" : workName, "content": text])
         

@@ -21,6 +21,8 @@ class HighlightsController: UIViewController {
     
     var highlights: [DBHighlightItem] = []
     
+    var sortBy = "date"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -35,9 +37,18 @@ class HighlightsController: UIViewController {
         if (theme == DefaultsManager.THEME_NIGHT) {
             self.view.backgroundColor = AppDelegate.redDarkColor
             self.tableView.backgroundColor = AppDelegate.greyDarkBg
+            self.messageView.backgroundColor = AppDelegate.greyDarkBg
+            self.messageLabel.textColor = AppDelegate.nightTextColor
         } else {
-            self.view.backgroundColor = UIColor.white
+            self.view.backgroundColor = AppDelegate.greyLightBg
             self.tableView.backgroundColor = AppDelegate.greyLightBg
+            self.messageView.backgroundColor = AppDelegate.greyLightBg
+            self.messageLabel.textColor = AppDelegate.redColor
+        }
+        
+        self.sortBy = DefaultsManager.getString(DefaultsManager.SORT_HIGHLIGHTS)
+        if (self.sortBy.isEmpty) {
+            self.sortBy = "date"
         }
         
         self.tableView.rowHeight = UITableViewAutomaticDimension
@@ -46,8 +57,54 @@ class HighlightsController: UIViewController {
         
         self.highlights = self.getAllHighlights()
         self.tableView.reloadData()
+        self.updateView()
         
         Answers.logCustomEvent(withName: "Highlights", customAttributes: ["count" : highlights.count])
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+    }
+    
+    @IBAction func sortHighlightsTouched(_ sender: AnyObject) {
+        let optionMenu = UIAlertController(title: nil, message: NSLocalizedString("Sort Options", comment: ""), preferredStyle: .actionSheet)
+        optionMenu.view.tintColor = AppDelegate.redColor
+        
+        let dateAction = UIAlertAction(title: NSLocalizedString("By Date Added", comment: ""), style: .default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            self.sortBy = "date"
+            
+            self.saveSortOptionsAndReload()
+        })
+        
+        let azAction = UIAlertAction(title: NSLocalizedString("By Work Title", comment: ""), style: .default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            self.sortBy = "workName"
+            
+            self.saveSortOptionsAndReload()
+        })
+        optionMenu.addAction(azAction)
+        optionMenu.addAction(dateAction)
+        
+        let authorAction = UIAlertAction(title: NSLocalizedString("By Author", comment: ""), style: .default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            self.sortBy = "author"
+            
+            self.saveSortOptionsAndReload()
+        })
+        optionMenu.addAction(authorAction)
+        
+        let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: {
+            (alert: UIAlertAction!) -> Void in
+            print("Cancelled")
+        })
+        optionMenu.addAction(cancelAction)
+        
+        optionMenu.popoverPresentationController?.sourceView =  self.view
+        optionMenu.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.size.width / 2.0, y: self.view.bounds.size.height / 2.0, width: 1.0, height: 1.0)
+        
+        self.present(optionMenu, animated: true, completion: nil)
     }
     
     @IBAction func deleteAllHighlights(_ sender: AnyObject) {
@@ -71,7 +128,7 @@ class HighlightsController: UIViewController {
         self.tableView.isHidden = !hasQuotes
         self.messageView.isHidden = hasQuotes
         
-        self.messageLabel.text = "You don't have any quotes yet. \nDo add a highlight: \n   open any work, select text and touch quotes icon. <image goes here>"
+        self.messageLabel.text = "You don't have any quotes yet. \nDo add a highlight: \n   Open any work, select text and touch quotes icon. "
     }
     
     func getAllHighlights() -> [DBHighlightItem] {
@@ -83,6 +140,11 @@ class HighlightsController: UIViewController {
         }
         
         let fetchRequest: NSFetchRequest <NSFetchRequestResult> = NSFetchRequest(entityName:"DBHighlightItem")
+//        if (sortBy != "date") {
+//            fetchRequest.sortDescriptors = [NSSortDescriptor(key: sortBy, ascending: true, selector: #selector(NSString.localizedStandardCompare(_:)))]
+//        } else {
+            fetchRequest.sortDescriptors = [NSSortDescriptor(key: sortBy, ascending: true)]
+//        }
         
         do {
             if let fetchedResults = try managedContext.fetch(fetchRequest) as? [DBHighlightItem]  {
@@ -163,6 +225,18 @@ class HighlightsController: UIViewController {
         
         deleteAlert.view.tintColor = AppDelegate.redColor
         present(deleteAlert, animated: true, completion: nil)
+    }
+    
+    //MARK: - sort
+    
+    func saveSortOptionsAndReload() {
+        DefaultsManager.putString(self.sortBy, key: DefaultsManager.SORT_HIGHLIGHTS)
+        
+        self.highlights = self.getAllHighlights()
+        self.tableView.reloadData()
+        self.updateView()
+        
+        Answers.logCustomEvent(withName: "Highlights: Sort", customAttributes: ["sortBy" : self.sortBy])
     }
 }
 

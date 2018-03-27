@@ -10176,11 +10176,18 @@ Please check your Internet connection and also make sure you are logged into you
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Highlights" id="Om1-72-gYR">
-                        <barButtonItem key="rightBarButtonItem" systemItem="trash" id="k7I-sV-7yn">
-                            <connections>
-                                <action selector="deleteAllHighlights:" destination="iJU-qH-kN5" id="6mP-0V-vOV"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="trash" id="k7I-sV-7yn">
+                                <connections>
+                                    <action selector="deleteAllHighlights:" destination="iJU-qH-kN5" id="6mP-0V-vOV"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem image="ic_sort" id="u0o-UJ-89P">
+                                <connections>
+                                    <action selector="sortHighlightsTouched:" destination="iJU-qH-kN5" id="VCC-2A-N4b"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="messageLabel" destination="myu-dZ-NKg" id="4vM-H3-8p6"/>
@@ -10206,7 +10213,7 @@ Please check your Internet connection and also make sure you are logged into you
         <image name="download-red" width="33" height="33"/>
         <image name="empty_filter" width="31" height="31"/>
         <image name="folder" width="60" height="60"/>
-        <image name="highlights_explained" width="726" height="262"/>
+        <image name="highlights_explained" width="266" height="187"/>
         <image name="hits" width="74" height="74"/>
         <image name="ic_sort" width="31" height="31"/>
         <image name="icon-download" width="32" height="32"/>

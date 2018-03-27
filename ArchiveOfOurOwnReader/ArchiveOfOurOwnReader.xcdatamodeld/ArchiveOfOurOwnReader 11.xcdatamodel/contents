@@ -112,12 +112,12 @@
         <element name="DBChapter" positionX="106" positionY="189" width="128" height="135"/>
         <element name="DBCharacterItem" positionX="-315" positionY="198" width="128" height="105"/>
         <element name="DBFandom" positionX="-65" positionY="248" width="128" height="105"/>
+        <element name="DBHighlightItem" positionX="-108" positionY="234" width="128" height="120"/>
         <element name="DBRelationship" positionX="162" positionY="507" width="128" height="30"/>
         <element name="DBWorkItem" positionX="-72" positionY="78" width="135" height="600"/>
         <element name="DBWorkNotifItem" positionX="-108" positionY="234" width="128" height="75"/>
         <element name="Folder" positionX="-108" positionY="234" width="128" height="75"/>
         <element name="HistoryItem" positionX="-108" positionY="234" width="128" height="120"/>
         <element name="Serie" positionX="-108" positionY="234" width="128" height="165"/>
-        <element name="DBHighlightItem" positionX="-108" positionY="234" width="128" height="120"/>
     </elements>
 </model>

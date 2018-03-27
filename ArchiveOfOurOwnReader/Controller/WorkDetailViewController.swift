@@ -359,9 +359,9 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         if let errH = doc.search(withXPathQuery: "//h2[@class='heading']") {
         
         if (errH.count>0 && (errH[0] as! TFHppleElement).text().range(of: "Error") != nil) {
-            workItem.setValue(NSLocalizedString("Sorry", comment: ""), forKey: "author")
-            workItem.setValue(NSLocalizedString("AO3Issue", comment: ""), forKey: "workTitle")
-            workItem.setValue("", forKey: "complete")
+            workItem.author = NSLocalizedString("Sorry", comment: "")
+            workItem.workTitle = NSLocalizedString("AO3Issue", comment: "")
+            workItem.complete = ""
             
             return
         }
