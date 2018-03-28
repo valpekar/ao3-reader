@@ -554,9 +554,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd"
             
-            if let datesEl = stats?.search(withXPathQuery: "//dd[@class='completed']"), datesEl.count > 0 {
-                workItem.datetime = (datesEl[0] as? TFHppleElement)?.text() ?? ""
-            } else if let datesEl: [TFHppleElement] = stats?.search(withXPathQuery: "//dd[@class='updated']") as? [TFHppleElement], datesEl.count > 0 {
+            if let datesEl = stats?.search(withXPathQuery: "//dd[@class='status']") as? [TFHppleElement], datesEl.count > 0 {
                 workItem.datetime = datesEl[0].text() ?? ""
             } else if let datesEl: [TFHppleElement] = stats?.search(withXPathQuery: "//dd[@class='published']") as? [TFHppleElement], datesEl.count > 0 {
                 workItem.datetime = datesEl[0].text() ?? ""
