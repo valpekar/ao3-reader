@@ -123,8 +123,18 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         }
         
         if (workUrl.isEmpty == false) {
-            showOnlineWork(workUrl)
-            workItem = WorkItem()
+            let workIdArr = workUrl.split(separator: "/")
+            if (workIdArr.count > 0) {
+                let workId = String(workIdArr[workIdArr.count - 1])
+                
+                downloadedWorkItem = getWorkById(workId: workId)
+            }
+            if (downloadedWorkItem != nil) {
+                showDownloadedWork()
+            } else {
+                workItem = WorkItem()
+                showOnlineWork(workUrl)
+            }
         } else if (workItem != nil) {
             if (workItem.isDownloaded == true) {
                 
@@ -208,6 +218,8 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
          self.modalDelegate?.controllerDidClosed()
     }
+    
+    
     
     func showDownloadedWork() {
         
@@ -674,7 +686,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                         let delay = 0.2 * Double(NSEC_PER_SEC)
                         let time = DispatchTime.now() + Double(Int64(delay)) / Double(NSEC_PER_SEC)
                         DispatchQueue.main.asyncAfter(deadline: time) {
-                            TSMessage.showNotification(in: self, title: NSLocalizedString("Update", comment: ""), subtitle: NSLocalizedString("UpdateAvail", comment: ""), type: TSMessageNotificationType.success, duration: 2.0, canBeDismissedByUser: true)
+                            TSMessage.showNotification(in: self, title: NSLocalizedString("Update", comment: ""), subtitle: NSLocalizedString("UpdateAvail", comment: ""), type: TSMessageNotificationType.success, duration: 15.0, canBeDismissedByUser: true)
                         }
                     }
                 }

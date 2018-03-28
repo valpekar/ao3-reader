@@ -400,10 +400,22 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
             if let archiveWarnings: [TFHppleElement] = workmeta[0].search(withXPathQuery: "//dd[@class='warning tags']/ul[@class='commas']/li") as? [TFHppleElement] {
                 workItem.archiveWarnings = ""
                 for i in 0..<archiveWarnings.count {
-                    workItem.archiveWarnings?.append(archiveWarnings[i].content)
-                    if (i < archiveWarnings.count - 1) {
-                        workItem.archiveWarnings?.append(", ")
+                    if var warnStr = archiveWarnings[i].content {
+                        if (warnStr.contains("Underage")) {
+                            warnStr = warnStr.replacingOccurrences(of: "Underage", with: "Archive Warnings")
+                            // isSensitive = true
+                        }
+                        if (warnStr.contains("Rape")) {
+                            warnStr = warnStr.replacingOccurrences(of: "Rape", with: "Warning: Violence")
+                            // isSensitive = true
+                        }
+                        
+                        workItem.archiveWarnings?.append(warnStr)
+                        if (i < archiveWarnings.count - 1) {
+                            workItem.archiveWarnings?.append(", ")
+                        }
                     }
+                    
                 }
             }
             
@@ -536,7 +548,29 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
                 stats = statsEl?[0]
             }
             
-            //parse stats
+            //Mark: - parse stats
+            
+            //Mark: - parse date
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+            
+            if let datesEl = stats?.search(withXPathQuery: "//dd[@class='completed']"), datesEl.count > 0 {
+                workItem.datetime = (datesEl[0] as? TFHppleElement)?.text() ?? ""
+            } else if let datesEl: [TFHppleElement] = stats?.search(withXPathQuery: "//dd[@class='updated']") as? [TFHppleElement], datesEl.count > 0 {
+                workItem.datetime = datesEl[0].text() ?? ""
+            } else if let datesEl: [TFHppleElement] = stats?.search(withXPathQuery: "//dd[@class='published']") as? [TFHppleElement], datesEl.count > 0 {
+                workItem.datetime = datesEl[0].text() ?? ""
+            }
+            
+            if let dt = workItem.datetime, dt.isEmpty == false {
+                if let date = dateFormatter.date(from: dt) {
+                    dateFormatter.dateFormat = "dd MMM yyyy"
+                    workItem.datetime = dateFormatter.string(from: date)
+                }
+            }
+            
+            //Mark: - parse other stats
+            
             if let langVar = stats?.search(withXPathQuery: "//dd[@class='language']") {
                 if(langVar.count > 0) {
                     workItem.language = (langVar[0] as? TFHppleElement)?.text() ?? ""
