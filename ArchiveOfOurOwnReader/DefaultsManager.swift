@@ -67,6 +67,7 @@ class DefaultsManager {
     static var SORT_HIGHLIGHTS = "sort_ghlts"
     static var NOTIF_DEVICE_TOKEN = "notifdtkn"
     static var REQ_DEVICE_TOKEN = "reqdtkn"
+    static var NOTIF_IDS_ARR = "nidsarr"
     static var THEME_DAY : Int = 0
     static var THEME_NIGHT : Int = 1
     
@@ -149,6 +150,22 @@ class DefaultsManager {
         defaults.set(data, forKey: key)
         defaults.synchronize()
         
+    }
+    
+    class func putStringArray(_ obj: [String], key: String) {
+        let defaults : UserDefaults = getDefaults()
+        defaults.set(obj, forKey: key)
+        defaults.synchronize()
+    }
+    
+    class func getStringArray(_ key: String) -> [String] {
+        var res: [String] = []
+        
+        if let strArr = getDefaults().object(forKey: key) as? [String] {
+          res = strArr
+        }
+        
+        return res
     }
     
 }

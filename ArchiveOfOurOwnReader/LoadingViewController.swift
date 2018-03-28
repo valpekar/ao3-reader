@@ -973,6 +973,11 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         return res
     }
     
+    func updateAppBadge() {
+        let worksToReload = DefaultsManager.getStringArray(DefaultsManager.NOTIF_IDS_ARR)
+        UIApplication.shared.applicationIconBadgeNumber = worksToReload.count
+    }
+    
     func queryComponents(_ key: String, value: AnyObject) -> [(String, String)] {
         var components: [(String, String)] = []
         if let dictionary = value as? [String: AnyObject] {

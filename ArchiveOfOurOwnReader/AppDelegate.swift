@@ -82,7 +82,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             }
         }
         
-        application.applicationIconBadgeNumber = 0
+        let worksToReload = DefaultsManager.getStringArray(DefaultsManager.NOTIF_IDS_ARR)
+        application.applicationIconBadgeNumber = worksToReload.count
         
        //  Flurry.startSession("DW87V8SZQC24X83XPSXB")
         FirebaseApp.configure()
@@ -163,10 +164,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         print("AppDelegate: didReceive UNNotificationResponse")
         
-       // UIApplication.shared.applicationIconBadgeNumber = 0
+        var wId = ""
         
-         let notification = response.notification.request.content.userInfo
+        let notification = response.notification.request.content.userInfo
         if let workId = notification["workId"] as? String {
+            wId = workId
             DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(300)) {
                 self.openWorkDetailController(workId: workId)
             }
@@ -182,7 +184,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 currentViewController.selectedControllerAtIndex(IndexPath(row: 7, section: 0))
             }
         }
-         UIApplication.shared.applicationIconBadgeNumber = 0
+        
+        var worksToReload = DefaultsManager.getStringArray(DefaultsManager.NOTIF_IDS_ARR)
+        if worksToReload.contains(wId) == false {
+            worksToReload.append(wId)
+        }
+        DefaultsManager.putStringArray(worksToReload, key: DefaultsManager.NOTIF_IDS_ARR)
+         UIApplication.shared.applicationIconBadgeNumber = worksToReload.count
     }
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {

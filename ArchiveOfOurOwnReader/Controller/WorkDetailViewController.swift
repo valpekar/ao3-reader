@@ -130,6 +130,16 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 downloadedWorkItem = getWorkById(workId: workId)
             }
             if (downloadedWorkItem != nil) {
+                
+                var worksToReload = DefaultsManager.getStringArray(DefaultsManager.NOTIF_IDS_ARR)
+                if worksToReload.contains(wId), let idx = worksToReload.index(of: wId) {
+                    worksToReload.remove(at: idx)
+                }
+                
+                DefaultsManager.putStringArray(worksToReload, key: DefaultsManager.NOTIF_IDS_ARR)
+                
+                updateAppBadge()
+                
                 showDownloadedWork()
             } else {
                 workItem = WorkItem()
