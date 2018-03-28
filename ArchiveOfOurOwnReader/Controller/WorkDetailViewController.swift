@@ -131,15 +131,6 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             }
             if (downloadedWorkItem != nil) {
                 
-                var worksToReload = DefaultsManager.getStringArray(DefaultsManager.NOTIF_IDS_ARR)
-                if worksToReload.contains(wId), let idx = worksToReload.index(of: wId) {
-                    worksToReload.remove(at: idx)
-                }
-                
-                DefaultsManager.putStringArray(worksToReload, key: DefaultsManager.NOTIF_IDS_ARR)
-                
-                updateAppBadge()
-                
                 showDownloadedWork()
             } else {
                 workItem = WorkItem()
@@ -233,6 +224,15 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     
     func showDownloadedWork() {
         
+        var worksToReload = DefaultsManager.getStringArray(DefaultsManager.NOTIF_IDS_ARR)
+        let wId = downloadedWorkItem.workId ?? ""
+        if worksToReload.contains(wId), let idx = worksToReload.index(of: wId) {
+            worksToReload.remove(at: idx)
+        }
+        DefaultsManager.putStringArray(worksToReload, key: DefaultsManager.NOTIF_IDS_ARR)
+        
+        updateAppBadge()
+        
         let auth = downloadedWorkItem.author ?? ""
         authorLabel.text = "\(auth)" // = underlineAttributedString
         langLabel.text = downloadedWorkItem.language ?? "-"
@@ -306,6 +306,15 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
 //        if let image = UIImage(named: "download-red") {
 //            downloadTrashButton.setImage(image, forState: .Normal)
 //        }
+        
+        var worksToReload = DefaultsManager.getStringArray(DefaultsManager.NOTIF_IDS_ARR)
+        let wId = workItem.workId 
+        if worksToReload.contains(wId), let idx = worksToReload.index(of: wId) {
+            worksToReload.remove(at: idx)
+        }
+        DefaultsManager.putStringArray(worksToReload, key: DefaultsManager.NOTIF_IDS_ARR)
+        
+        updateAppBadge()
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
             Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
