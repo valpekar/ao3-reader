@@ -35,6 +35,34 @@ class EditFoldersController: UITableViewController {
         }
         
         self.tableView.tableFooterView = UIView()
+        
+        self.loadAllFolders()
+        self.tableView.reloadData()
+        
+        Answers.logCustomEvent(withName: "Edit Folders", customAttributes: ["folders_count" : folders.count])
+    }
+    
+    func loadAllFolders() {
+        folders.removeAll()
+        
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate, let managedContext = appDelegate.managedObjectContext else {
+            return
+        }
+        
+        let fetchfolderRequest: NSFetchRequest <NSFetchRequestResult> = NSFetchRequest(entityName:"Folder")
+        fetchfolderRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: false)]
+        
+        do {
+            let fetchedResults = try managedContext.fetch(fetchfolderRequest) as? [Folder]
+            
+            if let results = fetchedResults {
+                folders = results
+            }
+        } catch {
+            #if DEBUG
+                print("cannot fetch folders.")
+            #endif
+        }
     }
     
     //MARK: - tableview
