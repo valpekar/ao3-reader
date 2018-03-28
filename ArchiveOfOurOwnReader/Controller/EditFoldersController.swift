@@ -36,8 +36,8 @@ class EditFoldersController: UITableViewController {
         
         self.tableView.tableFooterView = UIView()
         
-        self.loadAllFolders()
-        self.tableView.reloadData()
+//        self.loadAllFolders()
+//        self.tableView.reloadData()
         
         Answers.logCustomEvent(withName: "Edit Folders", customAttributes: ["folders_count" : folders.count])
     }

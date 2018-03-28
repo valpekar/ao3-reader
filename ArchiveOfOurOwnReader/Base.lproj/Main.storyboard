@@ -6905,6 +6905,11 @@ Major Problems:
                                     <segue destination="zne-OV-4Ng" kind="show" identifier="editFoldersSegue" id="xFq-gT-2pC"/>
                                 </connections>
                             </barButtonItem>
+                            <barButtonItem systemItem="add" id="Ei9-wy-GbN">
+                                <connections>
+                                    <action selector="addFolder:" destination="gZt-Yz-NNP" id="XqD-9e-cE5"/>
+                                </connections>
+                            </barButtonItem>
                             <barButtonItem image="ic_sort" id="37j-qy-QrS">
                                 <connections>
                                     <action selector="sortClicked:" destination="gZt-Yz-NNP" id="kvV-Fl-n64"/>
