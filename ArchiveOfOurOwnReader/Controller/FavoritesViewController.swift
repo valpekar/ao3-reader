@@ -84,13 +84,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         sortOrderAscendic = DefaultsManager.getBool(DefaultsManager.SORT_DWNLD_ASC) ?? false
         
         loadWroksFromDB(predicate: nil, predicateWFolder: NSPredicate(format: "folder = nil"))
-        
-        hidden.append(false)
-        
-        for _ in folders {
-            hidden.append(true)
-        }
-        
+                
         filtereddownloadedWorkds = downloadedWorkds
         
        // tableView.reloadData()
@@ -117,6 +111,16 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
             self.tableView.backgroundColor = AppDelegate.greyDarkBg
         }
     }
+    
+    func updateHiddenSections() {
+        hidden.append(false)
+        
+        for _ in folders {
+            hidden.append(true)
+        }
+    }
+    
+    //MARK: - tableview
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
@@ -626,6 +630,8 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
                 downloadedWorkds[folder.name ?? "No Name" ] = folder.works?.allObjects as? [DBWorkItem]
             }
         }
+        
+        updateHiddenSections()
     }
     
     func loadFandomsFromWorks() {

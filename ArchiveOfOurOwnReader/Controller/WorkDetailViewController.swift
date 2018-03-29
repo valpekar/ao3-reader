@@ -1322,10 +1322,10 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
         switch indexPath.section {
         case 4:
-                if (workItem != nil && fandoms != nil && fandoms.count > pos) {
+                if (fandoms != nil && fandoms.count > pos) {
                     tagUrl = fandoms[pos].fandomUrl
                 } else if (downloadedFandoms != nil && downloadedFandoms.count > pos) {
-                    tagUrl = (downloadedFandoms[pos].value(forKey: "fandomUrl") as? String) ?? ""
+                    tagUrl = downloadedFandoms[pos].fandomUrl ?? ""
                 }
                 NSLog("link Tapped = " + tagUrl)
                 
@@ -1334,10 +1334,10 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 }
             
         case 5:
-            if (workItem != nil && relationships != nil && relationships.count > pos) {
+            if (relationships != nil && relationships.count > pos) {
                 tagUrl = relationships[pos].relationshipUrl
             } else if (downloadedRelationships != nil && downloadedRelationships.count > pos) {
-                tagUrl = (downloadedRelationships[pos].value(forKey: "relationshipUrl") as? String) ?? ""
+                tagUrl = downloadedRelationships[pos].relationshipUrl ?? ""
             }
             NSLog("link Tapped = " + tagUrl)
             
@@ -1346,10 +1346,10 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             }
             
         case 6:
-            if (workItem != nil && characters != nil && characters.count > pos) {
+            if (characters != nil && characters.count > pos) {
                 tagUrl = characters[pos].characterUrl
             } else if (downloadedCharacters != nil && downloadedCharacters.count > pos) {
-                tagUrl = (downloadedCharacters[pos].value(forKey: "characterUrl") as? String) ?? ""
+                tagUrl = downloadedCharacters[pos].characterUrl ?? ""
             }
             NSLog("link Tapped = " + tagUrl)
                         

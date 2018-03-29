@@ -104,7 +104,9 @@ class FandomListController: LoadingViewController, UITableViewDataSource, UITabl
                                     
                                     childItem.title = childEl.content.condenseWhitespace()
                                     
-                                    if let attributes : NSDictionary = (childEl.search(withXPathQuery: "//a")[0] as? TFHppleElement)?.attributes as NSDictionary? {
+                                    if let attributesEl : [TFHppleElement] = (childEl.search(withXPathQuery: "//a") as? [TFHppleElement]),
+                                        attributesEl.count > 0,
+                                        let attributes: NSDictionary = attributesEl[0].attributes as NSDictionary? {
                                         childItem.url = (attributes["href"] as? String ?? "")
                                     }
                                     
