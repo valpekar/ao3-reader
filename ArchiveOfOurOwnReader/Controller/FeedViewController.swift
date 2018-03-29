@@ -384,6 +384,7 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
         
         i += 1
         
+        doneButtonAction()
         hideBackTitle()
     }
 

@@ -240,7 +240,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         var params:[String:Any] = [String:Any]()
         params["os"] = "i"
         params["token"] = deviceToken
-        params["timezone"] = localTimeZoneName
+        params["timezone"] = localTimeZoneName// "America/Atka"//localTimeZoneName
         
         if (deviceToken.isEmpty == false) {
             Alamofire.request("https://fanfic-pocket-reader.herokuapp.com/api/devices", method: HTTPMethod.post, parameters: params).response(completionHandler: { (response) in
