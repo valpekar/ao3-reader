@@ -82,8 +82,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             }
         }
         
-        let worksToReload = DefaultsManager.getStringArray(DefaultsManager.NOTIF_IDS_ARR)
-        application.applicationIconBadgeNumber = worksToReload.count
+        //let worksToReload = DefaultsManager.getStringArray(DefaultsManager.NOTIF_IDS_ARR)
+        //application.applicationIconBadgeNumber = worksToReload.count
         
        //  Flurry.startSession("DW87V8SZQC24X83XPSXB")
         FirebaseApp.configure()
@@ -159,8 +159,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         Answers.logCustomEvent(withName: "WillPresent_notification",
                                customAttributes: [:])
         
-        let worksToReload = DefaultsManager.getStringArray(DefaultsManager.NOTIF_IDS_ARR)
-        UIApplication.shared.applicationIconBadgeNumber = worksToReload.count + 1
+        var worksToReload = DefaultsManager.getStringArray(DefaultsManager.NOTIF_IDS_ARR)
+        
+        let notification = notification.request.content.userInfo
+        if let workId = notification["workId"] as? String {
+            if worksToReload.contains(workId) == false {
+                worksToReload.append(workId)
+            }
+        }
+        
+        DefaultsManager.putStringArray(worksToReload, key: DefaultsManager.NOTIF_IDS_ARR)
+        
+        UIApplication.shared.applicationIconBadgeNumber = worksToReload.count
+        
+        completionHandler([.alert, .sound, .badge])
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
@@ -193,6 +205,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         }
         DefaultsManager.putStringArray(worksToReload, key: DefaultsManager.NOTIF_IDS_ARR)
         UIApplication.shared.applicationIconBadgeNumber = worksToReload.count
+        
+        completionHandler()
     }
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {

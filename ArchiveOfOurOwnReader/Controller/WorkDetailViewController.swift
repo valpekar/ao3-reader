@@ -307,9 +307,15 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
 //            downloadTrashButton.setImage(image, forState: .Normal)
 //        }
         
+        var workId = workItem.workId
+        if (workId.isEmpty == true) {
+            let workIdArr = url.split(separator: "/")
+            if (workIdArr.count > 0) {
+                workId = String(workIdArr[workIdArr.count - 1])
+            }
+        }
         var worksToReload = DefaultsManager.getStringArray(DefaultsManager.NOTIF_IDS_ARR)
-        let wId = workItem.workId 
-        if worksToReload.contains(wId), let idx = worksToReload.index(of: wId) {
+        if worksToReload.contains(workId), let idx = worksToReload.index(of: workId) {
             worksToReload.remove(at: idx)
         }
         DefaultsManager.putStringArray(worksToReload, key: DefaultsManager.NOTIF_IDS_ARR)
@@ -531,6 +537,29 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                             workItem.stats += statsElDd[i].text() + " "
                         }
                     }
+                }
+            }
+            
+            var stats : TFHppleElement? = nil
+            let statsEl: [TFHppleElement]? =  workmeta[0].search(withXPathQuery: "//dl[@class='stats']") as? [TFHppleElement]
+            if (statsEl?.count ?? 0 > 0) {
+                stats = statsEl?[0]
+            }
+            
+            //Mark: - parse date
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+            
+            if let datesEl = stats?.search(withXPathQuery: "//dd[@class='status']") as? [TFHppleElement], datesEl.count > 0 {
+                workItem.datetime = datesEl[0].text() ?? ""
+            } else if let datesEl: [TFHppleElement] = stats?.search(withXPathQuery: "//dd[@class='published']") as? [TFHppleElement], datesEl.count > 0 {
+                workItem.datetime = datesEl[0].text() ?? ""
+            }
+            
+            if (workItem.datetime.isEmpty == false) {
+                if let date = dateFormatter.date(from: workItem.datetime) {
+                    dateFormatter.dateFormat = "dd MMM yyyy"
+                    workItem.datetime = dateFormatter.string(from: date)
                 }
             }
             
