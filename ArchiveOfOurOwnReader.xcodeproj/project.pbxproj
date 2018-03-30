@@ -366,6 +366,12 @@
 		3CBDC9AA1E9E244500A97C24 /* DBChapter+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "DBChapter+CoreDataProperties.swift"; path = "Model/DBChapter+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3CBDC9AD1E9E265B00A97C24 /* AnalyticsItem+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "AnalyticsItem+CoreDataClass.swift"; path = "Model/AnalyticsItem+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3CBDC9AE1E9E265B00A97C24 /* AnalyticsItem+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "AnalyticsItem+CoreDataProperties.swift"; path = "Model/AnalyticsItem+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		3CBF128E206D226F00ED0F65 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		3CBF128F206D226F00ED0F65 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main.strings; sourceTree = "<group>"; };
+		3CBF1290206D226F00ED0F65 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3CBF1291206D231100ED0F65 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		3CBF1292206D231100ED0F65 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
+		3CBF1293206D231100ED0F65 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		3CC6A2871E66800F005D1255 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Reachability.swift; path = Utils/Reachability.swift; sourceTree = "<group>"; };
 		3CC888961F83CC1C0027C469 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ListViewController.swift; path = Controller/ListViewController.swift; sourceTree = "<group>"; };
 		3CCA7B3B1EFAA1EC00590D12 /* SubscriptionsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SubscriptionsController.swift; path = Controller/SubscriptionsController.swift; sourceTree = "<group>"; };
@@ -860,6 +866,8 @@
 				th,
 				"pt-PT",
 				ko,
+				de,
+				"zh-Hans",
 			);
 			mainGroup = 28B6DC1B1B4E3F5900F34529;
 			productRefGroup = 28B6DC251B4E3F5900F34529 /* Products */;
@@ -1181,6 +1189,8 @@
 				3C3073341EE7E8E900D1509E /* th */,
 				3C3073361EE7E92000D1509E /* pt-PT */,
 				3C48CB5D1EFC00BD005B2E1B /* ko */,
+				3CBF128F206D226F00ED0F65 /* de */,
+				3CBF1292206D231100ED0F65 /* zh-Hans */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -1194,6 +1204,8 @@
 				3CA0A7B21F7BCC7800ADEE04 /* th */,
 				3CA0A7B31F7BCC7900ADEE04 /* pt-PT */,
 				3CA0A7B41F7BCC7A00ADEE04 /* ko */,
+				3CBF128E206D226F00ED0F65 /* de */,
+				3CBF1291206D231100ED0F65 /* zh-Hans */,
 			);
 			name = LaunchScreen.xib;
 			sourceTree = "<group>";
@@ -1208,6 +1220,8 @@
 				3C48CB5E1EFC00BD005B2E1B /* ko */,
 				3CA0A7B51F7BCCBC00ADEE04 /* en */,
 				3C9DFC372004B7DA00AE15AD /* Base */,
+				3CBF1290206D226F00ED0F65 /* de */,
+				3CBF1293206D231100ED0F65 /* zh-Hans */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

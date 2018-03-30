@@ -145,4 +145,36 @@
 "MoreDetails" = "Mais detalhes";
 "Attention" = "Atenção!";
 "SensitiveAttention" = "Oi! O aplicativo não pode incluir conteúdo relacionado a estupro e sexo com menores de idade, e esse conteúdo não deve estar disponível via pesquisa. Então o Modo de segurança é removido e funciona com tal conteúdo não estará disponível no aplicativo. Desculpe por qualquer inconveniente!";
+"MarkedForLater" = "Marked For Later";
+"CheckLink" = "Cannot get work! Please check if the link is correct!";
+"GettingInbox" = "Getting Inbox";
+"Options" = "Options";
+"MarkAsUnread" = "Mark As Unread";
+"MarkAsRead" = "Mark As Read";
+"DeleteFromInbox" = "Delete From Inbox";
+"Reply" = "Reply";
+"Approve" = "Approve";
+"Decline" = "Decline";
+"CouldNotReply" = "Could Not Reply";
+"CannotMarkItem" = "Could Not Mark Item";
+"SendingReply" = "Sending Reply";
+"CommentCreated" = "Your Comment Was Sent!";
+"CannotSendComment" = "Could Not Send Comment";
+"GettingInbox" = "Getting Inbox";
+"InboxUpdated" = "Inbox successfully updated!";
+"MarkItem" = "Mark Item";
+"DeletingFromInox" = "Deleting From Inox";
+"CommentApproved" = "Comment Successfully Approved!";
+"CouldNotDelete" = "Could Not Delete!";
+"SureDeleteItem" = "You want to delete this item?";
+"ItemDeleted" = "Item Successfully Deleted";
+"WorkDeletedFromDownloads" = "Work Has Been Deleted From Downloads";
+"Update" = "Update";
+"UpdateAvail" = "Update is available for this work (Settings -> Reload/Update)!";
+"GettingAuthorInfo" = "Getting Author Info";
+"MarkingForLater" = "Marking For Later";
+"MarkForLater" = "Mark For Later";
+"MarkAsRead" = "Mark As Read";
+
+
 
