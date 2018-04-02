@@ -40,7 +40,7 @@ class WorkListController: ListViewController, UITableViewDataSource, UITableView
         
         self.refreshControl = UIRefreshControl()
         self.refreshControl.attributedTitle = NSAttributedString(string: NSLocalizedString("PullToRefresh", comment: ""))
-        self.refreshControl.addTarget(self, action: #selector(FavoritesSiteController.refresh(_:)), for: UIControlEvents.valueChanged)
+        self.refreshControl.addTarget(self, action: #selector(WorkListController.refresh(_:)), for: UIControlEvents.valueChanged)
         self.tableView.addSubview(self.refreshControl)
         
         if (self.worksElement.isEmpty == true) {
@@ -114,7 +114,7 @@ class WorkListController: ListViewController, UITableViewDataSource, UITableView
         }
     }
     
-    func refresh(_ sender: AnyObject) {
+    @objc func refresh(_ sender: AnyObject) {
         requestWorks()
     }
     

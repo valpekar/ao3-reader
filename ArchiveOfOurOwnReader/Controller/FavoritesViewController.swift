@@ -1109,13 +1109,13 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         
         hidden[section] = !hidden[section]
         
-        tableView?.beginUpdates()
+        //self.tableView?.beginUpdates()
         if hidden[section] {
             tableView?.deleteRows(at: indexPaths, with: .fade)
         } else {
             tableView?.insertRows(at: indexPaths, with: .fade)
         }
-        tableView?.endUpdates()
+       // self.tableView?.endUpdates()
     }
     
     //https://codebasecamp.com/2016/12/02/Expandable-TableView/

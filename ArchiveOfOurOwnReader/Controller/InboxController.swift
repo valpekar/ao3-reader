@@ -34,7 +34,7 @@ class InboxController : ListViewController  {
         
         self.refreshControl = UIRefreshControl()
         self.refreshControl.attributedTitle = NSAttributedString(string: NSLocalizedString("PullToRefresh", comment: ""))
-        self.refreshControl.addTarget(self, action: #selector(HistoryViewController.refresh(_:)), for: UIControlEvents.valueChanged)
+        self.refreshControl.addTarget(self, action: #selector(InboxController.refresh(_:)), for: UIControlEvents.valueChanged)
         self.tableView.addSubview(self.refreshControl)
         
         self.tableView.rowHeight = UITableViewAutomaticDimension
@@ -61,7 +61,7 @@ class InboxController : ListViewController  {
         self.collectionView.reloadData()
     }
     
-    func refresh(_ sender:AnyObject) {
+    @objc func refresh(_ sender:AnyObject) {
         requestInbox()
     }
     

@@ -36,7 +36,7 @@ class MarkedForLaterController: ListViewController , UITableViewDataSource, UITa
         
         self.refreshControl = UIRefreshControl()
         self.refreshControl.attributedTitle = NSAttributedString(string: NSLocalizedString("PullToRefresh", comment: ""))
-        self.refreshControl.addTarget(self, action: #selector(HistoryViewController.refresh(_:)), for: UIControlEvents.valueChanged)
+        self.refreshControl.addTarget(self, action: #selector(MarkedForLaterController.refresh(_:)), for: UIControlEvents.valueChanged)
         self.tableView.addSubview(self.refreshControl)
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
@@ -58,7 +58,7 @@ class MarkedForLaterController: ListViewController , UITableViewDataSource, UITa
         showNav()
     }
     
-    func refresh(_ sender:AnyObject) {
+    @objc func refresh(_ sender:AnyObject) {
         requestFavs()
     }
     

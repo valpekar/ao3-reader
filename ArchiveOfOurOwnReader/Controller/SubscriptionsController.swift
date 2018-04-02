@@ -29,7 +29,7 @@ class SubscriptionsViewController: ListViewController, UITableViewDataSource, UI
         
         self.refreshControl = UIRefreshControl()
         self.refreshControl.attributedTitle = NSAttributedString(string: NSLocalizedString("PullToRefresh", comment: ""))
-        self.refreshControl.addTarget(self, action: #selector(HistoryViewController.refresh(_:)), for: UIControlEvents.valueChanged)
+        self.refreshControl.addTarget(self, action: #selector(SubscriptionsViewController.refresh(_:)), for: UIControlEvents.valueChanged)
         self.tableView.addSubview(self.refreshControl)
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
@@ -51,7 +51,7 @@ class SubscriptionsViewController: ListViewController, UITableViewDataSource, UI
         showNav()
     }
     
-    func refresh(_ sender:AnyObject) {
+    @objc func refresh(_ sender:AnyObject) {
         requestFavs()
     }
     

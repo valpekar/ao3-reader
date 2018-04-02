@@ -123,7 +123,7 @@ class RecommendationsController : ListViewController, UITableViewDataSource, UIT
         content.title = NSString.localizedUserNotificationString(forKey: NSLocalizedString("TimeForRecommendations", comment: ""), arguments: nil)
         content.body = NSString.localizedUserNotificationString(forKey: NSLocalizedString("SeeThem", comment: ""),
                                                                 arguments: nil)
-        content.badge = NSNumber(value: UIApplication.shared.applicationIconBadgeNumber + 1)
+      //  content.badge = NSNumber(value: UIApplication.shared.applicationIconBadgeNumber + 1)
         
         var dateInfo = DateComponents()
         dateInfo.hour = 19

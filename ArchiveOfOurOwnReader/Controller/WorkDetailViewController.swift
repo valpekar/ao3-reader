@@ -173,7 +173,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         if (workItem != nil) {
             self.title = workItem.workTitle
         } else if (downloadedWorkItem != nil) {
-            self.title = downloadedWorkItem.value(forKey: "workTitle") as? String ?? ""
+            self.title = downloadedWorkItem.workTitle ?? ""
         }
         
         tableView.backgroundColor = UIColor.clear
@@ -386,9 +386,9 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         var caution = doc.search(withXPathQuery: "//p[@class='caution']")
         
         if (caution != nil && (caution?.count)!>0 && (caution?[0] as? TFHppleElement)?.text().range(of: "adult content") != nil) {
-            workItem.setValue(NSLocalizedString("Sorry", comment: ""), forKey: "author")
-            workItem.setValue(NSLocalizedString("ContainsAdultContent", comment: ""), forKey: "workTitle")
-            workItem.setValue("", forKey: "complete")
+            workItem.author = NSLocalizedString("Sorry", comment: "")
+            workItem.workTitle = NSLocalizedString("ContainsAdultContent", comment: "")
+            workItem.complete = ""
             
             return
         }
@@ -924,7 +924,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             if (workItem != nil) {
                 workId = workItem.workId
             } else if (downloadedWorkItem != nil) {
-                workId = (downloadedWorkItem.value(forKey: "workId") as? String) ?? "0"
+                workId = downloadedWorkItem.workId ?? "0"
             }
             
             cController.workId = workId
@@ -1196,7 +1196,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 cell!.label.text = fandoms[indexPath.row].fandomName
                 
             } else if (downloadedFandoms != nil && downloadedFandoms.count > indexPath.row) {
-                cell!.label.text = downloadedFandoms[indexPath.row].value(forKey: "fandomName") as? String
+                cell!.label.text = downloadedFandoms[indexPath.row].fandomName ?? ""
                 
             } else {
                 indexesToHide.append(1)
@@ -1208,7 +1208,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 cell!.label.text = relationships[indexPath.row].relationshipName
                 
             } else if (downloadedRelationships != nil && downloadedRelationships.count > indexPath.row) {
-                cell!.label.text = downloadedRelationships[indexPath.row].value(forKey: "relationshipName") as? String
+                cell!.label.text = downloadedRelationships[indexPath.row].relationshipName ?? ""
                 
             } else {
                 indexesToHide.append(2)
@@ -1239,7 +1239,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             if (workItem != nil) {
                 cell!.label.text = "\(workItem.words) \(NSLocalizedString("Words", comment: ""))"
             } else if (downloadedWorkItem != nil) {
-                cell!.label.text = downloadedWorkItem.value(forKey: "words") as? String ?? ""
+                cell!.label.text = downloadedWorkItem.words ?? ""
             }
             if (theme == DefaultsManager.THEME_DAY) {
                 cell!.imgView.image = UIImage(named: "word")
@@ -1318,7 +1318,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         tableView.deselectRow(at: indexPath, animated: true)
         
         let pos = indexPath.row
-        tagUrl = ""
+        self.tagUrl = ""
         
         switch indexPath.section {
         case 4:
@@ -1371,7 +1371,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         if(workItem != nil) {
             authorName = workItem.author
         } else if (downloadedWorkItem != nil) {
-            authorName = downloadedWorkItem.value(forKey: "author") as? String ?? ""
+            authorName = downloadedWorkItem.author ?? ""
         }
         
         Answers.logCustomEvent(withName: "WorkDetail: author touched",
@@ -1454,18 +1454,18 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             
             
             if ( fandoms != nil && relationships != nil && fandoms.count > 0 && relationships.count > 0) {
-                saveToAnalytics(workItem.value(forKey: "author") as? String ?? "", category: workItem.category, mainFandom: fandoms[0].fandomName, mainRelationship: relationships[0].relationshipName)
+                saveToAnalytics(workItem.author, category: workItem.category, mainFandom: fandoms[0].fandomName, mainRelationship: relationships[0].relationshipName)
             }
             
         } else if (downloadedWorkItem != nil) {
-            guard let bd = (downloadedWorkItem.value(forKey: "workId") as? String) else {
+            guard let bd = downloadedWorkItem.workId else {
                 return
             }
             bid = bd
             requestStr += bid + "/mark_as_read"
             
             if (downloadedFandoms.count > 0 && downloadedRelationships.count > 0) {
-                saveToAnalytics(downloadedWorkItem.value(forKey: "author") as? String ?? "", category: downloadedWorkItem.value(forKey: "category") as? String ?? "", mainFandom: downloadedFandoms[0].fandomName ?? "", mainRelationship: downloadedRelationships[0].relationshipName ?? "")
+                saveToAnalytics(downloadedWorkItem.author ?? "", category: downloadedWorkItem.category ?? "", mainFandom: downloadedFandoms[0].fandomName ?? "", mainRelationship: downloadedRelationships[0].relationshipName ?? "")
             }
         }
         
@@ -1563,18 +1563,18 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             
             
             if ( fandoms != nil && relationships != nil && fandoms.count > 0 && relationships.count > 0) {
-                saveToAnalytics(workItem.value(forKey: "author") as? String ?? "", category: workItem.category, mainFandom: fandoms[0].fandomName, mainRelationship: relationships[0].relationshipName)
+                saveToAnalytics(workItem.author, category: workItem.category, mainFandom: fandoms[0].fandomName, mainRelationship: relationships[0].relationshipName)
             }
             
         } else if (downloadedWorkItem != nil) {
-            guard let bd = (downloadedWorkItem.value(forKey: "workId") as? String) else {
+            guard let bd = downloadedWorkItem.workId else {
                 return
             }
             bid = bd
             requestStr += bid + "/mark_for_later"
             
             if (downloadedFandoms.count > 0 && downloadedRelationships.count > 0) {
-                saveToAnalytics(downloadedWorkItem.value(forKey: "author") as? String ?? "", category: downloadedWorkItem.value(forKey: "category") as? String ?? "", mainFandom: downloadedFandoms[0].fandomName ?? "", mainRelationship: downloadedRelationships[0].relationshipName ?? "")
+                saveToAnalytics(downloadedWorkItem.author ?? "", category: downloadedWorkItem.category ?? "", mainFandom: downloadedFandoms[0].fandomName ?? "", mainRelationship: downloadedRelationships[0].relationshipName ?? "")
             }
         }
         
@@ -1673,18 +1673,18 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             
             
             if ( fandoms != nil && relationships != nil && fandoms.count > 0 && relationships.count > 0) {
-                saveToAnalytics(workItem.value(forKey: "author") as? String ?? "", category: workItem.category, mainFandom: fandoms[0].fandomName, mainRelationship: relationships[0].relationshipName)
+                saveToAnalytics(workItem.author, category: workItem.category, mainFandom: fandoms[0].fandomName, mainRelationship: relationships[0].relationshipName)
             }
             
         } else if (downloadedWorkItem != nil) {
-            guard let bd = (downloadedWorkItem.value(forKey: "workId") as? String) else {
+            guard let bd = downloadedWorkItem.workId else {
                 return
             }
             bid = bd
             requestStr += bid + "/bookmarks"
             
             if (downloadedFandoms.count > 0 && downloadedRelationships.count > 0) {
-                saveToAnalytics(downloadedWorkItem.value(forKey: "author") as? String ?? "", category: downloadedWorkItem.value(forKey: "category") as? String ?? "", mainFandom: downloadedFandoms[0].fandomName ?? "", mainRelationship: downloadedRelationships[0].relationshipName ?? "")
+                saveToAnalytics(downloadedWorkItem.author ?? "", category: downloadedWorkItem.category ?? "", mainFandom: downloadedFandoms[0].fandomName ?? "", mainRelationship: downloadedRelationships[0].relationshipName ?? "")
             }
         }
         
@@ -2050,7 +2050,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         if (workItem != nil) {
             workId = workItem.workId
         } else if (downloadedWorkItem != nil) {
-            workId = downloadedWorkItem.value(forKey: "workId") as? String ?? "0"
+            workId = downloadedWorkItem.workId ?? "0"
         }
         
         Answers.logCustomEvent(withName: "WorkDetail: Kudos add",
@@ -2197,7 +2197,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         if (workItem != nil) {
             wId = workItem.workId
         } else if (downloadedWorkItem != nil) {
-            wId = downloadedWorkItem.value(forKey: "workId") as? String ?? ""
+            wId = downloadedWorkItem.workId ?? ""
         }
         
         Answers.logCustomEvent(withName: "WorkDetail: browser open",
@@ -2229,8 +2229,8 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             }
         } else if (downloadedWorkItem != nil) {
             
-            author = downloadedWorkItem.value(forKey: "author") as? String ?? ""
-            category = downloadedWorkItem.value(forKey: "category") as? String ?? ""
+            author = downloadedWorkItem.author ?? ""
+            category = downloadedWorkItem.category ?? ""
             
             if (downloadedFandoms != nil && downloadedFandoms.count > 0) {
                 fandom = downloadedFandoms[0].fandomName ?? ""
