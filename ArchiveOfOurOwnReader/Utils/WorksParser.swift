@@ -385,7 +385,13 @@ class WorksParser {
                     item.isDownloaded = true
                     
                     if (downloadedItem.date != item.dateTime) {
-                        item.needReload = true
+                        let dateFormatter = DateFormatter()
+                        dateFormatter.dateFormat = "dd MMM yyyy"
+                        if let oldDate = dateFormatter.date(from: downloadedItem.date),
+                            let newDate = dateFormatter.date(from: item.dateTime),
+                            oldDate <= newDate {
+                            item.needReload = true
+                        }
                     }
                 }
             }
