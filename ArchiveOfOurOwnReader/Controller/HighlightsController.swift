@@ -85,7 +85,11 @@ class HighlightsController: UIViewController, NSFetchedResultsControllerDelegate
             print("An error occurred")
         }
         
-        self.copyOldHighlights()
+        DispatchQueue.global().async(execute: {
+        DispatchQueue.main.sync {
+            self.copyOldHighlights()
+        }
+        })
         
          self.updateView()
         

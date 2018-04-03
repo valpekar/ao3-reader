@@ -83,9 +83,13 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
                 
         filtereddownloadedWorkds = downloadedWorkds
         
-        if (hasOldSaves(downloadedWorkds: downloadedWorkds) == true) {
-            showOldAlert()
-        }
+        DispatchQueue.global().async(execute: {
+            DispatchQueue.main.sync {
+                if (self.hasOldSaves(downloadedWorkds: self.downloadedWorkds) == true) {
+                    self.showOldAlert()
+                }
+            }
+        })
         
        // tableView.reloadData()
         reloadTableView()
