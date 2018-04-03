@@ -82,8 +82,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             }
         }
         
-        //let worksToReload = DefaultsManager.getStringArray(DefaultsManager.NOTIF_IDS_ARR)
-        //application.applicationIconBadgeNumber = worksToReload.count
+        let worksToReload = DefaultsManager.getStringArray(DefaultsManager.NOTIF_IDS_ARR)
+        application.applicationIconBadgeNumber = worksToReload.count
         
        //  Flurry.startSession("DW87V8SZQC24X83XPSXB")
         FirebaseApp.configure()

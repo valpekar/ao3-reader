@@ -11,7 +11,7 @@ import CoreData
 import TSMessages
 import Crashlytics
 
-class HighlightsController: UIViewController {
+class HighlightsController: UIViewController, NSFetchedResultsControllerDelegate {
     
     @IBOutlet weak var tableView:UITableView!
     @IBOutlet weak var messageLabel:UILabel!
@@ -19,9 +19,29 @@ class HighlightsController: UIViewController {
     
     var theme = DefaultsManager.THEME_DAY
     
-    var highlights: [DBHighlightItem] = []
-    
     var sortBy = "date"
+    
+    fileprivate lazy var fetchedResultsController: NSFetchedResultsController<DBHighlightItem>? = {
+        
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,
+            let managedContext = appDelegate.managedObjectContext else {
+                return nil
+        }
+        
+        // Create Fetch Request
+        let fetchRequest: NSFetchRequest<DBHighlightItem> = DBHighlightItem.fetchRequest()
+        
+        // Configure Fetch Request
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: sortBy, ascending: true)]
+        
+        // Create Fetched Results Controller
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedContext, sectionNameKeyPath: nil, cacheName: nil)
+        
+        // Configure Fetched Results Controller
+        fetchedResultsController.delegate = self
+        
+        return fetchedResultsController
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,11 +75,21 @@ class HighlightsController: UIViewController {
         self.tableView.estimatedRowHeight = 200
         self.tableView.tableFooterView = UIView()
         
-        self.highlights = self.getAllHighlights()
-        self.tableView.reloadData()
-        self.updateView()
+       // self.highlights = self.getAllHighlights()
+       // self.tableView.reloadData()
+       // self.updateView()
         
-        Answers.logCustomEvent(withName: "Highlights", customAttributes: ["count" : highlights.count])
+        do {
+            try fetchedResultsController?.performFetch()
+        } catch {
+            print("An error occurred")
+        }
+        
+        self.copyOldHighlights()
+        
+         self.updateView()
+        
+        Answers.logCustomEvent(withName: "Highlights", customAttributes: ["count" : fetchedResultsController?.fetchedObjects?.count ?? 0])
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -116,6 +146,7 @@ class HighlightsController: UIViewController {
         
         deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Yes", comment: ""), style: .default, handler: { (action: UIAlertAction) in
             self.deleteAllHighlights()
+            self.tableView.reloadData()
         }))
         
         deleteAlert.view.tintColor = AppDelegate.redColor
@@ -123,12 +154,14 @@ class HighlightsController: UIViewController {
     }
     
     private func updateView() {
-        let hasQuotes = highlights.count > 0
+        let hasQuotes = fetchedResultsController?.fetchedObjects?.count ?? 0 > 0
         
         self.tableView.isHidden = !hasQuotes
         self.messageView.isHidden = hasQuotes
         
         self.messageLabel.text = "You don't have any quotes yet. \nDo add a highlight: \n   Open any work, select text and touch quotes icon. "
+        
+        self.title = "Highlights (\(fetchedResultsController?.fetchedObjects?.count ?? 0))"
     }
     
     func getAllHighlights() -> [DBHighlightItem] {
@@ -182,7 +215,7 @@ class HighlightsController: UIViewController {
                 return
         }
         
-        Answers.logCustomEvent(withName: "Highlights", customAttributes: ["deleteAll,count" : highlights.count])
+        Answers.logCustomEvent(withName: "Highlights", customAttributes: ["deleteAll,count" : fetchedResultsController?.fetchedObjects?.count ?? 0])
         
         let fetch = NSFetchRequest<NSFetchRequestResult>(entityName: "DBHighlightItem")
         let request = NSBatchDeleteRequest(fetchRequest: fetch)
@@ -192,6 +225,20 @@ class HighlightsController: UIViewController {
         } catch _ {
             NSLog("Cannot delete all notif items")
         }
+        
+        do {
+            try managedContext.save()
+        } catch let error as NSError {
+            print("Could not delete all \(String(describing: error.userInfo))")
+        }
+        
+        do {
+            try fetchedResultsController?.performFetch()
+        } catch {
+            print("An error occurred")
+        }
+        
+        self.updateView()
     }
     
     func shareHighlight(highlightItem: DBHighlightItem) {
@@ -219,8 +266,8 @@ class HighlightsController: UIViewController {
         deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Yes", comment: ""), style: .default, handler: { (action: UIAlertAction) in
             self.deleteHighlight(highlightItem: highlightItem)
             
-            self.highlights = self.getAllHighlights()
-            self.tableView.reloadData()
+//            self.highlights = self.getAllHighlights()
+//            self.tableView.reloadData()
         }))
         
         deleteAlert.view.tintColor = AppDelegate.redColor
@@ -232,11 +279,89 @@ class HighlightsController: UIViewController {
     func saveSortOptionsAndReload() {
         DefaultsManager.putString(self.sortBy, key: DefaultsManager.SORT_HIGHLIGHTS)
         
-        self.highlights = self.getAllHighlights()
+        self.fetchedResultsController?.fetchRequest.sortDescriptors = [NSSortDescriptor(key: sortBy, ascending: true)]
+    
+        do {
+            try fetchedResultsController?.performFetch()
+        } catch {
+            print("Highlights: saveSortOptionsAndReload An error occurred")
+        }
+        
+//        self.highlights = self.getAllHighlights()
         self.tableView.reloadData()
-        self.updateView()
+//        self.updateView()
         
         Answers.logCustomEvent(withName: "Highlights: Sort", customAttributes: ["sortBy" : self.sortBy])
+    }
+    
+    //MARK: - copy olds
+    
+    func copyOldHighlights() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,
+            let managedContextOld = appDelegate.managedObjectContextOld else {
+                return
+        }
+        guard let managedContext = appDelegate.managedObjectContext else {
+                return
+        }
+        
+        var items: [DBHighlightItem] = []
+        
+        let fetchRequest: NSFetchRequest <NSFetchRequestResult> = NSFetchRequest(entityName:"DBHighlightItem")
+        do {
+            if let fetchedResults = try managedContextOld.fetch(fetchRequest) as? [DBHighlightItem] {
+                items = fetchedResults
+            }
+        } catch {
+            #if DEBUG
+            print("cannot fetch favorites.")
+            #endif
+        }
+        
+        
+        for item in items {
+            
+            var shouldCopy = false
+            
+            let predicate = NSPredicate(format: "content == %@", item.content ?? "")
+            if let array = (fetchedResultsController?.fetchedObjects as NSArray?)?.filtered(using: predicate) as? [DBHighlightItem] {
+                if array.count == 0  {
+                    shouldCopy = true
+                }
+            } else if fetchedResultsController?.fetchedObjects?.count ?? 0 > 0 {
+                shouldCopy = true
+            }
+            
+            if (shouldCopy == true) {
+                
+            guard let entity = NSEntityDescription.entity(forEntityName: "DBHighlightItem",  in: managedContext) else {
+                return
+            }
+            
+            let nItem = DBHighlightItem(entity: entity, insertInto: managedContext)
+            nItem.workId = item.workId
+            nItem.workName = item.workName
+            nItem.author = item.author
+            nItem.content = item.content
+            nItem.date = item.date
+            
+            Answers.logCustomEvent(withName: "Highlights: save highlight from old", customAttributes: ["workName" : nItem.workName ?? "", "content": nItem.content ?? ""])
+            
+            do {
+                try managedContext.save()
+            } catch let error as NSError {
+                print("Could not save \(String(describing: error.userInfo))")
+            }
+                
+                managedContextOld.delete(item)
+                
+                do {
+                    try managedContextOld.save()
+                } catch let error as NSError {
+                    print("Could not save \(String(describing: error.userInfo))")
+                }
+        }
+        }
     }
 }
 
@@ -245,16 +370,25 @@ class HighlightsController: UIViewController {
 extension HighlightsController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return highlights.count
+        if let sections = fetchedResultsController?.sections {
+            let currentSection = sections[section]
+            return currentSection.numberOfObjects
+        }
+        return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: HighlightCell = tableView.dequeueReusableCell(withIdentifier: "HighlightCell") as! HighlightCell
         
-        let highlightItem = highlights[indexPath.row]
-
-        cell.contentLabel.text = highlightItem.content
-        cell.authorLabel.text = "- \(highlightItem.author ?? ""), \"\(highlightItem.workName ?? "")\""
+        let highlightItem = fetchedResultsController?.object(at: indexPath)
+        configureCell(cell: cell, highlightItem: highlightItem, indexPath: indexPath)
+        
+        return cell
+    }
+    
+    func configureCell(cell: HighlightCell, highlightItem: DBHighlightItem?, indexPath: IndexPath) {
+        cell.contentLabel.text = highlightItem?.content
+        cell.authorLabel.text = "- \(highlightItem?.author ?? ""), \"\(highlightItem?.workName ?? "")\""
         
         if (theme == DefaultsManager.THEME_DAY) {
             cell.backgroundColor = AppDelegate.greyLightBg
@@ -265,15 +399,13 @@ extension HighlightsController: UITableViewDelegate, UITableViewDataSource {
             cell.contentLabel.textColor = AppDelegate.textLightColor
             cell.authorLabel.textColor = AppDelegate.purpleLightColor
         }
-        
-        return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let selectedHighlight = highlights[indexPath.row]
-        
-        showQuoteDialog(selectedHighlight: selectedHighlight)
+        if let selectedHighlight = fetchedResultsController?.object(at: indexPath) {
+            showQuoteDialog(selectedHighlight: selectedHighlight)
+        }
         
         tableView.deselectRow(at: indexPath, animated: true)
     }
@@ -298,5 +430,60 @@ extension HighlightsController: UITableViewDelegate, UITableViewDataSource {
         deleteAlert.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.size.width / 2.0, y: self.navigationController?.navigationBar.bounds.height ?? 64, width: 1.0, height: 1.0)
         
         present(deleteAlert, animated: true, completion: nil)
+    }
+    
+    //MARK: - NSFetchedResultsControllerDelegate
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, sectionIndexTitleForSectionName sectionName: String) -> String? {
+        return sectionName
+    }
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        self.tableView.endUpdates()
+    }
+    
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        self.tableView.beginUpdates()
+    }
+    
+    func controller(controller: NSFetchedResultsController<NSFetchRequestResult>, didChangeSection sectionInfo: NSFetchedResultsSectionInfo, atIndex sectionIndex: Int, forChangeType type: NSFetchedResultsChangeType) {
+        switch type {
+        case .insert:
+            tableView.insertSections(IndexSet([sectionIndex]), with: .fade)
+        case .delete:
+            tableView.deleteSections(IndexSet([sectionIndex]), with: .fade)
+        default:
+            return
+        }
+    }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        
+        switch type {
+        case .insert:
+            if let indexPath = newIndexPath {
+                tableView.insertRows(at: [indexPath], with: .automatic)
+            }
+        case .update:
+            if let indexPath = indexPath {
+                let workItem = fetchedResultsController?.object(at: indexPath)
+                guard let cell = tableView.cellForRow(at: indexPath) as? HighlightCell else { break }
+                configureCell(cell: cell, highlightItem: workItem, indexPath: indexPath)
+            }
+        case .move:
+            if let indexPath = indexPath {
+                tableView.deleteRows(at: [indexPath], with: .automatic)
+                tableView.reloadSections([indexPath.section], with: .none)
+            }
+            if let newIndexPath = newIndexPath {
+                tableView.insertRows(at: [newIndexPath], with: .automatic)
+                tableView.reloadSections([newIndexPath.section], with: .none)
+            }
+        case .delete:
+            if let indexPath = indexPath {
+                tableView.deleteRows(at: [indexPath], with: .automatic)
+                tableView.reloadSections([indexPath.section], with: .none)
+            }
+        }
     }
 }

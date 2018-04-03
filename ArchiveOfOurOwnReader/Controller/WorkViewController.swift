@@ -1615,6 +1615,9 @@ extension WorkViewController {
     }
     
     func showQuoteDialog(text: String) {
+        if (text.isEmpty == true) {
+            return
+        }
         let deleteAlert = UIAlertController(title: NSLocalizedString("AreYouSure", comment: ""), message: NSLocalizedString("You want to save this lines to your Highlights?", comment: ""), preferredStyle: UIAlertControllerStyle.alert)
         
         deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: { (action: UIAlertAction) in

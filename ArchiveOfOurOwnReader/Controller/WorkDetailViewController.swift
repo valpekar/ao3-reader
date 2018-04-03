@@ -368,6 +368,11 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         //let dta = NSString(data: data, encoding: NSUTF8StringEncoding)
         //print("the string is: \(dta)")
         
+        if (workItem == nil) {
+            Answers.logCustomEvent(withName: "WorkDetail: Show Online", customAttributes: ["downloadCurWork" : "is nil"])
+            return
+        }
+        
         onlineChapters.removeAll()
         
         let doc : TFHpple = TFHpple(htmlData: data)
@@ -383,9 +388,10 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         }
         }
         
-        var caution = doc.search(withXPathQuery: "//p[@class='caution']")
-        
-        if (caution != nil && (caution?.count)!>0 && (caution?[0] as? TFHppleElement)?.text().range(of: "adult content") != nil) {
+        if let caution = doc.search(withXPathQuery: "//p[@class='caution']") as? [TFHppleElement],
+            caution.count > 0,
+            let _ = caution[0].text().range(of: "adult content")  {
+            
             workItem.author = NSLocalizedString("Sorry", comment: "")
             workItem.workTitle = NSLocalizedString("ContainsAdultContent", comment: "")
             workItem.complete = ""
