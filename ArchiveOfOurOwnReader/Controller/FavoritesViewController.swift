@@ -71,10 +71,6 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         
         // Reload the table
         //self.tableView.reloadData()
-        
-        if (hasOldSaves() == true) {
-            showOldAlert()
-        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -86,6 +82,10 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         loadWroksFromDB(predicate: nil, predicateWFolder: NSPredicate(format: "folder = nil"))
                 
         filtereddownloadedWorkds = downloadedWorkds
+        
+        if (hasOldSaves(downloadedWorkds: downloadedWorkds) == true) {
+            showOldAlert()
+        }
         
        // tableView.reloadData()
         reloadTableView()
@@ -420,7 +420,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         }
     }
     
-    func hasOldSaves() -> Bool {
+    func hasOldSaves(downloadedWorkds: [String : [DBWorkItem]]) -> Bool {
         var res = false
         
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,
@@ -428,11 +428,26 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
                 return res
         }
         
+        var workItems: [DBWorkItem] = []
+        for wItemArr in downloadedWorkds.map({$0.value}) {
+            workItems.append(contentsOf: wItemArr)
+        }
+        
+        
         let fetchRequest: NSFetchRequest <NSFetchRequestResult> = NSFetchRequest(entityName:"DBWorkItem")
         do {
             if let fetchedResults = try managedContextOld.fetch(fetchRequest) as? [DBWorkItem] {
                 if fetchedResults.count > 0 {
-                    res = true
+                    for fRes in fetchedResults {
+                        let predicate = NSPredicate(format: "workId == %@", fRes.workId ?? "")
+                        if let array = (workItems as NSArray?)?.filtered(using: predicate) as? [DBWorkItem] {
+                            if array.count == 0  {
+                            res = true
+                            }
+                        } else {
+                            res = true
+                        }
+                    }
                 }
             }
         } catch {
@@ -440,7 +455,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
                 print("cannot fetch favorites.")
             #endif
         }
-                
+        
         return res
     }
     
@@ -1127,4 +1142,15 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
     //https://newfivefour.com/swift-ios-expanding-uitableview-sections.html
     //https://github.com/HuyVuong1121/TreeTableView/tree/master/无级级树状TableView/YSTreeTableView/YSTreeTableView
     //https://github.com/younatics/YNExpandableCell
+}
+
+
+extension DBWorkItem {
+    
+    public func isEqualToItem(_ workItem: DBWorkItem?) -> Bool {
+        if let rhs = workItem {
+            return self.workId == rhs.workId
+        }
+        return false
+    }
 }
