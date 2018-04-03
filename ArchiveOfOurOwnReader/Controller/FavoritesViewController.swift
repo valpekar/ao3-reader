@@ -394,6 +394,10 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
             self.hideLoadingView()
         }))
         
+        deleteAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction) in
+            print("Cancel")
+        }))
+        
         deleteAlert.view.tintColor = AppDelegate.redColor
         
         present(deleteAlert, animated: true, completion: nil)
