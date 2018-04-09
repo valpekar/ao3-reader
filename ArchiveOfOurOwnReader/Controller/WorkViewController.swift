@@ -763,7 +763,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
         fetchRequest.predicate = NSPredicate(format: "workId = %@", workItem.workId)
         let selectWorks = (try? managedContext.fetch(fetchRequest)) as? [HistoryItem]
         
-        if (selectWorks?.count ?? 0 > 0) {
+        if (selectWorks?.count ?? 0 > 0 && self.webView != nil) {
             let currentWork = selectWorks?[0]
             currentWork?.lastChapter = currentOnlineChapter
             currentWork?.lastChapterIdx = currentOnlineChapterIdx as NSNumber

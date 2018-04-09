@@ -85,11 +85,6 @@ class HighlightsController: UIViewController, NSFetchedResultsControllerDelegate
             print("An error occurred")
         }
         
-        DispatchQueue.global().async(execute: {
-        DispatchQueue.main.sync {
-            self.copyOldHighlights()
-        }
-        })
         
          self.updateView()
         
@@ -99,6 +94,15 @@ class HighlightsController: UIViewController, NSFetchedResultsControllerDelegate
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+    }
+    
+    @IBAction func restoreTouched(_ sender: AnyObject) {
+        
+        DispatchQueue.global().async(execute: {
+            DispatchQueue.main.sync {
+                self.copyOldHighlights()
+            }
+        })
     }
     
     @IBAction func sortHighlightsTouched(_ sender: AnyObject) {
@@ -336,7 +340,17 @@ class HighlightsController: UIViewController, NSFetchedResultsControllerDelegate
                 shouldCopy = true
             }
             
-            if (shouldCopy == true) {
+            if (shouldCopy == false) {
+                let deleteAlert = UIAlertController(title: "Restore Highlights", message: "Cannot find any lost highlights.", preferredStyle: UIAlertControllerStyle.alert)
+                
+                deleteAlert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { (action: UIAlertAction) in
+                    print("Cancel")
+                }))
+                
+                deleteAlert.view.tintColor = AppDelegate.redColor
+                
+                self.present(deleteAlert, animated: true, completion: nil)
+            } else if (shouldCopy == true) {
                 
             guard let entity = NSEntityDescription.entity(forEntityName: "DBHighlightItem",  in: managedContext) else {
                 return

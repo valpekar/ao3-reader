@@ -68,6 +68,8 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     
     var isSensitive = false
     
+    var fromNotif = false
+    
     var downloadUrls: [String:String] = [:]
     
     override func viewDidLoad() {
@@ -157,6 +159,10 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
         self.checkBookmarkAndUpdate()
         
+        if (self.fromNotif == true) {
+            Answers.logCustomEvent(withName: "WorkDetail: from notification",
+                                   customAttributes: [:])
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -312,6 +318,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             let workIdArr = url.split(separator: "/")
             if (workIdArr.count > 0) {
                 workId = String(workIdArr[workIdArr.count - 1])
+                workItem.workId = workId
             }
         }
         var worksToReload = DefaultsManager.getStringArray(DefaultsManager.NOTIF_IDS_ARR)

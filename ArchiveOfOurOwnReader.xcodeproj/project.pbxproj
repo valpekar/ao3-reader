@@ -1351,7 +1351,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = ArchiveOfOurOwnReader/ArchiveOfOurOwnReader.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Sergei Pekar (539SFCFYYY)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = DL7Z77P4W8;
@@ -1392,7 +1392,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = ArchiveOfOurOwnReader/ArchiveOfOurOwnReader.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Sergei Pekar (DL7Z77P4W8)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = DL7Z77P4W8;
@@ -1416,7 +1416,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "sergei.pekar.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "f7dd2af4-de6c-45c8-afb9-9b33cb74887f";
+				PROVISIONING_PROFILE = "b1791f11-6556-44c7-a095-b7ae83db30bc";
 				PROVISIONING_PROFILE_SPECIFIER = "Unofficial Reader for AO3 Distribution Profile";
 				STRIP_INSTALLED_PRODUCT = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "./ArchiveOfOurOwnReader/Swift-HTML-Parser-Bridging-Header.h";

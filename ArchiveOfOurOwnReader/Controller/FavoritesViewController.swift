@@ -83,14 +83,6 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
                 
         filtereddownloadedWorkds = downloadedWorkds
         
-        DispatchQueue.global().async(execute: {
-            DispatchQueue.main.sync {
-                if (self.hasOldSaves(downloadedWorkds: self.downloadedWorkds) == true) {
-                    self.showOldAlert()
-                }
-            }
-        })
-        
        // tableView.reloadData()
         reloadTableView()
         
@@ -122,6 +114,27 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         for _ in folders {
             hidden.append(true)
         }
+    }
+    
+    @IBAction func restoreTouched(_ sender: AnyObject) {
+        
+        DispatchQueue.global().async(execute: {
+            DispatchQueue.main.sync {
+                if (self.hasOldSaves(downloadedWorkds: self.downloadedWorkds) == true) {
+                    self.showOldAlert()
+                } else {
+                    let deleteAlert = UIAlertController(title: "Restore Downloads", message: "Cannot find any lost downloads.", preferredStyle: UIAlertControllerStyle.alert)
+                    
+                    deleteAlert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { (action: UIAlertAction) in
+                        print("Cancel")
+                    }))
+                    
+                    deleteAlert.view.tintColor = AppDelegate.redColor
+                    
+                    self.present(deleteAlert, animated: true, completion: nil)
+                }
+            }
+        })
     }
     
     //MARK: - tableview

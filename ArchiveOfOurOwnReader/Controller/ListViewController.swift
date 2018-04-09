@@ -527,7 +527,14 @@ class ListViewController: LoadingViewController, PageSelectDelegate, UIPopoverPr
         
             let cC = self.getCountryCode()
             
-            if (purchased || donated || cC.contains("IR")) {
+            let pseuds = DefaultsManager.getObject(DefaultsManager.PSEUD_IDS) as? [String:String] ?? [:]
+            var curPseud = ""
+            if (pseuds.keys.count > 0) {
+                let curKey = Array(pseuds.keys)[0]
+                curPseud = pseuds[curKey] ?? ""
+            }
+            
+            if (purchased || donated || cC.contains("IR") || curPseud == "sankopay") {
                 #if DEBUG
                     print("premium")
                 #endif
@@ -583,6 +590,7 @@ class ListViewController: LoadingViewController, PageSelectDelegate, UIPopoverPr
     }
     
     func doDeleteWork() {
+        let wId = curWork?.workId ?? ""
         var res: DBWorkItem?
         
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate, let managedContext = appDelegate.managedObjectContext else {
@@ -592,7 +600,7 @@ class ListViewController: LoadingViewController, PageSelectDelegate, UIPopoverPr
         let fetchRequest: NSFetchRequest <NSFetchRequestResult> = NSFetchRequest(entityName:"DBWorkItem")
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "dateAdded", ascending: false)]
         fetchRequest.fetchLimit = 1
-        let searchPredicate: NSPredicate = NSPredicate(format: "workId = %@", curWork?.workId ?? "")
+        let searchPredicate: NSPredicate = NSPredicate(format: "workId = %@", wId)
         
         fetchRequest.predicate = searchPredicate
         
@@ -626,6 +634,9 @@ class ListViewController: LoadingViewController, PageSelectDelegate, UIPopoverPr
             }
             
             TSMessage.showNotification(in: self, title: NSLocalizedString("Success", comment: ""), subtitle: NSLocalizedString("WorkDeletedFromDownloads", comment: ""), type: .success)
+            
+            self.saveWorkNotifItem(workId: wId, wasDeleted: NSNumber(booleanLiteral: true))
+            self.sendAllNotSentForDelete()
         
         } else {
             TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CannotFindWrk", comment: ""), type: .error)

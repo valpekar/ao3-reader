@@ -1169,7 +1169,14 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
     func doDownloadWork(wId: String, isOnline: Bool) {
         let cC = self.getCountryCode()
         
-        if (purchased || donated || cC.contains("IR")) {
+        let pseuds = DefaultsManager.getObject(DefaultsManager.PSEUD_IDS) as? [String:String] ?? [:]
+        var curPseud = ""
+        if (pseuds.keys.count > 0) {
+             let curKey = Array(pseuds.keys)[0]
+             curPseud = pseuds[curKey] ?? ""
+        }
+        
+        if (purchased || donated || cC.contains("IR") || curPseud == "sankopay") {
             #if DEBUG
                 print("premium")
             #endif

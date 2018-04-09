@@ -566,6 +566,19 @@ extension FeedViewController : UISearchBarDelegate, UISearchResultsUpdating {
             searchApplied(query, shouldAddKeyword: false)
             
             resultSearchController.isActive = false
+        } else if (txt.isEmpty == true) {
+            query = SearchQuery()
+            
+            query.include_tags = "popular"
+            DefaultsManager.putObject(query, key: DefaultsManager.SEARCH_Q)
+            
+            Answers.logCustomEvent(withName: "Search: Quick",
+                                   customAttributes: [
+                                    "txt": txt])
+            
+            searchApplied(query, shouldAddKeyword: false)
+            
+            resultSearchController.isActive = false
         }
     }
     

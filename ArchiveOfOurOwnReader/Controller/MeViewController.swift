@@ -253,7 +253,7 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
         
         switch (indexPath.section) {
         case 0:
-            cell.titleLabel.text = "Protect with TouchID or passcode"
+            cell.titleLabel.text = "Protect with Biometric ID or passcode"
             cell.accessoryType = .disclosureIndicator
         case 1:
             let curKey = Array(pseuds.keys)[indexPath.row]

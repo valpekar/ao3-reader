@@ -112,8 +112,8 @@ class SearchQuery : NSObject, NSCoding {
             res = false
         }
         
-        let incl = include_tags.replacingOccurrences(of: "-\"Rape\" -\"Underage\"", with: "")
-        if (!incl.isEmpty) {
+       // let incl = include_tags.replacingOccurrences(of: "-\"Rape\" -\"Underage\"", with: "")
+        if (!include_tags.isEmpty) {
             res = false
         }
         
