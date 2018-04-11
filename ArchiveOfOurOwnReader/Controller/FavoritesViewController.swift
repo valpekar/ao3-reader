@@ -11,20 +11,39 @@ import CoreData
 import Crashlytics
 import TSMessages
 
-class FavoritesViewController: LoadingViewController, UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating, UISearchBarDelegate {
+class FavoritesViewController: LoadingViewController, UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating, UISearchBarDelegate, EditFoldersProtocol {
     
     @IBOutlet weak var tableView:UITableView!
     
     static var uncategorized = "Uncategorized"
     
-    var downloadedWorkds: [String : [DBWorkItem]] = [:]
     var downloadedFandoms: [DBFandom] = []
-    var folders: [Folder] = []
-    var filtereddownloadedWorkds: [String : [DBWorkItem]] = [:]
     
-    var hidden:[Bool] = []
+    var selectedWork: DBWorkItem? = nil
     
     var resultSearchController = UISearchController()
+    
+    fileprivate lazy var fetchedResultsController: NSFetchedResultsController<DBWorkItem>? = {
+        
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,
+            let managedContext = appDelegate.managedObjectContext else {
+                return nil
+        }
+        
+        // Create Fetch Request
+        let fetchRequest: NSFetchRequest<DBWorkItem> = DBWorkItem.fetchRequest()
+        
+        // Configure Fetch Request
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: sortBy, ascending: true)]
+        
+        // Create Fetched Results Controller
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedContext, sectionNameKeyPath: nil, cacheName: nil)
+        
+        // Configure Fetched Results Controller
+        fetchedResultsController.delegate = self
+        
+        return fetchedResultsController
+    }()
     
     var sortBy = "dateAdded"
     var sortOrderAscendic = false
@@ -71,6 +90,24 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
             return controller
         })()
         
+        sortBy = DefaultsManager.getString(DefaultsManager.SORT_DWNLD_BY)
+        sortOrderAscendic = DefaultsManager.getBool(DefaultsManager.SORT_DWNLD_ASC) ?? false
+        
+        if (sortBy.isEmpty) {
+            sortBy = "dateAdded"
+        }
+        
+        if (sortBy != "dateAdded") {
+            self.fetchedResultsController?.fetchRequest.sortDescriptors = [NSSortDescriptor(key: sortBy, ascending: sortOrderAscendic, selector: #selector(NSString.localizedStandardCompare(_:)))]
+        } else {
+            self.fetchedResultsController?.fetchRequest.sortDescriptors = [NSSortDescriptor(key: sortBy, ascending: sortOrderAscendic)]
+        }
+        
+        do {
+            try fetchedResultsController?.performFetch()
+        } catch {
+            print("An error occurred")
+        }
         // Reload the table
         //self.tableView.reloadData()
     }
@@ -78,23 +115,17 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        sortBy = DefaultsManager.getString(DefaultsManager.SORT_DWNLD_BY)
-        sortOrderAscendic = DefaultsManager.getBool(DefaultsManager.SORT_DWNLD_ASC) ?? false
-        
-        if (self.folderName == FavoritesViewController.uncategorized) {
-            loadWroksFromDB(predicate: nil, predicateWFolder: NSPredicate(format: "folder = nil"))
-        } else {
-            loadWroksFromDB(predicate: nil, predicateWFolder: NSPredicate(format: "folder.name = \(folderName)"))
-        }
-                
-        filtereddownloadedWorkds = downloadedWorkds
+//        if (self.folderName == FavoritesViewController.uncategorized) {
+//            loadWroksFromDB(predicate: nil, predicateWFolder: NSPredicate(format: "folder = nil"))
+//        } else {
+//            loadWroksFromDB(predicate: nil, predicateWFolder: NSPredicate(format: "folder.name = \(folderName)"))
+//        }
         
        // tableView.reloadData()
-        reloadTableView()
         
         let titleDict: [NSAttributedStringKey : Any] = [NSAttributedStringKey.foregroundColor: UIColor.white]
         self.navigationController!.navigationBar.titleTextAttributes = titleDict
-        self.title = String(downloadedWorkds.values.joined().count) + " " + NSLocalizedString("Downloaded", comment: "")
+        self.title = String(self.fetchedResultsController?.fetchedObjects?.count ?? 0) + " " + NSLocalizedString("Downloaded", comment: "")
         
     }
     
@@ -114,19 +145,11 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         }
     }
     
-    func updateHiddenSections() {
-        hidden.append(false)
-        
-        for _ in folders {
-            hidden.append(true)
-        }
-    }
-    
     @IBAction func restoreTouched(_ sender: AnyObject) {
         
         DispatchQueue.global().async(execute: {
             DispatchQueue.main.sync {
-                if (self.hasOldSaves(downloadedWorkds: self.downloadedWorkds) == true) {
+                if (self.hasOldSaves(workItems: (self.fetchedResultsController?.fetchedObjects)!) == true) {
                     self.showOldAlert()
                 } else {
                     let deleteAlert = UIAlertController(title: "Restore Downloads", message: "Cannot find any lost downloads.", preferredStyle: UIAlertControllerStyle.alert)
@@ -150,147 +173,96 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        if (self.resultSearchController.isActive) {
-            if (section == 0) {
-                return filtereddownloadedWorkds[FavoritesViewController.uncategorized]?.count ?? 0
-            } else {
-                return filtereddownloadedWorkds[folders[section - 1].name ?? "No Name"]?.count ?? 0
-            }
+        if let sections = fetchedResultsController?.sections {
+            let currentSection = sections[section]
+            return currentSection.numberOfObjects
         }
-        else {
-            if (hidden.count > section && hidden[section]) {
-                return 0
-            } else {
-            if (section == 0) {
-                return downloadedWorkds[FavoritesViewController.uncategorized]?.count ?? 0
-            } else {
-                return downloadedWorkds[folders[section - 1].name ?? "No Name"]?.count ?? 0
-            }
-            }
-        }
-    }
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return folders.count + 1 //1 for uncategorized
+        return 0
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        
-        if (self.resultSearchController.isActive) {
-            if (section == 0) {
-                return "\(FavoritesViewController.uncategorized) (\(filtereddownloadedWorkds[FavoritesViewController.uncategorized]?.count ?? 0))"
-            } else {
-                let name = folders[section - 1].name ?? "No Name"
-                return "\(name) (\(filtereddownloadedWorkds[name]?.count ?? 0))"
-            }
-        } else {
-            if (section == 0) {
-                return "\(FavoritesViewController.uncategorized) (\(downloadedWorkds[FavoritesViewController.uncategorized]?.count ?? 0))"
-            } else {
-                let name = folders[section - 1].name ?? "No Name"
-                return "\(name) (\(downloadedWorkds[name]?.count ?? 0))"
-            }
-        }
-        
-        return folderName
+        return self.folderName
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellIdentifier: String = "FeedCell"
         
-        var cell:DownloadedCell! = nil
+        let cell:DownloadedCell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! DownloadedCell
         
-        if let c:DownloadedCell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? DownloadedCell {
-            cell = c
-        } else {
-            cell = DownloadedCell(reuseIdentifier: cellIdentifier)
-        }
+        let curWork: DBWorkItem? = self.fetchedResultsController?.object(at: indexPath)
         
-        var curWork: DBWorkItem?
+        configureCell(curWork: curWork, cell: cell, indexPath: indexPath)
         
-        if (self.resultSearchController.isActive) {
-            if (indexPath.section == 0) {
-                curWork = (filtereddownloadedWorkds["Uncategorized"])?[indexPath.row]
-            } else if (indexPath.section - 1 < folders.count) {
-                let curFolderName: String = folders[indexPath.section - 1].name ?? "No Name"
-                curWork = (filtereddownloadedWorkds[curFolderName])?[indexPath.row]
-            }
-        } else {
-            if (indexPath.section == 0) {
-                curWork = (downloadedWorkds["Uncategorized"])?[indexPath.row]
-            } else if (indexPath.section - 1 < folders.count) {
-                let curFolderName: String = folders[indexPath.section - 1].name ?? "No Name"
-                curWork = (downloadedWorkds[curFolderName])?[indexPath.row]
-            }
-        }
-        
-        cell?.topicLabel.text = curWork?.workTitle ?? "-"
+        return cell
+    }
+    
+    func configureCell(curWork: DBWorkItem?, cell: DownloadedCell, indexPath: IndexPath) {
+        cell.topicLabel.text = curWork?.workTitle ?? "-"
         
         var fandomsStr = ""
         if let downloadedFandoms = curWork?.mutableSetValue(forKey: "fandoms").allObjects as? [DBFandom] {
-        for i in 0..<downloadedFandoms.count {
-            let fandom = downloadedFandoms[i]
-            fandomsStr += fandom.value(forKey: "fandomName") as? String ?? ""
-            if (i < downloadedFandoms.count - 1) {
-                fandomsStr += " | "
+            for i in 0..<downloadedFandoms.count {
+                let fandom = downloadedFandoms[i]
+                fandomsStr += fandom.value(forKey: "fandomName") as? String ?? ""
+                if (i < downloadedFandoms.count - 1) {
+                    fandomsStr += " | "
+                }
             }
         }
-        }
-        cell?.fandomsLabel.text = NSLocalizedString("Fandoms_", comment: "") + fandomsStr
+        cell.fandomsLabel.text = NSLocalizedString("Fandoms_", comment: "") + fandomsStr
         
-        cell?.wordsLabel.text = curWork?.words ?? "-"
+        cell.wordsLabel.text = curWork?.words ?? "-"
         
         switch (curWork?.ratingTags ?? "").trimmingCharacters(in: .whitespacesAndNewlines) {
         case "General Audiences":
-            cell?.ratingImg.image = UIImage(named: "G")
+            cell.ratingImg.image = UIImage(named: "G")
         case "Teen And Up Audiences":
-            cell?.ratingImg.image = UIImage(named: "PG13")
+            cell.ratingImg.image = UIImage(named: "PG13")
         case "Mature":
-            cell?.ratingImg.image = UIImage(named: "NC17")
+            cell.ratingImg.image = UIImage(named: "NC17")
         case "Explicit":
-            cell?.ratingImg.image = UIImage(named: "R")
+            cell.ratingImg.image = UIImage(named: "R")
         default:
-            cell?.ratingImg.image = UIImage(named: "NotRated")
+            cell.ratingImg.image = UIImage(named: "NotRated")
         }
         
         if (curWork?.topicPreview != nil) {
-            cell?.topicPreviewLabel.text = curWork?.topicPreview
+            cell.topicPreviewLabel.text = curWork?.topicPreview
         }
         else {
-            cell?.topicPreviewLabel.text = ""
+            cell.topicPreviewLabel.text = ""
         }
         
-        cell?.authorLabel.text = curWork?.author ?? "-"
+        cell.authorLabel.text = curWork?.author ?? "-"
         
-        cell?.datetimeLabel.text = curWork?.value(forKey: "datetime") as? String
-        cell?.languageLabel.text = curWork?.value(forKey: "language") as? String
-        cell?.chaptersLabel.text = curWork?.chaptersCount ?? "-"
+        cell.datetimeLabel.text = curWork?.value(forKey: "datetime") as? String
+        cell.languageLabel.text = curWork?.value(forKey: "language") as? String
+        cell.chaptersLabel.text = curWork?.chaptersCount ?? "-"
         
         if let kudosNum: Float = Float(curWork?.value(forKey: "kudos") as? String ?? "0") {
-            cell?.kudosLabel.text =  kudosNum.formatUsingAbbrevation()
+            cell.kudosLabel.text =  kudosNum.formatUsingAbbrevation()
         } else {
-            cell?.kudosLabel.text = curWork?.value(forKey: "kudos") as? String
+            cell.kudosLabel.text = curWork?.value(forKey: "kudos") as? String
         }
         
         if let bookmarksNum: Float = Float(curWork?.value(forKey: "bookmarks") as? String ?? "0") {
-            cell?.bookmarksLabel.text =  bookmarksNum.formatUsingAbbrevation()
+            cell.bookmarksLabel.text =  bookmarksNum.formatUsingAbbrevation()
         } else {
-            cell?.bookmarksLabel.text = curWork?.value(forKey: "bookmarks") as? String
+            cell.bookmarksLabel.text = curWork?.value(forKey: "bookmarks") as? String
         }
         
         if let hitsNum: Float = Float(curWork?.value(forKey: "hits") as? String ?? "0") {
-            cell?.hitsLabel.text =  hitsNum.formatUsingAbbrevation()
+            cell.hitsLabel.text =  hitsNum.formatUsingAbbrevation()
         } else {
-            cell?.hitsLabel.text = curWork?.value(forKey: "hits") as? String
+            cell.hitsLabel.text = curWork?.value(forKey: "hits") as? String
         }
         
         /*cell?.completeLabel.text = curWork.valueForKey("complete") as? String
-        cell?.categoryLabel.text = curWork.valueForKey("category") as? String
-        cell?.ratingLabel.text = curWork.valueForKey("ratingTags") as? String*/
+         cell?.categoryLabel.text = curWork.valueForKey("category") as? String
+         cell?.ratingLabel.text = curWork.valueForKey("ratingTags") as? String*/
         
         if let tags = curWork?.tags, tags.isEmpty == false {
-            cell?.tagsLabel.text = tags
+            cell.tagsLabel.text = tags
         } else {
             var allTags = curWork?.archiveWarnings ?? ""
             if (allTags.isEmpty == false) {
@@ -325,11 +297,11 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
                 allTags = String(allTags[..<index])
             }
             
-            cell?.tagsLabel.text = allTags
+            cell.tagsLabel.text = allTags
         }
         
-        cell?.deleteButton.btnIndexPath = indexPath
-        cell?.folderButton.btnIndexPath = indexPath
+        cell.deleteButton.btnIndexPath = indexPath
+        cell.folderButton.btnIndexPath = indexPath
         
         if (theme == DefaultsManager.THEME_DAY) {
             cell.backgroundColor = AppDelegate.greyLightBg
@@ -384,27 +356,8 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         }
         
         cell.fandomsLabel.textColor = AppDelegate.greenColor
-        
-        return cell!
     }
     
-    let tap = UITapGestureRecognizer(target: self, action: #selector(FavoritesViewController.tapFunction))
-    
-    func reloadTableView() {
-        tableView.reloadData()
-        
-//        for section in 0..<folders.count {
-//        let vvv = tableView.headerView(forSection: section)
-//        vvv?.tag = section
-//
-//        vvv?.isUserInteractionEnabled = true
-//
-//            let condition = vvv?.gestureRecognizers?.contains(tap) ?? false
-//            if (!condition) {
-//                vvv?.addGestureRecognizer(tap)
-//            }
-//        }
-    }
     
     //MARK: - works
     
@@ -449,19 +402,13 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         }
     }
     
-    func hasOldSaves(downloadedWorkds: [String : [DBWorkItem]]) -> Bool {
+    func hasOldSaves(workItems: [DBWorkItem]) -> Bool {
         var res = false
         
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,
             let managedContextOld = appDelegate.managedObjectContextOld else {
                 return res
         }
-        
-        var workItems: [DBWorkItem] = []
-        for wItemArr in downloadedWorkds.map({$0.value}) {
-            workItems.append(contentsOf: wItemArr)
-        }
-        
         
         let fetchRequest: NSFetchRequest <NSFetchRequestResult> = NSFetchRequest(entityName:"DBWorkItem")
         do {
@@ -610,8 +557,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         }
     }
     
-    func loadWroksFromDB(predicate: NSPredicate?, predicateWFolder: NSPredicate) {
-        folders.removeAll()
+    /*func loadWroksFromDB(predicate: NSPredicate?, predicateWFolder: NSPredicate) {
         
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate, let managedContext = appDelegate.managedObjectContext else {
             return
@@ -679,18 +625,15 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
             }
         }
         
-        updateHiddenSections()
-    }
+    }*/
     
     func loadFandomsFromWorks() {
         downloadedFandoms.removeAll()
         
-        for wArrItem in Array(downloadedWorkds.values) {
-            for wItem in wArrItem {
+        for wItem: DBWorkItem in (self.fetchedResultsController?.fetchedObjects!)! {
                 if let wFandoms: [DBFandom] = wItem.fandoms?.allObjects as? [DBFandom] {
                     downloadedFandoms.append(contentsOf: wFandoms)
                 }
-            }
         }
     }
     
@@ -698,7 +641,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         var res = 0
         
         let searchPredicate = NSPredicate(format: "fandoms.fandomName CONTAINS[c] %@ LIMIT 1", fandom)
-        let array = (Array(downloadedWorkds.values.joined()) as NSArray).filtered(using: searchPredicate)
+        let array = (self.fetchedResultsController?.fetchedObjects! as! NSArray).filtered(using: searchPredicate)
         res = array.count
         
         return res
@@ -708,7 +651,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         var res: [NSManagedObject] = []
         
         let searchPredicate = NSPredicate(format: "fandoms.fandomName CONTAINS[c] %@ ", fandom)
-        if let array = (Array(downloadedWorkds.values.joined()) as NSArray).filtered(using: searchPredicate) as? [NSManagedObject] {
+        if let array = (self.fetchedResultsController?.fetchedObjects! as! NSArray).filtered(using: searchPredicate) as? [NSManagedObject] {
             res = array
         }
         
@@ -725,33 +668,14 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
                     return
             }
             
-            var curWork: DBWorkItem?
-            
-            if (self.resultSearchController.isActive) {
-                if (indexPath.section == 0) {
-                    curWork = (filtereddownloadedWorkds["Uncategorized"])?[indexPath.row]
-                } else if (indexPath.section - 1 < folders.count) {
-                    let curFolderName: String = folders[indexPath.section - 1].name ?? "No Name"
-                    curWork = (filtereddownloadedWorkds[curFolderName])?[indexPath.row]
-                }
-//                if ((tableView.indexPathForSelectedRow!.row < filtereddownloadedWorkds.count ) {
-//                    curWork = filtereddownloadedWorkds[tableView.indexPathForSelectedRow!.row]
-//                }
-            } else {
-                if (indexPath.section == 0) {
-                    curWork = (downloadedWorkds["Uncategorized"])?[indexPath.row]
-                } else if (indexPath.section - 1 < folders.count) {
-                    let curFolderName: String = folders[indexPath.section - 1].name ?? "No Name"
-                    curWork = (downloadedWorkds[curFolderName])?[indexPath.row]
-                }
-            }
+            let curWork: DBWorkItem? = self.fetchedResultsController?.object(at: indexPath)
             
             workDetail.downloadedWorkItem = curWork
              workDetail.modalDelegate = self
         } else if (segue.identifier == "editFoldersSegue") {
             let editController: EditFoldersController = segue.destination as! EditFoldersController
-           // editController.editFoldersProtocol = self
-            editController.folders = folders
+            editController.editFoldersProtocol = self
+          //  editController.folders = folders
         }
         
         hideBackTitle()
@@ -790,13 +714,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         let appDel:AppDelegate = UIApplication.shared.delegate as! AppDelegate
         let context:NSManagedObjectContext = appDel.managedObjectContext!
         
-        var curWork: DBWorkItem?
-        if (indexPath.section == 0) {
-            curWork = (downloadedWorkds["Uncategorized"])?[indexPath.row]
-        } else if (indexPath.section - 1 < folders.count) {
-            let curFolderName: String = folders[indexPath.section - 1].name ?? "No Name"
-            curWork = (downloadedWorkds[curFolderName])?[indexPath.row]
-        }
+        let curWork: DBWorkItem? = self.fetchedResultsController?.object(at: indexPath)
         
         let wId = curWork?.workId ?? "0"
         
@@ -812,11 +730,9 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
             self.saveWorkNotifItem(workId: wId, wasDeleted: NSNumber(booleanLiteral: true))
             self.sendAllNotSentForDelete()
             
-            loadWroksFromDB(predicate: nil, predicateWFolder: NSPredicate(format: "folder = nil"))
-            
-            self.tableView.reloadData()
+            //self.tableView.reloadData()
             // self.tableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: .Fade)
-            self.title = String(downloadedWorkds.values.joined().count) + " " + NSLocalizedString("Downloaded", comment: "")
+            self.title = String(fetchedResultsController?.fetchedObjects?.count ?? 0) + " " + NSLocalizedString("Downloaded", comment: "")
         }
     }
     
@@ -832,7 +748,6 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
     //MARK: - UISearchBarDelegate
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        filtereddownloadedWorkds = downloadedWorkds
     }
     
     //MARK: - UISearchResultsUpdating delegate
@@ -840,16 +755,15 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
     func updateSearchResults(for searchController: UISearchController) {
         
         guard let text = searchController.searchBar.text else {
-            self.tableView.reloadData()
+            //self.tableView.reloadData()
             return
         }
         
         if text.isEmpty {
-            self.tableView.reloadData()
+            //self.tableView.reloadData()
             return
         }
         
-        filtereddownloadedWorkds.removeAll(keepingCapacity: false)
         
         let searchPredicate = NSPredicate(format: "topic CONTAINS[cd] %@ OR topicPreview CONTAINS[cd] %@ OR tags CONTAINS[cd] %@ OR author CONTAINS[cd] %@ OR workTitle CONTAINS[cd] %@ OR fandoms.fandomName CONTAINS[cd] %@", text, text, text, text, text, text)
         
@@ -857,7 +771,13 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
 //        let array = (Array(downloadedWorkds.values.joined()) as NSArray).filtered(using: searchPredicate)
 //        filtereddownloadedWorkds = array as! [DBWorkItem]
         
-        loadWroksFromDB(predicate: searchPredicate, predicateWFolder: predicateWFolder)
+        self.fetchedResultsController?.fetchRequest.predicate = searchPredicate
+        
+        do {
+            try fetchedResultsController?.performFetch()
+        } catch {
+            print("View Folders: updateSearchResults An error occurred")
+        }
         
         self.tableView.reloadData()
     }
@@ -888,7 +808,17 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         DefaultsManager.putBool(self.sortOrderAscendic, key: DefaultsManager.SORT_DWNLD_ASC)
         DefaultsManager.putString(self.sortBy, key: DefaultsManager.SORT_DWNLD_BY)
         
-        self.loadWroksFromDB(predicate: nil, predicateWFolder: NSPredicate(format: "folder = nil"))
+        if (sortBy != "dateAdded") {
+            self.fetchedResultsController?.fetchRequest.sortDescriptors = [NSSortDescriptor(key: sortBy, ascending: sortOrderAscendic, selector: #selector(NSString.localizedStandardCompare(_:)))]
+        } else {
+            self.fetchedResultsController?.fetchRequest.sortDescriptors = [NSSortDescriptor(key: sortBy, ascending: sortOrderAscendic)]
+        }
+        
+        do {
+            try fetchedResultsController?.performFetch()
+        } catch {
+            print("Downloaded: saveSortOptionsAndReload An error occurred")
+        }
         self.tableView.reloadData()
         
         Answers.logCustomEvent(withName: "Downloaded: Sort", customAttributes: ["sortBy" : self.sortBy])
@@ -958,7 +888,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
     
     
     @IBAction func folderTouched(sender: ButtonWithSection) {
-        if (folders.count == 0) {
+        /*if (folders.count == 0) {
             TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("NoFolders", comment: ""), type: .error)
             return
         }
@@ -998,7 +928,19 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         self.present(alert, animated: true) {
             //code to execute once the alert is showing
         }
+        */
         
+        let indexPath = sender.btnIndexPath
+        let curWork: DBWorkItem? = self.fetchedResultsController?.object(at: indexPath)
+        self.selectedWork = curWork
+        
+        performSegue(withIdentifier: "editFoldersSegue", sender: self)
+    }
+    
+    func folderSelected(folder: Folder) {
+        if (self.selectedWork != nil) {
+            self.moveToFolder(folder: folder, curWork: self.selectedWork!)
+        }
     }
     
     func moveToFolder(folder: Folder, curWork: DBWorkItem) {
@@ -1019,68 +961,13 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
             #endif
         }
         
-        loadWroksFromDB(predicate: nil, predicateWFolder: NSPredicate(format: "folder = nil"))
-        tableView.reloadData()
-    }
-    
-    //MARK: - expanding
-    
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        /*let label = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 21))
-        label.textAlignment = .left
-        label.tag = section
-        label.textColor = AppDelegate.redColor
-        
-        if (section == 0) {
-            label.text = "\(uncategorized) (\(downloadedWorkds[uncategorized]?.count ?? 0))"
-        } else {
-            let name = folders[section - 1].name ?? "No Name"
-            label.text = "\(name) (\(downloadedWorkds[name]?.count ?? 0))"
-        }*/
-        
-//        let vvv = tableView.headerView(forSection: section)
-//        vvv?.tag = section
+//        do {
+//            try fetchedResultsController?.performFetch()
+//        } catch {
+//            print("Downloaded: saveSortOptionsAndReload An error occurred")
+//        }
 //
-//        let tap = UITapGestureRecognizer(target: self, action: #selector(FavoritesViewController.tapFunction))
-//        vvv?.isUserInteractionEnabled = true
-//        vvv?.addGestureRecognizer(tap)
-        
-        let vvv = UITableViewHeaderFooterView()
-        vvv.tag = section
-        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(FavoritesViewController.tapFunction))
-        vvv.isUserInteractionEnabled = true
-        vvv.addGestureRecognizer(tap)
-        
-        return vvv
-    }
-    
-    @objc func tapFunction(sender:UITapGestureRecognizer) {
-        guard let section = sender.view?.tag else {
-            return
-        }
-        var folderName = ""
-        if (section == 0) {
-            folderName = FavoritesViewController.uncategorized
-        } else if (section - 1 < folders.count) {
-            folderName = folders[section - 1].name ?? "No Name"
-        } else {
-            return
-        }
-        guard let count = downloadedWorkds[folderName]?.count else {
-            return
-        }
-        let indexPaths = (0..<count).map { i in return IndexPath(item: i, section: section)  }
-        
-        hidden[section] = !hidden[section]
-        
-        //self.tableView?.beginUpdates()
-        if hidden[section] {
-            tableView?.deleteRows(at: indexPaths, with: .fade)
-        } else {
-            tableView?.insertRows(at: indexPaths, with: .fade)
-        }
-       // self.tableView?.endUpdates()
+//        tableView.reloadData()
     }
     
     //https://codebasecamp.com/2016/12/02/Expandable-TableView/
@@ -1090,6 +977,64 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
     //https://github.com/younatics/YNExpandableCell
 }
 
+//MARK: - NSFetchedResultsControllerDelegate
+
+extension FavoritesViewController: NSFetchedResultsControllerDelegate {
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, sectionIndexTitleForSectionName sectionName: String) -> String? {
+        return sectionName
+    }
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        self.tableView.endUpdates()
+    }
+    
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        self.tableView.beginUpdates()
+    }
+    
+    func controller(controller: NSFetchedResultsController<NSFetchRequestResult>, didChangeSection sectionInfo: NSFetchedResultsSectionInfo, atIndex sectionIndex: Int, forChangeType type: NSFetchedResultsChangeType) {
+        switch type {
+        case .insert:
+            tableView.insertSections(IndexSet([sectionIndex]), with: .fade)
+        case .delete:
+            tableView.deleteSections(IndexSet([sectionIndex]), with: .fade)
+        default:
+            return
+        }
+    }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        
+        switch type {
+        case .insert:
+            if let indexPath = newIndexPath {
+                tableView.insertRows(at: [indexPath], with: .automatic)
+            }
+        case .update:
+            if let indexPath = indexPath {
+                let work = fetchedResultsController?.object(at: indexPath)
+                guard let cell = tableView.cellForRow(at: indexPath) as? DownloadedCell else { break }
+                configureCell(curWork: work, cell: cell, indexPath: indexPath)
+            }
+        case .move:
+            if let indexPath = indexPath {
+                tableView.deleteRows(at: [indexPath], with: .automatic)
+                tableView.reloadSections([indexPath.section], with: .none)
+            }
+            if let newIndexPath = newIndexPath {
+                tableView.insertRows(at: [newIndexPath], with: .automatic)
+                tableView.reloadSections([newIndexPath.section], with: .none)
+            }
+        case .delete:
+            if let indexPath = indexPath {
+                tableView.deleteRows(at: [indexPath], with: .automatic)
+                tableView.reloadSections([indexPath.section], with: .none)
+            }
+        }
+    }
+    
+}
 
 extension DBWorkItem {
     

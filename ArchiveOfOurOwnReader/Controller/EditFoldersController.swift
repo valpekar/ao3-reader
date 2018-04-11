@@ -17,6 +17,8 @@ class EditFoldersController: UITableViewController {
     var editFoldersProtocol: EditFoldersProtocol?
     var theme: Int = DefaultsManager.THEME_DAY
     
+    var selectedFolderIdx = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -95,7 +97,12 @@ class EditFoldersController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        folderTouched(index: indexPath.row)
+        if (editFoldersProtocol != nil) {
+            self.selectedFolderIdx = indexPath.row
+            self.navigationController?.popViewController(animated: true)
+        } else {
+            folderTouched(index: indexPath.row)
+        }
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
@@ -278,10 +285,12 @@ class EditFoldersController: UITableViewController {
     //MARK: - back
     
     override func viewWillDisappear(_ animated: Bool) {
-        editFoldersProtocol?.foldersEdited()
+        if (selectedFolderIdx < folders.count) {
+            editFoldersProtocol?.folderSelected(folder: folders[selectedFolderIdx])
+        }
     }
 }
 
 protocol EditFoldersProtocol {
-    func foldersEdited()
+    func folderSelected(folder: Folder)
 }

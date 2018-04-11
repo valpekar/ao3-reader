@@ -97,6 +97,23 @@ class ViewFoldersController: LoadingViewController, NSFetchedResultsControllerDe
             fl = "Group"
         }
         self.title = "\(count) \(fl)"
+        
+        var unCatCount = 0
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate, let managedContext = appDelegate.managedObjectContext else {
+            return
+        }
+        let fetchRequest: NSFetchRequest <NSFetchRequestResult> = NSFetchRequest(entityName:"DBWorkItem")
+        fetchRequest.predicate = NSPredicate(format: "folder = nil")
+        
+        do {
+            let count = try managedContext.count(for:fetchRequest)
+            unCatCount = count
+        } catch let error as NSError {
+            print("updateView Error: \(error.localizedDescription)")
+            unCatCount = 0
+        }
+        
+        unCatButton.setTitle("\(FavoritesViewController.uncategorized) (\(unCatCount))", for: UIControlState.normal)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -108,7 +125,6 @@ class ViewFoldersController: LoadingViewController, NSFetchedResultsControllerDe
             
         } else if (segue.identifier == "editFoldersSegue") {
             if let editController: EditFoldersController = segue.destination as? EditFoldersController {
-                //editController.editFoldersProtocol = self
                 editController.folders = fetchedResultsController?.fetchedObjects ?? []
             }
         }
@@ -298,7 +314,7 @@ extension ViewFoldersController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func configureCell(cell: UITableViewCell, folder: Folder?, indexPath: IndexPath) {
-        cell.textLabel?.text = folder?.name ?? ""
+        cell.textLabel?.text = "\(folder?.name ?? "") (\(folder?.works?.count ?? 0))"
         
         if (theme == DefaultsManager.THEME_DAY) {
             cell.backgroundColor = AppDelegate.greyLightBg
