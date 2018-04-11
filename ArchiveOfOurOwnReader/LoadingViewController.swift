@@ -1181,7 +1181,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
                 print("premium")
             #endif
         } else {
-            if (countWroksFromDB() > 49) {
+            if (countWroksFromDB() > 29) {
                 TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Only30Stroies", comment: ""), type: .error, duration: 2.0)
                 
                 return
