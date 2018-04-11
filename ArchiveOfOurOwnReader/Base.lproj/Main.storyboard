@@ -590,6 +590,122 @@
             </objects>
             <point key="canvasLocation" x="1884" y="-1249"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="GDI-qH-zGZ">
+            <objects>
+                <navigationController id="7fd-d6-kJm" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="9ra-UE-tNA">
+                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="OIQ-Vr-lpG" kind="relationship" relationship="rootViewController" id="vcS-fG-fd8"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7tt-Eq-Yu8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2840" y="-1266"/>
+        </scene>
+        <!--Downloaded-->
+        <scene sceneID="AlT-9r-t0R">
+            <objects>
+                <viewController storyboardIdentifier="ViewFoldersController" title="Downloaded" id="OIQ-Vr-lpG" customClass="ViewFoldersController" customModule="ArchiveOfOurOwnReader" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="dS4-Tj-yCc"/>
+                        <viewControllerLayoutGuide type="bottom" id="Ach-uj-L2a"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="dyg-14-xJm">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="724"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="jAx-j3-hn7">
+                                <rect key="frame" x="0.0" y="99" width="375" height="591"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FolderCell" id="MyQ-yd-oM9">
+                                        <rect key="frame" x="0.0" y="55.333333333333343" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="MyQ-yd-oM9" id="soC-cV-bIc">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.666666666666664"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="OIQ-Vr-lpG" id="HhS-vE-aKb"/>
+                                    <outlet property="delegate" destination="OIQ-Vr-lpG" id="fCj-2a-tAN"/>
+                                </connections>
+                            </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R8B-fd-Ega">
+                                <rect key="frame" x="16" y="66" width="343" height="33"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="unCatTouched:" destination="OIQ-Vr-lpG" eventType="touchUpInside" id="6Mx-UB-6N7"/>
+                                </connections>
+                            </button>
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="o67-3W-at7">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
+                                <color key="barTintColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="OIQ-Vr-lpG" id="57T-gj-OMM"/>
+                                </connections>
+                            </searchBar>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="R8B-fd-Ega" firstAttribute="top" secondItem="o67-3W-at7" secondAttribute="bottom" constant="10" id="8Xr-Gk-lr6"/>
+                            <constraint firstItem="R8B-fd-Ega" firstAttribute="leading" secondItem="dyg-14-xJm" secondAttribute="leadingMargin" id="BcZ-le-Scn"/>
+                            <constraint firstItem="jAx-j3-hn7" firstAttribute="top" secondItem="R8B-fd-Ega" secondAttribute="bottom" id="Czp-Wt-ndx"/>
+                            <constraint firstItem="Ach-uj-L2a" firstAttribute="top" secondItem="jAx-j3-hn7" secondAttribute="bottom" id="IS4-8W-vYX"/>
+                            <constraint firstItem="jAx-j3-hn7" firstAttribute="leading" secondItem="dyg-14-xJm" secondAttribute="leading" id="Q2U-7F-yVp"/>
+                            <constraint firstAttribute="trailing" secondItem="o67-3W-at7" secondAttribute="trailing" id="jjI-Td-4Qi"/>
+                            <constraint firstItem="o67-3W-at7" firstAttribute="leading" secondItem="dyg-14-xJm" secondAttribute="leading" id="myg-tl-v8I"/>
+                            <constraint firstAttribute="trailing" secondItem="jAx-j3-hn7" secondAttribute="trailing" id="uC6-yT-0Va"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="R8B-fd-Ega" secondAttribute="trailing" id="whX-WM-jwM"/>
+                            <constraint firstItem="o67-3W-at7" firstAttribute="top" secondItem="dyg-14-xJm" secondAttribute="top" id="xsU-c4-Gen"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Downloaded" id="1b9-zV-6qf">
+                        <rightBarButtonItems>
+                            <barButtonItem title="Edit" id="hjh-ym-2ah">
+                                <connections>
+                                    <action selector="editTouched:" destination="OIQ-Vr-lpG" id="lNh-oT-CnB"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem systemItem="add" id="fFy-63-A3g">
+                                <connections>
+                                    <action selector="addFolder:" destination="OIQ-Vr-lpG" id="2fe-5w-yC3"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem image="ic_sort" id="kNU-0T-ges">
+                                <connections>
+                                    <action selector="sortFoldersTouched:" destination="OIQ-Vr-lpG" id="tcq-SK-aoD"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="searchBar" destination="o67-3W-at7" id="0kA-gu-fqe"/>
+                        <outlet property="tableView" destination="jAx-j3-hn7" id="oCH-Bm-UYg"/>
+                        <outlet property="unCatButton" destination="R8B-fd-Ega" id="ePS-qw-gzA"/>
+                        <segue destination="gZt-Yz-NNP" kind="show" identifier="showFolderSegue" id="AVD-tc-abp"/>
+                        <segue destination="zne-OV-4Ng" kind="show" identifier="editFoldersSegue" id="cqA-7c-ayn"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CSh-V2-csK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3722" y="-1266"/>
+        </scene>
         <!--Comment View Controller-->
         <scene sceneID="LSo-kA-Txm">
             <objects>
@@ -7097,7 +7213,7 @@ Major Problems:
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9zz-Ph-x5b" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-346" y="-621"/>
+            <point key="canvasLocation" x="-396" y="-480"/>
         </scene>
         <!--History View Controller-->
         <scene sceneID="BVF-cT-dcE">
@@ -10235,9 +10351,11 @@ Please check your Internet connection and also make sure you are logged into you
         <image name="word" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="AVD-tc-abp"/>
         <segue reference="jXE-kt-jek"/>
         <segue reference="GOa-zO-Fy6"/>
         <segue reference="6Vy-m9-kwB"/>
         <segue reference="b3W-0z-TKl"/>
+        <segue reference="cqA-7c-ayn"/>
     </inferredMetricsTieBreakers>
 </document>

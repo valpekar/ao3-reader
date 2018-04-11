@@ -14,7 +14,7 @@ import Crashlytics
 class EditFoldersController: UITableViewController {
     
     var folders: [Folder] = []
-    var editFoldersProtocol: EditFoldersProtocol!
+    var editFoldersProtocol: EditFoldersProtocol?
     var theme: Int = DefaultsManager.THEME_DAY
     
     override func viewDidLoad() {
@@ -278,7 +278,7 @@ class EditFoldersController: UITableViewController {
     //MARK: - back
     
     override func viewWillDisappear(_ animated: Bool) {
-        editFoldersProtocol.foldersEdited()
+        editFoldersProtocol?.foldersEdited()
     }
 }
 

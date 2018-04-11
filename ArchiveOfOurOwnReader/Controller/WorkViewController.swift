@@ -249,6 +249,11 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
         super.viewWillDisappear(animated)
         
         saveChanges()
+        
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.isTranslucent = true
+        self.navigationController?.navigationBar.isHidden = false
     }
     
     func scrollWorks() {

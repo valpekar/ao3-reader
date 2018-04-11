@@ -2,8 +2,8 @@
 //  Folder+CoreDataProperties.swift
 //  ArchiveOfOurOwnReader
 //
-//  Created by Valeriya Pekar on 7/20/17.
-//  Copyright © 2017 Sergei Pekar. All rights reserved.
+//  Created by Valeriya Pekar on 4/11/18.
+//  Copyright © 2018 Sergei Pekar. All rights reserved.
 //
 //
 
@@ -18,6 +18,7 @@ extension Folder {
     }
 
     @NSManaged public var name: String?
+    @NSManaged public var date: NSDate?
     @NSManaged public var works: NSSet?
 
 }

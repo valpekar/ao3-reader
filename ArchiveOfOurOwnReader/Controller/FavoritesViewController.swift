@@ -11,11 +11,11 @@ import CoreData
 import Crashlytics
 import TSMessages
 
-class FavoritesViewController: LoadingViewController, UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating, UISearchBarDelegate, EditFoldersProtocol {
+class FavoritesViewController: LoadingViewController, UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating, UISearchBarDelegate {
     
     @IBOutlet weak var tableView:UITableView!
     
-    let uncategorized = "Uncategorized"
+    static var uncategorized = "Uncategorized"
     
     var downloadedWorkds: [String : [DBWorkItem]] = [:]
     var downloadedFandoms: [DBFandom] = []
@@ -29,9 +29,11 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
     var sortBy = "dateAdded"
     var sortOrderAscendic = false
     
+    var folderName = uncategorized
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.createDrawerButton()
+       // self.createDrawerButton()
         
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 200
@@ -79,7 +81,11 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         sortBy = DefaultsManager.getString(DefaultsManager.SORT_DWNLD_BY)
         sortOrderAscendic = DefaultsManager.getBool(DefaultsManager.SORT_DWNLD_ASC) ?? false
         
-        loadWroksFromDB(predicate: nil, predicateWFolder: NSPredicate(format: "folder = nil"))
+        if (self.folderName == FavoritesViewController.uncategorized) {
+            loadWroksFromDB(predicate: nil, predicateWFolder: NSPredicate(format: "folder = nil"))
+        } else {
+            loadWroksFromDB(predicate: nil, predicateWFolder: NSPredicate(format: "folder.name = \(folderName)"))
+        }
                 
         filtereddownloadedWorkds = downloadedWorkds
         
@@ -139,11 +145,15 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
     
     //MARK: - tableview
     
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 46
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if (self.resultSearchController.isActive) {
             if (section == 0) {
-                return filtereddownloadedWorkds[uncategorized]?.count ?? 0
+                return filtereddownloadedWorkds[FavoritesViewController.uncategorized]?.count ?? 0
             } else {
                 return filtereddownloadedWorkds[folders[section - 1].name ?? "No Name"]?.count ?? 0
             }
@@ -153,7 +163,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
                 return 0
             } else {
             if (section == 0) {
-                return downloadedWorkds[uncategorized]?.count ?? 0
+                return downloadedWorkds[FavoritesViewController.uncategorized]?.count ?? 0
             } else {
                 return downloadedWorkds[folders[section - 1].name ?? "No Name"]?.count ?? 0
             }
@@ -169,19 +179,21 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         
         if (self.resultSearchController.isActive) {
             if (section == 0) {
-                return "\(uncategorized) (\(filtereddownloadedWorkds[uncategorized]?.count ?? 0))"
+                return "\(FavoritesViewController.uncategorized) (\(filtereddownloadedWorkds[FavoritesViewController.uncategorized]?.count ?? 0))"
             } else {
                 let name = folders[section - 1].name ?? "No Name"
                 return "\(name) (\(filtereddownloadedWorkds[name]?.count ?? 0))"
             }
         } else {
             if (section == 0) {
-                return "\(uncategorized) (\(downloadedWorkds[uncategorized]?.count ?? 0))"
+                return "\(FavoritesViewController.uncategorized) (\(downloadedWorkds[FavoritesViewController.uncategorized]?.count ?? 0))"
             } else {
                 let name = folders[section - 1].name ?? "No Name"
                 return "\(name) (\(downloadedWorkds[name]?.count ?? 0))"
             }
         }
+        
+        return folderName
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -738,7 +750,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
              workDetail.modalDelegate = self
         } else if (segue.identifier == "editFoldersSegue") {
             let editController: EditFoldersController = segue.destination as! EditFoldersController
-            editController.editFoldersProtocol = self
+           // editController.editFoldersProtocol = self
             editController.folders = folders
         }
         
@@ -944,82 +956,6 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         self.present(optionMenu, animated: true, completion: nil)
     }
     
-    //MARK: - folders
-    
-    @IBAction func addFolder(_ sender: AnyObject) {
-        let alert = UIAlertController(title: "Folder", message: "Add New Group", preferredStyle: .alert)
-        
-        alert.addTextField { (textField) in
-            textField.autocapitalizationType = .words
-            textField.clearButtonMode = .whileEditing
-            textField.text = "Folder \(self.folders.count + 1)"
-        }
-        
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert] (_) in
-            let textField = alert?.textFields![0] // Force unwrapping because we know it exists.
-            
-            if let txt = textField?.text {
-                
-                self.addNewFolder(name: txt)
-                Answers.logCustomEvent(withName: "New_folder",
-                                   customAttributes: [
-                                    "name": txt])
-            } else {
-                TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("FolderNameEmpty", comment: ""), type: .error)
-            }
-            
-        }))
-        
-        alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: UIAlertActionStyle.cancel, handler: { (action) in
-            #if DEBUG
-            print("cancel")
-            #endif
-        }))
-        
-        alert.view.tintColor = AppDelegate.redColor
-        self.present(alert, animated: true, completion: nil)
-    }
-    
-    func addNewFolder(name: String) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            return
-        }
-        guard let managedContext = appDelegate.managedObjectContext else {
-            return
-        }
-        
-        let req: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Folder")
-        let predicate = NSPredicate(format: "name == %@", name)
-        req.predicate = predicate
-        do {
-            if let fetchedWorks = try managedContext.fetch(req) as? [Folder] {
-                if (fetchedWorks.count > 0) {
-                    TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("FolderAlreadyExists", comment: ""), type: .error)
-                    return
-                }
-            }
-        } catch {
-            fatalError("Failed to fetch folders: \(error)")
-        }
-        
-        guard let entity = NSEntityDescription.entity(forEntityName: "Folder",  in: managedContext) else {
-                return
-        }
-        let newFolder = Folder(entity: entity, insertInto:managedContext)
-        newFolder.name = name
-        
-        //save to DB
-        do {
-            try managedContext.save()
-        } catch let error as NSError {
-            #if DEBUG
-                print("Could not save \(String(describing: error.userInfo))")
-            #endif
-        }
-        
-        loadWroksFromDB(predicate: nil, predicateWFolder: NSPredicate(format: "folder = nil"))
-        tableView.reloadData()
-    }
     
     @IBAction func folderTouched(sender: ButtonWithSection) {
         if (folders.count == 0) {
@@ -1087,13 +1023,6 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         tableView.reloadData()
     }
     
-    //MARK: - EditFoldersProtocol
-    
-     func foldersEdited() {
-        loadWroksFromDB(predicate: nil, predicateWFolder: NSPredicate(format: "folder = nil"))
-        tableView.reloadData()
-    }
-    
     //MARK: - expanding
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -1132,7 +1061,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         }
         var folderName = ""
         if (section == 0) {
-            folderName = uncategorized
+            folderName = FavoritesViewController.uncategorized
         } else if (section - 1 < folders.count) {
             folderName = folders[section - 1].name ?? "No Name"
         } else {

@@ -134,6 +134,7 @@
 		3CB7735F1C847CCD00DC15C4 /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB7735E1C847CCD00DC15C4 /* ContainerViewController.swift */; };
 		3CB773611C847D6100DC15C4 /* SidePanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB773601C847D6100DC15C4 /* SidePanelViewController.swift */; };
 		3CB773631C8480C300DC15C4 /* CenterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB773621C8480C300DC15C4 /* CenterViewController.swift */; };
+		3CB85BF8207E2E010021A2CC /* ViewFoldersController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB85BF7207E2E010021A2CC /* ViewFoldersController.swift */; };
 		3CB992C11CF470D5004772AF /* PublishWorkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB992C01CF470D5004772AF /* PublishWorkController.swift */; };
 		3CBC35BD2004EA7400A115EC /* InboxItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CBC35BC2004EA7400A115EC /* InboxItem.swift */; };
 		3CBC35BF2004EC8F00A115EC /* InboxItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CBC35BE2004EC8F00A115EC /* InboxItemCell.swift */; };
@@ -358,6 +359,8 @@
 		3CB7735E1C847CCD00DC15C4 /* ContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
 		3CB773601C847D6100DC15C4 /* SidePanelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SidePanelViewController.swift; sourceTree = "<group>"; };
 		3CB773621C8480C300DC15C4 /* CenterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CenterViewController.swift; sourceTree = "<group>"; };
+		3CB85BF7207E2E010021A2CC /* ViewFoldersController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewFoldersController.swift; sourceTree = "<group>"; };
+		3CB85BF9207E2F550021A2CC /* ArchiveOfOurOwnReader 12.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ArchiveOfOurOwnReader 12.xcdatamodel"; sourceTree = "<group>"; };
 		3CB992C01CF470D5004772AF /* PublishWorkController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PublishWorkController.swift; path = Controller/PublishWorkController.swift; sourceTree = "<group>"; };
 		3CBB44E81F052D2300F09AB6 /* ArchiveOfOurOwnReader 5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ArchiveOfOurOwnReader 5.xcdatamodel"; sourceTree = "<group>"; };
 		3CBC35BC2004EA7400A115EC /* InboxItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = InboxItem.swift; path = Object/InboxItem.swift; sourceTree = "<group>"; };
@@ -640,6 +643,7 @@
 				3C4FAC0A2007800400BABB17 /* ReplyController.swift */,
 				3C9FEDCA2048357000D8C91E /* AuthorViewController.swift */,
 				3CD6BBAB2063D7A700958973 /* HighlightsController.swift */,
+				3CB85BF7207E2E010021A2CC /* ViewFoldersController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -1121,6 +1125,7 @@
 				1D04502E1BC50C4000ECE572 /* ModalControllerDelegate.swift in Sources */,
 				3C3358C41FEBEA410061AB20 /* MarkedForLaterController.swift in Sources */,
 				3C88E52C1BD000FB000340A3 /* ContentsViewController.swift in Sources */,
+				3CB85BF8207E2E010021A2CC /* ViewFoldersController.swift in Sources */,
 				3C662F081C9C40F700D1F917 /* SupportController.swift in Sources */,
 				3CB773611C847D6100DC15C4 /* SidePanelViewController.swift in Sources */,
 				1D2832121BBD6A7200FFC887 /* Relationship.swift in Sources */,
@@ -1504,6 +1509,7 @@
 		28B6DC2B1B4E3F5900F34529 /* ArchiveOfOurOwnReader.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				3CB85BF9207E2F550021A2CC /* ArchiveOfOurOwnReader 12.xcdatamodel */,
 				3C808807205A8D3100B172B3 /* ArchiveOfOurOwnReader 11.xcdatamodel */,
 				3C9DFC382004D5AA00AE15AD /* ArchiveOfOurOwnReader 10.xcdatamodel */,
 				3C5A579B1FD817C60010E2A9 /* ArchiveOfOurOwnReader 9.xcdatamodel */,
@@ -1516,7 +1522,7 @@
 				3C9C87BB1CE35D8800C10410 /* ArchiveOfOurOwnReader 2.xcdatamodel */,
 				28B6DC2C1B4E3F5900F34529 /* ArchiveOfOurOwnReader.xcdatamodel */,
 			);
-			currentVersion = 3C808807205A8D3100B172B3 /* ArchiveOfOurOwnReader 11.xcdatamodel */;
+			currentVersion = 3CB85BF9207E2F550021A2CC /* ArchiveOfOurOwnReader 12.xcdatamodel */;
 			path = ArchiveOfOurOwnReader.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
