@@ -97,6 +97,7 @@
 		3C5813D31C6E00E800C3FC12 /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C5813D21C6E00E800C3FC12 /* EventKitUI.framework */; };
 		3C5813D51C6E00F000C3FC12 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C5813D41C6E00F000C3FC12 /* MediaPlayer.framework */; };
 		3C5813D71C6E010300C3FC12 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C5813D61C6E010300C3FC12 /* SystemConfiguration.framework */; };
+		3C5F2BDF207FBCE6006018AA /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C5F2BDE207FBCE6006018AA /* CloudKit.framework */; };
 		3C60ADE1207F4A5300158419 /* BaseFolderController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C60ADE0207F4A5300158419 /* BaseFolderController.swift */; };
 		3C662F061C9C40DC00D1F917 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C662F051C9C40DC00D1F917 /* Security.framework */; };
 		3C662F081C9C40F700D1F917 /* SupportController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C662F071C9C40F700D1F917 /* SupportController.swift */; };
@@ -310,6 +311,7 @@
 		3C5813D41C6E00F000C3FC12 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		3C5813D61C6E010300C3FC12 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		3C5A579B1FD817C60010E2A9 /* ArchiveOfOurOwnReader 9.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ArchiveOfOurOwnReader 9.xcdatamodel"; sourceTree = "<group>"; };
+		3C5F2BDE207FBCE6006018AA /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		3C60ADE0207F4A5300158419 /* BaseFolderController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseFolderController.swift; sourceTree = "<group>"; };
 		3C662F051C9C40DC00D1F917 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		3C662F071C9C40F700D1F917 /* SupportController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SupportController.swift; path = Controller/SupportController.swift; sourceTree = "<group>"; };
@@ -417,6 +419,7 @@
 				3C0448FC1C637478005DCE5F /* StoreKit.framework in Frameworks */,
 				3CCBC0E41CB534DE000207CF /* QuartzCore.framework in Frameworks */,
 				3C5813D51C6E00F000C3FC12 /* MediaPlayer.framework in Frameworks */,
+				3C5F2BDF207FBCE6006018AA /* CloudKit.framework in Frameworks */,
 				3CCBC0E21CB534CE000207CF /* Foundation.framework in Frameworks */,
 				3C1612521C720B0F00FB0670 /* CoreMedia.framework in Frameworks */,
 				3CCBC0E01CB534A7000207CF /* CoreLocation.framework in Frameworks */,
@@ -742,6 +745,7 @@
 		EE320A781FA37486137D80FD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3C5F2BDE207FBCE6006018AA /* CloudKit.framework */,
 				3CD0F4AB1F87A45400E54046 /* LocalAuthentication.framework */,
 				3C274CBD1CE4CCBA00F3AC68 /* Flurry */,
 				1D7BDD391B5E75870017C346 /* libxml2.2.dylib */,
@@ -1008,6 +1012,7 @@
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/HexColors/HexColors.framework",
 				"${BUILT_PRODUCTS_DIR}/RSLoadingView/RSLoadingView.framework",
+				"${BUILT_PRODUCTS_DIR}/Seam3/Seam3.framework",
 				"${BUILT_PRODUCTS_DIR}/Spring/Spring.framework",
 				"${BUILT_PRODUCTS_DIR}/TSMessages/TSMessages.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
@@ -1021,6 +1026,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HexColors.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RSLoadingView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Seam3.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Spring.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TSMessages.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",

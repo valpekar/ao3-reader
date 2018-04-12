@@ -19,6 +19,8 @@ pod 'Appirater'
 pod 'Spring', :git => 'https://github.com/MengTo/Spring.git'
 pod 'RSLoadingView'
 pod 'ExpandableLabel'
+pod 'Seam3'
+#pod 'Seam', :git => 'https://github.com/nofelmahmood/Seam.git'
 
   target 'ArchiveOfOurOwnReaderTests' do
     inherit! :search_paths

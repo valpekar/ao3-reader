@@ -15,6 +15,7 @@ import AVFoundation
 import Appirater
 import UserNotifications
 import Alamofire
+import Seam3
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
@@ -334,6 +335,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         return NSManagedObjectModel(contentsOf: modelURL)!
     }()
 
+    //https://github.com/paulw11/Seam3
     lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator? = {
         // The persistent store coordinator for the application. This implementation creates and return a coordinator, having added the store for the application to it. This property is optional since there are legitimate error conditions that could cause the creation of the store to fail.
         // Create the coordinator and store
@@ -346,8 +348,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         let url = self.applicationDocumentsDirectory.appendingPathComponent("ArchiveOfOurOwnReader.sqlite")
         var error: NSError? = nil
         var failureReason = "There was an error creating or loading the application's saved data."
+        
+        var smStore: SMStore
+        SMStore.registerStoreClass()
+        
         do {
-            try coordinator!.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: url, options: mOptions)
+            try coordinator!.addPersistentStore(ofType: SMStore.type, configurationName: nil, at: url, options: mOptions)
         } catch var error1 as NSError {
             error = error1
             coordinator = nil
