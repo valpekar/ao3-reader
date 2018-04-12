@@ -338,8 +338,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // The persistent store coordinator for the application. This implementation creates and return a coordinator, having added the store for the application to it. This property is optional since there are legitimate error conditions that could cause the creation of the store to fail.
         // Create the coordinator and store
         let mOptions = [NSMigratePersistentStoresAutomaticallyOption: true,
-                        NSInferMappingModelAutomaticallyOption: true,
-                        NSPersistentStoreUbiquitousContentNameKey: "ArchiveOfOurOwnReaderContainer"] as [String : Any]
+                        NSInferMappingModelAutomaticallyOption: true
+                        /*NSPersistentStoreUbiquitousContentNameKey: "ArchiveOfOurOwnReaderContainer"*/] as [String : Any]
 
         
         var coordinator: NSPersistentStoreCoordinator? = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
@@ -373,7 +373,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // Create the coordinator and store
         
         let mOptions = [NSMigratePersistentStoresAutomaticallyOption: true,
-                        NSInferMappingModelAutomaticallyOption: true] as [String : Any]
+                        NSInferMappingModelAutomaticallyOption: true,
+                        NSPersistentStoreUbiquitousContentNameKey: "ArchiveOfOurOwnReaderContainer" ] as [String : Any]
         
         var coordinator: NSPersistentStoreCoordinator? = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
         let url = self.applicationDocumentsDirectory.appendingPathComponent("ArchiveOfOurOwnReader.sqlite")
@@ -435,7 +436,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                     error = error1
                     // Replace this implementation with code to handle the error appropriately.
                     // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                    NSLog("Unresolved error \(String(describing: error)), \(error!.userInfo)")
+                    NSLog("Unresolved error \(String(describing: error1)), \(error1.userInfo)")
                     abort()
                 }
             }

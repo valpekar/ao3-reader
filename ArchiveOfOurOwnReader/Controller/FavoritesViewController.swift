@@ -97,6 +97,13 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
             sortBy = "dateAdded"
         }
         
+        var folderPredicate: NSPredicate = NSPredicate(format: "folder = nil")
+       
+        if (folderName != FavoritesViewController.uncategorized) {
+            folderPredicate = NSPredicate(format: "folder.name = %@", folderName)
+        }
+        self.fetchedResultsController?.fetchRequest.predicate = folderPredicate
+        
         if (sortBy != "dateAdded") {
             self.fetchedResultsController?.fetchRequest.sortDescriptors = [NSSortDescriptor(key: sortBy, ascending: sortOrderAscendic, selector: #selector(NSString.localizedStandardCompare(_:)))]
         } else {

@@ -11,24 +11,16 @@ import CoreData
 import TSMessages
 import Crashlytics
 
-class EditFoldersController: UITableViewController {
+class EditFoldersController: BaseFolderController {
     
-    var folders: [Folder] = []
     var editFoldersProtocol: EditFoldersProtocol?
-    var theme: Int = DefaultsManager.THEME_DAY
     
-    var selectedFolderIdx = 0
+    var selectedFolderIdx: IndexPath = IndexPath(row: 0, section: 0)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.title = "Edit Folders"
-        
-        if let th = DefaultsManager.getInt(DefaultsManager.THEME_APP) {
-            theme = th
-        } else {
-            theme = DefaultsManager.THEME_DAY
-        }
         
         if (theme == DefaultsManager.THEME_DAY) {
             self.tableView.backgroundColor = AppDelegate.greyLightBg
@@ -41,82 +33,43 @@ class EditFoldersController: UITableViewController {
 //        self.loadAllFolders()
 //        self.tableView.reloadData()
         
-        Answers.logCustomEvent(withName: "Edit Folders", customAttributes: ["folders_count" : folders.count])
-    }
-    
-    func loadAllFolders() {
-        folders.removeAll()
-        
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate, let managedContext = appDelegate.managedObjectContext else {
-            return
-        }
-        
-        let fetchfolderRequest: NSFetchRequest <NSFetchRequestResult> = NSFetchRequest(entityName:"Folder")
-        fetchfolderRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: false)]
+        fetchedResultsController?.fetchRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: false)]
         
         do {
-            let fetchedResults = try managedContext.fetch(fetchfolderRequest) as? [Folder]
-            
-            if let results = fetchedResults {
-                folders = results
-            }
+            try fetchedResultsController?.performFetch()
         } catch {
-            #if DEBUG
-                print("cannot fetch folders.")
-            #endif
-        }
-    }
-    
-    //MARK: - tableview
-    
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return folders.count
-    }
-    
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "FolderCell", for: indexPath)
-        
-        let folder = folders[indexPath.row]
-        
-        cell.textLabel?.text = folder.name ?? "No Name"
-        
-        if (theme == DefaultsManager.THEME_DAY) {
-            cell.backgroundColor = AppDelegate.greyLightBg
-            cell.textLabel?.textColor = AppDelegate.redColor
-            
-        } else {
-            cell.backgroundColor = AppDelegate.greyDarkBg
-            cell.textLabel?.textColor = AppDelegate.textLightColor
+            print("An error occurred")
         }
         
-        return cell
+        Answers.logCustomEvent(withName: "Edit Folders", customAttributes: ["folders_count" : self.fetchedResultsController?.fetchedObjects?.count ?? 0])
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if (editFoldersProtocol != nil) {
-            self.selectedFolderIdx = indexPath.row
+            self.selectedFolderIdx = indexPath
             self.navigationController?.popViewController(animated: true)
         } else {
-            folderTouched(index: indexPath.row)
+            
+            if let folder = fetchedResultsController?.object(at: indexPath) {
+                folderTouched(folder: folder)
+            } else {
+                TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("FolderNotFound", comment: ""), type: .error)
+            }
         }
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
     //MARK: - folders
     
-    func folderTouched(index: Int) {
+    func folderTouched(folder: Folder) {
         let alert = UIAlertController(title: "Edit Folder", message: "Do you want to delete or rename the folder?", preferredStyle: .actionSheet)
         
         alert.addAction(UIAlertAction(title: "Rename Folder", style: .default, handler: { (action) in
-            self.renameFolderTouched(index: index)
+            self.renameFolderTouched(folder: folder)
         }))
         
         alert.addAction(UIAlertAction(title: "Delete Folder", style: .default, handler: { (action) in
-            self.deleteFolderTouched(index: index)
+            self.deleteFolderTouched(folder: folder)
         }))
         
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
@@ -134,11 +87,7 @@ class EditFoldersController: UITableViewController {
         }
     }
     
-    func deleteFolderTouched(index: Int) {
-        if (index >= folders.count) {
-            TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("FolderNotFound", comment: ""), type: .error)
-            return
-        }
+    func deleteFolderTouched(folder: Folder) {
         
         let deleteAlert = UIAlertController(title: NSLocalizedString("AreYouSure", comment: ""), message: NSLocalizedString("Do you want to delete works too?", comment: ""), preferredStyle: UIAlertControllerStyle.alert)
         
@@ -148,7 +97,7 @@ class EditFoldersController: UITableViewController {
         
         deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Delete folder, keep works", comment: ""), style: .default, handler: { (action: UIAlertAction) in
             
-            self.deleteFolder(index: index, withWorks: false)
+            self.deleteFolder(folder: folder, withWorks: false)
             
             self.dismiss(animated: true, completion: { () -> Void in
             })
@@ -156,7 +105,7 @@ class EditFoldersController: UITableViewController {
         
         deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Delete with works", comment: ""), style: .default, handler: { (action: UIAlertAction) in
             
-            self.deleteFolder(index: index, withWorks: true)
+            self.deleteFolder(folder: folder, withWorks: true)
             
             self.dismiss(animated: true, completion: { () -> Void in
             })
@@ -167,15 +116,13 @@ class EditFoldersController: UITableViewController {
         present(deleteAlert, animated: true, completion: nil)
     }
     
-    func deleteFolder(index: Int, withWorks: Bool) {
+    func deleteFolder(folder: Folder, withWorks: Bool) {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
         }
         guard let managedContext = appDelegate.managedObjectContext else {
             return
         }
-        
-        let folder = folders[index]
         
         if (withWorks == true) {
             if let works = folder.works {
@@ -186,7 +133,6 @@ class EditFoldersController: UITableViewController {
         }
         
         managedContext.delete(folder)
-        folders.remove(at: index)
         
         do {
             try managedContext.save()
@@ -197,14 +143,7 @@ class EditFoldersController: UITableViewController {
         self.tableView.reloadData()
     }
     
-    func renameFolderTouched(index: Int) {
-        if (index >= folders.count) {
-            TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("FolderNotFound", comment: ""), type: .error)
-            return
-        }
-        
-        let folder = folders[index]
-        
+    func renameFolderTouched(folder: Folder) {
         renameFolderDialog(folder: folder)
     }
     
@@ -285,8 +224,8 @@ class EditFoldersController: UITableViewController {
     //MARK: - back
     
     override func viewWillDisappear(_ animated: Bool) {
-        if (selectedFolderIdx < folders.count) {
-            editFoldersProtocol?.folderSelected(folder: folders[selectedFolderIdx])
+        if let folder = fetchedResultsController?.object(at: selectedFolderIdx) {
+            editFoldersProtocol?.folderSelected(folder: folder)
         }
     }
 }

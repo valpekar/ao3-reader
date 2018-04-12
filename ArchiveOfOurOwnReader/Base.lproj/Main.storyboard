@@ -552,44 +552,6 @@
             </objects>
             <point key="canvasLocation" x="1208.8" y="-480.29556650246309"/>
         </scene>
-        <!--Edit Folders Controller-->
-        <scene sceneID="R8l-9t-MuK">
-            <objects>
-                <tableViewController storyboardIdentifier="EditFoldersController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="zne-OV-4Ng" customClass="EditFoldersController" customModule="ArchiveOfOurOwnReader" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="G1G-7G-X7d">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="724"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FolderCell" textLabel="7NC-5t-gVl" style="IBUITableViewCellStyleDefault" id="6dR-ES-Ik8">
-                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="6dR-ES-Ik8" id="ikV-Zv-M1n">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.666666666666664"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="7NC-5t-gVl">
-                                            <rect key="frame" x="16" y="0.0" width="343" height="43.666666666666664"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="zne-OV-4Ng" id="wBO-kO-EDn"/>
-                            <outlet property="delegate" destination="zne-OV-4Ng" id="gbY-yV-dno"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" id="SvM-yi-Rz9"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="UIJ-gH-C4s" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1884" y="-1249"/>
-        </scene>
         <!--Navigation Controller-->
         <scene sceneID="GDI-qH-zGZ">
             <objects>
@@ -699,7 +661,7 @@
                         <outlet property="tableView" destination="jAx-j3-hn7" id="oCH-Bm-UYg"/>
                         <outlet property="unCatButton" destination="R8B-fd-Ega" id="ePS-qw-gzA"/>
                         <segue destination="gZt-Yz-NNP" kind="show" identifier="showFolderSegue" id="AVD-tc-abp"/>
-                        <segue destination="zne-OV-4Ng" kind="show" identifier="editFoldersSegue" id="cqA-7c-ayn"/>
+                        <segue destination="7S3-aS-PpM" kind="show" identifier="editFoldersSegue" id="Mk3-Ot-1ke"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CSh-V2-csK" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -6465,6 +6427,65 @@ Major Problems:
             </objects>
             <point key="canvasLocation" x="409" y="-1481"/>
         </scene>
+        <!--Edit Folders Controller-->
+        <scene sceneID="D8e-GO-AQy">
+            <objects>
+                <viewController storyboardIdentifier="EditFoldersController" id="7S3-aS-PpM" customClass="EditFoldersController" customModule="ArchiveOfOurOwnReader" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="8dt-2p-ngj"/>
+                        <viewControllerLayoutGuide type="bottom" id="LVC-sI-HUl"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Kam-pL-4xO">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="724"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="tmI-ep-s1X">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
+                                <color key="barTintColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="7S3-aS-PpM" id="3Xm-f4-yhC"/>
+                                </connections>
+                            </searchBar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="JZd-ke-RfW">
+                                <rect key="frame" x="0.0" y="56" width="375" height="634"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FolderCell" id="JyP-IW-973">
+                                        <rect key="frame" x="0.0" y="55.333333333333343" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="JyP-IW-973" id="uon-El-JMh">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.666666666666664"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="7S3-aS-PpM" id="jXs-lh-MDk"/>
+                                    <outlet property="delegate" destination="7S3-aS-PpM" id="8nA-n6-wXM"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="tmI-ep-s1X" firstAttribute="top" secondItem="8dt-2p-ngj" secondAttribute="bottom" id="3B8-qL-UYe"/>
+                            <constraint firstItem="JZd-ke-RfW" firstAttribute="top" secondItem="tmI-ep-s1X" secondAttribute="bottom" id="4JY-Lp-ur3"/>
+                            <constraint firstItem="JZd-ke-RfW" firstAttribute="leading" secondItem="Kam-pL-4xO" secondAttribute="leading" id="DMY-a3-CNe"/>
+                            <constraint firstItem="LVC-sI-HUl" firstAttribute="top" secondItem="JZd-ke-RfW" secondAttribute="bottom" id="fgC-Tg-QpO"/>
+                            <constraint firstAttribute="trailing" secondItem="JZd-ke-RfW" secondAttribute="trailing" id="gmR-BR-RD1"/>
+                            <constraint firstItem="tmI-ep-s1X" firstAttribute="leading" secondItem="Kam-pL-4xO" secondAttribute="leading" id="vhf-SJ-yt4"/>
+                            <constraint firstAttribute="trailing" secondItem="tmI-ep-s1X" secondAttribute="trailing" id="yWV-Sj-ARs"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="searchBar" destination="tmI-ep-s1X" id="E3f-Nd-Zhc"/>
+                        <outlet property="tableView" destination="JZd-ke-RfW" id="sxH-2d-VFq"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="X7W-ba-rIR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1833" y="-1267"/>
+        </scene>
         <!--Favorites View Controller-->
         <scene sceneID="kvC-i1-h8z">
             <objects>
@@ -7013,7 +7034,7 @@ Major Problems:
                         <rightBarButtonItems>
                             <barButtonItem systemItem="edit" id="yjt-Zj-D4F">
                                 <connections>
-                                    <segue destination="zne-OV-4Ng" kind="show" identifier="editFoldersSegue" id="xFq-gT-2pC"/>
+                                    <segue destination="7S3-aS-PpM" kind="show" identifier="editFoldersSegue" id="u6V-hW-14D"/>
                                 </connections>
                             </barButtonItem>
                             <barButtonItem systemItem="add" id="Ei9-wy-GbN">
@@ -10352,10 +10373,10 @@ Please check your Internet connection and also make sure you are logged into you
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="AVD-tc-abp"/>
+        <segue reference="Mk3-Ot-1ke"/>
         <segue reference="jXE-kt-jek"/>
         <segue reference="GOa-zO-Fy6"/>
         <segue reference="6Vy-m9-kwB"/>
         <segue reference="b3W-0z-TKl"/>
-        <segue reference="xFq-gT-2pC"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -97,6 +97,7 @@
 		3C5813D31C6E00E800C3FC12 /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C5813D21C6E00E800C3FC12 /* EventKitUI.framework */; };
 		3C5813D51C6E00F000C3FC12 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C5813D41C6E00F000C3FC12 /* MediaPlayer.framework */; };
 		3C5813D71C6E010300C3FC12 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C5813D61C6E010300C3FC12 /* SystemConfiguration.framework */; };
+		3C60ADE1207F4A5300158419 /* BaseFolderController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C60ADE0207F4A5300158419 /* BaseFolderController.swift */; };
 		3C662F061C9C40DC00D1F917 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C662F051C9C40DC00D1F917 /* Security.framework */; };
 		3C662F081C9C40F700D1F917 /* SupportController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C662F071C9C40F700D1F917 /* SupportController.swift */; };
 		3C684E5D1F8E391500419D69 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C684E5C1F8E391500419D69 /* AuthViewController.swift */; };
@@ -309,6 +310,7 @@
 		3C5813D41C6E00F000C3FC12 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		3C5813D61C6E010300C3FC12 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		3C5A579B1FD817C60010E2A9 /* ArchiveOfOurOwnReader 9.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ArchiveOfOurOwnReader 9.xcdatamodel"; sourceTree = "<group>"; };
+		3C60ADE0207F4A5300158419 /* BaseFolderController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseFolderController.swift; sourceTree = "<group>"; };
 		3C662F051C9C40DC00D1F917 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		3C662F071C9C40F700D1F917 /* SupportController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SupportController.swift; path = Controller/SupportController.swift; sourceTree = "<group>"; };
 		3C684E5C1F8E391500419D69 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AuthViewController.swift; path = Controller/AuthViewController.swift; sourceTree = "<group>"; };
@@ -644,6 +646,7 @@
 				3C9FEDCA2048357000D8C91E /* AuthorViewController.swift */,
 				3CD6BBAB2063D7A700958973 /* HighlightsController.swift */,
 				3CB85BF7207E2E010021A2CC /* ViewFoldersController.swift */,
+				3C60ADE0207F4A5300158419 /* BaseFolderController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -1152,6 +1155,7 @@
 				1D1C2FEB1B8DA3E70076D10C /* WorkCharacter.swift in Sources */,
 				1D7BDD401B5E83AC0017C346 /* NewsFeedItem.swift in Sources */,
 				3CD6BBAC2063D7A700958973 /* HighlightsController.swift in Sources */,
+				3C60ADE1207F4A5300158419 /* BaseFolderController.swift in Sources */,
 				3C0448F81C634209005DCE5F /* IAPHelper.swift in Sources */,
 				1D2832111BBD6A7200FFC887 /* Fandom.swift in Sources */,
 				1D2832281BBD6CDA00FFC887 /* FavoritesViewController.swift in Sources */,
