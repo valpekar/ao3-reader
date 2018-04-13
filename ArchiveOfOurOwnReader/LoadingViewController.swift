@@ -272,7 +272,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return workItemToReload
         }
-        let managedContext = appDelegate.persistentContainer.viewContext
+        let managedContext = appDelegate.persistentContainer.newBackgroundContext()
         
         var wid = ""
         if let curWork = curWork {
@@ -747,7 +747,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         }
     }
     
-    func saveChapters(_ curworkItem: NSManagedObject) {
+    func saveChapters(_ curworkItem: NSManagedObject, managedContext: NSManagedObjectContext) {
         
         #if DEBUG
         print("save chapters begin")
@@ -755,7 +755,6 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate
         {
-            let managedContext = appDelegate.persistentContainer.viewContext
         
             var err: NSError?
         
@@ -817,7 +816,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         }
     }
     
-    func parseNxtChapter(_ data: Data, curworkItem: NSManagedObject) {
+    func parseNxtChapter(_ data: Data, curworkItem: NSManagedObject, managedContext: NSManagedObjectContext) {
         
         //let dta = NSString(data: data, encoding: NSUTF8StringEncoding)
         let doc : TFHpple = TFHpple(htmlData: data)
@@ -873,7 +872,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
                                             print(response.error ?? "")
                                                 #endif
                                             if let d = response.data {
-                                                self.parseNxtChapter(d, curworkItem: curworkItem)
+                                                self.parseNxtChapter(d, curworkItem: curworkItem, managedContext: managedContext)
                                             }
                                         })
                                 }
@@ -881,7 +880,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
                             }
                         
                     } else {
-                        saveChapters(curworkItem)
+                        saveChapters(curworkItem, managedContext: managedContext)
                         hideLoadingView()
                     }
     }
