@@ -97,10 +97,10 @@ class SidePanelViewController: UIViewController, UITableViewDataSource, UITableV
     func getDownloadedWorksCount() -> Int {
         var res = 0
         
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,
-            let managedContext = appDelegate.managedObjectContext else {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
                 return res
         }
+        let managedContext = appDelegate.persistentContainer.viewContext
         
         let fetchRequest: NSFetchRequest <NSFetchRequestResult> = NSFetchRequest(entityName:"DBWorkItem")
         do {

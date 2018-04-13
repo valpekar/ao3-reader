@@ -269,10 +269,10 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
     func downloadWork(_ data: Data, curWork: NewsFeedItem? = nil, workItemOld: WorkItem? = nil, workItemToReload: DBWorkItem? = nil) -> DBWorkItem? {
         
         var workItem : DBWorkItem! = nil
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,
-        let managedContext = appDelegate.managedObjectContext else {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return workItemToReload
         }
+        let managedContext = appDelegate.persistentContainer.viewContext
         
         var wid = ""
         if let curWork = curWork {
@@ -313,7 +313,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         
         if let curWork = curWork {
             
-            workItem.setValue(curWork.warning, forKey: "ArchiveWarnings")
+            workItem.setValue(curWork.warning, forKey: "archiveWarnings")
             workItem.setValue(curWork.title, forKey: "workTitle")
             workItem.setValue(curWork.topic, forKey: "topic")
             workItem.setValue(curWork.topicPreview, forKey: "topicPreview")
@@ -333,7 +333,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
             workItem.setValue(Date(), forKey: "dateAdded")
             
         } else if (workItemOld != nil) {
-            workItem.setValue(workItemOld!.archiveWarnings, forKey: "ArchiveWarnings")
+            workItem.setValue(workItemOld!.archiveWarnings, forKey: "archiveWarnings")
             workItem.setValue(workItemOld!.workTitle, forKey: "workTitle")
             workItem.setValue(workItemOld!.topic, forKey: "topic")
             workItem.setValue(workItemOld!.topicPreview, forKey: "topicPreview")
@@ -725,8 +725,10 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
             print("Could not save \(String(describing: err?.userInfo))")
                 #endif
             hideLoadingView()
-            
+                        
             TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: "Could not save \(String(describing: err?.userInfo))", type: .error)
+            
+            return nil
         }
         
         saveToAnalytics(workItem.author ?? "", category: workItem.value(forKey: "category") as? String ?? "", mainFandom: firstFandom, mainRelationship: firstRelationship)
@@ -751,7 +753,9 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         print("save chapters begin")
             #endif
         
-        if let appDelegate = UIApplication.shared.delegate as? AppDelegate, let managedContext = appDelegate.managedObjectContext {
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        {
+            let managedContext = appDelegate.persistentContainer.viewContext
         
             var err: NSError?
         
@@ -884,9 +888,11 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
     
     func saveToAnalytics(_ author: String, category: String, mainFandom: String, mainRelationship: String) {
        
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate, let managedContext = appDelegate.managedObjectContext else {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
                 return
             }
+        
+        let managedContext = appDelegate.persistentContainer.viewContext
         
             let entity =  NSEntityDescription.entity(forEntityName: "AnalyticsItem",  in: managedContext)
             if let analyticsItem: AnalyticsItem = NSManagedObject(entity: entity!, insertInto:managedContext) as? AnalyticsItem {
@@ -918,9 +924,10 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         
         var result: [CheckDownloadItem] = []
         
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate, let managedContext = appDelegate.managedObjectContext else {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return result
         }
+        let managedContext = appDelegate.persistentContainer.viewContext
         let fetchRequest: NSFetchRequest <NSFetchRequestResult> = NSFetchRequest(entityName:"DBWorkItem")
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "dateAdded", ascending: false)]
         
@@ -948,9 +955,10 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
     func getWorkById(workId: String) -> DBWorkItem? {
         var res: DBWorkItem?
         
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate, let managedContext = appDelegate.managedObjectContext else {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return res
         }
+        let managedContext = appDelegate.persistentContainer.viewContext
         
         let fetchRequest: NSFetchRequest <NSFetchRequestResult> = NSFetchRequest(entityName:"DBWorkItem")
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "dateAdded", ascending: false)]
@@ -1140,9 +1148,10 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
     }
     
     func countWroksFromDB() -> Int {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate, let managedContext = appDelegate.managedObjectContext else {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return 0
         }
+        let managedContext = appDelegate.persistentContainer.viewContext
         
         let fetchRequest: NSFetchRequest <NSFetchRequestResult> = NSFetchRequest(entityName:"DBWorkItem")
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "dateAdded", ascending: false)]
@@ -1243,10 +1252,10 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
     
     
     func saveWorkNotifItem(workId: String, wasDeleted: NSNumber) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,
-            let managedContext = appDelegate.managedObjectContext else {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
                 return
         }
+        let managedContext = appDelegate.persistentContainer.viewContext
         guard let entity = NSEntityDescription.entity(forEntityName: "DBWorkNotifItem",  in: managedContext) else {
             return
         }
@@ -1262,10 +1271,10 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
     }
     
     func deleteWorkNotifItem(notifItem: DBWorkNotifItem) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,
-            let managedContext = appDelegate.managedObjectContext else {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
                 return
         }
+        let managedContext = appDelegate.persistentContainer.viewContext
         
         managedContext.delete(notifItem as NSManagedObject)
         do {
@@ -1276,10 +1285,10 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
     }
     
     func deleteWorkNotifItemById(workId: String) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,
-            let managedContext = appDelegate.managedObjectContext else {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
                 return
         }
+        let managedContext = appDelegate.persistentContainer.viewContext
         
         let fetchRequest: NSFetchRequest <NSFetchRequestResult> = NSFetchRequest(entityName:"DBWorkNotifItem")
         
@@ -1312,10 +1321,10 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
     func getAllWorkNotifItems(areDeleted: NSNumber) -> [DBWorkNotifItem] {
         var res: [DBWorkNotifItem] = []
         
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,
-            let managedContext = appDelegate.managedObjectContext else {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
                 return res
         }
+        let managedContext = appDelegate.persistentContainer.viewContext
         
         let fetchRequest: NSFetchRequest <NSFetchRequestResult> = NSFetchRequest(entityName:"DBWorkNotifItem")
         

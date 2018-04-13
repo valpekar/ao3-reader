@@ -72,9 +72,11 @@ class ViewFoldersController: BaseFolderController {
         self.title = "\(count) \(fl)"
         
         var unCatCount = 0
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate, let managedContext = appDelegate.managedObjectContext else {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
         }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
         let fetchRequest: NSFetchRequest <NSFetchRequestResult> = NSFetchRequest(entityName:"DBWorkItem")
         fetchRequest.predicate = NSPredicate(format: "folder = nil")
         
@@ -86,7 +88,7 @@ class ViewFoldersController: BaseFolderController {
             unCatCount = 0
         }
         
-        unCatButton.setTitle("\(FavoritesViewController.uncategorized) (\(unCatCount))", for: UIControlState.normal)
+        unCatButton.setTitle("\(FavoritesViewController.uncategorized) (\(unCatCount) works)", for: UIControlState.normal)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -218,9 +220,7 @@ class ViewFoldersController: BaseFolderController {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
         }
-        guard let managedContext = appDelegate.managedObjectContext else {
-            return
-        }
+        let managedContext = appDelegate.persistentContainer.viewContext
         
         let req: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Folder")
         let predicate = NSPredicate(format: "name == %@", name)

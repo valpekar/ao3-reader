@@ -718,10 +718,10 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
     
     func saveWorkChanged() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,
-            let managedContext = appDelegate.managedObjectContext,
             let workId = downloadedWorkItem?.workId else {
             return
         }
+        let managedContext = appDelegate.persistentContainer.viewContext
         
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "DBWorkItem")
         fetchRequest.predicate = NSPredicate(format: "workId = %@", workId)
@@ -741,13 +741,12 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
     }
     
     func currentWorkSaveChanges() {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,
-            let managedContext = appDelegate.managedObjectContext else {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
                 return
         }
         
         do {
-            try managedContext.save()
+            try appDelegate.saveContext()
         } catch _ {
             print("cannot save current work after download")
         }
@@ -760,9 +759,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
         }
-        guard let managedContext = appDelegate.managedObjectContext else {
-            return
-        }
+        let managedContext = appDelegate.persistentContainer.viewContext
         
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "HistoryItem")
         fetchRequest.predicate = NSPredicate(format: "workId = %@", workItem.workId)
@@ -801,10 +798,10 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
     }
     
     func getHistoryItem(workId: String) -> HistoryItem? {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,
-            let managedContext = appDelegate.managedObjectContext else {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return nil
         }
+        let managedContext = appDelegate.persistentContainer.viewContext
         
         let req: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "HistoryItem")
         let predicate = NSPredicate(format: "workId == %@", workId)
@@ -1638,10 +1635,10 @@ extension WorkViewController {
     }
     
     func saveQuote(text: String) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,
-            let managedContext = appDelegate.managedObjectContext else {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
                 return
         }
+        let managedContext = appDelegate.persistentContainer.viewContext
         guard let entity = NSEntityDescription.entity(forEntityName: "DBHighlightItem",  in: managedContext) else {
             return
         }

@@ -1903,8 +1903,10 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                                        customAttributes: [
                                         "workId": self.downloadedWorkItem.workId ?? "0"])
                 
-                let appDel:AppDelegate = UIApplication.shared.delegate as! AppDelegate
-                let context:NSManagedObjectContext = appDel.managedObjectContext!
+                guard let appDel:AppDelegate = UIApplication.shared.delegate as? AppDelegate else {
+                    return
+                }
+                let context = appDel.persistentContainer.viewContext
                 context.delete(self.downloadedWorkItem as NSManagedObject)
                 do {
                     try context.save()
@@ -2098,15 +2100,11 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     }
     
     func saveChanges() {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate, let managedContext = appDelegate.managedObjectContext else {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
         }
         
-        do {
-            try managedContext.save()
-        } catch _ {
-            print("updateWork: Cannot save")
-        }
+        appDelegate.saveContext()
     }
     
     //MARK: - Banner

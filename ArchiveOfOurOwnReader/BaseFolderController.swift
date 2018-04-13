@@ -22,10 +22,10 @@ class BaseFolderController: LoadingViewController, NSFetchedResultsControllerDel
     
     lazy var fetchedResultsController: NSFetchedResultsController<Folder>? = {
         
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,
-            let managedContext = appDelegate.managedObjectContext else {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
                 return nil
         }
+        let managedContext = appDelegate.persistentContainer.viewContext
         
         // Create Fetch Request
         let fetchRequest: NSFetchRequest<Folder> = Folder.fetchRequest()

@@ -15,7 +15,7 @@ class EditFoldersController: BaseFolderController {
     
     var editFoldersProtocol: EditFoldersProtocol?
     
-    var selectedFolderIdx: IndexPath = IndexPath(row: 0, section: 0)
+    var selectedFolderIdx: IndexPath = IndexPath(row: -1, section: 0)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -120,9 +120,7 @@ class EditFoldersController: BaseFolderController {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
         }
-        guard let managedContext = appDelegate.managedObjectContext else {
-            return
-        }
+        let managedContext = appDelegate.persistentContainer.viewContext
         
         if (withWorks == true) {
             if let works = folder.works {
@@ -188,9 +186,7 @@ class EditFoldersController: BaseFolderController {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
         }
-        guard let managedContext = appDelegate.managedObjectContext else {
-            return
-        }
+        let managedContext = appDelegate.persistentContainer.viewContext
         
         let req: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Folder")
         let predicate = NSPredicate(format: "name == %@", newName)
@@ -224,7 +220,9 @@ class EditFoldersController: BaseFolderController {
     //MARK: - back
     
     override func viewWillDisappear(_ animated: Bool) {
-        if let folder = fetchedResultsController?.object(at: selectedFolderIdx) {
+        if selectedFolderIdx.row < fetchedResultsController?.fetchedObjects?.count ?? 0,
+            selectedFolderIdx.row >= 0,
+            let folder = fetchedResultsController?.object(at: selectedFolderIdx) {
             editFoldersProtocol?.folderSelected(folder: folder)
         }
     }

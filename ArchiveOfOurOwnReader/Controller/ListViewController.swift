@@ -573,8 +573,7 @@ class ListViewController: LoadingViewController, PageSelectDelegate, UIPopoverPr
             print(response.error ?? "")
         #endif
         self.parseCookies(response)
-        if let d = response.data {
-            let _ = self.downloadWork(d, curWork: curWork)
+        if let d = response.data, let isNil = self.downloadWork(d, curWork: curWork) {
             self.hideLoadingView()
             if (self.works.count > curRow) {
                 self.works[curRow].isDownloaded = true
@@ -593,9 +592,10 @@ class ListViewController: LoadingViewController, PageSelectDelegate, UIPopoverPr
         let wId = curWork?.workId ?? ""
         var res: DBWorkItem?
         
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate, let managedContext = appDelegate.managedObjectContext else {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
         }
+        let managedContext = appDelegate.persistentContainer.viewContext
         
         let fetchRequest: NSFetchRequest <NSFetchRequestResult> = NSFetchRequest(entityName:"DBWorkItem")
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "dateAdded", ascending: false)]

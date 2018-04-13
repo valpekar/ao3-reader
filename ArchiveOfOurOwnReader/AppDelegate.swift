@@ -15,7 +15,6 @@ import AVFoundation
 import Appirater
 import UserNotifications
 import Alamofire
-import Seam3
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
@@ -138,6 +137,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 //            self.openWorkDetailController(workId: "1")
 //        }
         
+        
         return true
     }
     
@@ -204,7 +204,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         }
         DefaultsManager.putStringArray(worksToReload, key: DefaultsManager.NOTIF_IDS_ARR)
         UIApplication.shared.applicationIconBadgeNumber = worksToReload.count
-        
+                
         completionHandler()
     }
     
@@ -322,6 +322,42 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
 
     // MARK: - Core Data stack
+    
+    lazy var persistentContainer: NSPersistentContainer = {
+        /*
+         The persistent container for the application. This implementation
+         creates and returns a container, having loaded the store for the
+         application to it. This property is optional since there are legitimate
+         error conditions that could cause the creation of the store to fail.
+         */
+        let container = NSPersistentContainer(name: "ArchiveOfOurOwnReader")
+        container.viewContext.automaticallyMergesChangesFromParent = true
+        
+        let description = NSPersistentStoreDescription()
+        
+        description.shouldInferMappingModelAutomatically = true
+        description.shouldMigrateStoreAutomatically = true
+        
+        container.persistentStoreDescriptions = [description]
+        
+        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
+            if let error = error as NSError? {
+                // Replace this implementation with code to handle the error appropriately.
+                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+                
+                /*
+                 Typical reasons for an error here include:
+                 * The parent directory does not exist, cannot be created, or disallows writing.
+                 * The persistent store is not accessible, due to permissions or data protection when the device is locked.
+                 * The device is out of space.
+                 * The store could not be migrated to the current model version.
+                 Check the error message to determine what the actual problem was.
+                 */
+                fatalError("Unresolved error \(error), \(error.userInfo)")
+            }
+        })
+        return container
+    }()
 
     lazy var applicationDocumentsDirectory: URL = {
         // The directory the application uses to store the Core Data store file. This code uses a directory named "sergei.pekar.ArchiveOfOurOwnReader" in the application's documents Application Support directory.
@@ -335,44 +371,40 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         return NSManagedObjectModel(contentsOf: modelURL)!
     }()
 
-    //https://github.com/paulw11/Seam3
-    lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator? = {
-        // The persistent store coordinator for the application. This implementation creates and return a coordinator, having added the store for the application to it. This property is optional since there are legitimate error conditions that could cause the creation of the store to fail.
-        // Create the coordinator and store
-        let mOptions = [NSMigratePersistentStoresAutomaticallyOption: true,
-                        NSInferMappingModelAutomaticallyOption: true
-                        /*NSPersistentStoreUbiquitousContentNameKey: "ArchiveOfOurOwnReaderContainer"*/] as [String : Any]
-
-        
-        var coordinator: NSPersistentStoreCoordinator? = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
-        let url = self.applicationDocumentsDirectory.appendingPathComponent("ArchiveOfOurOwnReader.sqlite")
-        var error: NSError? = nil
-        var failureReason = "There was an error creating or loading the application's saved data."
-        
-        var smStore: SMStore
-        SMStore.registerStoreClass()
-        
-        do {
-            try coordinator!.addPersistentStore(ofType: SMStore.type, configurationName: nil, at: url, options: mOptions)
-        } catch var error1 as NSError {
-            error = error1
-            coordinator = nil
-            // Report any error we got.
-            var dict = [String: AnyObject]()
-            dict[NSLocalizedDescriptionKey] = "Failed to initialize the application's saved data" as AnyObject?
-            dict[NSLocalizedFailureReasonErrorKey] = failureReason as AnyObject?
-            dict[NSUnderlyingErrorKey] = error
-            error = NSError(domain: "YOUR_ERROR_DOMAIN", code: 9999, userInfo: dict)
-            // Replace this with code to handle the error appropriately.
-            // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            NSLog("Unresolved error \(String(describing: error)), \(error!.userInfo)")
-            abort()
-        } catch {
-            fatalError()
-        }
-        
-        return coordinator
-    }()
+//    lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator? = {
+//        // The persistent store coordinator for the application. This implementation creates and return a coordinator, having added the store for the application to it. This property is optional since there are legitimate error conditions that could cause the creation of the store to fail.
+//        // Create the coordinator and store
+//        let mOptions = [NSMigratePersistentStoresAutomaticallyOption: true,
+//                        NSInferMappingModelAutomaticallyOption: true
+//                        /*NSPersistentStoreUbiquitousContentNameKey: "ArchiveOfOurOwnReaderContainer"*/] as [String : Any]
+//
+//
+//        var coordinator: NSPersistentStoreCoordinator? = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
+//        let url = self.applicationDocumentsDirectory.appendingPathComponent("ArchiveOfOurOwnReader.sqlite")
+//        var error: NSError? = nil
+//        var failureReason = "There was an error creating or loading the application's saved data."
+//
+//        do {
+//            try coordinator!.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: url, options: mOptions)
+//        } catch var error1 as NSError {
+//            error = error1
+//            coordinator = nil
+//            // Report any error we got.
+//            var dict = [String: AnyObject]()
+//            dict[NSLocalizedDescriptionKey] = "Failed to initialize the application's saved data" as AnyObject?
+//            dict[NSLocalizedFailureReasonErrorKey] = failureReason as AnyObject?
+//            dict[NSUnderlyingErrorKey] = error
+//            error = NSError(domain: "YOUR_ERROR_DOMAIN", code: 9999, userInfo: dict)
+//            // Replace this with code to handle the error appropriately.
+//            // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+//            NSLog("Unresolved error \(String(describing: error)), \(error!.userInfo)")
+//            abort()
+//        } catch {
+//            fatalError()
+//        }
+//
+//        return coordinator
+//    }()
     
     lazy var persistentStoreCoordinator1: NSPersistentStoreCoordinator? = {
         // The persistent store coordinator for the application. This implementation creates and return a coordinator, having added the store for the application to it. This property is optional since there are legitimate error conditions that could cause the creation of the store to fail.
@@ -408,16 +440,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         return coordinator
     }()
 
-    lazy var managedObjectContext: NSManagedObjectContext? = {
-        // Returns the managed object context for the application (which is already bound to the persistent store coordinator for the application.) This property is optional since there are legitimate error conditions that could cause the creation of the context to fail.
-        let coordinator = self.persistentStoreCoordinator
-        if coordinator == nil {
-            return nil
-        }
-        var managedObjectContext = NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.mainQueueConcurrencyType)
-        managedObjectContext.persistentStoreCoordinator = coordinator
-        return managedObjectContext
-    }()
+//    lazy var managedObjectContext: NSManagedObjectContext? = {
+//        // Returns the managed object context for the application (which is already bound to the persistent store coordinator for the application.) This property is optional since there are legitimate error conditions that could cause the creation of the context to fail.
+//        let coordinator = self.persistentStoreCoordinator
+//        if coordinator == nil {
+//            return nil
+//        }
+//        var managedObjectContext = NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.mainQueueConcurrencyType)
+//        managedObjectContext.persistentStoreCoordinator = coordinator
+//        return managedObjectContext
+//    }()
     
     lazy var managedObjectContextOld: NSManagedObjectContext? = {
         // Returns the managed object context for the application (which is already bound to the persistent store coordinator for the application.) This property is optional since there are legitimate error conditions that could cause the creation of the context to fail.
@@ -433,18 +465,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     // MARK: - Core Data Saving support
 
     func saveContext () {
-        if let moc = self.managedObjectContext {
-            var error: NSError? = nil
-            if moc.hasChanges {
-                do {
-                    try moc.save()
-                } catch let error1 as NSError {
-                    error = error1
-                    // Replace this implementation with code to handle the error appropriately.
-                    // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                    NSLog("Unresolved error \(String(describing: error1)), \(error1.userInfo)")
-                    abort()
-                }
+        let context = persistentContainer.viewContext
+        if context.hasChanges {
+            do {
+                try context.save()
+            } catch {
+                // Replace this implementation with code to handle the error appropriately.
+                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+                let nserror = error as NSError
+                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
             }
         }
     }

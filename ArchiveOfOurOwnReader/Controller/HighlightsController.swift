@@ -23,10 +23,10 @@ class HighlightsController: UIViewController, NSFetchedResultsControllerDelegate
     
     fileprivate lazy var fetchedResultsController: NSFetchedResultsController<DBHighlightItem>? = {
         
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,
-            let managedContext = appDelegate.managedObjectContext else {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
                 return nil
         }
+        let managedContext = appDelegate.persistentContainer.viewContext
         
         // Create Fetch Request
         let fetchRequest: NSFetchRequest<DBHighlightItem> = DBHighlightItem.fetchRequest()
@@ -175,10 +175,10 @@ class HighlightsController: UIViewController, NSFetchedResultsControllerDelegate
     func getAllHighlights() -> [DBHighlightItem] {
         var res: [DBHighlightItem] = []
         
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,
-            let managedContext = appDelegate.managedObjectContext else {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
                 return res
         }
+        let managedContext = appDelegate.persistentContainer.viewContext
         
         let fetchRequest: NSFetchRequest <NSFetchRequestResult> = NSFetchRequest(entityName:"DBHighlightItem")
 //        if (sortBy != "date") {
@@ -201,10 +201,10 @@ class HighlightsController: UIViewController, NSFetchedResultsControllerDelegate
     }
     
     func deleteHighlight(highlightItem: DBHighlightItem) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,
-            let managedContext = appDelegate.managedObjectContext else {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
                 return
         }
+        let managedContext = appDelegate.persistentContainer.viewContext
         
         managedContext.delete(highlightItem as NSManagedObject)
         do {
@@ -218,10 +218,11 @@ class HighlightsController: UIViewController, NSFetchedResultsControllerDelegate
     }
     
     func deleteAllHighlights() {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,
-            let managedContext = appDelegate.managedObjectContext else {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
                 return
         }
+        
+        let managedContext = appDelegate.persistentContainer.viewContext
         
         Answers.logCustomEvent(withName: "Highlights", customAttributes: ["deleteAll,count" : fetchedResultsController?.fetchedObjects?.count ?? 0])
         
@@ -309,9 +310,7 @@ class HighlightsController: UIViewController, NSFetchedResultsControllerDelegate
             let managedContextOld = appDelegate.managedObjectContextOld else {
                 return
         }
-        guard let managedContext = appDelegate.managedObjectContext else {
-                return
-        }
+        let managedContext = appDelegate.persistentContainer.viewContext
         
         var items: [DBHighlightItem] = []
         

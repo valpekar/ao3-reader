@@ -25,10 +25,11 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
     
     fileprivate lazy var fetchedResultsController: NSFetchedResultsController<DBWorkItem>? = {
         
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,
-            let managedContext = appDelegate.managedObjectContext else {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
                 return nil
         }
+        
+        let managedContext = appDelegate.persistentContainer.viewContext
         
         // Create Fetch Request
         let fetchRequest: NSFetchRequest<DBWorkItem> = DBWorkItem.fetchRequest()
@@ -140,6 +141,11 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         super.viewWillAppear(animated)
         
         showNav()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        self.resultSearchController.isActive = false
+        searchBarCancelButtonClicked(self.resultSearchController.searchBar)
     }
     
     override func applyTheme() {
@@ -381,6 +387,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
             self.copyOldWorksFromDB()
             self.deleteOldSaves()
             self.hideLoadingView()
+            self.title = String(self.fetchedResultsController?.fetchedObjects?.count ?? 0) + " " + NSLocalizedString("Downloaded", comment: "")
         }))
         
         deleteAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction) in
@@ -444,10 +451,10 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
     
     func copyOldWorksFromDB() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,
-            let managedContextOld = appDelegate.managedObjectContextOld,
-            let managedContextNew = appDelegate.managedObjectContext else {
+            let managedContextOld = appDelegate.managedObjectContextOld else {
                 return
         }
+        let managedContextNew = appDelegate.persistentContainer.viewContext
         
         let fetchRequest: NSFetchRequest <NSFetchRequestResult> = NSFetchRequest(entityName:"DBWorkItem")
         do {
@@ -554,7 +561,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         }
         
         do {
-            try managedContextNew.save()
+            try appDelegate.saveContext()
             hideLoadingView()
         } catch let error as NSError {
             #if DEBUG
@@ -718,8 +725,10 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
     }
     
     func deleteItemFromDownloaded(_ indexPath: IndexPath) {
-        let appDel:AppDelegate = UIApplication.shared.delegate as! AppDelegate
-        let context:NSManagedObjectContext = appDel.managedObjectContext!
+        guard let appDel:AppDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+         let context = appDel.persistentContainer.viewContext
         
         let curWork: DBWorkItem? = self.fetchedResultsController?.object(at: indexPath)
         
@@ -956,9 +965,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
         }
-        guard let managedContext = appDelegate.managedObjectContext else {
-            return
-        }
+         let managedContext = appDelegate.persistentContainer.viewContext
         
         do {
             try managedContext.save()
