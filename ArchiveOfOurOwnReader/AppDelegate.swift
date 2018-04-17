@@ -238,7 +238,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         var params:[String:Any] = [String:Any]()
         params["os"] = "i"
         params["token"] = deviceToken
-        params["timezone"] = localTimeZoneName// "America/Atka"//localTimeZoneName
+        params["timezone"] = localTimeZoneName // "America/Atka"//localTimeZoneName
+        
+        params["app_version"] = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "unknown"
+        params["app_build"] = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "unknown"
         
         if (deviceToken.isEmpty == false) {
             Alamofire.request("https://fanfic-pocket-reader.herokuapp.com/api/devices", method: HTTPMethod.post, parameters: params).response(completionHandler: { (response) in
@@ -259,6 +262,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         var params:[String:Any] = [String:Any]()
         params["token"] = deviceToken
         params["timezone"] = localTimeZoneName
+        
+        params["app_version"] = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "unknown"
+        params["app_build"] = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "unknown"
         
         var headers:[String:String] = [String:String]()
         headers["auth"] = reqDeviceToken
