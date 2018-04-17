@@ -7039,7 +7039,7 @@ Major Problems:
                             </barButtonItem>
                             <barButtonItem systemItem="add" id="Ei9-wy-GbN">
                                 <connections>
-                                    <action selector="addFolder:" destination="gZt-Yz-NNP" id="XqD-9e-cE5"/>
+                                    <action selector="addFolder:" destination="Hqn-mE-rHh" id="NUe-VW-Jot"/>
                                 </connections>
                             </barButtonItem>
                             <barButtonItem image="ic_sort" id="37j-qy-QrS">
@@ -10373,7 +10373,7 @@ Please check your Internet connection and also make sure you are logged into you
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="AVD-tc-abp"/>
-        <segue reference="Mk3-Ot-1ke"/>
+        <segue reference="u6V-hW-14D"/>
         <segue reference="jXE-kt-jek"/>
         <segue reference="GOa-zO-Fy6"/>
         <segue reference="6Vy-m9-kwB"/>

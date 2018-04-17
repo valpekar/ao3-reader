@@ -35,7 +35,7 @@ class HighlightsController: UIViewController, NSFetchedResultsControllerDelegate
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: sortBy, ascending: true)]
         
         // Create Fetched Results Controller
-        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedContext, sectionNameKeyPath: nil, cacheName: nil)
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: appDelegate.persistentContainer.viewContext, sectionNameKeyPath: nil, cacheName: nil)
         
         // Configure Fetched Results Controller
         fetchedResultsController.delegate = self

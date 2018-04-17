@@ -137,7 +137,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 //            self.openWorkDetailController(workId: "1")
 //        }
         
-        
         return true
     }
     
@@ -323,6 +322,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
     // MARK: - Core Data stack
     
+    lazy var applicationDocumentsDirectory: URL = {
+        // The directory the application uses to store the Core Data store file. This code uses a directory named "sergei.pekar.ArchiveOfOurOwnReader" in the application's documents Application Support directory.
+        let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        return urls[urls.count-1]
+    }()
+    
+    lazy var managedObjectModel: NSManagedObjectModel = {
+        // The managed object model for the application. This property is not optional. It is a fatal error for the application not to be able to find and load its model.
+        let modelURL = Bundle.main.url(forResource: "ArchiveOfOurOwnReader", withExtension: "momd")!
+        return NSManagedObjectModel(contentsOf: modelURL)!
+    }()
+    
     lazy var persistentContainer: NSPersistentContainer = {
         /*
          The persistent container for the application. This implementation
@@ -331,14 +342,52 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
          error conditions that could cause the creation of the store to fail.
          */
         let container = NSPersistentContainer(name: "ArchiveOfOurOwnReader")
-        container.viewContext.automaticallyMergesChangesFromParent = true
+        
+        let newUrl = self.applicationDocumentsDirectory.appendingPathComponent("ArchiveOfOurOwnReader.sqlite")
         
         let description = NSPersistentStoreDescription()
-        
+
         description.shouldInferMappingModelAutomatically = true
         description.shouldMigrateStoreAutomatically = true
+        /*description.url*/
+        description.url = newUrl
         
-        container.persistentStoreDescriptions = [description]
+        container.persistentStoreDescriptions.append(description)
+        
+        print("default url =\(NSPersistentContainer.defaultDirectoryURL())")
+        
+        let migrated = DefaultsManager.getBool("migrated") ?? false
+        
+        if (migrated == false) {
+        //self.applicationDocumentsDirectory.appendingPathComponent("ArchiveOfOurOwnReader.sqlite")
+        if let oldStore = self.persistentStoreCoordinator1?.persistentStores.first {
+            do {
+                try self.persistentStoreCoordinator1?.migratePersistentStore(oldStore, to:  newUrl, options: [NSPersistentStoreRemoveUbiquitousMetadataOption:true, NSMigratePersistentStoresAutomaticallyOption: true,
+                NSInferMappingModelAutomaticallyOption: true], withType: NSSQLiteStoreType)
+            } catch {
+                print("Could not replace store: \(error)")
+            }
+            
+            let oldUrl = self.persistentStoreCoordinator1?.url(for: oldStore)
+            print("old persistent store url \(oldUrl)")
+            
+            //            do {
+            //                try persistentStoreCoordinator1?.remove(oldStore)
+            //            } catch {
+            //                print("Could not remove store: \(error)")
+            //            }
+            
+            //            if let old_url = oldUrl {
+            //            do {
+            //                try FileManager.default.removeItem(at: old_url)
+            //            } catch {
+            //                print("Could not remove at url: \(error)")
+            //            }
+            //            }
+            
+            DefaultsManager.putBool(true, key: "migrated")
+        }
+        }
         
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
@@ -354,21 +403,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                  Check the error message to determine what the actual problem was.
                  */
                 fatalError("Unresolved error \(error), \(error.userInfo)")
+            } else {
+                container.viewContext.automaticallyMergesChangesFromParent = true
             }
         })
         return container
-    }()
-
-    lazy var applicationDocumentsDirectory: URL = {
-        // The directory the application uses to store the Core Data store file. This code uses a directory named "sergei.pekar.ArchiveOfOurOwnReader" in the application's documents Application Support directory.
-        let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-        return urls[urls.count-1] 
-    }()
-
-    lazy var managedObjectModel: NSManagedObjectModel = {
-        // The managed object model for the application. This property is not optional. It is a fatal error for the application not to be able to find and load its model.
-        let modelURL = Bundle.main.url(forResource: "ArchiveOfOurOwnReader", withExtension: "momd")!
-        return NSManagedObjectModel(contentsOf: modelURL)!
     }()
 
 //    lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator? = {

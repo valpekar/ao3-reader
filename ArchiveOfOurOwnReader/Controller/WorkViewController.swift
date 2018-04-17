@@ -1672,7 +1672,7 @@ extension WorkViewController {
             try managedContext.save()
         } catch let error as NSError {
             print("Could not save \(String(describing: error.userInfo))")
-        }
+        } 
         
         TSMessage.showNotification(in: self, title: "Success", subtitle: "Highlight was successfully saved!", type: TSMessageNotificationType.success)
     }

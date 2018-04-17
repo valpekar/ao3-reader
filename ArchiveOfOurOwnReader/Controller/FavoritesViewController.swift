@@ -38,7 +38,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: sortBy, ascending: true)]
         
         // Create Fetched Results Controller
-        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedContext, sectionNameKeyPath: nil, cacheName: nil)
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: appDelegate.persistentContainer.viewContext, sectionNameKeyPath: nil, cacheName: nil)
         
         // Configure Fetched Results Controller
         fetchedResultsController.delegate = self
@@ -385,7 +385,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         deleteAlert.addAction(UIAlertAction(title: "Restore Them", style: .default, handler: { (action: UIAlertAction) in
             self.showLoadingView(msg: "Restoring...")
             self.copyOldWorksFromDB()
-            self.deleteOldSaves()
+            //self.deleteOldSaves()
             self.hideLoadingView()
             self.title = String(self.fetchedResultsController?.fetchedObjects?.count ?? 0) + " " + NSLocalizedString("Downloaded", comment: "")
         }))
@@ -489,6 +489,8 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
                     }
                 }
                 
+                newObj.setValue(nil, forKey: "folder")
+                
                 newObj.setValue(NSSet(array: chaptersSet), forKey: "chapters")
                 
                 var fandomssSet = [NSManagedObject]()
@@ -560,15 +562,9 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
             #endif
         }
         
-        do {
-            try appDelegate.saveContext()
-            hideLoadingView()
-        } catch let error as NSError {
-            #if DEBUG
-                print("Could not save \(String(describing: error.userInfo))")
-            #endif
-            
-        }
+        appDelegate.saveContext()
+        hideLoadingView()
+ 
     }
     
     /*func loadWroksFromDB(predicate: NSPredicate?, predicateWFolder: NSPredicate) {
@@ -696,6 +692,11 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         
         self.resultSearchController.isActive = false
         searchBarCancelButtonClicked(self.resultSearchController.searchBar)
+    }
+    
+    @IBAction func addFolder(_ sender: AnyObject) {
+        let fName = "Folder \(self.folderName) 1)"
+        showAddFolder(folderName: fName)
     }
     
     @IBAction func deleteButtonTouched(_ sender: UIButton) {

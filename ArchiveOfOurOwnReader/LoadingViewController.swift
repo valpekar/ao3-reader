@@ -14,6 +14,7 @@ import Alamofire
 import TSMessages
 import RSLoadingView
 import CoreTelephony
+import Crashlytics
 
 class LoadingViewController: CenterViewController, ModalControllerDelegate, AuthProtocol, UIAlertViewDelegate, GADInterstitialDelegate {
     
@@ -272,7 +273,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return workItemToReload
         }
-        let managedContext = appDelegate.persistentContainer.newBackgroundContext()
+        let managedContext = appDelegate.persistentContainer.viewContext
         
         var wid = ""
         if let curWork = curWork {
@@ -705,13 +706,13 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
                     #endif
                         if let data = response.data {
                             self.showLoadingView(msg: NSLocalizedString("LoadingNxtChapter", comment: ""))
-                            self.parseNxtChapter(data, curworkItem: workItem)
+                            self.parseNxtChapter(data, curworkItem: workItem, managedContext: managedContext)
                         }
                         
                 })
             }
         } else {
-            saveChapters(workItem)
+            saveChapters(workItem, managedContext: managedContext)
             hideLoadingView()
         }
         
@@ -1560,6 +1561,78 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         } else {
             return ""
         }
+    }
+    
+    func showAddFolder(folderName: String) {
+        let alert = UIAlertController(title: "Folder", message: "Add New Group", preferredStyle: .alert)
+        
+        alert.addTextField { (textField) in
+            textField.autocapitalizationType = .words
+            textField.clearButtonMode = .whileEditing
+            textField.text = folderName
+        }
+        
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert] (_) in
+            let textField = alert?.textFields![0] // Force unwrapping because we know it exists.
+            
+            if let txt = textField?.text {
+                
+                self.addNewFolder(name: txt)
+                Answers.logCustomEvent(withName: "New_folder",
+                                       customAttributes: [
+                                        "name": txt])
+            } else {
+                TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("FolderNameEmpty", comment: ""), type: .error)
+            }
+            
+        }))
+        
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: UIAlertActionStyle.cancel, handler: { (action) in
+            #if DEBUG
+            print("cancel")
+            #endif
+        }))
+        
+        alert.view.tintColor = AppDelegate.redColor
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func addNewFolder(name: String) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        let req: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Folder")
+        let predicate = NSPredicate(format: "name == %@", name)
+        req.predicate = predicate
+        do {
+            if let fetchedWorks = try managedContext.fetch(req) as? [Folder] {
+                if (fetchedWorks.count > 0) {
+                    TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("FolderAlreadyExists", comment: ""), type: .error)
+                    return
+                }
+            }
+        } catch {
+            fatalError("Failed to fetch folders: \(error)")
+        }
+        
+        guard let entity = NSEntityDescription.entity(forEntityName: "Folder",  in: managedContext) else {
+            return
+        }
+        let newFolder = Folder(entity: entity, insertInto:managedContext)
+        newFolder.name = name
+        
+        //save to DB
+        do {
+            try managedContext.save()
+        } catch let error as NSError {
+            #if DEBUG
+            print("Could not save \(String(describing: error.userInfo))")
+            #endif
+        }
+        
+        //        tableView.reloadData()
     }
  }
 
