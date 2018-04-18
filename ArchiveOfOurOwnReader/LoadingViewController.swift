@@ -1555,7 +1555,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
     
     
     func getCountryCode() -> String {
-        if let countryCode = (NSLocale.current as NSLocale).object(forKey: .countryCode) as? String {
+        if let countryCode = NSLocale.current.regionCode {
             print("country code = \(countryCode)")
             return countryCode
         } else {

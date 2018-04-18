@@ -375,21 +375,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             }
             
             let oldUrl = self.persistentStoreCoordinator1?.url(for: oldStore)
-            print("old persistent store url \(oldUrl)")
+            //print("old persistent store url \(oldUrl)")
             
-            //            do {
-            //                try persistentStoreCoordinator1?.remove(oldStore)
-            //            } catch {
-            //                print("Could not remove store: \(error)")
-            //            }
+                        do {
+                            try persistentStoreCoordinator1?.remove(oldStore)
+                        } catch {
+                            print("Could not remove store: \(error)")
+                        }
             
-            //            if let old_url = oldUrl {
-            //            do {
-            //                try FileManager.default.removeItem(at: old_url)
-            //            } catch {
-            //                print("Could not remove at url: \(error)")
-            //            }
-            //            }
+                        if let old_url = oldUrl {
+                        do {
+                            try FileManager.default.removeItem(at: old_url)
+                        } catch {
+                            print("Could not remove at url: \(error)")
+                        }
+                        }
             
             DefaultsManager.putBool(true, key: "migrated")
         }

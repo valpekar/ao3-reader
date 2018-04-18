@@ -2015,7 +2015,6 @@ Please check your Internet connection and also make sure you are logged into you
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8hg-sW-Hmw">
-                                                            <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -7034,12 +7033,12 @@ Major Problems:
                         <rightBarButtonItems>
                             <barButtonItem systemItem="edit" id="yjt-Zj-D4F">
                                 <connections>
-                                    <segue destination="7S3-aS-PpM" kind="show" identifier="editFoldersSegue" id="u6V-hW-14D"/>
+                                    <action selector="editTouched:" destination="gZt-Yz-NNP" id="wgW-b5-yiq"/>
                                 </connections>
                             </barButtonItem>
                             <barButtonItem systemItem="add" id="Ei9-wy-GbN">
                                 <connections>
-                                    <action selector="addFolder:" destination="Hqn-mE-rHh" id="NUe-VW-Jot"/>
+                                    <action selector="addFolder:" destination="gZt-Yz-NNP" id="5Ot-lb-HTQ"/>
                                 </connections>
                             </barButtonItem>
                             <barButtonItem image="ic_sort" id="37j-qy-QrS">
@@ -7056,6 +7055,7 @@ Major Problems:
                     </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="A5Y-f9-vYe" id="74y-Oe-DqE"/>
+                        <segue destination="7S3-aS-PpM" kind="show" identifier="editFoldersSegue" id="GYH-Ae-w0j"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Hqn-mE-rHh" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -10373,7 +10373,7 @@ Please check your Internet connection and also make sure you are logged into you
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="AVD-tc-abp"/>
-        <segue reference="u6V-hW-14D"/>
+        <segue reference="GYH-Ae-w0j"/>
         <segue reference="jXE-kt-jek"/>
         <segue reference="GOa-zO-Fy6"/>
         <segue reference="6Vy-m9-kwB"/>

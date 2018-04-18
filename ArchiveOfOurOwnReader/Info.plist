@@ -21,7 +21,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>102</string>
+	<string>104</string>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>
@@ -55,6 +55,14 @@
 	<string>The app would like to create a calendar event.</string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>Fanfic Pocket app needs face ID to use it for unlocking the app.</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Starjedi.ttf</string>
+		<string>NITEMARE.TTF</string>
+		<string>FuturaBook.ttf</string>
+		<string>Rooney-Regular.ttf</string>
+		<string>OpenDyslexic-Regular.ttf</string>
+	</array>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>

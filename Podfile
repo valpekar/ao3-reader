@@ -19,6 +19,7 @@ pod 'Appirater'
 pod 'Spring', :git => 'https://github.com/MengTo/Spring.git'
 pod 'RSLoadingView'
 pod 'ExpandableLabel'
+pod 'PopupDialog', '~> 0.7'
 
   target 'ArchiveOfOurOwnReaderTests' do
     inherit! :search_paths

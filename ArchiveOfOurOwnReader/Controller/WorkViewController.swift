@@ -13,6 +13,7 @@ import TSMessages
 import Crashlytics
 import WebKit
 import Spring
+import PopupDialog
 
 class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWebViewDelegate, WKNavigationDelegate, UIScrollViewDelegate {
     
@@ -1165,13 +1166,29 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
         var bgColor: UIColor = AppDelegate.greyLightColor
         var txtColor = AppDelegate.redColor
         
+        
+        var fontCss = ""
+        let fontFamilyStr = "font-family: \"\(fontFamily)\""
+        if (fontFamily.contains("Rooney")) {
+            fontCss = "@font-face { font-family: \"\(fontFamily)\"; src: url(Rooney-Regular.ttf); format('truetype')} "
+        } else if (fontFamily.contains("OpenDyslexic")) {
+            fontCss = "@font-face { font-family: \"\(fontFamily)\"; src: url(OpenDyslexic-Regular.ttf); format('truetype'); } "
+        } else if (fontFamily.contains("Futura")) {
+            fontCss = "@font-face { font-family: \"\(fontFamily)\"; src: url(FuturaBook.ttf); format('truetype')} "
+        }
+        else if (fontFamily.contains("Burton\'s Nightmare")) {
+            fontCss = "@font-face { font-family: \"\(fontFamily)\"; src: url(NITEMARE.TTF); format('truetype')} "
+        } else if (fontFamily.contains("Star Jedi")) {
+            fontCss = "@font-face { font-family: \"\(fontFamily)\"; src: url(Starjedi.ttf); format('truetype')} "
+        }
+        
         switch (theme) {
             case DefaultsManager.THEME_DAY :
                 webView.backgroundColor = AppDelegate.greyLightBg
                 webView.isOpaque = false
                 
-                let fontStr = "font-size: " + String(format:"%d", fontSize) + "%; font-family: \"\(fontFamily)\";"
-                worktext = String(format:"<style>body, table { color: #021439; %@; padding:5em 1.5em 4em 1.5em; text-align: left; line-height: 1.5em;  overflow-y: scroll; -webkit-overflow-scrolling: touch; } p {margin-bottom:1.0em}</style>%@", fontStr, work)
+                let fontStr = "font-size: " + String(format:"%d", fontSize) + "%; \(fontFamilyStr); "
+                worktext = String(format:"<style>\(fontCss) body, table { color: #021439; %@; padding:5em 1.5em 4em 1.5em; text-align: left; line-height: 1.5em;  overflow-y: scroll; -webkit-overflow-scrolling: touch; } p {margin-bottom:1.0em}</style>%@", fontStr, work)
             
                 bgColor = AppDelegate.greyLightColor
                 txtColor = AppDelegate.redColor
@@ -1185,8 +1202,8 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
                 self.webView.backgroundColor = AppDelegate.nightBgColor
                 self.webView.isOpaque = false
                 
-                let fontStr = "font-size: " + String(format:"%d", fontSize) + "%; font-family: \"\(fontFamily)\""
-                worktext = String(format:"<style>body, table { color: #e1e1ce; %@; padding:5em 1.5em 4em 1.5em; text-align: left; line-height: 1.5em; overflow-y: scroll; -webkit-overflow-scrolling: touch; } p {margin-bottom:1.0em} </style>%@", fontStr, work)
+                let fontStr = "font-size: " + String(format:"%d", fontSize) + "%; \(fontFamily); "
+                worktext = String(format:"<style>\(fontCss) body, table { color: #e1e1ce; %@; padding:5em 1.5em 4em 1.5em; text-align: left; line-height: 1.5em; overflow-y: scroll; -webkit-overflow-scrolling: touch; } p {margin-bottom:1.0em} </style>%@", fontStr, work)
             
                 bgColor = AppDelegate.greyDarkBg
                 txtColor = AppDelegate.textLightColor
@@ -1213,7 +1230,11 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
         nextButton.setTitleColor(txtColor, for: .normal)
         
         webView.reload()
-        webView.loadHTMLString(worktext, baseURL: nil)
+        var url: URL? = nil
+        if let resourcePath = Bundle.main.resourcePath {
+            url = URL.init(fileURLWithPath: resourcePath)
+        }
+        webView.loadHTMLString(worktext, baseURL: url)
     }
     
     @objc func changeThemeTouched() {
@@ -1329,63 +1350,225 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
     }
     
     @objc func changeTextFamilyTouched() {
-        let alert = UIAlertController(title: NSLocalizedString("FontFamily", comment: ""), message: "Select font family (\(fontFamily)", preferredStyle: UIAlertControllerStyle.actionSheet)
-        alert.addAction(UIAlertAction(title: "Verdana (default)", style: UIAlertActionStyle.default, handler: { action in
+        let popup = PopupDialog(title: NSLocalizedString("FontFamily", comment: ""), message: "Select font family (\(fontFamily)")
         
+        let buttonCancel = CancelButton(title: "CANCEL") {
+            print("You canceled the car dialog.")
+        }
+        
+        let buttonOne = DefaultButton(title: "Verdana (default)") {
             self.fontFamily = "Verdana"
             DefaultsManager.putString(self.fontFamily, key: DefaultsManager.FONT_FAMILY)
-            alert.message = "Select font family (\(self.fontFamily)"
             self.loadCurrentTheme()
-        }))
-        alert.addAction(UIAlertAction(title: "Arial", style: UIAlertActionStyle.default, handler: { action in
-            
+        }
+        
+        let buttonTwo = DefaultButton(title: "Arial") {
             self.fontFamily = "Arial"
             DefaultsManager.putString(self.fontFamily, key: DefaultsManager.FONT_FAMILY)
-            alert.message = "Select font family (\(self.fontFamily)"
             self.loadCurrentTheme()
-        }))
-        alert.addAction(UIAlertAction(title: "Courier New", style: UIAlertActionStyle.default, handler: { action in
-            
+        }
+        
+        let buttonThree = DefaultButton(title: "Courier New") {
             self.fontFamily = "Courier New"
             DefaultsManager.putString(self.fontFamily, key: DefaultsManager.FONT_FAMILY)
-            alert.message = "Select font family (\(self.fontFamily)"
             self.loadCurrentTheme()
-        }))
-        alert.addAction(UIAlertAction(title: "Helvetica", style: UIAlertActionStyle.default, handler: { action in
-            
+        }
+        
+        let button4 = DefaultButton(title: "Helvetica") {
             self.fontFamily = "Helvetica"
             DefaultsManager.putString(self.fontFamily, key: DefaultsManager.FONT_FAMILY)
-            alert.message = "Select font family (\(self.fontFamily)"
             self.loadCurrentTheme()
-        }))
-        alert.addAction(UIAlertAction(title: "Georgia", style: UIAlertActionStyle.default, handler: { action in
-            
+        }
+        
+        let button5 = DefaultButton(title: "Georgia") {
             self.fontFamily = "Georgia"
             DefaultsManager.putString(self.fontFamily, key: DefaultsManager.FONT_FAMILY)
-            alert.message = "Select font family (\(self.fontFamily)"
             self.loadCurrentTheme()
-        }))
-        alert.addAction(UIAlertAction(title: "Trebuchet MS", style: UIAlertActionStyle.default, handler: { action in
-            
+        }
+        
+        let button6 = DefaultButton(title: "Trebuchet MS") {
             self.fontFamily = "Trebuchet MS"
             DefaultsManager.putString(self.fontFamily, key: DefaultsManager.FONT_FAMILY)
-            alert.message = "Select font family (\(self.fontFamily)"
             self.loadCurrentTheme()
-        }))
-        alert.addAction(UIAlertAction(title: "Times New Roman", style: UIAlertActionStyle.default, handler: { action in
-            
+        }
+        
+        let button7 = DefaultButton(title: "Times New Roman") {
             self.fontFamily = "Times New Roman"
             DefaultsManager.putString(self.fontFamily, key: DefaultsManager.FONT_FAMILY)
-            alert.message = "Select font family (\(self.fontFamily)"
             self.loadCurrentTheme()
-        }))
+        }
         
-        alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: UIAlertActionStyle.cancel, handler: nil))
+        let button8 = DefaultButton(title: "Open Dyslexic Regular (Premium)") {
+            if (self.purchased == true) {
+            self.fontFamily = "OpenDyslexic"
+            DefaultsManager.putString(self.fontFamily, key: DefaultsManager.FONT_FAMILY)
+            self.loadCurrentTheme()
+            }  else {
+                TSMessage.showNotification(in: self, title: "Warning: This Font is Premium", subtitle: "Please upgrade to be able to use it!", type: TSMessageNotificationType.warning)
+            }
+        }
         
-        alert.popoverPresentationController?.sourceView = self.view
-        alert.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.size.width / 2.0, y: self.view.bounds.size.height / 2.0, width: 1.0, height: 1.0)
+        let button9 = DefaultButton(title: "Rooney (Premium)") {
+            if (self.purchased == true) {
+            self.fontFamily = "Rooney"
+            DefaultsManager.putString(self.fontFamily, key: DefaultsManager.FONT_FAMILY)
+            self.loadCurrentTheme()
+            }  else {
+                TSMessage.showNotification(in: self, title: "Warning: This Font is Premium", subtitle: "Please upgrade to be able to use it!", type: TSMessageNotificationType.warning)
+            }
+        }
         
-        self.present(alert, animated: true, completion: nil)
+        let button10 = DefaultButton(title: "Futura (Premium)") {
+            if (self.purchased == true) {
+            self.fontFamily = "Futura"
+            DefaultsManager.putString(self.fontFamily, key: DefaultsManager.FONT_FAMILY)
+            self.loadCurrentTheme()
+            }  else {
+                TSMessage.showNotification(in: self, title: "Warning: This Font is Premium", subtitle: "Please upgrade to be able to use it!", type: TSMessageNotificationType.warning)
+            }
+        }
+        
+        let button11 = DefaultButton(title: "Burton\'s Nightmare (Premium)") {
+            if (self.purchased == true) {
+            self.fontFamily = "Burton\'s Nightmare"
+            DefaultsManager.putString(self.fontFamily, key: DefaultsManager.FONT_FAMILY)
+            self.loadCurrentTheme()
+            }  else {
+                TSMessage.showNotification(in: self, title: "Warning: This Font is Premium", subtitle: "Please upgrade to be able to use it!", type: TSMessageNotificationType.warning)
+            }
+        }
+        
+        let button12 = DefaultButton(title: "Star Wars (Premium)") {
+            if (self.purchased == true) {
+            self.fontFamily = "Star Jedi"
+            DefaultsManager.putString(self.fontFamily, key: DefaultsManager.FONT_FAMILY)
+            self.loadCurrentTheme()
+            }  else {
+                TSMessage.showNotification(in: self, title: "Warning: This Font is Premium", subtitle: "Please upgrade to be able to use it!", type: TSMessageNotificationType.warning)
+            }
+        }
+        
+        popup.addButtons([buttonOne, buttonTwo, buttonThree, button4, button5, button6, button7, button8, button9, button10, button11, button12, buttonCancel])
+        
+        self.present(popup, animated: true, completion: nil)
+        
+//        let alert = UIAlertController(title: NSLocalizedString("FontFamily", comment: ""), message: "Select font family (\(fontFamily)", preferredStyle: UIAlertControllerStyle.actionSheet)
+//        alert.addAction(UIAlertAction(title: "Verdana (default)", style: UIAlertActionStyle.default, handler: { action in
+//
+//            self.fontFamily = "Verdana"
+//            DefaultsManager.putString(self.fontFamily, key: DefaultsManager.FONT_FAMILY)
+//            alert.message = "Select font family (\(self.fontFamily)"
+//            self.loadCurrentTheme()
+//        }))
+//        alert.addAction(UIAlertAction(title: "Arial", style: UIAlertActionStyle.default, handler: { action in
+//
+//            self.fontFamily = "Arial"
+//            DefaultsManager.putString(self.fontFamily, key: DefaultsManager.FONT_FAMILY)
+//            alert.message = "Select font family (\(self.fontFamily)"
+//            self.loadCurrentTheme()
+//        }))
+//        alert.addAction(UIAlertAction(title: "Courier New", style: UIAlertActionStyle.default, handler: { action in
+//
+//            self.fontFamily = "Courier New"
+//            DefaultsManager.putString(self.fontFamily, key: DefaultsManager.FONT_FAMILY)
+//            alert.message = "Select font family (\(self.fontFamily)"
+//            self.loadCurrentTheme()
+//        }))
+//        alert.addAction(UIAlertAction(title: "Helvetica", style: UIAlertActionStyle.default, handler: { action in
+//
+//            self.fontFamily = "Helvetica"
+//            DefaultsManager.putString(self.fontFamily, key: DefaultsManager.FONT_FAMILY)
+//            alert.message = "Select font family (\(self.fontFamily)"
+//            self.loadCurrentTheme()
+//        }))
+//        alert.addAction(UIAlertAction(title: "Georgia", style: UIAlertActionStyle.default, handler: { action in
+//
+//            self.fontFamily = "Georgia"
+//            DefaultsManager.putString(self.fontFamily, key: DefaultsManager.FONT_FAMILY)
+//            alert.message = "Select font family (\(self.fontFamily)"
+//            self.loadCurrentTheme()
+//        }))
+//        alert.addAction(UIAlertAction(title: "Trebuchet MS", style: UIAlertActionStyle.default, handler: { action in
+//
+//            self.fontFamily = "Trebuchet MS"
+//            DefaultsManager.putString(self.fontFamily, key: DefaultsManager.FONT_FAMILY)
+//            alert.message = "Select font family (\(self.fontFamily)"
+//            self.loadCurrentTheme()
+//        }))
+//        alert.addAction(UIAlertAction(title: "Times New Roman", style: UIAlertActionStyle.default, handler: { action in
+//
+//            self.fontFamily = "Times New Roman"
+//            DefaultsManager.putString(self.fontFamily, key: DefaultsManager.FONT_FAMILY)
+//            alert.message = "Select font family (\(self.fontFamily)"
+//            self.loadCurrentTheme()
+//        }))
+//
+//        alert.addAction(UIAlertAction(title: "Open Dyslexic Regular (Premium)", style: UIAlertActionStyle.default, handler: { action in
+//
+//            if (self.purchased == false) {
+//                self.fontFamily = "OpenDyslexic"
+//                DefaultsManager.putString(self.fontFamily, key: DefaultsManager.FONT_FAMILY)
+//                alert.message = "Select font family (\(self.fontFamily)"
+//                self.loadCurrentTheme()
+//            } else {
+//                TSMessage.showNotification(in: self, title: "Warning: This Font is Premium", subtitle: "Please upgrade to be able to use it!", type: TSMessageNotificationType.warning)
+//            }
+//        }))
+//
+//        alert.addAction(UIAlertAction(title: "Rooney (Premium)", style: UIAlertActionStyle.default, handler: { action in
+//
+//            if (self.purchased == false) {
+//                self.fontFamily = "Rooney"
+//                DefaultsManager.putString(self.fontFamily, key: DefaultsManager.FONT_FAMILY)
+//                alert.message = "Select font family (\(self.fontFamily)"
+//                self.loadCurrentTheme()
+//            } else {
+//                TSMessage.showNotification(in: self, title: "Warning: This Font is Premium", subtitle: "Please upgrade to be able to use it!", type: TSMessageNotificationType.warning)
+//            }
+//        }))
+//
+//        alert.addAction(UIAlertAction(title: "Futura (Premium)", style: UIAlertActionStyle.default, handler: { action in
+//
+//            if (self.purchased == false) {
+//                self.fontFamily = "Futura"
+//                DefaultsManager.putString(self.fontFamily, key: DefaultsManager.FONT_FAMILY)
+//                alert.message = "Select font family (\(self.fontFamily)"
+//                self.loadCurrentTheme()
+//            } else {
+//                TSMessage.showNotification(in: self, title: "Warning: This Font is Premium", subtitle: "Please upgrade to be able to use it!", type: TSMessageNotificationType.warning)
+//            }
+//        }))
+//
+//        alert.addAction(UIAlertAction(title: "Burton\'s Nightmare (Premium)", style: UIAlertActionStyle.default, handler: { action in
+//
+//            if (self.purchased == false) {
+//                self.fontFamily = "Burton\'s Nightmare"
+//                DefaultsManager.putString(self.fontFamily, key: DefaultsManager.FONT_FAMILY)
+//                alert.message = "Select font family (\(self.fontFamily)"
+//                self.loadCurrentTheme()
+//            } else {
+//                TSMessage.showNotification(in: self, title: "Warning: This Font is Premium", subtitle: "Please upgrade to be able to use it!", type: TSMessageNotificationType.warning)
+//            }
+//        }))
+//
+//        alert.addAction(UIAlertAction(title: "Star Wars (Premium)", style: UIAlertActionStyle.default, handler: { action in
+//
+//            if (self.purchased == false) {
+//                self.fontFamily = "Star Jedi"
+//                DefaultsManager.putString(self.fontFamily, key: DefaultsManager.FONT_FAMILY)
+//                alert.message = "Select font family (\(self.fontFamily)"
+//                self.loadCurrentTheme()
+//            } else {
+//                TSMessage.showNotification(in: self, title: "Warning: This Font is Premium", subtitle: "Please upgrade to be able to use it!", type: TSMessageNotificationType.warning)
+//            }
+//        }))
+//
+//        alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: UIAlertActionStyle.cancel, handler: nil))
+        
+//        alert.popoverPresentationController?.sourceView = self.view
+//        alert.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.size.width / 2.0, y: self.view.bounds.size.height / 2.0, width: 1.0, height: 1.0)
+//
+//        self.present(alert, animated: true, completion: nil)
     }
     
     @IBAction func contentsClicked(_ sender: UIButton) {

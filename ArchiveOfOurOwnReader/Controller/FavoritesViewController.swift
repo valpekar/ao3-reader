@@ -651,8 +651,8 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         var res = 0
         
         let searchPredicate = NSPredicate(format: "fandoms.fandomName CONTAINS[c] %@ LIMIT 1", fandom)
-        let array = (self.fetchedResultsController?.fetchedObjects! as! NSArray).filtered(using: searchPredicate)
-        res = array.count
+        let array = (self.fetchedResultsController?.fetchedObjects as? NSArray)?.filtered(using: searchPredicate)
+        res = array?.count ?? 0
         
         return res
     }
@@ -661,7 +661,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         var res: [NSManagedObject] = []
         
         let searchPredicate = NSPredicate(format: "fandoms.fandomName CONTAINS[c] %@ ", fandom)
-        if let array = (self.fetchedResultsController?.fetchedObjects! as! NSArray).filtered(using: searchPredicate) as? [NSManagedObject] {
+        if let array = (self.fetchedResultsController?.fetchedObjects as? NSArray)?.filtered(using: searchPredicate) as? [NSManagedObject] {
             res = array
         }
         
@@ -684,7 +684,9 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
              workDetail.modalDelegate = self
         } else if (segue.identifier == "editFoldersSegue") {
             let editController: EditFoldersController = segue.destination as! EditFoldersController
-            editController.editFoldersProtocol = self
+            if (self.selectedWork != nil) {
+                editController.editFoldersProtocol = self
+            }
           //  editController.folders = folders
         }
         
@@ -694,8 +696,13 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         searchBarCancelButtonClicked(self.resultSearchController.searchBar)
     }
     
+    @IBAction func editTouched(_ sender: AnyObject) {
+        self.selectedWork = nil
+        self.performSegue(withIdentifier: "editFoldersSegue", sender: self)
+    }
+    
     @IBAction func addFolder(_ sender: AnyObject) {
-        let fName = "Folder \(self.folderName) 1)"
+        let fName = "Folder \(self.folderName) 1"
         showAddFolder(folderName: fName)
     }
     
