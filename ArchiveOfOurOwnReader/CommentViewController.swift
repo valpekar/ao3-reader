@@ -8,7 +8,7 @@
 
 import UIKit
 import Alamofire
-import TSMessages
+import RMessage
 import WebKit
 
 class CommentViewController: LoadingViewController, UITableViewDelegate, UITableViewDataSource, WKNavigationDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
@@ -115,7 +115,9 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
                     self.hideLoadingView()
                 } else {
                     self.hideLoadingView()
-                    TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
+                    RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                        
+                    })
                 }
             })
         
@@ -317,7 +319,9 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
         if(commentTv.text != nil && commentTv.text.count > 0) {
             sendComment()
         } else {
-            TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("PleaseWriteComment", comment: ""), type: .error)
+            RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("PleaseWriteComment", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                
+            })
         }
     }
     
@@ -381,7 +385,9 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
                         
                     } else {
                         self.hideLoadingView()
-                        TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
+                        RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                            
+                        })
                     }
                 })
         }
@@ -457,7 +463,9 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
                     self.loadCurrentTheme()
                 } else {
                     self.hideLoadingView()
-                    TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
+                    RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                        
+                    })
                 }
             })
         }

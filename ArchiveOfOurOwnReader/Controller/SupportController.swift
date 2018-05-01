@@ -7,7 +7,7 @@
 //
 
 import MessageUI
-import TSMessages
+import RMessage
 import UIKit
 
 class SupportController: LoadingViewController, MFMailComposeViewControllerDelegate {
@@ -49,7 +49,7 @@ class SupportController: LoadingViewController, MFMailComposeViewControllerDeleg
     
 //    @IBAction func doneTouched(_ sender: AnyObject) {
 //        guard let text = codeTv.text else {
-//            TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: "Promo code cannot be empty", type: .error)
+//            RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: "Promo code cannot be empty", type: .error)
 //            return
 //        }
 //
@@ -58,11 +58,11 @@ class SupportController: LoadingViewController, MFMailComposeViewControllerDeleg
 //            UserDefaults.standard.set(true, forKey: "donated")
 //            UserDefaults.standard.synchronize()
 //
-//            TSMessage.showNotification(in: self, title: NSLocalizedString("Success", comment: ""), subtitle: "Promo Key Accepted!", type: .success)
+//            RMessage.showNotification(in: self, title: NSLocalizedString("Success", comment: ""), subtitle: "Promo Key Accepted!", type: .success)
 //
 //            codeTv.text = ""
 //        } else {
-//            TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: "No Such Promo Key!", type: .error)
+//            RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: "No Such Promo Key!", type: .error)
 //        }
 //    }
     

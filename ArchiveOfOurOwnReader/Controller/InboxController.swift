@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 import AlamofireImage
-import TSMessages
+import RMessage
 import Crashlytics
 
 class InboxController : ListViewController  {
@@ -113,7 +113,9 @@ class InboxController : ListViewController  {
                     self.showInbox()
                 } else {
                     self.hideLoadingView()
-                    TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
+                    RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                        
+                    })
                     
                 }
             })
@@ -559,7 +561,9 @@ extension InboxController: UICollectionViewDataSource, UICollectionViewDelegate,
                     self.showInbox()
                 } else {
                     self.hideLoadingView()
-                    TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
+                    RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                        
+                    })
                 }
             })
             
@@ -627,14 +631,18 @@ extension InboxController {
                         
                     } else {
                         self.hideLoadingView()
-                        TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CannotMarkItem", comment: ""), type: .error)
+                        RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CannotMarkItem", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                            
+                        })
                     }
                 })
             
         } else {
             
             self.hideLoadingView()
-            TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CannotMarkItem", comment: ""), type: .error)
+            RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CannotMarkItem", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                
+            })
         }
     }
     
@@ -649,12 +657,16 @@ extension InboxController {
         
         if let noticeEls = doc.search(withXPathQuery: "//div[@class='flash notice']") as? [TFHppleElement], noticeEls.count > 0,
             let noticeStr = noticeEls[0].content, noticeStr.contains("successfully") {
-            TSMessage.showNotification(in: self, title: NSLocalizedString("Success", comment: ""), subtitle: NSLocalizedString("InboxUpdated", comment: ""), type: .success)
+            RMessage.showNotification(in: self, title: NSLocalizedString("Success", comment: ""), subtitle: NSLocalizedString("InboxUpdated", comment: ""), type: RMessageType.success, customTypeName: "", callback: {
+                
+            })
             
             self.refresh(self.tableView)
         } else {
             
-            TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CouldNotReply", comment: ""), type: .error)
+            RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CouldNotReply", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                
+            })
         }
     }
 }
@@ -697,20 +709,27 @@ extension InboxController {
                         //self.parseMarkRequest(d)
                         self.hideLoadingView()
                         
-                        TSMessage.showNotification(in: self, title: NSLocalizedString("Success", comment: ""), subtitle: NSLocalizedString("CommentApproved", comment: ""), type: .success)
+                        RMessage.showNotification(in: self, title: NSLocalizedString("Success", comment: ""), subtitle: NSLocalizedString("CommentApproved", comment: ""), type: RMessageType.success, customTypeName: "", callback: {
+                            
+                        })
                         
                         self.refresh(self.tableView)
                         
                     } else {
                         self.hideLoadingView()
-                        TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: response.error?.localizedDescription, type: .error)
+                        RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: response.error?.localizedDescription, type: RMessageType.error, customTypeName: "", callback: {
+                            
+                        })
+                        
                     }
                 })
             
         } else {
             
             self.hideLoadingView()
-            TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CannotMarkItem", comment: ""), type: .error)
+            RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CannotMarkItem", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                
+            })
         }
     }
     
@@ -771,7 +790,9 @@ extension InboxController {
                     
                     if (response.response?.statusCode == 302) {
                         self.hideLoadingView()
-                        TSMessage.showNotification(in: self, title: NSLocalizedString("Success", comment: ""), subtitle: NSLocalizedString("ItemDeleted", comment: ""), type: .success)
+                        RMessage.showNotification(in: self, title: NSLocalizedString("Success", comment: ""), subtitle: NSLocalizedString("ItemDeleted", comment: ""), type: RMessageType.success, customTypeName: "", callback: {
+                            
+                        })
                         
                         self.refresh(self.tableView)
                         
@@ -784,14 +805,18 @@ extension InboxController {
                         
                     } else {
                         self.hideLoadingView()
-                        TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CouldNotDelete", comment: ""), type: .error)
+                        RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CouldNotDelete", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                            
+                        })
                     }
                 })
             
         } else {
             
             self.hideLoadingView()
-            TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CouldNotDelete", comment: ""), type: .error)
+            RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CouldNotDelete", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                
+            })
         }
     }
     
@@ -805,11 +830,15 @@ extension InboxController {
         
         if let noticeEls = doc.search(withXPathQuery: "//div[@class='flash notice']") as? [TFHppleElement], noticeEls.count > 0,
             let noticeStr = noticeEls[0].content, (noticeStr.contains("successfully")) {
-            TSMessage.showNotification(in: self, title: NSLocalizedString("Success", comment: ""), subtitle: NSLocalizedString("ItemDeleted", comment: ""), type: .success)
+            RMessage.showNotification(in: self, title: NSLocalizedString("Success", comment: ""), subtitle: NSLocalizedString("ItemDeleted", comment: ""), type: RMessageType.success, customTypeName: "", callback: {
+                
+            })
             
         } else {
             
-            TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CouldNotDelete", comment: ""), type: .error)
+            RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CouldNotDelete", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                
+            })
         }
     }
 }

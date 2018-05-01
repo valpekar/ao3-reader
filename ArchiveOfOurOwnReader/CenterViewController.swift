@@ -42,5 +42,7 @@ class CenterViewController: UIViewController {
         let backItem = UIBarButtonItem()
         backItem.title = " "
         navigationItem.backBarButtonItem = backItem
+        
+        self.delegate?.collapseSidePanels()
     }
 }

@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 import GoogleMobileAds
-import TSMessages
+import RMessage
 import Alamofire
 import Crashlytics
 
@@ -226,7 +226,21 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
          self.modalDelegate?.controllerDidClosed()
     }
     
-    
+    @IBAction func kudosTouched(_ sender: AnyObject) {
+        var workId = ""
+        
+        if let workItem = self.workItem {
+            workId = workItem.workId
+        } else if let downloadedWorkItem = self.downloadedWorkItem {
+            workId = downloadedWorkItem.workId ?? "0"
+        }
+        
+        Answers.logCustomEvent(withName: "WorkDetail: Kudos add",
+                               customAttributes: [
+                                "workId": workId])
+        
+        doLeaveKudos(workId: workId)
+    }
     
     func showDownloadedWork() {
         
@@ -364,7 +378,9 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                     self.hideLoadingView()
                 } else {
                     self.hideLoadingView()
-                    TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
+                    RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                        
+                    })
                 }
             })
         
@@ -747,7 +763,9 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                         let delay = 0.2 * Double(NSEC_PER_SEC)
                         let time = DispatchTime.now() + Double(Int64(delay)) / Double(NSEC_PER_SEC)
                         DispatchQueue.main.asyncAfter(deadline: time) {
-                            TSMessage.showNotification(in: self, title: NSLocalizedString("Update", comment: ""), subtitle: NSLocalizedString("UpdateAvail", comment: ""), type: TSMessageNotificationType.success, duration: 15.0, canBeDismissedByUser: true)
+                            RMessage.showNotification(in: self, title: NSLocalizedString("Update", comment: ""), subtitle: NSLocalizedString("UpdateAvail", comment: ""), type: RMessageType.success, customTypeName: "", duration: 15.0, callback: {
+                                
+                            } , canBeDismissedByUser: true)
                         }
                     }
                 }
@@ -840,7 +858,9 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
         if let noticediv: [TFHppleElement] = doc.search(withXPathQuery: "//div[@class='flash notice']") as? [TFHppleElement] {
             if(noticediv.count > 0) {
-                TSMessage.showNotification(in: self, title: NSLocalizedString("AddingBmk", comment: ""), subtitle: noticediv[0].content, type: .success)
+                RMessage.showNotification(in: self, title: NSLocalizedString("AddingBmk", comment: ""), subtitle: noticediv[0].content, type: RMessageType.success, customTypeName: "", callback: {
+                    
+                })
             
                 changedSmth = true
             }
@@ -849,13 +869,17 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         if let sorrydiv = doc.search(withXPathQuery: "//div[@class='flash error']") {
             
             if(sorrydiv.count>0 && (sorrydiv[0] as! TFHppleElement).text().range(of: "Sorry") != nil) {
-                TSMessage.showNotification(in: self, title: NSLocalizedString("AddingBmk", comment: ""), subtitle: (sorrydiv[0] as AnyObject).content, type: .error)
+                RMessage.showNotification(in: self, title: NSLocalizedString("AddingBmk", comment: ""), subtitle: (sorrydiv[0] as AnyObject).content, type: RMessageType.error, customTypeName: "", callback: {
+                    
+                })
                 return
             }
         }
         
         if (data.isEmpty) {
-            TSMessage.showNotification(in: self, title: NSLocalizedString("CannotAddBmk", comment: ""), subtitle: "Response Is Empty", type: .error)
+            RMessage.showNotification(in: self, title: NSLocalizedString("CannotAddBmk", comment: ""), subtitle: "Response Is Empty", type: RMessageType.error, customTypeName: "", callback: {
+                
+            })
         }
         return
     }
@@ -899,7 +923,10 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             readButton.isEnabled = false
             readButton.alpha = 0.5
             
-            TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("SensitiveContent", comment: ""), type: .warning, duration: 9.999999999999999e999, canBeDismissedByUser: true)
+            RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("SensitiveContent", comment: ""), type: RMessageType.error, customTypeName: "", duration: 9.999999999999999e999, callback: {
+                    
+            } , canBeDismissedByUser: true)
+            
         }
     }
     
@@ -1341,6 +1368,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                     tagUrl = downloadedFandoms[pos].fandomUrl ?? ""
                 }
                 NSLog("link Tapped = " + tagUrl)
+                CLSLogv("WorkDetail: link Tapped = " + tagUrl, getVaList([]))
                 
                 if (tagUrl.isEmpty == false) {
                     performSegue(withIdentifier: "listSegue", sender: self)
@@ -1353,6 +1381,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 tagUrl = downloadedRelationships[pos].relationshipUrl ?? ""
             }
             NSLog("link Tapped = " + tagUrl)
+            CLSLogv("WorkDetail: link Tapped = " + tagUrl, getVaList([]))
             
             if (tagUrl.isEmpty == false) {
                 performSegue(withIdentifier: "listSegue", sender: self)
@@ -1365,6 +1394,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 tagUrl = downloadedCharacters[pos].characterUrl ?? ""
             }
             NSLog("link Tapped = " + tagUrl)
+            CLSLogv("WorkDetail: link Tapped = " + tagUrl, getVaList([]))
                         
             if (tagUrl.isEmpty == false) {
                 performSegue(withIdentifier: "listSegue", sender: self)
@@ -1372,6 +1402,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             
         case 8:
             performSegue(withIdentifier: "showSerie", sender: self)
+            CLSLogv("WorkDetail: showSerie", getVaList([]))
             
         default:
             break
@@ -1513,7 +1544,9 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                             
                         } else {
                             self.hideLoadingView()
-                            TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
+                            RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                                
+                            })
                         }
                     })
             }
@@ -1529,20 +1562,26 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
         if let noticediv: [TFHppleElement] = doc.search(withXPathQuery: "//div[@class='flash notice']") as? [TFHppleElement] {
             if(noticediv.count > 0) {
-                TSMessage.showNotification(in: self, title: NSLocalizedString("MarkingForLater", comment: ""), subtitle: noticediv[0].content, type: .success)
+                RMessage.showNotification(in: self, title: NSLocalizedString("MarkingForLater", comment: ""), subtitle: noticediv[0].content, type: RMessageType.success, customTypeName: "", callback: {
+                    
+                })
             }
         }
         
         if let sorrydiv = doc.search(withXPathQuery: "//div[@class='flash error']") {
             
             if(sorrydiv.count>0 && (sorrydiv[0] as! TFHppleElement).text().range(of: "Sorry") != nil) {
-                TSMessage.showNotification(in: self, title: NSLocalizedString("MarkingForLater", comment: ""), subtitle: (sorrydiv[0] as AnyObject).content, type: .error)
+                RMessage.showNotification(in: self, title: NSLocalizedString("MarkingForLater", comment: ""), subtitle: (sorrydiv[0] as AnyObject).content, type: RMessageType.error, customTypeName: "", callback: {
+                    
+                })
                 return
             }
         }
         
         if (data.isEmpty) {
-            TSMessage.showNotification(in: self, title: NSLocalizedString("CannotMark", comment: ""), subtitle: "Response Is Empty", type: .error)
+            RMessage.showNotification(in: self, title: NSLocalizedString("CannotMark", comment: ""), subtitle: "Response Is Empty", type: RMessageType.error, customTypeName: "", callback: {
+                
+            })
         }
         return
     }
@@ -1622,7 +1661,9 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                             
                         } else {
                             self.hideLoadingView()
-                            TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
+                            RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                                
+                            })
                         }
                     })
             }
@@ -1747,7 +1788,9 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                         
                     } else {
                         self.hideLoadingView()
-                        TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
+                        RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                            
+                        })
                     }
                 })
             }
@@ -1801,7 +1844,9 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                     self.hideLoadingView()
                 } else {
                     self.hideLoadingView()
-                    TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
+                    RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                        
+                    })
 
                 }
             })
@@ -1814,14 +1859,18 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             if(noticediv.count > 0) {
                 bookmarked = false
                 changedSmth = true
-                TSMessage.showNotification(in: self, title: NSLocalizedString("DeleteFromBmk", comment: ""), subtitle: noticediv[0].content, type: .success)
+                RMessage.showNotification(in: self, title: NSLocalizedString("DeleteFromBmk", comment: ""), subtitle: noticediv[0].content, type: RMessageType.success, customTypeName: "", callback: {
+                    
+                })
             }
         }
         
         if let sorrydiv = doc.search(withXPathQuery: "//div[@class='flash error']") {
             
             if(sorrydiv.count>0 && (sorrydiv[0] as? TFHppleElement)?.text().range(of: "Sorry") != nil) {
-                TSMessage.showNotification(in: self, title: NSLocalizedString("DeleteFromBmk", comment: ""), subtitle: (sorrydiv[0] as AnyObject).content, type: .error)
+                RMessage.showNotification(in: self, title: NSLocalizedString("DeleteFromBmk", comment: ""), subtitle: (sorrydiv[0] as AnyObject).content, type: RMessageType.error, customTypeName: "", callback: {
+                    
+                })
 
                 return
             }
@@ -1866,7 +1915,9 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             }
         } else {
             self.hideLoadingView()
-            TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
+            RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                
+            })
         }
     }
     
@@ -1883,7 +1934,9 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             
         } else {
             self.hideLoadingView()
-            TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
+            RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                
+            })
         }
     }
     
@@ -1913,13 +1966,17 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 } catch _ {
                     NSLog("Cannot delete saved work")
                     
-                    TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CannotDeleteWrk", comment: ""), type: .error)
+                    RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CannotDeleteWrk", comment: ""), type: RMessageType.success, customTypeName: "", callback: {
+                        
+                    })
                 }
                 
                 self.saveWorkNotifItem(workId: wId, wasDeleted: NSNumber(booleanLiteral: true))
                 self.sendAllNotSentForDelete()
                 
-                TSMessage.showNotification(in: self, title: NSLocalizedString("Success", comment: ""), subtitle: NSLocalizedString("WorkDeletedFromDownloads", comment: ""), type: .success)
+                RMessage.showNotification(in: self, title: NSLocalizedString("Success", comment: ""), subtitle: NSLocalizedString("WorkDeletedFromDownloads", comment: ""), type: RMessageType.success, customTypeName: "", callback: {
+                    
+                })
             }))
             
             deleteAlert.view.tintColor = AppDelegate.redColor
@@ -2094,7 +2151,11 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             let delay = 0.2 * Double(NSEC_PER_SEC)
             let time = DispatchTime.now() + Double(Int64(delay)) / Double(NSEC_PER_SEC)
             DispatchQueue.main.asyncAfter(deadline: time) {
-                TSMessage.showNotification(in: self, title: NSLocalizedString("Update", comment: ""), subtitle: NSLocalizedString("UpdateAvail", comment: ""), type: TSMessageNotificationType.success, duration: 2.0, canBeDismissedByUser: true)
+                DispatchQueue.main.asyncAfter(deadline: time) {
+                    RMessage.showNotification(in: self, title: NSLocalizedString("Update", comment: ""), subtitle: NSLocalizedString("UpdateAvail", comment: ""), type: RMessageType.success, customTypeName: "", duration: 15.0, callback: {
+                        
+                    } , canBeDismissedByUser: true)
+                }
             }
         }
     }

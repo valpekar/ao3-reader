@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import TSMessages
+import RMessage
 import Alamofire
 import Crashlytics
 
@@ -166,7 +166,9 @@ class WorkListController: ListViewController, UITableViewDataSource, UITableView
                     self.showWorks()
                 } else {
                     self.hideLoadingView()
-                    TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
+                    RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                        
+                    })
                 }
                 self.refreshControl.endRefreshing()
             })
@@ -306,7 +308,9 @@ class WorkListController: ListViewController, UITableViewDataSource, UITableView
                     //self.saveWork()
                 } else {
                     self.hideLoadingView()
-                    TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
+                    RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                        
+                    })
                 }
             })
     }
@@ -318,7 +322,7 @@ extension WorkListController: UISearchResultsUpdating, UISearchBarDelegate {
     func updateSearchResults(for searchController: UISearchController) {
 //        if let txt = searchController.searchBar.text {
 //            if (txt.isEmpty) {
-//                TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CannotBeEmpty", comment: ""), type: .error, duration: 2.0)
+//                RMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CannotBeEmpty", comment: ""), type: .error, duration: 2.0)
 //            } else {
 //                searchAndFilter(txt)
 //            }
@@ -382,7 +386,10 @@ extension WorkListController: UISearchResultsUpdating, UISearchBarDelegate {
                     self.showWorks()
                 } else {
                     self.hideLoadingView()
-                    TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
+                    RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                        
+                    })
+                    
                 }
                 self.refreshControl.endRefreshing()
             })
@@ -394,7 +401,9 @@ extension WorkListController: UISearchResultsUpdating, UISearchBarDelegate {
 
             searchBar.endEditing(true)
         } else {
-            TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CannotBeEmpty", comment: ""), type: .error, duration: 2.0)
+            RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CannotBeEmpty", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                
+            })
         }
     }
 

@@ -10,7 +10,7 @@ import UIKit
 import Crashlytics
 import Alamofire
 import AlamofireImage
-import TSMessages
+import RMessage
 import ExpandableLabel
 
 class AuthorViewController: LoadingViewController {
@@ -103,7 +103,9 @@ class AuthorViewController: LoadingViewController {
                     self.hideLoadingView()
                 } else {
                     self.hideLoadingView()
-                    TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
+                    RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                        
+                    })
                 }
             })
     }

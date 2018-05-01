@@ -9,7 +9,7 @@
 
 import UIKit
 import Crashlytics
-import TSMessages
+import RMessage
 
 class SecuritySettingsController: LoadingViewController {
     
@@ -78,16 +78,22 @@ class SecuritySettingsController: LoadingViewController {
         if let txt: String = passTextView.text,
             let txt1: String = passrepTextView.text {
             if (txt.isEmpty || txt1.isEmpty) {
-                TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Please type your passcode", comment: ""), type: .error, duration: 2.0)
+                RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Please type your passcode", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                    
+                })
             } else if (txt != txt1) {
-                TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Passcodes do not match", comment: ""), type: .error, duration: 2.0)
+                RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Passcodes do not match", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                    
+                })
             } else {
                 
                 doneButtonAction()
                 
                 DefaultsManager.putString(txt, key: DefaultsManager.USER_PASS)
                 
-                TSMessage.showNotification(in: self, title:  NSLocalizedString("Success", comment: ""), subtitle: NSLocalizedString("Passcode successfully set", comment: ""), type: .success, duration: 2.0)
+                RMessage.showNotification(in: self, title: NSLocalizedString("Success", comment: ""), subtitle: NSLocalizedString("Passcode successfully set", comment: ""), type: RMessageType.success, customTypeName: "", callback: {
+                    
+                })
             }
         }
     }
@@ -113,7 +119,9 @@ class SecuritySettingsController: LoadingViewController {
             if (!DefaultsManager.getString(DefaultsManager.USER_PASS).isEmpty) {
                 DefaultsManager.putBool(true, key: DefaultsManager.NEEDS_PASS)
             } else {
-                TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Please type your passcode", comment: ""), type: .error, duration: 2.0)
+                RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Please type your passcode", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                    
+                })
                 sender.setOn(false, animated: true)
             }
         } else {

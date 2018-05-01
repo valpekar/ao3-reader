@@ -8,7 +8,7 @@
 
 import UIKit
 import Alamofire
-import TSMessages
+import RMessage
 import Crashlytics
 
 class SerieViewController: ListViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -101,7 +101,9 @@ class SerieViewController: ListViewController, UITableViewDataSource, UITableVie
                     self.showSerie()
                 } else {
                     self.hideLoadingView()
-                    TSMessage.showNotification(in: self, title: "Error", subtitle: "Check your Internet connection", type: .error)
+                    RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                        
+                    })
                 }
                 self.refreshControl.endRefreshing()
             })
@@ -169,7 +171,9 @@ class SerieViewController: ListViewController, UITableViewDataSource, UITableVie
                     //self.saveWork()
                 } else {
                     self.hideLoadingView()
-                    TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
+                    RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                        
+                    })
                 }
             })
     }
@@ -305,7 +309,9 @@ class SerieViewController: ListViewController, UITableViewDataSource, UITableVie
                     self.showSerie()
                 } else {
                     self.hideLoadingView()
-                    TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
+                    RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                        
+                    })
                 }
             })
         }

@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import TSMessages
+import RMessage
 
 class ImportWorkController : UIViewController {
     
@@ -86,15 +86,28 @@ class ImportWorkController : UIViewController {
     }
     
     @IBAction func importTouched(_ sender: AnyObject) {
-        if let txt: String = textField.text {
+        if var txt: String = textField.text {
             if (txt.isEmpty == false && (txt.contains(AppDelegate.ao3SiteUrl) || txt.contains("http://archiveofourown.org"))) {
+                if (txt.contains(" ")) {
+                    let arr = txt.split(separator: " ")
+                    if (arr.count > 0) {
+                        for arrStr in arr {
+                            if (arrStr.contains("http://archiveofourown.org")) {
+                                txt = String(arr[arr.count - 1])
+                                break
+                            }
+                        }
+                    }
+                }
                 DispatchQueue.main.async {
                         self.dismiss(animated: true) {
                             self.importDelegate?.linkPasted(workUrl: txt)
                         }
                 }
             } else {
-                    TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckLink", comment: ""), type: .error, duration: 2.0)
+                RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckLink", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                    
+                })
                 
             }
         }

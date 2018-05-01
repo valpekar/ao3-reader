@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 import StoreKit
 import CoreLocation
-import TSMessages
+import RMessage
 import Alamofire
 import Crashlytics
 
@@ -41,6 +41,8 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
     var triedToLogin = 0
     
     var refreshControl: UIRefreshControl!
+    
+    var openingPrevWork = false
     
     // MARK: - UIViewController Lifecycle
     override func viewDidLoad() {
@@ -106,17 +108,6 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
             searchApplied(self.query, shouldAddKeyword: true)
         }*/
         
-        if ( !DefaultsManager.getString(DefaultsManager.LASTWRKID).isEmpty) {
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let vc: WorkDetailViewController = storyboard.instantiateViewController(withIdentifier: "WorkDetailViewController") as! WorkDetailViewController
-            let item: WorkItem = WorkItem()
-            item.workId = DefaultsManager.getString(DefaultsManager.LASTWRKID)
-            vc.workItem = item
-            vc.modalDelegate = self
-            
-            self.navigationController?.pushViewController(vc, animated: true)
-        }
-        
         tryAgainButton.layer.borderWidth = 1.0
         tryAgainButton.layer.borderColor = AppDelegate.redColor.cgColor
         tryAgainButton.layer.cornerRadius = AppDelegate.smallCornerRadius
@@ -134,6 +125,13 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
         
         self.sendAllNotSentForNotif()
         self.sendAllNotSentForDelete()
+        
+        if ( !DefaultsManager.getString(DefaultsManager.LASTWRKID).isEmpty) {
+            openingPrevWork = true
+            
+            let mWorkId = DefaultsManager.getString(DefaultsManager.LASTWRKID)
+            openWorkDetails(workId: mWorkId)
+        }
         
     }
     
@@ -165,6 +163,22 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
         
         self.tableView.reloadData()
         self.collectionView.reloadData()
+        
+        let worksToReload = DefaultsManager.getStringArray(DefaultsManager.NOTIF_IDS_ARR)
+        if (worksToReload.count > 0 && openingPrevWork == false) {
+            openWorkDetails(workId: worksToReload[0])
+        }
+    }
+    
+    func openWorkDetails(workId: String) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc: WorkDetailViewController = storyboard.instantiateViewController(withIdentifier: "WorkDetailViewController") as! WorkDetailViewController
+        let item: WorkItem = WorkItem()
+        item.workId = workId
+        vc.workItem = item
+        vc.modalDelegate = self
+        
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     override func applyTheme() {
@@ -220,7 +234,9 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
                 searchApplied(self.query, shouldAddKeyword: true)
             }
         } else {
-            TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error, duration: 2.0)
+            RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                
+            })
         }
     }
    
@@ -443,7 +459,9 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
             //self.getFeed(d)
         } else {
             self.hideLoadingView()
-            TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error, duration: 2.0)
+            RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                
+            })
         }
         
         self.refreshControl.endRefreshing()
@@ -550,7 +568,9 @@ extension FeedViewController : UISearchBarDelegate, UISearchResultsUpdating {
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         guard let txt = searchBar.text else {
-            TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CannotBeEmpty", comment: ""), type: .error, duration: 2.0)
+            RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CannotBeEmpty", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                
+            })
             return
         }
         

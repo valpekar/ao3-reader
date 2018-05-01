@@ -9,7 +9,6 @@
 import UIKit
 import CoreData
 import Crashlytics
-import TSMessages
 
 class ViewFoldersController: BaseFolderController {
     

@@ -9,7 +9,7 @@
 import Foundation
 import StoreKit
 import CoreData
-import TSMessages
+import RMessage
 import Crashlytics
 
 class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewDataSource, SKPaymentTransactionObserver {
@@ -577,9 +577,13 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
         SKPaymentQueue.default().add(self)
         ReaderProducts.store.restoreCompletedTransactions { error in
             if let err = error {
-                TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: err.localizedDescription, type: .error)
+                RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: err.localizedDescription, type: RMessageType.error, customTypeName: "", callback: {
+                    
+                })
             } else {
-                TSMessage.showNotification(in: self, title: NSLocalizedString("Finished", comment: ""), subtitle: NSLocalizedString("RestoreProcess", comment: ""), type: .success)
+                RMessage.showNotification(in: self, title: NSLocalizedString("Finished", comment: ""), subtitle: NSLocalizedString("RestoreProcess", comment: ""), type: RMessageType.success, customTypeName: "", callback: {
+                    
+                })
                 
                 self.refreshUI()
                 
@@ -681,7 +685,9 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
                     UserDefaults.standard.set(donated, forKey: "donated")
                     UserDefaults.standard.synchronize()
                     
-                    TSMessage.showNotification(in: self, title: NSLocalizedString("ThankYou", comment: ""), subtitle: NSLocalizedString("ThankYouForTip", comment: ""), type: .success)
+                    RMessage.showNotification(in: self, title: NSLocalizedString("ThankYou", comment: ""), subtitle: NSLocalizedString("ThankYouForTip", comment: ""), type: RMessageType.success, customTypeName: "", callback: {
+                        
+                    })
                     
                 }
                 

@@ -8,7 +8,7 @@
 
 import UIKit
 import CoreData
-import TSMessages
+import RMessage
 import Crashlytics
 
 class EditFoldersController: BaseFolderController {
@@ -53,7 +53,9 @@ class EditFoldersController: BaseFolderController {
             if let folder = fetchedResultsController?.object(at: indexPath) {
                 folderTouched(folder: folder)
             } else {
-                TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("FolderNotFound", comment: ""), type: .error)
+                RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("FolderNotFound", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                    
+                })
             }
         }
         tableView.deselectRow(at: indexPath, animated: true)
@@ -135,7 +137,9 @@ class EditFoldersController: BaseFolderController {
         do {
             try managedContext.save()
         } catch _ {
-            TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Could not delete the folder!", comment: ""), type: .error)
+            RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Could not delete the folder!", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                
+            })
         }
         
         self.tableView.reloadData()
@@ -165,7 +169,9 @@ class EditFoldersController: BaseFolderController {
                                         "name_new": txt,
                                         "name_old": folder.name ?? "No Name"])
             } else {
-                TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("FolderNameEmpty", comment: ""), type: .error)
+                RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("FolderNameEmpty", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                    
+                })
             }
             
         }))
@@ -194,7 +200,9 @@ class EditFoldersController: BaseFolderController {
         do {
             if let fetchedWorks = try managedContext.fetch(req) as? [Folder] {
                 if (fetchedWorks.count > 0) {
-                    TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("FolderAlreadyExists", comment: ""), type: .error)
+                    RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("FolderAlreadyExists", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                        
+                    })
                     return
                 } else {
                     folder.name = newName
@@ -210,7 +218,9 @@ class EditFoldersController: BaseFolderController {
             #if DEBUG
                 print("Could not save \(String(describing: error.userInfo))")
             #endif
-            TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Could not rename the folder!", comment: ""), type: .error)
+            RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Could not rename the folder!", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                
+            })
         }
         
         tableView.reloadData()

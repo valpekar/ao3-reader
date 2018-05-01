@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import TSMessages
+import RMessage
 import Crashlytics
 
 class ChoosePrefController : LoadingViewController {
@@ -47,7 +47,9 @@ class ChoosePrefController : LoadingViewController {
     @IBAction func nextTouched(sender: AnyObject) {
         
         guard let txt = textField.text, !txt.isEmpty else {
-            TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("AtLeastOneFandom", comment: ""), type: .error, duration: 2.0)
+            RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("AtLeastOneFandom", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                
+            })
             return
         }
         

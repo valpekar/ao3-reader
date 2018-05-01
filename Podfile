@@ -8,7 +8,6 @@ target 'ArchiveOfOurOwnReader' do
 
   # Pods for ArchiveOfOurOwnReader
 
-pod 'TSMessages', :git => 'https://github.com/KrauseFx/TSMessages.git'
 pod 'Firebase'
 pod 'Firebase/AdMob'
 pod 'Firebase/Core'
@@ -20,6 +19,7 @@ pod 'Spring', :git => 'https://github.com/MengTo/Spring.git'
 pod 'RSLoadingView'
 pod 'ExpandableLabel'
 pod 'PopupDialog', '~> 0.7'
+pod 'RMessage'
 
   target 'ArchiveOfOurOwnReaderTests' do
     inherit! :search_paths

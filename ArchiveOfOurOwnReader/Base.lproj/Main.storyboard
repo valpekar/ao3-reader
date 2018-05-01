@@ -1123,8 +1123,8 @@
                                     <constraint firstAttribute="width" constant="320" id="yFd-0C-ReH"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BZH-PI-909">
-                                <rect key="frame" x="16" y="638" width="343" height="42"/>
+                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BZH-PI-909">
+                                <rect key="frame" x="16" y="638" width="303" height="42"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.85999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="42" id="LKz-oN-kpU"/>
@@ -1151,11 +1151,18 @@
                                     <segue destination="4yv-UH-kjf" kind="show" identifier="readSegue" id="XPF-AR-c4L"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x4P-wv-ZJ4">
+                                <rect key="frame" x="327" y="643" width="32" height="32"/>
+                                <state key="normal" image="likes"/>
+                                <connections>
+                                    <action selector="kudosTouched:" destination="g0F-jj-WaO" eventType="touchUpInside" id="n45-9w-BA2"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.85550840736040612" green="0.85550840736040612" blue="0.85550840736040612" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="x4P-wv-ZJ4" firstAttribute="leading" secondItem="BZH-PI-909" secondAttribute="trailing" constant="8" id="1Mb-RB-BM6"/>
                             <constraint firstItem="JVy-x2-Pai" firstAttribute="top" secondItem="DFN-f7-SBP" secondAttribute="bottom" id="993-Va-oJz"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="BZH-PI-909" secondAttribute="trailing" id="I0x-YZ-qyc"/>
                             <constraint firstItem="BZH-PI-909" firstAttribute="leading" secondItem="cdF-HD-3HJ" secondAttribute="leadingMargin" id="J3r-II-57L"/>
                             <constraint firstItem="1uf-cP-mwU" firstAttribute="leading" secondItem="cdF-HD-3HJ" secondAttribute="leading" id="Lmo-yq-ntC"/>
                             <constraint firstItem="JVy-x2-Pai" firstAttribute="top" secondItem="bXi-6T-lyf" secondAttribute="bottom" constant="110" id="M2v-uZ-Hof"/>
@@ -1166,6 +1173,8 @@
                             <constraint firstItem="BZH-PI-909" firstAttribute="top" secondItem="JVy-x2-Pai" secondAttribute="bottom" constant="10" id="kku-1c-BiP"/>
                             <constraint firstAttribute="trailingMargin" secondItem="JVy-x2-Pai" secondAttribute="trailing" id="lgC-eh-Sk0"/>
                             <constraint firstItem="1uf-cP-mwU" firstAttribute="top" secondItem="cdF-HD-3HJ" secondAttribute="top" id="luD-mI-pId"/>
+                            <constraint firstItem="x4P-wv-ZJ4" firstAttribute="centerY" secondItem="BZH-PI-909" secondAttribute="centerY" id="mPy-wx-Day"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="x4P-wv-ZJ4" secondAttribute="trailing" id="qJa-qE-Jas"/>
                             <constraint firstItem="DFN-f7-SBP" firstAttribute="centerX" secondItem="cdF-HD-3HJ" secondAttribute="centerX" id="tZk-9k-01F"/>
                             <constraint firstItem="RvI-P4-Jsq" firstAttribute="top" secondItem="BZH-PI-909" secondAttribute="bottom" constant="10" id="xgJ-AP-3JM"/>
                             <constraint firstItem="RvI-P4-Jsq" firstAttribute="top" secondItem="BZH-PI-909" secondAttribute="bottom" constant="58" id="zXo-hK-B3c"/>
@@ -10374,9 +10383,9 @@ Please check your Internet connection and also make sure you are logged into you
     <inferredMetricsTieBreakers>
         <segue reference="AVD-tc-abp"/>
         <segue reference="GYH-Ae-w0j"/>
-        <segue reference="jXE-kt-jek"/>
+        <segue reference="5rQ-gu-17N"/>
         <segue reference="GOa-zO-Fy6"/>
         <segue reference="6Vy-m9-kwB"/>
-        <segue reference="b3W-0z-TKl"/>
+        <segue reference="aEt-Fa-YHa"/>
     </inferredMetricsTieBreakers>
 </document>

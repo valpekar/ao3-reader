@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import TSMessages
+import RMessage
 import Alamofire
 import Crashlytics
 
@@ -96,7 +96,9 @@ class ReplyController: LoadingViewController {
             
             self.sendReply(text: txt)
         } else {
-            TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CannotSendComment", comment: ""), type: .error, duration: 2.0)
+            RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CannotSendComment", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                
+            })
         }
     }
     
@@ -125,7 +127,9 @@ class ReplyController: LoadingViewController {
                     self.parseCommentBox(d)
                 } else {
                     self.hideLoadingView()
-                    TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
+                    RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                        
+                    })
                     
                 }
             })
@@ -203,14 +207,18 @@ class ReplyController: LoadingViewController {
                         
                     } else {
                         self.hideLoadingView()
-                        TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CouldNotReply", comment: ""), type: .error)
+                        RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CouldNotReply", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                            
+                        })
                     }
                 })
             
         } else {
             
             self.hideLoadingView()
-            TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CouldNotReply", comment: ""), type: .error)
+            RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CouldNotReply", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                
+            })
         }
     }
     
@@ -224,7 +232,9 @@ class ReplyController: LoadingViewController {
         
         if let noticeEls = doc.search(withXPathQuery: "//div[@class='flash comment_notice']") as? [TFHppleElement], noticeEls.count > 0,
             let noticeStr = noticeEls[0].content, (noticeStr.contains("created") || noticeStr.contains("received")) {
-                    TSMessage.showNotification(in: self, title: NSLocalizedString("Success", comment: ""), subtitle: NSLocalizedString("CommentCreated", comment: ""), type: .success)
+            RMessage.showNotification(in: self, title: NSLocalizedString("Success", comment: ""), subtitle: NSLocalizedString("CommentCreated", comment: ""), type: RMessageType.success, customTypeName: "", callback: {
+                
+            })
             
             let delayTime = DispatchTime.now() + Double(Int64(1.5 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
             DispatchQueue.main.asyncAfter(deadline: delayTime) {
@@ -234,7 +244,9 @@ class ReplyController: LoadingViewController {
             }
         } else {
         
-            TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CouldNotReply", comment: ""), type: .error)
+            RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CouldNotReply", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                
+            })
             
             let string1 = NSString(data: data, encoding: String.Encoding.utf8.rawValue)
             Answers.logCustomEvent(withName: "Reply: Reply Error", customAttributes: ["doc":string1 ?? "data empty"])

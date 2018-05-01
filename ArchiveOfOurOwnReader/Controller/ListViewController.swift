@@ -8,7 +8,7 @@
 
 import Foundation
 import Alamofire
-import TSMessages
+import RMessage
 import Crashlytics
 import CoreData
 
@@ -477,7 +477,9 @@ class ListViewController: LoadingViewController, PageSelectDelegate, UIPopoverPr
                 
                 } else {
                     self.hideLoadingView()
-                    TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
+                    RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                        
+                    })
                 }
             })
     }
@@ -540,7 +542,9 @@ class ListViewController: LoadingViewController, PageSelectDelegate, UIPopoverPr
                 #endif
             } else {
                 if (countWroksFromDB() > 29) {
-                    TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Only30Stroies", comment: ""), type: .error, duration: 2.0)
+                    RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Only30Stroies", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                        
+                    })
                 
                     return
                 }
@@ -573,7 +577,7 @@ class ListViewController: LoadingViewController, PageSelectDelegate, UIPopoverPr
             print(response.error ?? "")
         #endif
         self.parseCookies(response)
-        if let d = response.data, let isNil = self.downloadWork(d, curWork: curWork) {
+        if let d = response.data, let _ = self.downloadWork(d, curWork: curWork) {
             self.hideLoadingView()
             if (self.works.count > curRow) {
                 self.works[curRow].isDownloaded = true
@@ -581,7 +585,9 @@ class ListViewController: LoadingViewController, PageSelectDelegate, UIPopoverPr
             }
             self.reload(row: curRow)
         } else {
-            TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CannotDwnldWrk", comment: ""), type: .error, duration: 2.0)
+            RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CannotDwnldWrk", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                
+            })
             self.hideLoadingView()
         }
         
@@ -622,7 +628,9 @@ class ListViewController: LoadingViewController, PageSelectDelegate, UIPopoverPr
                 try managedContext.save()
             } catch _ {
                 NSLog("Cannot delete saved work")
-                TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CannotDeleteWrk", comment: ""), type: .error)
+                RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CannotDeleteWrk", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                    
+                })
             }
             
             curWork?.isDownloaded = false
@@ -633,13 +641,17 @@ class ListViewController: LoadingViewController, PageSelectDelegate, UIPopoverPr
                 self.works[curRow].needReload = false
             }
             
-            TSMessage.showNotification(in: self, title: NSLocalizedString("Success", comment: ""), subtitle: NSLocalizedString("WorkDeletedFromDownloads", comment: ""), type: .success)
+            RMessage.showNotification(in: self, title: NSLocalizedString("Success", comment: ""), subtitle: NSLocalizedString("WorkDeletedFromDownloads", comment: ""), type: RMessageType.success, customTypeName: "", callback: {
+                
+            })
             
             self.saveWorkNotifItem(workId: wId, wasDeleted: NSNumber(booleanLiteral: true))
             self.sendAllNotSentForDelete()
         
         } else {
-            TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CannotFindWrk", comment: ""), type: .error)
+            RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CannotFindWrk", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                
+            })
         }
     }
     

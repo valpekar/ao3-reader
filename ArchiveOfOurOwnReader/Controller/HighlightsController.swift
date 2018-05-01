@@ -8,7 +8,7 @@
 
 import UIKit
 import CoreData
-import TSMessages
+import RMessage
 import Crashlytics
 
 class HighlightsController: UIViewController, NSFetchedResultsControllerDelegate {
@@ -213,7 +213,9 @@ class HighlightsController: UIViewController, NSFetchedResultsControllerDelegate
             NSLog("Cannot delete notif item")
         }
         
-        TSMessage.showNotification(in: self, title: "Success", subtitle: "Highlight was successfully deleted!", type: TSMessageNotificationType.success)
+        RMessage.showNotification(in: self, title: NSLocalizedString("Success", comment: ""), subtitle: "Highlight was successfully deleted!", type: RMessageType.success, customTypeName: "", callback: {
+            
+        })
         
     }
     

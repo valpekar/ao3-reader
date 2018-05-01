@@ -8,7 +8,7 @@
 
 import UIKit
 import Alamofire
-import TSMessages
+import RMessage
 
 class SubscriptionsViewController: ListViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
@@ -105,7 +105,9 @@ class SubscriptionsViewController: ListViewController, UITableViewDataSource, UI
                     self.showSubs()
                 } else {
                     self.hideLoadingView()
-                    TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
+                    RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                        
+                    })
                     
                 }
             })
@@ -241,7 +243,9 @@ class SubscriptionsViewController: ListViewController, UITableViewDataSource, UI
             #endif
         } else {
             if (countWroksFromDB() > 29) {
-                TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Only30Stroies", comment: ""), type: .error, duration: 2.0)
+                RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Only30Stroies", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                    
+                })
                 
                 return
             }
@@ -268,7 +272,9 @@ class SubscriptionsViewController: ListViewController, UITableViewDataSource, UI
                     let _ = self.downloadWork(d, curWork: curWork)
                     self.hideLoadingView()
                 } else {
-                    TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CannotDwnldWrk", comment: ""), type: .error, duration: 2.0)
+                    RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CannotDwnldWrk", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                        
+                    })
                     self.hideLoadingView()
                 }
             })
@@ -349,7 +355,9 @@ class SubscriptionsViewController: ListViewController, UITableViewDataSource, UI
                     self.showSubs()
                 } else {
                     self.hideLoadingView()
-                    TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
+                    RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                        
+                    })
                 }
             })
             

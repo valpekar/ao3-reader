@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 import Alamofire
-import TSMessages
+import RMessage
 import Crashlytics
 import WebKit
 import Spring
@@ -628,7 +628,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
 //                    
 //                } else {
 //                    self.hideLoadingView()
-//                    TSMessage.showNotification(in: self, title: "Error", subtitle: "Check your Internet connection", type: .error)
+//                    RMessage.showNotification(in: self, title: "Error", subtitle: "Check your Internet connection", type: .error)
 //                }
 //            })
         
@@ -656,7 +656,9 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
             
         } else {
             self.hideLoadingView()
-            TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
+            RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                
+            })
         }
         
     }
@@ -746,11 +748,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
                 return
         }
         
-        do {
-            try appDelegate.saveContext()
-        } catch _ {
-            print("cannot save current work after download")
-        }
+        appDelegate.saveContext()
     }
     
     
@@ -1004,7 +1002,9 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
             
         } else {
             self.hideLoadingView()
-            TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
+            RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                
+            })
         }
     }
     
@@ -1042,7 +1042,9 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
             
         } else {
             self.hideLoadingView()
-            TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error)
+            RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                
+            })
         }
     }
     
@@ -1202,7 +1204,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
                 self.webView.backgroundColor = AppDelegate.nightBgColor
                 self.webView.isOpaque = false
                 
-                let fontStr = "font-size: " + String(format:"%d", fontSize) + "%; \(fontFamily); "
+                let fontStr = "font-size: " + String(format:"%d", fontSize) + "%; \(fontFamilyStr); "
                 worktext = String(format:"<style>\(fontCss) body, table { color: #e1e1ce; %@; padding:5em 1.5em 4em 1.5em; text-align: left; line-height: 1.5em; overflow-y: scroll; -webkit-overflow-scrolling: touch; } p {margin-bottom:1.0em} </style>%@", fontStr, work)
             
                 bgColor = AppDelegate.greyDarkBg
@@ -1404,7 +1406,9 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
             DefaultsManager.putString(self.fontFamily, key: DefaultsManager.FONT_FAMILY)
             self.loadCurrentTheme()
             }  else {
-                TSMessage.showNotification(in: self, title: "Warning: This Font is Premium", subtitle: "Please upgrade to be able to use it!", type: TSMessageNotificationType.warning)
+                RMessage.showNotification(in: self, title: "Warning: This Font is Premium", subtitle: "Please upgrade to be able to use it!", type: RMessageType.warning, customTypeName: "", callback: {
+                    
+                })
             }
         }
         
@@ -1414,7 +1418,9 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
             DefaultsManager.putString(self.fontFamily, key: DefaultsManager.FONT_FAMILY)
             self.loadCurrentTheme()
             }  else {
-                TSMessage.showNotification(in: self, title: "Warning: This Font is Premium", subtitle: "Please upgrade to be able to use it!", type: TSMessageNotificationType.warning)
+                RMessage.showNotification(in: self, title: "Warning: This Font is Premium", subtitle: "Please upgrade to be able to use it!", type: RMessageType.warning, customTypeName: "", callback: {
+                    
+                })
             }
         }
         
@@ -1424,7 +1430,9 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
             DefaultsManager.putString(self.fontFamily, key: DefaultsManager.FONT_FAMILY)
             self.loadCurrentTheme()
             }  else {
-                TSMessage.showNotification(in: self, title: "Warning: This Font is Premium", subtitle: "Please upgrade to be able to use it!", type: TSMessageNotificationType.warning)
+                RMessage.showNotification(in: self, title: "Warning: This Font is Premium", subtitle: "Please upgrade to be able to use it!", type: RMessageType.warning, customTypeName: "", callback: {
+                    
+                })
             }
         }
         
@@ -1434,7 +1442,9 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
             DefaultsManager.putString(self.fontFamily, key: DefaultsManager.FONT_FAMILY)
             self.loadCurrentTheme()
             }  else {
-                TSMessage.showNotification(in: self, title: "Warning: This Font is Premium", subtitle: "Please upgrade to be able to use it!", type: TSMessageNotificationType.warning)
+                RMessage.showNotification(in: self, title: "Warning: This Font is Premium", subtitle: "Please upgrade to be able to use it!", type: RMessageType.warning, customTypeName: "", callback: {
+                    
+                })
             }
         }
         
@@ -1444,7 +1454,9 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
             DefaultsManager.putString(self.fontFamily, key: DefaultsManager.FONT_FAMILY)
             self.loadCurrentTheme()
             }  else {
-                TSMessage.showNotification(in: self, title: "Warning: This Font is Premium", subtitle: "Please upgrade to be able to use it!", type: TSMessageNotificationType.warning)
+                RMessage.showNotification(in: self, title: "Warning: This Font is Premium", subtitle: "Please upgrade to be able to use it!", type: RMessageType.warning, customTypeName: "", callback: {
+                    
+                })
             }
         }
         
@@ -1511,7 +1523,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
 //                alert.message = "Select font family (\(self.fontFamily)"
 //                self.loadCurrentTheme()
 //            } else {
-//                TSMessage.showNotification(in: self, title: "Warning: This Font is Premium", subtitle: "Please upgrade to be able to use it!", type: TSMessageNotificationType.warning)
+//                RMessage.showNotification(in: self, title: "Warning: This Font is Premium", subtitle: "Please upgrade to be able to use it!", type: RMessageNotificationType.warning)
 //            }
 //        }))
 //
@@ -1523,7 +1535,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
 //                alert.message = "Select font family (\(self.fontFamily)"
 //                self.loadCurrentTheme()
 //            } else {
-//                TSMessage.showNotification(in: self, title: "Warning: This Font is Premium", subtitle: "Please upgrade to be able to use it!", type: TSMessageNotificationType.warning)
+//                RMessage.showNotification(in: self, title: "Warning: This Font is Premium", subtitle: "Please upgrade to be able to use it!", type: RMessageNotificationType.warning)
 //            }
 //        }))
 //
@@ -1535,7 +1547,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
 //                alert.message = "Select font family (\(self.fontFamily)"
 //                self.loadCurrentTheme()
 //            } else {
-//                TSMessage.showNotification(in: self, title: "Warning: This Font is Premium", subtitle: "Please upgrade to be able to use it!", type: TSMessageNotificationType.warning)
+//                RMessage.showNotification(in: self, title: "Warning: This Font is Premium", subtitle: "Please upgrade to be able to use it!", type: RMessageNotificationType.warning)
 //            }
 //        }))
 //
@@ -1547,7 +1559,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
 //                alert.message = "Select font family (\(self.fontFamily)"
 //                self.loadCurrentTheme()
 //            } else {
-//                TSMessage.showNotification(in: self, title: "Warning: This Font is Premium", subtitle: "Please upgrade to be able to use it!", type: TSMessageNotificationType.warning)
+//                RMessage.showNotification(in: self, title: "Warning: This Font is Premium", subtitle: "Please upgrade to be able to use it!", type: RMessageNotificationType.warning)
 //            }
 //        }))
 //
@@ -1559,7 +1571,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
 //                alert.message = "Select font family (\(self.fontFamily)"
 //                self.loadCurrentTheme()
 //            } else {
-//                TSMessage.showNotification(in: self, title: "Warning: This Font is Premium", subtitle: "Please upgrade to be able to use it!", type: TSMessageNotificationType.warning)
+//                RMessage.showNotification(in: self, title: "Warning: This Font is Premium", subtitle: "Please upgrade to be able to use it!", type: RMessageNotificationType.warning)
 //            }
 //        }))
 //
@@ -1793,7 +1805,9 @@ extension WorkViewController {
             if let selectedString = result as? String {
                 self.showQuoteDialog(text: selectedString)
             } else {
-                TSMessage.showNotification(in: self, title: "Empty Selection", subtitle: "Please select any text to save it as quote.", type: TSMessageNotificationType.warning)
+                RMessage.showNotification(in: self, title: "Empty Selection", subtitle: "Please select any text to save it as quote.", type: RMessageType.warning, customTypeName: "", callback: {
+                    
+                })
             }
         }
 
@@ -1857,6 +1871,9 @@ extension WorkViewController {
             print("Could not save \(String(describing: error.userInfo))")
         } 
         
-        TSMessage.showNotification(in: self, title: "Success", subtitle: "Highlight was successfully saved!", type: TSMessageNotificationType.success)
+        RMessage.showNotification(in: self, title: NSLocalizedString("Success", comment: ""), subtitle: "Highlight was successfully saved!", type: RMessageType.success, customTypeName: "", callback: {
+            
+        })
+        
     }
 }

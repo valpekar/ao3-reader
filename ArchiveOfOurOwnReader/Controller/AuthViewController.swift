@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import TSMessages
+import RMessage
 import LocalAuthentication
 
 class AuthViewController: UIViewController {
@@ -57,23 +57,31 @@ class AuthViewController: UIViewController {
                     // In case that the error is a user fallback, then show the password alert view.
                     print(evalPolicyError?.localizedDescription ?? "")
                     guard let Errcode = evalPolicyError?._code else {
-                        TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Authentication failed", comment: ""), type: .error, duration: 2.0)
+                        RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Authentication failed", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                            
+                        })
                         return
                     }
                     
                     switch Errcode {
                         
                     case LAError.systemCancel.rawValue:
-                        TSMessage.showNotification(in: self, title:  NSLocalizedString("Warning", comment: ""), subtitle: NSLocalizedString("Authentication was cancelled by the system", comment: ""), type: .warning, duration: 2.0)
+                        RMessage.showNotification(in: self, title: NSLocalizedString("Warning", comment: ""), subtitle: NSLocalizedString("Authentication was cancelled by the system", comment: ""), type: RMessageType.warning, customTypeName: "", callback: {
+                            
+                        })
                         
                     case LAError.userCancel.rawValue:
-                        TSMessage.showNotification(in: self, title:  NSLocalizedString("Warning", comment: ""), subtitle: NSLocalizedString("Authentication was cancelled by the user", comment: ""), type: .warning, duration: 2.0)
+                        RMessage.showNotification(in: self, title: NSLocalizedString("Warning", comment: ""), subtitle: NSLocalizedString("Authentication was cancelled by the user", comment: ""), type: RMessageType.warning, customTypeName: "", callback: {
+                            
+                        })
                         
                     case LAError.userFallback.rawValue:
                         print("User selected to enter custom password")
                         
                     default:
-                        TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Authentication failed", comment: ""), type: .error, duration: 2.0)
+                        RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Authentication failed", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                        
+                    })
                     }
                 }
             })]
@@ -82,14 +90,20 @@ class AuthViewController: UIViewController {
             switch error!.code{
                 
             case LAError.biometryNotEnrolled.rawValue:
-                TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Touch/Face is not enrolled", comment: ""), type: .error, duration: 2.0)
+                RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Touch/Face is not enrolled", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                    
+                })
                 
             case LAError.passcodeNotSet.rawValue:
-                TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("A passcode has not been set", comment: ""), type: .error, duration: 2.0)
+                RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("A passcode has not been set", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                    
+                })
                 
             default:
                 // The LAError.TouchIDNotAvailable case.
-                TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Touch/Face ID not available", comment: ""), type: .error, duration: 2.0)
+                RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Touch/Face ID not available", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                    
+                })
             }
             
             // Optionally the error description can be displayed on the console.
@@ -101,7 +115,9 @@ class AuthViewController: UIViewController {
     @IBAction func passwordDone(_ sender: AnyObject) {
         if let txt: String = passTextField.text {
             if (txt.isEmpty) {
-                TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Please type your passcode!", comment: ""), type: .error, duration: 2.0)
+                RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Please type your passcode!", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                    
+                })
             } else {
                 let userPass: String = DefaultsManager.getString(DefaultsManager.USER_PASS);
                 if (userPass == txt) {
@@ -111,7 +127,9 @@ class AuthViewController: UIViewController {
                         }
                     }
                 } else {
-                    TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Incorrect password!", comment: ""), type: .error, duration: 2.0)
+                    RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Incorrect password!", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                        
+                    })
                 }
             }
         }

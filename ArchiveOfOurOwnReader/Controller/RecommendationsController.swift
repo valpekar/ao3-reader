@@ -8,7 +8,7 @@
 
 import UIKit
 import CoreData
-import TSMessages
+import RMessage
 import Alamofire
 import Crashlytics
 import UserNotifications
@@ -80,7 +80,9 @@ class RecommendationsController : ListViewController, UITableViewDataSource, UIT
                 } else if let dd = UserDefaults.standard.value(forKey: "donated") as? Bool , dd == true {
                         generateRecommendations()
                 } else {
-                    TSMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("NotPurchased", comment: ""), type: .error)
+                    RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("NotPurchased", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                    
+                    })
                     
                     refreshControl.endRefreshing()
                 }
@@ -226,7 +228,9 @@ class RecommendationsController : ListViewController, UITableViewDataSource, UIT
                         self.showWorks()
                     } else {
                         self.hideLoadingView()
-                        TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error, duration: 2.0)
+                        RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                            
+                        })
                     }
                 })
         }
@@ -271,7 +275,9 @@ class RecommendationsController : ListViewController, UITableViewDataSource, UIT
         var count = 0
         
         if (analyticsItems.count == 0) {
-            TSMessage.showNotification(in: self, title: "Not enough data", subtitle: "Please use the app at least for few hours to let it collect data to build recommendations for you!", type: .success)
+            RMessage.showNotification(in: self, title: "Not enough data", subtitle: "Please use the app at least for few hours to let it collect data to build recommendations for you!", type: RMessageType.success, customTypeName: "", callback: {
+                
+            })
             return
         }
         
@@ -360,7 +366,9 @@ class RecommendationsController : ListViewController, UITableViewDataSource, UIT
                     self.showWorks()
                 } else {
                     self.hideLoadingView()
-                    TSMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: .error, duration: 2.0)
+                    RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                        
+                    })
                 }
                 self.refreshControl.endRefreshing()
             })
