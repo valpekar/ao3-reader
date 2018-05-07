@@ -22,7 +22,7 @@ class RecommendationsController : ListViewController, UITableViewDataSource, UIT
     
     var refreshControl: UIRefreshControl!
     
-    var analyticsItems : [NSManagedObject] = [NSManagedObject]()
+    var analyticsItems : [AnalyticsItem] = [AnalyticsItem]()
     
     var shouldReload = true
     
@@ -76,9 +76,9 @@ class RecommendationsController : ListViewController, UITableViewDataSource, UIT
         if (shouldReload || noFound) {
             UserDefaults.standard.synchronize()
             if let pp = UserDefaults.standard.value(forKey: "pro") as? Bool, pp == true {
-                    generateRecommendations()
+                self.generateRecommendations(noFound: noFound)
                 } else if let dd = UserDefaults.standard.value(forKey: "donated") as? Bool , dd == true {
-                        generateRecommendations()
+                    self.generateRecommendations(noFound: noFound)
                 } else {
                     RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("NotPurchased", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
                     
@@ -94,6 +94,11 @@ class RecommendationsController : ListViewController, UITableViewDataSource, UIT
         
         refreshAlert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { (action: UIAlertAction!) in
             DefaultsManager.putBool(true, key: DefaultsManager.CONTENT_SHOWSN)
+        }))
+        
+        refreshAlert.addAction(UIAlertAction(title: "Recs do not show", style: .default, handler: { (action: UIAlertAction!) in
+            self.noFound = true
+            self.refresh(self.tableView)
         }))
         
         present(refreshAlert, animated: true, completion: nil)
@@ -156,13 +161,13 @@ class RecommendationsController : ListViewController, UITableViewDataSource, UIT
     }
     
     
-    func generateRecommendations() {
+    func generateRecommendations(noFound: Bool) {
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd MMM yyyy"
         
         guard let lastDate = DefaultsManager.getObject(DefaultsManager.LAST_DATE) else {
-            generateNewRecs()
+            generateNewRecs(noFound: noFound)
             DefaultsManager.putObject(Date() as AnyObject, key: DefaultsManager.LAST_DATE)
             
             descLabel.text = "\(NSLocalizedString("RecommendationsExplainedShort", comment: "")) \(NSLocalizedString("LastUpdate_", comment: "")) \(dateFormatter.string(from:  Date()))"
@@ -181,7 +186,7 @@ class RecommendationsController : ListViewController, UITableViewDataSource, UIT
         
         if (days >= 7 || noFound) {
             
-            generateNewRecs()
+            generateNewRecs(noFound: noFound)
             DefaultsManager.putObject(Date() as AnyObject, key: DefaultsManager.LAST_DATE)
             
            // UIApplication.shared.cancelAllLocalNotifications()
@@ -247,7 +252,7 @@ class RecommendationsController : ListViewController, UITableViewDataSource, UIT
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
         
         do {
-            let fetchedResults = try managedContext.fetch(fetchRequest) as? [NSManagedObject]
+            let fetchedResults = try managedContext.fetch(fetchRequest) as? [AnalyticsItem]
             
             if let results = fetchedResults {
                 analyticsItems = results
@@ -267,7 +272,7 @@ class RecommendationsController : ListViewController, UITableViewDataSource, UIT
         return days!
     }
     
-    func generateNewRecs() {
+    func generateNewRecs(noFound: Bool) {
         loadAnalyticsFromDB()
         
         let searchQuery:SearchQuery = SearchQuery()
@@ -285,24 +290,36 @@ class RecommendationsController : ListViewController, UITableViewDataSource, UIT
         let randC = Int(arc4random_uniform(UInt32(analyticsItems.count - 1)))
         let randR = Int(arc4random_uniform(UInt32(analyticsItems.count - 1)))
         
+        if (noFound == true) {
+            let aitem = analyticsItems[analyticsItems.count - 1]
+            
+            if (searchQuery.tag.isEmpty == false) {
+                searchQuery.tag += " || "
+            }
+            
+            if (!searchQuery.tag.contains(aitem.fandom ?? aitem.relationship ?? aitem.character ?? aitem.author ?? "popular")) {
+                searchQuery.tag += aitem.fandom ?? ""
+            }
+            
+        } else {
+        
         for aitem in analyticsItems {
             
             if (count == randF || count == randC || count == randR) {
             
-                if (!searchQuery.tag.isEmpty) {
+                if (searchQuery.tag.isEmpty == false) {
                     searchQuery.tag += " || "
                 }
                 
             searchQuery.tag += "("
-            if (!searchQuery.tag.contains(aitem.value(forKey: "fandom") as! String)) {
+            if (!searchQuery.tag.contains(aitem.fandom ?? "")) {
                 //searchQuery.tag += ", "
-                searchQuery.tag += aitem.value(forKey: "fandom") as! String
+                searchQuery.tag += aitem.fandom ?? ""
             }
             
-            
-            if (!searchQuery.tag.contains(aitem.value(forKey: "relationship") as! String)) {
+            if (!searchQuery.tag.contains(aitem.relationship ?? "")) {
                 searchQuery.tag += ", "
-                searchQuery.tag += aitem.value(forKey: "relationship") as! String
+                searchQuery.tag += aitem.relationship ?? ""
             }
             
             searchQuery.tag += ")"
@@ -314,7 +331,7 @@ class RecommendationsController : ListViewController, UITableViewDataSource, UIT
             
             count += 1
         }
-        
+        }
         
         DefaultsManager.putObject(searchQuery, key: DefaultsManager.SEARCH_Q_RECOMMEND)
         
@@ -363,13 +380,13 @@ class RecommendationsController : ListViewController, UITableViewDataSource, UIT
                     let checkItems = self.getDownloadedStats()
                     (self.pages, self.works, self.foundItems) = WorksParser.parseWorks(d, itemsCountHeading: "h3", worksElement: "work", downloadedCheckItems: checkItems)
                     //self.getFeed(d)
-                    self.showWorks()
                 } else {
                     self.hideLoadingView()
                     RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
                         
                     })
                 }
+                self.showWorks()
                 self.refreshControl.endRefreshing()
             })
         
@@ -401,7 +418,7 @@ class RecommendationsController : ListViewController, UITableViewDataSource, UIT
         if (works.count == 0) {
             noFound = true
             
-            generateNewRecs()
+            generateNewRecs(noFound: noFound)
         }
     }
     
@@ -422,7 +439,7 @@ class RecommendationsController : ListViewController, UITableViewDataSource, UIT
             cell = FeedTableViewCell(reuseIdentifier: cellIdentifier)
         }
         
-        let curWork:NewsFeedItem = works[(indexPath as NSIndexPath).row]
+        let curWork:NewsFeedItem = works[indexPath.row]
         
         cell = fillCellXib(cell: cell, curWork: curWork, needsDelete: false, index: indexPath.row)
         

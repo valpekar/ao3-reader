@@ -1358,6 +1358,9 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         tableView.deselectRow(at: indexPath, animated: true)
         
         let pos = indexPath.row
+        
+        CLSLogv("WorkDetail: didSelectRowAt \(pos)", getVaList([]))
+        
         self.tagUrl = ""
         
         switch indexPath.section {
