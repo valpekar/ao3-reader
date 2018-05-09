@@ -246,6 +246,22 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
         }
     }
     
+    func showSureClearDialog() {
+        let deleteAlert = UIAlertController(title: NSLocalizedString("AreYouSure", comment: ""), message: "You want to clear all notifications from this app?", preferredStyle: UIAlertControllerStyle.alert)
+        
+        deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: { (action: UIAlertAction) in
+            print("Cancel")
+        }))
+        
+        deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Yes", comment: ""), style: .default, handler: { (action: UIAlertAction) in
+            DefaultsManager.putStringArray([], key: DefaultsManager.NOTIF_IDS_ARR)
+            self.updateAppBadge()
+        }))
+        
+        deleteAlert.view.tintColor = AppDelegate.redColor
+        present(deleteAlert, animated: true, completion: nil)
+    }
+    
     //Mark: - TableView
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -253,8 +269,13 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
         
         switch (indexPath.section) {
         case 0:
-            cell.titleLabel.text = "Protect with Biometric ID or passcode"
-            cell.accessoryType = .disclosureIndicator
+            if (indexPath.row == 0) {
+                cell.titleLabel.text = "Clear All Notifications"
+                cell.accessoryType = .none
+            } else {
+                cell.titleLabel.text = "Protect with Biometric ID or passcode"
+                cell.accessoryType = .disclosureIndicator
+            }
         case 1:
             let curKey = Array(pseuds.keys)[indexPath.row]
             cell.titleLabel.text = pseuds[curKey]
@@ -318,7 +339,7 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch (section) {
         case 0:
-            return 1
+            return 2
         case 1:
             return pseuds.count
         case 2:
@@ -336,7 +357,11 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
         
         switch (indexPath.section) {
         case 0:
-            self.performSegue(withIdentifier: "securitySegue", sender: self)
+            if (indexPath.row == 0) {
+                self.showSureClearDialog()
+            } else {
+                self.performSegue(withIdentifier: "securitySegue", sender: self)
+            }
         case 1:
             let curKey = Array(pseuds.keys)[(indexPath as NSIndexPath).row]
             currentPseud = curKey
@@ -385,7 +410,7 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
         case 1:
             return "Pseud for bookmarks, history etc"
         case 2:
-            return "Other"
+            return "My AO3 Account"
         case 3:
             return "Theme"
         case 4:

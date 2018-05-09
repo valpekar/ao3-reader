@@ -12,6 +12,7 @@ class SearchQuery : NSObject, NSCoding {
     
     var include_tags = ""
     var exclude_tags = ""
+    var quick_tags = ""
     var tag = ""
     var title = "" 
     var creator = "" 
@@ -117,6 +118,10 @@ class SearchQuery : NSObject, NSCoding {
             res = false
         }
         
+        if (!quick_tags.isEmpty) {
+            res = false
+        }
+        
         if (!creator.isEmpty) {
             res = false
         }
@@ -206,6 +211,8 @@ class SearchQuery : NSObject, NSCoding {
             tagStr += " "
         }
         
+        tagStr += " \(quick_tags) "
+        
  //       var safe = true
 //        if let s = DefaultsManager.getBool(DefaultsManager.SAFE) {
 //            safe = s
@@ -215,7 +222,7 @@ class SearchQuery : NSObject, NSCoding {
             tagStr += "-\"Underage\" "
  //       }
         
-        var includeTags: [String] = include_tags.characters.split {$0 == ","}.map { String($0) }
+        var includeTags: [String] = include_tags.split {$0 == ","}.map { String($0) }
         for i in 0..<includeTags.count {
             tagStr += "\"" + includeTags[i].trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) + "\""
             if (i < includeTags.count - 1) {

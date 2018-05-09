@@ -714,11 +714,11 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
     func formFromToStatement(_ textFieldFrom: UITextField, textFieldTo: UITextField) -> String {
         var res: String = ""
         
-        if (textFieldFrom.text != nil && textFieldTo.text != nil && textFieldFrom.text!.characters.count > 0 && textFieldTo.text!.characters.count > 0) {
+        if (textFieldFrom.text != nil && textFieldTo.text != nil && textFieldFrom.text!.count > 0 && textFieldTo.text!.count > 0) {
             res = textFieldFrom.text! + "-" + textFieldTo.text!
-        } else  if (textFieldFrom.text!.count == 0 && textFieldTo.text!.characters.count > 0) {
+        } else  if (textFieldFrom.text!.count == 0 && textFieldTo.text!.count > 0) {
             res = "<" + textFieldTo.text!
-        } else  if (textFieldFrom.text!.count == 0 && textFieldTo.text!.characters.count == 0) {
+        } else  if (textFieldFrom.text!.count == 0 && textFieldTo.text!.count == 0) {
             res = ""
         } else {
             res = ">" + textFieldFrom.text!

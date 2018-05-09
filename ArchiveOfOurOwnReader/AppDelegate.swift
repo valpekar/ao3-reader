@@ -362,7 +362,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         print("default url =\(NSPersistentContainer.defaultDirectoryURL())")
         
-        let migrated = DefaultsManager.getBool("migrated") ?? false
+        /*let migrated = DefaultsManager.getBool("migrated") ?? false
         
         if (migrated == false) {
         //self.applicationDocumentsDirectory.appendingPathComponent("ArchiveOfOurOwnReader.sqlite")
@@ -393,7 +393,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             
             DefaultsManager.putBool(true, key: "migrated")
         }
-        }
+        }*/
         
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {

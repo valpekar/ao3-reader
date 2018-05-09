@@ -419,6 +419,8 @@ class RecommendationsController : ListViewController, UITableViewDataSource, UIT
             noFound = true
             
             generateNewRecs(noFound: noFound)
+        } else {
+            noFound = false
         }
     }
     

@@ -387,6 +387,11 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
             
         } else if(segue.identifier == "searchSegue") {
             if let searchController: SearchViewController = segue.destination as? SearchViewController {
+                
+                self.query.include_tags = self.query.quick_tags.split(separator: " ").joined(separator: ", ")
+                self.query.quick_tags = ""
+                DefaultsManager.putObject(self.query, key: DefaultsManager.SEARCH_Q)
+                
                 searchController.delegate = self
                 searchController.modalDelegate = self
                 
@@ -574,10 +579,10 @@ extension FeedViewController : UISearchBarDelegate, UISearchResultsUpdating {
             return
         }
         
-        if (!txt.isEmpty && query.include_tags != txt) {
+        if (!txt.isEmpty && query.quick_tags != txt) {
             query = SearchQuery()
             
-            query.include_tags = txt
+            query.quick_tags = txt
             DefaultsManager.putObject(query, key: DefaultsManager.SEARCH_Q)
             
             Answers.logCustomEvent(withName: "Search: Quick",
