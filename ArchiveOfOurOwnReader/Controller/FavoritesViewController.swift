@@ -91,7 +91,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
             return controller
         })()
         
-        sortBy = DefaultsManager.getString(DefaultsManager.SORT_DWNLD_BY)
+       // sortBy = DefaultsManager.getString(DefaultsManager.SORT_DWNLD_BY)
         sortOrderAscendic = DefaultsManager.getBool(DefaultsManager.SORT_DWNLD_ASC) ?? false
         
         if (sortBy.isEmpty) {
@@ -897,6 +897,15 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
             self.saveSortOptionsAndReload()
         })
         optionMenu.addAction(chaptersAction)
+        
+//        let fandomsAction = UIAlertAction(title: NSLocalizedString("Fandom", comment: ""), style: .default, handler: {
+//            (alert: UIAlertAction!) -> Void in
+//            self.sortBy = kp// "fandoms.name"
+//            self.sortOrderAscendic = true
+//            
+//            self.saveSortOptionsAndReload()
+//        })
+//        optionMenu.addAction(fandomsAction)
         
         let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: {
             (alert: UIAlertAction!) -> Void in

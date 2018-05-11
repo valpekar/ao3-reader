@@ -19,6 +19,8 @@ class WorkListController: ListViewController, UITableViewDataSource, UITableView
     @IBOutlet weak var tryAgainButton:UIButton!
     @IBOutlet weak var notFoundLabel:UILabel!
     
+    var resultSearchController = UISearchController()
+    
     var worksStr = NSLocalizedString("WorkList", comment: "")
     var tagUrl = ""
     var tagName = NSLocalizedString("WorkList", comment: "")
@@ -52,7 +54,7 @@ class WorkListController: ListViewController, UITableViewDataSource, UITableView
             liWorksElement = worksElement
         }
         
-        if (tagUrl.contains("/pseuds/") == false && tagUrl.contains("/users/") == false) {
+       // if (tagUrl.contains("/pseuds/") == false && tagUrl.contains("/users/") == false) {
         
             searchController = UISearchController(searchResultsController: nil)
             searchController.searchResultsUpdater = self
@@ -76,8 +78,7 @@ class WorkListController: ListViewController, UITableViewDataSource, UITableView
             }
         
             self.tableView.tableHeaderView = searchController.searchBar
-        
-        }
+      //  }
         
         if (!tagUrl.contains("archiveofourown.org")) {
             tagUrl = "https://archiveofourown.org\(tagUrl)"
@@ -313,6 +314,11 @@ class WorkListController: ListViewController, UITableViewDataSource, UITableView
                     })
                 }
             })
+    }
+    
+    override func doneButtonAction() {
+        super.doneButtonAction()
+        self.resultSearchController.dismiss(animated: true, completion: nil)
     }
 }
 

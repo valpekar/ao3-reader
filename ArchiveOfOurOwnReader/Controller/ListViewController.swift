@@ -28,6 +28,7 @@ class ListViewController: LoadingViewController, PageSelectDelegate, UIPopoverPr
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {

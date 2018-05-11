@@ -42,6 +42,21 @@ class BaseFolderController: LoadingViewController, NSFetchedResultsControllerDel
         return fetchedResultsController
     }()
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        if let tf = self.searchBar.value(forKey: "_searchField") as? UITextField {
+            addDoneButtonOnKeyboardTf(tf)
+        }
+        
+        self.searchBar.delegate = self
+    }
+    
+    override func doneButtonAction() {
+        self.searchBar.endEditing(true)
+        
+        updateSearchResults()
+    }
     
     func configureCell(cell: UITableViewCell, folder: Folder?, indexPath: IndexPath) {
         cell.textLabel?.text = "\(folder?.name ?? "") (\(folder?.works?.count ?? 0) works)"
@@ -154,7 +169,7 @@ extension BaseFolderController: UITableViewDelegate, UITableViewDataSource {
 }
 
 
-extension BaseFolderController: UISearchResultsUpdating, UISearchBarDelegate {
+extension BaseFolderController: UISearchBarDelegate {
     
     //MARK: - UISearchBarDelegate
     
@@ -162,13 +177,19 @@ extension BaseFolderController: UISearchResultsUpdating, UISearchBarDelegate {
         
     }
     
-    //MARK: - UISearchResultsUpdating delegate
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        updateSearchResults()
+    }
     
-    func updateSearchResults(for searchController: UISearchController) {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        updateSearchResults()
+    }
+        
+    func updateSearchResults() {
         
         var searchPredicate: NSPredicate? = nil
         
-        if let text = searchController.searchBar.text, text.isEmpty == false {
+        if let text = self.searchBar.text, text.isEmpty == false {
             searchPredicate = NSPredicate(format: "name CONTAINS[cd] %@", text)
         }
         
