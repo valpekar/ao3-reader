@@ -360,7 +360,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         container.persistentStoreDescriptions.append(description)
         
-        print("default url =\(NSPersistentContainer.defaultDirectoryURL())")
+     //   print("default url =\(NSPersistentContainer.defaultDirectoryURL())")
         
         /*let migrated = DefaultsManager.getBool("migrated") ?? false
         
@@ -411,6 +411,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             } else {
                 container.viewContext.automaticallyMergesChangesFromParent = true
+                container.viewContext.mergePolicy = NSMergePolicy.mergeByPropertyStoreTrump
             }
         })
         return container
