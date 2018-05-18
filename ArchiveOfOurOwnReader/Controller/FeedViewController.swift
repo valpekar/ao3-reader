@@ -168,6 +168,7 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
         if (worksToReload.count > 0 && openingPrevWork == false) {
             openWorkDetails(workId: worksToReload[0])
         }
+        self.updateAppBadge()
     }
     
     func openWorkDetails(workId: String) {

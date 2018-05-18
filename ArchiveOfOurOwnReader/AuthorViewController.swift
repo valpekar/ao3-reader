@@ -178,7 +178,13 @@ class AuthorViewController: LoadingViewController {
             let nameArr = authorName.split{$0 == " "}.map(String.init)
             var an = nameArr[1].replacingOccurrences(of: "(", with: "")
             an = an.replacingOccurrences(of: ")", with: "")
-            tagUrl = "https://archiveofourown.org/users/\(an)/pseuds/\(nameArr[0])/\(uri)"
+            
+            var val = nameArr[0]
+            if let encodedPseud = val.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)  {
+                val = encodedPseud
+            }
+            
+            tagUrl = "https://archiveofourown.org/users/\(an)/pseuds/\(val)/\(uri)"
         } else if (authorName.contains(",")) {
             let nameArr = authorName.split{$0 == ","}.map(String.init)
             tagUrl = "https://archiveofourown.org/users/\(nameArr[0])/\(uri))"

@@ -9,6 +9,8 @@
 import UIKit
 import QuartzCore
 import Crashlytics
+import CoreData
+import RMessage
 
 enum SlideOutState {
     case bothCollapsed
@@ -170,11 +172,52 @@ class ContainerViewController: UIViewController, CenterViewControllerDelegate, U
         }
     }
     
+    func getLastWork() -> DBWorkItem? {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+                return nil
+        }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "DBWorkItem")
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "dateUpdated", ascending: false)]
+        fetchRequest.fetchLimit = 1
+        if let selectWorks = (try? managedContext.fetch(fetchRequest)) as? [DBWorkItem] {
+            
+            if (selectWorks.count > 0) {
+                let currentWork = selectWorks[0] as DBWorkItem
+                return currentWork
+            }
+        }
+        
+        return nil
+    }
+    
     
     
     // MARK: - SidePanelViewControllerDelegate
     func selectedControllerAtIndex(_ indexPath:IndexPath) {
         self.collapseSidePanels()
+        
+        if (indexPath.row == 9 && self.instantiatedControllers.count > 0) { //READING NOW
+            if let work = getLastWork() {
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let vc: WorkDetailViewController = storyboard.instantiateViewController(withIdentifier: "WorkDetailViewController") as! WorkDetailViewController
+                vc.downloadedWorkItem = work
+                
+                Answers.logCustomEvent(withName: "Reading Now",
+                                       customAttributes: [
+                                        "workId": work.id ?? 0])
+                
+                
+                 if let controller = self.instantiatedControllers[0] {
+                    controller.navigationController?.pushViewController(vc, animated: true)
+                }
+            } else {
+                RMessage.showNotification(in: self, title: "Nothing found", subtitle: "Please start reading any downloaded fic to open it from Reading Now!", type: RMessageType.warning, customTypeName: "", callback: {
+                    
+                })
+            }
+        } else {
         
         if let controller = self.instantiatedControllers[indexPath.row] {
                 self.centerNavigationController.setViewControllers([controller], animated: true)
@@ -187,6 +230,7 @@ class ContainerViewController: UIViewController, CenterViewControllerDelegate, U
             if (self.centerNavigationController != nil) { //can happen on notification tap!!
                 self.centerNavigationController.setViewControllers([controller], animated: true)
             }
+        }
         }
     }
     

@@ -157,7 +157,13 @@ class FavoritesSiteController : ListViewController, UITableViewDataSource, UITab
         guard let curPs = pseuds[currentPseud] else {
             return
         }
-        let urlStr = "https://archiveofourown.org/users/\(login)/pseuds/\(curPs)/bookmarks" // + pseuds[currentPseud]! + "/bookmarks"
+        var curPseud = curPs
+        if let encodedPseud = curPseud.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)  {
+            curPseud = encodedPseud
+        }
+        
+        let urlStr = "https://archiveofourown.org/users/\(login)/pseuds/\(curPseud)/bookmarks" // + pseuds[currentPseud]! + "/bookmarks"
+       
         
         Alamofire.request(urlStr) //default is get
             .response(completionHandler: { response in

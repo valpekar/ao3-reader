@@ -734,6 +734,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
             let currentWork = selectWorks[0] as DBWorkItem
             currentWork.currentChapter = NSNumber(value: currentChapterIndex as Int)
             currentWork.scrollProgress = NSStringFromCGPoint(webView.scrollView.contentOffset)
+                currentWork.dateUpdated = Date() as NSDate
             
             do {
                 try managedContext.save()

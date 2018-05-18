@@ -29,13 +29,14 @@ class SidePanelViewController: UIViewController, UITableViewDataSource, UITableV
                        NSLocalizedString("Downloaded", comment: ""),
                        NSLocalizedString("Me", comment: ""),
                        NSLocalizedString("Recommendations", comment: ""),
-                       NSLocalizedString("Support", comment: "")
+                       NSLocalizedString("Support", comment: ""),
+                       NSLocalizedString("Reading Now", comment: "")
         /*, "Publish"*/]
     
     let sections = ["", ""]
     let secondSectionRows = ["Import From AO3"]
     let secondSectionRowsImgs = ["import"]
-    let imgs = ["shortstory", "bmk", "history" , "history", "subscriptions", "download-red", "profile", "shortstory", "support"/*, "shortstory"*/]
+    let imgs = ["shortstory", "bmk", "history" , "history", "subscriptions", "download-red", "profile", "shortstory", "support", "book_open"/*, "shortstory"*/]
     
     struct TableView {
         struct CellIdentifiers {

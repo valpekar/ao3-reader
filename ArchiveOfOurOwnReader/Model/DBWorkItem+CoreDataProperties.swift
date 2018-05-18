@@ -2,7 +2,7 @@
 //  DBWorkItem+CoreDataProperties.swift
 //  ArchiveOfOurOwnReader
 //
-//  Created by Valeriya Pekar on 1/9/18.
+//  Created by Valeriya Pekar on 5/18/18.
 //  Copyright © 2018 Sergei Pekar. All rights reserved.
 //
 //
@@ -27,6 +27,7 @@ extension DBWorkItem {
     @NSManaged public var currentChapter: NSNumber?
     @NSManaged public var dateAdded: NSDate?
     @NSManaged public var datetime: String?
+    @NSManaged public var freeform: String?
     @NSManaged public var hits: String?
     @NSManaged public var id: NSNumber?
     @NSManaged public var kudos: String?
@@ -41,13 +42,13 @@ extension DBWorkItem {
     @NSManaged public var tags: String?
     @NSManaged public var topic: String?
     @NSManaged public var topicPreview: String?
+    @NSManaged public var unread: NSNumber?
     @NSManaged public var updatedStr: String?
     @NSManaged public var words: String?
     @NSManaged public var workContent: String?
     @NSManaged public var workId: String?
     @NSManaged public var workTitle: String?
-    @NSManaged public var freeform: String?
-    @NSManaged public var unread: NSNumber?
+    @NSManaged public var dateUpdated: NSDate?
     @NSManaged public var chapters: NSSet?
     @NSManaged public var characters: NSSet?
     @NSManaged public var fandoms: NSSet?

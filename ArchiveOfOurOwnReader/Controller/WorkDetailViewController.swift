@@ -1102,7 +1102,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             
             cell.label.textColor = txtColor
             if (UIDevice.current.userInterfaceIdiom == .pad) {
-                cell.label.font = UIFont(name: "Helvetica Neue Light Italic", size: 18.0)
+                cell.label.font = UIFont(name: "Helvetica Neue Light Italic", size: 16.0)
             } else {
                 cell.label.font = UIFont(name: "Helvetica Neue Light Italic", size: 12.0) //.italicSystemFont(ofSize: 12.0)
             }
@@ -1193,7 +1193,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         case 1:
             
             if (UIDevice.current.userInterfaceIdiom == .pad) {
-                cell.label.font = UIFont.systemFont(ofSize: 21.0, weight: UIFont.Weight.regular)
+                cell.label.font = UIFont.systemFont(ofSize: 17.0, weight: UIFont.Weight.regular)
             } else {
                 cell.label.font = UIFont.systemFont(ofSize: 14.0, weight: UIFont.Weight.regular)
             }
@@ -1297,7 +1297,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
              cell.label.text = "View Serie (\(serieName))"
             
             if (UIDevice.current.userInterfaceIdiom == .pad) {
-                cell.label.font = UIFont.systemFont(ofSize: 21.0, weight: UIFont.Weight.regular)
+                cell.label.font = UIFont.systemFont(ofSize: 17.0, weight: UIFont.Weight.regular)
             } else {
                 cell.label.font = UIFont.systemFont(ofSize: 14.0, weight: UIFont.Weight.regular)
             }
@@ -1431,11 +1431,18 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             an = an.replacingOccurrences(of: ")", with: "")
             tagUrl = an //"https://archiveofourown.org/users/\(an)/pseuds/\(nameArr[0])/works"
         } else if (authorName.contains(",")) {
-            let nameArr = authorName.split{$0 == ","}.map(String.init)
-            tagUrl = nameArr[0] //"https://archiveofourown.org/users/\(nameArr[0])/works"
+            var nameArr = authorName.split{$0 == ","}.map(String.init)
+            if (nameArr[0].contains(" ")) {
+                tagUrl = nameArr[0].addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? tagUrl
+            }
+           // tagUrl = nameArr[0] //"https://archiveofourown.org/users/\(nameArr[0])/works"
         } else {
+            if (authorName.contains(" ")) {
+                tagUrl = authorName.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? tagUrl
+            }
             tagUrl = authorName //"https://archiveofourown.org/users/\(authorName)/works"
         }
+        
         performSegue(withIdentifier: "authorSegue", sender: self)
     }
     
