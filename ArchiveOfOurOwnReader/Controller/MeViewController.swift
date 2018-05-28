@@ -11,6 +11,7 @@ import StoreKit
 import CoreData
 import RMessage
 import Crashlytics
+import SwiftMessages
 
 class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewDataSource, SKPaymentTransactionObserver {
     
@@ -606,9 +607,11 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
                     
                 })
             } else {
-                RMessage.showNotification(in: self, title: NSLocalizedString("Finished", comment: ""), subtitle: NSLocalizedString("RestoreProcess", comment: ""), type: RMessageType.success, customTypeName: "", callback: {
-                    
-                })
+//                RMessage.showNotification(in: self, title: NSLocalizedString("Finished", comment: ""), subtitle: NSLocalizedString("RestoreProcess", comment: ""), type: RMessageType.success, customTypeName: "", callback: {
+//
+//                })
+                
+                self.showSuccess(title: NSLocalizedString("Finished", comment: ""), message: NSLocalizedString("RestoreProcess", comment: ""))
                 
                 self.refreshUI()
                 
@@ -618,7 +621,17 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
     
     /// Initiates purchase of a product.
     func purchaseProduct(_ product: SKProduct) {
-        self.view.makeToast(message: NSLocalizedString("NeedToRestart", comment: ""), duration: 1, position: "center" as AnyObject, title: NSLocalizedString("Attention", comment: ""))
+       // self.view.makeToast(message: NSLocalizedString("NeedToRestart", comment: ""), duration: 1, position: "center" as AnyObject, title: NSLocalizedString("Attention", comment: ""))
+        
+        let success = MessageView.viewFromNib(layout: .messageView)
+        success.configureTheme(.info)
+        success.configureDropShadow()
+        success.configureContent(title: NSLocalizedString("Attention", comment: ""), body: NSLocalizedString("NeedToRestart", comment: ""))
+        success.button?.isHidden = true
+        var successConfig = SwiftMessages.defaultConfig
+        successConfig.presentationStyle = .top
+        successConfig.presentationContext = .window(windowLevel: UIWindowLevelNormal)
+        
         print("Buying \(product.productIdentifier)...")
         let payment = SKPayment(product: product)
         SKPaymentQueue.default().add(payment)

@@ -10,6 +10,7 @@ import UIKit
 import Alamofire
 import RMessage
 import SafariServices
+import SwiftMessages
 
 class LoginViewController : LoadingViewController, UITextFieldDelegate {
     
@@ -24,8 +25,11 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-       makeRoundButton(button: loginButton)
+      // makeRoundButton(button: loginButton)
         makeRoundView(view: bgView)
+        
+        self.loginButton.applyGradient(colours: [AppDelegate.redDarkColor, AppDelegate.redLightColor], cornerRadius: AppDelegate.mediumCornerRadius)
+        
         loginTextField.delegate = self
         passTextField.delegate = self
         addDoneButtonOnKeyboardTf(loginTextField)
@@ -227,9 +231,21 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
         if (flashnoticediv.count > 0) {
             let noticeTxt = flashnoticediv[0].content as String
             if (noticeTxt.contains("Successfully logged")) {
-                RMessage.showNotification(in: self, title: NSLocalizedString("LogIn", comment: ""), subtitle: NSLocalizedString("LoggedInScs", comment: ""), type: RMessageType.success, customTypeName: "", callback: {
-                    
-                })
+//                RMessage.showNotification(in: self, title: NSLocalizedString("LogIn", comment: ""), subtitle: NSLocalizedString("LoggedInScs", comment: ""), type: RMessageType.success, customTypeName: "", callback: {
+//
+//                })
+                
+                let success = MessageView.viewFromNib(layout: .cardView)
+                success.configureTheme(.success)
+                success.configureDropShadow()
+                success.configureContent(title: NSLocalizedString("LogIn", comment: ""), body: NSLocalizedString("LoggedInScs", comment: ""))
+                success.button?.isHidden = true
+                var successConfig = SwiftMessages.defaultConfig
+                successConfig.presentationStyle = .top
+                successConfig.presentationContext = .window(windowLevel: UIWindowLevelNormal)
+                
+                SwiftMessages.show(config: successConfig, view: success)
+                
                 let delayTime = DispatchTime.now() + Double(Int64(1.500 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
                 
                 DefaultsManager.putBool(true, key: DefaultsManager.ADULT)

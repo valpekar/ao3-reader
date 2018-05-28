@@ -1872,9 +1872,10 @@ extension WorkViewController {
             print("Could not save \(String(describing: error.userInfo))")
         } 
         
-        RMessage.showNotification(in: self, title: NSLocalizedString("Success", comment: ""), subtitle: "Highlight was successfully saved!", type: RMessageType.success, customTypeName: "", callback: {
-            
-        })
+//        RMessage.showNotification(in: self, title: NSLocalizedString("Success", comment: ""), subtitle: "Highlight was successfully saved!", type: RMessageType.success, customTypeName: "", callback: {
+//
+//        })
+        showSuccess(title: NSLocalizedString("Success", comment: ""), message: "Highlight was successfully saved!")
         
     }
 }

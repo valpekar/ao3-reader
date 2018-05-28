@@ -642,9 +642,11 @@ class ListViewController: LoadingViewController, PageSelectDelegate, UIPopoverPr
                 self.works[curRow].needReload = false
             }
             
-            RMessage.showNotification(in: self, title: NSLocalizedString("Success", comment: ""), subtitle: NSLocalizedString("WorkDeletedFromDownloads", comment: ""), type: RMessageType.success, customTypeName: "", callback: {
-                
-            })
+//            RMessage.showNotification(in: self, title: NSLocalizedString("Success", comment: ""), subtitle: NSLocalizedString("WorkDeletedFromDownloads", comment: ""), type: RMessageType.success, customTypeName: "", callback: {
+//
+//            })
+            
+            showSuccess(title: NSLocalizedString("Success", comment: ""), message: NSLocalizedString("WorkDeletedFromDownloads", comment: ""))
             
             self.saveWorkNotifItem(workId: wId, wasDeleted: NSNumber(booleanLiteral: true))
             self.sendAllNotSentForDelete()

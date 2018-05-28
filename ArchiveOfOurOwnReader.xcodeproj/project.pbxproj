@@ -55,7 +55,6 @@
 		3C00E9C31D9C05FA00B0BBDF /* CustomEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C00E9C21D9C05FA00B0BBDF /* CustomEncoding.swift */; };
 		3C0448F71C634209005DCE5F /* ReaderProducts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C0448F51C634209005DCE5F /* ReaderProducts.swift */; };
 		3C0448F81C634209005DCE5F /* IAPHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C0448F61C634209005DCE5F /* IAPHelper.swift */; };
-		3C0448FA1C63745C005DCE5F /* HRToast+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C0448F91C63745C005DCE5F /* HRToast+UIView.swift */; };
 		3C0448FC1C637478005DCE5F /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C0448FB1C637478005DCE5F /* StoreKit.framework */; };
 		3C0449001C639080005DCE5F /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C0448FE1C639080005DCE5F /* Fabric.framework */; };
 		3C0449011C639080005DCE5F /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C0448FF1C639080005DCE5F /* Crashlytics.framework */; };
@@ -260,7 +259,6 @@
 		3C00E9C21D9C05FA00B0BBDF /* CustomEncoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomEncoding.swift; sourceTree = "<group>"; };
 		3C0448F51C634209005DCE5F /* ReaderProducts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReaderProducts.swift; sourceTree = "<group>"; };
 		3C0448F61C634209005DCE5F /* IAPHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IAPHelper.swift; sourceTree = "<group>"; };
-		3C0448F91C63745C005DCE5F /* HRToast+UIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HRToast+UIView.swift"; sourceTree = "<group>"; };
 		3C0448FB1C637478005DCE5F /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		3C0448FE1C639080005DCE5F /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		3C0448FF1C639080005DCE5F /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
@@ -610,7 +608,6 @@
 		28B6DC4D1B4E3F9300F34529 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				3C0448F91C63745C005DCE5F /* HRToast+UIView.swift */,
 				28B6DC4F1B4E424D00F34529 /* Custom */,
 				28B6DC351B4E3F5900F34529 /* LaunchScreen.xib */,
 				28B6DC301B4E3F5900F34529 /* Main.storyboard */,
@@ -822,7 +819,6 @@
 				3C0448FD1C63905F005DCE5F /* ShellScript */,
 				3C09E03D1CE5D2D1008169A5 /* Embed Frameworks */,
 				D57C937CC6FEEBC51D757723 /* [CP] Embed Pods Frameworks */,
-				4E04BA4A98E8B2FD4CFD0B26 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -841,8 +837,6 @@
 				28B6DC381B4E3F5A00F34529 /* Sources */,
 				28B6DC391B4E3F5A00F34529 /* Frameworks */,
 				28B6DC3A1B4E3F5A00F34529 /* Resources */,
-				FF03A67D4FBA9A6C20899691 /* [CP] Embed Pods Frameworks */,
-				C916A5C53DB0EF56FEAE16D4 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -982,21 +976,6 @@
 			shellPath = /bin/sh;
 			shellScript = "./Fabric.framework/run f3d6aa0aca6194181dd40e788db0d0f1b676ca2b 57256bb4bbb98587bf0897420c68825d23986517b161379fecabf94a57b86416";
 		};
-		4E04BA4A98E8B2FD4CFD0B26 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ArchiveOfOurOwnReader/Pods-ArchiveOfOurOwnReader-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		6A9A89A76AA91508F803C27E /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1013,21 +992,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		C916A5C53DB0EF56FEAE16D4 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ArchiveOfOurOwnReaderTests/Pods-ArchiveOfOurOwnReaderTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		D57C937CC6FEEBC51D757723 /* [CP] Embed Pods Frameworks */ = {
@@ -1049,6 +1013,7 @@
 				"${BUILT_PRODUCTS_DIR}/RMessage/RMessage.framework",
 				"${BUILT_PRODUCTS_DIR}/RSLoadingView/RSLoadingView.framework",
 				"${BUILT_PRODUCTS_DIR}/Spring/Spring.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftMessages/SwiftMessages.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -1065,26 +1030,12 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RMessage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RSLoadingView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Spring.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftMessages.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ArchiveOfOurOwnReader/Pods-ArchiveOfOurOwnReader-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		FF03A67D4FBA9A6C20899691 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ArchiveOfOurOwnReaderTests/Pods-ArchiveOfOurOwnReaderTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1203,7 +1154,6 @@
 				1D2832281BBD6CDA00FFC887 /* FavoritesViewController.swift in Sources */,
 				3C8995901E95169B00D511CD /* DBWorkItem+CoreDataClass.swift in Sources */,
 				3CD6BBA92063D72600958973 /* DBHighlightItem+CoreDataClass.swift in Sources */,
-				3C0448FA1C63745C005DCE5F /* HRToast+UIView.swift in Sources */,
 				28E1C7131B8D9246001E2E5A /* WorkDetailViewController.swift in Sources */,
 				1D8582D11BB4238E0005B05B /* ButtonCell.swift in Sources */,
 				3CBC35BD2004EA7400A115EC /* InboxItem.swift in Sources */,

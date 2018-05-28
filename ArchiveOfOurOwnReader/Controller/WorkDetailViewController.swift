@@ -763,9 +763,11 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                         let delay = 0.2 * Double(NSEC_PER_SEC)
                         let time = DispatchTime.now() + Double(Int64(delay)) / Double(NSEC_PER_SEC)
                         DispatchQueue.main.asyncAfter(deadline: time) {
-                            RMessage.showNotification(in: self, title: NSLocalizedString("Update", comment: ""), subtitle: NSLocalizedString("UpdateAvail", comment: ""), type: RMessageType.success, customTypeName: "", duration: 15.0, callback: {
-                                
-                            } , canBeDismissedByUser: true)
+//                            RMessage.showNotification(in: self, title: NSLocalizedString("Update", comment: ""), subtitle: NSLocalizedString("UpdateAvail", comment: ""), type: RMessageType.success, customTypeName: "", duration: 15.0, callback: {
+//
+//                            } , canBeDismissedByUser: true)
+                            
+                            self.showSuccess(title: NSLocalizedString("Update", comment: ""), message: NSLocalizedString("UpdateAvail", comment: ""))
                         }
                     }
                 }
@@ -1572,9 +1574,10 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
         if let noticediv: [TFHppleElement] = doc.search(withXPathQuery: "//div[@class='flash notice']") as? [TFHppleElement] {
             if(noticediv.count > 0) {
-                RMessage.showNotification(in: self, title: NSLocalizedString("MarkingForLater", comment: ""), subtitle: noticediv[0].content, type: RMessageType.success, customTypeName: "", callback: {
-                    
-                })
+//                RMessage.showNotification(in: self, title: NSLocalizedString("MarkingForLater", comment: ""), subtitle: noticediv[0].content, type: RMessageType.success, customTypeName: "", callback: {
+//
+//                })
+                showSuccess(title: NSLocalizedString("MarkingForLater", comment: ""), message: noticediv[0].content)
             }
         }
         
@@ -1869,9 +1872,11 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             if(noticediv.count > 0) {
                 bookmarked = false
                 changedSmth = true
-                RMessage.showNotification(in: self, title: NSLocalizedString("DeleteFromBmk", comment: ""), subtitle: noticediv[0].content, type: RMessageType.success, customTypeName: "", callback: {
-                    
-                })
+//                RMessage.showNotification(in: self, title: NSLocalizedString("DeleteFromBmk", comment: ""), subtitle: noticediv[0].content, type: RMessageType.success, customTypeName: "", callback: {
+//
+//                })
+                
+                showSuccess(title: NSLocalizedString("DeleteFromBmk", comment: ""), message: noticediv[0].content)
             }
         }
         
@@ -2083,6 +2088,12 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         })
         optionMenu.addAction(browserAction)
         
+        let shareAction = UIAlertAction(title: NSLocalizedString("Share", comment: ""), style: .default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            self.shareFic()
+        })
+        optionMenu.addAction(shareAction)
+        
         //
         let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: {
             (alert: UIAlertAction!) -> Void in
@@ -2289,6 +2300,28 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         UIApplication.shared.open(URL(string: "https://archiveofourown.org/works/\(wId)")!, options: [ : ], completionHandler: { (res) in
             print("open url \(res)")
         })
+
+    }
+    
+    func shareFic() {
+        var wId = ""
+        var wname = ""
+        if (workItem != nil) {
+            wId = workItem.workId
+        } else if (downloadedWorkItem != nil) {
+            wId = downloadedWorkItem.workId ?? ""
+        }
+        
+        Answers.logCustomEvent(withName: "WorkDetail: share",
+                               customAttributes: [
+                                "workId": wId])
+        
+        let url = URL(string: "https://archiveofourown.org/works/\(wId)")!
+        
+        let shareItems:Array = [url]
+        let activityViewController:UIActivityViewController = UIActivityViewController(activityItems: shareItems, applicationActivities: nil)
+       // activityViewController.excludedActivityTypes = [UIActivityTypePrint, UIActivityTypePostToVimeo]
+        self.present(activityViewController, animated: true, completion: nil)
 
     }
     

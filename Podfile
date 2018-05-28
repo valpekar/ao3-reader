@@ -20,6 +20,7 @@ pod 'RSLoadingView'
 pod 'ExpandableLabel'
 pod 'PopupDialog', '~> 0.7'
 pod 'RMessage'
+pod 'SwiftMessages'
 
   target 'ArchiveOfOurOwnReaderTests' do
     inherit! :search_paths

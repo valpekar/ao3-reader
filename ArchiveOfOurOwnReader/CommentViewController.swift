@@ -10,6 +10,7 @@ import UIKit
 import Alamofire
 import RMessage
 import WebKit
+import SwiftMessages
 
 class CommentViewController: LoadingViewController, UITableViewDelegate, UITableViewDataSource, WKNavigationDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
@@ -62,6 +63,7 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
         self.navigationController!.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         self.navigationController!.navigationBar.shadowImage = UIImage()
         self.navigationController!.navigationBar.isTranslucent = false
+        self.navigationController?.navigationBar.isHidden = false
     }
     
     func controllerDidClosedWithLogin() {
@@ -400,14 +402,26 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
         
         var noticediv: [TFHppleElement] = doc.search(withXPathQuery: "//div[@class='flash notice']") as! [TFHppleElement]
         if(noticediv.count > 0) {
-            self.view.makeToast(message: noticediv[0].content, duration: 3.0, position: "center" as AnyObject, title: NSLocalizedString("AddingComment", comment: ""))
+           // self.view.makeToast(message: noticediv[0].content, duration: 3.0, position: "center" as AnyObject, title: NSLocalizedString("AddingComment", comment: ""))
+            
+            let error = MessageView.viewFromNib(layout: .messageView)
+            error.configureTheme(.info)
+            error.configureContent(title: "Adding Comment", body: noticediv[0].content)
+            
+            SwiftMessages.show(config: SwiftMessages.defaultConfig, view: error)
             
             //changedSmth = true
         } else {
             var sorrydiv = doc.search(withXPathQuery: "//div[@class='flash error']")
             
             if(sorrydiv != nil && (sorrydiv?.count)!>0 && (sorrydiv?[0] as! TFHppleElement).text().range(of: "Sorry") != nil) {
-                self.view.makeToast(message: (sorrydiv![0] as AnyObject).content, duration: 3.0, position: "center" as AnyObject, title: "Adding Comment")
+              //  self.view.makeToast(message: (sorrydiv![0] as AnyObject).content, duration: 3.0, position: "center" as AnyObject, title: "Adding Comment")
+                let error = MessageView.viewFromNib(layout: .tabView)
+                error.configureTheme(.error)
+                error.configureContent(title: "Adding Comment", body: (sorrydiv![0] as AnyObject).content)
+                
+                SwiftMessages.show(config: SwiftMessages.defaultConfig, view: error)
+                
                 return
             }
         }

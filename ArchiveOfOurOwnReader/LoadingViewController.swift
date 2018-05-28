@@ -741,9 +741,11 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
             self.sendAllNotSentForNotif()
         }
         
-        RMessage.showNotification(in: self, title: NSLocalizedString("Success", comment: ""), subtitle: "Work has been downloaded! You can access if from Downloaded screen", type: RMessageType.success, customTypeName: "", callback: {
-            
-        })
+//        RMessage.showNotification(in: self, title: NSLocalizedString("Success", comment: ""), subtitle: "Work has been downloaded! You can access if from Downloaded screen", type: RMessageType.success, customTypeName: "", callback: {
+//
+//        })
+        
+        showSuccess(title: NSLocalizedString("Success", comment: ""), message: "Work has been downloaded! You can access if from Downloaded screen")
         
         if let wRl = workItemToReload {
             return wRl
@@ -1558,9 +1560,11 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
                 
             })
         } else if (dta.contains("#kudos") == true) {
-            RMessage.showNotification(in: self, title: NSLocalizedString("Kudos", comment: ""), subtitle: NSLocalizedString("KudosAdded", comment: ""), type: RMessageType.success, customTypeName: "", callback: {
-                
-            })
+//            RMessage.showNotification(in: self, title: NSLocalizedString("Kudos", comment: ""), subtitle: NSLocalizedString("KudosAdded", comment: ""), type: RMessageType.success, customTypeName: "", callback: {
+//
+//            })
+            
+            showSuccess(title: NSLocalizedString("Kudos", comment: ""), message: NSLocalizedString("KudosAdded", comment: ""))
             
             self.kudosToAnalytics()
         }

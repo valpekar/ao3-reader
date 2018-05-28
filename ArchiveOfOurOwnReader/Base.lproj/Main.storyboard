@@ -5839,7 +5839,7 @@ Please check your Internet connection and also make sure you are logged into you
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lf4-tB-BNC">
                                 <rect key="frame" x="67.666666666666686" y="203.66666666666669" width="240" height="44"/>
-                                <color key="backgroundColor" red="0.39215686274509803" green="0.11372549019607843" blue="0.54509803921568623" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="6Tc-fw-shr"/>
                                     <constraint firstAttribute="height" constant="64" id="Km4-Ox-4ln"/>
