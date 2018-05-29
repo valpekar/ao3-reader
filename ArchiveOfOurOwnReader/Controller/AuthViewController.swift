@@ -16,6 +16,7 @@ class AuthViewController: UIViewController {
     
     @IBOutlet weak var passTextField:UITextField!
     @IBOutlet weak var touchIDButton:UIButton!
+    @IBOutlet weak var okButton:UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +29,9 @@ class AuthViewController: UIViewController {
         } else if (!DefaultsManager.getString(DefaultsManager.USER_PASS).isEmpty) {
             touchIDButton.isHidden = true
         }
+        
+        self.touchIDButton.applyGradient(colours: [AppDelegate.redDarkColor, AppDelegate.redLightColor], cornerRadius: AppDelegate.mediumCornerRadius)
+        self.okButton.applyGradient(colours: [AppDelegate.redDarkColor, AppDelegate.redLightColor], cornerRadius: AppDelegate.mediumCornerRadius)
     }
     
     //MARK: - authenticate

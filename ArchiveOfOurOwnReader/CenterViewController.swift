@@ -94,7 +94,7 @@ class CenterViewController: UIViewController {
         var config = SwiftMessages.defaultConfig
         config.presentationStyle = .top
         config.presentationContext = .window(windowLevel: UIWindowLevelNormal)
-        infoConfig.duration = .seconds(seconds: 1.5)
+        config.duration = .seconds(seconds: 1.5)
         
         SwiftMessages.show(config: config, view: warn)
     }

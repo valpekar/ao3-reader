@@ -11,7 +11,6 @@ import iAd
 import CoreData
 import GoogleMobileAds
 import Alamofire
-import RMessage
 import RSLoadingView
 import CoreTelephony
 import Crashlytics
@@ -105,6 +104,11 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         interstitial = GADInterstitial(adUnitID: "ca-app-pub-8760316520462117/1282893180")
         interstitial?.delegate = self
         let request = GADRequest()
+        
+        let extras = GADExtras();
+        extras.additionalParameters = ["max_ad_content_rating": "MA"];
+        request.register(extras)
+        
         interstitial?.load(request)
     }
 
@@ -727,9 +731,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
                 #endif
             hideLoadingView()
             
-            RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: "Could not save \(err?.localizedDescription ?? "")", type: RMessageType.error, customTypeName: "", callback: {
-                
-            })
+            self.showError(title: NSLocalizedString("Error", comment: ""), message: "Could not save \(err?.localizedDescription ?? "")")
             
             return nil
         }
@@ -741,11 +743,8 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
             self.sendAllNotSentForNotif()
         }
         
-//        RMessage.showNotification(in: self, title: NSLocalizedString("Success", comment: ""), subtitle: "Work has been downloaded! You can access if from Downloaded screen", type: RMessageType.success, customTypeName: "", callback: {
-//
-//        })
         
-        showSuccess(title: NSLocalizedString("Success", comment: ""), message: "Work has been downloaded! You can access if from Downloaded screen")
+        self.showSuccess(title: NSLocalizedString("Success", comment: ""), message: "Work has been downloaded! You can access if from Downloaded screen")
         
         if let wRl = workItemToReload {
             return wRl
@@ -1197,9 +1196,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
             #endif
         } else {
             if (isOnline == true && countWroksFromDB() > 29) {
-                RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Only30Stroies", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
-                    
-                })
+                self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("Only30Stroies", comment: ""))
                 
                 return
             }
@@ -1534,18 +1531,14 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
                         
                     } else {
                         self.hideLoadingView()
-                        RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
-                            
-                        })
+                        self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CheckInternet", comment: ""))
                     }
                 })
             
         } else {
             
             self.hideLoadingView()
-            RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
-                
-            })
+            self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CheckInternet", comment: ""))
         }
     }
     
@@ -1556,15 +1549,10 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         //print("the string is: \(dta)")
         
         if (dta.contains("errors") == true) {
-            RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("LeftKudosAlready", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
-                
-            })
+            self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("LeftKudosAlready", comment: ""))
         } else if (dta.contains("#kudos") == true) {
-//            RMessage.showNotification(in: self, title: NSLocalizedString("Kudos", comment: ""), subtitle: NSLocalizedString("KudosAdded", comment: ""), type: RMessageType.success, customTypeName: "", callback: {
-//
-//            })
             
-            showSuccess(title: NSLocalizedString("Kudos", comment: ""), message: NSLocalizedString("KudosAdded", comment: ""))
+            self.showSuccess(title: NSLocalizedString("Kudos", comment: ""), message: NSLocalizedString("KudosAdded", comment: ""))
             
             self.kudosToAnalytics()
         }
@@ -1600,9 +1588,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
                                        customAttributes: [
                                         "name": txt])
             } else {
-                RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("FolderNameEmpty", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
-                    
-                })
+                self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("FolderNameEmpty", comment: ""))
             }
             
         }))
@@ -1629,9 +1615,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         do {
             if let fetchedWorks = try managedContext.fetch(req) as? [Folder] {
                 if (fetchedWorks.count > 0) {
-                    RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("FolderAlreadyExists", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
-                        
-                    })
+                    self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("FolderAlreadyExists", comment: ""))
                     return
                 }
             }

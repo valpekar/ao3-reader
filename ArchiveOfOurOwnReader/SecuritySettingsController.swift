@@ -20,12 +20,17 @@ class SecuritySettingsController: LoadingViewController {
     @IBOutlet weak var explainLabel: UILabel!
     @IBOutlet weak var authLabel: UILabel!
     @IBOutlet weak var passLabel: UILabel!
+    @IBOutlet weak var setButton: UIButton!
+    @IBOutlet weak var bgView: UIView!
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         refreshUI ()
+        
+        self.setButton.applyGradient(colours: [AppDelegate.redDarkColor, AppDelegate.redLightColor], cornerRadius: AppDelegate.mediumCornerRadius)
+        makeRoundView(view: bgView)
     }
     
     override func applyTheme() {

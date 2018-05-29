@@ -10,7 +10,6 @@ import UIKit
 import CoreData
 import StoreKit
 import CoreLocation
-import RMessage
 import Alamofire
 import Crashlytics
 
@@ -235,9 +234,7 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
                 searchApplied(self.query, shouldAddKeyword: true)
             }
         } else {
-            RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
-                
-            })
+            self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CheckInternet", comment: ""))
         }
     }
    
@@ -465,9 +462,7 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
             //self.getFeed(d)
         } else {
             self.hideLoadingView()
-            RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
-                
-            })
+            self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CheckInternet", comment: ""))
         }
         
         self.refreshControl.endRefreshing()
@@ -574,9 +569,7 @@ extension FeedViewController : UISearchBarDelegate, UISearchResultsUpdating {
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         guard let txt = searchBar.text else {
-            RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CannotBeEmpty", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
-                
-            })
+            self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CannotBeEmpty", comment: ""))
             return
         }
         

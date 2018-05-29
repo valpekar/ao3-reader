@@ -8,9 +8,7 @@
 
 import UIKit
 import Alamofire
-import RMessage
 import SafariServices
-import SwiftMessages
 
 class LoginViewController : LoadingViewController, UITextFieldDelegate {
     
@@ -119,9 +117,7 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
         
         guard let login = loginTextField.text,
             let pass = passTextField.text else {
-                RMessage.showNotification(in: self, title: NSLocalizedString("CannotLogin", comment: ""), subtitle: NSLocalizedString("FillUnamePass", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
-                    
-                })
+                self.showError(title:  NSLocalizedString("CannotLogin", comment: ""), message: NSLocalizedString("FillUnamePass", comment: ""))
                 return
         }
         
@@ -159,9 +155,7 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
                         
                     } else {
                         self.hideLoadingView()
-                        RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
-                            
-                        })
+                        self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CheckInternet", comment: ""))
                     }
                 }
             })
@@ -195,10 +189,7 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
                     self.hideLoadingView()
                 } else {
                     self.hideLoadingView()
-                    
-                    RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
-                        
-                    })
+                    self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CheckInternet", comment: ""))
                 }
             })
     }
@@ -231,20 +222,7 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
         if (flashnoticediv.count > 0) {
             let noticeTxt = flashnoticediv[0].content as String
             if (noticeTxt.contains("Successfully logged")) {
-//                RMessage.showNotification(in: self, title: NSLocalizedString("LogIn", comment: ""), subtitle: NSLocalizedString("LoggedInScs", comment: ""), type: RMessageType.success, customTypeName: "", callback: {
-//
-//                })
-                
-                let success = MessageView.viewFromNib(layout: .cardView)
-                success.configureTheme(.success)
-                success.configureDropShadow()
-                success.configureContent(title: NSLocalizedString("LogIn", comment: ""), body: NSLocalizedString("LoggedInScs", comment: ""))
-                success.button?.isHidden = true
-                var successConfig = SwiftMessages.defaultConfig
-                successConfig.presentationStyle = .top
-                successConfig.presentationContext = .window(windowLevel: UIWindowLevelNormal)
-                
-                SwiftMessages.show(config: successConfig, view: success)
+                self.showSuccess(title: NSLocalizedString("LogIn", comment: ""), message: NSLocalizedString("LoggedInScs", comment: ""))
                 
                 let delayTime = DispatchTime.now() + Double(Int64(1.500 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
                 
@@ -264,9 +242,7 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
     }
     
     func showError() {
-        RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CannotLogin", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
-            
-        })
+        self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CannotLogin", comment: ""))
         
         self.dismiss(animated: true, completion: {
             self.controllerDelegate.controllerDidClosed()
@@ -326,16 +302,12 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
         
         guard let login = loginTextField.text,
             let pass = passTextField.text else {
-                RMessage.showNotification(in: self, title: NSLocalizedString("FieldsCannotBeEmpty", comment: ""), subtitle: NSLocalizedString("FillUnamePass", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
-                    
-                })
+                self.showError(title: NSLocalizedString("FieldsCannotBeEmpty", comment: ""), message: NSLocalizedString("FillUnamePass", comment: ""))
                 return
         }
         
         if (pass.isEmpty || login.isEmpty) {
-            RMessage.showNotification(in: self, title: NSLocalizedString("FieldsCannotBeEmpty", comment: ""), subtitle: NSLocalizedString("FillUnamePass", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
-                
-            })
+            self.showError(title: NSLocalizedString("FieldsCannotBeEmpty", comment: ""), message: NSLocalizedString("FillUnamePass", comment: ""))
             return
         }
         

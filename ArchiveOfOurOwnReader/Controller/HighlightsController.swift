@@ -8,17 +8,14 @@
 
 import UIKit
 import CoreData
-import RMessage
 import Crashlytics
 
-class HighlightsController: UIViewController, NSFetchedResultsControllerDelegate {
+class HighlightsController: LoadingViewController, NSFetchedResultsControllerDelegate {
     
     @IBOutlet weak var tableView:UITableView!
     @IBOutlet weak var messageLabel:UILabel!
     @IBOutlet weak var messageView:UIView!
-    
-    var theme = DefaultsManager.THEME_DAY
-    
+        
     var sortBy = "date"
     
     fileprivate lazy var fetchedResultsController: NSFetchedResultsController<DBHighlightItem>? = {
@@ -212,10 +209,8 @@ class HighlightsController: UIViewController, NSFetchedResultsControllerDelegate
         } catch _ {
             NSLog("Cannot delete notif item")
         }
-        
-        RMessage.showNotification(in: self, title: NSLocalizedString("Success", comment: ""), subtitle: "Highlight was successfully deleted!", type: RMessageType.success, customTypeName: "", callback: {
-            
-        })
+
+        self.showSuccess(title: NSLocalizedString("Success", comment: ""), message: "Highlight was successfully deleted!")
         
     }
     

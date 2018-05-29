@@ -1125,14 +1125,14 @@
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BZH-PI-909">
                                 <rect key="frame" x="16" y="726" width="303" height="42"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.85999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="42" id="LKz-oN-kpU"/>
                                     <constraint firstAttribute="height" constant="60" id="oOJ-LH-91D"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
                                 <state key="normal" title="Read 📖">
-                                    <color key="titleColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <variation key="default">
@@ -2024,6 +2024,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8hg-sW-Hmw">
+                                                            <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -3055,7 +3056,7 @@ Please check your Internet connection and also make sure you are logged into you
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tSo-Lm-pg5">
                                 <rect key="frame" x="67.666666666666686" y="189.66666666666669" width="240" height="44"/>
-                                <color key="backgroundColor" red="0.3921568627" green="0.1137254902" blue="0.5450980392" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="3JL-IG-rZ4"/>
                                     <constraint firstAttribute="height" constant="64" id="gDJ-Vy-ulj"/>
@@ -3083,7 +3084,7 @@ Please check your Internet connection and also make sure you are logged into you
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xkp-z9-fSe">
                                 <rect key="frame" x="67.666666666666686" y="273.66666666666669" width="240" height="44"/>
-                                <color key="backgroundColor" red="0.3921568627" green="0.1137254902" blue="0.5450980392" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="64" id="GqL-eb-fwe"/>
                                     <constraint firstAttribute="height" constant="44" id="tRE-Qj-a4Z"/>
@@ -3140,6 +3141,7 @@ Please check your Internet connection and also make sure you are logged into you
                     </view>
                     <navigationItem key="navigationItem" id="dkA-vs-4vg"/>
                     <connections>
+                        <outlet property="okButton" destination="tSo-Lm-pg5" id="Pa7-JG-Wxs"/>
                         <outlet property="passTextField" destination="RVh-Lr-kOY" id="HnS-gs-UK1"/>
                         <outlet property="touchIDButton" destination="Xkp-z9-fSe" id="inv-ni-Nq0"/>
                     </connections>
@@ -5602,7 +5604,7 @@ Please check your Internet connection and also make sure you are logged into you
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PjV-cj-vS5">
                                 <rect key="frame" x="67.666666666666686" y="217.33333333333331" width="240" height="44"/>
-                                <color key="backgroundColor" red="0.3921568627" green="0.1137254902" blue="0.5450980392" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="OiD-Pj-zFq"/>
                                     <constraint firstAttribute="height" constant="64" id="WED-qw-Q7T"/>
@@ -5802,11 +5804,13 @@ Please check your Internet connection and also make sure you are logged into you
                     <connections>
                         <outlet property="authLabel" destination="arv-mL-Xqe" id="Vh7-WW-2Wp"/>
                         <outlet property="authSwitch" destination="4G5-5K-OdJ" id="s8Y-2i-BOA"/>
+                        <outlet property="bgView" destination="l91-Ya-f2M" id="6DX-1v-NVK"/>
                         <outlet property="explainLabel" destination="N9t-98-1gG" id="OVH-0J-uSe"/>
                         <outlet property="passLabel" destination="w6H-FE-eOu" id="FMe-l1-RyP"/>
                         <outlet property="passSwitch" destination="RoD-wr-lCx" id="bIi-3E-Vm5"/>
                         <outlet property="passTextView" destination="xwH-vJ-b34" id="Mo9-Z3-Srx"/>
                         <outlet property="passrepTextView" destination="TRV-NP-j8b" id="8Js-aK-GdR"/>
+                        <outlet property="setButton" destination="PjV-cj-vS5" id="hwc-qn-8vg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Tvq-S1-l5F" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -9,9 +9,9 @@
 import UIKit
 import CoreData
 import GoogleMobileAds
-import RMessage
 import Alamofire
 import Crashlytics
+import RMessage
 
 class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -96,6 +96,11 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             bannerView.rootViewController = self
             let request = GADRequest()
             request.testDevices = [ kGADSimulatorID ]
+           
+            let extras = GADExtras();
+            extras.additionalParameters = ["max_ad_content_rating": "MA"];
+            request.register(extras)
+           
             bannerView.load(request)
             
         } else {
@@ -109,7 +114,10 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 64
         
-        self.readButton.layer.cornerRadius = AppDelegate.smallCornerRadius
+//        self.readButton.layer.cornerRadius = AppDelegate.smallCornerRadius
+        
+        self.readButton.applyGradient(colours: [AppDelegate.redDarkColor, AppDelegate.redLightColor], cornerRadius: AppDelegate.mediumCornerRadius)
+        
         self.bgView.layer.cornerRadius = AppDelegate.smallCornerRadius
         self.authorView.layer.cornerRadius = AppDelegate.smallCornerRadius
         
@@ -188,8 +196,8 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             tableView.separatorColor = AppDelegate.greyLightColor
             bgView.backgroundColor = AppDelegate.whiteTransparentColor
             authorView.backgroundColor = AppDelegate.whiteTransparentColor
-            readButton.backgroundColor = AppDelegate.whiteTransparentColor
-            readButton.setTitleColor(AppDelegate.redColor, for: .normal)
+           // readButton.backgroundColor = AppDelegate.whiteTransparentColor
+          //  readButton.setTitleColor(AppDelegate.redColor, for: .normal)
             downloadTrashButton.setImage(UIImage(named: "settings"), for: UIControlState.normal)
             titleLabel.textColor = UIColor.black
             authorLabel.textColor = AppDelegate.darkerGreyColor
@@ -199,9 +207,9 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             tableView.separatorColor = AppDelegate.greyBg
             bgView.backgroundColor = AppDelegate.greyTransparentColor
             authorView.backgroundColor = AppDelegate.greyTransparentColor
-            readButton.backgroundColor = AppDelegate.greyTransparentColor
+           // readButton.backgroundColor = AppDelegate.greyTransparentColor
             titleLabel.textColor = UIColor.white
-            readButton.setTitleColor(UIColor.white, for: .normal)
+          //  readButton.setTitleColor(UIColor.white, for: .normal)
             downloadTrashButton.setImage(UIImage(named: "settings_light"), for: UIControlState.normal)
             authorLabel.textColor = UIColor.white
             dateLabel.textColor = AppDelegate.nightTextColor
@@ -378,9 +386,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                     self.hideLoadingView()
                 } else {
                     self.hideLoadingView()
-                    RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
-                        
-                    })
+                    self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CheckInternet", comment: ""))
                 }
             })
         
@@ -763,9 +769,6 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                         let delay = 0.2 * Double(NSEC_PER_SEC)
                         let time = DispatchTime.now() + Double(Int64(delay)) / Double(NSEC_PER_SEC)
                         DispatchQueue.main.asyncAfter(deadline: time) {
-//                            RMessage.showNotification(in: self, title: NSLocalizedString("Update", comment: ""), subtitle: NSLocalizedString("UpdateAvail", comment: ""), type: RMessageType.success, customTypeName: "", duration: 15.0, callback: {
-//
-//                            } , canBeDismissedByUser: true)
                             
                             self.showSuccess(title: NSLocalizedString("Update", comment: ""), message: NSLocalizedString("UpdateAvail", comment: ""))
                         }
@@ -860,9 +863,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
         if let noticediv: [TFHppleElement] = doc.search(withXPathQuery: "//div[@class='flash notice']") as? [TFHppleElement] {
             if(noticediv.count > 0) {
-                RMessage.showNotification(in: self, title: NSLocalizedString("AddingBmk", comment: ""), subtitle: noticediv[0].content, type: RMessageType.success, customTypeName: "", callback: {
-                    
-                })
+                self.showSuccess(title: NSLocalizedString("AddingBmk", comment: ""), message: noticediv[0].content)
             
                 changedSmth = true
             }
@@ -871,17 +872,13 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         if let sorrydiv = doc.search(withXPathQuery: "//div[@class='flash error']") {
             
             if(sorrydiv.count>0 && (sorrydiv[0] as! TFHppleElement).text().range(of: "Sorry") != nil) {
-                RMessage.showNotification(in: self, title: NSLocalizedString("AddingBmk", comment: ""), subtitle: (sorrydiv[0] as AnyObject).content, type: RMessageType.error, customTypeName: "", callback: {
-                    
-                })
+                self.showError(title: NSLocalizedString("AddingBmk", comment: ""), message: (sorrydiv[0] as AnyObject).content)
                 return
             }
         }
         
         if (data.isEmpty) {
-            RMessage.showNotification(in: self, title: NSLocalizedString("CannotAddBmk", comment: ""), subtitle: "Response Is Empty", type: RMessageType.error, customTypeName: "", callback: {
-                
-            })
+            self.showError(title: NSLocalizedString("CannotAddBmk", comment: ""), message: "Response Is Empty")
         }
         return
     }
@@ -925,9 +922,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             readButton.isEnabled = false
             readButton.alpha = 0.5
             
-            RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("SensitiveContent", comment: ""), type: RMessageType.error, customTypeName: "", duration: 9.999999999999999e999, callback: {
-                    
-            } , canBeDismissedByUser: true)
+            self.showError(title:  NSLocalizedString("Error", comment: ""), message: NSLocalizedString("SensitiveContent", comment: ""))
             
         }
     }
@@ -1556,9 +1551,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                             
                         } else {
                             self.hideLoadingView()
-                            RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
-                                
-                            })
+                            self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CheckInternet", comment: ""))
                         }
                     })
             }
@@ -1574,9 +1567,6 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
         if let noticediv: [TFHppleElement] = doc.search(withXPathQuery: "//div[@class='flash notice']") as? [TFHppleElement] {
             if(noticediv.count > 0) {
-//                RMessage.showNotification(in: self, title: NSLocalizedString("MarkingForLater", comment: ""), subtitle: noticediv[0].content, type: RMessageType.success, customTypeName: "", callback: {
-//
-//                })
                 showSuccess(title: NSLocalizedString("MarkingForLater", comment: ""), message: noticediv[0].content)
             }
         }
@@ -1584,17 +1574,13 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         if let sorrydiv = doc.search(withXPathQuery: "//div[@class='flash error']") {
             
             if(sorrydiv.count>0 && (sorrydiv[0] as! TFHppleElement).text().range(of: "Sorry") != nil) {
-                RMessage.showNotification(in: self, title: NSLocalizedString("MarkingForLater", comment: ""), subtitle: (sorrydiv[0] as AnyObject).content, type: RMessageType.error, customTypeName: "", callback: {
-                    
-                })
+                self.showError(title: NSLocalizedString("MarkingForLater", comment: ""), message: (sorrydiv[0] as AnyObject).content)
                 return
             }
         }
         
         if (data.isEmpty) {
-            RMessage.showNotification(in: self, title: NSLocalizedString("CannotMark", comment: ""), subtitle: "Response Is Empty", type: RMessageType.error, customTypeName: "", callback: {
-                
-            })
+            self.showError(title: NSLocalizedString("CannotMark", comment: ""), message: "Response Is Empty")
         }
         return
     }
