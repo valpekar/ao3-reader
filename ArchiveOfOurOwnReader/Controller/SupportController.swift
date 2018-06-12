@@ -66,11 +66,11 @@ class SupportController: LoadingViewController, MFMailComposeViewControllerDeleg
 //        }
 //    }
     
-    @IBAction func WebLink(_ sender: AnyObject) {
-        if let url = URL(string: "http://indiefics.com") {
-            UIApplication.shared.openURL(url)
-        }
-    }
+//    @IBAction func WebLink(_ sender: AnyObject) {
+//        if let url = URL(string: "http://indiefics.com") {
+//            UIApplication.shared.openURL(url)
+//        }
+//    }
     
     
     @IBAction func mailTouched(_ sender:AnyObject) {

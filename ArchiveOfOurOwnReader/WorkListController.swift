@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import RMessage
 import Alamofire
 import Crashlytics
 
@@ -167,9 +166,7 @@ class WorkListController: ListViewController, UITableViewDataSource, UITableView
                     self.showWorks()
                 } else {
                     self.hideLoadingView()
-                    RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
-                        
-                    })
+                    self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CheckInternet", comment: ""))
                 }
                 self.refreshControl.endRefreshing()
             })
@@ -309,9 +306,7 @@ class WorkListController: ListViewController, UITableViewDataSource, UITableView
                     //self.saveWork()
                 } else {
                     self.hideLoadingView()
-                    RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
-                        
-                    })
+                    self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CheckInternet", comment: ""))
                 }
             })
     }
@@ -392,9 +387,7 @@ extension WorkListController: UISearchResultsUpdating, UISearchBarDelegate {
                     self.showWorks()
                 } else {
                     self.hideLoadingView()
-                    RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
-                        
-                    })
+                    self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CheckInternet", comment: ""))
                     
                 }
                 self.refreshControl.endRefreshing()
@@ -407,9 +400,7 @@ extension WorkListController: UISearchResultsUpdating, UISearchBarDelegate {
 
             searchBar.endEditing(true)
         } else {
-            RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CannotBeEmpty", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
-                
-            })
+            self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CannotBeEmpty", comment: ""))
         }
     }
 
