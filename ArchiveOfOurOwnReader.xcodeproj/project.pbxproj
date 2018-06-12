@@ -101,6 +101,7 @@
 		3C662F061C9C40DC00D1F917 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C662F051C9C40DC00D1F917 /* Security.framework */; };
 		3C662F081C9C40F700D1F917 /* SupportController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C662F071C9C40F700D1F917 /* SupportController.swift */; };
 		3C684E5D1F8E391500419D69 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C684E5C1F8E391500419D69 /* AuthViewController.swift */; };
+		3C6B997C20CFF23700985390 /* UserMessagesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C6B997B20CFF23700985390 /* UserMessagesController.swift */; };
 		3C728C6A1E8CBA06006D7100 /* ChoosePrefController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C728C691E8CBA06006D7100 /* ChoosePrefController.swift */; };
 		3C74C71E1FD05E67008D191B /* FandomListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C74C71D1FD05E67008D191B /* FandomListController.swift */; };
 		3C74C7201FD05F22008D191B /* FandomItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C74C71F1FD05F22008D191B /* FandomItem.swift */; };
@@ -319,6 +320,7 @@
 		3C662F051C9C40DC00D1F917 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		3C662F071C9C40F700D1F917 /* SupportController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SupportController.swift; path = Controller/SupportController.swift; sourceTree = "<group>"; };
 		3C684E5C1F8E391500419D69 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AuthViewController.swift; path = Controller/AuthViewController.swift; sourceTree = "<group>"; };
+		3C6B997B20CFF23700985390 /* UserMessagesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMessagesController.swift; sourceTree = "<group>"; };
 		3C6D3D3B203D867100995985 /* ArchiveOfOurOwnReader.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ArchiveOfOurOwnReader.entitlements; sourceTree = "<group>"; };
 		3C728C691E8CBA06006D7100 /* ChoosePrefController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChoosePrefController.swift; sourceTree = "<group>"; };
 		3C74C71D1FD05E67008D191B /* FandomListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FandomListController.swift; sourceTree = "<group>"; };
@@ -659,6 +661,7 @@
 				3CD6BBAB2063D7A700958973 /* HighlightsController.swift */,
 				3CB85BF7207E2E010021A2CC /* ViewFoldersController.swift */,
 				3C60ADE0207F4A5300158419 /* BaseFolderController.swift */,
+				3C6B997B20CFF23700985390 /* UserMessagesController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -1103,6 +1106,7 @@
 				3CEAA530200F7975003FEFDE /* CheckDownloadItem.swift in Sources */,
 				3C0465981F8CBCBA003B6AE7 /* Serie+CoreDataProperties.swift in Sources */,
 				28B6DC541B4E47E700F34529 /* FeedViewController.swift in Sources */,
+				3C6B997C20CFF23700985390 /* UserMessagesController.swift in Sources */,
 				3CD6BBAE2063D89C00958973 /* HighlightCell.swift in Sources */,
 				3CCA7B3C1EFAA1EC00590D12 /* SubscriptionsController.swift in Sources */,
 				1D8777901B99D8DC00CEA738 /* SearchTagCell.swift in Sources */,
@@ -1280,7 +1284,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				"OTHER_SWIFT_FLAGS[arch=*]" = "-D DEBUG";
@@ -1335,7 +1339,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PROVISIONING_PROFILE = "3a2d16d4-3e58-4758-8d8e-5d2c7a136c18";
 				SDKROOT = iphoneos;

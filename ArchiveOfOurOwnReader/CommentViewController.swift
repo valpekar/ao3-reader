@@ -12,11 +12,14 @@ import RMessage
 import WebKit
 import SwiftMessages
 
-class CommentViewController: LoadingViewController, UITableViewDelegate, UITableViewDataSource, WKNavigationDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+class CommentViewController: LoadingViewController, UITableViewDelegate, UITableViewDataSource, WKNavigationDelegate, WKUIDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     @IBOutlet weak var commentTv: UITextView!
     @IBOutlet weak var sendBtn: UIButton!
-    @IBOutlet weak var commentsWebView: WKWebView!
+    
+    @IBOutlet weak var webViewContainer: UIView!
+    var webView: WKWebView!
+    
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var bgView: UIView!
@@ -32,6 +35,18 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let webConfiguration = WKWebViewConfiguration()
+        let customFrame = CGRect.init(origin: CGPoint.zero, size: CGSize.init(width: 0.0, height: self.webViewContainer.frame.size.height))
+        self.webView = WKWebView (frame: customFrame , configuration: webConfiguration)
+        webView.translatesAutoresizingMaskIntoConstraints = false
+        self.webViewContainer.addSubview(webView)
+        webView.topAnchor.constraint(equalTo: webViewContainer.topAnchor).isActive = true
+        webView.rightAnchor.constraint(equalTo: webViewContainer.rightAnchor).isActive = true
+        webView.leftAnchor.constraint(equalTo: webViewContainer.leftAnchor).isActive = true
+        webView.bottomAnchor.constraint(equalTo: webViewContainer.bottomAnchor).isActive = true
+        webView.heightAnchor.constraint(equalTo: webViewContainer.heightAnchor).isActive = true
+        webView.uiDelegate = self
         
         self.title = NSLocalizedString("Comments", comment: "")
         
@@ -234,8 +249,8 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
             self.collectionView.backgroundColor = AppDelegate.greyLightBg
             self.commentTv.textColor = AppDelegate.dayTextColor
             
-            self.commentsWebView.backgroundColor = UIColor.clear
-            self.commentsWebView.isOpaque = false
+            self.webView.backgroundColor = UIColor.clear
+            self.webView.isOpaque = false
             
             let fontStr = "font-size: " + String(format:"%d", fontSize) + "%;"
             worktext = String(format:"<style>body { color: #021439; %@ }</style>%@", fontStr, htmlStr)
@@ -245,8 +260,8 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
             self.collectionView.backgroundColor = AppDelegate.redDarkColor
             self.commentTv.textColor = AppDelegate.nightTextColor
             
-            self.commentsWebView.backgroundColor = UIColor(red: 50/255, green: 52/255, blue: 57/255, alpha: 1)
-            self.commentsWebView.isOpaque = false
+            self.webView.backgroundColor = UIColor(red: 50/255, green: 52/255, blue: 57/255, alpha: 1)
+            self.webView.isOpaque = false
             
             let fontStr = "font-size: " + String(format:"%d", fontSize) + "%;"
             worktext = String(format:"<style>body { color: #f5f5e9; %@ }</style>%@", fontStr, htmlStr)
@@ -255,8 +270,8 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
             break
         }
         
-        commentsWebView.reload()
-        commentsWebView.loadHTMLString(worktext, baseURL: nil)
+        webView.reload()
+        webView.loadHTMLString(worktext, baseURL: nil)
         
         collectionView.reloadData()
     }
@@ -271,8 +286,8 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
         //webView.stringByEvaluatingJavaScriptFromString("var links = document.getElementsByTagName('a');for (var i = 0; i < links.length; ++i) {links[i].style = 'text-decoration:none;color:#000;';} alert('a');")
         
         if (shouldScroll) {
-        let bottomOffset = CGPoint(x: 0, y: self.scrollView.contentSize.height - commentsWebView.scrollView.bounds.size.height);
-        commentsWebView.scrollView.setContentOffset(bottomOffset, animated:true)
+        let bottomOffset = CGPoint(x: 0, y: self.scrollView.contentSize.height - webView.scrollView.bounds.size.height);
+        webView.scrollView.setContentOffset(bottomOffset, animated:true)
         
         let height = Int(webView.stringByEvaluatingJavaScript(from: "document.body.offsetHeight;")!)
 

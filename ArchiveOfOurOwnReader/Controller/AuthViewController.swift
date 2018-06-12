@@ -10,7 +10,7 @@ import UIKit
 import RMessage
 import LocalAuthentication
 
-class AuthViewController: UIViewController {
+class AuthViewController: UserMessagesController {
     
     var authDelegate:AuthProtocol?
     
@@ -91,23 +91,27 @@ class AuthViewController: UIViewController {
             })]
         }  else {
             // If the security policy cannot be evaluated then show a short message depending on the error.
-            switch error!.code{
-                
-            case LAError.biometryNotEnrolled.rawValue:
-                RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Touch/Face is not enrolled", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+            if #available(iOS 11.0, *) {
+                switch error!.code{
                     
-                })
-                
-            case LAError.passcodeNotSet.rawValue:
-                RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("A passcode has not been set", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                case LAError.biometryNotEnrolled.rawValue:
+                    RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Touch/Face is not enrolled", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                        
+                    })
                     
-                })
-                
-            default:
-                // The LAError.TouchIDNotAvailable case.
-                RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Touch/Face ID not available", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                case LAError.passcodeNotSet.rawValue:
+                    RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("A passcode has not been set", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                        
+                    })
                     
-                })
+                default:
+                    // The LAError.TouchIDNotAvailable case.
+                    RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Touch/Face ID not available", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                        
+                    })
+                }
+            } else {
+                showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("Touch/Face ID not available", comment: ""))
             }
             
             // Optionally the error description can be displayed on the console.

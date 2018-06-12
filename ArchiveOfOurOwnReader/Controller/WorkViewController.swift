@@ -15,9 +15,12 @@ import WebKit
 import Spring
 import PopupDialog
 
-class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWebViewDelegate, WKNavigationDelegate, UIScrollViewDelegate {
+class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUIDelegate, WKNavigationDelegate, UIScrollViewDelegate {
     
-    @IBOutlet weak var webView: WKWebView!
+    
+    @IBOutlet weak var webViewContainer: UIView!
+    var webView: WKWebView!
+    
     @IBOutlet weak var layoutView: SpringView!
     @IBOutlet weak var layoutBottomView: SpringView!
     @IBOutlet weak var settingsView: SpringView!
@@ -58,6 +61,18 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, UIWeb
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        
+        let webConfiguration = WKWebViewConfiguration()
+        let customFrame = CGRect.init(origin: CGPoint.zero, size: CGSize.init(width: 0.0, height: self.webViewContainer.frame.size.height))
+        self.webView = WKWebView (frame: customFrame , configuration: webConfiguration)
+        webView.translatesAutoresizingMaskIntoConstraints = false
+        self.webViewContainer.addSubview(webView)
+        webView.topAnchor.constraint(equalTo: webViewContainer.topAnchor).isActive = true
+        webView.rightAnchor.constraint(equalTo: webViewContainer.rightAnchor).isActive = true
+        webView.leftAnchor.constraint(equalTo: webViewContainer.leftAnchor).isActive = true
+        webView.bottomAnchor.constraint(equalTo: webViewContainer.bottomAnchor).isActive = true
+        webView.heightAnchor.constraint(equalTo: webViewContainer.heightAnchor).isActive = true
+        webView.uiDelegate = self
         
         addNavItems()
         

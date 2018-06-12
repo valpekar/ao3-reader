@@ -143,7 +143,7 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
                     self.dismiss(animated: true, completion: {})
                 } else {
                     
-                    if let d = response.data {
+                    if let d = response.data, response.response?.statusCode == 200 {
                         
                         self.parseCookies(response)
                         self.parseResponse(d)
@@ -214,14 +214,16 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
     }
     
     func parseResponse(_ data: Data) {
-        let doc : TFHpple = TFHpple(htmlData: data)
-        guard let flashnoticediv: [TFHppleElement] = doc.search(withXPathQuery: "//div[@class='flash notice']") as? [TFHppleElement] else {
-            showError()
-            return
-        }
-        if (flashnoticediv.count > 0) {
-            let noticeTxt = flashnoticediv[0].content as String
-            if (noticeTxt.contains("Successfully logged")) {
+//        let doc : TFHpple = TFHpple(htmlData: data)
+//        guard let flashnoticediv: [TFHppleElement] = doc.search(withXPathQuery: "//div[@class='flash notice']") as? [TFHppleElement] else {
+//            showError()
+//            return
+//        }
+//        if (flashnoticediv.count > 0) {
+//            let noticeTxt = flashnoticediv[0].content as String
+//            if (noticeTxt.contains("Successfully logged")) {
+        
+        
                 self.showSuccess(title: NSLocalizedString("LogIn", comment: ""), message: NSLocalizedString("LoggedInScs", comment: ""))
                 
                 let delayTime = DispatchTime.now() + Double(Int64(1.500 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
@@ -234,11 +236,11 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
                 self.dismiss(animated: true, completion: {
                     self.controllerDelegate.controllerDidClosedWithLogin!()
                 })
-                }
-            }
-        } else {
-           showError()
-        }
+               }
+//            }
+//        } else {
+//           showError()
+//        }
     }
     
     func showError() {

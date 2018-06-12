@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="yfP-Fh-r7Y">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="yfP-Fh-r7Y">
     <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -686,14 +686,11 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OGW-bT-jr5">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="734"/>
                                         <subviews>
-                                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y4u-Ry-RvA">
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kUa-f2-jAQ">
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="534"/>
                                                 <color key="backgroundColor" red="0.29019607843137252" green="0.31372549019607843" blue="0.32941176470588235" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <wkWebViewConfiguration key="configuration">
-                                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
-                                                    <wkPreferences key="preferences"/>
-                                                </wkWebViewConfiguration>
-                                            </wkWebView>
+                                                <color key="tintColor" red="0.3921568627" green="0.1137254902" blue="0.5450980392" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </view>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="onDrag" translatesAutoresizingMaskIntoConstraints="NO" id="Tub-7u-x9f">
                                                 <rect key="frame" x="20" y="586" width="335" height="100"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -781,16 +778,16 @@
                                             <constraint firstAttribute="trailing" secondItem="Tub-7u-x9f" secondAttribute="trailing" constant="20" id="7Vb-60-fjF"/>
                                             <constraint firstAttribute="trailing" secondItem="ibn-K2-prA" secondAttribute="trailing" constant="20" id="7jU-86-gP8"/>
                                             <constraint firstItem="Tub-7u-x9f" firstAttribute="top" secondItem="BvH-fm-6Yj" secondAttribute="bottom" constant="8" id="8Wb-P3-5Wq"/>
-                                            <constraint firstItem="BvH-fm-6Yj" firstAttribute="top" secondItem="Y4u-Ry-RvA" secondAttribute="bottom" id="Evz-RQ-KIr"/>
+                                            <constraint firstItem="BvH-fm-6Yj" firstAttribute="top" secondItem="kUa-f2-jAQ" secondAttribute="bottom" id="FvF-re-rXt"/>
                                             <constraint firstAttribute="bottom" secondItem="ibn-K2-prA" secondAttribute="bottom" constant="4" id="N55-X4-kb4"/>
-                                            <constraint firstAttribute="trailing" secondItem="Y4u-Ry-RvA" secondAttribute="trailing" id="O0l-m0-iiW"/>
                                             <constraint firstItem="ibn-K2-prA" firstAttribute="leading" secondItem="OGW-bT-jr5" secondAttribute="leading" constant="20" id="PB6-fD-jpR"/>
-                                            <constraint firstItem="Y4u-Ry-RvA" firstAttribute="top" secondItem="OGW-bT-jr5" secondAttribute="top" id="YPU-sN-WxO"/>
+                                            <constraint firstAttribute="trailing" secondItem="kUa-f2-jAQ" secondAttribute="trailing" id="TZl-m7-4QP"/>
+                                            <constraint firstItem="kUa-f2-jAQ" firstAttribute="top" secondItem="OGW-bT-jr5" secondAttribute="top" id="Wx4-TH-C8H"/>
                                             <constraint firstAttribute="trailing" secondItem="BvH-fm-6Yj" secondAttribute="trailing" id="cvH-qM-qeS"/>
                                             <constraint firstItem="ibn-K2-prA" firstAttribute="top" secondItem="Tub-7u-x9f" secondAttribute="bottom" constant="4" id="d3M-dc-JwW"/>
-                                            <constraint firstItem="Y4u-Ry-RvA" firstAttribute="leading" secondItem="OGW-bT-jr5" secondAttribute="leading" id="jnE-Ne-nDl"/>
                                             <constraint firstItem="Tub-7u-x9f" firstAttribute="leading" secondItem="OGW-bT-jr5" secondAttribute="leading" constant="20" id="kGM-TK-Tnk"/>
                                             <constraint firstItem="BvH-fm-6Yj" firstAttribute="leading" secondItem="OGW-bT-jr5" secondAttribute="leading" id="pul-MH-oMO"/>
+                                            <constraint firstItem="kUa-f2-jAQ" firstAttribute="leading" secondItem="OGW-bT-jr5" secondAttribute="leading" id="tbj-2N-b4n"/>
                                             <constraint firstItem="ibn-K2-prA" firstAttribute="top" secondItem="Tub-7u-x9f" secondAttribute="bottom" id="wvy-az-yTd"/>
                                         </constraints>
                                         <variation key="default">
@@ -823,9 +820,9 @@
                         <outlet property="bgView" destination="OGW-bT-jr5" id="3LM-Lu-6sQ"/>
                         <outlet property="collectionView" destination="BvH-fm-6Yj" id="jBB-aj-6Wf"/>
                         <outlet property="commentTv" destination="Tub-7u-x9f" id="Pob-Z6-Cf9"/>
-                        <outlet property="commentsWebView" destination="Y4u-Ry-RvA" id="Zlp-Fy-GCM"/>
                         <outlet property="scrollView" destination="7bU-sj-Io5" id="fmM-Kf-huo"/>
                         <outlet property="sendBtn" destination="ibn-K2-prA" id="mK3-yf-hDb"/>
+                        <outlet property="webViewContainer" destination="kUa-f2-jAQ" id="7cy-OI-ta6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="S3B-Rq-8hK" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2024,7 +2021,6 @@ Please check your Internet connection and also make sure you are logged into you
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8hg-sW-Hmw">
-                                                            <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -2779,16 +2775,11 @@ Please check your Internet connection and also make sure you are logged into you
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iGS-U8-np2">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zXn-wb-LlQ">
                                 <rect key="frame" x="0.0" y="44" width="375" height="734"/>
                                 <color key="backgroundColor" red="0.19607843137254902" green="0.20392156862745098" blue="0.22352941176470587" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <color key="tintColor" red="0.8653129940597053" green="0.89898474554477892" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <wkWebViewConfiguration key="configuration" allowsInlineMediaPlayback="YES">
-                                    <dataDetectorTypes key="dataDetectorTypes" none="YES"/>
-                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" audio="YES" video="YES"/>
-                                    <wkPreferences key="preferences"/>
-                                </wkWebViewConfiguration>
-                            </wkWebView>
+                                <color key="tintColor" red="0.3921568627" green="0.1137254902" blue="0.5450980392" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QBX-yq-43c" customClass="SpringView" customModule="Spring">
                                 <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                                 <subviews>
@@ -2960,13 +2951,13 @@ Please check your Internet connection and also make sure you are logged into you
                         </subviews>
                         <color key="backgroundColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="iGS-U8-np2" firstAttribute="leading" secondItem="qtN-uh-88S" secondAttribute="leading" id="1ze-pH-WzW"/>
                             <constraint firstAttribute="trailing" secondItem="bAf-8o-obo" secondAttribute="trailing" id="5lY-Cb-6zP"/>
-                            <constraint firstItem="7u2-7t-GEs" firstAttribute="top" secondItem="iGS-U8-np2" secondAttribute="bottom" id="BKs-3q-VG1"/>
+                            <constraint firstItem="zXn-wb-LlQ" firstAttribute="leading" secondItem="qtN-uh-88S" secondAttribute="leading" id="BWf-uE-CoL"/>
                             <constraint firstItem="QBX-yq-43c" firstAttribute="top" secondItem="fvP-35-xPI" secondAttribute="bottom" id="JGY-Dv-HFu"/>
-                            <constraint firstItem="iGS-U8-np2" firstAttribute="top" secondItem="fvP-35-xPI" secondAttribute="bottom" id="PzN-8N-Ywg"/>
-                            <constraint firstAttribute="trailing" secondItem="iGS-U8-np2" secondAttribute="trailing" id="VLe-hQ-8cc"/>
                             <constraint firstItem="iXh-gl-Lcm" firstAttribute="top" secondItem="fvP-35-xPI" secondAttribute="bottom" id="X2e-Hd-0e1"/>
+                            <constraint firstAttribute="trailing" secondItem="zXn-wb-LlQ" secondAttribute="trailing" id="fdB-QF-7ss"/>
+                            <constraint firstItem="zXn-wb-LlQ" firstAttribute="top" secondItem="fvP-35-xPI" secondAttribute="bottom" id="hhQ-k9-Kek"/>
+                            <constraint firstItem="7u2-7t-GEs" firstAttribute="top" secondItem="zXn-wb-LlQ" secondAttribute="bottom" id="kU1-bz-uww"/>
                             <constraint firstItem="bAf-8o-obo" firstAttribute="leading" secondItem="qtN-uh-88S" secondAttribute="leading" id="kt3-z2-eAG"/>
                             <constraint firstAttribute="trailing" secondItem="QBX-yq-43c" secondAttribute="trailing" id="mvA-3S-EPw"/>
                             <constraint firstItem="7u2-7t-GEs" firstAttribute="top" secondItem="bAf-8o-obo" secondAttribute="bottom" id="mzF-LH-WlW"/>
@@ -2987,13 +2978,13 @@ Please check your Internet connection and also make sure you are logged into you
                         <outlet property="prevButton" destination="z5B-7o-XaX" id="qTT-qk-NHP"/>
                         <outlet property="scrollingSlider" destination="bvh-I4-9hj" id="A6J-ss-CrV"/>
                         <outlet property="settingsView" destination="iXh-gl-Lcm" id="ddj-nQ-0bw"/>
-                        <outlet property="webView" destination="iGS-U8-np2" id="XSg-93-Go0"/>
+                        <outlet property="webViewContainer" destination="zXn-wb-LlQ" id="J2g-sd-UH8"/>
                         <segue destination="aFH-5Z-kbf" kind="show" identifier="leaveComment" id="b3W-0z-TKl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aox-L7-d85" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2799.1999999999998" y="245.12743628185908"/>
+            <point key="canvasLocation" x="2799.1999999999998" y="244.58128078817734"/>
         </scene>
         <!--Authentication-->
         <scene sceneID="7ib-bw-vMD">
@@ -5920,7 +5911,8 @@ Please check your Internet connection and also make sure you are logged into you
                                             </textField>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZoH-XP-5Sc">
                                                 <rect key="frame" x="0.0" y="39.666666666666686" width="224" height="1"/>
-                                                <color key="backgroundColor" name="windowFrameColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" red="0.72834654283905176" green="0.73924755034615908" blue="0.75858160621761661" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="tintColor" red="0.3921568627" green="0.1137254902" blue="0.5450980392" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="1" id="tad-ON-zUb"/>
                                                 </constraints>
@@ -10379,6 +10371,6 @@ Please check your Internet connection and also make sure you are logged into you
         <segue reference="5rQ-gu-17N"/>
         <segue reference="GOa-zO-Fy6"/>
         <segue reference="pDe-8P-N2j"/>
-        <segue reference="aEt-Fa-YHa"/>
+        <segue reference="b3W-0z-TKl"/>
     </inferredMetricsTieBreakers>
 </document>
