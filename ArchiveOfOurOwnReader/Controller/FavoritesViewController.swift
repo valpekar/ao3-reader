@@ -158,26 +158,26 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         }
     }
     
-    @IBAction func restoreTouched(_ sender: AnyObject) {
-        
-        DispatchQueue.global().async(execute: {
-            DispatchQueue.main.sync {
-                if (self.hasOldSaves(workItems: (self.fetchedResultsController?.fetchedObjects)!) == true) {
-                    self.showOldAlert()
-                } else {
-                    let deleteAlert = UIAlertController(title: "Restore Downloads", message: "Cannot find any lost downloads.", preferredStyle: UIAlertControllerStyle.alert)
-                    
-                    deleteAlert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { (action: UIAlertAction) in
-                        print("Cancel")
-                    }))
-                    
-                    deleteAlert.view.tintColor = AppDelegate.redColor
-                    
-                    self.present(deleteAlert, animated: true, completion: nil)
-                }
-            }
-        })
-    }
+//    @IBAction func restoreTouched(_ sender: AnyObject) {
+//
+//        DispatchQueue.global().async(execute: {
+//            DispatchQueue.main.sync {
+//                if (self.hasOldSaves(workItems: (self.fetchedResultsController?.fetchedObjects)!) == true) {
+//                    self.showOldAlert()
+//                } else {
+//                    let deleteAlert = UIAlertController(title: "Restore Downloads", message: "Cannot find any lost downloads.", preferredStyle: UIAlertControllerStyle.alert)
+//
+//                    deleteAlert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { (action: UIAlertAction) in
+//                        print("Cancel")
+//                    }))
+//
+//                    deleteAlert.view.tintColor = AppDelegate.redColor
+//
+//                    self.present(deleteAlert, animated: true, completion: nil)
+//                }
+//            }
+//        })
+//    }
     
     //MARK: - tableview
     
@@ -374,198 +374,198 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
     
     //MARK: - works
     
-    func showOldAlert() {
-        let deleteAlert = UIAlertController(title: "Lost Downloads ", message: "You have some lost downloaded works. What should I do with them?", preferredStyle: UIAlertControllerStyle.alert)
-        
-        deleteAlert.addAction(UIAlertAction(title: "Delete Them All", style: .default, handler: { (action: UIAlertAction) in
-            print("Delete olds")
-            self.deleteOldSaves()
-        }))
-        
-        deleteAlert.addAction(UIAlertAction(title: "Restore Them", style: .default, handler: { (action: UIAlertAction) in
-            self.showLoadingView(msg: "Restoring...")
-            self.copyOldWorksFromDB()
-            //self.deleteOldSaves()
-            self.hideLoadingView()
-            self.title = String(self.fetchedResultsController?.fetchedObjects?.count ?? 0) + " " + NSLocalizedString("Downloaded", comment: "")
-        }))
-        
-        deleteAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction) in
-            print("Cancel")
-        }))
-        
-        deleteAlert.view.tintColor = AppDelegate.redColor
-        
-        present(deleteAlert, animated: true, completion: nil)
-    }
+//    func showOldAlert() {
+//        let deleteAlert = UIAlertController(title: "Lost Downloads ", message: "You have some lost downloaded works. What should I do with them?", preferredStyle: UIAlertControllerStyle.alert)
+//
+//        deleteAlert.addAction(UIAlertAction(title: "Delete Them All", style: .default, handler: { (action: UIAlertAction) in
+//            print("Delete olds")
+//            self.deleteOldSaves()
+//        }))
+//
+//        deleteAlert.addAction(UIAlertAction(title: "Restore Them", style: .default, handler: { (action: UIAlertAction) in
+//            self.showLoadingView(msg: "Restoring...")
+//            self.copyOldWorksFromDB()
+//            //self.deleteOldSaves()
+//            self.hideLoadingView()
+//            self.title = String(self.fetchedResultsController?.fetchedObjects?.count ?? 0) + " " + NSLocalizedString("Downloaded", comment: "")
+//        }))
+//
+//        deleteAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction) in
+//            print("Cancel")
+//        }))
+//
+//        deleteAlert.view.tintColor = AppDelegate.redColor
+//
+//        present(deleteAlert, animated: true, completion: nil)
+//    }
     
-    func deleteOldSaves() {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,
-            let managedContextOld = appDelegate.managedObjectContextOld else {
-                return
-        }
-        
-        let fetchRequest: NSFetchRequest <NSFetchRequestResult> = NSFetchRequest(entityName:"DBWorkItem")
-        let request = NSBatchDeleteRequest(fetchRequest: fetchRequest)
-        do {
-            try managedContextOld.execute(request)
-        } catch {
-            #if DEBUG
-                print("cannot fetch favorites.")
-            #endif
-        }
-    }
+//    func deleteOldSaves() {
+//        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,
+//            let managedContextOld = appDelegate.managedObjectContextOld else {
+//                return
+//        }
+//
+//        let fetchRequest: NSFetchRequest <NSFetchRequestResult> = NSFetchRequest(entityName:"DBWorkItem")
+//        let request = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+//        do {
+//            try managedContextOld.execute(request)
+//        } catch {
+//            #if DEBUG
+//                print("cannot fetch favorites.")
+//            #endif
+//        }
+//    }
     
-    func hasOldSaves(workItems: [DBWorkItem]) -> Bool {
-        var res = false
-        
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,
-            let managedContextOld = appDelegate.managedObjectContextOld else {
-                return res
-        }
-        
-        let fetchRequest: NSFetchRequest <NSFetchRequestResult> = NSFetchRequest(entityName:"DBWorkItem")
-        do {
-            if let fetchedResults = try managedContextOld.fetch(fetchRequest) as? [DBWorkItem] {
-                if fetchedResults.count > 0 {
-                    for fRes in fetchedResults {
-                        let predicate = NSPredicate(format: "workId == %@", fRes.workId ?? "")
-                        if let array = (workItems as NSArray?)?.filtered(using: predicate) as? [DBWorkItem] {
-                            if array.count == 0  {
-                            res = true
-                            }
-                        } else {
-                            res = true
-                        }
-                    }
-                }
-            }
-        } catch {
-            #if DEBUG
-                print("cannot fetch favorites.")
-            #endif
-        }
-        
-        return res
-    }
-    
-    func copyOldWorksFromDB() {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,
-            let managedContextOld = appDelegate.managedObjectContextOld else {
-                return
-        }
-        let managedContextNew = appDelegate.persistentContainer.viewContext
-        
-        let fetchRequest: NSFetchRequest <NSFetchRequestResult> = NSFetchRequest(entityName:"DBWorkItem")
-        do {
-            if let fetchedResults = try managedContextOld.fetch(fetchRequest) as? [DBWorkItem] {
-            
-            for resultItem in fetchedResults {
-                let entity = NSEntityDescription.entity(forEntityName: "DBWorkItem",  in: managedContextNew)
-                let newObj: NSManagedObject = NSManagedObject(entity: entity!, insertInto: managedContextNew)
-                
-                let entityDescription = resultItem.entity
-                let attrs = entityDescription.attributesByName
-                
-                for attr in attrs {
-                    newObj.setValue(resultItem.value(forKey: attr.key), forKey: attr.key)
-                }
-                
-                var chaptersSet = [NSManagedObject]()
-                
-                if let chaptersOld = resultItem.chapters {
-                    for chapterOld in chaptersOld {
-                        let entityC = NSEntityDescription.entity(forEntityName: "DBChapter",  in: managedContextNew)
-                        let newChapter: NSManagedObject = NSManagedObject(entity: entityC!, insertInto: managedContextNew)
-                    
-                        let entityDescriptionC = (chapterOld as? DBChapter)?.entity
-                        if let attrsC = entityDescriptionC?.attributesByName {
-                    
-                        for attr in attrsC {
-                            newChapter.setValue((chapterOld as? DBChapter)?.value(forKey: attr.key), forKey: attr.key)
-                        }
-                        chaptersSet.append(newChapter)
-                        }
-                    }
-                }
-                
-                newObj.setValue(nil, forKey: "folder")
-                
-                newObj.setValue(NSSet(array: chaptersSet), forKey: "chapters")
-                
-                var fandomssSet = [NSManagedObject]()
-                
-                if let fandomsOld = resultItem.fandoms {
-                    for fandomOld in fandomsOld {
-                        let entityF = NSEntityDescription.entity(forEntityName: "DBFandom",  in: managedContextNew)
-                        let newFandom: NSManagedObject = NSManagedObject(entity: entityF!, insertInto: managedContextNew)
-                        
-                        let entityDescriptionF = (fandomOld as? DBFandom)?.entity
-                        if let attrsF = entityDescriptionF?.attributesByName {
-                            
-                            for attr in attrsF {
-                                newFandom.setValue((fandomOld as? DBFandom)?.value(forKey: attr.key), forKey: attr.key)
-                            }
-                        }
-                        fandomssSet.append(newFandom)
-                    }
-                }
-                
-                newObj.setValue(NSSet(array: fandomssSet), forKey: "fandoms")
-                
-                var charsSet = [NSManagedObject]()
-                
-                if let charactersOld = resultItem.characters {
-                    for characterOld in charactersOld {
-                        let entityCh = NSEntityDescription.entity(forEntityName: "DBCharacterItem",  in: managedContextNew)
-                        let newChar: NSManagedObject = NSManagedObject(entity: entityCh!, insertInto: managedContextNew)
-                        
-                        let entityDescriptionCh = (characterOld as? DBCharacterItem)?.entity
-                        if let attrsCh = entityDescriptionCh?.attributesByName {
-                            
-                            for attr in attrsCh {
-                                newChar.setValue((characterOld as? DBCharacterItem)?.value(forKey: attr.key), forKey: attr.key)
-                            }
-                        }
-                        charsSet.append(newChar)
-                    }
-                }
-                
-                newObj.setValue(NSSet(array: charsSet), forKey: "characters")
-                
-                var relsSet = [NSManagedObject]()
-                
-                if let relsOld = resultItem.relationships {
-                    for relOld in relsOld {
-                        let entityR = NSEntityDescription.entity(forEntityName: "DBRelationship",  in: managedContextNew)
-                        let newRel: NSManagedObject = NSManagedObject(entity: entityR!, insertInto: managedContextNew)
-                        
-                        let entityDescriptionR = (relOld as? DBRelationship)?.entity
-                        if let attrsR = entityDescriptionR?.attributesByName {
-                            
-                            for attr in attrsR {
-                                newRel.setValue((relOld as? DBRelationship)?.value(forKey: attr.key), forKey: attr.key)
-                            }
-                        }
-                        relsSet.append(newRel)
-                    }
-                }
-                
-                newObj.setValue(NSSet(array: relsSet), forKey: "relationships")
-            }
-                
-                //delete old!
-            }
-        } catch {
-            #if DEBUG
-                print("cannot fetch favorites.")
-            #endif
-        }
-        
-        appDelegate.saveContext()
-        hideLoadingView()
- 
-    }
+//    func hasOldSaves(workItems: [DBWorkItem]) -> Bool {
+//        var res = false
+//
+//        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,
+//            let managedContextOld = appDelegate.managedObjectContextOld else {
+//                return res
+//        }
+//
+//        let fetchRequest: NSFetchRequest <NSFetchRequestResult> = NSFetchRequest(entityName:"DBWorkItem")
+//        do {
+//            if let fetchedResults = try managedContextOld.fetch(fetchRequest) as? [DBWorkItem] {
+//                if fetchedResults.count > 0 {
+//                    for fRes in fetchedResults {
+//                        let predicate = NSPredicate(format: "workId == %@", fRes.workId ?? "")
+//                        if let array = (workItems as NSArray?)?.filtered(using: predicate) as? [DBWorkItem] {
+//                            if array.count == 0  {
+//                            res = true
+//                            }
+//                        } else {
+//                            res = true
+//                        }
+//                    }
+//                }
+//            }
+//        } catch {
+//            #if DEBUG
+//                print("cannot fetch favorites.")
+//            #endif
+//        }
+//
+//        return res
+//    }
+//
+//    func copyOldWorksFromDB() {
+//        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,
+//            let managedContextOld = appDelegate.managedObjectContextOld else {
+//                return
+//        }
+//        let managedContextNew = appDelegate.persistentContainer.viewContext
+//
+//        let fetchRequest: NSFetchRequest <NSFetchRequestResult> = NSFetchRequest(entityName:"DBWorkItem")
+//        do {
+//            if let fetchedResults = try managedContextOld.fetch(fetchRequest) as? [DBWorkItem] {
+//
+//            for resultItem in fetchedResults {
+//                let entity = NSEntityDescription.entity(forEntityName: "DBWorkItem",  in: managedContextNew)
+//                let newObj: NSManagedObject = NSManagedObject(entity: entity!, insertInto: managedContextNew)
+//
+//                let entityDescription = resultItem.entity
+//                let attrs = entityDescription.attributesByName
+//
+//                for attr in attrs {
+//                    newObj.setValue(resultItem.value(forKey: attr.key), forKey: attr.key)
+//                }
+//
+//                var chaptersSet = [NSManagedObject]()
+//
+//                if let chaptersOld = resultItem.chapters {
+//                    for chapterOld in chaptersOld {
+//                        let entityC = NSEntityDescription.entity(forEntityName: "DBChapter",  in: managedContextNew)
+//                        let newChapter: NSManagedObject = NSManagedObject(entity: entityC!, insertInto: managedContextNew)
+//
+//                        let entityDescriptionC = (chapterOld as? DBChapter)?.entity
+//                        if let attrsC = entityDescriptionC?.attributesByName {
+//
+//                        for attr in attrsC {
+//                            newChapter.setValue((chapterOld as? DBChapter)?.value(forKey: attr.key), forKey: attr.key)
+//                        }
+//                        chaptersSet.append(newChapter)
+//                        }
+//                    }
+//                }
+//
+//                newObj.setValue(nil, forKey: "folder")
+//
+//                newObj.setValue(NSSet(array: chaptersSet), forKey: "chapters")
+//
+//                var fandomssSet = [NSManagedObject]()
+//
+//                if let fandomsOld = resultItem.fandoms {
+//                    for fandomOld in fandomsOld {
+//                        let entityF = NSEntityDescription.entity(forEntityName: "DBFandom",  in: managedContextNew)
+//                        let newFandom: NSManagedObject = NSManagedObject(entity: entityF!, insertInto: managedContextNew)
+//
+//                        let entityDescriptionF = (fandomOld as? DBFandom)?.entity
+//                        if let attrsF = entityDescriptionF?.attributesByName {
+//
+//                            for attr in attrsF {
+//                                newFandom.setValue((fandomOld as? DBFandom)?.value(forKey: attr.key), forKey: attr.key)
+//                            }
+//                        }
+//                        fandomssSet.append(newFandom)
+//                    }
+//                }
+//
+//                newObj.setValue(NSSet(array: fandomssSet), forKey: "fandoms")
+//
+//                var charsSet = [NSManagedObject]()
+//
+//                if let charactersOld = resultItem.characters {
+//                    for characterOld in charactersOld {
+//                        let entityCh = NSEntityDescription.entity(forEntityName: "DBCharacterItem",  in: managedContextNew)
+//                        let newChar: NSManagedObject = NSManagedObject(entity: entityCh!, insertInto: managedContextNew)
+//
+//                        let entityDescriptionCh = (characterOld as? DBCharacterItem)?.entity
+//                        if let attrsCh = entityDescriptionCh?.attributesByName {
+//
+//                            for attr in attrsCh {
+//                                newChar.setValue((characterOld as? DBCharacterItem)?.value(forKey: attr.key), forKey: attr.key)
+//                            }
+//                        }
+//                        charsSet.append(newChar)
+//                    }
+//                }
+//
+//                newObj.setValue(NSSet(array: charsSet), forKey: "characters")
+//
+//                var relsSet = [NSManagedObject]()
+//
+//                if let relsOld = resultItem.relationships {
+//                    for relOld in relsOld {
+//                        let entityR = NSEntityDescription.entity(forEntityName: "DBRelationship",  in: managedContextNew)
+//                        let newRel: NSManagedObject = NSManagedObject(entity: entityR!, insertInto: managedContextNew)
+//
+//                        let entityDescriptionR = (relOld as? DBRelationship)?.entity
+//                        if let attrsR = entityDescriptionR?.attributesByName {
+//
+//                            for attr in attrsR {
+//                                newRel.setValue((relOld as? DBRelationship)?.value(forKey: attr.key), forKey: attr.key)
+//                            }
+//                        }
+//                        relsSet.append(newRel)
+//                    }
+//                }
+//
+//                newObj.setValue(NSSet(array: relsSet), forKey: "relationships")
+//            }
+//
+//                //delete old!
+//            }
+//        } catch {
+//            #if DEBUG
+//                print("cannot fetch favorites.")
+//            #endif
+//        }
+//
+//        appDelegate.saveContext()
+//        hideLoadingView()
+//
+//    }
     
     /*func loadWroksFromDB(predicate: NSPredicate?, predicateWFolder: NSPredicate) {
         

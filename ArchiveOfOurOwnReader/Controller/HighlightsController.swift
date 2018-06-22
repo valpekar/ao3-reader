@@ -93,14 +93,14 @@ class HighlightsController: LoadingViewController, NSFetchedResultsControllerDel
         
     }
     
-    @IBAction func restoreTouched(_ sender: AnyObject) {
-        
-        DispatchQueue.global().async(execute: {
-            DispatchQueue.main.sync {
-                self.copyOldHighlights()
-            }
-        })
-    }
+//    @IBAction func restoreTouched(_ sender: AnyObject) {
+//
+//        DispatchQueue.global().async(execute: {
+//            DispatchQueue.main.sync {
+//                self.copyOldHighlights()
+//            }
+//        })
+//    }
     
     @IBAction func sortHighlightsTouched(_ sender: AnyObject) {
         let optionMenu = UIAlertController(title: nil, message: NSLocalizedString("Sort Options", comment: ""), preferredStyle: .actionSheet)
@@ -302,81 +302,81 @@ class HighlightsController: LoadingViewController, NSFetchedResultsControllerDel
     
     //MARK: - copy olds
     
-    func copyOldHighlights() {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,
-            let managedContextOld = appDelegate.managedObjectContextOld else {
-                return
-        }
-        let managedContext = appDelegate.persistentContainer.viewContext
-        
-        var items: [DBHighlightItem] = []
-        
-        let fetchRequest: NSFetchRequest <NSFetchRequestResult> = NSFetchRequest(entityName:"DBHighlightItem")
-        do {
-            if let fetchedResults = try managedContextOld.fetch(fetchRequest) as? [DBHighlightItem] {
-                items = fetchedResults
-            }
-        } catch {
-            #if DEBUG
-            print("cannot fetch favorites.")
-            #endif
-        }
-        
-        
-        for item in items {
-            
-            var shouldCopy = false
-            
-            let predicate = NSPredicate(format: "content == %@", item.content ?? "")
-            if let array = (fetchedResultsController?.fetchedObjects as NSArray?)?.filtered(using: predicate) as? [DBHighlightItem] {
-                if array.count == 0  {
-                    shouldCopy = true
-                }
-            } else if fetchedResultsController?.fetchedObjects?.count ?? 0 > 0 {
-                shouldCopy = true
-            }
-            
-            if (shouldCopy == false) {
-                let deleteAlert = UIAlertController(title: "Restore Highlights", message: "Cannot find any lost highlights.", preferredStyle: UIAlertControllerStyle.alert)
-                
-                deleteAlert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { (action: UIAlertAction) in
-                    print("Cancel")
-                }))
-                
-                deleteAlert.view.tintColor = AppDelegate.redColor
-                
-                self.present(deleteAlert, animated: true, completion: nil)
-            } else if (shouldCopy == true) {
-                
-            guard let entity = NSEntityDescription.entity(forEntityName: "DBHighlightItem",  in: managedContext) else {
-                return
-            }
-            
-            let nItem = DBHighlightItem(entity: entity, insertInto: managedContext)
-            nItem.workId = item.workId
-            nItem.workName = item.workName
-            nItem.author = item.author
-            nItem.content = item.content
-            nItem.date = item.date
-            
-            Answers.logCustomEvent(withName: "Highlights: save highlight from old", customAttributes: ["workName" : nItem.workName ?? "", "content": nItem.content ?? ""])
-            
-            do {
-                try managedContext.save()
-            } catch let error as NSError {
-                print("Could not save \(String(describing: error.userInfo))")
-            }
-                
-                managedContextOld.delete(item)
-                
-                do {
-                    try managedContextOld.save()
-                } catch let error as NSError {
-                    print("Could not save \(String(describing: error.userInfo))")
-                }
-        }
-        }
-    }
+//    func copyOldHighlights() {
+//        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,
+//            let managedContextOld = appDelegate.managedObjectContextOld else {
+//                return
+//        }
+//        let managedContext = appDelegate.persistentContainer.viewContext
+//        
+//        var items: [DBHighlightItem] = []
+//        
+//        let fetchRequest: NSFetchRequest <NSFetchRequestResult> = NSFetchRequest(entityName:"DBHighlightItem")
+//        do {
+//            if let fetchedResults = try managedContextOld.fetch(fetchRequest) as? [DBHighlightItem] {
+//                items = fetchedResults
+//            }
+//        } catch {
+//            #if DEBUG
+//            print("cannot fetch favorites.")
+//            #endif
+//        }
+//        
+//        
+//        for item in items {
+//            
+//            var shouldCopy = false
+//            
+//            let predicate = NSPredicate(format: "content == %@", item.content ?? "")
+//            if let array = (fetchedResultsController?.fetchedObjects as NSArray?)?.filtered(using: predicate) as? [DBHighlightItem] {
+//                if array.count == 0  {
+//                    shouldCopy = true
+//                }
+//            } else if fetchedResultsController?.fetchedObjects?.count ?? 0 > 0 {
+//                shouldCopy = true
+//            }
+//            
+//            if (shouldCopy == false) {
+//                let deleteAlert = UIAlertController(title: "Restore Highlights", message: "Cannot find any lost highlights.", preferredStyle: UIAlertControllerStyle.alert)
+//                
+//                deleteAlert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { (action: UIAlertAction) in
+//                    print("Cancel")
+//                }))
+//                
+//                deleteAlert.view.tintColor = AppDelegate.redColor
+//                
+//                self.present(deleteAlert, animated: true, completion: nil)
+//            } else if (shouldCopy == true) {
+//                
+//            guard let entity = NSEntityDescription.entity(forEntityName: "DBHighlightItem",  in: managedContext) else {
+//                return
+//            }
+//            
+//            let nItem = DBHighlightItem(entity: entity, insertInto: managedContext)
+//            nItem.workId = item.workId
+//            nItem.workName = item.workName
+//            nItem.author = item.author
+//            nItem.content = item.content
+//            nItem.date = item.date
+//            
+//            Answers.logCustomEvent(withName: "Highlights: save highlight from old", customAttributes: ["workName" : nItem.workName ?? "", "content": nItem.content ?? ""])
+//            
+//            do {
+//                try managedContext.save()
+//            } catch let error as NSError {
+//                print("Could not save \(String(describing: error.userInfo))")
+//            }
+//                
+//                managedContextOld.delete(item)
+//                
+//                do {
+//                    try managedContextOld.save()
+//                } catch let error as NSError {
+//                    print("Could not save \(String(describing: error.userInfo))")
+//                }
+//        }
+//        }
+//    }
 }
 
 //MARK: Tableview

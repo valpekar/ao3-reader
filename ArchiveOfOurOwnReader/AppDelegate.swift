@@ -453,7 +453,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 //        return coordinator
 //    }()
     
-    lazy var persistentStoreCoordinator1: NSPersistentStoreCoordinator? = {
+/*    lazy var persistentStoreCoordinator1: NSPersistentStoreCoordinator? = {
         // The persistent store coordinator for the application. This implementation creates and return a coordinator, having added the store for the application to it. This property is optional since there are legitimate error conditions that could cause the creation of the store to fail.
         // Create the coordinator and store
         
@@ -485,7 +485,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         }
         
         return coordinator
-    }()
+    }()*/
 
 //    lazy var managedObjectContext: NSManagedObjectContext? = {
 //        // Returns the managed object context for the application (which is already bound to the persistent store coordinator for the application.) This property is optional since there are legitimate error conditions that could cause the creation of the context to fail.
@@ -498,7 +498,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 //        return managedObjectContext
 //    }()
     
-    lazy var managedObjectContextOld: NSManagedObjectContext? = {
+    /*lazy var managedObjectContextOld: NSManagedObjectContext? = {
         // Returns the managed object context for the application (which is already bound to the persistent store coordinator for the application.) This property is optional since there are legitimate error conditions that could cause the creation of the context to fail.
         let coordinator = self.persistentStoreCoordinator1
         if coordinator == nil {
@@ -507,7 +507,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         var managedObjectContext = NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.mainQueueConcurrencyType)
         managedObjectContext.persistentStoreCoordinator = coordinator
         return managedObjectContext
-    }()
+    }()*/
 
     // MARK: - Core Data Saving support
 
