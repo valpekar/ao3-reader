@@ -350,16 +350,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
          */
         let container = NSPersistentContainer(name: "ArchiveOfOurOwnReader")
         
-        let newUrl = self.applicationDocumentsDirectory.appendingPathComponent("ArchiveOfOurOwnReader.sqlite")
-        
-        let description = NSPersistentStoreDescription()
-
-        description.shouldInferMappingModelAutomatically = true
-        description.shouldMigrateStoreAutomatically = true
-        /*description.url*/
-        description.url = newUrl
-        
-        container.persistentStoreDescriptions.append(description)
+//        let newUrl = self.applicationDocumentsDirectory.appendingPathComponent("ArchiveOfOurOwnReader.sqlite")
+//        
+//        let description = NSPersistentStoreDescription()
+//
+//        description.shouldInferMappingModelAutomatically = true
+//        description.shouldMigrateStoreAutomatically = true
+//        /*description.url*/
+//        description.url = newUrl
+//        
+//        container.persistentStoreDescriptions.append(description)
         
      //   print("default url =\(NSPersistentContainer.defaultDirectoryURL())")
         
