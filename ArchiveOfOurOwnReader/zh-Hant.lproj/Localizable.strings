@@ -102,7 +102,7 @@
 "RestoreProcess" = "恢復過程";
 "Attention" = "注意!";
 "NeedToRestart" = "您將需要重新啟動應用程序以進行原生廣告的更改才能生效!";
-"Upgrade" = "升級";
+"Upgrade" = "升級  ⭐️";
 "Buy" = "購買";
 "Restore" = "恢復";
 "ThankYou" = "謝謝!";
@@ -145,14 +145,13 @@
 "MoreDetails" = "更多細節";
 "Attention" = "注意!";
 "SensitiveAttention" = "嗨！ 該應用不能包含與強姦和未成年性相關的內容，並且這些內容不應通過搜索獲得。 所以安全模式被刪除，並且與此類內容一起使用在應用程序中將不可用。 對不起，有什麼不方便！";
-"MarkedForLater" = "Marked For Later";
-"CheckLink" = "Cannot get work! Please check if the link is correct!";
-"GettingInbox" = "Getting Inbox";
-"Options" = "Options";
-"MarkAsUnread" = "Mark As Unread";
-"MarkAsRead" = "Mark As Read";
-"DeleteFromInbox" = "Delete From Inbox";
-"Reply" = "Reply";
+"MarkedForLater" = "為以後標記";
+"CheckLink" = "無法工作！ 請檢查鏈接是否正確！";
+"GettingInbox" = "獲取收件箱";
+"Options" = "選項";
+"MarkAsUnread" = "標記為未讀";
+"DeleteFromInbox" = "從收件箱中刪除";
+"Reply" = "回复";
 "Approve" = "Approve";
 "Decline" = "Decline";
 "CouldNotReply" = "Could Not Reply";
@@ -163,19 +162,20 @@
 "GettingInbox" = "Getting Inbox";
 "InboxUpdated" = "Inbox successfully updated!";
 "MarkItem" = "Mark Item";
-"DeletingFromInox" = "Deleting From Inox";
+"DeletingFromInox" = "Deleting From Inbox";
 "CommentApproved" = "Comment Successfully Approved!";
-"CouldNotDelete" = "Could Not Delete!";
-"SureDeleteItem" = "You want to delete this item?";
-"ItemDeleted" = "Item Successfully Deleted";
-"WorkDeletedFromDownloads" = "Work Has Been Deleted From Downloads";
-"Update" = "Update";
-"UpdateAvail" = "Update is available for this work (Settings -> Reload/Update)!";
-"GettingAuthorInfo" = "Getting Author Info";
-"MarkingForLater" = "Marking For Later";
-"MarkForLater" = "Mark For Later";
-"MarkAsRead" = "Mark As Read";
-"Reading Now" = "Reading Now";
+"CouldNotDelete" = "無法刪除！";
+"SureDeleteItem" = "你想刪除這個項目？";
+"ItemDeleted" = "項目成功刪除";
+"WorkDeletedFromDownloads" = "工作已從下載中刪除";
+"Update" = "更新";
+"UpdateAvail" = "更新可用於這項工作（設置 - >重新加載/更新）！";
+"GettingAuthorInfo" = "獲取作者信息";
+"MarkingForLater" = "稍後標記";
+"MarkForLater" = "馬克以後";
+"MarkAsRead" = "標記為已讀";
+"Reading Now" = "現在閱讀";
+"ThankYouForSub" = "感謝您購買訂閱！ 感謝您的應用程序將變得更好！🙏";
 
 
 

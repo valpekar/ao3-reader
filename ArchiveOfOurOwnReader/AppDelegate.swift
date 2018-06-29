@@ -52,6 +52,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     static var dayBgColor = UIColor(red: 231/255, green: 234/255, blue: 238/255, alpha: 1.0)
     static var greyTransparentColor = UIColor(red: 115/255, green: 116/255, blue: 118/255, alpha: 0.95)
     static var whiteTransparentColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.95)
+    static var whiteHalfTransparentColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.85)
 
     static var bigCollCellWidth = 70
     static var smallCollCellWidth = 38
@@ -350,16 +351,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
          */
         let container = NSPersistentContainer(name: "ArchiveOfOurOwnReader")
         
-//        let newUrl = self.applicationDocumentsDirectory.appendingPathComponent("ArchiveOfOurOwnReader.sqlite")
-//        
-//        let description = NSPersistentStoreDescription()
+        let newUrl = self.applicationDocumentsDirectory.appendingPathComponent("ArchiveOfOurOwnReader.sqlite")
+        
+        let description = NSPersistentStoreDescription()
 //
 //        description.shouldInferMappingModelAutomatically = true
 //        description.shouldMigrateStoreAutomatically = true
-//        /*description.url*/
-//        description.url = newUrl
-//        
-//        container.persistentStoreDescriptions.append(description)
+        description.url = newUrl
+        
+        container.persistentStoreDescriptions.append(description)
         
      //   print("default url =\(NSPersistentContainer.defaultDirectoryURL())")
         

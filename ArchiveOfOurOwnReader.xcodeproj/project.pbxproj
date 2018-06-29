@@ -80,6 +80,7 @@
 		3C16125E1C720B5700FB0670 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C16125D1C720B5700FB0670 /* libxml2.tbd */; };
 		3C1612601C720B6000FB0670 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C16125F1C720B6000FB0670 /* libz.tbd */; };
 		3C22BBEE1FED2BD60012CBA4 /* PagesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C22BBED1FED2BD60012CBA4 /* PagesController.swift */; };
+		3C230AF720E537D5008B9476 /* RFS_Juan_Casco.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3C230AF620E537CA008B9476 /* RFS_Juan_Casco.ttf */; };
 		3C2548D11E71872D00B872A3 /* WorkListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C2548D01E71872D00B872A3 /* WorkListController.swift */; };
 		3C274CC31CE4CCBA00F3AC68 /* FlurryEmpty.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C274CBF1CE4CCBA00F3AC68 /* FlurryEmpty.m */; };
 		3C274CC41CE4CCBA00F3AC68 /* libFlurry_7.6.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C274CC11CE4CCBA00F3AC68 /* libFlurry_7.6.0.a */; };
@@ -101,6 +102,7 @@
 		3C662F061C9C40DC00D1F917 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C662F051C9C40DC00D1F917 /* Security.framework */; };
 		3C662F081C9C40F700D1F917 /* SupportController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C662F071C9C40F700D1F917 /* SupportController.swift */; };
 		3C684E5D1F8E391500419D69 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C684E5C1F8E391500419D69 /* AuthViewController.swift */; };
+		3C69A14020E6479F00D9BBAF /* UIWebViewSearch.js in Resources */ = {isa = PBXBuildFile; fileRef = 3C69A13F20E6479F00D9BBAF /* UIWebViewSearch.js */; };
 		3C6B997C20CFF23700985390 /* UserMessagesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C6B997B20CFF23700985390 /* UserMessagesController.swift */; };
 		3C6E1E8720E3CC130051B42E /* UpgradesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C6E1E8620E3CC130051B42E /* UpgradesController.swift */; };
 		3C728C6A1E8CBA06006D7100 /* ChoosePrefController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C728C691E8CBA06006D7100 /* ChoosePrefController.swift */; };
@@ -288,6 +290,7 @@
 		3C16125D1C720B5700FB0670 /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
 		3C16125F1C720B6000FB0670 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		3C22BBED1FED2BD60012CBA4 /* PagesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PagesController.swift; path = Controller/PagesController.swift; sourceTree = "<group>"; };
+		3C230AF620E537CA008B9476 /* RFS_Juan_Casco.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = RFS_Juan_Casco.ttf; sourceTree = "<group>"; };
 		3C2548D01E71872D00B872A3 /* WorkListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkListController.swift; sourceTree = "<group>"; };
 		3C274CBE1CE4CCBA00F3AC68 /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
 		3C274CBF1CE4CCBA00F3AC68 /* FlurryEmpty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlurryEmpty.m; sourceTree = "<group>"; };
@@ -321,6 +324,7 @@
 		3C662F051C9C40DC00D1F917 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		3C662F071C9C40F700D1F917 /* SupportController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SupportController.swift; path = Controller/SupportController.swift; sourceTree = "<group>"; };
 		3C684E5C1F8E391500419D69 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AuthViewController.swift; path = Controller/AuthViewController.swift; sourceTree = "<group>"; };
+		3C69A13F20E6479F00D9BBAF /* UIWebViewSearch.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = UIWebViewSearch.js; sourceTree = "<group>"; };
 		3C6B997B20CFF23700985390 /* UserMessagesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMessagesController.swift; sourceTree = "<group>"; };
 		3C6D3D3B203D867100995985 /* ArchiveOfOurOwnReader.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ArchiveOfOurOwnReader.entitlements; sourceTree = "<group>"; };
 		3C6E1E8620E3CC130051B42E /* UpgradesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UpgradesController.swift; path = Controller/UpgradesController.swift; sourceTree = "<group>"; };
@@ -741,11 +745,13 @@
 		3CB5072720875C1A004AE0B8 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				3C230AF620E537CA008B9476 /* RFS_Juan_Casco.ttf */,
 				3CB5073420876D9A004AE0B8 /* Starjedi.ttf */,
 				3CB5073220876CA2004AE0B8 /* NITEMARE.TTF */,
 				3CB5073020876A5F004AE0B8 /* OpenDyslexic-Regular.ttf */,
 				3CB5072E208760EE004AE0B8 /* FuturaBook.ttf */,
 				3CB5072A20875ECB004AE0B8 /* Rooney-Regular.ttf */,
+				3C69A13F20E6479F00D9BBAF /* UIWebViewSearch.js */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -923,6 +929,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3C69A14020E6479F00D9BBAF /* UIWebViewSearch.js in Resources */,
 				28B6DC321B4E3F5900F34529 /* Main.storyboard in Resources */,
 				3CB5073120876A69004AE0B8 /* OpenDyslexic-Regular.ttf in Resources */,
 				28B6DC371B4E3F5900F34529 /* LaunchScreen.xib in Resources */,
@@ -937,6 +944,7 @@
 				1D7C4ED21BB16E7E00F4ECFA /* lang_map.plist in Resources */,
 				1D0312811BB57D9A0008027E /* rating_map.plist in Resources */,
 				3CB5073520876DA5004AE0B8 /* Starjedi.ttf in Resources */,
+				3C230AF720E537D5008B9476 /* RFS_Juan_Casco.ttf in Resources */,
 				3CB5072F208760FA004AE0B8 /* FuturaBook.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

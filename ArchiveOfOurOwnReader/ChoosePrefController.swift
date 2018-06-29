@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import RMessage
 import Crashlytics
 
 class ChoosePrefController : LoadingViewController {
@@ -24,9 +23,10 @@ class ChoosePrefController : LoadingViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        nextButton.layer.borderWidth = 1.0
-        nextButton.layer.borderColor = AppDelegate.redColor.cgColor
-        makeRoundView(view: nextButton)
+//        nextButton.layer.borderWidth = 1.0
+//        nextButton.layer.borderColor = AppDelegate.redColor.cgColor
+        self.nextButton.applyGradient(colours: [AppDelegate.redDarkColor, AppDelegate.redLightColor], cornerRadius: AppDelegate.mediumCornerRadius)
+        
         addDoneButtonOnKeyboardTf(textField)
         
         NotificationCenter.default.addObserver(self, selector: #selector(ChoosePrefController.keyboardWillShow(notification:)), name:NSNotification.Name.UIKeyboardWillShow, object: nil);
@@ -47,9 +47,7 @@ class ChoosePrefController : LoadingViewController {
     @IBAction func nextTouched(sender: AnyObject) {
         
         guard let txt = textField.text, !txt.isEmpty else {
-            RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("AtLeastOneFandom", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
-                
-            })
+            self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("AtLeastOneFandom", comment: ""))
             return
         }
         

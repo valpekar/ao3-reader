@@ -102,7 +102,7 @@
 "RestoreProcess" = "복원 프로세스";
 "Attention" = "주의!";
 "NeedToRestart" = "기본 광고가 적용된 변경 사항을 적용하려면 앱을 다시 시작해야합니다!";
-"Upgrade" = "업그레이드";
+"Upgrade" = "업그레이드  ⭐️";
 "Buy" = "사다 ✅";
 "Restore" = "복원";
 "ThankYou" = "고맙습니다! 🙏";
@@ -176,6 +176,7 @@
 "MarkForLater" = "Mark For Later";
 "MarkAsRead" = "Mark As Read";
 "Reading Now" = "Reading Now";
+"ThankYouForSub" = "Thank you for buying subscription! Thanks to you the app will become better! 🙏";
 
 
 

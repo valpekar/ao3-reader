@@ -102,7 +102,7 @@
 "RestoreProcess" = "復元プロセス";
 "Attention" = "注意!";
 "NeedToRestart" = "ネイティブ広告の変更を有効にするには、アプリを再起動する必要があります!";
-"Upgrade" = "アップグレード";
+"Upgrade" = "アップグレード  ⭐️";
 "Buy" = "購入";
 "Restore" = "リストア";
 "ThankYou" = "ありがとうございました!";
@@ -176,6 +176,7 @@
 "MarkForLater" = "Mark For Later";
 "MarkAsRead" = "Mark As Read";
 "Reading Now" = "Reading Now";
+"ThankYouForSub" = "Thank you for buying subscription! Thanks to you the app will become better! 🙏";
 
 
 

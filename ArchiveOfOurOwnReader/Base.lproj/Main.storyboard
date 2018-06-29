@@ -617,6 +617,7 @@
                             </button>
                             <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="o67-3W-at7">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
+                                <color key="tintColor" red="0.81377610980000004" green="0.64405626760000001" blue="0.9439766839" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="barTintColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
@@ -2949,14 +2950,23 @@ Please check your Internet connection and also make sure you are logged into you
                                     <constraint firstItem="Qc6-DB-2IT" firstAttribute="leading" secondItem="4YJ-Cm-pnq" secondAttribute="trailing" constant="4" id="ZAJ-6Q-O8G"/>
                                 </constraints>
                             </view>
+                            <searchBar hidden="YES" contentMode="redraw" showsCancelButton="YES" translatesAutoresizingMaskIntoConstraints="NO" id="R2w-mB-AN4">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
+                                <color key="tintColor" red="0.81377610980000004" green="0.64405626760000001" blue="0.9439766839" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="barTintColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
                         </subviews>
                         <color key="backgroundColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="bAf-8o-obo" secondAttribute="trailing" id="5lY-Cb-6zP"/>
+                            <constraint firstAttribute="trailing" secondItem="R2w-mB-AN4" secondAttribute="trailing" id="8jr-mN-kgI"/>
                             <constraint firstItem="zXn-wb-LlQ" firstAttribute="leading" secondItem="qtN-uh-88S" secondAttribute="leading" id="BWf-uE-CoL"/>
                             <constraint firstItem="QBX-yq-43c" firstAttribute="top" secondItem="fvP-35-xPI" secondAttribute="bottom" id="JGY-Dv-HFu"/>
+                            <constraint firstItem="R2w-mB-AN4" firstAttribute="top" secondItem="fvP-35-xPI" secondAttribute="bottom" id="TKj-9X-y2M"/>
                             <constraint firstItem="iXh-gl-Lcm" firstAttribute="top" secondItem="fvP-35-xPI" secondAttribute="bottom" id="X2e-Hd-0e1"/>
                             <constraint firstAttribute="trailing" secondItem="zXn-wb-LlQ" secondAttribute="trailing" id="fdB-QF-7ss"/>
+                            <constraint firstItem="R2w-mB-AN4" firstAttribute="leading" secondItem="qtN-uh-88S" secondAttribute="leading" id="gSB-PL-YUT"/>
                             <constraint firstItem="zXn-wb-LlQ" firstAttribute="top" secondItem="fvP-35-xPI" secondAttribute="bottom" id="hhQ-k9-Kek"/>
                             <constraint firstItem="7u2-7t-GEs" firstAttribute="top" secondItem="zXn-wb-LlQ" secondAttribute="bottom" id="kU1-bz-uww"/>
                             <constraint firstItem="bAf-8o-obo" firstAttribute="leading" secondItem="qtN-uh-88S" secondAttribute="leading" id="kt3-z2-eAG"/>
@@ -2978,6 +2988,7 @@ Please check your Internet connection and also make sure you are logged into you
                         <outlet property="nextButton" destination="wnZ-d8-1x3" id="bIb-Fh-uzQ"/>
                         <outlet property="prevButton" destination="z5B-7o-XaX" id="qTT-qk-NHP"/>
                         <outlet property="scrollingSlider" destination="bvh-I4-9hj" id="A6J-ss-CrV"/>
+                        <outlet property="searchBar" destination="R2w-mB-AN4" id="cKS-wf-rTi"/>
                         <outlet property="settingsView" destination="iXh-gl-Lcm" id="ddj-nQ-0bw"/>
                         <outlet property="webViewContainer" destination="zXn-wb-LlQ" id="J2g-sd-UH8"/>
                         <segue destination="aFH-5Z-kbf" kind="show" identifier="leaveComment" id="b3W-0z-TKl"/>
@@ -3454,7 +3465,7 @@ Please check your Internet connection and also make sure you are logged into you
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Browse" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VFd-qE-5pi">
                                                     <rect key="frame" x="67" y="11" width="293" height="22"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -5243,10 +5254,9 @@ Please check your Internet connection and also make sure you are logged into you
                     </view>
                     <navigationItem key="navigationItem" id="12d-zO-klr">
                         <barButtonItem key="backBarButtonItem" title=" " id="0od-gu-Zbt"/>
-                        <barButtonItem key="rightBarButtonItem" title="Upgrade" id="OIx-7O-wVZ">
+                        <barButtonItem key="rightBarButtonItem" title=" " id="OIx-7O-wVZ">
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
-                                <action selector="removeAdsTouched:" destination="aAL-eX-Mdc" id="q6e-hb-qld"/>
                                 <segue destination="WbV-02-eQd" kind="presentation" identifier="upgradesSegue" id="Avs-MD-mEK"/>
                             </connections>
                         </barButtonItem>
@@ -5301,7 +5311,7 @@ Please check your Internet connection and also make sure you are logged into you
                                             <constraint firstAttribute="width" constant="240" id="90f-gF-mh6"/>
                                             <constraint firstAttribute="width" constant="680" id="AAy-hU-Eir"/>
                                         </constraints>
-                                        <mutableString key="text">Application has Auto-Renewable Subscription (Prosub). The subscription price is 1.99$ per month.
+                                        <string key="text">Application has Auto-Renewable Subscription (Prosub). The subscription price is 1.99$ per month.
 Once you have purchased it, the subscription starts. Since then every week you will get digitally generated recommendations of fan fics (fan fiction works) to read. Subscription length is 1 month and it is auto-renewable.
 
 Payment will be charged to iTunes Account at confirmation of purchase.
@@ -5318,7 +5328,7 @@ To Unsubscribe:
 3. Tap View Apple ID. 
 4. Tap the subscription that you want to manage.
 If you don't see a subscription but are still being charged, make sure that you're signed in with the correct Apple ID. 
-5. Use the options to manage your subscription. You can tap Cancel Subscription. If you cancel, your subscription will stop at the end of the current billing cycle.</mutableString>
+5. Use the options to manage your subscription. You can tap Cancel Subscription. If you cancel, your subscription will stop at the end of the current billing cycle.</string>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -5822,13 +5832,17 @@ Please check your Internet connection and also make sure you are logged into you
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="book_bg" translatesAutoresizingMaskIntoConstraints="NO" id="9oT-V9-zTL">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                            </imageView>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ksp-fG-KYC">
                                 <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <color key="barTintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="barTintColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <items>
-                                    <navigationItem title="Title" id="fVc-bJ-ZVg">
+                                    <navigationItem title=" " id="fVc-bJ-ZVg">
                                         <barButtonItem key="rightBarButtonItem" systemItem="stop" id="Ir0-VV-UtM">
+                                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <connections>
                                                 <action selector="closeButtonTouched:" destination="WbV-02-eQd" id="Nit-Md-F2l"/>
                                             </connections>
@@ -5836,13 +5850,10 @@ Please check your Internet connection and also make sure you are logged into you
                                     </navigationItem>
                                 </items>
                             </navigationBar>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="book_bg" translatesAutoresizingMaskIntoConstraints="NO" id="9oT-V9-zTL">
-                                <rect key="frame" x="0.0" y="88" width="375" height="724"/>
-                            </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" verticalCompressionResistancePriority="751" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OgX-We-gZD">
-                                <rect key="frame" x="16" y="241" width="343" height="91"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <nil key="textColor"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" verticalCompressionResistancePriority="751" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="OgX-We-gZD">
+                                <rect key="frame" x="16" y="186" width="343" height="149"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" red="0.39215686274509803" green="0.11372549019607843" blue="0.54509803921568623" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zr6-25-d3S">
@@ -5858,7 +5869,7 @@ Please check your Internet connection and also make sure you are logged into you
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="8jP-hu-645">
-                                <rect key="frame" x="16" y="348" width="343" height="340"/>
+                                <rect key="frame" x="16" y="351" width="343" height="340"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kti-m2-cnY">
                                         <rect key="frame" x="0.0" y="0.0" width="343" height="100"/>
@@ -5887,9 +5898,13 @@ Please check your Internet connection and also make sure you are logged into you
                                                     <constraint firstAttribute="width" constant="150" id="f4O-UL-9Cr"/>
                                                     <constraint firstAttribute="height" constant="44" id="uki-Qj-0Va"/>
                                                 </constraints>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                                 <state key="normal" title="Buy Yearly">
                                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="yrTouched:" destination="WbV-02-eQd" eventType="touchUpInside" id="CnM-Cu-jr5"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -5920,18 +5935,25 @@ Please check your Internet connection and also make sure you are logged into you
                                                 <color key="textColor" red="0.3921568627" green="0.1137254902" blue="0.5450980392" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Billed annually." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Igm-rO-paP">
-                                                <rect key="frame" x="10" y="68" width="90" height="15.666666666666671"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Billed quarterly." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Igm-rO-paP">
+                                                <rect key="frame" x="10" y="68" width="94.666666666666671" height="15.666666666666671"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                 <color key="textColor" red="0.81377610980000004" green="0.64405626760000001" blue="0.9439766839" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="394-Uq-h1b">
-                                                <rect key="frame" x="181" y="35" width="150" height="30"/>
+                                                <rect key="frame" x="181" y="28" width="150" height="44"/>
                                                 <constraints>
+                                                    <constraint firstAttribute="height" constant="44" id="Gvq-9o-b5m"/>
                                                     <constraint firstAttribute="width" constant="150" id="hn3-Nx-028"/>
                                                 </constraints>
-                                                <state key="normal" title="Buy Yearly"/>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                                <state key="normal" title="Buy Quarter">
+                                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="quarterTouched:" destination="WbV-02-eQd" eventType="touchUpInside" id="A8m-mK-P3y"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -5969,11 +5991,18 @@ Please check your Internet connection and also make sure you are logged into you
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="96a-oH-d51">
-                                                <rect key="frame" x="181" y="35" width="150" height="30"/>
+                                                <rect key="frame" x="181" y="28" width="150" height="44"/>
                                                 <constraints>
+                                                    <constraint firstAttribute="height" constant="44" id="4Pz-A5-fmO"/>
                                                     <constraint firstAttribute="width" constant="150" id="HBd-CY-LUe"/>
                                                 </constraints>
-                                                <state key="normal" title="Buy Yearly"/>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                                <state key="normal" title="Buy Monthly">
+                                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="monthTouched:" destination="WbV-02-eQd" eventType="touchUpInside" id="B53-5U-BwM"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -5991,20 +6020,36 @@ Please check your Internet connection and also make sure you are logged into you
                                     </view>
                                 </subviews>
                             </stackView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="rec1m" translatesAutoresizingMaskIntoConstraints="NO" id="eOl-eH-YRw">
-                                <rect key="frame" x="16" y="96" width="343" height="133"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="outline" translatesAutoresizingMaskIntoConstraints="NO" id="eOl-eH-YRw">
+                                <rect key="frame" x="16" y="96" width="343" height="90"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="90" id="Yen-Hw-Lku"/>
+                                </constraints>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wmZ-xv-H8O">
+                                <rect key="frame" x="97" y="711" width="181" height="29"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
+                                <state key="normal" title="Restore Previous Purchase">
+                                    <color key="titleColor" red="0.81377610980000004" green="0.64405626760000001" blue="0.9439766839" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="restoreTapped:" destination="WbV-02-eQd" eventType="touchUpInside" id="D3f-42-siN"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="OgX-We-gZD" firstAttribute="top" secondItem="eOl-eH-YRw" secondAttribute="bottom" constant="12" id="6AF-9a-D46"/>
+                            <constraint firstItem="zr6-25-d3S" firstAttribute="top" secondItem="wmZ-xv-H8O" secondAttribute="bottom" constant="8" id="5Y4-4V-jAQ"/>
+                            <constraint firstItem="OgX-We-gZD" firstAttribute="top" secondItem="eOl-eH-YRw" secondAttribute="bottom" id="6AF-9a-D46"/>
                             <constraint firstAttribute="bottom" secondItem="9oT-V9-zTL" secondAttribute="bottom" id="9Ve-5v-nD3"/>
                             <constraint firstAttribute="trailingMargin" secondItem="OgX-We-gZD" secondAttribute="trailing" id="EYC-PJ-10Q"/>
-                            <constraint firstItem="zr6-25-d3S" firstAttribute="top" secondItem="8jP-hu-645" secondAttribute="bottom" constant="60" id="Eb7-3h-k0Y"/>
                             <constraint firstAttribute="trailing" secondItem="ksp-fG-KYC" secondAttribute="trailing" id="LY0-6q-4fr"/>
                             <constraint firstItem="9oT-V9-zTL" firstAttribute="leading" secondItem="dyx-5T-718" secondAttribute="leading" id="Ond-Ke-yx4"/>
+                            <constraint firstItem="wmZ-xv-H8O" firstAttribute="top" secondItem="8jP-hu-645" secondAttribute="bottom" constant="20" id="RJO-qx-lsX"/>
                             <constraint firstItem="ksp-fG-KYC" firstAttribute="leading" secondItem="dyx-5T-718" secondAttribute="leading" id="RgY-Iy-OTq"/>
+                            <constraint firstItem="wmZ-xv-H8O" firstAttribute="centerX" secondItem="dyx-5T-718" secondAttribute="centerX" id="UFz-jQ-n2q"/>
                             <constraint firstItem="zr6-25-d3S" firstAttribute="leading" secondItem="dyx-5T-718" secondAttribute="leadingMargin" constant="12" id="Uow-iw-q2U"/>
+                            <constraint firstItem="9oT-V9-zTL" firstAttribute="top" secondItem="dyx-5T-718" secondAttribute="top" id="ZAK-eu-0Zh"/>
                             <constraint firstItem="OgX-We-gZD" firstAttribute="leading" secondItem="dyx-5T-718" secondAttribute="leadingMargin" id="ZTE-Vf-l2x"/>
                             <constraint firstAttribute="trailingMargin" secondItem="zr6-25-d3S" secondAttribute="trailing" constant="12" id="eqe-nm-N9Q"/>
                             <constraint firstItem="eOl-eH-YRw" firstAttribute="top" secondItem="ksp-fG-KYC" secondAttribute="bottom" constant="8" id="h4p-Ff-80i"/>
@@ -6015,14 +6060,16 @@ Please check your Internet connection and also make sure you are logged into you
                             <constraint firstItem="09C-s7-Bcx" firstAttribute="top" secondItem="zr6-25-d3S" secondAttribute="bottom" id="miQ-TZ-YFZ"/>
                             <constraint firstAttribute="trailing" secondItem="9oT-V9-zTL" secondAttribute="trailing" id="qO8-5H-hfD"/>
                             <constraint firstItem="8jP-hu-645" firstAttribute="trailing" secondItem="dyx-5T-718" secondAttribute="trailingMargin" id="rBD-Rj-aVG"/>
-                            <constraint firstItem="9oT-V9-zTL" firstAttribute="top" secondItem="ksp-fG-KYC" secondAttribute="bottom" id="sj2-EW-MOj"/>
                             <constraint firstItem="ksp-fG-KYC" firstAttribute="top" secondItem="MaG-Vt-xAP" secondAttribute="bottom" id="yqT-IG-4yc"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="lbl" destination="OgX-We-gZD" id="q5B-GS-Ayc"/>
+                        <outlet property="m1btn" destination="96a-oH-d51" id="yFa-Y8-Lc8"/>
                         <outlet property="m3btn" destination="394-Uq-h1b" id="Bkn-EZ-Ibm"/>
+                        <outlet property="navBar" destination="ksp-fG-KYC" id="P3P-dT-4CZ"/>
                         <outlet property="privacybtn" destination="zr6-25-d3S" id="dvi-Ye-XC6"/>
+                        <outlet property="restorebtn" destination="wmZ-xv-H8O" id="ni9-EX-H2U"/>
                         <outlet property="view1" destination="Kti-m2-cnY" id="tRZ-m7-DRa"/>
                         <outlet property="view2" destination="r1u-lM-tYx" id="4ud-dB-fj1"/>
                         <outlet property="view3" destination="Zyw-YY-CVG" id="NZl-j7-Cgk"/>
@@ -6670,6 +6717,7 @@ Major Problems:
                         <subviews>
                             <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="tmI-ep-s1X">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
+                                <color key="tintColor" red="0.81377610980000004" green="0.64405626760000001" blue="0.9439766839" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="barTintColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
@@ -7357,16 +7405,16 @@ Major Problems:
                                 </variation>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tKS-fA-gQ9">
-                                <rect key="frame" x="137.66666666666666" y="390.66666666666669" width="100" height="40"/>
+                                <rect key="frame" x="117.66666666666669" y="390.66666666666669" width="140" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="4oz-fH-FLr"/>
-                                    <constraint firstAttribute="width" constant="100" id="Omx-GP-ekb"/>
+                                    <constraint firstAttribute="width" constant="140" id="Omx-GP-ekb"/>
                                     <constraint firstAttribute="width" constant="240" id="Yk7-7e-jlW"/>
                                     <constraint firstAttribute="height" constant="56" id="mJI-3W-ZFz"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                 <state key="normal" title="Next">
-                                    <color key="titleColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <variation key="default">
                                     <mask key="constraints">
@@ -7375,7 +7423,7 @@ Major Problems:
                                     </mask>
                                 </variation>
                                 <variation key="heightClass=regular-widthClass=regular">
-                                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="21"/>
                                     <mask key="constraints">
                                         <exclude reference="4oz-fH-FLr"/>
                                         <exclude reference="Omx-GP-ekb"/>
@@ -10579,11 +10627,11 @@ Please check your Internet connection and also make sure you are logged into you
         <image name="hits" width="74" height="74"/>
         <image name="ic_sort" width="31" height="31"/>
         <image name="icon-download" width="32" height="32"/>
-        <image name="lang" width="18" height="18"/>
+        <image name="lang" width="42" height="42"/>
         <image name="likes" width="32" height="32"/>
+        <image name="outline" width="133" height="133"/>
         <image name="pref_bg" width="360" height="240"/>
-        <image name="profile" width="20" height="20"/>
-        <image name="rec1m" width="133" height="133"/>
+        <image name="profile" width="42" height="42"/>
         <image name="settings" width="33" height="33"/>
         <image name="shortstory" width="32" height="32"/>
         <image name="transp" width="96" height="96"/>
@@ -10593,7 +10641,7 @@ Please check your Internet connection and also make sure you are logged into you
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="AVD-tc-abp"/>
-        <segue reference="GYH-Ae-w0j"/>
+        <segue reference="Mk3-Ot-1ke"/>
         <segue reference="jXE-kt-jek"/>
         <segue reference="GOa-zO-Fy6"/>
         <segue reference="QjG-hc-3tA"/>

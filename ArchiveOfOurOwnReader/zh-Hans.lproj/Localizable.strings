@@ -106,7 +106,7 @@
 "RestoreProcess" = "Restore Process";
 "Attention" = "Attention!";
 "NeedToRestart" = "You will need to restart the app for changes with native ads to take effect!";
-"Upgrade" = "Upgrade";
+"Upgrade" = "Upgrade  ⭐️";
 "Buy" = "Buy ✅";
 "Restore" = "Restore";
 "ThankYou" = "Thank you! 🙏";
@@ -180,4 +180,5 @@
 "MarkForLater" = "Mark For Later";
 "MarkAsRead" = "Mark As Read";
 "Reading Now" = "Reading Now";
+"ThankYouForSub" = "Thank you for buying subscription! Thanks to you the app will become better! 🙏";
 

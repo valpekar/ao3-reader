@@ -27,6 +27,8 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
     @IBOutlet weak var prevButton: UIButton!
     @IBOutlet weak var nextButton: UIButton!
     
+    @IBOutlet weak var searchBar: UISearchBar!
+    
     @IBOutlet weak var contentsButton: UIButton!
     
     @IBOutlet weak var kudosButton: UIButton!
@@ -57,6 +59,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
     var onlineChapters = [Int:ChapterOnline]()
     
     var viewLaidoutSubviews = false // <-- variable to prevent the viewDidLayoutSubviews code from happening more than once
+    
     
     override func viewDidLoad() {
         
@@ -119,6 +122,15 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
         }
         
         self.webView.scrollView.delegate = self
+        self.searchBar.delegate = self
+        
+        if let tf = self.searchBar.value(forKey: "_searchField") as? UITextField {
+            addDoneButtonOnKeyboardTf(tf)
+        }
+    }
+    
+    override func doneButtonAction() {
+        self.searchBar.endEditing(true)
     }
     
     
@@ -357,6 +369,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
         UIApplication.shared.isIdleTimerDisabled = false
     }
     
+    
     // Retrieve and set your content offset when the view re-appears
     // and its subviews are first laid out
     /*override func viewDidLayoutSubviews() {
@@ -448,9 +461,13 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
         let qButton = UIBarButtonItem(image : imageQ, style: .plain, target: self, action: #selector(WorkViewController.quoteTouched) );
         qButton.tintColor = UIColor.white
         
+        let imageSs = UIImage(named: "search") as UIImage?
+        let ssButton = UIBarButtonItem(image : imageSs, style: .plain, target: self, action: #selector(WorkViewController.searchTouched) );
+        ssButton.tintColor = UIColor.white
+        
         let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace, target: nil, action: nil)
         
-        self.navigationItem.rightBarButtonItems = [ searchButton, igButton, ffButton, qButton, flexSpace]
+        self.navigationItem.rightBarButtonItems = [ searchButton, igButton, ffButton, qButton, ssButton, flexSpace]
     }
     
     @objc func handleHideTap(_ recognizer: UITapGestureRecognizer) {
@@ -464,6 +481,9 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
                 self.settingsView.isHidden = true
             }
         }
+        
+        self.searchBar.isHidden = true
+        self.removeAllHighlights()
     }
     
     //https://stackoverflow.com/questions/31114340/setstatusbarhidden-is-deprecated-in-ios-9-0
@@ -558,6 +578,15 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        
+//        if let path = Bundle.main.path(forResource: "UIWebViewSearch", ofType: "js"), let jsCode = try? String(contentsOfFile:path, encoding:String.Encoding.utf8) {
+//
+//            self.webView.evaluateJavaScript(jsCode) { (res, error) in
+//                print(res ?? "")
+//                print(error?.localizedDescription ?? "")
+//            }
+//        }
+        
         self.webView.scrollView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0)
         
         let delayTime = DispatchTime.now() + Double(Int64(0.2 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
@@ -1198,6 +1227,8 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
             fontCss = "@font-face { font-family: \"\(fontFamily)\"; src: url(NITEMARE.TTF); format('truetype')} "
         } else if (fontFamily.contains("Star Jedi")) {
             fontCss = "@font-face { font-family: \"\(fontFamily)\"; src: url(Starjedi.ttf); format('truetype')} "
+        } else if (fontFamily.contains("Romance Fatal Serif")) {
+            fontCss = "@font-face { font-family: \"\(fontFamily)\"; src: url(RFS_Juan_Casco.ttf); format('truetype')} "
         }
         
         switch (theme) {
@@ -1236,7 +1267,6 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
         }
         
        // let _ = webView(wview: webView, enableGL: false)
-        
         layoutView.backgroundColor = bgColor
         layoutBottomView.backgroundColor = bgColor
         settingsView.backgroundColor = bgColor
@@ -1255,7 +1285,17 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
         webView.loadHTMLString(worktext, baseURL: url)
     }
     
+    @objc func searchTouched() {
+        if (purchased == true || donated == true) {
+            self.searchBar.isHidden = false
+        } else {
+            self.showWarning(title: "Premium Feature", message: "Searching on the page is available to premium users only.")
+        }
+    }
+    
     @objc func changeThemeTouched() {
+        
+        self.searchBar.isHidden = true
         
         saveChanges()
         
@@ -1308,6 +1348,8 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
     }
     
     @objc func changeTextSizeTouched() {
+        self.searchBar.isHidden = true
+        
         if (settingsView.isHidden == true) {
             
             settingsView.isHidden = false
@@ -1476,7 +1518,17 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
             }
         }
         
-        popup.addButtons([buttonOne, buttonTwo, buttonThree, button4, button5, button6, button7, button8, button9, button10, button11, button12, buttonCancel])
+        let button13 = DefaultButton(title: "Romance Fatal Serif (Premium)") {
+            if (self.purchased == true) {
+                self.fontFamily = "Romance Fatal Serif"
+                DefaultsManager.putString(self.fontFamily, key: DefaultsManager.FONT_FAMILY)
+                self.loadCurrentTheme()
+            }  else {
+                self.showWarning(title: "Warning: This Font is Premium", message: "Please upgrade to be able to use it!")
+            }
+        }
+        
+        popup.addButtons([buttonOne, buttonTwo, buttonThree, button4, button5, button6, button7, button8, button9, button10, button11, button12, button13, buttonCancel])
         
         self.present(popup, animated: true, completion: nil)
         
@@ -1774,7 +1826,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
         let velocity = (elapsed == 0) ? 0 : fabs(distance / CGFloat(elapsed))
         previousScrollMoment = d
         previousScrollX = x
-        print("scrolling velocity \(velocity)")
+       // print("scrolling velocity \(velocity)")
         
         self.scrollingSlider.removeTarget(self, action: #selector(self.scrollingSliderValueChanged(_:)), for: UIControlEvents.valueChanged)
         self.scrollingSlider.value = Float(scrollView.contentOffset.y)
@@ -1893,4 +1945,45 @@ extension WorkViewController {
         showSuccess(title: NSLocalizedString("Success", comment: ""), message: "Highlight was successfully saved!")
         
     }
+}
+
+extension WorkViewController: UISearchBarDelegate {
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if (searchBar.text?.count ?? 0 > 2) {
+            
+            if let path = Bundle.main.path(forResource: "UIWebViewSearch", ofType: "js"), let jsCode = try? String(contentsOfFile:path, encoding:String.Encoding.utf8) {
+                
+                self.webView.evaluateJavaScript(jsCode) { (res, error) in
+                    print(res ?? "")
+                    print(error?.localizedDescription ?? "")
+                    
+                    let startSearch = String(format: "uiWebview_HighlightAllOccurencesOfString('%@')", searchText)
+                    self.webView.evaluateJavaScript(startSearch) { (res, error) in
+                        print(res ?? "")
+                        print(error?.localizedDescription ?? "")
+                    }
+                }
+            }
+            
+           
+        } else if (searchBar.text?.count ?? 0 == 0) {
+            removeAllHighlights()
+        }
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        removeAllHighlights()
+        self.searchBar.isHidden = true
+    }
+    
+    func removeAllHighlights() {
+        self.webView.evaluateJavaScript("uiWebview_RemoveAllHighlights()") { (res, error) in
+            
+        }
+        self.searchBar.text = ""
+        self.searchBar.endEditing(true)
+    }
+    
+    
 }

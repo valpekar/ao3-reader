@@ -102,7 +102,7 @@
 "RestoreProcess" = "Processo de Restauração";
 "Attention" = "Atenção!";
 "NeedToRestart" = "Você precisará reiniciar o aplicativo para que as alterações com anúncios nativos sejam efetivadas!";
-"Upgrade" = "Aprimorar";
+"Upgrade" = "Aprimorar  ⭐️";
 "Buy" = "Comprar";
 "Restore" = "Restaurar";
 "ThankYou" = "Obrigado!";
@@ -176,6 +176,7 @@
 "MarkForLater" = "Mark For Later";
 "MarkAsRead" = "Mark As Read";
 "Reading Now" = "Reading Now";
+"ThankYouForSub" = "Thank you for buying subscription! Thanks to you the app will become better! 🙏";
 
 
 

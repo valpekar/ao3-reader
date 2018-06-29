@@ -19,7 +19,7 @@ enum SlideOutState {
 
 let centerPanelExpandedOffset: CGFloat = 60
 
-class ContainerViewController: UIViewController, CenterViewControllerDelegate, UIGestureRecognizerDelegate, SidePanelViewControllerDelegate {
+class ContainerViewController: UserMessagesController, CenterViewControllerDelegate, UIGestureRecognizerDelegate, SidePanelViewControllerDelegate {
     
     var centerNavigationController: UINavigationController!
     var centerViewController: CenterViewController!
@@ -213,9 +213,7 @@ class ContainerViewController: UIViewController, CenterViewControllerDelegate, U
                     controller.navigationController?.pushViewController(vc, animated: true)
                 }
             } else {
-                RMessage.showNotification(in: self, title: "Nothing found", subtitle: "Please start reading any downloaded fic to open it from Reading Now!", type: RMessageType.warning, customTypeName: "", callback: {
-                    
-                })
+                self.showWarning(title: "Nothing found", message: "Please start reading any downloaded fic to open it from Reading Now!")
             }
         } else {
         

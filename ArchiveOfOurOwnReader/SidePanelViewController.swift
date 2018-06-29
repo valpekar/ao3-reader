@@ -36,7 +36,7 @@ class SidePanelViewController: UIViewController, UITableViewDataSource, UITableV
     let sections = ["", ""]
     let secondSectionRows = ["Import From AO3"]
     let secondSectionRowsImgs = ["import"]
-    let imgs = ["shortstory", "bmk", "history" , "history", "subscriptions", "download-red", "profile", "shortstory", "support", "book_open"/*, "shortstory"*/]
+    let imgs = ["browse", "bmk", "history" , "history", "subscriptions", "downloaded", "profile", "recomm", "support", "book_open"/*, "shortstory"*/]
     
     struct TableView {
         struct CellIdentifiers {

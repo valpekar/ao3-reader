@@ -10,6 +10,7 @@ import Foundation
 
 class DefaultsManager {
     
+    static var SEARCHED : String = "searched"
     static var SEARCH_Q : String = "sq"
     static var SEARCH_Q_RECOMMEND : String = "sqr"
     static var SEARCH_Q_PREF : String = "sqt"

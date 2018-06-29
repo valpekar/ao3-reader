@@ -21,7 +21,7 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
     @IBOutlet weak var notifLabel: UILabel!
     @IBOutlet weak var pseudsTableView: UITableView!
     
-    let subTxt = "Application has Auto-Renewable Subscription (Prosub) named Pro Subscription. The subscription price is 0.99$ per month. \nOnce you have purchased it, the subscription starts. Since then every week you will get digitally generated recommendations of fanfics (fanfiction works) to read. \nThe auto-renewable subscription nature: Get work recommendations every week based on what you have read and liked, no ads, download unlimited works. \nSubscription length is 1 month and it is auto-renewable. \n\nPayment will be charged to iTunes Account at confirmation of purchase. \nSubscription automatically renews unless auto-renew is turned off at least 24-hours before the end of the current period. \nAccount will be charged for renewal within 24-hours prior to the end of the current period, and identify the cost of the renewal. \nSubscriptions may be managed by the user and auto-renewal may be turned off by going to the user's Account Settings after purchase.\nNo cancellation of the current subscription is allowed during active subscription period. \n\nAny unused portion of a free trial period, if offered, will be forfeited when the user purchases a subscription to that publication. \n\nTo Unsubscribe: \n1. Go to Settings > iTunes & App Store. \n2. Tap your Apple ID at the top of the screen. \n3. Tap View Apple ID. \n4. Tap the subscription that you want to manage. \nIf you don't see a subscription but are still being charged, make sure that you're signed in with the correct Apple ID. \n5. Use the options to manage your subscription. You can tap Cancel Subscription. If you cancel, your subscription will stop at the end of the current billing cycle."
+    let subTxt = "Application has Auto-Renewable Subscription (Prosub) named Pro Subscription. The subscription price is 1.99$ per month, 4.99$ for quarter (3 month), 19.99$ for year. \nOnce you have purchased it, the subscription starts. Since then every week you will get digitally generated recommendations of fanfics (fanfiction works) to read. \nThe auto-renewable subscription nature: Get work recommendations every week based on what you have read and liked, no ads, download unlimited works. \nSubscription length is 1 month and it is auto-renewable. \n\nPayment will be charged to iTunes Account at confirmation of purchase. \nSubscription automatically renews unless auto-renew is turned off at least 24-hours before the end of the current period. \nAccount will be charged for renewal within 24-hours prior to the end of the current period, and identify the cost of the renewal. \nSubscriptions may be managed by the user and auto-renewal may be turned off by going to the user's Account Settings after purchase.\nNo cancellation of the current subscription is allowed during active subscription period. \n\nAny unused portion of a free trial period, if offered, will be forfeited when the user purchases a subscription to that publication. \n\nTo Unsubscribe: \n1. Go to Settings > iTunes & App Store. \n2. Tap your Apple ID at the top of the screen. \n3. Tap View Apple ID. \n4. Tap the subscription that you want to manage. \nIf you don't see a subscription but are still being charged, make sure that you're signed in with the correct Apple ID. \n5. Use the options to manage your subscription. You can tap Cancel Subscription. If you cancel, your subscription will stop at the end of the current billing cycle."
     
     var pseuds: [String:String] = [:]
     var currentPseud = ""
@@ -436,6 +436,11 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
                 cController.liWorksElement = "own work"
                 cController.worksElement = "work"
             }
+        } else if (segue.identifier == "upgradesSegue") {
+            if let uController = segue.destination as? UpgradesController {
+                uController.products = self.products
+                uController.donated = donated
+            }
         }
     }
     
@@ -603,9 +608,7 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
         SKPaymentQueue.default().add(self)
         ReaderProducts.store.restoreCompletedTransactions { error in
             if let err = error {
-                RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: err.localizedDescription, type: RMessageType.error, customTypeName: "", callback: {
-                    
-                })
+                self.showError(title: NSLocalizedString("Error", comment: ""), message: err.localizedDescription)
             } else {
 //                RMessage.showNotification(in: self, title: NSLocalizedString("Finished", comment: ""), subtitle: NSLocalizedString("RestoreProcess", comment: ""), type: RMessageType.success, customTypeName: "", callback: {
 //
@@ -713,6 +716,10 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
                     purchased = isPurchased
                     Answers.logCustomEvent(withName: "ProSub", customAttributes: ["donated" : donated])
                     
+                    if (purchased == true) {
+                        self.showSuccess(title: NSLocalizedString("ThankYou", comment: ""), message: NSLocalizedString("ThankYouForSub", comment: ""))
+                    }
+                    
                 } else if (product.productIdentifier == "tip.small" ||
                     product.productIdentifier == "tip.medium" ||
                     product.productIdentifier == "tip.large") {
@@ -723,9 +730,7 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
                     UserDefaults.standard.set(donated, forKey: "donated")
                     UserDefaults.standard.synchronize()
                     
-                    RMessage.showNotification(in: self, title: NSLocalizedString("ThankYou", comment: ""), subtitle: NSLocalizedString("ThankYouForTip", comment: ""), type: RMessageType.success, customTypeName: "", callback: {
-                        
-                    })
+                    self.showSuccess(title: NSLocalizedString("ThankYou", comment: ""), message: NSLocalizedString("ThankYouForTip", comment: ""))
                     
                 }
                 

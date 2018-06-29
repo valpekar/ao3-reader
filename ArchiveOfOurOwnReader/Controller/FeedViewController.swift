@@ -206,7 +206,7 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
     }
     
     override func loadAfterAuth() {
-        if (query.isEmpty()) {
+        if (self.query.isEmpty() == true && DefaultsManager.getBool(DefaultsManager.SEARCHED) ?? false == false) {
             self.performSegue(withIdentifier: "choosePref", sender: self)
         } else if (works.count == 0 ){
             refresh(tableView)
@@ -275,6 +275,8 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
                 }
                 self.collectionView.flashScrollIndicators()
             }
+            
+            DefaultsManager.putBool(true, key: DefaultsManager.SEARCHED)
         }
     }
     
@@ -366,7 +368,7 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
                 }
             }
                         
-            if (i % 5 == 0 && (purchased == false && donated == false)) {
+            if (i % 3 == 0 && (purchased == false && donated == false)) {
                 showAdMobInterstitial()
                 adsShown += 1
             }

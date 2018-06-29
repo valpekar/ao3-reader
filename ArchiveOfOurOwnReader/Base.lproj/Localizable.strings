@@ -106,11 +106,12 @@
 "RestoreProcess" = "Restore Process";
 "Attention" = "Attention!";
 "NeedToRestart" = "You will need to restart the app for changes with native ads to take effect!";
-"Upgrade" = "Upgrade";
+"Upgrade" = "Upgrade ⭐️";
 "Buy" = "Buy ✅";
 "Restore" = "Restore";
 "ThankYou" = "Thank you! 🙏";
 "ThankYouForTip" = "Thank you for leaving a tip! Thanks to you the app will become better! 🙏";
+"ThankYouForSub" = "Thank you for buying subscription! Thanks to you the app will become better! 🙏";
 "History" = "History";
 "PullToRefresh" = "Pull To Refresh";
 "GettingHistory" = "Getting History";
@@ -167,7 +168,7 @@
 "GettingInbox" = "Getting Inbox";
 "InboxUpdated" = "Inbox successfully updated!";
 "MarkItem" = "Mark Item";
-"DeletingFromInox" = "Deleting From Inox";
+"DeletingFromInox" = "Deleting From Inbox";
 "CommentApproved" = "Comment Successfully Approved!";
 "CouldNotDelete" = "Could Not Delete!";
 "SureDeleteItem" = "You want to delete this item?";
