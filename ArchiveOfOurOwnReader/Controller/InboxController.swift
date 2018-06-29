@@ -41,17 +41,20 @@ class InboxController : ListViewController  {
         self.tableView.estimatedRowHeight = 80
         
         self.tableView.tableFooterView = UIView()
+       
         
+        Answers.logCustomEvent(withName: "Inbox: Opened", customAttributes: [:])
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
             Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: AppDelegate.ao3SiteUrl), mainDocumentURL: nil)
             
             requestInbox()
         } else if ((UIApplication.shared.delegate as! AppDelegate).cookies.count == 0 || (UIApplication.shared.delegate as! AppDelegate).token.isEmpty) {
             
-            openLoginController()
+            openLoginController(force: false)
         }
-        
-        Answers.logCustomEvent(withName: "Inbox: Opened", customAttributes: [:])
     }
     
     override func viewWillAppear(_ animated: Bool) {

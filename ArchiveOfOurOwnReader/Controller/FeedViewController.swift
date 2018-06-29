@@ -224,7 +224,7 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
             if (!DefaultsManager.getString(DefaultsManager.PSEUD_ID).isEmpty &&  (/*(UIApplication.shared.delegate as! AppDelegate).cookies.count == 0 ||*/ (UIApplication.shared.delegate as! AppDelegate).token.isEmpty)) {
                 
                 if (triedToLogin < 2) {
-                    openLoginController()
+                    openLoginController(force:true)
                     triedToLogin += 1
                 }
             } else if (query.isEmpty()) {

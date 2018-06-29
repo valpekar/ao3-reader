@@ -1952,6 +1952,10 @@ extension WorkViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if (searchBar.text?.count ?? 0 > 2) {
             
+            Answers.logCustomEvent(withName: "WorkView: search",
+                                   customAttributes: [
+                                    "searchText": searchText])
+            
             if let path = Bundle.main.path(forResource: "UIWebViewSearch", ofType: "js"), let jsCode = try? String(contentsOfFile:path, encoding:String.Encoding.utf8) {
                 
                 self.webView.evaluateJavaScript(jsCode) { (res, error) in

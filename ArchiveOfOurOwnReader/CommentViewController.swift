@@ -66,10 +66,7 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
         getAllComments()
         //loadCurrentTheme()
         
-        if ((UIApplication.shared.delegate as! AppDelegate).cookies.count == 0 || (UIApplication.shared.delegate as! AppDelegate).token.isEmpty) {
-            
-            openLoginController()
-        }
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -79,6 +76,11 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
         self.navigationController!.navigationBar.shadowImage = UIImage()
         self.navigationController!.navigationBar.isTranslucent = false
         self.navigationController?.navigationBar.isHidden = false
+        
+        if ((UIApplication.shared.delegate as! AppDelegate).cookies.count == 0 || (UIApplication.shared.delegate as! AppDelegate).token.isEmpty) {
+            
+            openLoginController(force: false)
+        }
     }
     
     func controllerDidClosedWithLogin() {

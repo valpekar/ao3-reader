@@ -38,13 +38,18 @@ class HistoryViewController : ListViewController, UITableViewDataSource, UITable
         self.refreshControl.addTarget(self, action: #selector(HistoryViewController.refresh(_:)), for: UIControlEvents.valueChanged)
         self.tableView.addSubview(self.refreshControl)
         
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        if (works.count == 0) {
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
             Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: AppDelegate.ao3SiteUrl), mainDocumentURL: nil)
             requestFavs()
         } else if ((UIApplication.shared.delegate as! AppDelegate).cookies.count == 0 || (UIApplication.shared.delegate as! AppDelegate).token.isEmpty) {
-            
-            openLoginController()
-            //requestFavs() //openLoginController()
+            openLoginController(force: false) //openLoginController()
+            requestFavs()
+        }
         }
     }
     

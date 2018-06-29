@@ -60,20 +60,22 @@ class ReplyController: LoadingViewController {
 //        gestureRec.addTarget(self, action: #selector(ReplyController.viewTapped))
 //        self.view.addGestureRecognizer(gestureRec)
         
-        if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: AppDelegate.ao3SiteUrl), mainDocumentURL: nil)
-            
-            requestCommentBox()
-        } else if ((UIApplication.shared.delegate as! AppDelegate).cookies.count == 0 || (UIApplication.shared.delegate as! AppDelegate).token.isEmpty) {
-            
-            openLoginController()
-        }
+        
         
         Answers.logCustomEvent(withName: "Reply: Opened", customAttributes: [:])
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+        if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
+            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: AppDelegate.ao3SiteUrl), mainDocumentURL: nil)
+            
+            requestCommentBox()
+        } else if ((UIApplication.shared.delegate as! AppDelegate).cookies.count == 0 || (UIApplication.shared.delegate as! AppDelegate).token.isEmpty) {
+            
+            openLoginController(force: false)
+        }
         
     }
     

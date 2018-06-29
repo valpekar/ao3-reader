@@ -1098,11 +1098,17 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
     
     //MARK: - login
     
-    func openLoginController() {
-        let nav = self.storyboard?.instantiateViewController(withIdentifier: "navLoginViewController") as! UINavigationController
-        (nav.viewControllers[0] as! LoginViewController).controllerDelegate = self
+    var openLogin = false
+    
+    func openLoginController(force: Bool = true) {
+        if (openLogin == false || force == true) {
+            let nav = self.storyboard?.instantiateViewController(withIdentifier: "navLoginViewController") as! UINavigationController
+            (nav.viewControllers[0] as! LoginViewController).controllerDelegate = self
         
-        self.present(nav, animated: true, completion: nil)
+            self.present(nav, animated: true, completion: nil)
+            
+            openLogin = true
+        }
     }
     
     func controllerDidClosed() {

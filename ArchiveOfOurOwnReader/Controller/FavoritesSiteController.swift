@@ -44,12 +44,7 @@ class FavoritesSiteController : ListViewController, UITableViewDataSource, UITab
         
         self.title = NSLocalizedString("Bookmarks", comment: "")
         
-        if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: AppDelegate.ao3SiteUrl), mainDocumentURL: nil)
-            requestFavs()
-        } else {
-            openLoginController() //openLoginController()
-        }
+        
         
     }
     
@@ -60,6 +55,20 @@ class FavoritesSiteController : ListViewController, UITableViewDataSource, UITab
         self.collectionView.reloadData()
         
         showNav()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
+        if (works.count == 0) {
+        
+        if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
+            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: AppDelegate.ao3SiteUrl), mainDocumentURL: nil)
+            requestFavs()
+        } else if ((UIApplication.shared.delegate as! AppDelegate).cookies.count == 0 || (UIApplication.shared.delegate as! AppDelegate).token.isEmpty) {
+            openLoginController(force: false) //openLoginController()
+            requestFavs()
+        }
+        }
     }
     
     @objc func refresh(_ sender:AnyObject) {
@@ -107,12 +116,12 @@ class FavoritesSiteController : ListViewController, UITableViewDataSource, UITab
     
     //MARK: - login
     
-    override func openLoginController() {
-        let nav = self.storyboard?.instantiateViewController(withIdentifier: "navLoginViewController") as! UINavigationController
-        (nav.viewControllers[0] as! LoginViewController).controllerDelegate = self
-        
-        self.present(nav, animated: true, completion: nil)
-    }
+//    override func openLoginController() {
+//        let nav = self.storyboard?.instantiateViewController(withIdentifier: "navLoginViewController") as! UINavigationController
+//        (nav.viewControllers[0] as! LoginViewController).controllerDelegate = self
+//        
+//        self.present(nav, animated: true, completion: nil)
+//    }
     
     @IBAction func loginTouched(_ sender: AnyObject) {
         openLoginController()
