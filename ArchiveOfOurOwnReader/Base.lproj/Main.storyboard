@@ -5850,14 +5850,8 @@ Please check your Internet connection and also make sure you are logged into you
                                     </navigationItem>
                                 </items>
                             </navigationBar>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" verticalCompressionResistancePriority="751" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="OgX-We-gZD">
-                                <rect key="frame" x="16" y="186" width="343" height="149"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <color key="textColor" red="0.39215686274509803" green="0.11372549019607843" blue="0.54509803921568623" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zr6-25-d3S">
-                                <rect key="frame" x="28" y="748" width="319" height="30"/>
+                                <rect key="frame" x="28" y="565" width="319" height="30"/>
                                 <state key="normal" title="Privacy Policy and Terms of Use">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
@@ -5868,11 +5862,11 @@ Please check your Internet connection and also make sure you are logged into you
                                     <action selector="aboutSubsTouched:" destination="WbV-02-eQd" eventType="touchUpInside" id="BqX-sc-0w8"/>
                                 </connections>
                             </button>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="8jP-hu-645">
-                                <rect key="frame" x="16" y="351" width="343" height="340"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="8jP-hu-645">
+                                <rect key="frame" x="16" y="200" width="343" height="320"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kti-m2-cnY">
-                                        <rect key="frame" x="0.0" y="0.0" width="343" height="100"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="343" height="96"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Yearly Subscription" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rVV-4A-3AA">
                                                 <rect key="frame" x="10" y="14" width="139" height="18"/>
@@ -5889,7 +5883,7 @@ Please check your Internet connection and also make sure you are logged into you
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Billed annually." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V1T-nv-tNj">
                                                 <rect key="frame" x="10" y="68" width="90" height="15.666666666666671"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                <color key="textColor" red="0.81377610982944937" green="0.64405626763326973" blue="0.94397668393782386" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="textColor" red="0.71764705880000002" green="0.57254901960000004" blue="0.84705882349999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rfe-h6-Pvs">
@@ -5912,7 +5906,7 @@ Please check your Internet connection and also make sure you are logged into you
                                             <constraint firstAttribute="trailing" secondItem="rfe-h6-Pvs" secondAttribute="trailing" constant="12" id="0gA-JX-WdH"/>
                                             <constraint firstItem="V1T-nv-tNj" firstAttribute="leading" secondItem="Kti-m2-cnY" secondAttribute="leading" constant="10" id="12m-2G-fdp"/>
                                             <constraint firstItem="V1T-nv-tNj" firstAttribute="top" secondItem="sje-vM-3xT" secondAttribute="bottom" constant="6" id="1Rv-hd-mJm"/>
-                                            <constraint firstAttribute="height" constant="100" id="GqM-wU-xXV"/>
+                                            <constraint firstAttribute="height" constant="96" id="GqM-wU-xXV"/>
                                             <constraint firstItem="sje-vM-3xT" firstAttribute="top" secondItem="rVV-4A-3AA" secondAttribute="bottom" constant="6" id="PnG-8b-jRd"/>
                                             <constraint firstItem="sje-vM-3xT" firstAttribute="leading" secondItem="Kti-m2-cnY" secondAttribute="leading" constant="10" id="SP0-cC-zm3"/>
                                             <constraint firstItem="rVV-4A-3AA" firstAttribute="leading" secondItem="Kti-m2-cnY" secondAttribute="leading" constant="10" id="aUb-ts-T6J"/>
@@ -5921,7 +5915,7 @@ Please check your Internet connection and also make sure you are logged into you
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r1u-lM-tYx">
-                                        <rect key="frame" x="0.0" y="120" width="343" height="100"/>
+                                        <rect key="frame" x="0.0" y="112" width="343" height="96"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Quarter Subscription" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xey-WI-p5t">
                                                 <rect key="frame" x="10" y="14" width="150.33333333333334" height="18"/>
@@ -5938,7 +5932,7 @@ Please check your Internet connection and also make sure you are logged into you
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Billed quarterly." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Igm-rO-paP">
                                                 <rect key="frame" x="10" y="68" width="94.666666666666671" height="15.666666666666671"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                <color key="textColor" red="0.81377610980000004" green="0.64405626760000001" blue="0.9439766839" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="textColor" red="0.71764705882352942" green="0.5725490196078431" blue="0.84705882352941175" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="394-Uq-h1b">
@@ -5959,7 +5953,7 @@ Please check your Internet connection and also make sure you are logged into you
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstItem="394-Uq-h1b" firstAttribute="centerY" secondItem="Ksq-fr-9jf" secondAttribute="centerY" id="2yX-ml-g7z"/>
-                                            <constraint firstAttribute="height" constant="100" id="A4S-Iq-ld6"/>
+                                            <constraint firstAttribute="height" constant="96" id="A4S-Iq-ld6"/>
                                             <constraint firstItem="Igm-rO-paP" firstAttribute="top" secondItem="Ksq-fr-9jf" secondAttribute="bottom" constant="6" id="AMn-tw-glu"/>
                                             <constraint firstItem="xey-WI-p5t" firstAttribute="top" secondItem="r1u-lM-tYx" secondAttribute="top" constant="14" id="Gmx-eC-Tol"/>
                                             <constraint firstItem="xey-WI-p5t" firstAttribute="leading" secondItem="r1u-lM-tYx" secondAttribute="leading" constant="10" id="OOw-Tg-DaR"/>
@@ -5970,7 +5964,7 @@ Please check your Internet connection and also make sure you are logged into you
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zyw-YY-CVG">
-                                        <rect key="frame" x="0.0" y="240" width="343" height="100"/>
+                                        <rect key="frame" x="0.0" y="224" width="343" height="96"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Monthly Subscription" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="018-Rf-jhC">
                                                 <rect key="frame" x="10" y="14" width="153" height="18"/>
@@ -5987,7 +5981,7 @@ Please check your Internet connection and also make sure you are logged into you
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Billed monthly." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4TR-Uv-Bid">
                                                 <rect key="frame" x="10" y="68" width="88.666666666666671" height="15.666666666666671"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                <color key="textColor" red="0.81377610980000004" green="0.64405626760000001" blue="0.9439766839" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="textColor" red="0.71764705880000002" green="0.57254901960000004" blue="0.84705882349999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="96a-oH-d51">
@@ -6014,20 +6008,20 @@ Please check your Internet connection and also make sure you are logged into you
                                             <constraint firstItem="4TR-Uv-Bid" firstAttribute="top" secondItem="3H5-Po-Zmp" secondAttribute="bottom" constant="6" id="gOd-Sj-lAV"/>
                                             <constraint firstItem="96a-oH-d51" firstAttribute="centerY" secondItem="3H5-Po-Zmp" secondAttribute="centerY" id="gxP-7Y-Qpe"/>
                                             <constraint firstItem="3H5-Po-Zmp" firstAttribute="leading" secondItem="Zyw-YY-CVG" secondAttribute="leading" constant="10" id="jQO-Vs-ndc"/>
-                                            <constraint firstAttribute="height" constant="100" id="uMQ-BU-8Df"/>
+                                            <constraint firstAttribute="height" constant="96" id="uMQ-BU-8Df"/>
                                             <constraint firstItem="018-Rf-jhC" firstAttribute="leading" secondItem="Zyw-YY-CVG" secondAttribute="leading" constant="10" id="yvo-ip-ayD"/>
                                         </constraints>
                                     </view>
                                 </subviews>
                             </stackView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="outline" translatesAutoresizingMaskIntoConstraints="NO" id="eOl-eH-YRw">
-                                <rect key="frame" x="16" y="96" width="343" height="90"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="outline" translatesAutoresizingMaskIntoConstraints="NO" id="eOl-eH-YRw">
+                                <rect key="frame" x="16" y="96" width="133" height="94"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="90" id="Yen-Hw-Lku"/>
+                                    <constraint firstAttribute="height" constant="94" id="Yen-Hw-Lku"/>
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wmZ-xv-H8O">
-                                <rect key="frame" x="97" y="711" width="181" height="29"/>
+                                <rect key="frame" x="97" y="536" width="181" height="29"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
                                 <state key="normal" title="Restore Previous Purchase">
                                     <color key="titleColor" red="0.81377610980000004" green="0.64405626760000001" blue="0.9439766839" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -6036,40 +6030,72 @@ Please check your Internet connection and also make sure you are logged into you
                                     <action selector="restoreTapped:" destination="WbV-02-eQd" eventType="touchUpInside" id="D3f-42-siN"/>
                                 </connections>
                             </button>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" indicatorStyle="white" translatesAutoresizingMaskIntoConstraints="NO" id="B5Q-Eh-HvR">
+                                <rect key="frame" x="0.0" y="595" width="375" height="183"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fP1-Zx-QuT">
+                                        <rect key="frame" x="8" y="8" width="340" height="14.333333333333336"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="340" id="oGe-ZG-iP6"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="12"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </label>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="fP1-Zx-QuT" firstAttribute="top" secondItem="B5Q-Eh-HvR" secondAttribute="top" constant="8" id="Ib8-Cf-W8v"/>
+                                    <constraint firstItem="fP1-Zx-QuT" firstAttribute="leading" secondItem="B5Q-Eh-HvR" secondAttribute="leading" constant="8" id="WEG-Q1-Znf"/>
+                                    <constraint firstAttribute="bottom" secondItem="fP1-Zx-QuT" secondAttribute="bottom" id="ZHL-3i-kU1"/>
+                                    <constraint firstAttribute="trailing" secondItem="fP1-Zx-QuT" secondAttribute="trailing" constant="8" id="yg0-qq-2Xy"/>
+                                </constraints>
+                            </scrollView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="249" verticalCompressionResistancePriority="751" ambiguous="YES" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="OgX-We-gZD">
+                                <rect key="frame" x="157" y="86" width="202" height="114"/>
+                                <string key="text">Premium Subscription offers: \n • Get work recommendations every week based on what you have read and liked \n • No ads \n • Unlimited number of works to download for offline reading \n • Premium fonts</string>
+                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="13"/>
+                                <color key="textColor" red="0.39215686274509803" green="0.11372549019607843" blue="0.54509803921568623" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="zr6-25-d3S" firstAttribute="top" secondItem="wmZ-xv-H8O" secondAttribute="bottom" constant="8" id="5Y4-4V-jAQ"/>
-                            <constraint firstItem="OgX-We-gZD" firstAttribute="top" secondItem="eOl-eH-YRw" secondAttribute="bottom" id="6AF-9a-D46"/>
+                            <constraint firstItem="8jP-hu-645" firstAttribute="top" secondItem="eOl-eH-YRw" secondAttribute="bottom" constant="10" id="4xf-wA-W8m"/>
+                            <constraint firstItem="zr6-25-d3S" firstAttribute="top" secondItem="wmZ-xv-H8O" secondAttribute="bottom" id="5Y4-4V-jAQ"/>
                             <constraint firstAttribute="bottom" secondItem="9oT-V9-zTL" secondAttribute="bottom" id="9Ve-5v-nD3"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="OgX-We-gZD" secondAttribute="trailing" id="EYC-PJ-10Q"/>
+                            <constraint firstItem="8jP-hu-645" firstAttribute="top" secondItem="OgX-We-gZD" secondAttribute="bottom" id="DGM-ar-GjL"/>
+                            <constraint firstItem="09C-s7-Bcx" firstAttribute="top" secondItem="B5Q-Eh-HvR" secondAttribute="bottom" id="Gir-Pb-E5w"/>
                             <constraint firstAttribute="trailing" secondItem="ksp-fG-KYC" secondAttribute="trailing" id="LY0-6q-4fr"/>
                             <constraint firstItem="9oT-V9-zTL" firstAttribute="leading" secondItem="dyx-5T-718" secondAttribute="leading" id="Ond-Ke-yx4"/>
-                            <constraint firstItem="wmZ-xv-H8O" firstAttribute="top" secondItem="8jP-hu-645" secondAttribute="bottom" constant="20" id="RJO-qx-lsX"/>
+                            <constraint firstItem="wmZ-xv-H8O" firstAttribute="top" secondItem="8jP-hu-645" secondAttribute="bottom" constant="16" id="RJO-qx-lsX"/>
                             <constraint firstItem="ksp-fG-KYC" firstAttribute="leading" secondItem="dyx-5T-718" secondAttribute="leading" id="RgY-Iy-OTq"/>
                             <constraint firstItem="wmZ-xv-H8O" firstAttribute="centerX" secondItem="dyx-5T-718" secondAttribute="centerX" id="UFz-jQ-n2q"/>
                             <constraint firstItem="zr6-25-d3S" firstAttribute="leading" secondItem="dyx-5T-718" secondAttribute="leadingMargin" constant="12" id="Uow-iw-q2U"/>
                             <constraint firstItem="9oT-V9-zTL" firstAttribute="top" secondItem="dyx-5T-718" secondAttribute="top" id="ZAK-eu-0Zh"/>
-                            <constraint firstItem="OgX-We-gZD" firstAttribute="leading" secondItem="dyx-5T-718" secondAttribute="leadingMargin" id="ZTE-Vf-l2x"/>
+                            <constraint firstItem="OgX-We-gZD" firstAttribute="leading" secondItem="eOl-eH-YRw" secondAttribute="trailing" id="auh-OG-C6U"/>
+                            <constraint firstItem="B5Q-Eh-HvR" firstAttribute="top" secondItem="zr6-25-d3S" secondAttribute="bottom" id="dx2-rb-891"/>
                             <constraint firstAttribute="trailingMargin" secondItem="zr6-25-d3S" secondAttribute="trailing" constant="12" id="eqe-nm-N9Q"/>
+                            <constraint firstItem="OgX-We-gZD" firstAttribute="centerY" secondItem="eOl-eH-YRw" secondAttribute="centerY" id="gnv-jt-ddR"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="OgX-We-gZD" secondAttribute="trailing" id="h4Z-yB-Rjt"/>
                             <constraint firstItem="eOl-eH-YRw" firstAttribute="top" secondItem="ksp-fG-KYC" secondAttribute="bottom" constant="8" id="h4p-Ff-80i"/>
                             <constraint firstItem="8jP-hu-645" firstAttribute="leading" secondItem="dyx-5T-718" secondAttribute="leadingMargin" id="kEd-h9-sL3"/>
-                            <constraint firstItem="8jP-hu-645" firstAttribute="top" secondItem="OgX-We-gZD" secondAttribute="bottom" constant="16" id="ksE-Wk-Zjw"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="eOl-eH-YRw" secondAttribute="trailing" id="lKx-f8-SYa"/>
                             <constraint firstItem="eOl-eH-YRw" firstAttribute="leading" secondItem="dyx-5T-718" secondAttribute="leadingMargin" id="lwy-lX-vJ0"/>
-                            <constraint firstItem="09C-s7-Bcx" firstAttribute="top" secondItem="zr6-25-d3S" secondAttribute="bottom" id="miQ-TZ-YFZ"/>
+                            <constraint firstAttribute="trailing" secondItem="B5Q-Eh-HvR" secondAttribute="trailing" id="m16-Ep-exy"/>
                             <constraint firstAttribute="trailing" secondItem="9oT-V9-zTL" secondAttribute="trailing" id="qO8-5H-hfD"/>
                             <constraint firstItem="8jP-hu-645" firstAttribute="trailing" secondItem="dyx-5T-718" secondAttribute="trailingMargin" id="rBD-Rj-aVG"/>
+                            <constraint firstItem="B5Q-Eh-HvR" firstAttribute="leading" secondItem="dyx-5T-718" secondAttribute="leading" id="tGF-l0-sSP"/>
                             <constraint firstItem="ksp-fG-KYC" firstAttribute="top" secondItem="MaG-Vt-xAP" secondAttribute="bottom" id="yqT-IG-4yc"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="infoLbl" destination="fP1-Zx-QuT" id="ITK-Qq-gPM"/>
                         <outlet property="lbl" destination="OgX-We-gZD" id="q5B-GS-Ayc"/>
                         <outlet property="m1btn" destination="96a-oH-d51" id="yFa-Y8-Lc8"/>
                         <outlet property="m3btn" destination="394-Uq-h1b" id="Bkn-EZ-Ibm"/>
                         <outlet property="navBar" destination="ksp-fG-KYC" id="P3P-dT-4CZ"/>
                         <outlet property="privacybtn" destination="zr6-25-d3S" id="dvi-Ye-XC6"/>
                         <outlet property="restorebtn" destination="wmZ-xv-H8O" id="ni9-EX-H2U"/>
+                        <outlet property="scrollview" destination="B5Q-Eh-HvR" id="bT1-py-pl2"/>
                         <outlet property="view1" destination="Kti-m2-cnY" id="tRZ-m7-DRa"/>
                         <outlet property="view2" destination="r1u-lM-tYx" id="4ud-dB-fj1"/>
                         <outlet property="view3" destination="Zyw-YY-CVG" id="NZl-j7-Cgk"/>

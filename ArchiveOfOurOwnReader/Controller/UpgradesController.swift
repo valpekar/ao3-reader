@@ -17,6 +17,7 @@ class UpgradesController: UserMessagesController, SKPaymentTransactionObserver {
     @IBOutlet weak var privacybtn:UIButton!
     @IBOutlet weak var restorebtn:UIButton!
     @IBOutlet weak var lbl:UILabel!
+    @IBOutlet weak var infoLbl:UILabel!
     
     
     @IBOutlet weak var view1:UIView!
@@ -27,9 +28,13 @@ class UpgradesController: UserMessagesController, SKPaymentTransactionObserver {
     @IBOutlet weak var m3btn:UIButton!
     @IBOutlet weak var m1btn:UIButton!
     
+    @IBOutlet weak var scrollview:UIScrollView!
+    
     var donated = false
     
     @IBOutlet weak var navBar:UINavigationBar!
+    
+    let subTxt = "Application has Auto-Renewable Subscription. Once you have purchased it, the subscription starts. Since then every week you will get digitally generated recommendations of fanfics (fanfiction works) to read. \nThe auto-renewable subscription nature: Get work recommendations every week based on what you have read and liked, no ads, download unlimited works. \nPayment will be charged to iTunes Account at confirmation of purchase. \nSubscription automatically renews unless auto-renew is turned off at least 24-hours before the end of the current period. \nAccount will be charged for renewal within 24-hours prior to the end of the current period, and identify the cost of the renewal. \nSubscriptions may be managed by the user and auto-renewal may be turned off by going to the user's Account Settings after purchase.\nNo cancellation of the current subscription is allowed during active subscription period. \nAny unused portion of a free trial period, if offered, will be forfeited when the user purchases a subscription to that publication. \n\nTo Unsubscribe: \n1. Go to Settings > iTunes & App Store. \n2. Tap your Apple ID at the top of the screen. \n3. Tap View Apple ID. \n4. Tap the subscription that you want to manage. \nIf you don't see a subscription but are still being charged, make sure that you're signed in with the correct Apple ID. \n5. Use the options to manage your subscription. You can tap Cancel Subscription. If you cancel, your subscription will stop at the end of the current billing cycle."
     
     // This list of available in-app purchases
     var products: Array <SKProduct> = [SKProduct]()
@@ -43,7 +48,8 @@ class UpgradesController: UserMessagesController, SKPaymentTransactionObserver {
         
         self.title = " "
         
-        lbl.text = "Premium Subscription offers: \n • Get work recommendations every week based on what you have read and liked \n • No ads \n • Unlimited number of works to download for offline reading \n • Premium fonts"
+        lbl.text = "• Get work recommendations every week \n • No ads, premium fonts \n • Unlimited offline reading"
+        infoLbl.text = subTxt
         
         view1.layer.cornerRadius = AppDelegate.smallCornerRadius
         view2.layer.cornerRadius = AppDelegate.smallCornerRadius
@@ -59,6 +65,14 @@ class UpgradesController: UserMessagesController, SKPaymentTransactionObserver {
         
         
         NotificationCenter.default.addObserver(self, selector: #selector(UpgradesController.productPurchased(_:)), name: NSNotification.Name(rawValue: IAPHelperProductPurchasedNotification), object: nil)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
+            self.scrollview.flashScrollIndicators()
+        }
     }
     
      @IBAction func closeButtonTouched(_ sender: AnyObject) {
