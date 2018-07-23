@@ -18,15 +18,13 @@ class WorkListController: ListViewController, UITableViewDataSource, UITableView
     @IBOutlet weak var tryAgainButton:UIButton!
     @IBOutlet weak var notFoundLabel:UILabel!
     
-    var resultSearchController = UISearchController()
-    
     var worksStr = NSLocalizedString("WorkList", comment: "")
     var tagUrl = ""
     var tagName = NSLocalizedString("WorkList", comment: "")
     
     var refreshControl: UIRefreshControl!
     
-    var searchController: UISearchController!
+    @IBOutlet weak var searchBar: UISearchBar!
     var searched = false
     
     override func viewDidLoad() {
@@ -55,15 +53,15 @@ class WorkListController: ListViewController, UITableViewDataSource, UITableView
         
        // if (tagUrl.contains("/pseuds/") == false && tagUrl.contains("/users/") == false) {
         
-            searchController = UISearchController(searchResultsController: nil)
-            searchController.searchResultsUpdater = self
-            searchController.searchBar.delegate = self
-            searchController.searchBar.tintColor = AppDelegate.purpleLightColor
-            searchController.searchBar.backgroundImage = UIImage()
-            searchController.dimsBackgroundDuringPresentation = false
-            definesPresentationContext = true
-            
-            if let tf = searchController.searchBar.value(forKey: "_searchField") as? UITextField {
+//            searchController = UISearchController(searchResultsController: nil)
+//            searchController.searchResultsUpdater = self
+//            searchController.searchBar.delegate = self
+//            searchController.searchBar.tintColor = AppDelegate.purpleLightColor
+//            searchController.searchBar.backgroundImage = UIImage()
+//            searchController.dimsBackgroundDuringPresentation = false
+//            definesPresentationContext = true
+        
+            if let tf = self.searchBar.value(forKey: "_searchField") as? UITextField {
                 addDoneButtonOnKeyboardTf(tf)
                 
                 if (theme == DefaultsManager.THEME_DAY) {
@@ -76,8 +74,10 @@ class WorkListController: ListViewController, UITableViewDataSource, UITableView
                 }
             }
         
-            self.tableView.tableHeaderView = searchController.searchBar
+       //     self.tableView.tableHeaderView = searchController.searchBar
       //  }
+        
+        self.searchBar.delegate = self
         
         if (!tagUrl.contains("archiveofourown.org")) {
             tagUrl = "https://archiveofourown.org\(tagUrl)"
@@ -119,9 +119,9 @@ class WorkListController: ListViewController, UITableViewDataSource, UITableView
     }
     
     @IBAction func tryAgainTouched(_ sender: AnyObject) {
-        if (self.searchController != nil) {
-            self.searchController.searchBar.text = ""
-            self.searchController.searchBar.endEditing(true)
+        if (self.searchBar != nil) {
+            self.searchBar.text = ""
+            self.searchBar.endEditing(true)
         }
         
         requestWorks()
@@ -313,7 +313,10 @@ class WorkListController: ListViewController, UITableViewDataSource, UITableView
     
     override func doneButtonAction() {
         super.doneButtonAction()
-        self.resultSearchController.dismiss(animated: true, completion: nil)
+        self.searchBar.endEditing(true)
+        
+//        self.searchBarSearchButtonClicked(self.searchController.searchBar)
+//        self.searchController.dismiss(animated: true, completion: nil)
     }
 }
 
@@ -328,6 +331,13 @@ extension WorkListController: UISearchResultsUpdating, UISearchBarDelegate {
 //                searchAndFilter(txt)
 //            }
 //        }
+        
+        if (searchBar.text != nil && searchBar.text?.isEmpty == false) {
+            searchAndFilter(searchBar.text!)
+        } else {
+            requestWorks()
+        }
+        searchBar.endEditing(true)
     }
     
     
@@ -360,7 +370,12 @@ extension WorkListController: UISearchResultsUpdating, UISearchBarDelegate {
                                  "query": text,
                                  "revised_at": "",
                                  "other_tag_names": "",
+                                 "excluded_tag_names": "",
                                  "language_id": "",
+                                 "date_from": "",
+                                 "date_to": "",
+                                 "words_from": "",
+                                 "words_to": "",
                                  "complete": "0"
                                  ]
         let strArr = tagUrl.components(separatedBy: "/")
@@ -412,9 +427,9 @@ extension WorkListController: UISearchResultsUpdating, UISearchBarDelegate {
             requestWorks()
         }
     }
-
+    
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        if (searchBar.text != nil && searchBar.text?.isEmpty == false) {
+        if (searchBar.text != nil && searchBar.text?.isEmpty == false && searchBar.text?.count ?? 0 > 2) {
             searchAndFilter(searchBar.text!)
         } else {
             requestWorks()

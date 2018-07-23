@@ -87,7 +87,7 @@ class ViewFoldersController: BaseFolderController {
             unCatCount = 0
         }
         
-        unCatButton.setTitle("\(FavoritesViewController.uncategorized) (\(unCatCount) works)", for: UIControlState.normal)
+        unCatButton.setTitle("\(FavoritesViewController.uncategorized) (\(unCatCount) works) →", for: UIControlState.normal)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

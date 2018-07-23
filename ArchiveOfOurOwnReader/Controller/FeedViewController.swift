@@ -368,7 +368,7 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
                 }
             }
                         
-            if (i % 3 == 0 && (purchased == false && donated == false)) {
+            if (i % 5 == 0 && (purchased == false && donated == false)) {
                 showAdMobInterstitial()
                 adsShown += 1
             }

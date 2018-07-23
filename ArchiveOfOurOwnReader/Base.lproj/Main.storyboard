@@ -2023,6 +2023,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8hg-sW-Hmw">
+                                                            <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -2214,7 +2215,7 @@ Please check your Internet connection and also make sure you are logged into you
                                 </connections>
                             </collectionView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="240" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="dVv-Wb-Czg">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="646"/>
+                                <rect key="frame" x="0.0" y="56" width="375" height="590"/>
                                 <color key="backgroundColor" red="0.92000001669999998" green="0.92000001669999998" blue="0.92000001669999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="FeedCell1" rowHeight="240" id="3mG-9j-QZh" customClass="FeedTableViewCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
@@ -2734,6 +2735,14 @@ Please check your Internet connection and also make sure you are logged into you
                                     <outlet property="delegate" destination="h60-ml-Ofy" id="K4a-ce-R7V"/>
                                 </connections>
                             </tableView>
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="vQc-EY-Nta">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
+                                <color key="barTintColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <textInputTraits key="textInputTraits" spellCheckingType="no" returnKeyType="search"/>
+                                <connections>
+                                    <outlet property="delegate" destination="h60-ml-Ofy" id="q3b-00-ouK"/>
+                                </connections>
+                            </searchBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -2742,19 +2751,23 @@ Please check your Internet connection and also make sure you are logged into you
                             <constraint firstItem="7BG-8k-w0K" firstAttribute="centerY" secondItem="7oc-1t-9bM" secondAttribute="centerY" id="GaP-Dk-esp"/>
                             <constraint firstAttribute="trailingMargin" secondItem="etO-j1-oPB" secondAttribute="trailing" constant="20" id="VFG-j6-vGP"/>
                             <constraint firstItem="7BG-8k-w0K" firstAttribute="centerX" secondItem="7oc-1t-9bM" secondAttribute="centerX" id="WCK-Ae-13R"/>
-                            <constraint firstItem="dVv-Wb-Czg" firstAttribute="top" secondItem="nXI-Uu-5un" secondAttribute="bottom" id="YSf-DK-KBP"/>
+                            <constraint firstItem="dVv-Wb-Czg" firstAttribute="top" secondItem="vQc-EY-Nta" secondAttribute="bottom" id="ZN8-n9-qEu"/>
+                            <constraint firstItem="vQc-EY-Nta" firstAttribute="top" secondItem="nXI-Uu-5un" secondAttribute="bottom" id="cHZ-e5-INj"/>
                             <constraint firstItem="dVv-Wb-Czg" firstAttribute="leading" secondItem="7oc-1t-9bM" secondAttribute="leading" id="fWY-Jb-q6F"/>
                             <constraint firstItem="RmA-Nc-iEP" firstAttribute="top" secondItem="dVv-Wb-Czg" secondAttribute="bottom" id="j4k-j1-NUP"/>
                             <constraint firstAttribute="trailing" secondItem="dVv-Wb-Czg" secondAttribute="trailing" id="mAo-P5-H7D"/>
                             <constraint firstItem="Yoc-3C-4q5" firstAttribute="top" secondItem="RmA-Nc-iEP" secondAttribute="bottom" id="nA7-rt-eDP"/>
                             <constraint firstItem="etO-j1-oPB" firstAttribute="leading" secondItem="7oc-1t-9bM" secondAttribute="leadingMargin" constant="20" id="pwk-V8-98C"/>
                             <constraint firstItem="RmA-Nc-iEP" firstAttribute="leading" secondItem="7oc-1t-9bM" secondAttribute="leading" id="v9d-Tr-3J7"/>
+                            <constraint firstAttribute="trailing" secondItem="vQc-EY-Nta" secondAttribute="trailing" id="wfM-PY-yfR"/>
+                            <constraint firstItem="vQc-EY-Nta" firstAttribute="leading" secondItem="7oc-1t-9bM" secondAttribute="leading" id="zul-iE-Kqx"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Title" id="B7Y-8Z-ywV"/>
                     <connections>
                         <outlet property="collectionView" destination="RmA-Nc-iEP" id="qcI-Jr-Arj"/>
                         <outlet property="notFoundLabel" destination="etO-j1-oPB" id="Uhn-XD-lqs"/>
+                        <outlet property="searchBar" destination="vQc-EY-Nta" id="drG-ar-5T8"/>
                         <outlet property="tableView" destination="dVv-Wb-Czg" id="0yN-JY-EZh"/>
                         <outlet property="tryAgainButton" destination="7BG-8k-w0K" id="iEU-w6-GBO"/>
                         <segue destination="g0F-jj-WaO" kind="show" identifier="workDetail" id="pDe-8P-N2j"/>
@@ -10669,8 +10682,8 @@ Please check your Internet connection and also make sure you are logged into you
         <segue reference="AVD-tc-abp"/>
         <segue reference="Mk3-Ot-1ke"/>
         <segue reference="jXE-kt-jek"/>
-        <segue reference="GOa-zO-Fy6"/>
-        <segue reference="QjG-hc-3tA"/>
+        <segue reference="MlO-FU-stp"/>
+        <segue reference="pDe-8P-N2j"/>
         <segue reference="b3W-0z-TKl"/>
     </inferredMetricsTieBreakers>
 </document>

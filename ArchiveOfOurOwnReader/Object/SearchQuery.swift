@@ -201,7 +201,10 @@ class SearchQuery : NSObject, NSCoding {
         var tagStr: String = ""
         var excludeTags: [String] = exclude_tags.components(separatedBy:  ",").map { String($0) }
         for i in 0..<excludeTags.count {
-            tagStr += "-\"" + excludeTags[i].trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) + "\""
+            let ss = excludeTags[i].trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+            if (ss.count > 0) {
+                tagStr += "-\"" + ss + "\""
+            }
             if (i < excludeTags.count - 1) {
                 tagStr += " "
             }
