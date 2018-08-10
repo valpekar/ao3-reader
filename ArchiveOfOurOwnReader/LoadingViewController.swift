@@ -1626,6 +1626,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
                 }
             }
         } catch {
+            debugLog(message: "Failed to fetch folders: \(error)")
             fatalError("Failed to fetch folders: \(error)")
         }
         
