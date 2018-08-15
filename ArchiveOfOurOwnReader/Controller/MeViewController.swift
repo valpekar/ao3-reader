@@ -54,11 +54,6 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
             donated = dd
         }
         
-        
-        if (purchased == false && donated == false) {
-            reload(false, productId: "")
-        }
-        
         NotificationCenter.default.addObserver(self, selector: #selector(MeViewController.productPurchased(_:)), name: NSNotification.Name(rawValue: IAPHelperProductPurchasedNotification), object: nil)
         //SKPaymentQueue.default().add(self)
         
@@ -79,6 +74,10 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
         
         if ((purchased || donated)  && DefaultsManager.getBool(DefaultsManager.ADULT) == nil) {
             DefaultsManager.putBool(true, key: DefaultsManager.ADULT)
+        }
+                
+        if (purchased == false && donated == false) {
+            reload(false, productId: "")
         }
         
         UserDefaults.standard.synchronize()
@@ -588,7 +587,7 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
                         }
                     }
                     var restore = false
-                    if (productId.contains("pro")) {
+                    if (productId.contains("pro") || productId.contains("sub")) {
                         restore = true
                     }
                     self.showBuyAlert(product, restore: restore)

@@ -75,6 +75,12 @@ class UpgradesController: UserMessagesController, SKPaymentTransactionObserver {
         }
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        SKPaymentQueue.default().remove(self)
+    }
+    
      @IBAction func closeButtonTouched(_ sender: AnyObject) {
         self.dismiss(animated: true) {
             

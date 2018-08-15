@@ -18,7 +18,7 @@ public enum ReaderProducts {
     public static let ProVersion = Prefix + "pro"
     
     // All of the products assembled into a set of product identifiers.
-    fileprivate static let productIdentifiers: Set<ProductIdentifier> = [ReaderProducts.ProVersion, "prosub", "tip.small", "tip.medium", "tip.large"]
+    fileprivate static let productIdentifiers: Set<ProductIdentifier> = [ReaderProducts.ProVersion, "prosub", "yearly_sub", "quarter_sub", "tip.small", "tip.medium", "tip.large"]
     
     /// Static instance of IAPHelper that for rage products.
     public static let store = IAPHelper(productIdentifiers: ReaderProducts.productIdentifiers)
