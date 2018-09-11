@@ -87,7 +87,7 @@ class ImportWorkController : UIViewController {
     
     @IBAction func importTouched(_ sender: AnyObject) {
         if var txt: String = textField.text {
-            if (txt.isEmpty == false && (txt.contains(AppDelegate.ao3SiteUrl) || txt.contains("http://archiveofourown.org"))) {
+            if (txt.isEmpty == false && (txt.contains(AppDelegate.ao3SiteUrl) || txt.contains("archiveofourown.org"))) {
                 if (txt.contains(" ")) {
                     let arr = txt.split(separator: " ")
                     if (arr.count > 0) {

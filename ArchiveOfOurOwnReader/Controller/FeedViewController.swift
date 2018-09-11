@@ -144,10 +144,7 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
         navVC.navigationBar.shadowImage = UIImage()
         navVC.navigationBar.isTranslucent = false
         
-        UserDefaults.standard.synchronize()
-        if let pp = UserDefaults.standard.value(forKey: "pro") as? Bool {
-            purchased = pp
-        }
+        loadPurchasedSettings()
         
         //
         

@@ -136,13 +136,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         
        // cycleInterstitial()
         
-        UserDefaults.standard.synchronize()
-        if let pp = UserDefaults.standard.value(forKey: "pro") as? Bool {
-            purchased = pp
-        }
-        if let dd = UserDefaults.standard.value(forKey: "donated") as? Bool {
-            donated = dd
-        }
+        loadPurchasedSettings()
         
         self.isAdult = true
         
@@ -157,6 +151,26 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         }
         
         applyTheme()
+    }
+    
+    func loadPurchasedSettings() {
+        UserDefaults.standard.synchronize()
+        
+        if let pp = UserDefaults.standard.value(forKey: "pro") as? Bool {
+            purchased = pp
+        }
+        
+        if let py = UserDefaults.standard.value(forKey: "yearly_sub") as? Bool {
+            purchased = py
+        }
+        
+        if let pq = UserDefaults.standard.value(forKey: "quarter_sub") as? Bool {
+            purchased = pq
+        }
+        
+        if let dd = UserDefaults.standard.value(forKey: "donated") as? Bool {
+            donated = dd
+        }
     }
     
     override func applyTheme() {
@@ -396,7 +410,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         if let workmeta: [TFHppleElement] = doc.search(withXPathQuery: "//dl[@class='work meta group']") as? [TFHppleElement] {
         
         if(workmeta.count > 0) {
-            if let ratings: [TFHppleElement] = workmeta[0].search(withXPathQuery: "//dd[@class='rating tags']/ul[@class='*']/li") as? [TFHppleElement] {
+            if let ratings: [TFHppleElement] = workmeta[0].search(withXPathQuery: "//dd[@class='rating tags']/ul[@class='commas']/li") as? [TFHppleElement] {
                 if (ratings.count > 0) {
                     workItem.setValue(ratings[0].content, forKey: "ratingTags")
                 }
@@ -1221,10 +1235,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         
         var params:[String:AnyObject] = [String:AnyObject]()
         
-        UserDefaults.standard.synchronize()
-        if let pp = UserDefaults.standard.value(forKey: "pro") as? Bool {
-            purchased = pp
-        }
+       loadPurchasedSettings()
         
         var vadult = ""
         params["view_adult"] = "true" as AnyObject?

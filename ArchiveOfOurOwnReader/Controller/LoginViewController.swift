@@ -36,11 +36,6 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
         loginTextField.text = DefaultsManager.getString(DefaultsManager.LOGIN)
         passTextField.text = DefaultsManager.getString(DefaultsManager.PSWD)
         
-//        UserDefaults.standard.synchronize()
-//        if let pp = UserDefaults.standard.value(forKey: "pro") as? Bool {
-//            purchased = pp
-//        }
-        
         //if (purchased) {
         
         if let login = loginTextField.text,
@@ -89,8 +84,16 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
                     print(response.request ?? "")
                     print(response.error ?? "")
                 #endif
-                self.parseParams(response.data!)
-                self.tryLogin() //Uncomment!
+                if let d = response.data {
+                    self.parseParams(d)
+                    self.tryLogin() //Uncomment!
+                } else {
+                    var err = NSLocalizedString("CheckInternet", comment: "")
+                    if let errMsg = response.error {
+                        err = "\(response.response?.statusCode ?? -1): \(errMsg.localizedDescription)"
+                    }
+                    self.showError(title: NSLocalizedString("Error", comment: ""), message: err)
+                }
                // self.hideLoadingView()
             })
     }
@@ -149,13 +152,17 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
                         self.parseResponse(d)
                         self.hideLoadingView()
                         if (DefaultsManager.getObject(DefaultsManager.PSEUD_IDS) == nil ||
-                            (DefaultsManager.getObject(DefaultsManager.PSEUD_IDS) as! [String : String]).keys.count == 0) {
+                            (DefaultsManager.getObject(DefaultsManager.PSEUD_IDS) as? [String : String])?.keys.count ?? 0 == 0) {
                             self.sendPseudIdRequest()
                         }
                         
                     } else {
                         self.hideLoadingView()
-                        self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CheckInternet", comment: ""))
+                        var err = NSLocalizedString("CheckInternet", comment: "")
+                        if let errMsg = response.error {
+                            err = "\(response.response?.statusCode ?? -1): \(errMsg.localizedDescription)"
+                        }
+                        self.showError(title: NSLocalizedString("Error", comment: ""), message: err)
                     }
                 }
             })
@@ -189,7 +196,11 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
                     self.hideLoadingView()
                 } else {
                     self.hideLoadingView()
-                    self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CheckInternet", comment: ""))
+                    var err = NSLocalizedString("CheckInternet", comment: "")
+                    if let errMsg = response.error {
+                        err = "\(response.response?.statusCode ?? -1): \(errMsg.localizedDescription)"
+                    }
+                    self.showError(title: NSLocalizedString("Error", comment: ""), message: err)
                 }
             })
     }
@@ -206,7 +217,7 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
             let authtoken: [TFHppleElement]? = doc.search(withXPathQuery: "//input[@name='authenticity_token']") as? [TFHppleElement]
             if (authtoken?.count ?? 0 > 0) {
                 let loginEl: TFHppleElement = authtoken![0]
-                token = loginEl.attributes["value"] as! String
+                token = loginEl.attributes["value"] as? String ?? ""
                 (UIApplication.shared.delegate as! AppDelegate).token = token
             }
 

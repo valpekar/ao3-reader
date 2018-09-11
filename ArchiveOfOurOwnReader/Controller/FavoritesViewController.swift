@@ -58,14 +58,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 200
         
-        UserDefaults.standard.synchronize()
-        if let pp = UserDefaults.standard.value(forKey: "pro") as? Bool {
-            purchased = pp
-        }
-        
-        if let dd = UserDefaults.standard.value(forKey: "donated") as? Bool {
-            donated = dd
-        }
+        loadPurchasedSettings()
         
         if (purchased == false && donated == false) {
             loadAdMobInterstitial()

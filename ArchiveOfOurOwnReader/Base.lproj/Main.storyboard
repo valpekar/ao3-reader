@@ -8287,7 +8287,7 @@ Please check your Internet connection and also make sure you are logged into you
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5ns-DW-t0s">
-                                <rect key="frame" x="16" y="160" width="343" height="160"/>
+                                <rect key="frame" x="16" y="160" width="343" height="200"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Paste link to AO3 work here" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cEb-uA-LCW">
                                         <rect key="frame" x="0.0" y="30" width="343" height="19.666666666666671"/>
@@ -8296,13 +8296,13 @@ Please check your Internet connection and also make sure you are logged into you
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Gc7-vt-gMg">
-                                        <rect key="frame" x="20" y="61.666666666666657" width="303" height="30"/>
+                                        <rect key="frame" x="20" y="107.66666666666669" width="303" height="30"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="URL"/>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sW2-OM-coS">
-                                        <rect key="frame" x="177.66666666666663" y="103.66666666666669" width="145.33333333333337" height="30"/>
+                                        <rect key="frame" x="177.66666666666663" y="149.66666666666669" width="145.33333333333337" height="30"/>
                                         <state key="normal" title="View Work">
                                             <color key="titleColor" red="0.44705882352941173" green="0.74901960784313726" blue="0.90196078431372551" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
@@ -8311,7 +8311,7 @@ Please check your Internet connection and also make sure you are logged into you
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tCI-9S-LiQ">
-                                        <rect key="frame" x="20" y="103" width="145.66666666666666" height="30"/>
+                                        <rect key="frame" x="20" y="149" width="145.66666666666666" height="30"/>
                                         <state key="normal" title="Cancel">
                                             <color key="titleColor" red="0.82830715673575128" green="0.39026778673855705" blue="0.41183199635214424" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
@@ -8319,20 +8319,29 @@ Please check your Internet connection and also make sure you are logged into you
                                             <action selector="cancelTouched:" destination="0vy-0R-s74" eventType="touchUpInside" id="Psl-rX-CSv"/>
                                         </connections>
                                     </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Make sure you've selected &quot;Entire Work&quot; when copying the link." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0KE-Om-jSg">
+                                        <rect key="frame" x="10" y="59.666666666666657" width="323" height="36"/>
+                                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="Gc7-vt-gMg" secondAttribute="trailing" constant="20" id="0Hy-tZ-loZ"/>
                                     <constraint firstItem="tCI-9S-LiQ" firstAttribute="leading" secondItem="5ns-DW-t0s" secondAttribute="leading" constant="20" id="4wu-iE-Fti"/>
+                                    <constraint firstAttribute="trailing" secondItem="0KE-Om-jSg" secondAttribute="trailing" constant="10" id="BsS-kl-EKJ"/>
                                     <constraint firstAttribute="trailing" secondItem="cEb-uA-LCW" secondAttribute="trailing" id="ER9-l9-v14"/>
+                                    <constraint firstItem="0KE-Om-jSg" firstAttribute="top" secondItem="cEb-uA-LCW" secondAttribute="bottom" constant="10" id="Ei9-o2-2jL"/>
                                     <constraint firstItem="Gc7-vt-gMg" firstAttribute="leading" secondItem="5ns-DW-t0s" secondAttribute="leading" constant="20" id="H58-Xo-UMf"/>
                                     <constraint firstItem="cEb-uA-LCW" firstAttribute="leading" secondItem="5ns-DW-t0s" secondAttribute="leading" id="Soc-QL-MJJ"/>
+                                    <constraint firstItem="Gc7-vt-gMg" firstAttribute="top" secondItem="0KE-Om-jSg" secondAttribute="bottom" constant="12" id="VlN-O0-EkN"/>
                                     <constraint firstItem="tCI-9S-LiQ" firstAttribute="top" secondItem="Gc7-vt-gMg" secondAttribute="bottom" constant="12" id="d0I-bQ-3G1"/>
                                     <constraint firstItem="cEb-uA-LCW" firstAttribute="top" secondItem="5ns-DW-t0s" secondAttribute="top" constant="30" id="dSE-CA-b84"/>
+                                    <constraint firstItem="0KE-Om-jSg" firstAttribute="leading" secondItem="5ns-DW-t0s" secondAttribute="leading" constant="10" id="gyl-h0-zON"/>
                                     <constraint firstItem="sW2-OM-coS" firstAttribute="top" secondItem="Gc7-vt-gMg" secondAttribute="bottom" constant="12" id="kOK-sd-wLw"/>
-                                    <constraint firstAttribute="height" constant="160" id="lE0-RL-tzh"/>
+                                    <constraint firstAttribute="height" constant="200" id="lE0-RL-tzh"/>
                                     <constraint firstItem="sW2-OM-coS" firstAttribute="width" secondItem="tCI-9S-LiQ" secondAttribute="width" id="o0L-Ih-k5p"/>
-                                    <constraint firstItem="Gc7-vt-gMg" firstAttribute="top" secondItem="cEb-uA-LCW" secondAttribute="bottom" constant="12" id="oEg-hk-B0U"/>
                                     <constraint firstAttribute="trailing" secondItem="sW2-OM-coS" secondAttribute="trailing" constant="20" id="r7A-j3-GMz"/>
                                     <constraint firstItem="sW2-OM-coS" firstAttribute="leading" secondItem="tCI-9S-LiQ" secondAttribute="trailing" constant="12" id="v1o-H7-tLH"/>
                                 </constraints>

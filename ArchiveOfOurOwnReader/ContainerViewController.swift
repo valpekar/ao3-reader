@@ -259,6 +259,7 @@ private extension UIStoryboard {
 extension ContainerViewController : WorkImportDelegate {
    
     func linkPasted(workUrl: String) {
+        selectedControllerAtIndex(IndexPath(row:0,section:0))
         if let controller = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "WorkDetailViewController") as? WorkDetailViewController {
             controller.workUrl = workUrl
             

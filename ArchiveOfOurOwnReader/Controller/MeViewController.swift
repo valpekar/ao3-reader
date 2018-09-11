@@ -44,15 +44,8 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
         self.pseudsTableView.rowHeight = UITableViewAutomaticDimension
         self.pseudsTableView.estimatedRowHeight = 44
         
-        UserDefaults.standard.synchronize()
-        
-        if let pp = UserDefaults.standard.value(forKey: "pro") as? Bool {
-            purchased = pp
-            isPurchased = purchased
-        }
-        if let dd = UserDefaults.standard.value(forKey: "donated") as? Bool {
-            donated = dd
-        }
+        loadPurchasedSettings()
+        isPurchased = purchased
         
         NotificationCenter.default.addObserver(self, selector: #selector(MeViewController.productPurchased(_:)), name: NSNotification.Name(rawValue: IAPHelperProductPurchasedNotification), object: nil)
         //SKPaymentQueue.default().add(self)
@@ -62,15 +55,7 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        
-        UserDefaults.standard.synchronize()
-        
-        if let pp = UserDefaults.standard.value(forKey: "pro") as? Bool {
-            purchased = pp
-        }
-        if let dd = UserDefaults.standard.value(forKey: "donated") as? Bool {
-            donated = dd
-        }
+        loadPurchasedSettings()
         
         if ((purchased || donated)  && DefaultsManager.getBool(DefaultsManager.ADULT) == nil) {
             DefaultsManager.putBool(true, key: DefaultsManager.ADULT)
@@ -647,7 +632,7 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
             
             for product in products {
                 
-                if (product.productIdentifier == "prosub" || product.productIdentifier == "sergei.pekar.ArchiveOfOurOwnReader.pro") {
+                if (product.productIdentifier == "prosub" || product.productIdentifier == "sergei.pekar.ArchiveOfOurOwnReader.pro" || product.productIdentifier == "yearly_sub" || product.productIdentifier == "quarter_sub") {
                     isPurchased = ReaderProducts.store.isProductPurchased(product.productIdentifier)
                     UserDefaults.standard.set(isPurchased, forKey: "pro")
                     UserDefaults.standard.synchronize()
@@ -707,7 +692,7 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
             if product.productIdentifier == productIdentifier {
                // reload(false, productId: "")
                 
-                if (product.productIdentifier == "prosub" || product.productIdentifier == "sergei.pekar.ArchiveOfOurOwnReader.pro") {
+                if (product.productIdentifier == "prosub" || product.productIdentifier == "sergei.pekar.ArchiveOfOurOwnReader.pro" || product.productIdentifier == "yearly_sub" || product.productIdentifier == "quarter_sub") {
                     isPurchased = ReaderProducts.store.isProductPurchased(product.productIdentifier)
                     UserDefaults.standard.set(isPurchased, forKey: "pro")
                     UserDefaults.standard.synchronize()

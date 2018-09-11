@@ -75,13 +75,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        UserDefaults.standard.synchronize()
-        if let pp = UserDefaults.standard.value(forKey: "pro") as? Bool {
-            purchased = pp
-        }
-        if let dd = UserDefaults.standard.value(forKey: "donated") as? Bool {
-            donated = dd
-        }
+        loadPurchasedSettings()
         
        // donated = false
       //  purchased = true
@@ -357,13 +351,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
         var params:[String:AnyObject] = [String:AnyObject]()
         
-        UserDefaults.standard.synchronize()
-        if let pp = UserDefaults.standard.value(forKey: "pro") as? Bool {
-            purchased = pp
-        }
-        if let dd = UserDefaults.standard.value(forKey: "donated") as? Bool {
-            donated = dd
-        }
+       loadPurchasedSettings()
         
         var vadult = ""
         params["view_adult"] = "true" as AnyObject?
@@ -735,10 +723,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
         var params:[String:AnyObject] = [String:AnyObject]()
         
-        UserDefaults.standard.synchronize()
-        if let pp = UserDefaults.standard.value(forKey: "pro") as? Bool {
-            purchased = pp
-        }
+        loadPurchasedSettings()
         
         var vadult = ""
         if let isAdult = DefaultsManager.getBool(DefaultsManager.ADULT)  {
