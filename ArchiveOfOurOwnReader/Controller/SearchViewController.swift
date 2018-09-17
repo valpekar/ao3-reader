@@ -197,7 +197,7 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
                 (cell as? SearchTagWithTextCell)?.textField.text = searchQuery.title
             case 2:
                 (cell as? SearchTagWithTextCell)?.textField.tag = TAG_AUTHOR
-                (cell as? SearchTagWithTextCell)?.textField.text = searchQuery.creator
+                (cell as? SearchTagWithTextCell)?.textField.text = searchQuery.creators
             case 3:
                 (cell as? SearchTagWithTextCell)?.textField.tag = TAG_NONE
                 (cell as? SearchTagWithTextCell)?.textField.inputView = langPickerView
@@ -594,11 +594,11 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
     @IBAction func tFieldDoneEditing(_ sender: UITextField) {
         switch (sender.tag) {
         case TAG_ANYFIELD:
-            searchQuery.tag = sender.text!
+            searchQuery.tag = sender.text ?? ""
         case TAG_TITLE:
-            searchQuery.title = sender.text!
+            searchQuery.title = sender.text ?? ""
         case TAG_AUTHOR:
-            searchQuery.creator = sender.text!
+            searchQuery.creators = sender.text ?? ""
         case TAG_KUDOS_FROM:
             for subview in sender.superview!.subviews {
                 if let textField = subview as? UITextField {
@@ -736,8 +736,11 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
         }
         else if(textToParse.range(of: "-")  != nil) {
             let range: Range = textToParse.range(of: "-")!
-            textFieldFrom.text = textToParse.substring( with: textToParse.startIndex..<range.lowerBound)
-            textFieldTo.text = textToParse.substring( with: range.upperBound..<textToParse.endIndex).replacingOccurrences(of: "-", with: "")
+            let rangeFirst = textToParse.startIndex..<range.lowerBound
+            textFieldFrom.text = String(textToParse[rangeFirst])
+            
+            let rangeSecond = range.upperBound..<textToParse.endIndex
+            textFieldTo.text = String(textToParse[rangeSecond]).replacingOccurrences(of: "-", with: "")
         } else {
             textFieldFrom.text = textToParse
         }

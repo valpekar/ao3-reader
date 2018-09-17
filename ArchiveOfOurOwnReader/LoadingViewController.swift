@@ -326,6 +326,8 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
             workItem = workItemToReload
         }
         
+        workItem.needsUpdate = 0
+        
         var err: NSError?
         
         chapters = [ChapterOnline]()

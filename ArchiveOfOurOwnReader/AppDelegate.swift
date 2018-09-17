@@ -123,6 +123,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         Appirater.setDebug(false)
         Appirater.appLaunched(true)
         
+        let worksToReload = DefaultsManager.getStringArray(DefaultsManager.NOTIF_IDS_ARR)
+        
+        for workToReload in worksToReload {
+            if let downloadedWorkItem: DBWorkItem = getWorkById(workId: workToReload) {
+                downloadedWorkItem.needsUpdate = 1
+            }
+            
+            
+        }
+        
         // Check if launched from notification
 //        if let notification = launchOptions?[.remoteNotification] as? [String: AnyObject] {
 //            if let workId = notification["workId"] as? String {
@@ -140,6 +150,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 //        }
         
         return true
+    }
+    
+    func getWorkById(workId: String) -> DBWorkItem? {
+        var res: DBWorkItem?
+        
+        let managedContext = persistentContainer.viewContext
+        
+        let fetchRequest: NSFetchRequest <NSFetchRequestResult> = NSFetchRequest(entityName:"DBWorkItem")
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "dateAdded", ascending: false)]
+        fetchRequest.fetchLimit = 1
+        let searchPredicate: NSPredicate = NSPredicate(format: "workId = %@", workId)
+        
+        fetchRequest.predicate = searchPredicate
+        
+        do {
+            let fetchedResults = try managedContext.fetch(fetchRequest) as? [DBWorkItem]
+            
+            if let results = fetchedResults {
+                res = results.first
+            }
+        } catch {
+            #if DEBUG
+            print("cannot fetch favorites.")
+            #endif
+        }
+        return res
     }
     
     func openWorkDetailController(workId: String) {

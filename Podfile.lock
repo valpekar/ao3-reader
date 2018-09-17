@@ -1,52 +1,76 @@
 PODS:
-  - Alamofire (4.7.2)
-  - AlamofireImage (3.3.1):
-    - Alamofire (~> 4.5)
+  - Alamofire (4.7.3)
+  - AlamofireImage (3.4.0):
+    - Alamofire (~> 4.7)
   - Appirater (2.3.1)
   - DynamicBlurView (2.0.2)
-  - ExpandableLabel (0.4.0)
-  - Firebase (5.3.0):
-    - Firebase/Core (= 5.3.0)
-  - Firebase/AdMob (5.3.0):
+  - ExpandableLabel (0.4.1)
+  - Firebase (5.8.0):
+    - Firebase/Core (= 5.8.0)
+  - Firebase/AdMob (5.8.0):
     - Firebase/Core
-    - Google-Mobile-Ads-SDK (= 7.31.0)
-  - Firebase/Analytics (5.3.0):
+    - Google-Mobile-Ads-SDK (~> 7.32)
+  - Firebase/Analytics (5.8.0):
     - Firebase/Core
-  - Firebase/Core (5.3.0):
+  - Firebase/Core (5.8.0):
     - Firebase/CoreOnly
-    - FirebaseAnalytics (= 5.0.1)
-  - Firebase/CoreOnly (5.3.0):
-    - FirebaseCore (= 5.0.4)
-  - FirebaseAnalytics (5.0.1):
-    - FirebaseCore (~> 5.0)
-    - FirebaseInstanceID (~> 3.0)
-    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
+    - FirebaseAnalytics (= 5.1.2)
+  - Firebase/CoreOnly (5.8.0):
+    - FirebaseCore (= 5.1.3)
+  - FirebaseAnalytics (5.1.2):
+    - FirebaseCore (~> 5.1)
+    - FirebaseInstanceID (~> 3.2)
+    - GoogleAppMeasurement (~> 5.1)
+    - GoogleUtilities/AppDelegateSwizzler (~> 5.2.0)
+    - GoogleUtilities/MethodSwizzler (~> 5.2.0)
+    - GoogleUtilities/Network (~> 5.2)
+    - "GoogleUtilities/NSData+zlib (~> 5.2)"
     - nanopb (~> 0.3)
-  - FirebaseCore (5.0.4):
-    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
-  - FirebaseInstanceID (3.1.1):
-    - FirebaseCore (~> 5.0)
-  - Google-Mobile-Ads-SDK (7.31.0)
-  - GoogleToolboxForMac/Defines (2.1.4)
-  - "GoogleToolboxForMac/NSData+zlib (2.1.4)":
-    - GoogleToolboxForMac/Defines (= 2.1.4)
+  - FirebaseCore (5.1.3):
+    - GoogleUtilities/Logger (~> 5.2)
+  - FirebaseInstanceID (3.2.1):
+    - FirebaseCore (~> 5.1)
+    - GoogleUtilities/Environment (~> 5.2)
+  - Google-Mobile-Ads-SDK (7.33.1)
+  - GoogleAppMeasurement (5.1.2):
+    - GoogleUtilities/AppDelegateSwizzler (~> 5.2.0)
+    - GoogleUtilities/MethodSwizzler (~> 5.2.0)
+    - GoogleUtilities/Network (~> 5.2)
+    - "GoogleUtilities/NSData+zlib (~> 5.2)"
+    - nanopb (~> 0.3)
+  - GoogleUtilities/AppDelegateSwizzler (5.2.3):
+    - GoogleUtilities/Environment
+    - GoogleUtilities/Logger
+    - GoogleUtilities/Network
+  - GoogleUtilities/Environment (5.2.3)
+  - GoogleUtilities/Logger (5.2.3):
+    - GoogleUtilities/Environment
+  - GoogleUtilities/MethodSwizzler (5.2.3):
+    - GoogleUtilities/Logger
+  - GoogleUtilities/Network (5.2.3):
+    - GoogleUtilities/Logger
+    - "GoogleUtilities/NSData+zlib"
+    - GoogleUtilities/Reachability
+  - "GoogleUtilities/NSData+zlib (5.2.3)"
+  - GoogleUtilities/Reachability (5.2.3):
+    - GoogleUtilities/Logger
   - HexColors (4.0.0)
   - nanopb (0.3.8):
     - nanopb/decode (= 0.3.8)
     - nanopb/encode (= 0.3.8)
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
-  - PopupDialog (0.7.1):
+  - PopupDialog (0.8.1):
     - DynamicBlurView (~> 2.0)
   - PPTopMostController (0.0.1)
-  - RMessage (2.3.0):
+  - RMessage (2.3.2):
     - HexColors (~> 4.0)
     - PPTopMostController
-  - RSLoadingView (1.1.2)
+  - RSLoadingView (1.1.3)
   - Spring (1.0.5)
-  - SwiftMessages (4.1.4):
-    - SwiftMessages/App (= 4.1.4)
-  - SwiftMessages/App (4.1.4)
+  - SwiftMessages (5.0.1):
+    - SwiftMessages/App (= 5.0.1)
+  - SwiftMessages/App (5.0.1)
 
 DEPENDENCIES:
   - Alamofire
@@ -75,7 +99,8 @@ SPEC REPOS:
     - FirebaseCore
     - FirebaseInstanceID
     - Google-Mobile-Ads-SDK
-    - GoogleToolboxForMac
+    - GoogleAppMeasurement
+    - GoogleUtilities
     - HexColors
     - nanopb
     - PopupDialog
@@ -94,25 +119,26 @@ CHECKOUT OPTIONS:
     :git: https://github.com/MengTo/Spring.git
 
 SPEC CHECKSUMS:
-  Alamofire: e4fa87002c137ba2d8d634d2c51fabcda0d5c223
-  AlamofireImage: 3b35b586853abaf94ca1250f4e94cff3c21a4c0d
+  Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
+  AlamofireImage: 5f79836de27236819b13b27d0c97be6c205976fe
   Appirater: 44a4651f7912a17dc906b655f0c215d5bb768b84
   DynamicBlurView: aa6db4defc6e537eb86fc5e58dd3991666178399
-  ExpandableLabel: 5f5f61fbf71433000cd7c3290617e6fcccb72c86
-  Firebase: 68afeeb05461db02d7c9e3215cda28068670f4aa
-  FirebaseAnalytics: b3628aea54c50464c32c393fb2ea032566e7ecc2
-  FirebaseCore: 62f1b792a49bb9e8b4073f24606d2c93ffc352f0
-  FirebaseInstanceID: f3f0657372592ecdfdfe2cac604a5a75758376a6
-  Google-Mobile-Ads-SDK: 6e529e748b45507a2ca904e0b5a52669ba3920c4
-  GoogleToolboxForMac: 91c824d21e85b31c2aae9bb011c5027c9b4e738f
+  ExpandableLabel: 1ad99072d1d90f1db5925b8d04d56bf8607e5f9b
+  Firebase: 25812f43e7a53b11ae2f0a5f4c6d12faeb1f7cd7
+  FirebaseAnalytics: df15839e9c6ca6bd14d2e8ab6b0c672e6c49097e
+  FirebaseCore: 27bd80e5bfaaf9552a1f5cacb4c7e8bb925bab22
+  FirebaseInstanceID: ea5af6920d0a4a29b40459d055bebe4a6c1333c4
+  Google-Mobile-Ads-SDK: 71c6d3e8d8f52673fa5a83fc0d027623b11fde16
+  GoogleAppMeasurement: fc4a4c3fe0144db9313cbf443ffe62e6b1d6268c
+  GoogleUtilities: 6f681e27050c5e130325e89fa0316dfca826f954
   HexColors: 5f95843ef89aff6a72e1fd3a8ebabf205cc43379
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
-  PopupDialog: 39598b7d41719f5c025b4b70e62728bae7734fef
+  PopupDialog: 3d4e8e0795c3a614f407d730986c9b9af9781123
   PPTopMostController: 4e6f1e5f8c645bdcc74cd837a20f607ff262c048
-  RMessage: 27f860ca6712e0926a5fc63f362fd09667d9d02b
-  RSLoadingView: fdfeee9968b6dad2559169a97da0ad2580371f3a
+  RMessage: 761f8ff71247b8d72d0c4a0be5a8e6ce8dfdedd0
+  RSLoadingView: c7749afdd455229643e8f34277d0695973a15b1a
   Spring: 3c7666eccefdeb87140008dc81043f89f8dbb787
-  SwiftMessages: 2c33fdee8b8f38dfc7e1036684456b505891da8c
+  SwiftMessages: 32ce3cfc8388b41aae56ff4853cc752a20101147
 
 PODFILE CHECKSUM: b36ce1596d5d614771989df73ff4372067216d68
 

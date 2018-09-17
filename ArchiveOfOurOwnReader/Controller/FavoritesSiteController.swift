@@ -544,7 +544,11 @@ extension FavoritesSiteController: UISearchBarDelegate {
                                      "with_notes" : "0",
                                      "rec" : "0",
                                      "other_tag_names" : "",
-                                     "query" : query] as AnyObject?
+                                     "other_bookmark_tag_names": "",
+                                     "excluded_tag_names": "",
+                                     "excluded_bookmark_tag_names": "",
+                                     "bookmark_query" : "",
+                                     "bookmarkable_query" : query] as AnyObject?
         
         params["commit"] = "Sort and Filter" as AnyObject?
         

@@ -57,7 +57,7 @@ class ContentsViewController: UIViewController, UIPopoverPresentationControllerD
             
             let chapter = downloadedChapters[indexPath.row]
             
-            chapterIsRead = Bool(chapter.unread ?? 0)
+            chapterIsRead = Bool(truncating: chapter.unread ?? 0)
 
             let chapterName = chapter.chapterName
             cell?.textLabel?.text = chapterName

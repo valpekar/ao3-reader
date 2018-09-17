@@ -15,7 +15,7 @@ class SearchQuery : NSObject, NSCoding {
     var quick_tags = ""
     var tag = ""
     var title = "" 
-    var creator = "" 
+    var creators = "" 
     var revised_at = "" 
     var complete = "0" 
     var single_chapter = "0" 
@@ -122,7 +122,7 @@ class SearchQuery : NSObject, NSCoding {
             res = false
         }
         
-        if (!creator.isEmpty) {
+        if (!creators.isEmpty) {
             res = false
         }
         
@@ -251,7 +251,7 @@ class SearchQuery : NSObject, NSCoding {
         
         params["work_search"] = ["query": tagStr,
         "title": title,
-        "creator": creator,
+        "creators": creators,
         "revised_at": revised_at,
         "complete": complete,
         "single_chapter": single_chapter,
@@ -314,29 +314,29 @@ class SearchQuery : NSObject, NSCoding {
         
         self.init()
         
-        self.include_tags = (decoder.decodeObject(forKey: "include_tags") as? String)!
-        self.exclude_tags = (decoder.decodeObject(forKey: "exclude_tags") as? String)!
-        self.tag = (decoder.decodeObject(forKey: "tag") as? String)!
-        self.title = (decoder.decodeObject(forKey: "title") as? String)!
-        self.creator = (decoder.decodeObject(forKey: "creator") as? String)!
-        self.revised_at = (decoder.decodeObject(forKey: "revised_at") as? String)!
-        self.complete = (decoder.decodeObject(forKey: "complete") as? String)!
-        self.single_chapter = (decoder.decodeObject(forKey: "single_chapter") as? String)!
-        self.word_count = (decoder.decodeObject(forKey: "word_count") as? String)!
-        self.fandom_names = (decoder.decodeObject(forKey: "fandom_names") as? String)!
-        self.language_id = (decoder.decodeObject(forKey: "language_id") as? String)!
-        self.rating_ids = (decoder.decodeObject(forKey: "rating_ids") as? String)!
-        self.character_names = (decoder.decodeObject(forKey: "character_names") as? String)!
-        self.relationship_names = (decoder.decodeObject(forKey: "relationship_names") as? String)!
-        self.freeform_names = (decoder.decodeObject(forKey: "freeform_names") as? String)!
-        self.hits = (decoder.decodeObject(forKey: "hits") as? String)!
-        self.kudos_count = (decoder.decodeObject(forKey: "kudos_count") as? String)!
-        self.comments_count = (decoder.decodeObject(forKey: "comments_count") as? String)!
-        self.bookmarks_count = (decoder.decodeObject(forKey: "bookmarks_count") as? String)!
-        self.sort_column = (decoder.decodeObject(forKey: "sort_column") as? String)!
-        self.sort_direction = (decoder.decodeObject(forKey: "sort_direction") as? String)!
-        self.warnings = (decoder.decodeObject(forKey: "warnings") as? [String])!
-        self.categories = (decoder.decodeObject(forKey: "categories") as? [String])!
+        self.include_tags = (decoder.decodeObject(forKey: "include_tags") as? String) ?? ""
+        self.exclude_tags = (decoder.decodeObject(forKey: "exclude_tags") as? String) ?? ""
+        self.tag = (decoder.decodeObject(forKey: "tag") as? String) ?? ""
+        self.title = (decoder.decodeObject(forKey: "title") as? String) ?? ""
+        self.creators = (decoder.decodeObject(forKey: "creators") as? String) ?? ""
+        self.revised_at = (decoder.decodeObject(forKey: "revised_at") as? String) ?? ""
+        self.complete = (decoder.decodeObject(forKey: "complete") as? String) ?? ""
+        self.single_chapter = (decoder.decodeObject(forKey: "single_chapter") as? String) ?? ""
+        self.word_count = (decoder.decodeObject(forKey: "word_count") as? String) ?? ""
+        self.fandom_names = (decoder.decodeObject(forKey: "fandom_names") as? String) ?? ""
+        self.language_id = (decoder.decodeObject(forKey: "language_id") as? String) ?? ""
+        self.rating_ids = (decoder.decodeObject(forKey: "rating_ids") as? String) ?? ""
+        self.character_names = (decoder.decodeObject(forKey: "character_names") as? String) ?? ""
+        self.relationship_names = (decoder.decodeObject(forKey: "relationship_names") as? String) ?? ""
+        self.freeform_names = (decoder.decodeObject(forKey: "freeform_names") as? String) ?? ""
+        self.hits = (decoder.decodeObject(forKey: "hits") as? String) ?? ""
+        self.kudos_count = (decoder.decodeObject(forKey: "kudos_count") as? String) ?? ""
+        self.comments_count = (decoder.decodeObject(forKey: "comments_count") as? String) ?? ""
+        self.bookmarks_count = (decoder.decodeObject(forKey: "bookmarks_count") as? String) ?? ""
+        self.sort_column = (decoder.decodeObject(forKey: "sort_column") as? String) ?? ""
+        self.sort_direction = (decoder.decodeObject(forKey: "sort_direction") as? String) ?? ""
+        self.warnings = (decoder.decodeObject(forKey: "warnings") as? [String]) ?? []
+        self.categories = (decoder.decodeObject(forKey: "categories") as? [String]) ?? []
         
     }
     
@@ -345,7 +345,7 @@ class SearchQuery : NSObject, NSCoding {
         coder.encode(self.exclude_tags, forKey: "exclude_tags")
         coder.encode(self.tag, forKey: "tag")
         coder.encode(self.title, forKey: "title")
-        coder.encode(self.creator, forKey: "creator")
+        coder.encode(self.creators, forKey: "creators")
         coder.encode(self.revised_at, forKey: "revised_at")
         coder.encode(self.complete, forKey: "complete")
         coder.encode(self.single_chapter, forKey: "single_chapter")

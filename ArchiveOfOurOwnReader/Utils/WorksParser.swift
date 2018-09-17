@@ -51,7 +51,16 @@ class WorksParser {
         }
         if let workGroup = doc.search(withXPathQuery: "//\(olLiteral)[@class='\(worksElement) index group']") as? [TFHppleElement] {
             if (workGroup.count > 0) {
-                if let worksList : [TFHppleElement] = workGroup[0].search(withXPathQuery: "//li[@class='\(liEl) blurb group']") as? [TFHppleElement] {
+                
+                var worksList : [TFHppleElement]? = nil
+                if let wList = workGroup[0].search(withXPathQuery: "//li[@class='\(liEl) blurb group']") as? [TFHppleElement],
+                    wList.count > 0 {
+                    worksList = wList
+                } else if let ownList = workGroup[0].search(withXPathQuery: "//li[@class='own \(liEl) blurb group']") as? [TFHppleElement],
+                    ownList.count > 0 {
+                    worksList = ownList
+                }
+                if let worksList : [TFHppleElement] = worksList {
                 
                     //sometimes they have extra space " " after group ("group ") >.<
                     if (worksList.count == 0) {
@@ -165,7 +174,16 @@ class WorksParser {
         
         if let workGroup = doc.search(withXPathQuery: "//ul[@class='series work index group']") as? [TFHppleElement] {
             if (workGroup.count > 0) {
-                if let worksList : [TFHppleElement] = workGroup[0].search(withXPathQuery: "//li[@class='work blurb group']") as? [TFHppleElement] {
+                
+                var worksList : [TFHppleElement]? = nil
+                if let wList = workGroup[0].search(withXPathQuery: "//li[@class='work blurb group']") as? [TFHppleElement],
+                    wList.count > 0 {
+                    worksList = wList
+                } else if let ownList = workGroup[0].search(withXPathQuery: "//li[@class='own work blurb group']") as? [TFHppleElement],
+                    ownList.count > 0 {
+                    worksList = ownList
+                }
+                if let worksList : [TFHppleElement] = worksList {
                     
                     for workListItem in worksList {
                         

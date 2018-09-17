@@ -203,7 +203,11 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
     }
     
     func configureCell(curWork: DBWorkItem?, cell: DownloadedCell, indexPath: IndexPath) {
-        cell.topicLabel.text = curWork?.workTitle ?? "-"
+        var title = curWork?.workTitle ?? "-"
+        if (curWork?.needsUpdate ?? 0 == 1) {
+            title = "🔶 \(title)"
+        }
+        cell.topicLabel.text = title
         
         var fandomsStr = ""
         if let downloadedFandoms = curWork?.mutableSetValue(forKey: "fandoms").allObjects as? [DBFandom] {
@@ -644,7 +648,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         var res = 0
         
         let searchPredicate = NSPredicate(format: "fandoms.fandomName CONTAINS[c] %@ LIMIT 1", fandom)
-        let array = (self.fetchedResultsController?.fetchedObjects as? NSArray)?.filtered(using: searchPredicate)
+        let array = (self.fetchedResultsController?.fetchedObjects as NSArray?)?.filtered(using: searchPredicate)
         res = array?.count ?? 0
         
         return res
@@ -654,7 +658,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         var res: [NSManagedObject] = []
         
         let searchPredicate = NSPredicate(format: "fandoms.fandomName CONTAINS[c] %@ ", fandom)
-        if let array = (self.fetchedResultsController?.fetchedObjects as? NSArray)?.filtered(using: searchPredicate) as? [NSManagedObject] {
+        if let array = (self.fetchedResultsController?.fetchedObjects as NSArray?)?.filtered(using: searchPredicate) as? [NSManagedObject] {
             res = array
         }
         
@@ -784,7 +788,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         
         let searchPredicate = NSPredicate(format: "topic CONTAINS[cd] %@ OR topicPreview CONTAINS[cd] %@ OR tags CONTAINS[cd] %@ OR author CONTAINS[cd] %@ OR workTitle CONTAINS[cd] %@ OR fandoms.fandomName CONTAINS[cd] %@", text, text, text, text, text, text)
         
-        let predicateWFolder = NSPredicate(format: "folder = nil AND (topic CONTAINS[cd] %@ OR topicPreview CONTAINS[cd] %@ OR tags CONTAINS[cd] %@ OR author CONTAINS[cd] %@ OR workTitle CONTAINS[cd] %@ OR fandoms.fandomName CONTAINS[cd] %@)", text, text, text, text, text, text)
+       // let predicateWFolder = NSPredicate(format: "folder = nil AND (topic CONTAINS[cd] %@ OR topicPreview CONTAINS[cd] %@ OR tags CONTAINS[cd] %@ OR author CONTAINS[cd] %@ OR workTitle CONTAINS[cd] %@ OR fandoms.fandomName CONTAINS[cd] %@)", text, text, text, text, text, text)
 //        let array = (Array(downloadedWorkds.values.joined()) as NSArray).filtered(using: searchPredicate)
 //        filtereddownloadedWorkds = array as! [DBWorkItem]
         
