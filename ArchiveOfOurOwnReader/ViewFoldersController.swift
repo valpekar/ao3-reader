@@ -13,7 +13,9 @@ import Crashlytics
 class ViewFoldersController: BaseFolderController {
     
     @IBOutlet weak var unCatButton:UIButton!
+    @IBOutlet weak var updButton:UIButton!
     
+    var showUpdates = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,10 +25,12 @@ class ViewFoldersController: BaseFolderController {
             self.view.backgroundColor = AppDelegate.redDarkColor
             self.tableView.backgroundColor = AppDelegate.greyDarkBg
             self.unCatButton.setTitleColor(AppDelegate.textLightColor, for: UIControlState.normal)
+            self.updButton.setTitleColor(AppDelegate.textLightColor, for: UIControlState.normal)
         } else {
             self.view.backgroundColor = AppDelegate.greyLightBg
             self.tableView.backgroundColor = AppDelegate.greyLightBg
             self.unCatButton.setTitleColor(AppDelegate.redDarkColor, for: UIControlState.normal)
+            self.updButton.setTitleColor(AppDelegate.redDarkColor, for: UIControlState.normal)
         }
         
         self.sortBy = DefaultsManager.getString(DefaultsManager.SORT_FOLDERS)
@@ -40,6 +44,8 @@ class ViewFoldersController: BaseFolderController {
         
         unCatButton.setTitle(FavoritesViewController.uncategorized, for: UIControlState.normal)
         unCatButton.contentHorizontalAlignment = .left
+        
+        updButton.contentHorizontalAlignment = .left
         
         // self.highlights = self.getAllHighlights()
         // self.tableView.reloadData()
@@ -58,6 +64,8 @@ class ViewFoldersController: BaseFolderController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+        showUpdates = false
         
         updateView()
     }
@@ -88,6 +96,14 @@ class ViewFoldersController: BaseFolderController {
         }
         
         unCatButton.setTitle("\(FavoritesViewController.uncategorized) (\(unCatCount) works) →", for: UIControlState.normal)
+        
+        let worksToReload = DefaultsManager.getStringArray(DefaultsManager.NOTIF_IDS_ARR)
+        if (worksToReload.count == 0) {
+            updButton.isEnabled = false
+        } else {
+            updButton.isEnabled = true
+        }
+        updButton.setTitle("Latest Updates (\(worksToReload.count))", for: UIControlState.normal)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -95,6 +111,7 @@ class ViewFoldersController: BaseFolderController {
             
             if let favsController: FavoritesViewController = segue.destination as? FavoritesViewController {
                 favsController.folderName = selectedFolderName
+                favsController.showUpdatesOnly = showUpdates
             }
             
         } /*else if (segue.identifier == "editFoldersSegue") {
@@ -116,6 +133,16 @@ class ViewFoldersController: BaseFolderController {
     @IBAction func unCatTouched(_ sender: AnyObject) {
         self.searchBar.text = ""
         self.searchBar.resignFirstResponder()
+        
+        selectedFolderName = FavoritesViewController.uncategorized
+        performSegue(withIdentifier: "showFolderSegue", sender: self)
+    }
+    
+    @IBAction func updCatTouched(_ sender: AnyObject) {
+        self.searchBar.text = ""
+        self.searchBar.resignFirstResponder()
+        
+        showUpdates = true
         
         selectedFolderName = FavoritesViewController.uncategorized
         performSegue(withIdentifier: "showFolderSegue", sender: self)

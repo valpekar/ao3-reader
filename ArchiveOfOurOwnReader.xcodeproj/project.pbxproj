@@ -1397,7 +1397,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "sergei.pekar.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "f5e196b2-811c-433e-b66f-4628445e57a3";
+				PROVISIONING_PROFILE = "a057db4d-da3a-4950-8a3e-221bc683fa9a";
 				PROVISIONING_PROFILE_SPECIFIER = "Unofficial Reader for AO3 Development";
 				STRIP_INSTALLED_PRODUCT = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "./ArchiveOfOurOwnReader/Swift-HTML-Parser-Bridging-Header.h";
@@ -1438,7 +1438,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "sergei.pekar.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "b1791f11-6556-44c7-a095-b7ae83db30bc";
+				PROVISIONING_PROFILE = "449c73e5-ec28-41af-a9de-c0c5cfa4ae6d";
 				PROVISIONING_PROFILE_SPECIFIER = "Unofficial Reader for AO3 Distribution Profile";
 				STRIP_INSTALLED_PRODUCT = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "./ArchiveOfOurOwnReader/Swift-HTML-Parser-Bridging-Header.h";

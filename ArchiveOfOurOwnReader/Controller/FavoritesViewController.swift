@@ -21,6 +21,8 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
     
     var selectedWork: DBWorkItem? = nil
     
+    var showUpdatesOnly = false
+    
     var resultSearchController = UISearchController()
     
     fileprivate lazy var fetchedResultsController: NSFetchedResultsController<DBWorkItem>? = {
@@ -36,6 +38,11 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         
         // Configure Fetch Request
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: sortBy, ascending: true)]
+        
+        if (showUpdatesOnly == true) {
+            let predicate = NSPredicate(format: "needsUpdate == 1")
+            fetchRequest.predicate = predicate
+        }
         
         // Create Fetched Results Controller
         let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: appDelegate.persistentContainer.viewContext, sectionNameKeyPath: nil, cacheName: nil)
@@ -205,7 +212,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
     func configureCell(curWork: DBWorkItem?, cell: DownloadedCell, indexPath: IndexPath) {
         var title = curWork?.workTitle ?? "-"
         if (curWork?.needsUpdate ?? 0 == 1) {
-            title = "🔶 \(title)"
+            title = "⚪ \(title)"
         }
         cell.topicLabel.text = title
         
