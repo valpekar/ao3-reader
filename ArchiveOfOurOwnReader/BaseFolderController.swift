@@ -18,7 +18,7 @@ class BaseFolderController: LoadingViewController, NSFetchedResultsControllerDel
     
     var sortBy = "date"
     
-    var selectedFolderName = FavoritesViewController.uncategorized
+    var selectedFolderName = LoadingViewController.uncategorized
     
     lazy var fetchedResultsController: NSFetchedResultsController<Folder>? = {
         
@@ -158,7 +158,7 @@ extension BaseFolderController: UITableViewDelegate, UITableViewDataSource {
         self.searchBar.resignFirstResponder()
         
         if let selectedFolder = fetchedResultsController?.object(at: indexPath) {
-            selectedFolderName = selectedFolder.name ?? FavoritesViewController.uncategorized
+            selectedFolderName = selectedFolder.name ?? LoadingViewController.uncategorized
             performSegue(withIdentifier: "showFolderSegue", sender: self)
         }
         

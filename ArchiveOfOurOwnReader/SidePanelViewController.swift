@@ -88,7 +88,7 @@ class SidePanelViewController: UIViewController, UITableViewDataSource, UITableV
                 
                 let worksToReload = DefaultsManager.getStringArray(DefaultsManager.NOTIF_IDS_ARR)
                 if (worksToReload.count > 0) {
-                    title = "\(title) ⚪"
+                    title = "\(title) 🔄"
                 }
                 cell.configureForHeader(title, imageName: imgs[indexPath.row])
             } else {

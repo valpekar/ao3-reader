@@ -15,7 +15,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
     
     @IBOutlet weak var tableView:UITableView!
     
-    static var uncategorized = "Uncategorized"
+    
     
     var downloadedFandoms: [DBFandom] = []
     
@@ -56,7 +56,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
     var sortBy = "dateAdded"
     var sortOrderAscendic = false
     
-    var folderName = uncategorized
+    var folderName = LoadingViewController.uncategorized
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -100,8 +100,10 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         
         var folderPredicate: NSPredicate = NSPredicate(format: "folder = nil")
        
-        if (folderName != FavoritesViewController.uncategorized) {
+        if (folderName != LoadingViewController.uncategorized) {
             folderPredicate = NSPredicate(format: "folder.name = %@", folderName)
+        } else if (showUpdatesOnly == true) {
+            folderPredicate = NSPredicate(format: "needsUpdate == 1")
         }
         self.fetchedResultsController?.fetchRequest.predicate = folderPredicate
         
@@ -212,7 +214,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
     func configureCell(curWork: DBWorkItem?, cell: DownloadedCell, indexPath: IndexPath) {
         var title = curWork?.workTitle ?? "-"
         if (curWork?.needsUpdate ?? 0 == 1) {
-            title = "⚪ \(title)"
+            title = "🔄 \(title)"
         }
         cell.topicLabel.text = title
         

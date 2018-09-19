@@ -248,12 +248,16 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
         var worksToReload = DefaultsManager.getStringArray(DefaultsManager.NOTIF_IDS_ARR)
         let wId = downloadedWorkItem.workId ?? ""
-        if worksToReload.contains(wId), let idx = worksToReload.index(of: wId) {
-            worksToReload.remove(at: idx)
-        }
-        DefaultsManager.putStringArray(worksToReload, key: DefaultsManager.NOTIF_IDS_ARR)
+//        if worksToReload.contains(wId), let idx = worksToReload.index(of: wId) {
+//            worksToReload.remove(at: idx)
+//        }
+//        DefaultsManager.putStringArray(worksToReload, key: DefaultsManager.NOTIF_IDS_ARR)
         
         updateAppBadge()
+        
+        if (downloadedWorkItem.needsUpdate ?? 0 == 1) {
+            self.showSuccess(title: NSLocalizedString("Update", comment: ""), message: NSLocalizedString("UpdateAvail", comment: ""))
+        }
         
         let auth = downloadedWorkItem.author ?? ""
         authorLabel.text = "\(auth)" // = underlineAttributedString
@@ -337,13 +341,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 workItem.workId = workId
             }
         }
-        var worksToReload = DefaultsManager.getStringArray(DefaultsManager.NOTIF_IDS_ARR)
-        if worksToReload.contains(workId), let idx = worksToReload.index(of: workId) {
-            worksToReload.remove(at: idx)
-        }
-        DefaultsManager.putStringArray(worksToReload, key: DefaultsManager.NOTIF_IDS_ARR)
         
-        updateAppBadge()
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
             Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
@@ -1898,6 +1896,15 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             if let dd = self.downloadWork(d, workItemToReload: self.downloadedWorkItem) {
                 self.downloadedWorkItem = dd
                 showDownloadedWork()
+                
+                var worksToReload = DefaultsManager.getStringArray(DefaultsManager.NOTIF_IDS_ARR)
+                let workId = dd.workId ?? "0"
+                if worksToReload.contains(workId), let idx = worksToReload.index(of: workId) {
+                    worksToReload.remove(at: idx)
+                }
+                DefaultsManager.putStringArray(worksToReload, key: DefaultsManager.NOTIF_IDS_ARR)
+                
+                updateAppBadge()
             }
         } else {
             self.hideLoadingView()
@@ -2144,9 +2151,10 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             let time = DispatchTime.now() + Double(Int64(delay)) / Double(NSEC_PER_SEC)
             DispatchQueue.main.asyncAfter(deadline: time) {
                 DispatchQueue.main.asyncAfter(deadline: time) {
-                    RMessage.showNotification(in: self, title: NSLocalizedString("Update", comment: ""), subtitle: NSLocalizedString("UpdateAvail", comment: ""), type: RMessageType.success, customTypeName: "", duration: 15.0, callback: {
-                        
-                    } , canBeDismissedByUser: true)
+//                    RMessage.showNotification(in: self, title: NSLocalizedString("Update", comment: ""), subtitle: NSLocalizedString("UpdateAvail", comment: ""), type: RMessageType.success, customTypeName: "", duration: 15.0, callback: {
+//
+//                    } , canBeDismissedByUser: true)
+                    self.showSuccess(title: NSLocalizedString("Update", comment: ""), message: NSLocalizedString("UpdateAvail", comment: ""))
                 }
             }
         }

@@ -21,6 +21,8 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
     
    // var tftinterstitial: TFTInterstitial? = nil
     
+    static var uncategorized = "Uncategorized"
+    
     var activityView: UIActivityIndicatorView!
     var loadingView: UIView!
     var loadingLabel: UILabel!
@@ -1377,7 +1379,9 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         var headers:[String:String] = [String:String]()
         headers["auth"] = deviceToken
         
-        Alamofire.request("https://fanfic-pocket-reader.herokuapp.com/api/downloads",
+        let url = "http://192.168.100.49/api/downloads" //"https://fanfic-pocket-reader.herokuapp.com/api/downloads"
+        
+        Alamofire.request(url,
                           method: .post,
                           parameters: params,
                           encoding: URLEncoding.default,
@@ -1412,7 +1416,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         var headers:[String:String] = [String:String]()
         headers["auth"] = deviceToken
         
-        var urlStr = "https://fanfic-pocket-reader.herokuapp.com/api/downloads/"
+        var urlStr = "https://fanfic-pocket-reader.herokuapp.com/api/downloads/" //"http://192.168.100.49/api/downloads"
         var count = 0
         for workId in workIds {
             urlStr.append(workId)

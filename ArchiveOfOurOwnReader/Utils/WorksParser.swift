@@ -19,9 +19,9 @@ class WorksParser {
         guard let dta = NSString(data: data, encoding: String.Encoding.utf8.rawValue) else {
             return (pages, works, worksCountStr)
         }
-        #if DEBUG
+       /* #if DEBUG
             print(dta)
-        #endif
+        #endif*/
         guard let doc : TFHpple = TFHpple(htmlData: data) else {
             return (pages, works, worksCountStr)
         }

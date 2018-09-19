@@ -62,6 +62,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         Fabric.with([Crashlytics.self])
+        FirebaseApp.configure()
         
        // TFTTapForTap.initializeWithAPIKey("ecd826723b670f9d750ce1eb02d9558a")
         
@@ -88,7 +89,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
        // application.applicationIconBadgeNumber = worksToReload.count
         
        //  Flurry.startSession("DW87V8SZQC24X83XPSXB")
-        FirebaseApp.configure()
         GADMobileAds.configure(withApplicationID: "ca-app-pub-8760316520462117~7329426789");
         
         if (DefaultsManager.getObject(DefaultsManager.PSEUD_IDS) == nil) {
@@ -152,6 +152,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         return true
     }
     
+    func createLocalNotification(workId: String) {
+        //creating the notification content
+        let content = UNMutableNotificationContent()
+        
+        //adding title, subtitle, body and badge
+        content.title = "Work Update"
+        content.subtitle = "Yay :)"
+        content.body = "Open the app to update the work."
+        content.userInfo = ["workId":workId]
+        content.badge = 1
+        
+        //getting the notification trigger
+        //it will be called after 5 seconds
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+        
+        //getting the notification request
+        let request = UNNotificationRequest(identifier: "WorkUpdate", content: content, trigger: trigger)
+        
+        //adding the notification to notification center
+        UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
+    }
+    
     func getWorkById(workId: String) -> DBWorkItem? {
         var res: DBWorkItem?
         
@@ -201,6 +223,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         if let workId = notification["workId"] as? String {
             if worksToReload.contains(workId) == false {
                 worksToReload.append(workId)
+                print("willPresent workId \(workId)")
             }
         }
         
@@ -209,6 +232,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         UIApplication.shared.applicationIconBadgeNumber = worksToReload.count
         
         completionHandler([.alert, .sound, .badge])
+    }
+    
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        print("AppDelegate: didReceiveRemoteNotification ")
+        
+        var wId = ""
+        
+        if let workId = userInfo["workId"] as? String {
+            wId = workId
+            print("didReceiveRemoteNotification workId \(workId)")
+        }
+        
+        var worksToReload = DefaultsManager.getStringArray(DefaultsManager.NOTIF_IDS_ARR)
+        if worksToReload.contains(wId) == false {
+            worksToReload.append(wId)
+        }
+        DefaultsManager.putStringArray(worksToReload, key: DefaultsManager.NOTIF_IDS_ARR)
+        UIApplication.shared.applicationIconBadgeNumber = worksToReload.count
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
@@ -281,8 +322,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         params["app_version"] = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "unknown"
         params["app_build"] = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "unknown"
         
+        let url = "http://192.168.100.49/api/devices" //"https://fanfic-pocket-reader.herokuapp.com/api/devices"
+        
         if (deviceToken.isEmpty == false) {
-            Alamofire.request("https://fanfic-pocket-reader.herokuapp.com/api/devices", method: HTTPMethod.post, parameters: params).response(completionHandler: { (response) in
+            Alamofire.request(url, method: HTTPMethod.post, parameters: params).response(completionHandler: { (response) in
                 print(response.error ?? "")
                 
                 if let data = response.data {
@@ -309,11 +352,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         headers["Content-Type"] = "application/x-www-form-urlencoded"
         
         if (deviceToken.isEmpty == false) {
-            Alamofire.request("https://fanfic-pocket-reader.herokuapp.com/api/devices", method: HTTPMethod.put, parameters: params, headers: headers).response(completionHandler: { (response) in
+            let url = "http://192.168.100.49/api/devices" // "https://fanfic-pocket-reader.herokuapp.com/api/devices"
+            Alamofire.request(url, method: HTTPMethod.put, parameters: params, headers: headers).response(completionHandler: { (response) in
                 print(response.error ?? "")
                 
                 if let data = response.data, let responseString = String(data: data, encoding: .utf8) {
                     print(responseString)
+                    
+                    if (responseString.contains("No device with such token")) {
+                        self.sendRequestRegisterForPushes()
+                    }
                 }
                 
                 if (response.response?.statusCode == 200) {

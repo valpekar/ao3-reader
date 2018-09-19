@@ -42,7 +42,7 @@ class ViewFoldersController: BaseFolderController {
         self.tableView.estimatedRowHeight = 44
         self.tableView.tableFooterView = UIView()
         
-        unCatButton.setTitle(FavoritesViewController.uncategorized, for: UIControlState.normal)
+        unCatButton.setTitle(LoadingViewController.uncategorized, for: UIControlState.normal)
         unCatButton.contentHorizontalAlignment = .left
         
         updButton.contentHorizontalAlignment = .left
@@ -95,7 +95,7 @@ class ViewFoldersController: BaseFolderController {
             unCatCount = 0
         }
         
-        unCatButton.setTitle("\(FavoritesViewController.uncategorized) (\(unCatCount) works) →", for: UIControlState.normal)
+        unCatButton.setTitle("\(LoadingViewController.uncategorized) (\(unCatCount) works) →", for: UIControlState.normal)
         
         let worksToReload = DefaultsManager.getStringArray(DefaultsManager.NOTIF_IDS_ARR)
         if (worksToReload.count == 0) {
@@ -134,7 +134,7 @@ class ViewFoldersController: BaseFolderController {
         self.searchBar.text = ""
         self.searchBar.resignFirstResponder()
         
-        selectedFolderName = FavoritesViewController.uncategorized
+        selectedFolderName = LoadingViewController.uncategorized
         performSegue(withIdentifier: "showFolderSegue", sender: self)
     }
     
@@ -144,7 +144,7 @@ class ViewFoldersController: BaseFolderController {
         
         showUpdates = true
         
-        selectedFolderName = FavoritesViewController.uncategorized
+        selectedFolderName = LoadingViewController.uncategorized
         performSegue(withIdentifier: "showFolderSegue", sender: self)
     }
     
