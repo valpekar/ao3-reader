@@ -1379,7 +1379,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         var headers:[String:String] = [String:String]()
         headers["auth"] = deviceToken
         
-        let url = "http://192.168.100.49/api/downloads" //"https://fanfic-pocket-reader.herokuapp.com/api/downloads"
+        let url = "https://fanfic-pocket-reader.herokuapp.com/api/downloads"
         
         Alamofire.request(url,
                           method: .post,

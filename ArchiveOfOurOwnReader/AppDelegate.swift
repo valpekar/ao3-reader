@@ -322,7 +322,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         params["app_version"] = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "unknown"
         params["app_build"] = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "unknown"
         
-        let url = "http://192.168.100.49/api/devices" //"https://fanfic-pocket-reader.herokuapp.com/api/devices"
+        let url = "https://fanfic-pocket-reader.herokuapp.com/api/devices" //"http://192.168.100.49/api/devices"
         
         if (deviceToken.isEmpty == false) {
             Alamofire.request(url, method: HTTPMethod.post, parameters: params).response(completionHandler: { (response) in
@@ -352,7 +352,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         headers["Content-Type"] = "application/x-www-form-urlencoded"
         
         if (deviceToken.isEmpty == false) {
-            let url = "http://192.168.100.49/api/devices" // "https://fanfic-pocket-reader.herokuapp.com/api/devices"
+            let url = "https://fanfic-pocket-reader.herokuapp.com/api/devices" //"http://192.168.100.49/api/devices" 
             Alamofire.request(url, method: HTTPMethod.put, parameters: params, headers: headers).response(completionHandler: { (response) in
                 print(response.error ?? "")
                 

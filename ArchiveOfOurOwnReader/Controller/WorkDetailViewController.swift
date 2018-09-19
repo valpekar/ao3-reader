@@ -1986,6 +1986,25 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         self.performSegue(withIdentifier: "leaveComment", sender: self)
     }
     
+    func stopNotifAction() {
+        var worksToReload = DefaultsManager.getStringArray(DefaultsManager.NOTIF_IDS_ARR)
+        
+        var workId = ""
+        
+        if (workItem != nil) {
+            workId = workItem.workId
+        } else if (downloadedWorkItem != nil) {
+            workId = downloadedWorkItem.workId ?? "0"
+        }
+        
+        if worksToReload.contains(workId), let idx = worksToReload.index(of: workId) {
+            worksToReload.remove(at: idx)
+        }
+        DefaultsManager.putStringArray(worksToReload, key: DefaultsManager.NOTIF_IDS_ARR)
+        
+        updateAppBadge()
+    }
+    
     @IBAction func settingsButtonTouched(_ sender: AnyObject) {
         let optionMenu = UIAlertController(title: nil, message: NSLocalizedString("WrkOptions", comment: ""), preferredStyle: .actionSheet)
         optionMenu.view.tintColor = AppDelegate.redColor
@@ -1997,6 +2016,12 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             })
             optionMenu.addAction(deleteAction)
         }
+        
+        let markNotifAction = UIAlertAction(title: "Clear Notifications For This Work", style: .default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            self.stopNotifAction()
+        })
+        optionMenu.addAction(markNotifAction)
         
         if (workItem != nil  && !isSensitive) {
             let saveAction = UIAlertAction(title: NSLocalizedString("DownloadWrk", comment: ""), style: .default, handler: {

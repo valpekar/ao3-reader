@@ -134,6 +134,8 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
         
     }
     
+    var triedOpenDetails = 0
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -161,7 +163,8 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
         self.collectionView.reloadData()
         
         let worksToReload = DefaultsManager.getStringArray(DefaultsManager.NOTIF_IDS_ARR)
-        if (worksToReload.count > 0 && openingPrevWork == false) {
+        if (worksToReload.count > 0 && openingPrevWork == false && triedOpenDetails == 0) {
+            triedOpenDetails = 1
             openWorkDetails(workId: worksToReload[0])
         }
         self.updateAppBadge()
