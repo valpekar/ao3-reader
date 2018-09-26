@@ -522,9 +522,7 @@ extension FavoritesSiteController: UISearchBarDelegate {
             if (keys.count > 0) {
                 currentPseud = keys[0]
             } else {
-                RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("LoginToViewBmks", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
-                    
-                })
+                self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("LoginToViewBmks", comment: ""))
                 showWorks()
                 return
             }

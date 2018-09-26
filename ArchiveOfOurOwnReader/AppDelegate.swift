@@ -435,7 +435,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
          application to it. This property is optional since there are legitimate
          error conditions that could cause the creation of the store to fail.
          */
-        let container = NSPersistentContainer(name: "ArchiveOfOurOwnReader")
+        var container = NSPersistentContainer(name: "ArchiveOfOurOwnReader")
         
         let newUrl = self.applicationDocumentsDirectory.appendingPathComponent("ArchiveOfOurOwnReader.sqlite")
         
@@ -496,7 +496,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                  Check the error message to determine what the actual problem was.
                  */
                 debugLog(message: "Unresolved error \(error), \(error.userInfo)")
-                fatalError("Unresolved error \(error), \(error.userInfo)")
+                
+                if (error.code == 134110) {
+                    debugLog(message: "error to load old db, try to create new: \(error.userInfo)")
+                    container = self.createNewContainer()
+                } else {
+                    fatalError("Unresolved error \(error), \(error.userInfo)")
+                }
             } else {
              //   container.viewContext.automaticallyMergesChangesFromParent = true
              //   container.viewContext.mergePolicy = NSMergePolicy.mergeByPropertyStoreTrump
@@ -504,6 +510,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         })
         return container
     }()
+    
+    func createNewContainer() -> NSPersistentContainer {
+        let container = NSPersistentContainer(name: "ArchiveOfOurOwnReader")
+        
+        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
+            if let error = error as NSError? {
+                // Replace this implementation with code to handle the error appropriately.
+                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+                
+                /*
+                 Typical reasons for an error here include:
+                 * The parent directory does not exist, cannot be created, or disallows writing.
+                 * The persistent store is not accessible, due to permissions or data protection when the device is locked.
+                 * The device is out of space.
+                 * The store could not be migrated to the current model version.
+                 Check the error message to determine what the actual problem was.
+                 */
+                debugLog(message: "Unresolved error \(error), \(error.userInfo)")
+                fatalError("Unresolved error \(error), \(error.userInfo)")
+            }
+        })
+        return container
+    }
 
 //    lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator? = {
 //        // The persistent store coordinator for the application. This implementation creates and return a coordinator, having added the store for the application to it. This property is optional since there are legitimate error conditions that could cause the creation of the store to fail.
