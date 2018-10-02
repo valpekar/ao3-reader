@@ -60,6 +60,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     //utf8=%E2%9C%93&authenticity_token=Ew7ritgSHINn3NyzuiPTBYjEBWyddhe%2FYmcAqQJQ8iU%3D&user_session%5Blogin%5D=SSADev&user_session%5Bpassword%5D=IsiT301-1&commit=Log+In
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        // Possible fix of #1162
+        // see https://forums.developer.apple.com/thread/90411#285457
+        setenv("JSC_useJIT", "false", 0)
+        
         // Override point for customization after application launch.
         Fabric.with([Crashlytics.self])
         FirebaseApp.configure()
