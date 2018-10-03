@@ -22,7 +22,7 @@ class UserMessagesController: UIViewController {
         success.button?.isHidden = true
         var successConfig = SwiftMessages.defaultConfig
         successConfig.presentationStyle = .top
-        successConfig.presentationContext = .window(windowLevel: UIWindowLevelNormal)
+     //   successConfig.presentationContext = .window(windowLevel: UIWindowLevelNormal)
         successConfig.duration = .seconds(seconds: 1.5)
         
         SwiftMessages.show(config: successConfig, view: success)
@@ -36,7 +36,7 @@ class UserMessagesController: UIViewController {
         
         var config = SwiftMessages.defaultConfig
         config.presentationStyle = .top
-        config.presentationContext = .window(windowLevel: UIWindowLevelNormal)
+     //   config.presentationContext = .window(windowLevel: UIWindowLevelNormal)
         
         SwiftMessages.show(config: config, view: error)
     }
@@ -49,7 +49,7 @@ class UserMessagesController: UIViewController {
         
         var config = SwiftMessages.defaultConfig
         config.presentationStyle = .top
-        config.presentationContext = .window(windowLevel: UIWindowLevelNormal)
+    //    config.presentationContext = .window(windowLevel: UIWindowLevelNormal)
         
         SwiftMessages.show(config: config, view: warn)
     }
@@ -62,7 +62,7 @@ class UserMessagesController: UIViewController {
         
         var config = SwiftMessages.defaultConfig
         config.presentationStyle = .top
-        config.presentationContext = .window(windowLevel: UIWindowLevelNormal)
+       // config.presentationContext = .window(windowLevel: UIWindowLevelNormal)
         config.duration = .seconds(seconds: 1.5)
         
         SwiftMessages.show(config: config, view: warn)

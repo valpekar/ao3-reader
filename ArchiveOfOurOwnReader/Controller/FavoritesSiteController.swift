@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import RMessage
 import Alamofire
 import Crashlytics
 
@@ -154,9 +153,7 @@ class FavoritesSiteController : ListViewController, UITableViewDataSource, UITab
             if (keys.count > 0) {
                 currentPseud = keys[0]
             } else {
-                RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("LoginToViewBmks", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
-                    
-                })
+                self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("LoginToViewBmks", comment: ""))
                 showWorks()
                 return
             }
@@ -186,9 +183,7 @@ class FavoritesSiteController : ListViewController, UITableViewDataSource, UITab
                     self.showWorks()
                 } else {
                     self.hideLoadingView()
-                    RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
-                        
-                    })
+                    self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CheckInternet", comment: ""))
                 }
                 self.refreshControl.endRefreshing()
             })
@@ -342,9 +337,7 @@ class FavoritesSiteController : ListViewController, UITableViewDataSource, UITab
                     //self.saveWork()
                 } else {
                     self.hideLoadingView()
-                    RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
-                        
-                    })
+                    self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CheckInternet", comment: ""))
                 }
             })
     }
@@ -409,9 +402,7 @@ class FavoritesSiteController : ListViewController, UITableViewDataSource, UITab
                     self.hideLoadingView()
                 } else {
                     self.hideLoadingView()
-                    RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
-                        
-                    })
+                    self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CheckInternet", comment: ""))
                 }
             })
     }
@@ -426,16 +417,12 @@ class FavoritesSiteController : ListViewController, UITableViewDataSource, UITab
             if let index = self.works.index( where: {$0.workId == curWork.workId}) {
                 self.works.remove(at: index)
             }
-            RMessage.showNotification(in: self, title: NSLocalizedString("DeleteFromBmk", comment: ""), subtitle: noticediv?[0].content ?? "", type: RMessageType.success, customTypeName: "", callback: {
-                
-            })
+            self.showSuccess(title: NSLocalizedString("DeleteFromBmk", comment: ""), message: noticediv?[0].content ?? "")
         } else {
             if let sorrydiv = doc.search(withXPathQuery: "//div[@class='flash error']") {
             
                 if(sorrydiv.count>0 && (sorrydiv[0] as? TFHppleElement)?.text().range(of: "Sorry") != nil) {
-                    RMessage.showNotification(in: self, title: NSLocalizedString("DeleteFromBmk", comment: ""), subtitle: (sorrydiv[0] as AnyObject).content, type: RMessageType.error, customTypeName: "", callback: {
-                        
-                    })
+                    self.showError(title: NSLocalizedString("DeleteFromBmk", comment: ""), message: (sorrydiv[0] as AnyObject).content)
                     return
                 }
             }
@@ -473,9 +460,7 @@ extension FavoritesSiteController: UISearchBarDelegate {
             
             self.searchBar.endEditing(true)
         } else {
-            RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CannotBeEmpty", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
-                
-            })
+            self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CannotBeEmpty", comment: ""))
         }
     }
     
@@ -562,9 +547,7 @@ extension FavoritesSiteController: UISearchBarDelegate {
                     self.showWorks()
                 } else {
                     self.hideLoadingView()
-                    RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
-                        
-                    })
+                    self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CheckInternet", comment: ""))
                 }
                 self.refreshControl.endRefreshing()
             })

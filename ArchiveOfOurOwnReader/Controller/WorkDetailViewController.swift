@@ -1047,9 +1047,9 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         var cell: WorkDetailCell! = nil
         
         if (indexPath.section == 0 || indexPath.section == 1 || indexPath.section == 9) {
-            cell = tableView.dequeueReusableCell(withIdentifier: "txtCell") as! WorkDetailCell
+            cell = tableView.dequeueReusableCell(withIdentifier: "txtCell") as? WorkDetailCell
         } else {
-            cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! WorkDetailCell
+            cell = tableView.dequeueReusableCell(withIdentifier: "cell") as? WorkDetailCell
         }
         
         if (cell == nil) {

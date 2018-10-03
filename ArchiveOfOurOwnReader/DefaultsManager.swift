@@ -70,6 +70,7 @@ class DefaultsManager {
     static var NOTIF_DEVICE_TOKEN = "notifdtkn"
     static var REQ_DEVICE_TOKEN = "reqdtkn"
     static var NOTIF_IDS_ARR = "nidsarr"
+    static var SHOW_ERR_AVFAUDIO = "serravfaud"
     static var THEME_DAY : Int = 0
     static var THEME_NIGHT : Int = 1
     

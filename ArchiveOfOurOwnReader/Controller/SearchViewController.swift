@@ -521,8 +521,8 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
             searchTags.append(DefaultsManager.getString(DefaultsManager.SEARCH_Q_PREF2))
             searchTags.append(DefaultsManager.getString(DefaultsManager.SEARCH_Q_PREF3))
         
-        if (DefaultsManager.getObject(DefaultsManager.SEARCH_Q) != nil) {
-            self.searchQuery = DefaultsManager.getObject(DefaultsManager.SEARCH_Q) as! SearchQuery
+        if let sq = DefaultsManager.getObject(DefaultsManager.SEARCH_Q) as? SearchQuery {
+            self.searchQuery = sq
         } else {
             self.searchQuery = SearchQuery()
         }

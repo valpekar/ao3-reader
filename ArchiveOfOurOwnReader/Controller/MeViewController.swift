@@ -617,7 +617,7 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
         success.button?.isHidden = true
         var successConfig = SwiftMessages.defaultConfig
         successConfig.presentationStyle = .top
-        successConfig.presentationContext = .window(windowLevel: UIWindowLevelNormal)
+     //   successConfig.presentationContext = .window(windowLevel: UIWindowLevelNormal)
         
         print("Buying \(product.productIdentifier)...")
         let payment = SKPayment(product: product)

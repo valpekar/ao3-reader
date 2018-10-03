@@ -407,9 +407,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-        do { try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient) } catch _ {}
-        do { try AVAudioSession.sharedInstance().setActive(true) } catch _ {}
-        
+        let systemVersion = UIDevice.current.systemVersion
+        if (systemVersion.contains("10.0") == true || systemVersion.contains("10.1") == true) {
+            print("version 10.0.x contains bugs with audio")
+            let shown: Bool = DefaultsManager.getBool(DefaultsManager.SHOW_ERR_AVFAUDIO) ?? false
+            if (shown == false) {
+                showError(message: "Your operating system is not up-to-date and is known to have bugs with Audio. You will have problems with listening music while using other apps like mine. Please consider updating.")
+                DefaultsManager.putBool(true, key: DefaultsManager.SHOW_ERR_AVFAUDIO)
+            }
+        } else  {
+            do { try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient) } catch let error as NSError {debugLog(error.description)}
+            do { try AVAudioSession.sharedInstance().setActive(true) } catch let error as NSError {debugLog(error.description)}
+        }
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
@@ -501,9 +510,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                  */
                 debugLog(message: "Unresolved error \(error), \(error.userInfo)")
                 
-                if (error.code == 134110) {
+                if (error.code == 134110 || error.code == 259 ) {
                     debugLog(message: "error to load old db, try to create new: \(error.userInfo)")
                     container = self.createNewContainer()
+                    self.showError(message: "Error while trying to load database. More Info: \(error.userInfo)")
                 } else {
                     fatalError("Unresolved error \(error), \(error.userInfo)")
                 }
@@ -514,6 +524,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         })
         return container
     }()
+    
+    func showError(message: String) {
+        let alertController = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default) {
+            UIAlertAction in
+            NSLog("OK Pressed")
+        }
+        alertController.addAction(okAction)
+        self.window?.rootViewController?.present(alertController, animated: true, completion: nil)
+    }
     
     func createNewContainer() -> NSPersistentContainer {
         let container = NSPersistentContainer(name: "ArchiveOfOurOwnReader")

@@ -151,7 +151,7 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
                         self.parseCookies(response)
                         self.parseResponse(d)
                         self.hideLoadingView()
-                        if (DefaultsManager.getObject(DefaultsManager.PSEUD_IDS) == nil ||
+                        if (DefaultsManager.getString(DefaultsManager.PSEUD_ID).isEmpty ||
                             (DefaultsManager.getObject(DefaultsManager.PSEUD_IDS) as? [String : String])?.keys.count ?? 0 == 0) {
                             self.sendPseudIdRequest()
                         }

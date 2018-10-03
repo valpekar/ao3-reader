@@ -173,7 +173,7 @@
 "ItemDeleted" = "Item Successfully Deleted";
 "WorkDeletedFromDownloads" = "Work Has Been Deleted From Downloads";
 "Update" = "Update";
-"UpdateAvail" = "Update is available for this work (Settings -> Reload/Update)!";
+"UpdateAvail" = "Update is available for this work (⚙️ -> Reload/Update)!";
 "GettingAuthorInfo" = "Getting Author Info";
 "MarkingForLater" = "Marking For Later";
 "MarkForLater" = "Mark For Later";

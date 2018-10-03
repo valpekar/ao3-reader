@@ -255,7 +255,7 @@ class InboxController : ListViewController  {
                         item.workName = linkEl.content
                         
                         if let index = linkStr.index(of: "/comments") {
-                            let wurl = linkStr.substring(to: index)
+                            let wurl = String(linkStr[..<index])
                             item.workUrl = wurl
                         }
                     }
