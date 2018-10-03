@@ -34,12 +34,12 @@ class WorkListController: ListViewController, UITableViewDataSource, UITableView
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.isTranslucent = false
         
-        self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.estimatedRowHeight = 200
         
         self.refreshControl = UIRefreshControl()
         self.refreshControl.attributedTitle = NSAttributedString(string: NSLocalizedString("PullToRefresh", comment: ""))
-        self.refreshControl.addTarget(self, action: #selector(WorkListController.refresh(_:)), for: UIControlEvents.valueChanged)
+        self.refreshControl.addTarget(self, action: #selector(WorkListController.refresh(_:)), for: UIControl.Event.valueChanged)
         self.tableView.addSubview(self.refreshControl)
         
         if (self.worksElement.isEmpty == true) {
@@ -104,12 +104,12 @@ class WorkListController: ListViewController, UITableViewDataSource, UITableView
         if (theme == DefaultsManager.THEME_DAY) {
             self.tableView.backgroundColor = AppDelegate.greyLightBg
             self.collectionView.backgroundColor = AppDelegate.greyLightBg
-            self.tryAgainButton.setTitleColor(AppDelegate.redColor, for: UIControlState.normal)
+            self.tryAgainButton.setTitleColor(AppDelegate.redColor, for: UIControl.State.normal)
             self.notFoundLabel.textColor = AppDelegate.redColor
         } else {
             self.tableView.backgroundColor = AppDelegate.greyDarkBg
             self.collectionView.backgroundColor = AppDelegate.redDarkColor
-            self.tryAgainButton.setTitleColor(AppDelegate.purpleLightColor, for: UIControlState.normal)
+            self.tryAgainButton.setTitleColor(AppDelegate.purpleLightColor, for: UIControl.State.normal)
             self.notFoundLabel.textColor = AppDelegate.nightTextColor
         }
     }
@@ -173,7 +173,7 @@ class WorkListController: ListViewController, UITableViewDataSource, UITableView
     }
     
     override func reload(row: Int) {
-        self.tableView.reloadRows(at: [ IndexPath(row: row, section: 0)], with: UITableViewRowAnimation.automatic)
+        self.tableView.reloadRows(at: [ IndexPath(row: row, section: 0)], with: UITableView.RowAnimation.automatic)
     }
     
     override func showWorks() {

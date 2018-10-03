@@ -52,15 +52,15 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
         self.worksElement = "work"
         self.itemsCountHeading = "h3"
         
-        self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.estimatedRowHeight = 200
         
         self.refreshControl = UIRefreshControl()
         self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
-        self.refreshControl.addTarget(self, action: #selector(FeedViewController.refresh(_:)), for: UIControlEvents.valueChanged)
+        self.refreshControl.addTarget(self, action: #selector(FeedViewController.refresh(_:)), for: UIControl.Event.valueChanged)
         self.tableView.addSubview(self.refreshControl)
         
-        let titleDict: [NSAttributedStringKey : Any] = [NSAttributedStringKey.foregroundColor: UIColor.white]
+        let titleDict: [NSAttributedString.Key : Any] = [NSAttributedString.Key.foregroundColor: UIColor.white]
         self.navigationController?.navigationBar.titleTextAttributes = titleDict
         
         self.resultSearchController = ({
@@ -243,7 +243,7 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
     
     @IBAction func checkStatusTouched(_ sender: AnyObject) {
         if let url = URL(string: "https://twitter.com/ao3_status") {
-            UIApplication.shared.open(url, options: [ : ], completionHandler: { (res) in
+            UIApplication.shared.open(url, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([ : ]), completionHandler: { (res) in
                 print("open twitter status")
             })
         }
@@ -485,7 +485,7 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
     
     override func reload(row: Int) {
         self.tableView.beginUpdates()
-        self.tableView.reloadRows(at: [ IndexPath(row: row, section: 0)], with: UITableViewRowAnimation.automatic)
+        self.tableView.reloadRows(at: [ IndexPath(row: row, section: 0)], with: UITableView.RowAnimation.automatic)
         self.tableView.endUpdates()
     }
     
@@ -518,7 +518,7 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
     }
     
     func showContestAlert() {
-        let refreshAlert = UIAlertController(title: "Contest Announcement!", message: "Hi! I want to share great news! If you post your fanfics to http://indiefics.com from Jun 1 till June 30, you can take part in fanfics contest! The best chosen fanfic will be shown in this app as the first item on the main screen! For more details please check http://indiefics.com !", preferredStyle: UIAlertControllerStyle.alert)
+        let refreshAlert = UIAlertController(title: "Contest Announcement!", message: "Hi! I want to share great news! If you post your fanfics to http://indiefics.com from Jun 1 till June 30, you can take part in fanfics contest! The best chosen fanfic will be shown in this app as the first item on the main screen! For more details please check http://indiefics.com !", preferredStyle: UIAlertController.Style.alert)
         
         refreshAlert.addAction(UIAlertAction(title: "Don't show again", style: .default, handler: { (action: UIAlertAction!) in
             DefaultsManager.putObject(false as AnyObject, key: DefaultsManager.DONTSHOW_CONTEST)
@@ -535,11 +535,11 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
     }
     
     func showContentAlert() {
-        let refreshAlert = UIAlertController(title: NSLocalizedString("Attention", comment: ""), message: NSLocalizedString("SensitiveAttention", comment: ""), preferredStyle: UIAlertControllerStyle.alert)
+        let refreshAlert = UIAlertController(title: NSLocalizedString("Attention", comment: ""), message: NSLocalizedString("SensitiveAttention", comment: ""), preferredStyle: UIAlertController.Style.alert)
         
         refreshAlert.addAction(UIAlertAction(title: NSLocalizedString("MoreDetails", comment: ""), style: .default, handler: { (action: UIAlertAction!) in
             if let url: URL = URL(string: "https://www.tumblr.com/blog/unofficialao3app") {
-                UIApplication.shared.open(url, options: [ : ], completionHandler: { (result) in
+                UIApplication.shared.open(url, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([ : ]), completionHandler: { (result) in
                     print("Tumblr opened")
                 })
             }
@@ -614,3 +614,8 @@ extension FeedViewController : UISearchBarDelegate, UISearchResultsUpdating {
 
 
 
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
+}

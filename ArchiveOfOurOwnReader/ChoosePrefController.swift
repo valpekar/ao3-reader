@@ -29,8 +29,8 @@ class ChoosePrefController : LoadingViewController {
         
         addDoneButtonOnKeyboardTf(textField)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(ChoosePrefController.keyboardWillShow(notification:)), name:NSNotification.Name.UIKeyboardWillShow, object: nil);
-        NotificationCenter.default.addObserver(self, selector: #selector(ChoosePrefController.keyboardWillHide(notification:)), name:NSNotification.Name.UIKeyboardWillHide, object: nil);
+        NotificationCenter.default.addObserver(self, selector: #selector(ChoosePrefController.keyboardWillShow(notification:)), name:UIResponder.keyboardWillShowNotification, object: nil);
+        NotificationCenter.default.addObserver(self, selector: #selector(ChoosePrefController.keyboardWillHide(notification:)), name:UIResponder.keyboardWillHideNotification, object: nil);
         
     }
     
@@ -71,7 +71,7 @@ class ChoosePrefController : LoadingViewController {
         self.ipadHeightLayoutConstraint?.constant = 1
         self.iphoneHeightLayoutConstraint?.constant = 1
         
-        UIView.animate(withDuration: info?[UIKeyboardAnimationDurationUserInfoKey] as? Double ?? 1.0, animations: { () -> Void in
+        UIView.animate(withDuration: info?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double ?? 1.0, animations: { () -> Void in
             self.view.layoutIfNeeded()
         })
     }
@@ -82,7 +82,7 @@ class ChoosePrefController : LoadingViewController {
         self.ipadHeightLayoutConstraint?.constant = 420
         self.iphoneHeightLayoutConstraint?.constant = 220
         
-        UIView.animate(withDuration: info?[UIKeyboardAnimationDurationUserInfoKey] as? Double ?? 1.0, animations: { () -> Void in
+        UIView.animate(withDuration: info?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double ?? 1.0, animations: { () -> Void in
             self.view.layoutIfNeeded()
         })
     }

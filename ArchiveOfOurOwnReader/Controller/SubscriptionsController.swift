@@ -29,7 +29,7 @@ class SubscriptionsViewController: ListViewController, UITableViewDataSource, UI
         
         self.refreshControl = UIRefreshControl()
         self.refreshControl.attributedTitle = NSAttributedString(string: NSLocalizedString("PullToRefresh", comment: ""))
-        self.refreshControl.addTarget(self, action: #selector(SubscriptionsViewController.refresh(_:)), for: UIControlEvents.valueChanged)
+        self.refreshControl.addTarget(self, action: #selector(SubscriptionsViewController.refresh(_:)), for: UIControl.Event.valueChanged)
         self.tableView.addSubview(self.refreshControl)
         
     }
@@ -118,7 +118,7 @@ class SubscriptionsViewController: ListViewController, UITableViewDataSource, UI
     }
     
     override func reload(row: Int) {
-        self.tableView.reloadRows(at: [ IndexPath(row: row, section: 0)], with: UITableViewRowAnimation.automatic)
+        self.tableView.reloadRows(at: [ IndexPath(row: row, section: 0)], with: UITableView.RowAnimation.automatic)
     }
     
     func parseSubs(_ data: Data) {

@@ -42,7 +42,7 @@ class ImportWorkController : UIViewController {
             label.textColor = AppDelegate.redColor
         }
         
-        NotificationCenter.default.addObserver(self, selector: #selector(ImportWorkController.applicationWillEnter(notification:)), name: NSNotification.Name.UIApplicationWillEnterForeground, object: UIApplication.shared)
+        NotificationCenter.default.addObserver(self, selector: #selector(ImportWorkController.applicationWillEnter(notification:)), name: UIApplication.willEnterForegroundNotification, object: UIApplication.shared)
 
         let gestureRec = UITapGestureRecognizer()
         gestureRec.numberOfTapsRequired = 1

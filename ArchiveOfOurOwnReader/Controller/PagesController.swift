@@ -57,7 +57,7 @@ class PagesController: UIViewController, UIPopoverPresentationControllerDelegate
         var cell:UITableViewCell? = tableView.dequeueReusableCell(withIdentifier: cellIdentifier)
         
         if (cell == nil) {
-            cell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: cellIdentifier)
+            cell = UITableViewCell(style: UITableViewCell.CellStyle.default, reuseIdentifier: cellIdentifier)
         }
         
         if (theme == DefaultsManager.THEME_DAY) {

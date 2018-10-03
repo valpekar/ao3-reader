@@ -47,7 +47,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         super.viewDidLoad()
         //self.interstitialPresentationPolicy = ADInterstitialPresentationPolicy.Manual
         
-        notification = NotificationCenter.default.addObserver(forName: .UIApplicationWillEnterForeground, object: nil, queue: .main) {
+        notification = NotificationCenter.default.addObserver(forName: UIApplication.willEnterForegroundNotification, object: nil, queue: .main) {
             [unowned self] notification in
             
             self.checkAuth()
@@ -1138,8 +1138,8 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
         doneToolbar.backgroundColor = UIColor.white
         
-        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
-        let done: UIBarButtonItem = UIBarButtonItem(title: NSLocalizedString("Done", comment: ""), style: UIBarButtonItemStyle.done, target: self, action: #selector(LoadingViewController.doneButtonAction))
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
+        let done: UIBarButtonItem = UIBarButtonItem(title: NSLocalizedString("Done", comment: ""), style: UIBarButtonItem.Style.done, target: self, action: #selector(LoadingViewController.doneButtonAction))
         done.tintColor = AppDelegate.redColor
         
         var items: [UIBarButtonItem] = [UIBarButtonItem]()
@@ -1158,8 +1158,8 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
         doneToolbar.backgroundColor = UIColor(red: 198/255, green: 208/255, blue: 209/255, alpha: 1)
         
-        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
-        let done: UIBarButtonItem = UIBarButtonItem(title: NSLocalizedString("Done", comment: ""), style: UIBarButtonItemStyle.done, target: self, action: #selector(LoadingViewController.doneButtonAction))
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
+        let done: UIBarButtonItem = UIBarButtonItem(title: NSLocalizedString("Done", comment: ""), style: UIBarButtonItem.Style.done, target: self, action: #selector(LoadingViewController.doneButtonAction))
         done.tintColor = AppDelegate.redColor
         
         var items: [UIBarButtonItem] = [UIBarButtonItem]()
@@ -1616,7 +1616,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
             
         }))
         
-        alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: UIAlertActionStyle.cancel, handler: { (action) in
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: UIAlertAction.Style.cancel, handler: { (action) in
             #if DEBUG
             print("cancel")
             #endif

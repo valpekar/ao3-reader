@@ -91,7 +91,7 @@ class EditFoldersController: BaseFolderController {
     
     func deleteFolderTouched(folder: Folder) {
         
-        let deleteAlert = UIAlertController(title: NSLocalizedString("AreYouSure", comment: ""), message: NSLocalizedString("Do you want to delete works too?", comment: ""), preferredStyle: UIAlertControllerStyle.alert)
+        let deleteAlert = UIAlertController(title: NSLocalizedString("AreYouSure", comment: ""), message: NSLocalizedString("Do you want to delete works too?", comment: ""), preferredStyle: UIAlertController.Style.alert)
         
         deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: { (action: UIAlertAction) in
             print("Cancel")
@@ -176,7 +176,7 @@ class EditFoldersController: BaseFolderController {
             
         }))
         
-        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: { (action) in
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel, handler: { (action) in
             #if DEBUG
             print("cancel")
             #endif

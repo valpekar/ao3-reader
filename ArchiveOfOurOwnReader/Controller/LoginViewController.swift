@@ -355,7 +355,7 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
     }
     
     @IBAction func infoTouched(_ sender:AnyObject) {
-        let refreshAlert = UIAlertController(title: NSLocalizedString("DoINeedToTellMyPass", comment: ""), message: NSLocalizedString("TellPassExplain", comment: ""), preferredStyle: UIAlertControllerStyle.alert)
+        let refreshAlert = UIAlertController(title: NSLocalizedString("DoINeedToTellMyPass", comment: ""), message: NSLocalizedString("TellPassExplain", comment: ""), preferredStyle: UIAlertController.Style.alert)
         
         refreshAlert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default, handler: { (action: UIAlertAction!) in
             refreshAlert.dismiss(animated: true, completion: nil)

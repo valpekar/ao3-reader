@@ -88,7 +88,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
         prevButton.isHidden = true
         self.webView.navigationDelegate = self
         
-        NotificationCenter.default.addObserver(self, selector: #selector(willResignActive), name: .UIApplicationWillResignActive, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(willResignActive), name: UIApplication.willResignActiveNotification, object: nil)
         
         if let workItem = self.workItem {
             
@@ -108,14 +108,14 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
         webView.addGestureRecognizer(tapRecognizer)
         
         let swipeRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(WorkViewController.handleSwipe(_:)))
-        swipeRecognizer.direction = UISwipeGestureRecognizerDirection.left
+        swipeRecognizer.direction = UISwipeGestureRecognizer.Direction.left
         self.webView.addGestureRecognizer(swipeRecognizer)
         
         let swipeRecognizerR = UISwipeGestureRecognizer(target: self, action: #selector(WorkViewController.handleSwipe(_:)))
-        swipeRecognizerR.direction = UISwipeGestureRecognizerDirection.right
+        swipeRecognizerR.direction = UISwipeGestureRecognizer.Direction.right
         self.webView.addGestureRecognizer(swipeRecognizerR)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(WorkViewController.lockScreen), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(WorkViewController.lockScreen), name: UIApplication.didEnterBackgroundNotification, object: nil)
         
         if (DefaultsManager.getBool("featuresShown") ?? false == false) {
             showContentAlert()
@@ -203,7 +203,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
     }
     
     func showContentAlert() {
-        let refreshAlert = UIAlertController(title: NSLocalizedString("Attention", comment: ""), message: "Enter/Leave Fullscreen mode with 2 taps; swipe to switch Next/Previous chapter", preferredStyle: UIAlertControllerStyle.alert)
+        let refreshAlert = UIAlertController(title: NSLocalizedString("Attention", comment: ""), message: "Enter/Leave Fullscreen mode with 2 taps; swipe to switch Next/Previous chapter", preferredStyle: UIAlertController.Style.alert)
         
         refreshAlert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { (action: UIAlertAction!) in
             DefaultsManager.putBool(true, key: "featuresShown")
@@ -300,7 +300,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
                     let _ = self.webView {
                     let delayTime = DispatchTime.now() + Double(Int64(1.5 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
                     DispatchQueue.main.asyncAfter(deadline: delayTime) {
-                        let scrollOffset:CGPoint? = CGPointFromString(lastScroll)
+                        let scrollOffset:CGPoint? = NSCoder.cgPoint(for: lastScroll)
                         if let position:CGPoint = scrollOffset {
                             self.webView.scrollView.setContentOffset(position, animated: true)
                         }
@@ -331,7 +331,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
                 offset.isEmpty == false {
                 let delayTime = DispatchTime.now() + Double(Int64(1.0 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
                 DispatchQueue.main.asyncAfter(deadline: delayTime) {
-                    let scrollOffset:CGPoint = CGPointFromString(offset)
+                    let scrollOffset:CGPoint = NSCoder.cgPoint(for: offset)
                     self.webView.scrollView.setContentOffset(scrollOffset, animated: true)
                 }
             }
@@ -361,7 +361,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
         if (downloadedWorkItem != nil) {
             saveWorkChanged()
         } else if let workItem = self.workItem {
-            DefaultsManager.putString(NSStringFromCGPoint(webView.scrollView.contentOffset), key: DefaultsManager.LASTWRKSCROLL)
+            DefaultsManager.putString(NSCoder.string(for: webView.scrollView.contentOffset), key: DefaultsManager.LASTWRKSCROLL)
             DefaultsManager.putString(workItem.workId, key: DefaultsManager.LASTWRKID)
             DefaultsManager.putString(currentOnlineChapter, key: DefaultsManager.LASTWRKCHAPTER)
         }
@@ -465,7 +465,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
         let ssButton = UIBarButtonItem(image : imageSs, style: .plain, target: self, action: #selector(WorkViewController.searchTouched) );
         ssButton.tintColor = UIColor.white
         
-        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace, target: nil, action: nil)
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.fixedSpace, target: nil, action: nil)
         
         self.navigationItem.rightBarButtonItems = [ searchButton, igButton, ffButton, qButton, ssButton, flexSpace]
     }
@@ -547,10 +547,10 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
     }
     
     @objc func handleSwipe(_ recognizer: UISwipeGestureRecognizer) {
-        if recognizer.direction == UISwipeGestureRecognizerDirection.right {
+        if recognizer.direction == UISwipeGestureRecognizer.Direction.right {
             prevButtonTouched(prevButton)
         }
-        else if recognizer.direction == UISwipeGestureRecognizerDirection.left {
+        else if recognizer.direction == UISwipeGestureRecognizer.Direction.left {
             nextButtonTouched(nextButton)
         }
     }
@@ -573,7 +573,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
         return true
     }
     
-    func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
+    func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebView.NavigationType) -> Bool {
         return true
     }
     
@@ -587,7 +587,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
 //            }
 //        }
         
-        self.webView.scrollView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0)
+        self.webView.scrollView.contentInset = UIEdgeInsets.init(top: 0, left: 0, bottom: 0, right: 0)
         
         let delayTime = DispatchTime.now() + Double(Int64(0.2 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
         DispatchQueue.main.asyncAfter(deadline: delayTime) {
@@ -777,7 +777,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
             if (selectWorks.count > 0) {
             let currentWork = selectWorks[0] as DBWorkItem
             currentWork.currentChapter = NSNumber(value: currentChapterIndex as Int)
-            currentWork.scrollProgress = NSStringFromCGPoint(webView.scrollView.contentOffset)
+            currentWork.scrollProgress = NSCoder.string(for: webView.scrollView.contentOffset)
                 currentWork.dateUpdated = Date() as NSDate
             
             do {
@@ -813,7 +813,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
             let currentWork = selectWorks?[0]
             currentWork?.lastChapter = currentOnlineChapter
             currentWork?.lastChapterIdx = currentOnlineChapterIdx as NSNumber
-            currentWork?.scrollProgress = NSStringFromCGPoint(webView.scrollView.contentOffset)
+            currentWork?.scrollProgress = NSCoder.string(for: webView.scrollView.contentOffset)
             currentWork?.timeStamp = NSDate()
             
             do {
@@ -829,7 +829,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
             let historyItem = HistoryItem(entity: entity, insertInto:managedContext)
             historyItem.lastChapter = currentOnlineChapter
             historyItem.lastChapterIdx = currentOnlineChapterIdx as NSNumber
-            historyItem.scrollProgress = NSStringFromCGPoint(webView.scrollView.contentOffset)
+            historyItem.scrollProgress = NSCoder.string(for: webView.scrollView.contentOffset)
             historyItem.timeStamp = NSDate()
             historyItem.workId = workItem.workId
             
@@ -902,7 +902,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
             isOnline = false
         }
         
-        beforeDownloadOffset = NSStringFromCGPoint(webView.scrollView.contentOffset)
+        beforeDownloadOffset = NSCoder.string(for: webView.scrollView.contentOffset)
         
         Answers.logCustomEvent(withName: "WorkView: Download touched",
                                customAttributes: [
@@ -917,17 +917,17 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
         Answers.logCustomEvent(withName: "WorkView: Comments touched",
                                customAttributes: [:])
         
-        let alert = UIAlertController(title: NSLocalizedString("Comments", comment: ""), message: "View Comments For:", preferredStyle: UIAlertControllerStyle.actionSheet)
-        alert.addAction(UIAlertAction(title: "Entire Work", style: UIAlertActionStyle.default, handler: { action in
+        let alert = UIAlertController(title: NSLocalizedString("Comments", comment: ""), message: "View Comments For:", preferredStyle: UIAlertController.Style.actionSheet)
+        alert.addAction(UIAlertAction(title: "Entire Work", style: UIAlertAction.Style.default, handler: { action in
             self.commentsForEntireWork = true
             self.performSegue(withIdentifier: "leaveComment", sender: self)
         }))
-        alert.addAction(UIAlertAction(title: "Current Chapter", style: UIAlertActionStyle.default, handler: { action in
+        alert.addAction(UIAlertAction(title: "Current Chapter", style: UIAlertAction.Style.default, handler: { action in
             self.commentsForEntireWork = false
             self.performSegue(withIdentifier: "leaveComment", sender: self)
         }))
         
-        alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: UIAlertActionStyle.cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: UIAlertAction.Style.cancel, handler: nil))
         
         alert.popoverPresentationController?.sourceView = self.view
         alert.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.size.width / 2.0, y: self.view.bounds.size.height / 2.0, width: 1.0, height: 1.0)
@@ -1242,8 +1242,8 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
                 bgColor = AppDelegate.greyLightColor
                 txtColor = AppDelegate.redColor
             
-                commentsButton.setImage(UIImage(named: "comments"), for: UIControlState.normal)
-                kudosButton.setImage(UIImage(named: "likes"), for: UIControlState.normal)
+                commentsButton.setImage(UIImage(named: "comments"), for: UIControl.State.normal)
+                kudosButton.setImage(UIImage(named: "likes"), for: UIControl.State.normal)
             
                 self.view.backgroundColor = AppDelegate.greyLightBg
                 
@@ -1257,8 +1257,8 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
                 bgColor = AppDelegate.greyDarkBg
                 txtColor = AppDelegate.textLightColor
             
-                commentsButton.setImage(UIImage(named: "comments_light"), for: UIControlState.normal)
-                kudosButton.setImage(UIImage(named: "likes_light"), for: UIControlState.normal)
+                commentsButton.setImage(UIImage(named: "comments_light"), for: UIControl.State.normal)
+                kudosButton.setImage(UIImage(named: "likes_light"), for: UIControl.State.normal)
             
                 self.view.backgroundColor = AppDelegate.redDarkColor
                 
@@ -1828,12 +1828,12 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
         previousScrollX = x
        // print("scrolling velocity \(velocity)")
         
-        self.scrollingSlider.removeTarget(self, action: #selector(self.scrollingSliderValueChanged(_:)), for: UIControlEvents.valueChanged)
+        self.scrollingSlider.removeTarget(self, action: #selector(self.scrollingSliderValueChanged(_:)), for: UIControl.Event.valueChanged)
         self.scrollingSlider.value = Float(scrollView.contentOffset.y)
         
         let delayTime = DispatchTime.now() + Double(Int64(0.0 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
         DispatchQueue.main.asyncAfter(deadline: delayTime) {
-            self.scrollingSlider.addTarget(self, action: #selector(self.scrollingSliderValueChanged(_:)), for: UIControlEvents.valueChanged)
+            self.scrollingSlider.addTarget(self, action: #selector(self.scrollingSliderValueChanged(_:)), for: UIControl.Event.valueChanged)
         }
         
         if (velocity > 2000 && shouldStartTrackVelocity == true && self.layoutView.tag == 0) {
@@ -1885,7 +1885,7 @@ extension WorkViewController {
         if (text.isEmpty == true) {
             return
         }
-        let deleteAlert = UIAlertController(title: NSLocalizedString("AreYouSure", comment: ""), message: NSLocalizedString("You want to save this lines to your Highlights?", comment: ""), preferredStyle: UIAlertControllerStyle.alert)
+        let deleteAlert = UIAlertController(title: NSLocalizedString("AreYouSure", comment: ""), message: NSLocalizedString("You want to save this lines to your Highlights?", comment: ""), preferredStyle: UIAlertController.Style.alert)
         
         deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: { (action: UIAlertAction) in
             print("Cancel")

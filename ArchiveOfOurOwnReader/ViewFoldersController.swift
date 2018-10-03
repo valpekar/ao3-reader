@@ -24,13 +24,13 @@ class ViewFoldersController: BaseFolderController {
         if (theme == DefaultsManager.THEME_NIGHT) {
             self.view.backgroundColor = AppDelegate.redDarkColor
             self.tableView.backgroundColor = AppDelegate.greyDarkBg
-            self.unCatButton.setTitleColor(AppDelegate.textLightColor, for: UIControlState.normal)
-            self.updButton.setTitleColor(AppDelegate.textLightColor, for: UIControlState.normal)
+            self.unCatButton.setTitleColor(AppDelegate.textLightColor, for: UIControl.State.normal)
+            self.updButton.setTitleColor(AppDelegate.textLightColor, for: UIControl.State.normal)
         } else {
             self.view.backgroundColor = AppDelegate.greyLightBg
             self.tableView.backgroundColor = AppDelegate.greyLightBg
-            self.unCatButton.setTitleColor(AppDelegate.redDarkColor, for: UIControlState.normal)
-            self.updButton.setTitleColor(AppDelegate.redDarkColor, for: UIControlState.normal)
+            self.unCatButton.setTitleColor(AppDelegate.redDarkColor, for: UIControl.State.normal)
+            self.updButton.setTitleColor(AppDelegate.redDarkColor, for: UIControl.State.normal)
         }
         
         self.sortBy = DefaultsManager.getString(DefaultsManager.SORT_FOLDERS)
@@ -38,11 +38,11 @@ class ViewFoldersController: BaseFolderController {
             self.sortBy = "date"
         }
         
-        self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.estimatedRowHeight = 44
         self.tableView.tableFooterView = UIView()
         
-        unCatButton.setTitle(LoadingViewController.uncategorized, for: UIControlState.normal)
+        unCatButton.setTitle(LoadingViewController.uncategorized, for: UIControl.State.normal)
         unCatButton.contentHorizontalAlignment = .left
         
         updButton.contentHorizontalAlignment = .left
@@ -95,7 +95,7 @@ class ViewFoldersController: BaseFolderController {
             unCatCount = 0
         }
         
-        unCatButton.setTitle("\(LoadingViewController.uncategorized) (\(unCatCount) works) →", for: UIControlState.normal)
+        unCatButton.setTitle("\(LoadingViewController.uncategorized) (\(unCatCount) works) →", for: UIControl.State.normal)
         
         let worksToReload = DefaultsManager.getStringArray(DefaultsManager.NOTIF_IDS_ARR)
         if (worksToReload.count == 0) {
@@ -103,7 +103,7 @@ class ViewFoldersController: BaseFolderController {
         } else {
             updButton.isEnabled = true
         }
-        updButton.setTitle("Latest Updates (\(worksToReload.count))", for: UIControlState.normal)
+        updButton.setTitle("Latest Updates (\(worksToReload.count))", for: UIControl.State.normal)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

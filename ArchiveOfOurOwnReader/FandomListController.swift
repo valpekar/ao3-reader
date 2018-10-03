@@ -29,7 +29,7 @@ class FandomListController: LoadingViewController, UITableViewDataSource, UITabl
         
         tableView.tableFooterView = UIView()
         
-        self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.estimatedRowHeight = 44
         
         self.title = listName

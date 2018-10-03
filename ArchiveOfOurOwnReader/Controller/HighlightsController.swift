@@ -68,7 +68,7 @@ class HighlightsController: LoadingViewController, NSFetchedResultsControllerDel
             self.sortBy = "date"
         }
         
-        self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.estimatedRowHeight = 200
         self.tableView.tableFooterView = UIView()
         
@@ -143,7 +143,7 @@ class HighlightsController: LoadingViewController, NSFetchedResultsControllerDel
     }
     
     @IBAction func deleteAllHighlights(_ sender: AnyObject) {
-        let deleteAlert = UIAlertController(title: NSLocalizedString("AreYouSure", comment: ""), message: NSLocalizedString("You want to delete all your highlights?", comment: ""), preferredStyle: UIAlertControllerStyle.alert)
+        let deleteAlert = UIAlertController(title: NSLocalizedString("AreYouSure", comment: ""), message: NSLocalizedString("You want to delete all your highlights?", comment: ""), preferredStyle: UIAlertController.Style.alert)
         
         deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: { (action: UIAlertAction) in
             print("Cancel")
@@ -263,7 +263,7 @@ class HighlightsController: LoadingViewController, NSFetchedResultsControllerDel
     }
     
     func showDeleteDialog(highlightItem: DBHighlightItem) {
-        let deleteAlert = UIAlertController(title: NSLocalizedString("AreYouSure", comment: ""), message: NSLocalizedString("You want to delete the highlight?", comment: ""), preferredStyle: UIAlertControllerStyle.alert)
+        let deleteAlert = UIAlertController(title: NSLocalizedString("AreYouSure", comment: ""), message: NSLocalizedString("You want to delete the highlight?", comment: ""), preferredStyle: UIAlertController.Style.alert)
         
         deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: { (action: UIAlertAction) in
             print("Cancel")
@@ -425,7 +425,7 @@ extension HighlightsController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func showQuoteDialog(selectedHighlight: DBHighlightItem) {
-        let deleteAlert = UIAlertController(title: NSLocalizedString("Highlight Options", comment: ""), message: selectedHighlight.workName, preferredStyle: UIAlertControllerStyle.actionSheet)
+        let deleteAlert = UIAlertController(title: NSLocalizedString("Highlight Options", comment: ""), message: selectedHighlight.workName, preferredStyle: UIAlertController.Style.actionSheet)
         
         deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Delete", comment: ""), style: .default, handler: { (action: UIAlertAction) in
             self.showDeleteDialog(highlightItem: selectedHighlight)

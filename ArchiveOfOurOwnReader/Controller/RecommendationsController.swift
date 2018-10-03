@@ -37,12 +37,12 @@ class RecommendationsController : ListViewController, UITableViewDataSource, UIT
         self.worksElement = "work"
         self.itemsCountHeading = "h3"
         
-        self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.estimatedRowHeight = 200
         
         self.refreshControl = UIRefreshControl()
         self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
-        self.refreshControl.addTarget(self, action: #selector(RecommendationsController.refresh(_:)), for: UIControlEvents.valueChanged)
+        self.refreshControl.addTarget(self, action: #selector(RecommendationsController.refresh(_:)), for: UIControl.Event.valueChanged)
         self.tableView.addSubview(self.refreshControl)
         
         self.title = NSLocalizedString("Recommendations", comment: "")
@@ -90,7 +90,7 @@ class RecommendationsController : ListViewController, UITableViewDataSource, UIT
     }
     
     @IBAction func infoTouched(_ sender: AnyObject) {
-        let refreshAlert = UIAlertController(title: NSLocalizedString("Recommendations", comment: ""), message: NSLocalizedString("RecommendationsExplained", comment: ""), preferredStyle: UIAlertControllerStyle.alert)
+        let refreshAlert = UIAlertController(title: NSLocalizedString("Recommendations", comment: ""), message: NSLocalizedString("RecommendationsExplained", comment: ""), preferredStyle: UIAlertController.Style.alert)
         
         refreshAlert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { (action: UIAlertAction!) in
             DefaultsManager.putBool(true, key: DefaultsManager.CONTENT_SHOWSN)
@@ -393,7 +393,7 @@ class RecommendationsController : ListViewController, UITableViewDataSource, UIT
     }
     
     override func reload(row: Int) {
-        self.tableView.reloadRows(at: [ IndexPath(row: row, section: 0)], with: UITableViewRowAnimation.automatic)
+        self.tableView.reloadRows(at: [ IndexPath(row: row, section: 0)], with: UITableView.RowAnimation.automatic)
     }
 
     //MARK: - get and show feed

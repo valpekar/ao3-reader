@@ -62,7 +62,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         super.viewDidLoad()
        // self.createDrawerButton()
         
-        self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.estimatedRowHeight = 200
         
         loadPurchasedSettings()
@@ -133,7 +133,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         
        // tableView.reloadData()
         
-        let titleDict: [NSAttributedStringKey : Any] = [NSAttributedStringKey.foregroundColor: UIColor.white]
+        let titleDict: [NSAttributedString.Key : Any] = [NSAttributedString.Key.foregroundColor: UIColor.white]
         self.navigationController!.navigationBar.titleTextAttributes = titleDict
         self.title = String(self.fetchedResultsController?.fetchedObjects?.count ?? 0) + " " + NSLocalizedString("Downloaded", comment: "")
         
@@ -714,7 +714,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
     
     @IBAction func deleteButtonTouched(_ sender: UIButton) {
             
-            let deleteAlert = UIAlertController(title: NSLocalizedString("AreYouSure", comment: ""), message: NSLocalizedString("DeleteFromDownloaded", comment: ""), preferredStyle: UIAlertControllerStyle.alert)
+            let deleteAlert = UIAlertController(title: NSLocalizedString("AreYouSure", comment: ""), message: NSLocalizedString("DeleteFromDownloaded", comment: ""), preferredStyle: UIAlertController.Style.alert)
             
             deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .default, handler: { (action: UIAlertAction) in
                 #if DEBUG

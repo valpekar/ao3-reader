@@ -34,7 +34,7 @@ class CenterViewController: UserMessagesController {
     }
         
     func createDrawerButton() {
-        let barButtonItem = UIBarButtonItem(image: UIImage(named: "drawer"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(CenterViewController.drawerClicked(_:)))
+        let barButtonItem = UIBarButtonItem(image: UIImage(named: "drawer"), style: UIBarButtonItem.Style.plain, target: self, action: #selector(CenterViewController.drawerClicked(_:)))
         self.navigationItem.leftBarButtonItem = barButtonItem
     }
     

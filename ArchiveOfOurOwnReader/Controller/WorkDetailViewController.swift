@@ -105,7 +105,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         bgImage.image = UIImage(named:name)
         
         self.tableView.tableFooterView = UIView()
-        self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.estimatedRowHeight = 64
         
 //        self.readButton.layer.cornerRadius = AppDelegate.smallCornerRadius
@@ -192,7 +192,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             authorView.backgroundColor = AppDelegate.whiteTransparentColor
            // readButton.backgroundColor = AppDelegate.whiteTransparentColor
           //  readButton.setTitleColor(AppDelegate.redColor, for: .normal)
-            downloadTrashButton.setImage(UIImage(named: "settings"), for: UIControlState.normal)
+            downloadTrashButton.setImage(UIImage(named: "settings"), for: UIControl.State.normal)
             titleLabel.textColor = UIColor.black
             authorLabel.textColor = AppDelegate.darkerGreyColor
             dateLabel.textColor = AppDelegate.greyColor
@@ -204,7 +204,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
            // readButton.backgroundColor = AppDelegate.greyTransparentColor
             titleLabel.textColor = UIColor.white
           //  readButton.setTitleColor(UIColor.white, for: .normal)
-            downloadTrashButton.setImage(UIImage(named: "settings_light"), for: UIControlState.normal)
+            downloadTrashButton.setImage(UIImage(named: "settings_light"), for: UIControl.State.normal)
             authorLabel.textColor = UIColor.white
             dateLabel.textColor = AppDelegate.nightTextColor
             authorView.layer.shadowColor = AppDelegate.redColor.cgColor
@@ -1054,10 +1054,10 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
         if (cell == nil) {
             if (indexPath.section == 0 || indexPath.section == 1 || indexPath.section == 9) {
-                cell = WorkDetailTxtCell(style: UITableViewCellStyle.default, reuseIdentifier: "txtCell")
+                cell = WorkDetailTxtCell(style: UITableViewCell.CellStyle.default, reuseIdentifier: "txtCell")
             } else {
                 if(cell == nil) {
-                    cell = WorkDetailCell(style: UITableViewCellStyle.default, reuseIdentifier: "cell")
+                    cell = WorkDetailCell(style: UITableViewCell.CellStyle.default, reuseIdentifier: "cell")
                 }
             }
         }
@@ -1665,7 +1665,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     }
     
     func deletebookmarkWorkAction() {
-        let deleteAlert = UIAlertController(title: NSLocalizedString("AreYouSure", comment: ""), message: NSLocalizedString("SureDeleteWrkFromBmks", comment: ""), preferredStyle: UIAlertControllerStyle.alert)
+        let deleteAlert = UIAlertController(title: NSLocalizedString("AreYouSure", comment: ""), message: NSLocalizedString("SureDeleteWrkFromBmks", comment: ""), preferredStyle: UIAlertController.Style.alert)
         
         deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: { (action: UIAlertAction) in
             print("Cancel")
@@ -1935,7 +1935,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     
     func deleteWork() {
         if (downloadedWorkItem != nil) {
-            let deleteAlert = UIAlertController(title: NSLocalizedString("AreYouSure", comment: ""), message: NSLocalizedString("SureDeleteWrk", comment: ""), preferredStyle: UIAlertControllerStyle.alert)
+            let deleteAlert = UIAlertController(title: NSLocalizedString("AreYouSure", comment: ""), message: NSLocalizedString("SureDeleteWrk", comment: ""), preferredStyle: UIAlertController.Style.alert)
             
             deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .default, handler: { (action: UIAlertAction) in
                 print("Cancel")
@@ -2249,7 +2249,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                                         "url": downloadUrl])
         
         if let url = URL(string: finalPath) {
-            UIApplication.shared.open(url, options: [ : ], completionHandler: { (res) in
+            UIApplication.shared.open(url, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([ : ]), completionHandler: { (res) in
                 print(res)
             })
         }
@@ -2301,7 +2301,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                                customAttributes: [
                                 "workId": wId])
         
-        UIApplication.shared.open(URL(string: "https://archiveofourown.org/works/\(wId)")!, options: [ : ], completionHandler: { (res) in
+        UIApplication.shared.open(URL(string: "https://archiveofourown.org/works/\(wId)")!, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([ : ]), completionHandler: { (res) in
             print("open url \(res)")
         })
 
@@ -2368,4 +2368,9 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         }
     }
    
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
 }

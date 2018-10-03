@@ -41,7 +41,7 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
         
         self.pseudsTableView.tableFooterView = UIView()
         
-        self.pseudsTableView.rowHeight = UITableViewAutomaticDimension
+        self.pseudsTableView.rowHeight = UITableView.automaticDimension
         self.pseudsTableView.estimatedRowHeight = 44
         
         loadPurchasedSettings()
@@ -160,7 +160,7 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
             }
             
             pseudsTableView.reloadData()
-            loginButton.setTitle(NSLocalizedString("LogOut", comment: ""), for: UIControlState())
+            loginButton.setTitle(NSLocalizedString("LogOut", comment: ""), for: UIControl.State())
             
             notifSwitch.isEnabled = true
             
@@ -189,7 +189,7 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
     
     func setNotAuthorizedUI() {
         usernameLabel.text = NSLocalizedString("NotAuthorized", comment: "")
-        loginButton.setTitle(NSLocalizedString("LogIn", comment: ""), for: UIControlState())
+        loginButton.setTitle(NSLocalizedString("LogIn", comment: ""), for: UIControl.State())
         
         self.title = NSLocalizedString("NotAuthorized", comment: "")
         
@@ -232,7 +232,7 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
     }
     
     func showSureClearDialog() {
-        let deleteAlert = UIAlertController(title: NSLocalizedString("AreYouSure", comment: ""), message: "You want to clear all notifications from this app?", preferredStyle: UIAlertControllerStyle.alert)
+        let deleteAlert = UIAlertController(title: NSLocalizedString("AreYouSure", comment: ""), message: "You want to clear all notifications from this app?", preferredStyle: UIAlertController.Style.alert)
         
         deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: { (action: UIAlertAction) in
             print("Cancel")
@@ -378,7 +378,7 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
         case 4:
             if (indexPath.row == 1) {
                 if let url = URL(string: "http://simpleappalliance.blogspot.com/2016/05/unofficial-ao3-reader-privacy-policy.html") {
-                    UIApplication.shared.open(url, options: [:], completionHandler: { (res) in
+                    UIApplication.shared.open(url, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: { (res) in
                         print("open url simpleappalliance.blogspot.com")
                     })
                 }
@@ -543,7 +543,7 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
     }
     
     func showErrorAlert(productId: String) {
-        let refreshAlert = UIAlertController(title: NSLocalizedString("Error", comment: ""), message: "Cannot get product list. Please check your Internet connection", preferredStyle: UIAlertControllerStyle.alert)
+        let refreshAlert = UIAlertController(title: NSLocalizedString("Error", comment: ""), message: "Cannot get product list. Please check your Internet connection", preferredStyle: UIAlertController.Style.alert)
         refreshAlert.addAction(UIAlertAction(title: "Try again", style: .default, handler: { (action: UIAlertAction!) in
             self.reload(true, productId: productId)
         }))
@@ -671,16 +671,16 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
     
     func showBuyAlert(_ product: SKProduct, restore: Bool) {
         let alertController = UIAlertController(title: product.localizedTitle, message:
-            product.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
-        alertController.addAction(UIAlertAction(title: NSLocalizedString("Buy", comment: ""), style: UIAlertActionStyle.default, handler: { (action: UIAlertAction!) in
+            product.localizedDescription, preferredStyle: UIAlertController.Style.alert)
+        alertController.addAction(UIAlertAction(title: NSLocalizedString("Buy", comment: ""), style: UIAlertAction.Style.default, handler: { (action: UIAlertAction!) in
             self.purchaseProduct(product)
         } ))
         if (restore) {
-            alertController.addAction(UIAlertAction(title: NSLocalizedString("Restore", comment: ""), style: UIAlertActionStyle.default, handler: { (action: UIAlertAction!) in
+            alertController.addAction(UIAlertAction(title: NSLocalizedString("Restore", comment: ""), style: UIAlertAction.Style.default, handler: { (action: UIAlertAction!) in
                 self.restoreTapped(self)
             } ))
         }
-        alertController.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: UIAlertActionStyle.cancel, handler: nil))
+        alertController.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: UIAlertAction.Style.cancel, handler: nil))
         
         self.present(alertController, animated: true, completion: nil)
     }
@@ -751,4 +751,9 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
             
         }
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
 }

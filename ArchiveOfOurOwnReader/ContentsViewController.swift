@@ -45,7 +45,7 @@ class ContentsViewController: UIViewController, UIPopoverPresentationControllerD
         var cell:UITableViewCell? = tableView.dequeueReusableCell(withIdentifier: cellIdentifier)
         
         if (cell == nil) {
-            cell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: cellIdentifier)
+            cell = UITableViewCell(style: UITableViewCell.CellStyle.default, reuseIdentifier: cellIdentifier)
         }
         
         var chapterIsRead = false

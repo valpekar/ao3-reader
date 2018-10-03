@@ -39,7 +39,7 @@ class ContainerViewController: UserMessagesController, CenterViewControllerDeleg
         centerNavigationController =  UIStoryboard.mainStoryboard().instantiateViewController(withIdentifier: "NavigationViewController") as? UINavigationController //
         //UINavigationController(rootViewController: centerViewController)
         view.addSubview(centerNavigationController.view)
-        addChildViewController(centerNavigationController)
+        addChild(centerNavigationController)
         
         let controller = UIStoryboard.mainStoryboard().instantiateViewController(withIdentifier: self.viewControllers[0]) as! CenterViewController
         self.instantiatedControllers[0] = controller
@@ -47,7 +47,7 @@ class ContainerViewController: UserMessagesController, CenterViewControllerDeleg
         
         self.centerNavigationController.setViewControllers([controller], animated: true)
 
-        self.instantiatedControllers[0]!.didMove(toParentViewController: self)
+        self.instantiatedControllers[0]!.didMove(toParent: self)
         /*
         centerViewController = centerNavigationController.viewControllers[0] as? CenterViewController //UIStoryboard.centerViewController()
         centerViewController.delegate = self
@@ -93,8 +93,8 @@ class ContainerViewController: UserMessagesController, CenterViewControllerDeleg
         
         view.insertSubview(sidePanelController.view, at: 0)
         
-        addChildViewController(sidePanelController)
-        sidePanelController.didMove(toParentViewController: self)
+        addChild(sidePanelController)
+        sidePanelController.didMove(toParent: self)
     }
     
     func animateLeftPanel(shouldExpand: Bool) {
@@ -115,7 +115,7 @@ class ContainerViewController: UserMessagesController, CenterViewControllerDeleg
     }
     
     func animateCenterPanelXPosition(targetPosition: CGFloat, completion: ((Bool) -> Void)! = nil) {
-        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: UIViewAnimationOptions(), animations: {
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: UIView.AnimationOptions(), animations: {
             self.centerNavigationController.view.frame.origin.x = targetPosition
             }, completion: completion)
     }

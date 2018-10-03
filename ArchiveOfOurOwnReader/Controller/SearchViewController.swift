@@ -578,7 +578,7 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
             cell = textField.superview!.superview  as! UITableViewCell
             // TextField -> UITableVieCellContentView -> (in iOS 7!)ScrollView -> Cell!
         }
-        tableView.scrollToRow(at: tableView.indexPath(for: cell)!, at:UITableViewScrollPosition.middle, animated:true)
+        tableView.scrollToRow(at: tableView.indexPath(for: cell)!, at:UITableView.ScrollPosition.middle, animated:true)
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
