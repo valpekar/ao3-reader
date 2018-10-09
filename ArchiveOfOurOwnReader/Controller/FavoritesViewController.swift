@@ -134,7 +134,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
        // tableView.reloadData()
         
         let titleDict: [NSAttributedString.Key : Any] = [NSAttributedString.Key.foregroundColor: UIColor.white]
-        self.navigationController!.navigationBar.titleTextAttributes = titleDict
+        self.navigationController?.navigationBar.titleTextAttributes = titleDict
         self.title = String(self.fetchedResultsController?.fetchedObjects?.count ?? 0) + " " + NSLocalizedString("Downloaded", comment: "")
         
     }

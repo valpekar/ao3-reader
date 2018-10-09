@@ -1339,7 +1339,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
         let pos = indexPath.row
         
-        CLSLogv("WorkDetail: didSelectRowAt \(pos)", getVaList([]))
+        CLSLogv("WorkDetail: didSelectRowAt pos=\(pos); section=\(indexPath.section)", getVaList([]))
         
         self.tagUrl = ""
         
@@ -1361,6 +1361,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             if (relationships != nil && relationships.count > pos) {
                 tagUrl = relationships[pos].relationshipUrl
             } else if (downloadedRelationships != nil && downloadedRelationships.count > pos) {
+                CLSLogv("WorkDetail: section=5; downloadedRelationships=\(downloadedRelationships.count)", getVaList([]))
                 tagUrl = downloadedRelationships[pos].relationshipUrl ?? ""
             }
             NSLog("link Tapped = " + tagUrl)
