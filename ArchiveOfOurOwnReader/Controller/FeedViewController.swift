@@ -484,9 +484,11 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
     }
     
     override func reload(row: Int) {
-        self.tableView.beginUpdates()
-        self.tableView.reloadRows(at: [ IndexPath(row: row, section: 0)], with: UITableView.RowAnimation.automatic)
-        self.tableView.endUpdates()
+        if self.works.count > row {
+            self.tableView.beginUpdates()
+            self.tableView.reloadRows(at: [ IndexPath(row: row, section: 0)], with: UITableView.RowAnimation.automatic)
+            self.tableView.endUpdates()
+        }
     }
     
     
