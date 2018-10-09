@@ -230,7 +230,7 @@ class RecommendationsController : ListViewController, UITableViewDataSource, UIT
                         self.showWorks()
                     } else {
                         self.hideLoadingView()
-                        showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CheckInternet", comment: ""))
+                        self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CheckInternet", comment: ""))
                     }
                 })
         }
@@ -375,7 +375,7 @@ class RecommendationsController : ListViewController, UITableViewDataSource, UIT
                     //self.getFeed(d)
                 } else {
                     self.hideLoadingView()
-                    showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CheckInternet", comment: ""))
+                    self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CheckInternet", comment: ""))
                 }
                 self.showWorks()
                 self.refreshControl.endRefreshing()

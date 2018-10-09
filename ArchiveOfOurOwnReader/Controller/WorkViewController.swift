@@ -1859,7 +1859,7 @@ extension WorkViewController {
 
     @objc func quoteTouched() {
         self.webView.evaluateJavaScript("window.getSelection().toString()") { (result, error) in
-            if let selectedString = result as? String, selectedString.isEmpt == false {
+            if let selectedString = result as? String, selectedString.isEmpty == false {
                 self.showQuoteDialog(text: selectedString)
             } else {
                 self.showWarning(title: "Empty Selection", message: "Please select any text to save it as quote.")
