@@ -12,6 +12,7 @@ import StoreKit
 import CoreLocation
 import Alamofire
 import Crashlytics
+import GoogleMobileAds
 
 protocol SearchControllerDelegate {
     func searchApplied(_ searchQuery:SearchQuery, shouldAddKeyword: Bool)
@@ -358,20 +359,48 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
 //        }
     }
     
+    var selectedRow = 0
+    
+    func interstitialDidDismissScreen(_ ad: GADInterstitial) {
+        showWorkDetail()
+    }
+    
+    override func doInsteadOfAd() {
+        showWorkDetail()
+    }
+    
+    func showWorkDetail() {
+        
+        if (selectedRow >= works.count) {
+            return
+        }
+        
+        let newsItem:NewsFeedItem = works[selectedRow]
+        if (newsItem.workId.contains("serie")) {
+            self.performSegue(withIdentifier: "serieDetail", sender: self)
+        } else {
+            self.performSegue(withIdentifier: "workDetail", sender: self)
+        }
+    }
+    
+    override func selectCell(row: Int, works: [NewsFeedItem]) {
+        selectedRow = row
+        
+        if (i % 5 == 0 && (purchased == false && donated == false)) {
+            showAdMobInterstitial()
+            adsShown += 1
+        } else {
+            doInsteadOfAd()
+        }
+    }
+    
     // MARK: - navigation
     override func  prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier == "workDetail") {
             
-            if let row = tableView.indexPathForSelectedRow?.row {
-                if (row < works.count) {
-                    selectedWorkDetail(segue: segue, row: row, modalDelegate: self, newsItem: works[row])
+                if (selectedRow < works.count) {
+                    selectedWorkDetail(segue: segue, row: selectedRow, modalDelegate: self, newsItem: works[selectedRow])
                 }
-            }
-                        
-            if (i % 5 == 0 && (purchased == false && donated == false)) {
-                showAdMobInterstitial()
-                adsShown += 1
-            }
             
             hideBackTitle()
             
@@ -517,23 +546,6 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
     
     func controllerDidClosedWithChange() {
         
-    }
-    
-    func showContestAlert() {
-        let refreshAlert = UIAlertController(title: "Contest Announcement!", message: "Hi! I want to share great news! If you post your fanfics to http://indiefics.com from Jun 1 till June 30, you can take part in fanfics contest! The best chosen fanfic will be shown in this app as the first item on the main screen! For more details please check http://indiefics.com !", preferredStyle: UIAlertController.Style.alert)
-        
-        refreshAlert.addAction(UIAlertAction(title: "Don't show again", style: .default, handler: { (action: UIAlertAction!) in
-            DefaultsManager.putObject(false as AnyObject, key: DefaultsManager.DONTSHOW_CONTEST)
-        }))
-        
-        refreshAlert.addAction(UIAlertAction(title: "More Details", style: .default, handler: { (action: UIAlertAction!) in
-            UIApplication.shared.openURL(URL(string: "http://www.indiefics.com")!)
-        }))
-        
-        refreshAlert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { (action: UIAlertAction!) in
-        }))
-        
-        //presentViewController(refreshAlert, animated: true, completion: nil)
     }
     
     func showContentAlert() {

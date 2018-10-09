@@ -115,15 +115,18 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
     }
 
     func showAdMobInterstitial() {
-        if interstitial?.isReady ?? false {
-            if (purchased == false && donated == false) {
+        if interstitial?.isReady ?? false, (purchased == false && donated == false) {
                 interstitial?.present(fromRootViewController: self)
-            }
         } else {
             #if DEBUG
             print("Ad wasn't ready")
             #endif
+            doInsteadOfAd()
         }
+    }
+    
+    func doInsteadOfAd() {
+        
     }
     
     func interstitialDidReceiveAd(_ ad: GADInterstitial) {
