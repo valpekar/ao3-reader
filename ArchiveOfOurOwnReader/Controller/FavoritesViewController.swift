@@ -9,7 +9,6 @@
 import UIKit
 import CoreData
 import Crashlytics
-import RMessage
 
 class FavoritesViewController: LoadingViewController, UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating, UISearchBarDelegate, EditFoldersProtocol {
     
@@ -928,7 +927,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
     
     @IBAction func folderTouched(sender: ButtonWithSection) {
         /*if (folders.count == 0) {
-            RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("NoFolders", comment: ""), type: .error)
+            showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("NoFolders", comment: ""), type: .error)
             return
         }
         

@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import RMessage
 import Alamofire
 import Crashlytics
 
@@ -71,9 +70,7 @@ class CategoriesController: LoadingViewController, UITableViewDataSource, UITabl
                 self.showCategories()
             } else {
                 self.showCategories()
-                RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
-                    
-                })
+                self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CheckInternet", comment: ""))
             }
         })
     }

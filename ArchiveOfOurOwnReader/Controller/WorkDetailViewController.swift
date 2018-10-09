@@ -11,7 +11,6 @@ import CoreData
 import GoogleMobileAds
 import Alamofire
 import Crashlytics
-import RMessage
 
 class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -1644,9 +1643,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                             
                         } else {
                             self.hideLoadingView()
-                            RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
-                                
-                            })
+                            self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CheckInternet", comment: ""))
                         }
                     })
             }
@@ -1771,9 +1768,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                         
                     } else {
                         self.hideLoadingView()
-                        RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
-                            
-                        })
+                        self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CheckInternet", comment: ""))
                     }
                 })
             }
@@ -1827,10 +1822,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                     self.hideLoadingView()
                 } else {
                     self.hideLoadingView()
-                    RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
-                        
-                    })
-
+                    self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CheckInternet", comment: ""))
                 }
             })
     }
@@ -1842,7 +1834,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             if(noticediv.count > 0) {
                 bookmarked = false
                 changedSmth = true
-//                RMessage.showNotification(in: self, title: NSLocalizedString("DeleteFromBmk", comment: ""), subtitle: noticediv[0].content, type: RMessageType.success, customTypeName: "", callback: {
+//                showNotification(in: self, title: NSLocalizedString("DeleteFromBmk", comment: ""), subtitle: noticediv[0].content, type: Type.success, customTypeName: "", callback: {
 //
 //                })
                 
@@ -1853,9 +1845,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         if let sorrydiv = doc.search(withXPathQuery: "//div[@class='flash error']") {
             
             if(sorrydiv.count>0 && (sorrydiv[0] as? TFHppleElement)?.text().range(of: "Sorry") != nil) {
-                RMessage.showNotification(in: self, title: NSLocalizedString("DeleteFromBmk", comment: ""), subtitle: (sorrydiv[0] as AnyObject).content, type: RMessageType.error, customTypeName: "", callback: {
-                    
-                })
+                self.showError(title: NSLocalizedString("DeleteFromBmk", comment: ""), message: (sorrydiv[0] as AnyObject).content)
 
                 return
             }
@@ -1909,9 +1899,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             }
         } else {
             self.hideLoadingView()
-            RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
-                
-            })
+            self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CheckInternet", comment: ""))
         }
     }
     
@@ -1928,9 +1916,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             
         } else {
             self.hideLoadingView()
-            RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
-                
-            })
+            self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CheckInternet", comment: ""))
         }
     }
     
@@ -1959,18 +1945,13 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                     try context.save()
                 } catch _ {
                     NSLog("Cannot delete saved work")
-                    
-                    RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CannotDeleteWrk", comment: ""), type: RMessageType.success, customTypeName: "", callback: {
-                        
-                    })
+                    self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CannotDeleteWrk", comment: ""))
                 }
                 
                 self.saveWorkNotifItem(workId: wId, wasDeleted: NSNumber(booleanLiteral: true))
                 self.sendAllNotSentForDelete()
                 
-                RMessage.showNotification(in: self, title: NSLocalizedString("Success", comment: ""), subtitle: NSLocalizedString("WorkDeletedFromDownloads", comment: ""), type: RMessageType.success, customTypeName: "", callback: {
-                    
-                })
+                self.showSuccess(title: NSLocalizedString("Success", comment: ""), message: NSLocalizedString("WorkDeletedFromDownloads", comment: ""))
             }))
             
             deleteAlert.view.tintColor = AppDelegate.redColor
@@ -2177,7 +2158,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             let time = DispatchTime.now() + Double(Int64(delay)) / Double(NSEC_PER_SEC)
             DispatchQueue.main.asyncAfter(deadline: time) {
                 DispatchQueue.main.asyncAfter(deadline: time) {
-//                    RMessage.showNotification(in: self, title: NSLocalizedString("Update", comment: ""), subtitle: NSLocalizedString("UpdateAvail", comment: ""), type: RMessageType.success, customTypeName: "", duration: 15.0, callback: {
+//                    showNotification(in: self, title: NSLocalizedString("Update", comment: ""), subtitle: NSLocalizedString("UpdateAvail", comment: ""), type: Type.success, customTypeName: "", duration: 15.0, callback: {
 //
 //                    } , canBeDismissedByUser: true)
                     self.showSuccess(title: NSLocalizedString("Update", comment: ""), message: NSLocalizedString("UpdateAvail", comment: ""))

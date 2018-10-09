@@ -9,7 +9,6 @@
 import UIKit
 import CoreData
 import Crashlytics
-import RMessage
 
 class BaseFolderController: LoadingViewController, NSFetchedResultsControllerDelegate {
     

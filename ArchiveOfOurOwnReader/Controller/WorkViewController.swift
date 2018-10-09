@@ -9,7 +9,6 @@
 import UIKit
 import CoreData
 import Alamofire
-import RMessage
 import Crashlytics
 import WebKit
 import Spring
@@ -498,7 +497,6 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
         
         if (self.layoutView.tag == 1) {
             self.navigationController?.setNavigationBarHidden(false, animated: true)
-            UIApplication.shared.isStatusBarHidden = false //.setStatusBarHidden(false, with: .fade)
             animateLayoutDown()
             
             self.layoutView.tag = 0
@@ -517,6 +515,14 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
             self.webView.evaluateJavaScript("document.documentElement.style.webkitTouchCallout='default'", completionHandler: { (res, error) in
                 print(error.debugDescription)
             })
+        }
+    }
+    
+    override var prefersStatusBarHidden: Bool {
+        if (self.layoutView.tag == 1) {
+            return false
+        } else {
+            return true
         }
     }
     
@@ -541,7 +547,6 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
         }
         
         self.navigationController?.setNavigationBarHidden(true, animated: true)
-        UIApplication.shared.isStatusBarHidden = true //.setStatusBarHidden(true, with: .fade)
         
         self.layoutView.tag = 1
     }
@@ -672,7 +677,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
 //                    
 //                } else {
 //                    self.hideLoadingView()
-//                    RMessage.showNotification(in: self, title: "Error", subtitle: "Check your Internet connection", type: .error)
+//                    showNotification(in: self, title: "Error", subtitle: "Check your Internet connection", type: .error)
 //                }
 //            })
         
@@ -700,21 +705,19 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
             
         } else {
             self.hideLoadingView()
-            RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
-                
-            })
+            showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CheckInternet", comment: ""))
         }
         
     }
     
     func parseChapter(_ data: Data) -> (String, String) {
         //
-        guard let doc : TFHpple? = TFHpple(htmlData: data) else {
+        guard let doc : TFHpple = TFHpple(htmlData: data) else {
             return ("", "")
         }
         var workContentStr: String = ""
         
-        if let workContentEl = doc?.search(withXPathQuery: "//div[@id='chapters']") as? [TFHppleElement] {
+        if let workContentEl = doc.search(withXPathQuery: "//div[@id='chapters']") as? [TFHppleElement] {
             if (workContentEl.count > 0) {
                 workContentStr = workContentEl[0].raw ?? ""
             
@@ -731,14 +734,14 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
         }
         
         var title = ""
-        if let tt = doc?.search(withXPathQuery: "//h3[@class='title']") as? [TFHppleElement] {
+        if let tt = doc.search(withXPathQuery: "//h3[@class='title']") as? [TFHppleElement] {
             if (tt.count > 0) {
                 title = tt[0].content ?? ""
                 title = title.trimmingCharacters(in: .whitespacesAndNewlines)
             }
         }
         
-        if let navigationEl: [TFHppleElement] = doc?.search(withXPathQuery: "//ul[@class='work navigation actions']") as? [TFHppleElement] {
+        if let navigationEl: [TFHppleElement] = doc.search(withXPathQuery: "//ul[@class='work navigation actions']") as? [TFHppleElement] {
         
         if (navigationEl.count > 0) {
             
@@ -1047,9 +1050,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
             
         } else {
             self.hideLoadingView()
-            RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
-                
-            })
+            showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CheckInternet", comment: ""))
         }
     }
     
@@ -1087,9 +1088,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
             
         } else {
             self.hideLoadingView()
-            RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
-                
-            })
+            showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CheckInternet", comment: ""))
         }
     }
     
@@ -1464,9 +1463,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
             DefaultsManager.putString(self.fontFamily, key: DefaultsManager.FONT_FAMILY)
             self.loadCurrentTheme()
             }  else {
-                RMessage.showNotification(in: self, title: "Warning: This Font is Premium", subtitle: "Please upgrade to be able to use it!", type: RMessageType.warning, customTypeName: "", callback: {
-                    
-                })
+                self.showWarning(title: "Warning: This Font is Premium", message: "Please upgrade to be able to use it!")
             }
         }
         
@@ -1476,9 +1473,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
             DefaultsManager.putString(self.fontFamily, key: DefaultsManager.FONT_FAMILY)
             self.loadCurrentTheme()
             }  else {
-                RMessage.showNotification(in: self, title: "Warning: This Font is Premium", subtitle: "Please upgrade to be able to use it!", type: RMessageType.warning, customTypeName: "", callback: {
-                    
-                })
+                self.showWarning(title: "Warning: This Font is Premium", message: "Please upgrade to be able to use it!")
             }
         }
         
@@ -1488,9 +1483,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
             DefaultsManager.putString(self.fontFamily, key: DefaultsManager.FONT_FAMILY)
             self.loadCurrentTheme()
             }  else {
-                RMessage.showNotification(in: self, title: "Warning: This Font is Premium", subtitle: "Please upgrade to be able to use it!", type: RMessageType.warning, customTypeName: "", callback: {
-                    
-                })
+                self.showWarning(title: "Warning: This Font is Premium", message: "Please upgrade to be able to use it!")
             }
         }
         
@@ -1500,9 +1493,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
             DefaultsManager.putString(self.fontFamily, key: DefaultsManager.FONT_FAMILY)
             self.loadCurrentTheme()
             }  else {
-                RMessage.showNotification(in: self, title: "Warning: This Font is Premium", subtitle: "Please upgrade to be able to use it!", type: RMessageType.warning, customTypeName: "", callback: {
-                    
-                })
+                self.showWarning(title: "Warning: This Font is Premium", message: "Please upgrade to be able to use it!")
             }
         }
         
@@ -1512,9 +1503,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
             DefaultsManager.putString(self.fontFamily, key: DefaultsManager.FONT_FAMILY)
             self.loadCurrentTheme()
             }  else {
-                RMessage.showNotification(in: self, title: "Warning: This Font is Premium", subtitle: "Please upgrade to be able to use it!", type: RMessageType.warning, customTypeName: "", callback: {
-                    
-                })
+                self.showWarning(title: "Warning: This Font is Premium", message: "Please upgrade to be able to use it!")
             }
         }
         
@@ -1591,7 +1580,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
 //                alert.message = "Select font family (\(self.fontFamily)"
 //                self.loadCurrentTheme()
 //            } else {
-//                RMessage.showNotification(in: self, title: "Warning: This Font is Premium", subtitle: "Please upgrade to be able to use it!", type: RMessageNotificationType.warning)
+//                showNotification(in: self, title: "Warning: This Font is Premium", subtitle: "Please upgrade to be able to use it!", type: NotificationType.warning)
 //            }
 //        }))
 //
@@ -1603,7 +1592,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
 //                alert.message = "Select font family (\(self.fontFamily)"
 //                self.loadCurrentTheme()
 //            } else {
-//                RMessage.showNotification(in: self, title: "Warning: This Font is Premium", subtitle: "Please upgrade to be able to use it!", type: RMessageNotificationType.warning)
+//                showNotification(in: self, title: "Warning: This Font is Premium", subtitle: "Please upgrade to be able to use it!", type: NotificationType.warning)
 //            }
 //        }))
 //
@@ -1615,7 +1604,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
 //                alert.message = "Select font family (\(self.fontFamily)"
 //                self.loadCurrentTheme()
 //            } else {
-//                RMessage.showNotification(in: self, title: "Warning: This Font is Premium", subtitle: "Please upgrade to be able to use it!", type: RMessageNotificationType.warning)
+//                showNotification(in: self, title: "Warning: This Font is Premium", subtitle: "Please upgrade to be able to use it!", type: NotificationType.warning)
 //            }
 //        }))
 //
@@ -1627,7 +1616,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
 //                alert.message = "Select font family (\(self.fontFamily)"
 //                self.loadCurrentTheme()
 //            } else {
-//                RMessage.showNotification(in: self, title: "Warning: This Font is Premium", subtitle: "Please upgrade to be able to use it!", type: RMessageNotificationType.warning)
+//                showNotification(in: self, title: "Warning: This Font is Premium", subtitle: "Please upgrade to be able to use it!", type: NotificationType.warning)
 //            }
 //        }))
 //
@@ -1639,7 +1628,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
 //                alert.message = "Select font family (\(self.fontFamily)"
 //                self.loadCurrentTheme()
 //            } else {
-//                RMessage.showNotification(in: self, title: "Warning: This Font is Premium", subtitle: "Please upgrade to be able to use it!", type: RMessageNotificationType.warning)
+//                showNotification(in: self, title: "Warning: This Font is Premium", subtitle: "Please upgrade to be able to use it!", type: NotificationType.warning)
 //            }
 //        }))
 //
@@ -1823,7 +1812,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
         let x = scrollView.contentOffset.y
         let elapsed = Date().timeIntervalSince(previousScrollMoment)
         let distance = (x - previousScrollX)
-        let velocity = (elapsed == 0) ? 0 : fabs(distance / CGFloat(elapsed))
+        let velocity = (elapsed == 0) ? 0 : abs(distance / CGFloat(elapsed))
         previousScrollMoment = d
         previousScrollX = x
        // print("scrolling velocity \(velocity)")
@@ -1870,12 +1859,10 @@ extension WorkViewController {
 
     @objc func quoteTouched() {
         self.webView.evaluateJavaScript("window.getSelection().toString()") { (result, error) in
-            if let selectedString = result as? String {
+            if let selectedString = result as? String, selectedString.isEmpt == false {
                 self.showQuoteDialog(text: selectedString)
             } else {
-                RMessage.showNotification(in: self, title: "Empty Selection", subtitle: "Please select any text to save it as quote.", type: RMessageType.warning, customTypeName: "", callback: {
-                    
-                })
+                self.showWarning(title: "Empty Selection", message: "Please select any text to save it as quote.")
             }
         }
 
@@ -1939,7 +1926,7 @@ extension WorkViewController {
             print("Could not save \(String(describing: error.userInfo))")
         } 
         
-//        RMessage.showNotification(in: self, title: NSLocalizedString("Success", comment: ""), subtitle: "Highlight was successfully saved!", type: RMessageType.success, customTypeName: "", callback: {
+//        showNotification(in: self, title: NSLocalizedString("Success", comment: ""), subtitle: "Highlight was successfully saved!", type: Type.success, customTypeName: "", callback: {
 //
 //        })
         showSuccess(title: NSLocalizedString("Success", comment: ""), message: "Highlight was successfully saved!")

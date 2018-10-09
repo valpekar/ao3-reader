@@ -9,7 +9,6 @@
 import Foundation
 import StoreKit
 import CoreData
-import RMessage
 import Crashlytics
 import SwiftMessages
 
@@ -594,9 +593,6 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
             if let err = error {
                 self.showError(title: NSLocalizedString("Error", comment: ""), message: err.localizedDescription)
             } else {
-//                RMessage.showNotification(in: self, title: NSLocalizedString("Finished", comment: ""), subtitle: NSLocalizedString("RestoreProcess", comment: ""), type: RMessageType.success, customTypeName: "", callback: {
-//
-//                })
                 
                 self.showSuccess(title: NSLocalizedString("Finished", comment: ""), message: NSLocalizedString("RestoreProcess", comment: ""))
                 

@@ -7,9 +7,8 @@
 //
 
 import UIKit
-import RMessage
 
-class ImportWorkController : UIViewController {
+class ImportWorkController : UserMessagesController {
     
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var bgView: UIView!
@@ -105,9 +104,7 @@ class ImportWorkController : UIViewController {
                         }
                 }
             } else {
-                RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckLink", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
-                    
-                })
+                self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CheckLink", comment: ""))
                 
             }
         }

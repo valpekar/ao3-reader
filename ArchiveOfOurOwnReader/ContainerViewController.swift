@@ -10,7 +10,6 @@ import UIKit
 import QuartzCore
 import Crashlytics
 import CoreData
-import RMessage
 
 enum SlideOutState {
     case bothCollapsed

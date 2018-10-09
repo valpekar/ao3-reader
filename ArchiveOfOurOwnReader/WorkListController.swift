@@ -326,7 +326,7 @@ extension WorkListController: UISearchResultsUpdating, UISearchBarDelegate {
     func updateSearchResults(for searchController: UISearchController) {
 //        if let txt = searchController.searchBar.text {
 //            if (txt.isEmpty) {
-//                RMessage.showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CannotBeEmpty", comment: ""), type: .error, duration: 2.0)
+//                showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CannotBeEmpty", comment: ""), type: .error, duration: 2.0)
 //            } else {
 //                searchAndFilter(txt)
 //            }

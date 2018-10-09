@@ -361,17 +361,11 @@ class HistoryViewController : ListViewController, UITableViewDataSource, UITable
             if let index = self.works.index( where: {$0.workId == curWork.workId}) {
                 self.works.remove(at: index)
             }
-//            RMessage.showNotification(in: self, title: NSLocalizedString("DeletingFromHistory", comment: ""), subtitle: noticediv?[0].content ?? "", type: RMessageType.success, customTypeName: "", callback: {
-//
-//            })
             self.showSuccess(title: NSLocalizedString("DeletingFromHistory", comment: ""), message: noticediv?[0].content ?? "")
         } else {
             if let sorrydiv = doc.search(withXPathQuery: "//div[@class='flash error']") as? [TFHppleElement] {
             
                 if(sorrydiv.count>0 && sorrydiv[0].text().range(of: "Sorry") != nil) {
-//                    RMessage.showNotification(in: self, title: NSLocalizedString("DeletingFromHistory", comment: ""), subtitle: sorrydiv[0].content, type: RMessageType.error, customTypeName: "", callback: {
-//                        
-//                    })
                     self.showError(title: NSLocalizedString("DeletingFromHistory", comment: ""), message: sorrydiv[0].content)
                     return
                 }

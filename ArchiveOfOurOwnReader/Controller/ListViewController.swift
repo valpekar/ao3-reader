@@ -8,7 +8,6 @@
 
 import Foundation
 import Alamofire
-import RMessage
 import Crashlytics
 import CoreData
 
@@ -478,9 +477,7 @@ class ListViewController: LoadingViewController, PageSelectDelegate, UIPopoverPr
                 
                 } else {
                     self.hideLoadingView()
-                    RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
-                        
-                    })
+                    self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CheckInternet", comment: ""))
                 }
             })
     }
@@ -543,9 +540,7 @@ class ListViewController: LoadingViewController, PageSelectDelegate, UIPopoverPr
                 #endif
             } else {
                 if (countWroksFromDB() > 29) {
-                    RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Only30Stroies", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
-                        
-                    })
+                    self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("Only30Stroies", comment: ""))
                 
                     return
                 }
@@ -586,9 +581,7 @@ class ListViewController: LoadingViewController, PageSelectDelegate, UIPopoverPr
             }
             self.reload(row: curRow)
         } else {
-            RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CannotDwnldWrk", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
-                
-            })
+            self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CannotDwnldWrk", comment: ""))
             self.hideLoadingView()
         }
         
@@ -629,9 +622,7 @@ class ListViewController: LoadingViewController, PageSelectDelegate, UIPopoverPr
                 try managedContext.save()
             } catch _ {
                 NSLog("Cannot delete saved work")
-                RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CannotDeleteWrk", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
-                    
-                })
+                self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CannotDeleteWrk", comment: ""))
             }
             
             curWork?.isDownloaded = false
@@ -642,19 +633,13 @@ class ListViewController: LoadingViewController, PageSelectDelegate, UIPopoverPr
                 self.works[curRow].needReload = false
             }
             
-//            RMessage.showNotification(in: self, title: NSLocalizedString("Success", comment: ""), subtitle: NSLocalizedString("WorkDeletedFromDownloads", comment: ""), type: RMessageType.success, customTypeName: "", callback: {
-//
-//            })
-            
             showSuccess(title: NSLocalizedString("Success", comment: ""), message: NSLocalizedString("WorkDeletedFromDownloads", comment: ""))
             
             self.saveWorkNotifItem(workId: wId, wasDeleted: NSNumber(booleanLiteral: true))
             self.sendAllNotSentForDelete()
         
         } else {
-            RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CannotFindWrk", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
-                
-            })
+            self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CannotFindWrk", comment: ""))
         }
     }
     
