@@ -233,9 +233,9 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
         
         UIApplication.shared.isIdleTimerDisabled = true
                 
-        self.navigationController!.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
-        self.navigationController!.navigationBar.shadowImage = UIImage()
-        self.navigationController!.navigationBar.isTranslucent = false
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.isTranslucent = false
         
         self.navigationController?.setNavigationBarHidden(false, animated: false)
         

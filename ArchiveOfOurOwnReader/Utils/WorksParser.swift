@@ -254,7 +254,20 @@ class WorksParser {
         
         if let userstuffArr = workListItem.search(withXPathQuery: "//blockquote[@class='userstuff summary']/p"), userstuffArr.count > 0  {
                 if let userstuff : TFHppleElement = userstuffArr[0] as? TFHppleElement {
-                    item.topicPreview = userstuff.content
+                    var isBanner = false
+                    if (userstuff.attributes?.count ?? 0 > 0) {
+                        if (userstuff.attributes["id"] as? String ?? "" == "admin-banner") {
+                            isBanner = true
+                        }
+                    }
+                    if (isBanner == false) {
+                        item.topicPreview = userstuff.content
+                    } else {
+                        if userstuffArr.count > 1,
+                            let userstuff1 : TFHppleElement = userstuffArr[1] as? TFHppleElement {
+                            item.topicPreview = userstuff1.content
+                        }
+                    }
                 }
         }
         

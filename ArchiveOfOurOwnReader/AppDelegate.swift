@@ -536,6 +536,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
     
     func createNewContainer() -> NSPersistentContainer {
+        
+        let fileManager = FileManager.default
+        if let documentsDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).last {
+            
+            let storeURL = documentsDirectory.appendingPathComponent("ArchiveOfOurOwnReader.sqlite")
+        
+            if (fileManager.fileExists(atPath: storeURL.path)) {
+                debugLog("Core data store (old) exists. Deleting store.")
+                do {
+                    try fileManager.removeItem(at: storeURL)
+                } catch {
+                    debugLog("Failed to delete incompatible store, carrying on anyway.")
+                }
+            }
+        }
         let container = NSPersistentContainer(name: "ArchiveOfOurOwnReader")
         
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in

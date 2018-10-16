@@ -173,7 +173,9 @@ class WorkListController: ListViewController, UITableViewDataSource, UITableView
     }
     
     override func reload(row: Int) {
-        self.tableView.reloadRows(at: [ IndexPath(row: row, section: 0)], with: UITableView.RowAnimation.automatic)
+        if self.works.count > row {
+            self.tableView.reloadRows(at: [ IndexPath(row: row, section: 0)], with: UITableView.RowAnimation.automatic)
+        }
     }
     
     override func showWorks() {

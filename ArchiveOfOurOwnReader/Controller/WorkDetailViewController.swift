@@ -1363,8 +1363,8 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 CLSLogv("WorkDetail: section=5; downloadedRelationships=\(downloadedRelationships.count)", getVaList([]))
                 tagUrl = downloadedRelationships[pos].relationshipUrl ?? ""
             }
-            NSLog("link Tapped = " + tagUrl)
-            CLSLogv("WorkDetail: link Tapped = " + tagUrl, getVaList([]))
+          //  NSLog("link Tapped = \(tagUrl)" )
+            CLSLogv("WorkDetail: link Tapped = \(tagUrl)", getVaList([]))
             
             if (tagUrl.isEmpty == false) {
                 performSegue(withIdentifier: "listSegue", sender: self)
