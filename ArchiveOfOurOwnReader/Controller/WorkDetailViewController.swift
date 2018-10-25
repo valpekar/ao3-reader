@@ -1364,7 +1364,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 tagUrl = downloadedRelationships[pos].relationshipUrl ?? ""
             }
           //  NSLog("link Tapped = \(tagUrl)" )
-            CLSLogv("WorkDetail: link Tapped = \(tagUrl)", getVaList([]))
+            CLSLogv("WorkDetail: link Tapped = %@", getVaList([tagUrl]))
             
             if (tagUrl.isEmpty == false) {
                 performSegue(withIdentifier: "listSegue", sender: self)
@@ -1376,8 +1376,8 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             } else if (downloadedCharacters != nil && downloadedCharacters.count > pos) {
                 tagUrl = downloadedCharacters[pos].characterUrl ?? ""
             }
-            NSLog("link Tapped = " + tagUrl)
-            CLSLogv("WorkDetail: link Tapped = " + tagUrl, getVaList([]))
+           // NSLog("link Tapped = " + tagUrl)
+            CLSLogv("WorkDetail: link Tapped = %@", getVaList([tagUrl]))
                         
             if (tagUrl.isEmpty == false) {
                 performSegue(withIdentifier: "listSegue", sender: self)
