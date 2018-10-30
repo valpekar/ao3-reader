@@ -241,19 +241,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         print("AppDelegate: didReceiveRemoteNotification ")
         
-        var wId = ""
+        var wId: String = ""
         
-        if let workId = userInfo["workId"] as? String {
+        if let aps = userInfo["aps"] as? NSDictionary {
+            if let custom = aps["custom"] as? NSDictionary {
+                if let workId = custom["workId"] as? String, workId.isEmpty == false {
+                    wId = workId
+                    print("didReceiveRemoteNotification workId \(workId)")
+                }
+            }
+        }
+        
+        if let workId = userInfo["workId"] as? String, workId.isEmpty == false {
             wId = workId
             print("didReceiveRemoteNotification workId \(workId)")
         }
         
-        var worksToReload = DefaultsManager.getStringArray(DefaultsManager.NOTIF_IDS_ARR)
-        if worksToReload.contains(wId) == false {
-            worksToReload.append(wId)
+        if (wId.isEmpty == false) {
+            var worksToReload = DefaultsManager.getStringArray(DefaultsManager.NOTIF_IDS_ARR)
+            if worksToReload.contains(wId) == false {
+                worksToReload.append(wId)
+            }
+            
+            DefaultsManager.putStringArray(worksToReload, key: DefaultsManager.NOTIF_IDS_ARR)
+            UIApplication.shared.applicationIconBadgeNumber = worksToReload.count
+            
+            let workItem = getWorkById(workId: wId)
+            workItem?.needsUpdate = 1
+            saveContext()
         }
-        DefaultsManager.putStringArray(worksToReload, key: DefaultsManager.NOTIF_IDS_ARR)
-        UIApplication.shared.applicationIconBadgeNumber = worksToReload.count
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {

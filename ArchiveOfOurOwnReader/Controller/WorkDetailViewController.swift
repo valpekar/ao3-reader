@@ -1982,6 +1982,9 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         if worksToReload.contains(workId), let idx = worksToReload.index(of: workId) {
             worksToReload.remove(at: idx)
         }
+        if worksToReload.contains(""), let idx = worksToReload.index(of: "") {
+            worksToReload.remove(at: idx)
+        }
         DefaultsManager.putStringArray(worksToReload, key: DefaultsManager.NOTIF_IDS_ARR)
         
         updateAppBadge()

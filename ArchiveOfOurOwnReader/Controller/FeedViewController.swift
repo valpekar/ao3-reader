@@ -130,7 +130,7 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
             openingPrevWork = true
             
             let mWorkId = DefaultsManager.getString(DefaultsManager.LASTWRKID)
-            openWorkDetails(workId: mWorkId)
+            openWorkDetails(workId: mWorkId, fromNotif: false)
         }
         
     }
@@ -166,18 +166,21 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
         let worksToReload = DefaultsManager.getStringArray(DefaultsManager.NOTIF_IDS_ARR)
         if (worksToReload.count > 0 && openingPrevWork == false && triedOpenDetails == 0) {
             triedOpenDetails = 1
-            openWorkDetails(workId: worksToReload[0])
+            if (worksToReload[0].isEmpty == false) {
+                openWorkDetails(workId: worksToReload[0], fromNotif: true)
+            }
         }
         self.updateAppBadge()
     }
     
-    func openWorkDetails(workId: String) {
+    func openWorkDetails(workId: String, fromNotif: Bool) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc: WorkDetailViewController = storyboard.instantiateViewController(withIdentifier: "WorkDetailViewController") as! WorkDetailViewController
         let item: WorkItem = WorkItem()
         item.workId = workId
         vc.workItem = item
         vc.modalDelegate = self
+        vc.fromNotif = true
         
         self.navigationController?.pushViewController(vc, animated: true)
     }
