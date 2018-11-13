@@ -95,8 +95,6 @@ class FavoriteAuthorsController : ListViewController, NSFetchedResultsController
         self.tableView.isHidden = !hasAuthors
         self.messageLabel.isHidden = hasAuthors
         
-        self.messageLabel.text = "You don't have any favorite authors yet. \nTo add one: \n   Open any author profile, click Add to Favorite Authors. "
-        
         self.title = "Favorite Authors (\(fetchedResultsController?.fetchedObjects?.count ?? 0))"
     }
     
@@ -159,7 +157,7 @@ extension FavoriteAuthorsController: UITableViewDelegate, UITableViewDataSource 
         if (theme == DefaultsManager.THEME_DAY) {
             cell.backgroundColor = AppDelegate.greyLightBg
             cell.authorNameLabel.textColor = AppDelegate.redDarkColor
-            cell.worksButton.setTitleColor( AppDelegate.redTextColor, for: .normal)
+            cell.worksButton.setTitleColor( AppDelegate.purpleLightColor, for: .normal)
         } else {
             cell.backgroundColor = AppDelegate.greyDarkBg
             cell.authorNameLabel.textColor = AppDelegate.textLightColor
