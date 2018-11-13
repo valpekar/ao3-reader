@@ -66,6 +66,7 @@ class DefaultsManager {
     static var SORT_DWNLD_BY = "sort_by"
     static var SORT_DWNLD_ASC = "sort_by_asc"
     static var SORT_HIGHLIGHTS = "sort_ghlts"
+    static var SORT_AUTHORS  = "sort_athrs"
     static var SORT_FOLDERS = "sort_fldrs"
     static var NOTIF_DEVICE_TOKEN = "notifdtkn"
     static var REQ_DEVICE_TOKEN = "reqdtkn"

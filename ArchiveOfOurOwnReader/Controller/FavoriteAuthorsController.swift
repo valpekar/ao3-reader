@@ -1,0 +1,237 @@
+//
+//  FavoriteAuthors.swift
+//  ArchiveOfOurOwnReader
+//
+//  Created by Valeriya Pekar on 11/13/18.
+//  Copyright © 2018 Sergei Pekar. All rights reserved.
+//
+
+import UIKit
+import Crashlytics
+import Alamofire
+import AlamofireImage
+import CoreData
+
+class FavoriteAuthorsController : ListViewController, NSFetchedResultsControllerDelegate {
+    
+    @IBOutlet weak var tableView:UITableView!
+    @IBOutlet weak var messageLabel:UILabel!
+    
+    var sortBy = "priority"
+    
+    var favAuthors: [DBFavAuthor] = []
+    
+    fileprivate lazy var fetchedResultsController: NSFetchedResultsController<DBFavAuthor>? = {
+        
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return nil
+        }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        // Create Fetch Request
+        let fetchRequest: NSFetchRequest<DBFavAuthor> = DBFavAuthor.fetchRequest()
+        
+        // Configure Fetch Request
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: sortBy, ascending: true)]
+        
+        // Create Fetched Results Controller
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: appDelegate.persistentContainer.viewContext, sectionNameKeyPath: nil, cacheName: nil)
+        
+        // Configure Fetched Results Controller
+        fetchedResultsController.delegate = self
+        
+        return fetchedResultsController
+    }()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.title = NSLocalizedString("FavoriteAuthors", comment: "")
+        
+        self.messageLabel.text = NSLocalizedString("NoFavoriteAuthors", comment: "")
+        
+        self.createDrawerButton()
+        
+        if let th = DefaultsManager.getInt(DefaultsManager.THEME_APP) {
+            theme = th
+        } else {
+            theme = DefaultsManager.THEME_DAY
+        }
+        
+        if (theme == DefaultsManager.THEME_NIGHT) {
+            self.view.backgroundColor = AppDelegate.redDarkColor
+            self.tableView.backgroundColor = AppDelegate.greyDarkBg
+            self.messageLabel.textColor = AppDelegate.nightTextColor
+        } else {
+            self.view.backgroundColor = AppDelegate.greyLightBg
+            self.tableView.backgroundColor = AppDelegate.greyLightBg
+            self.messageLabel.textColor = AppDelegate.redColor
+        }
+        
+        self.sortBy = DefaultsManager.getString(DefaultsManager.SORT_AUTHORS)
+        if (self.sortBy.isEmpty) {
+            self.sortBy = "priority"
+        }
+        
+        self.tableView.rowHeight = UITableView.automaticDimension
+        self.tableView.estimatedRowHeight = 200
+        self.tableView.tableFooterView = UIView()
+        
+        do {
+            try fetchedResultsController?.performFetch()
+        } catch {
+            print("An error occurred")
+        }
+        
+        
+        self.updateView()
+        
+        Answers.logCustomEvent(withName: "Favorite Authors", customAttributes: ["count" : fetchedResultsController?.fetchedObjects?.count ?? 0])
+    }
+    
+    private func updateView() {
+        let hasAuthors = fetchedResultsController?.fetchedObjects?.count ?? 0 > 0
+        
+        self.tableView.isHidden = !hasAuthors
+        self.messageLabel.isHidden = hasAuthors
+        
+        self.messageLabel.text = "You don't have any favorite authors yet. \nTo add one: \n   Open any author profile, click Add to Favorite Authors. "
+        
+        self.title = "Favorite Authors (\(fetchedResultsController?.fetchedObjects?.count ?? 0))"
+    }
+    
+    var selectedRow = 0
+    
+    @IBAction func worksTouched(_ sender:UIButton) {
+        selectedRow = sender.tag
+        
+        self.performSegue(withIdentifier: "listSegue", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "listSegue") {
+            let item = fetchedResultsController?.object(at: IndexPath(row: selectedRow, section: 0))
+            let tagUrl = "https://archiveofourown.org/users/\(item?.name ?? "")/works"
+             CLSLogv("FavAuthors: works Tapped = %@", getVaList([tagUrl]))
+            if let cController: WorkListController = segue.destination as? WorkListController {
+                cController.tagUrl = tagUrl
+            }
+        } else if (segue.identifier == "authorSegue") {
+            let item = fetchedResultsController?.object(at: IndexPath(row: selectedRow, section: 0))
+            let tagUrl = "https://archiveofourown.org/users/\(item?.name ?? "")"
+            CLSLogv("FavAuthors: author Tapped = %@", getVaList([tagUrl]))
+            if let cController: AuthorViewController = segue.destination as? AuthorViewController {
+                cController.authorName = item?.name ?? ""
+            }
+        }
+        hideBackTitle()
+    }
+}
+
+//MARK: Tableview
+
+extension FavoriteAuthorsController: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if let sections = fetchedResultsController?.sections {
+            let currentSection = sections[section]
+            return currentSection.numberOfObjects
+        }
+        return 0
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell: AuthorCell = tableView.dequeueReusableCell(withIdentifier: "AuthorCell") as! AuthorCell
+        
+        let item = fetchedResultsController?.object(at: indexPath)
+        configureCell(cell: cell, author: item, indexPath: indexPath)
+        
+        return cell
+    }
+    
+    func configureCell(cell: AuthorCell, author: DBFavAuthor?, indexPath: IndexPath) {
+        cell.authorNameLabel.text = author?.name ?? ""
+        cell.worksButton.tag = indexPath.row
+        cell.worksButton.setTitle("View Works", for: .normal)
+        
+        cell.worksButton.addTarget(self, action: #selector( FavoriteAuthorsController.worksTouched), for: UIControl.Event.touchUpInside)
+        
+        if (theme == DefaultsManager.THEME_DAY) {
+            cell.backgroundColor = AppDelegate.greyLightBg
+            cell.authorNameLabel.textColor = AppDelegate.redDarkColor
+            cell.worksButton.setTitleColor( AppDelegate.redTextColor, for: .normal)
+        } else {
+            cell.backgroundColor = AppDelegate.greyDarkBg
+            cell.authorNameLabel.textColor = AppDelegate.textLightColor
+            cell.worksButton.setTitleColor( AppDelegate.purpleLightColor, for: .normal)
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        selectedRow = indexPath.row
+        self.performSegue(withIdentifier: "authorSegue", sender: self)
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 60
+    }
+    
+    //MARK: - NSFetchedResultsControllerDelegate
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, sectionIndexTitleForSectionName sectionName: String) -> String? {
+        return sectionName
+    }
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        self.tableView.endUpdates()
+    }
+    
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        self.tableView.beginUpdates()
+    }
+    
+    func controller(controller: NSFetchedResultsController<NSFetchRequestResult>, didChangeSection sectionInfo: NSFetchedResultsSectionInfo, atIndex sectionIndex: Int, forChangeType type: NSFetchedResultsChangeType) {
+        switch type {
+        case .insert:
+            tableView.insertSections(IndexSet([sectionIndex]), with: .fade)
+        case .delete:
+            tableView.deleteSections(IndexSet([sectionIndex]), with: .fade)
+        default:
+            return
+        }
+    }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        
+        switch type {
+        case .insert:
+            if let indexPath = newIndexPath {
+                tableView.insertRows(at: [indexPath], with: .automatic)
+            }
+        case .update:
+            if let indexPath = indexPath {
+                let item = fetchedResultsController?.object(at: indexPath)
+                guard let cell = tableView.cellForRow(at: indexPath) as? AuthorCell else { break }
+                configureCell(cell: cell, author: item, indexPath: indexPath)
+            }
+        case .move:
+            if let indexPath = indexPath {
+                tableView.deleteRows(at: [indexPath], with: .automatic)
+                tableView.reloadSections([indexPath.section], with: .none)
+            }
+            if let newIndexPath = newIndexPath {
+                tableView.insertRows(at: [newIndexPath], with: .automatic)
+                tableView.reloadSections([newIndexPath.section], with: .none)
+            }
+        case .delete:
+            if let indexPath = indexPath {
+                tableView.deleteRows(at: [indexPath], with: .automatic)
+                tableView.reloadSections([indexPath.section], with: .none)
+            }
+        }
+    }
+
+}

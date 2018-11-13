@@ -70,8 +70,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
        // TFTTapForTap.initializeWithAPIKey("ecd826723b670f9d750ce1eb02d9558a")
         
-        UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
-        //UINavigationBar.appearance().barStyle = .Black
+        //UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
         
         UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white], for: UIControl.State())
         UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white], for: UIControl.State.selected)        

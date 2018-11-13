@@ -23,12 +23,12 @@ class SidePanelViewController: UIViewController, UITableViewDataSource, UITableV
     
     let controllers = [NSLocalizedString("Browse", comment: ""),
                        NSLocalizedString("Bookmarks", comment: ""),
-                       NSLocalizedString("History", comment: ""),
                        NSLocalizedString("MarkedForLater", comment: ""),
                        NSLocalizedString("Subscriptions", comment: ""),
                        NSLocalizedString("Downloaded", comment: ""),
                        NSLocalizedString("Me", comment: ""),
                        NSLocalizedString("Recommendations", comment: ""),
+                       NSLocalizedString("FavoriteAuthors", comment: ""),
                        NSLocalizedString("Support", comment: ""),
                        NSLocalizedString("Reading Now", comment: "")
         /*, "Publish"*/]
@@ -36,7 +36,7 @@ class SidePanelViewController: UIViewController, UITableViewDataSource, UITableV
     let sections = ["", ""]
     let secondSectionRows = ["Import From AO3"]
     let secondSectionRowsImgs = ["import"]
-    let imgs = ["browse", "bmk", "history" , "history", "subscriptions", "downloaded", "profile", "recomm", "support", "book_open"/*, "shortstory"*/]
+    let imgs = ["browse", "bmk", "history" , "subscriptions", "downloaded", "profile", "recomm", "star", "support", "book_open"/*, "shortstory"*/]
     
     struct TableView {
         struct CellIdentifiers {
@@ -82,7 +82,7 @@ class SidePanelViewController: UIViewController, UITableViewDataSource, UITableV
         cell.separatorInset = UIEdgeInsets.zero
         
         if (indexPath.section == 0) {
-            if (indexPath.row == 5) {
+            if (indexPath.row == 4) {
                 let downloadedCount = getDownloadedWorksCount()
                 var title = "\(controllers[indexPath.row])  (\(downloadedCount))"
                 

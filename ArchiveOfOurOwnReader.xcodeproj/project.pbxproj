@@ -102,6 +102,10 @@
 		3C60ADE1207F4A5300158419 /* BaseFolderController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C60ADE0207F4A5300158419 /* BaseFolderController.swift */; };
 		3C662F061C9C40DC00D1F917 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C662F051C9C40DC00D1F917 /* Security.framework */; };
 		3C662F081C9C40F700D1F917 /* SupportController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C662F071C9C40F700D1F917 /* SupportController.swift */; };
+		3C6644E3219AB98100BD85AC /* FavoriteAuthorsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C6644E2219AB98100BD85AC /* FavoriteAuthorsController.swift */; };
+		3C6644E7219AC16900BD85AC /* DBFavAuthor+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C6644E5219AC16900BD85AC /* DBFavAuthor+CoreDataClass.swift */; };
+		3C6644E8219AC16900BD85AC /* DBFavAuthor+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C6644E6219AC16900BD85AC /* DBFavAuthor+CoreDataProperties.swift */; };
+		3C6644EA219AF4F600BD85AC /* AuthorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C6644E9219AF4F600BD85AC /* AuthorCell.swift */; };
 		3C684E5D1F8E391500419D69 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C684E5C1F8E391500419D69 /* AuthViewController.swift */; };
 		3C69A14020E6479F00D9BBAF /* UIWebViewSearch.js in Resources */ = {isa = PBXBuildFile; fileRef = 3C69A13F20E6479F00D9BBAF /* UIWebViewSearch.js */; };
 		3C6B997C20CFF23700985390 /* UserMessagesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C6B997B20CFF23700985390 /* UserMessagesController.swift */; };
@@ -326,6 +330,11 @@
 		3C60ADE0207F4A5300158419 /* BaseFolderController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseFolderController.swift; sourceTree = "<group>"; };
 		3C662F051C9C40DC00D1F917 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		3C662F071C9C40F700D1F917 /* SupportController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SupportController.swift; path = Controller/SupportController.swift; sourceTree = "<group>"; };
+		3C6644E2219AB98100BD85AC /* FavoriteAuthorsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FavoriteAuthorsController.swift; path = Controller/FavoriteAuthorsController.swift; sourceTree = "<group>"; };
+		3C6644E4219AC10000BD85AC /* ArchiveOfOurOwnReader 15.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ArchiveOfOurOwnReader 15.xcdatamodel"; sourceTree = "<group>"; };
+		3C6644E5219AC16900BD85AC /* DBFavAuthor+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "DBFavAuthor+CoreDataClass.swift"; path = "Model/DBFavAuthor+CoreDataClass.swift"; sourceTree = "<group>"; };
+		3C6644E6219AC16900BD85AC /* DBFavAuthor+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "DBFavAuthor+CoreDataProperties.swift"; path = "Model/DBFavAuthor+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		3C6644E9219AF4F600BD85AC /* AuthorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AuthorCell.swift; path = View/Custom/Cells/AuthorCell.swift; sourceTree = "<group>"; };
 		3C684E5C1F8E391500419D69 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AuthViewController.swift; path = Controller/AuthViewController.swift; sourceTree = "<group>"; };
 		3C69A13F20E6479F00D9BBAF /* UIWebViewSearch.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = UIWebViewSearch.js; sourceTree = "<group>"; };
 		3C6B997B20CFF23700985390 /* UserMessagesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMessagesController.swift; sourceTree = "<group>"; };
@@ -589,6 +598,8 @@
 		28B6DC4C1B4E3F8900F34529 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				3C6644E5219AC16900BD85AC /* DBFavAuthor+CoreDataClass.swift */,
+				3C6644E6219AC16900BD85AC /* DBFavAuthor+CoreDataProperties.swift */,
 				3CD6BBA72063D72600958973 /* DBHighlightItem+CoreDataClass.swift */,
 				3CD6BBA82063D72600958973 /* DBHighlightItem+CoreDataProperties.swift */,
 				3C80880C205A945800B172B3 /* DBWorkNotifItem+CoreDataClass.swift */,
@@ -672,6 +683,7 @@
 				3C60ADE0207F4A5300158419 /* BaseFolderController.swift */,
 				3C6B997B20CFF23700985390 /* UserMessagesController.swift */,
 				3C6E1E8620E3CC130051B42E /* UpgradesController.swift */,
+				3C6644E2219AB98100BD85AC /* FavoriteAuthorsController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -709,6 +721,7 @@
 				3C93ED5F1FCF140100F1F4D4 /* CategoryCell.swift */,
 				3CBC35BE2004EC8F00A115EC /* InboxItemCell.swift */,
 				3CD6BBAD2063D89C00958973 /* HighlightCell.swift */,
+				3C6644E9219AF4F600BD85AC /* AuthorCell.swift */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -1092,6 +1105,7 @@
 				3C93D4B01F223AB000948D08 /* EditFoldersController.swift in Sources */,
 				3C082A531F20E21100CA717D /* Folder+CoreDataClass.swift in Sources */,
 				3CB7735F1C847CCD00DC15C4 /* ContainerViewController.swift in Sources */,
+				3C6644E7219AC16900BD85AC /* DBFavAuthor+CoreDataClass.swift in Sources */,
 				3C22BBEE1FED2BD60012CBA4 /* PagesController.swift in Sources */,
 				3C0448F71C634209005DCE5F /* ReaderProducts.swift in Sources */,
 				3C6E1E8720E3CC130051B42E /* UpgradesController.swift in Sources */,
@@ -1113,6 +1127,7 @@
 				3CDF1FAB1F39AA57004D858F /* WorksParser.swift in Sources */,
 				3CBDC9AC1E9E244500A97C24 /* DBChapter+CoreDataProperties.swift in Sources */,
 				3C80880F205A945800B172B3 /* DBWorkNotifItem+CoreDataProperties.swift in Sources */,
+				3C6644EA219AF4F600BD85AC /* AuthorCell.swift in Sources */,
 				3CF1D00E1C87182300D219B2 /* HistoryViewController.swift in Sources */,
 				28B6DC2D1B4E3F5900F34529 /* ArchiveOfOurOwnReader.xcdatamodeld in Sources */,
 				3C3EF71C1E6D55DA000CAA1F /* ChapterOnline.swift in Sources */,
@@ -1157,6 +1172,7 @@
 				3C31054A1C7F57020065256E /* FavoritesSiteController.swift in Sources */,
 				3C4FAC0B2007800400BABB17 /* ReplyController.swift in Sources */,
 				1D2CFFFF1B8C7F7F0065EB2B /* PageItem.swift in Sources */,
+				3C6644E3219AB98100BD85AC /* FavoriteAuthorsController.swift in Sources */,
 				3CB992C11CF470D5004772AF /* PublishWorkController.swift in Sources */,
 				3C74C71E1FD05E67008D191B /* FandomListController.swift in Sources */,
 				3C13D2CE1CCA1D0D008B023B /* CommentCell.swift in Sources */,
@@ -1165,6 +1181,7 @@
 				3C3105481C7F3D260065256E /* LoginViewController.swift in Sources */,
 				3C8FF85620063BE8006C01DF /* ExtensionsHelper.swift in Sources */,
 				3CBDC9B01E9E265B00A97C24 /* AnalyticsItem+CoreDataProperties.swift in Sources */,
+				3C6644E8219AC16900BD85AC /* DBFavAuthor+CoreDataProperties.swift in Sources */,
 				28E1C7151B8D9257001E2E5A /* WorkViewController.swift in Sources */,
 				1D1C2FEB1B8DA3E70076D10C /* WorkCharacter.swift in Sources */,
 				1D7BDD401B5E83AC0017C346 /* NewsFeedItem.swift in Sources */,
@@ -1522,6 +1539,7 @@
 		28B6DC2B1B4E3F5900F34529 /* ArchiveOfOurOwnReader.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				3C6644E4219AC10000BD85AC /* ArchiveOfOurOwnReader 15.xcdatamodel */,
 				3C51E08D214FD23800A081B5 /* ArchiveOfOurOwnReader 14.xcdatamodel */,
 				3CCBD88F20AF0BB1006DF419 /* ArchiveOfOurOwnReader 13.xcdatamodel */,
 				3CB85BF9207E2F550021A2CC /* ArchiveOfOurOwnReader 12.xcdatamodel */,
@@ -1537,7 +1555,7 @@
 				3C9C87BB1CE35D8800C10410 /* ArchiveOfOurOwnReader 2.xcdatamodel */,
 				28B6DC2C1B4E3F5900F34529 /* ArchiveOfOurOwnReader.xcdatamodel */,
 			);
-			currentVersion = 3C51E08D214FD23800A081B5 /* ArchiveOfOurOwnReader 14.xcdatamodel */;
+			currentVersion = 3C6644E4219AC10000BD85AC /* ArchiveOfOurOwnReader 15.xcdatamodel */;
 			path = ArchiveOfOurOwnReader.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

@@ -28,7 +28,15 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
     // This list of available in-app purchases
     var products: Array <SKProduct> = [SKProduct]()
     
-    @IBOutlet weak var removeAdsItem: UIBarButtonItem!
+    @IBOutlet weak var removeAdsItem: UIBarButtonItem! {
+        didSet {
+//            let icon = UIImage(named: "star")
+//            let iconSize = CGRect(origin: CGPoint.zero, size: icon!.size)
+//            let iconButton = UIButton(frame: iconSize)
+//            iconButton.setBackgroundImage(icon, for: .normal)
+//            removeAdsItem.customView = iconButton
+        }
+    }
     
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -146,7 +154,7 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
         if (login.isEmpty == false) {
             usernameLabel.text = login
             
-            self.title = login
+            //self.title = login
             
             pseuds = DefaultsManager.getObject(DefaultsManager.PSEUD_IDS) as? [String:String] ?? [:]
             currentPseud = DefaultsManager.getString(DefaultsManager.PSEUD_ID)
@@ -270,12 +278,16 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
                 cell.accessoryType = .none
             }
         case 2:
-            if (indexPath.row == 0) {
+            switch (indexPath.row) {
+            case 0:
                 cell.titleLabel.text = "My Works"
-            } else if (indexPath.row == 1) {
+            case 1:
                 cell.titleLabel.text = "Inbox"
-            } else {
+            case 2:
                 cell.titleLabel.text = "My Highlights"
+            case 3:
+                cell.titleLabel.text = NSLocalizedString("History", comment: "")
+            default: break
             }
             cell.accessoryType = .none
         case 3:
@@ -327,7 +339,7 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
         case 1:
             return pseuds.count
         case 2:
-            return 3
+            return 4
         case 3:
             return 2
         case 4:
@@ -353,12 +365,16 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
             
             tableView.reloadData()
         case 2:
-            if (indexPath.row == 0) {
+            switch indexPath.row  {
+            case 0:
                 self.performSegue(withIdentifier: "listSegue", sender: self)
-            } else if (indexPath.row == 1) {
+            case 1:
                 self.performSegue(withIdentifier: "inboxSegue", sender: self)
-            } else {
+            case 2:
                 self.performSegue(withIdentifier: "showHighlightsSegue", sender: self)
+            case 3:
+                self.performSegue(withIdentifier: "showHistory", sender: self)
+            default: break 
             }
         case 3:
             if (indexPath.row == 0) {

@@ -164,7 +164,7 @@ class HighlightsController: LoadingViewController, NSFetchedResultsControllerDel
         self.tableView.isHidden = !hasQuotes
         self.messageView.isHidden = hasQuotes
         
-        self.messageLabel.text = "You don't have any quotes yet. \nDo add a highlight: \n   Open any work, select text and touch quotes icon. "
+        self.messageLabel.text = "You don't have any quotes yet. \nTo add a highlight: \n   Open any work, select text and touch quotes icon. "
         
         self.title = "Highlights (\(fetchedResultsController?.fetchedObjects?.count ?? 0))"
     }

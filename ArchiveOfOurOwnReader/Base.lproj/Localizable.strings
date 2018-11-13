@@ -181,4 +181,6 @@
 "MarkForLater" = "Mark For Later";
 "MarkAsRead" = "Mark As Read";
 "Reading Now" = "Reading Now";
+"FavoriteAuthors" = "Favorite Authors";
+"NoFavoriteAuthors" = "You have no favorite authors! Add anyone to favorites from author's profile screen and they will appear here.";
 

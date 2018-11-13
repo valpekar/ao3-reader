@@ -11,6 +11,7 @@ import Crashlytics
 import Alamofire
 import AlamofireImage
 import ExpandableLabel
+import CoreData
 
 class AuthorViewController: LoadingViewController {
     
@@ -18,6 +19,7 @@ class AuthorViewController: LoadingViewController {
     
     @IBOutlet weak var bioLabel: ExpandableLabel!
     @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var favButton: UIButton!
     @IBOutlet weak var picImg: UIImageView!
     
     var authorName: String = ""
@@ -30,6 +32,8 @@ class AuthorViewController: LoadingViewController {
     var seriesCount = "0"
     
     var bio: String = ""
+    
+    var authorIsFav = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,12 +64,14 @@ class AuthorViewController: LoadingViewController {
         if (theme == DefaultsManager.THEME_DAY) {
             nameLabel.textColor = AppDelegate.redColor
             bioLabel.textColor = AppDelegate.greyColor
+            favButton.setTitleColor(AppDelegate.redColor, for: UIControl.State.normal)
             
             self.tableView.backgroundColor = AppDelegate.greyLightBg
         
         } else {
             nameLabel.textColor = AppDelegate.purpleLightColor
             bioLabel.textColor = AppDelegate.textLightColor
+            favButton.setTitleColor(AppDelegate.purpleLightColor, for: UIControl.State.normal)
             
             self.tableView.backgroundColor = AppDelegate.greyDarkBg
         }
@@ -98,6 +104,7 @@ class AuthorViewController: LoadingViewController {
                 if let d = response.data {
                     self.parseCookies(response)
                     self.parseAuthorProfileResponse(d)
+                    self.checkAuthorFav()
                     self.showProfile()
                     self.hideLoadingView()
                 } else {
@@ -149,6 +156,31 @@ class AuthorViewController: LoadingViewController {
         }
     }
     
+    func checkAuthorFav() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "DBFavAuthor")
+        let predicate = NSPredicate(format: "name == %@", self.authorName)
+        fetchRequest.predicate = predicate
+        fetchRequest.fetchLimit = 1
+        
+        do{
+            let count = try appDelegate.persistentContainer.viewContext.count(for: fetchRequest)
+            if(count == 0){
+                authorIsFav = false
+            }
+            else{
+                authorIsFav = true
+            }
+        }
+        catch let error as NSError {
+            print("Could not fetch \(error), \(error.userInfo)")
+        }
+        
+        
+    }
+    
     func showProfile() {
         bioLabel.text = self.bio
         nameLabel.text = self.authorName
@@ -161,8 +193,17 @@ class AuthorViewController: LoadingViewController {
             imageTransition: .crossDissolve(0.2)
         )
         }
+        self.setIsFavButton()
         
         self.tableView.reloadData()
+    }
+    
+    func setIsFavButton() {
+        if (authorIsFav == true) {
+            favButton.setTitle("- Remove from Favorite Authors", for: .normal)
+        } else {
+            favButton.setTitle("+ Add to Favorite Authors", for: .normal)
+        }
     }
     
     func authorWorksTouched(uri: String) {
@@ -202,6 +243,72 @@ class AuthorViewController: LoadingViewController {
         }
         
         hideBackTitle()
+    }
+    
+    func addAuthorToFav() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        guard let entity = NSEntityDescription.entity(forEntityName: "DBFavAuthor",  in: managedContext) else {
+                return
+            }
+            let authorItem = DBFavAuthor(entity: entity, insertInto:managedContext)
+            authorItem.name = self.authorName
+            authorItem.priority = 0
+            authorItem.authorId = ""
+            
+            do {
+                try managedContext.save()
+                authorIsFav = true
+                
+                self.showSuccess(title: NSLocalizedString("Success", comment: ""), message: "Suceesfuly added \(self.authorName) to favorites!")
+                
+            } catch let error as NSError {
+                print("Could not save \(String(describing: error.userInfo))")
+                self.showError(title: NSLocalizedString("Error", comment: ""), message: "Cannot add to favorites")
+            }
+        self.setIsFavButton()
+        
+        Answers.logCustomEvent(withName: "Add Favorite Author", customAttributes: ["name" : self.authorName])
+    }
+    
+    func removeAuthorFromFav() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "DBFavAuthor")
+        fetchRequest.predicate = NSPredicate(format: "name = %@", self.authorName)
+        if let authors = (try? managedContext.fetch(fetchRequest)) as? [DBFavAuthor], authors.count > 0 {
+        
+            let currentAuthor = authors[0]
+            managedContext.delete(currentAuthor)
+            do {
+                try managedContext.save()
+                
+                authorIsFav = false
+                
+                 self.showSuccess(title: NSLocalizedString("Success", comment: ""), message: "Suceesfuly deleted \(self.authorName) from favorites!")
+                
+            } catch _ {
+                NSLog("Cannot delete fav author")
+                self.showError(title: NSLocalizedString("Error", comment: ""), message: "Cannot delete from favorites")
+            }
+        }
+        self.setIsFavButton()
+        
+        Answers.logCustomEvent(withName: "Delete Favorite Author", customAttributes: ["name" : self.authorName])
+    }
+    
+    @IBAction func addToFavTouched(_ sender: AnyObject) {
+        if (authorIsFav == false) {
+            self.addAuthorToFav()
+        }  else {
+            self.removeAuthorFromFav()
+        }
     }
 }
 

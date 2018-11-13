@@ -90,7 +90,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>kTCCServiceMediaLibrary</key>
-	<string>The app needs this permission to allow you music in background.</string>
 </dict>
 </plist>

@@ -25,9 +25,7 @@ class HistoryViewController : ListViewController, UITableViewDataSource, UITable
         
         self.worksElement = "reading work"
         self.itemsCountHeading = "h2"
-        
-        self.createDrawerButton()
-        
+                
         self.title = NSLocalizedString("History", comment: "")
         
         self.tableView.rowHeight = UITableView.automaticDimension

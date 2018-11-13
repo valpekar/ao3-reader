@@ -44,9 +44,10 @@ class WorksParser {
                 worksCountStr = itemsCount[0].content.trimmingCharacters(
                     in: CharacterSet.whitespacesAndNewlines
                 )
-                if let idx = worksCountStr.index(of: "d") {
-                    worksCountStr = String(worksCountStr[..<worksCountStr.index(after: idx)])
-                }
+                worksCountStr = worksCountStr.replacingOccurrences(of: "?", with: "")
+//                if let idx = worksCountStr.index(of: "d") {
+//                    worksCountStr = String(worksCountStr[..<worksCountStr.index(after: idx)])
+//                }
             }
         }
         if let workGroup = doc.search(withXPathQuery: "//\(olLiteral)[@class='\(worksElement) index group']") as? [TFHppleElement] {

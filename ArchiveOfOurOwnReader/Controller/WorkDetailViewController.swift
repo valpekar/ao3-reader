@@ -1349,8 +1349,8 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 } else if (downloadedFandoms != nil && downloadedFandoms.count > pos) {
                     tagUrl = downloadedFandoms[pos].fandomUrl ?? ""
                 }
-                NSLog("link Tapped = " + tagUrl)
-                CLSLogv("WorkDetail: link Tapped = " + tagUrl, getVaList([]))
+                NSLog("link Tapped = %@", tagUrl)
+                CLSLogv("WorkDetail: link Tapped = %@", getVaList([tagUrl]))
                 
                 if (tagUrl.isEmpty == false) {
                     performSegue(withIdentifier: "listSegue", sender: self)
