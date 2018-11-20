@@ -12,7 +12,7 @@ import RMessage
 
 class SubscriptionsViewController: ListViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
-    var subsAddedStr = NSLocalizedString("Subscriptions", comment: "")
+    var subsAddedStr = Localization("Subscriptions")
 
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var tableView:UITableView!
@@ -25,10 +25,10 @@ class SubscriptionsViewController: ListViewController, UITableViewDataSource, UI
         
         self.createDrawerButton()
         
-        self.title = NSLocalizedString("Subscriptions", comment: "")
+        self.title = Localization("Subscriptions")
         
         self.refreshControl = UIRefreshControl()
-        self.refreshControl.attributedTitle = NSAttributedString(string: NSLocalizedString("PullToRefresh", comment: ""))
+        self.refreshControl.attributedTitle = NSAttributedString(string: Localization("PullToRefresh"))
         self.refreshControl.addTarget(self, action: #selector(SubscriptionsViewController.refresh(_:)), for: UIControl.Event.valueChanged)
         self.tableView.addSubview(self.refreshControl)
         
@@ -86,7 +86,7 @@ class SubscriptionsViewController: ListViewController, UITableViewDataSource, UI
     func requestFavs() {
         let username = DefaultsManager.getString(DefaultsManager.LOGIN)
         
-        showLoadingView(msg: NSLocalizedString("GettingSubs", comment: ""))
+        showLoadingView(msg: Localization("GettingSubs"))
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
             Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: AppDelegate.ao3SiteUrl), mainDocumentURL: nil)
@@ -109,7 +109,7 @@ class SubscriptionsViewController: ListViewController, UITableViewDataSource, UI
                     self.showSubs()
                 } else {
                     self.hideLoadingView()
-                    self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CheckInternet", comment: ""))
+                    self.showError(title: Localization("Error"), message: Localization("CheckInternet"))
                     
                 }
             })
@@ -245,7 +245,7 @@ class SubscriptionsViewController: ListViewController, UITableViewDataSource, UI
             #endif
         } else {
             if (countWroksFromDB() > 29) {
-                RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Only30Stroies", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("Only30Stroies"), type: RMessageType.error, customTypeName: "", callback: {
                     
                 })
                 
@@ -255,7 +255,7 @@ class SubscriptionsViewController: ListViewController, UITableViewDataSource, UI
         
         let curWork:NewsFeedItem = works[sender.tag]
         
-        showLoadingView(msg: "\(NSLocalizedString("DwnloadingWrk", comment: "")) \(curWork.title)")
+        showLoadingView(msg: "\(Localization("DwnloadingWrk")) \(curWork.title)")
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
             Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
@@ -274,7 +274,7 @@ class SubscriptionsViewController: ListViewController, UITableViewDataSource, UI
                     let _ = self.downloadWork(d, curWork: curWork)
                     self.hideLoadingView()
                 } else {
-                    RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CannotDwnldWrk", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                    RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("CannotDwnldWrk"), type: RMessageType.error, customTypeName: "", callback: {
                         
                     })
                     self.hideLoadingView()
@@ -347,7 +347,7 @@ class SubscriptionsViewController: ListViewController, UITableViewDataSource, UI
                 Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
             }
             
-            showLoadingView(msg: "\(NSLocalizedString("LoadingPage", comment: "")) \(page.name)")
+            showLoadingView(msg: "\(Localization("LoadingPage")) \(page.name)")
             
             Alamofire.request("https://archiveofourown.org" + page.url, method: .get).response(completionHandler: { response in
                 print(response.error ?? "")
@@ -357,7 +357,7 @@ class SubscriptionsViewController: ListViewController, UITableViewDataSource, UI
                     self.showSubs()
                 } else {
                     self.hideLoadingView()
-                    RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                    RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("CheckInternet"), type: RMessageType.error, customTypeName: "", callback: {
                         
                     })
                 }

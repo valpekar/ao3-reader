@@ -87,7 +87,7 @@ class AuthorViewController: LoadingViewController {
             }
         }
         
-        showLoadingView(msg: NSLocalizedString("GettingAuthorInfo", comment: ""))
+        showLoadingView(msg: Localization("GettingAuthorInfo"))
         
         let urlStr = "\(AppDelegate.ao3SiteUrl)/users/\(authorName)/profile"
         
@@ -109,7 +109,7 @@ class AuthorViewController: LoadingViewController {
                     self.hideLoadingView()
                 } else {
                     self.hideLoadingView()
-                    self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CheckInternet", comment: ""))
+                    self.showError(title: Localization("Error"), message: Localization("CheckInternet"))
                 }
             })
     }
@@ -200,9 +200,9 @@ class AuthorViewController: LoadingViewController {
     
     func setIsFavButton() {
         if (authorIsFav == true) {
-            favButton.setTitle("- Remove from Favorite Authors", for: .normal)
+            favButton.setTitle(Localization("RemAuthFromFav"), for: .normal)
         } else {
-            favButton.setTitle("+ Add to Favorite Authors", for: .normal)
+            favButton.setTitle(Localization("AddAuthToFav"), for: .normal)
         }
     }
     
@@ -263,11 +263,11 @@ class AuthorViewController: LoadingViewController {
                 try managedContext.save()
                 authorIsFav = true
                 
-                self.showSuccess(title: NSLocalizedString("Success", comment: ""), message: "Suceesfuly added \(self.authorName) to favorites!")
+                self.showSuccess(title: Localization("Success"), message: "Suceesfuly added \(self.authorName) to favorites!")
                 
             } catch let error as NSError {
                 print("Could not save \(String(describing: error.userInfo))")
-                self.showError(title: NSLocalizedString("Error", comment: ""), message: "Cannot add to favorites")
+                self.showError(title: Localization("Error"), message: "Cannot add to favorites")
             }
         self.setIsFavButton()
         
@@ -291,11 +291,11 @@ class AuthorViewController: LoadingViewController {
                 
                 authorIsFav = false
                 
-                 self.showSuccess(title: NSLocalizedString("Success", comment: ""), message: "Suceesfuly deleted \(self.authorName) from favorites!")
+                 self.showSuccess(title: Localization("Success"), message: "Suceesfuly deleted \(self.authorName) from favorites!")
                 
             } catch _ {
                 NSLog("Cannot delete fav author")
-                self.showError(title: NSLocalizedString("Error", comment: ""), message: "Cannot delete from favorites")
+                self.showError(title: Localization("Error"), message: "Cannot delete from favorites")
             }
         }
         self.setIsFavButton()
@@ -337,13 +337,13 @@ extension AuthorViewController: UITableViewDelegate, UITableViewDataSource {
         
         switch (indexPath.row) {
         case 0:
-            cell.titleLabel.text = "Works (\(self.worksCount))"
+            cell.titleLabel.text = "\(Localization("Works")) (\(self.worksCount))"
             cell.accessoryType = .disclosureIndicator
         case 1:
-            cell.titleLabel.text = "Series (\(self.seriesCount))"
+            cell.titleLabel.text = "\(Localization("Series")) (\(self.seriesCount))"
             cell.accessoryType = .disclosureIndicator
         case 2:
-            cell.titleLabel.text = "Bookmarks (\(self.bmkCount))"
+            cell.titleLabel.text = "\(Localization("Bookmarks")) (\(self.bmkCount))"
             cell.accessoryType = .disclosureIndicator
             
         default: break

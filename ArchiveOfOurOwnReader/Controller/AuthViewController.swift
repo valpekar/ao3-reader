@@ -60,23 +60,23 @@ class AuthViewController: UserMessagesController {
                     // In case that the error is a user fallback, then show the password alert view.
                     print(evalPolicyError?.localizedDescription ?? "")
                     guard let Errcode = evalPolicyError?._code else {
-                        self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("Authentication failed", comment: ""))
+                        self.showError(title: Localization("Error"), message: Localization("Authentication failed"))
                         return
                     }
                     
                     switch Errcode {
                         
                     case LAError.systemCancel.rawValue:
-                        self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("Authentication was cancelled by the system", comment: ""))
+                        self.showError(title: Localization("Error"), message: Localization("Authentication was cancelled by the system"))
                         
                     case LAError.userCancel.rawValue:
-                        self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("Authentication was cancelled by the user", comment: ""))
+                        self.showError(title: Localization("Error"), message: Localization("Authentication was cancelled by the user"))
                         
                     case LAError.userFallback.rawValue:
                         print("User selected to enter custom password")
                         
                     default:
-                        self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("Authentication failed", comment: ""))
+                        self.showError(title: Localization("Error"), message: Localization("Authentication failed"))
                     }
                 }
             })]
@@ -86,17 +86,17 @@ class AuthViewController: UserMessagesController {
                 switch error!.code{
                     
                 case LAError.biometryNotEnrolled.rawValue:
-                    self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("Touch/Face is not enrolled", comment: ""))
+                    self.showError(title: Localization("Error"), message: Localization("Touch/Face is not enrolled"))
                     
                 case LAError.passcodeNotSet.rawValue:
-                    self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("A passcode has not been set", comment: ""))
+                    self.showError(title: Localization("Error"), message: Localization("A passcode has not been set"))
                     
                 default:
                     // The LAError.TouchIDNotAvailable case.
-                    self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("Touch/Face ID not available", comment: ""))
+                    self.showError(title: Localization("Error"), message: Localization("Touch/Face ID not available"))
                 }
             } else {
-                self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("Touch/Face ID not available", comment: ""))
+                self.showError(title: Localization("Error"), message: Localization("Touch/Face ID not available"))
             }
             
             // Optionally the error description can be displayed on the console.
@@ -108,7 +108,7 @@ class AuthViewController: UserMessagesController {
     @IBAction func passwordDone(_ sender: AnyObject) {
         if let txt: String = passTextField.text {
             if (txt.isEmpty) {
-                self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("Please type your passcode!", comment: ""))
+                self.showError(title: Localization("Error"), message: Localization("Please type your passcode!"))
             } else {
                 let userPass: String = DefaultsManager.getString(DefaultsManager.USER_PASS);
                 if (userPass == txt) {
@@ -118,7 +118,7 @@ class AuthViewController: UserMessagesController {
                         }
                     }
                 } else {
-                    self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("Incorrect password!", comment: ""))
+                    self.showError(title: Localization("Error"), message: Localization("Incorrect password!"))
                 }
             }
         }

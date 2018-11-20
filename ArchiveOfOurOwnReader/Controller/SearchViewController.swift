@@ -38,27 +38,27 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
     var searchTags:[String] = [String]()
     var excludeTags:[String] = [String]()
     var labelTitlesWithText:[String] = [
-        NSLocalizedString("AnyField", comment: ""),
-        NSLocalizedString("Title", comment: ""),
-        NSLocalizedString("Author", comment: ""),
-        NSLocalizedString("Language", comment: ""),
-        NSLocalizedString("Rating", comment: "")]
-    var sortlabelTitlesWithText:[String] = [NSLocalizedString("SortBy", comment: ""),
-                                            NSLocalizedString("SortDirection", comment: "")]
-    var worktagsTitlesWithText:[String] = [NSLocalizedString("Fandoms", comment: ""),
-                                           NSLocalizedString("Relationships", comment: ""),
-                                           NSLocalizedString("Characters", comment: "")]
-    var labelTitlesFromTo:[String] = [NSLocalizedString("Kudos", comment: ""),
-                                      NSLocalizedString("Hits", comment: ""),
-                                      NSLocalizedString("Comments", comment: ""),
-                                      NSLocalizedString("Bookmarks", comment: ""),
-                                      NSLocalizedString("WordCount", comment: "")]
-    var labelTitlesSwitch:[String] = [NSLocalizedString("ChooseNoWarn", comment: ""),
-                                      NSLocalizedString("GraphicViolence", comment: ""),
-                                      NSLocalizedString("MajorCharDeath", comment: ""),
-                                      NSLocalizedString("NoWarn", comment: "")]
-                                      //NSLocalizedString("RapeNonCon", comment: ""),
-                                      //NSLocalizedString("Underage", comment: "")]
+        Localization("AnyField"),
+        Localization("Title"),
+        Localization("Author"),
+        Localization("Language"),
+        Localization("Rating")]
+    var sortlabelTitlesWithText:[String] = [Localization("SortBy"),
+                                            Localization("SortDirection")]
+    var worktagsTitlesWithText:[String] = [Localization("Fandoms"),
+                                           Localization("Relationships"),
+                                           Localization("Characters")]
+    var labelTitlesFromTo:[String] = [Localization("Kudos"),
+                                      Localization("Hits"),
+                                      Localization("Comments"),
+                                      Localization("Bookmarks"),
+                                      Localization("WordCount")]
+    var labelTitlesSwitch:[String] = [Localization("ChooseNoWarn"),
+                                      Localization("GraphicViolence"),
+                                      Localization("MajorCharDeath"),
+                                      Localization("NoWarn")]
+                                      //Localization("RapeNonCon"),
+                                      //Localization("Underage")]
     var imgTitlesFromTo:[String] = ["likes", "hits", "comments", "bookmark", "word"]
     
     var currentTextField: UITextField?
@@ -208,12 +208,12 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
                 (cell as? SearchTagWithTextCell)?.textField.text = selectedRaiting
             case 5:
                 cell = (tableView.dequeueReusableCell(withIdentifier: "searchSwitchCell") as? SearchSwitchCell)!
-                (cell as? SearchSwitchCell)?.label.text = NSLocalizedString("SingleChpt", comment: "")
+                (cell as? SearchSwitchCell)?.label.text = Localization("SingleChpt")
                 (cell as? SearchSwitchCell)?.switchItem.tag = TAG_SINGLE_CHAPTER
                 setCategorySwitchState((cell as? SearchSwitchCell)!.switchItem)
             case 6:
                 cell = (tableView.dequeueReusableCell(withIdentifier: "searchSwitchCell") as? SearchSwitchCell)!
-                (cell as? SearchSwitchCell)?.label.text = NSLocalizedString("Complete", comment: "")
+                (cell as? SearchSwitchCell)?.label.text = Localization("Complete")
                 (cell as? SearchSwitchCell)?.switchItem.tag = TAG_COMPLETE
                 setCategorySwitchState((cell as? SearchSwitchCell)!.switchItem)
             default:
@@ -243,8 +243,8 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
             (cell as? SearchFromToCell)?.fromTextView.delegate = self
             (cell as? SearchFromToCell)?.toTextView.delegate = self
             
-            (cell as? SearchFromToCell)?.fromTextView.placeholder = NSLocalizedString("From", comment: "")
-            (cell as? SearchFromToCell)?.toTextView.placeholder = NSLocalizedString("To", comment: "")
+            (cell as? SearchFromToCell)?.fromTextView.placeholder = Localization("From")
+            (cell as? SearchFromToCell)?.toTextView.placeholder = Localization("To")
             
             if (theme == DefaultsManager.THEME_DAY) {
                 (cell as? SearchFromToCell)?.fromTextView.textColor = UIColor.black
@@ -492,21 +492,21 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
         
         switch (section) {
         case 0:
-            res = NSLocalizedString("IncludeTags", comment: "")
+            res = Localization("IncludeTags")
         case 1:
-            res = NSLocalizedString("ExcludeTags", comment: "")
+            res = Localization("ExcludeTags")
         case 2:
-            res = NSLocalizedString("WorkInfo", comment: "")
+            res = Localization("WorkInfo")
         case 3:
-            res = NSLocalizedString("Stats", comment: "")
+            res = Localization("Stats")
         case 4:
-            res = NSLocalizedString("Category", comment: "")
+            res = Localization("Category")
         case 5:
-            res = NSLocalizedString("Warnings", comment: "")
+            res = Localization("Warnings")
         case 6:
-            res = NSLocalizedString("WorkTags", comment: "")
+            res = Localization("WorkTags")
         case 7:
-            res = NSLocalizedString("Search", comment: "")
+            res = Localization("Search")
         default:
             break
         }

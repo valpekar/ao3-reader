@@ -28,7 +28,7 @@ class SupportController: LoadingViewController, MFMailComposeViewControllerDeleg
         ZDKConfig.instance().userIdentity = anonymousIdentity
         ZDKLogger.enable(true)
          */
-        self.title = NSLocalizedString("Support", comment: "")
+        self.title = Localization("Support")
     }
     
     override func applyTheme() {
@@ -48,7 +48,7 @@ class SupportController: LoadingViewController, MFMailComposeViewControllerDeleg
     
 //    @IBAction func doneTouched(_ sender: AnyObject) {
 //        guard let text = codeTv.text else {
-//            showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: "Promo code cannot be empty", type: .error)
+//            showNotification(in: self, title: Localization("Error"), subtitle: "Promo code cannot be empty", type: .error)
 //            return
 //        }
 //
@@ -57,11 +57,11 @@ class SupportController: LoadingViewController, MFMailComposeViewControllerDeleg
 //            UserDefaults.standard.set(true, forKey: "donated")
 //            UserDefaults.standard.synchronize()
 //
-//            showNotification(in: self, title: NSLocalizedString("Success", comment: ""), subtitle: "Promo Key Accepted!", type: .success)
+//            showNotification(in: self, title: Localization("Success"), subtitle: "Promo Key Accepted!", type: .success)
 //
 //            codeTv.text = ""
 //        } else {
-//            showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: "No Such Promo Key!", type: .error)
+//            showNotification(in: self, title: Localization("Error"), subtitle: "No Such Promo Key!", type: .error)
 //        }
 //    }
     

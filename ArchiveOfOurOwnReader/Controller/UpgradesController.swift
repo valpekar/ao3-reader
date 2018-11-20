@@ -9,7 +9,7 @@
 import UIKit
 import StoreKit
 import Crashlytics
-
+import Firebase
 
 class UpgradesController: UserMessagesController, SKPaymentTransactionObserver {
     
@@ -48,8 +48,11 @@ class UpgradesController: UserMessagesController, SKPaymentTransactionObserver {
         
         self.title = " "
         
-        lbl.text = "• Get work recommendations every week \n • No ads, premium fonts \n • Unlimited offline reading"
+        lbl.text = Localization("PremiumFeaturesDesc")
         infoLbl.text = subTxt
+        
+        privacybtn.setTitle(Localization("PPolicy"), for: UIControl.State.normal)
+        restorebtn.setTitle(Localization("RestorePrevPurchase"), for: UIControl.State.normal)
         
         view1.layer.cornerRadius = AppDelegate.smallCornerRadius
         view2.layer.cornerRadius = AppDelegate.smallCornerRadius
@@ -103,10 +106,10 @@ class UpgradesController: UserMessagesController, SKPaymentTransactionObserver {
         SKPaymentQueue.default().add(self)
         ReaderProducts.store.restoreCompletedTransactions { error in
             if let err = error {
-                self.showError(title: NSLocalizedString("Error", comment: ""), message: err.localizedDescription)
+                self.showError(title: Localization("Error"), message: err.localizedDescription)
             } else {
                 
-                self.showSuccess(title: NSLocalizedString("Finished", comment: ""), message: NSLocalizedString("RestoreProcess", comment: ""))
+                self.showSuccess(title: Localization("Finished"), message: Localization("RestoreProcess"))
                 
                // self.refreshUI()
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
@@ -120,7 +123,7 @@ class UpgradesController: UserMessagesController, SKPaymentTransactionObserver {
     }
     
     func showSuccessAndClose() {
-        self.showSuccess(title: NSLocalizedString("ThankYou", comment: ""), message: NSLocalizedString("ThankYouForSub", comment: ""))
+        self.showSuccess(title: Localization("ThankYou"), message: Localization("ThankYouForSub"))
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             self.dismiss(animated: true, completion: {
@@ -176,9 +179,9 @@ class UpgradesController: UserMessagesController, SKPaymentTransactionObserver {
     
     /// Initiates purchase of a product.
     func purchaseProduct(_ product: SKProduct) {
-        // self.view.makeToast(message: NSLocalizedString("NeedToRestart", comment: ""), duration: 1, position: "center" as AnyObject, title: NSLocalizedString("Attention", comment: ""))
+        // self.view.makeToast(message: Localization("NeedToRestart"), duration: 1, position: "center" as AnyObject, title: Localization("Attention"))
         
-      //  self.showSuccess(title: NSLocalizedString("Attention", comment: ""), message: NSLocalizedString("NeedToRestart", comment: ""))
+      //  self.showSuccess(title: Localization("Attention"), message: Localization("NeedToRestart"))
         
         print("Buying \(product.productIdentifier)...")
         let payment = SKPayment(product: product)
@@ -198,6 +201,7 @@ class UpgradesController: UserMessagesController, SKPaymentTransactionObserver {
                     UserDefaults.standard.synchronize()
                     
                     Answers.logCustomEvent(withName: "ProSub", customAttributes: ["donated" : donated])
+                    Analytics.logEvent("ProSub", parameters: ["donated": donated as NSObject ])
                     
                     if (isPurchased == true) {
                         showSuccessAndClose()
@@ -209,6 +213,7 @@ class UpgradesController: UserMessagesController, SKPaymentTransactionObserver {
                     UserDefaults.standard.synchronize()
                     
                     Answers.logCustomEvent(withName: "ProSub", customAttributes: ["donated" : donated, "length": "year"])
+                    Analytics.logEvent("ProSub", parameters: ["donated": donated as NSObject, "length": "year" as NSObject ])
                     
                     if (isPurchased == true) {
                         showSuccessAndClose()
@@ -220,6 +225,7 @@ class UpgradesController: UserMessagesController, SKPaymentTransactionObserver {
                     UserDefaults.standard.synchronize()
                     
                     Answers.logCustomEvent(withName: "ProSub", customAttributes: ["donated" : donated, "length": "quarter"])
+                    Analytics.logEvent("ProSub", parameters: ["donated": donated as NSObject, "length": "quarter" as NSObject ])
                     
                     if (isPurchased == true) {
                         showSuccessAndClose()

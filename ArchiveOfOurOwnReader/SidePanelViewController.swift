@@ -21,20 +21,20 @@ class SidePanelViewController: UIViewController, UITableViewDataSource, UITableV
 
     var delegate: SidePanelViewControllerDelegate?
     
-    let controllers = [NSLocalizedString("Browse", comment: ""),
-                       NSLocalizedString("Bookmarks", comment: ""),
-                       NSLocalizedString("MarkedForLater", comment: ""),
-                       NSLocalizedString("Subscriptions", comment: ""),
-                       NSLocalizedString("Downloaded", comment: ""),
-                       NSLocalizedString("Me", comment: ""),
-                       NSLocalizedString("Recommendations", comment: ""),
-                       NSLocalizedString("FavoriteAuthors", comment: ""),
-                       NSLocalizedString("Support", comment: ""),
-                       NSLocalizedString("Reading Now", comment: "")
+    let controllers = [Localization("Browse"),
+                       Localization("Bookmarks"),
+                       Localization("MarkedForLater"),
+                       Localization("Subscriptions"),
+                       Localization("Downloaded"),
+                       Localization("Me"),
+                       Localization("Recommendations"),
+                       Localization("FavoriteAuthors"),
+                       Localization("Support"),
+                       Localization("Reading Now")
         /*, "Publish"*/]
     
     let sections = ["", ""]
-    let secondSectionRows = ["Import From AO3"]
+    let secondSectionRows = [Localization("ImportFrm")]
     let secondSectionRowsImgs = ["import"]
     let imgs = ["browse", "bmk", "history" , "subscriptions", "downloaded", "profile", "recomm", "star", "support", "book_open"/*, "shortstory"*/]
     
@@ -91,10 +91,14 @@ class SidePanelViewController: UIViewController, UITableViewDataSource, UITableV
                     title = "\(title) 🔄"
                 }
                 cell.configureForHeader(title, imageName: imgs[indexPath.row])
+            } else if (indexPath.row == 7) {
+                let favAuthorsCount = getFavAuthorsCount()
+                let title = "\(controllers[indexPath.row])  (\(favAuthorsCount))"
+                cell.configureForHeader(title, imageName: imgs[indexPath.row])
             } else {
                 cell.configureForHeader(controllers[indexPath.row], imageName: imgs[indexPath.row])
             }
-        } else {
+        }  else {
             cell.configureForHeader(secondSectionRows[indexPath.row], imageName: secondSectionRowsImgs[indexPath.row])
         }
         
@@ -118,6 +122,29 @@ class SidePanelViewController: UIViewController, UITableViewDataSource, UITableV
         } catch {
             #if DEBUG
                 print("cannot count favorites.")
+            #endif
+        }
+        
+        return res
+    }
+    
+    func getFavAuthorsCount() -> Int {
+        var res = 0
+        
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return res
+        }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        let fetchRequest: NSFetchRequest <NSFetchRequestResult> = NSFetchRequest(entityName:"DBFavAuthor")
+        do {
+            let countReq = try managedContext.count(for: fetchRequest)
+            if countReq != NSNotFound {
+                res = countReq
+            }
+        } catch {
+            #if DEBUG
+            print("cannot count favorites.")
             #endif
         }
         

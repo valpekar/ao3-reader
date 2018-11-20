@@ -98,14 +98,14 @@ class ReplyController: LoadingViewController {
             
             self.sendReply(text: txt)
         } else {
-            RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CannotSendComment", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+            RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("CannotSendComment"), type: RMessageType.error, customTypeName: "", callback: {
                 
             })
         }
     }
     
     func requestCommentBox() {
-        showLoadingView(msg: NSLocalizedString("GettingInbox", comment: ""))
+        showLoadingView(msg: Localization("GettingInbox"))
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
             Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: AppDelegate.ao3SiteUrl), mainDocumentURL: nil)
@@ -129,7 +129,7 @@ class ReplyController: LoadingViewController {
                     self.parseCommentBox(d)
                 } else {
                     self.hideLoadingView()
-                    RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                    RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("CheckInternet"), type: RMessageType.error, customTypeName: "", callback: {
                         
                     })
                     
@@ -171,7 +171,7 @@ class ReplyController: LoadingViewController {
     }
     
     func sendReply(text: String) {
-        showLoadingView(msg: NSLocalizedString("SendingReply", comment: ""))
+        showLoadingView(msg: Localization("SendingReply"))
         
         var urlStr: String = sendReplyUrl
         if (urlStr.contains("http") == false) {
@@ -209,7 +209,7 @@ class ReplyController: LoadingViewController {
                         
                     } else {
                         self.hideLoadingView()
-                        RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CouldNotReply", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                        RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("CouldNotReply"), type: RMessageType.error, customTypeName: "", callback: {
                             
                         })
                     }
@@ -218,7 +218,7 @@ class ReplyController: LoadingViewController {
         } else {
             
             self.hideLoadingView()
-            RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CouldNotReply", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+            RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("CouldNotReply"), type: RMessageType.error, customTypeName: "", callback: {
                 
             })
         }
@@ -234,7 +234,7 @@ class ReplyController: LoadingViewController {
         
         if let noticeEls = doc.search(withXPathQuery: "//div[@class='flash comment_notice']") as? [TFHppleElement], noticeEls.count > 0,
             let noticeStr = noticeEls[0].content, (noticeStr.contains("created") || noticeStr.contains("received")) {
-            RMessage.showNotification(in: self, title: NSLocalizedString("Success", comment: ""), subtitle: NSLocalizedString("CommentCreated", comment: ""), type: RMessageType.success, customTypeName: "", callback: {
+            RMessage.showNotification(in: self, title: Localization("Success"), subtitle: Localization("CommentCreated"), type: RMessageType.success, customTypeName: "", callback: {
                 
             })
             
@@ -246,7 +246,7 @@ class ReplyController: LoadingViewController {
             }
         } else {
         
-            RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CouldNotReply", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+            RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("CouldNotReply"), type: RMessageType.error, customTypeName: "", callback: {
                 
             })
             

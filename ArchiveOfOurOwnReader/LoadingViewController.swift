@@ -14,6 +14,7 @@ import Alamofire
 import RSLoadingView
 import CoreTelephony
 import Crashlytics
+ import Firebase
 
 class LoadingViewController: CenterViewController, ModalControllerDelegate, AuthProtocol, UIAlertViewDelegate, GADInterstitialDelegate {
     
@@ -27,6 +28,9 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
     var loadingView: UIView!
     var loadingLabel: UILabel!
     var interstitial: GADInterstitial?
+    
+    /// The reward-based video ad.
+    var rewardBasedVideo: GADRewardBasedVideoAd?
     
     var rloadingView: RSLoadingView!
     
@@ -112,6 +116,14 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         request.register(extras)
         
         interstitial?.load(request)
+    }
+    
+    func loadAdMobRewared() {
+        rewardBasedVideo = GADRewardBasedVideoAd.sharedInstance()
+        rewardBasedVideo?.delegate = self
+        // Load a reward based video ad.
+        rewardBasedVideo?.load(GADRequest(),
+                               withAdUnitID: "ca-app-pub-3940256099942544/1712485313")
     }
 
     func showAdMobInterstitial() {
@@ -388,8 +400,8 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         if(sorrydiv.count>0) {
             if let sorrydivFirst = sorrydiv[0] as? TFHppleElement {
                 if (sorrydivFirst.text().range(of: "Sorry") != nil) {
-                    workItem.setValue(NSLocalizedString("Sorry", comment: ""), forKey: "author")
-                    workItem.setValue(NSLocalizedString("WrkAvailOnlyRegistered", comment: ""), forKey: "workTitle")
+                    workItem.setValue(Localization("Sorry"), forKey: "author")
+                    workItem.setValue(Localization("WrkAvailOnlyRegistered"), forKey: "workTitle")
                     workItem.setValue("", forKey: "complete")
                     //   return NEXT_CHAPTER_NOT_EXIST;
                     return workItemToReload
@@ -401,8 +413,8 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         if let caution = doc.search(withXPathQuery: "//p[@class='caution']") {
         
         if (caution.count>0 && (caution[0] as? TFHppleElement)?.text().range(of: "adult content") != nil) {
-            workItem.setValue(NSLocalizedString("Sorry", comment: ""), forKey: "author")
-            workItem.setValue(NSLocalizedString("ContainsAdultContent", comment: ""), forKey: "workTitle")
+            workItem.setValue(Localization("Sorry"), forKey: "author")
+            workItem.setValue(Localization("ContainsAdultContent"), forKey: "workTitle")
             workItem.setValue("", forKey: "complete")
             
             return workItemToReload
@@ -730,7 +742,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
                         print(response.error ?? "")
                     #endif
                         if let data = response.data {
-                            self.showLoadingView(msg: NSLocalizedString("LoadingNxtChapter", comment: ""))
+                            self.showLoadingView(msg: Localization("LoadingNxtChapter"))
                             self.parseNxtChapter(data, curworkItem: workItem, managedContext: managedContext)
                         }
                         
@@ -752,7 +764,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
                 #endif
             hideLoadingView()
             
-            self.showError(title: NSLocalizedString("Error", comment: ""), message: "Could not save \(err?.localizedDescription ?? "")")
+            self.showError(title: Localization("Error"), message: "Could not save \(err?.localizedDescription ?? "")")
             
             return nil
         }
@@ -765,7 +777,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         }
         
         
-        self.showSuccess(title: NSLocalizedString("Success", comment: ""), message: "Work has been downloaded! You can access if from Downloaded screen")
+        self.showSuccess(title: Localization("Success"), message: "Work has been downloaded! You can access if from Downloaded screen")
         
         if let wRl = workItemToReload {
             return wRl
@@ -1142,7 +1154,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         doneToolbar.backgroundColor = UIColor.white
         
         let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
-        let done: UIBarButtonItem = UIBarButtonItem(title: NSLocalizedString("Done", comment: ""), style: UIBarButtonItem.Style.done, target: self, action: #selector(LoadingViewController.doneButtonAction))
+        let done: UIBarButtonItem = UIBarButtonItem(title: Localization("Done"), style: UIBarButtonItem.Style.done, target: self, action: #selector(LoadingViewController.doneButtonAction))
         done.tintColor = AppDelegate.redColor
         
         var items: [UIBarButtonItem] = [UIBarButtonItem]()
@@ -1162,7 +1174,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         doneToolbar.backgroundColor = UIColor(red: 198/255, green: 208/255, blue: 209/255, alpha: 1)
         
         let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
-        let done: UIBarButtonItem = UIBarButtonItem(title: NSLocalizedString("Done", comment: ""), style: UIBarButtonItem.Style.done, target: self, action: #selector(LoadingViewController.doneButtonAction))
+        let done: UIBarButtonItem = UIBarButtonItem(title: Localization("Done"), style: UIBarButtonItem.Style.done, target: self, action: #selector(LoadingViewController.doneButtonAction))
         done.tintColor = AppDelegate.redColor
         
         var items: [UIBarButtonItem] = [UIBarButtonItem]()
@@ -1205,6 +1217,23 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         view.layer.cornerRadius = AppDelegate.smallCornerRadius
     }
     
+    var idBeforeLimit = ""
+    func showLimitError() {
+        let alert = UIAlertController(title: Localization("Warning"), message: Localization("Only30Stroies"), preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: Localization("Upgrade"), style: .destructive, handler: { action in
+            if UIApplication.shared.windows.count > 0,
+            let currentViewController: ContainerViewController = UIApplication.shared.windows[0].rootViewController as? ContainerViewController, currentViewController.instantiatedControllers.count > 0 {
+                currentViewController.selectedControllerAtIndex(IndexPath(row: 5, section: 0))
+            }
+            }))
+        alert.addAction(UIAlertAction(title: Localization("Watch Rewarded Ad"), style: .default, handler: { action in
+            self.showRewardedAd()
+        }))
+        alert.addAction(UIAlertAction(title: Localization("Cancel"), style: .cancel, handler: { action in
+        }))
+
+        self.present(alert, animated: true, completion: nil)
+    }
     
     
     func doDownloadWork(wId: String, isOnline: Bool) {
@@ -1223,13 +1252,19 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
             #endif
         } else {
             if (isOnline == true && countWroksFromDB() > 29) {
-                self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("Only30Stroies", comment: ""))
+                idBeforeLimit = wId
+                self.showLimitError()
                 
                 return
             }
         }
         
-        showLoadingView(msg: NSLocalizedString("DwnloadingWrk", comment: ""))
+        downloadWorkForSure(wId: wId, isOnline: isOnline)
+        
+    }
+    
+    func downloadWorkForSure(wId: String, isOnline: Bool) {
+        showLoadingView(msg: Localization("DwnloadingWrk"))
         
         if let del = UIApplication.shared.delegate as? AppDelegate {
             if (del.cookies.count > 0) {
@@ -1242,7 +1277,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         
         var params:[String:AnyObject] = [String:AnyObject]()
         
-       loadPurchasedSettings()
+        loadPurchasedSettings()
         
         var vadult = ""
         params["view_adult"] = "true" as AnyObject?
@@ -1259,7 +1294,6 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
             Alamofire.request("https://archiveofourown.org/works/" + wId + vadult, method: .get, parameters: params)
                 .response(completionHandler: onSavedWorkLoaded(_:))
         }
-        
     }
     
     func onSavedWorkLoaded(_ response: DefaultDataResponse) {
@@ -1522,7 +1556,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
             return
         }
         
-        showLoadingView(msg: NSLocalizedString("LeavingKudos", comment: ""))
+        showLoadingView(msg: Localization("LeavingKudos"))
         
         let requestStr = "https://archiveofourown.org/kudos.js"
         //let pseud_id = DefaultsManager.getString(DefaultsManager.PSEUD_ID)
@@ -1557,14 +1591,14 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
                         
                     } else {
                         self.hideLoadingView()
-                        self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CheckInternet", comment: ""))
+                        self.showError(title: Localization("Error"), message: Localization("CheckInternet"))
                     }
                 })
             
         } else {
             
             self.hideLoadingView()
-            self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CheckInternet", comment: ""))
+            self.showError(title: Localization("Error"), message: Localization("CheckInternet"))
         }
     }
     
@@ -1575,10 +1609,10 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         //print("the string is: \(dta)")
         
         if (dta.contains("errors") == true) {
-            self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("LeftKudosAlready", comment: ""))
+            self.showError(title: Localization("Error"), message: Localization("LeftKudosAlready"))
         } else if (dta.contains("#kudos") == true) {
             
-            self.showSuccess(title: NSLocalizedString("Kudos", comment: ""), message: NSLocalizedString("KudosAdded", comment: ""))
+            self.showSuccess(title: Localization("Kudos"), message: Localization("KudosAdded"))
             
             self.kudosToAnalytics()
         }
@@ -1613,13 +1647,14 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
                 Answers.logCustomEvent(withName: "New_folder",
                                        customAttributes: [
                                         "name": txt])
+                Analytics.logEvent("New_folder", parameters: ["name": txt as NSObject])
             } else {
-                self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("FolderNameEmpty", comment: ""))
+                self.showError(title: Localization("Error"), message: Localization("FolderNameEmpty"))
             }
             
         }))
         
-        alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: UIAlertAction.Style.cancel, handler: { (action) in
+        alert.addAction(UIAlertAction(title: Localization("Cancel"), style: UIAlertAction.Style.cancel, handler: { (action) in
             #if DEBUG
             print("cancel")
             #endif
@@ -1641,7 +1676,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         do {
             if let fetchedWorks = try managedContext.fetch(req) as? [Folder] {
                 if (fetchedWorks.count > 0) {
-                    self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("FolderAlreadyExists", comment: ""))
+                    self.showError(title: Localization("Error"), message: Localization("FolderAlreadyExists"))
                     return
                 }
             }
@@ -1713,4 +1748,34 @@ extension String: ParameterEncoding {
         
         return numFormatter.string(from: NSNumber (value:value)) ?? ""
     }
+ }
+
+ 
+ 
+ extension LoadingViewController: GADRewardBasedVideoAdDelegate {
+    
+    func rewardBasedVideoAd(_ rewardBasedVideoAd: GADRewardBasedVideoAd, didRewardUserWith reward: GADAdReward) {
+        if (reward.amount.doubleValue > 0.0) {
+            self.doDownloadWork(wId: idBeforeLimit, isOnline: true)
+        }
+        
+        Answers.logCustomEvent(withName: "Rewarded: Received Reward", customAttributes: ["result" : "watched"])
+        Analytics.logEvent("Rewarded: Received Reward", parameters: ["result" : "watched"])
+        
+        self.loadAdMobRewared()
+    }
+    
+    func rewardBasedVideoAdDidClose(_ rewardBasedVideoAd: GADRewardBasedVideoAd) {
+        self.loadAdMobRewared()
+    }
+    
+    func showRewardedAd() {
+        Answers.logCustomEvent(withName: "Rewarded: Start ", customAttributes: [:])
+        Analytics.logEvent("Rewarded: Start", parameters: [:])
+        
+        if rewardBasedVideo?.isReady == true {
+            rewardBasedVideo?.present(fromRootViewController: self)
+        }
+    }
+    
  }

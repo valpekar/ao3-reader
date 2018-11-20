@@ -62,7 +62,7 @@ class FandomListController: LoadingViewController, UITableViewDataSource, UITabl
             Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
         }
         
-        showLoadingView(msg: "\(NSLocalizedString("LoadingPage", comment: ""))")
+        showLoadingView(msg: "\(Localization("LoadingPage"))")
         
         Alamofire.request(listUrl, method: .get).response(completionHandler: { response in
             print(response.error ?? "")
@@ -72,7 +72,7 @@ class FandomListController: LoadingViewController, UITableViewDataSource, UITabl
                 self.showCategories()
             } else {
                 self.showCategories()
-                RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("CheckInternet"), type: RMessageType.error, customTypeName: "", callback: {
                     
                 })
             }

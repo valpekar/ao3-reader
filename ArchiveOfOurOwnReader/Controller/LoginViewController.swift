@@ -42,7 +42,7 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
             let pass = passTextField.text {
             
             if (!login.isEmpty && !pass.isEmpty) {
-                showLoadingView(msg: NSLocalizedString("PleaseWait", comment: ""))
+                showLoadingView(msg: Localization("PleaseWait"))
                 getLoginParams()
             }
         }
@@ -88,11 +88,11 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
                     self.parseParams(d)
                     self.tryLogin() //Uncomment!
                 } else {
-                    var err = NSLocalizedString("CheckInternet", comment: "")
+                    var err = Localization("CheckInternet")
                     if let errMsg = response.error {
                         err = "\(response.response?.statusCode ?? -1): \(errMsg.localizedDescription)"
                     }
-                    self.showError(title: NSLocalizedString("Error", comment: ""), message: err)
+                    self.showError(title: Localization("Error"), message: err)
                 }
                // self.hideLoadingView()
             })
@@ -120,7 +120,7 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
         
         guard let login = loginTextField.text,
             let pass = passTextField.text else {
-                self.showError(title:  NSLocalizedString("CannotLogin", comment: ""), message: NSLocalizedString("FillUnamePass", comment: ""))
+                self.showError(title:  Localization("CannotLogin"), message: Localization("FillUnamePass"))
                 return
         }
         
@@ -158,11 +158,11 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
                         
                     } else {
                         self.hideLoadingView()
-                        var err = NSLocalizedString("CheckInternet", comment: "")
+                        var err = Localization("CheckInternet")
                         if let errMsg = response.error {
                             err = "\(response.response?.statusCode ?? -1): \(errMsg.localizedDescription)"
                         }
-                        self.showError(title: NSLocalizedString("Error", comment: ""), message: err)
+                        self.showError(title: Localization("Error"), message: err)
                     }
                 }
             })
@@ -178,7 +178,7 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
             return
         }
         
-        showLoadingView(msg: NSLocalizedString("PleaseWait", comment: ""))
+        showLoadingView(msg: Localization("PleaseWait"))
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
             Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
@@ -196,11 +196,11 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
                     self.hideLoadingView()
                 } else {
                     self.hideLoadingView()
-                    var err = NSLocalizedString("CheckInternet", comment: "")
+                    var err = Localization("CheckInternet")
                     if let errMsg = response.error {
                         err = "\(response.response?.statusCode ?? -1): \(errMsg.localizedDescription)"
                     }
-                    self.showError(title: NSLocalizedString("Error", comment: ""), message: err)
+                    self.showError(title: Localization("Error"), message: err)
                 }
             })
     }
@@ -235,7 +235,7 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
 //            if (noticeTxt.contains("Successfully logged")) {
         
         
-                self.showSuccess(title: NSLocalizedString("LogIn", comment: ""), message: NSLocalizedString("LoggedInScs", comment: ""))
+                self.showSuccess(title: Localization("LogIn"), message: Localization("LoggedInScs"))
                 
                 let delayTime = DispatchTime.now() + Double(Int64(1.500 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
                 
@@ -255,7 +255,7 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
     }
     
     func showError() {
-        self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CannotLogin", comment: ""))
+        self.showError(title: Localization("Error"), message: Localization("CannotLogin"))
         
         self.dismiss(animated: true, completion: {
             self.controllerDelegate.controllerDidClosed()
@@ -315,16 +315,16 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
         
         guard let login = loginTextField.text,
             let pass = passTextField.text else {
-                self.showError(title: NSLocalizedString("FieldsCannotBeEmpty", comment: ""), message: NSLocalizedString("FillUnamePass", comment: ""))
+                self.showError(title: Localization("FieldsCannotBeEmpty"), message: Localization("FillUnamePass"))
                 return
         }
         
         if (pass.isEmpty || login.isEmpty) {
-            self.showError(title: NSLocalizedString("FieldsCannotBeEmpty", comment: ""), message: NSLocalizedString("FillUnamePass", comment: ""))
+            self.showError(title: Localization("FieldsCannotBeEmpty"), message: Localization("FillUnamePass"))
             return
         }
         
-        showLoadingView(msg: NSLocalizedString("PleaseWait", comment: ""))
+        showLoadingView(msg: Localization("PleaseWait"))
         getLoginParams()
         
         //sendLoginRequest()
@@ -355,9 +355,9 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
     }
     
     @IBAction func infoTouched(_ sender:AnyObject) {
-        let refreshAlert = UIAlertController(title: NSLocalizedString("DoINeedToTellMyPass", comment: ""), message: NSLocalizedString("TellPassExplain", comment: ""), preferredStyle: UIAlertController.Style.alert)
+        let refreshAlert = UIAlertController(title: Localization("DoINeedToTellMyPass"), message: Localization("TellPassExplain"), preferredStyle: UIAlertController.Style.alert)
         
-        refreshAlert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default, handler: { (action: UIAlertAction!) in
+        refreshAlert.addAction(UIAlertAction(title: Localization("OK"), style: .default, handler: { (action: UIAlertAction!) in
             refreshAlert.dismiss(animated: true, completion: nil)
         }))
         

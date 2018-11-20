@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 import Crashlytics
 
 class ChoosePrefController : LoadingViewController {
@@ -19,6 +20,7 @@ class ChoosePrefController : LoadingViewController {
     
     @IBOutlet weak var nextButton:UIButton!
     @IBOutlet weak var textField:UITextField!
+    @IBOutlet weak var label:UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +33,8 @@ class ChoosePrefController : LoadingViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(ChoosePrefController.keyboardWillShow(notification:)), name:UIResponder.keyboardWillShowNotification, object: nil);
         NotificationCenter.default.addObserver(self, selector: #selector(ChoosePrefController.keyboardWillHide(notification:)), name:UIResponder.keyboardWillHideNotification, object: nil);
+        
+        label.text = Localization("ChoosePrefWarn")
         
     }
     
@@ -47,13 +51,14 @@ class ChoosePrefController : LoadingViewController {
     @IBAction func nextTouched(sender: AnyObject) {
         
         guard let txt = textField.text, !txt.isEmpty else {
-            self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("AtLeastOneFandom", comment: ""))
+            self.showError(title: Localization("Error"), message: Localization("AtLeastOneFandom"))
             return
         }
         
         Answers.logCustomEvent(withName: "prefChosen",
                                customAttributes: [
                                 "fandom": txt])
+        Analytics.logEvent("ChoosePref: Chosen", parameters: ["fandom" : txt as NSObject])
         
         self.dismiss(animated: true) {
             print(self.chosenFandoms)

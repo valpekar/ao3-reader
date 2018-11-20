@@ -15,7 +15,7 @@
 "Error" = "ความผิดพลาด 👻";
 "CannotBeEmpty" = "กรุณาพิมพ์อะไร!";
 "CheckInternet" = "ตรวจสอบการเชื่อมต่ออินเทอร์เน็ตของคุณ";
-"Only30Stroies" = "คุณสามารถดาวน์โหลดได้ 30 เรื่องเท่านั้น โปรดอัปเกรดเพื่อดาวน์โหลดเพิ่มเติม";
+"Only30Stroies" = "คุณสามารถดาวน์โหลดได้ 30 เรื่องเท่านั้น โปรดอัปเกรดเพื่อดาวน์โหลดเพิ่มเติม หรือดูวิดีโอที่ได้รับรางวัลสำหรับการดาวน์โหลดฟรีอีก 1 ครั้ง";
 "DwnloadingWrk" = "กำลังดาวน์โหลดงาน";
 "CannotDwnldWrk" = "ไม่สามารถดาวน์โหลดงานได้!";
 "Chapters_" = "บท: ";
@@ -178,6 +178,35 @@
 
 "Reading Now" = "Reading Now";
 "ThankYouForSub" = "Thank you for buying subscription! Thanks to you the app will become better! 🙏";
+"FavoriteAuthors" = "Favorite Authors";
+"NoFavoriteAuthors" = "You have no favorite authors! Add anyone to favorites from author's profile screen and they will appear here.";
+"ViewWorks" = "View Works";
+"AddAuthToFav" = "+ Add to Favorite Authors";
+"RemAuthFromFav" = "- Remove from Favorite Authors";
+"ChoosePrefWarn" = "I need to know it so I can give you first portion of fics you might like. You can always choose anything else on  Search screen.";
+"ImportFrm" = "Import From AO3";
+"Works" = "Works";
+"Series" = "Series";
+"Share" = "Share";
+"SecuritySettings" = "Security Settings";
+"MyAO3" = "My AO3 Account";
+"MyPseud" = "Pseud for bookmarks, history etc";
+"Theme" = "Theme";
+"AboutSub" = "About Subscription";
+"Day" = "Day";
+"Night" = "Night";
+"PPolicy" = "Privacy Policy and Terms of Use";
+"Inbox" = "Inbox";
+"MyHighlights" = "My Highlights";
+"MyWorks" = "My Works";
+"ClearAllNotif" = "Clear All Notifications";
+"ProtectBio" = "Protect with Biometric ID or passcode";
+"PremiumFeaturesDesc" = " • Get work recommendations every week \n • No ads, premium fonts \n • Unlimited offline reading";
+"RestorePrevPurchase" = "Restore Previous Purchase";
+"SystemLanguage" = "System Language";
+"English" = "English";
+"LangChanged" = "Language successfully changed. Please restart the app for changes to take effect.";
+"ErrLangChanged" = "Cannot change language. Please email me from support screen to let me know!";
 
 
 

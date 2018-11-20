@@ -47,6 +47,14 @@ class PagesController: UIViewController, UIPopoverPresentationControllerDelegate
         }
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.tableView.flashScrollIndicators()
+        }
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return lastPage
     }

@@ -106,6 +106,7 @@
 		3C6644E7219AC16900BD85AC /* DBFavAuthor+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C6644E5219AC16900BD85AC /* DBFavAuthor+CoreDataClass.swift */; };
 		3C6644E8219AC16900BD85AC /* DBFavAuthor+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C6644E6219AC16900BD85AC /* DBFavAuthor+CoreDataProperties.swift */; };
 		3C6644EA219AF4F600BD85AC /* AuthorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C6644E9219AF4F600BD85AC /* AuthorCell.swift */; };
+		3C6644EC21A428B600BD85AC /* Localisator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C6644EB21A428B600BD85AC /* Localisator.swift */; };
 		3C684E5D1F8E391500419D69 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C684E5C1F8E391500419D69 /* AuthViewController.swift */; };
 		3C69A14020E6479F00D9BBAF /* UIWebViewSearch.js in Resources */ = {isa = PBXBuildFile; fileRef = 3C69A13F20E6479F00D9BBAF /* UIWebViewSearch.js */; };
 		3C6B997C20CFF23700985390 /* UserMessagesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C6B997B20CFF23700985390 /* UserMessagesController.swift */; };
@@ -335,6 +336,7 @@
 		3C6644E5219AC16900BD85AC /* DBFavAuthor+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "DBFavAuthor+CoreDataClass.swift"; path = "Model/DBFavAuthor+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3C6644E6219AC16900BD85AC /* DBFavAuthor+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "DBFavAuthor+CoreDataProperties.swift"; path = "Model/DBFavAuthor+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3C6644E9219AF4F600BD85AC /* AuthorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AuthorCell.swift; path = View/Custom/Cells/AuthorCell.swift; sourceTree = "<group>"; };
+		3C6644EB21A428B600BD85AC /* Localisator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Localisator.swift; path = Utils/Localisator.swift; sourceTree = "<group>"; };
 		3C684E5C1F8E391500419D69 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AuthViewController.swift; path = Controller/AuthViewController.swift; sourceTree = "<group>"; };
 		3C69A13F20E6479F00D9BBAF /* UIWebViewSearch.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = UIWebViewSearch.js; sourceTree = "<group>"; };
 		3C6B997B20CFF23700985390 /* UserMessagesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMessagesController.swift; sourceTree = "<group>"; };
@@ -735,6 +737,7 @@
 				3CDF1FAA1F39AA57004D858F /* WorksParser.swift */,
 				1D8777911B99EDF600CEA738 /* DefaultsManager.swift */,
 				3C8FF85520063BE8006C01DF /* ExtensionsHelper.swift */,
+				3C6644EB21A428B600BD85AC /* Localisator.swift */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -1107,6 +1110,7 @@
 				3CB7735F1C847CCD00DC15C4 /* ContainerViewController.swift in Sources */,
 				3C6644E7219AC16900BD85AC /* DBFavAuthor+CoreDataClass.swift in Sources */,
 				3C22BBEE1FED2BD60012CBA4 /* PagesController.swift in Sources */,
+				3C6644EC21A428B600BD85AC /* Localisator.swift in Sources */,
 				3C0448F71C634209005DCE5F /* ReaderProducts.swift in Sources */,
 				3C6E1E8720E3CC130051B42E /* UpgradesController.swift in Sources */,
 				3C44A7A71F8F56F100AEAE7B /* SecuritySettingsController.swift in Sources */,

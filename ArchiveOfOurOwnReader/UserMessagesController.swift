@@ -8,6 +8,7 @@
 
 import UIKit
 import SwiftMessages
+import Firebase
 
 class UserMessagesController: UIViewController {
     

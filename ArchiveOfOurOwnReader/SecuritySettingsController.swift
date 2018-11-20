@@ -83,11 +83,11 @@ class SecuritySettingsController: LoadingViewController {
         if let txt: String = passTextView.text,
             let txt1: String = passrepTextView.text {
             if (txt.isEmpty || txt1.isEmpty) {
-                RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Please type your passcode", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("Please type your passcode"), type: RMessageType.error, customTypeName: "", callback: {
                     
                 })
             } else if (txt != txt1) {
-                RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Passcodes do not match", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("Passcodes do not match"), type: RMessageType.error, customTypeName: "", callback: {
                     
                 })
             } else {
@@ -96,7 +96,7 @@ class SecuritySettingsController: LoadingViewController {
                 
                 DefaultsManager.putString(txt, key: DefaultsManager.USER_PASS)
                 
-                RMessage.showNotification(in: self, title: NSLocalizedString("Success", comment: ""), subtitle: NSLocalizedString("Passcode successfully set", comment: ""), type: RMessageType.success, customTypeName: "", callback: {
+                RMessage.showNotification(in: self, title: Localization("Success"), subtitle: Localization("Passcode successfully set"), type: RMessageType.success, customTypeName: "", callback: {
                     
                 })
             }
@@ -124,7 +124,7 @@ class SecuritySettingsController: LoadingViewController {
             if (!DefaultsManager.getString(DefaultsManager.USER_PASS).isEmpty) {
                 DefaultsManager.putBool(true, key: DefaultsManager.NEEDS_PASS)
             } else {
-                RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Please type your passcode", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("Please type your passcode"), type: RMessageType.error, customTypeName: "", callback: {
                     
                 })
                 sender.setOn(false, animated: true)

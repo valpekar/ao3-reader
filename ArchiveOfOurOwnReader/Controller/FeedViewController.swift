@@ -13,6 +13,7 @@ import CoreLocation
 import Alamofire
 import Crashlytics
 import GoogleMobileAds
+import Firebase
 
 protocol SearchControllerDelegate {
     func searchApplied(_ searchQuery:SearchQuery, shouldAddKeyword: Bool)
@@ -238,7 +239,7 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
                 searchApplied(self.query, shouldAddKeyword: true)
             }
         } else {
-            self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CheckInternet", comment: ""))
+            self.showError(title: Localization("Error"), message: Localization("CheckInternet"))
         }
     }
    
@@ -429,6 +430,7 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
                 
                 Answers.logCustomEvent(withName: "Search: Extended Opened",
                                        customAttributes: [:])
+                Analytics.logEvent("Search: Extended Opened", parameters: [:])
             }
         } else if (segue.identifier == "choosePref") {
             if let choosePref: UINavigationController = segue.destination as? UINavigationController {
@@ -469,7 +471,7 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
             Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: AppDelegate.ao3SiteUrl), mainDocumentURL: nil)
         }
        
-        showLoadingView(msg: NSLocalizedString("Searching", comment: ""))
+        showLoadingView(msg: Localization("Searching"))
         
         guard let url = URL( string: (encodedURLRequest?.url?.absoluteString)!) else {
             return
@@ -496,7 +498,7 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
             //self.getFeed(d)
         } else {
             self.hideLoadingView()
-            self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CheckInternet", comment: ""))
+            self.showError(title: Localization("Error"), message: Localization("CheckInternet"))
         }
         
         self.refreshControl.endRefreshing()
@@ -552,9 +554,9 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
     }
     
     func showContentAlert() {
-        let refreshAlert = UIAlertController(title: NSLocalizedString("Attention", comment: ""), message: NSLocalizedString("SensitiveAttention", comment: ""), preferredStyle: UIAlertController.Style.alert)
+        let refreshAlert = UIAlertController(title: Localization("Attention"), message: Localization("SensitiveAttention"), preferredStyle: UIAlertController.Style.alert)
         
-        refreshAlert.addAction(UIAlertAction(title: NSLocalizedString("MoreDetails", comment: ""), style: .default, handler: { (action: UIAlertAction!) in
+        refreshAlert.addAction(UIAlertAction(title: Localization("MoreDetails"), style: .default, handler: { (action: UIAlertAction!) in
             if let url: URL = URL(string: "https://www.tumblr.com/blog/unofficialao3app") {
                 UIApplication.shared.open(url, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([ : ]), completionHandler: { (result) in
                     print("Tumblr opened")
@@ -577,6 +579,7 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
         Answers.logCustomEvent(withName: "Fandom Chosen",
                                customAttributes: [
                                 "pref": pref])
+        Analytics.logEvent("Fandom Chosen", parameters: ["pref": pref as NSObject])
         
         self.searchApplied(self.query, shouldAddKeyword: true)
     }
@@ -588,7 +591,7 @@ extension FeedViewController : UISearchBarDelegate, UISearchResultsUpdating {
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         guard let txt = searchBar.text else {
-            self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CannotBeEmpty", comment: ""))
+            self.showError(title: Localization("Error"), message: Localization("CannotBeEmpty"))
             return
         }
         
@@ -601,6 +604,7 @@ extension FeedViewController : UISearchBarDelegate, UISearchResultsUpdating {
             Answers.logCustomEvent(withName: "Search: Quick",
                                    customAttributes: [
                                     "txt": txt])
+            Analytics.logEvent("Search: Quick", parameters: ["txt": txt as NSObject])
             
             searchApplied(query, shouldAddKeyword: false)
             
@@ -614,6 +618,7 @@ extension FeedViewController : UISearchBarDelegate, UISearchResultsUpdating {
             Answers.logCustomEvent(withName: "Search: Quick",
                                    customAttributes: [
                                     "txt": txt])
+            Analytics.logEvent("Search: Quick", parameters: ["txt": txt as NSObject])
             
             searchApplied(query, shouldAddKeyword: false)
             

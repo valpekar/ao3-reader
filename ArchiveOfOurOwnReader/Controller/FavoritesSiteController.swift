@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import Firebase
 import Crashlytics
 
 class FavoritesSiteController : ListViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
@@ -39,9 +40,9 @@ class FavoritesSiteController : ListViewController, UITableViewDataSource, UITab
         self.refreshControl.addTarget(self, action: #selector(FavoritesSiteController.refresh(_:)), for: UIControl.Event.valueChanged)
         self.tableView.addSubview(self.refreshControl)
         
-        self.foundItems = NSLocalizedString("Bookmarks", comment: "")
+        self.foundItems = Localization("Bookmarks")
         
-        self.title = NSLocalizedString("Bookmarks", comment: "")
+        self.title = Localization("Bookmarks")
         
         
         
@@ -143,7 +144,7 @@ class FavoritesSiteController : ListViewController, UITableViewDataSource, UITab
         }
         }
         
-        showLoadingView(msg: NSLocalizedString("GettingBmks", comment: ""))
+        showLoadingView(msg: Localization("GettingBmks"))
         
         let pseuds = DefaultsManager.getObject(DefaultsManager.PSEUD_IDS) as! [String:String]
         var currentPseud = DefaultsManager.getString(DefaultsManager.PSEUD_ID)
@@ -153,7 +154,7 @@ class FavoritesSiteController : ListViewController, UITableViewDataSource, UITab
             if (keys.count > 0) {
                 currentPseud = keys[0]
             } else {
-                self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("LoginToViewBmks", comment: ""))
+                self.showError(title: Localization("Error"), message: Localization("LoginToViewBmks"))
                 showWorks()
                 return
             }
@@ -183,7 +184,7 @@ class FavoritesSiteController : ListViewController, UITableViewDataSource, UITab
                     self.showWorks()
                 } else {
                     self.hideLoadingView()
-                    self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CheckInternet", comment: ""))
+                    self.showError(title: Localization("Error"), message: Localization("CheckInternet"))
                 }
                 self.refreshControl.endRefreshing()
             })
@@ -313,7 +314,7 @@ class FavoritesSiteController : ListViewController, UITableViewDataSource, UITab
     @IBAction func downloadButtonTouched(_ sender: UIButton) {
         
         let curWork:NewsFeedItem = works[sender.tag]
-        showLoadingView(msg: "\(NSLocalizedString("DwnloadingWrk", comment: "")) \(curWork.title)")
+        showLoadingView(msg: "\(Localization("DwnloadingWrk")) \(curWork.title)")
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
             Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
@@ -337,7 +338,7 @@ class FavoritesSiteController : ListViewController, UITableViewDataSource, UITab
                     //self.saveWork()
                 } else {
                     self.hideLoadingView()
-                    self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CheckInternet", comment: ""))
+                    self.showError(title: Localization("Error"), message: Localization("CheckInternet"))
                 }
             })
     }
@@ -346,13 +347,13 @@ class FavoritesSiteController : ListViewController, UITableViewDataSource, UITab
     
     @IBAction func deleteButtonTouched(_ sender: UIButton) {
         
-        let deleteAlert = UIAlertController(title: NSLocalizedString("AreYouSure", comment: ""), message: NSLocalizedString("SureDeleteWrkFromBmks", comment: ""), preferredStyle: UIAlertController.Style.alert)
+        let deleteAlert = UIAlertController(title: Localization("AreYouSure"), message: Localization("SureDeleteWrkFromBmks"), preferredStyle: UIAlertController.Style.alert)
         
-        deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .default, handler: { (action: UIAlertAction) in
+        deleteAlert.addAction(UIAlertAction(title: Localization("Cancel"), style: .default, handler: { (action: UIAlertAction) in
             print("Cancel")
         }))
         
-        deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Yes", comment: ""), style: .default, handler: { (action: UIAlertAction) in
+        deleteAlert.addAction(UIAlertAction(title: Localization("Yes"), style: .default, handler: { (action: UIAlertAction) in
             
             let curWork:NewsFeedItem = self.works[sender.tag]
             self.deleteItemFromBookmarks(curWork)
@@ -366,7 +367,7 @@ class FavoritesSiteController : ListViewController, UITableViewDataSource, UITab
     }
     
     func deleteItemFromBookmarks(_ curWork: NewsFeedItem) {
-        showLoadingView(msg: NSLocalizedString("DeletingFromBmks", comment: ""))
+        showLoadingView(msg: Localization("DeletingFromBmks"))
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
             Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
@@ -402,7 +403,7 @@ class FavoritesSiteController : ListViewController, UITableViewDataSource, UITab
                     self.hideLoadingView()
                 } else {
                     self.hideLoadingView()
-                    self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CheckInternet", comment: ""))
+                    self.showError(title: Localization("Error"), message: Localization("CheckInternet"))
                 }
             })
     }
@@ -417,12 +418,12 @@ class FavoritesSiteController : ListViewController, UITableViewDataSource, UITab
             if let index = self.works.index( where: {$0.workId == curWork.workId}) {
                 self.works.remove(at: index)
             }
-            self.showSuccess(title: NSLocalizedString("DeleteFromBmk", comment: ""), message: noticediv?[0].content ?? "")
+            self.showSuccess(title: Localization("DeleteFromBmk"), message: noticediv?[0].content ?? "")
         } else {
             if let sorrydiv = doc.search(withXPathQuery: "//div[@class='flash error']") {
             
                 if(sorrydiv.count>0 && (sorrydiv[0] as? TFHppleElement)?.text().range(of: "Sorry") != nil) {
-                    self.showError(title: NSLocalizedString("DeleteFromBmk", comment: ""), message: (sorrydiv[0] as AnyObject).content)
+                    self.showError(title: Localization("DeleteFromBmk"), message: (sorrydiv[0] as AnyObject).content)
                     return
                 }
             }
@@ -430,13 +431,13 @@ class FavoritesSiteController : ListViewController, UITableViewDataSource, UITab
     }
     
     override func deleteTouched(rowIndex: Int) {
-        let deleteAlert = UIAlertController(title: NSLocalizedString("AreYouSure", comment: ""), message: NSLocalizedString("SureDeleteWrkFromBmks", comment: ""), preferredStyle: UIAlertController.Style.alert)
+        let deleteAlert = UIAlertController(title: Localization("AreYouSure"), message: Localization("SureDeleteWrkFromBmks"), preferredStyle: UIAlertController.Style.alert)
         
-        deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .default, handler: { (action: UIAlertAction) in
+        deleteAlert.addAction(UIAlertAction(title: Localization("Cancel"), style: .default, handler: { (action: UIAlertAction) in
             print("Cancel")
         }))
         
-        deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Yes", comment: ""), style: .default, handler: { (action: UIAlertAction) in
+        deleteAlert.addAction(UIAlertAction(title: Localization("Yes"), style: .default, handler: { (action: UIAlertAction) in
             
             let curWork:NewsFeedItem = self.works[rowIndex]
             self.deleteItemFromBookmarks(curWork)
@@ -460,7 +461,7 @@ extension FavoritesSiteController: UISearchBarDelegate {
             
             self.searchBar.endEditing(true)
         } else {
-            self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CannotBeEmpty", comment: ""))
+            self.showError(title: Localization("Error"), message: Localization("CannotBeEmpty"))
         }
     }
     
@@ -487,6 +488,7 @@ extension FavoritesSiteController: UISearchBarDelegate {
         searched = true
         
         Answers.logCustomEvent(withName: "Bookmarks: search", customAttributes: ["query" : query])
+        Analytics.logEvent("Bookmarks: search", parameters: ["query" : query as NSObject])
         
         if let del = UIApplication.shared.delegate as? AppDelegate {
             if (del.cookies.count > 0) {
@@ -497,7 +499,7 @@ extension FavoritesSiteController: UISearchBarDelegate {
             }
         }
         
-        showLoadingView(msg: NSLocalizedString("GettingBmks", comment: ""))
+        showLoadingView(msg: Localization("GettingBmks"))
         
         let pseuds = DefaultsManager.getObject(DefaultsManager.PSEUD_IDS) as! [String:String]
         var currentPseud = DefaultsManager.getString(DefaultsManager.PSEUD_ID)
@@ -507,7 +509,7 @@ extension FavoritesSiteController: UISearchBarDelegate {
             if (keys.count > 0) {
                 currentPseud = keys[0]
             } else {
-                self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("LoginToViewBmks", comment: ""))
+                self.showError(title: Localization("Error"), message: Localization("LoginToViewBmks"))
                 showWorks()
                 return
             }
@@ -547,7 +549,7 @@ extension FavoritesSiteController: UISearchBarDelegate {
                     self.showWorks()
                 } else {
                     self.hideLoadingView()
-                    self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CheckInternet", comment: ""))
+                    self.showError(title: Localization("Error"), message: Localization("CheckInternet"))
                 }
                 self.refreshControl.endRefreshing()
             })

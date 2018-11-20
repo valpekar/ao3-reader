@@ -60,7 +60,7 @@ class CategoriesController: LoadingViewController, UITableViewDataSource, UITabl
             Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
         }
         
-        showLoadingView(msg: "\(NSLocalizedString("LoadingPage", comment: ""))")
+        showLoadingView(msg: "\(Localization("LoadingPage"))")
         
         Alamofire.request("https://archiveofourown.org/media", method: .get).response(completionHandler: { response in
             print(response.error ?? "")
@@ -70,7 +70,7 @@ class CategoriesController: LoadingViewController, UITableViewDataSource, UITabl
                 self.showCategories()
             } else {
                 self.showCategories()
-                self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CheckInternet", comment: ""))
+                self.showError(title: Localization("Error"), message: Localization("CheckInternet"))
             }
         })
     }

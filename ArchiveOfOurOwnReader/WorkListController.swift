@@ -18,9 +18,9 @@ class WorkListController: ListViewController, UITableViewDataSource, UITableView
     @IBOutlet weak var tryAgainButton:UIButton!
     @IBOutlet weak var notFoundLabel:UILabel!
     
-    var worksStr = NSLocalizedString("WorkList", comment: "")
+    var worksStr = Localization("WorkList")
     var tagUrl = ""
-    var tagName = NSLocalizedString("WorkList", comment: "")
+    var tagName = Localization("WorkList")
     
     var refreshControl: UIRefreshControl!
     
@@ -38,7 +38,7 @@ class WorkListController: ListViewController, UITableViewDataSource, UITableView
         self.tableView.estimatedRowHeight = 200
         
         self.refreshControl = UIRefreshControl()
-        self.refreshControl.attributedTitle = NSAttributedString(string: NSLocalizedString("PullToRefresh", comment: ""))
+        self.refreshControl.attributedTitle = NSAttributedString(string: Localization("PullToRefresh"))
         self.refreshControl.addTarget(self, action: #selector(WorkListController.refresh(_:)), for: UIControl.Event.valueChanged)
         self.tableView.addSubview(self.refreshControl)
         
@@ -144,7 +144,7 @@ class WorkListController: ListViewController, UITableViewDataSource, UITableView
             }
         }
         
-        showLoadingView(msg: NSLocalizedString("GettingWorks", comment: ""))
+        showLoadingView(msg: Localization("GettingWorks"))
         
         let urlStr = tagUrl
         
@@ -166,7 +166,7 @@ class WorkListController: ListViewController, UITableViewDataSource, UITableView
                     self.showWorks()
                 } else {
                     self.hideLoadingView()
-                    self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CheckInternet", comment: ""))
+                    self.showError(title: Localization("Error"), message: Localization("CheckInternet"))
                 }
                 self.refreshControl.endRefreshing()
             })
@@ -284,7 +284,7 @@ class WorkListController: ListViewController, UITableViewDataSource, UITableView
     @IBAction func downloadButtonTouched(_ sender: UIButton) {
         
         let curWork:NewsFeedItem = works[sender.tag]
-        showLoadingView(msg: "\(NSLocalizedString("DwnloadingWrk", comment: "")) \(curWork.title)")
+        showLoadingView(msg: "\(Localization("DwnloadingWrk")) \(curWork.title)")
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
             Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
@@ -308,7 +308,7 @@ class WorkListController: ListViewController, UITableViewDataSource, UITableView
                     //self.saveWork()
                 } else {
                     self.hideLoadingView()
-                    self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CheckInternet", comment: ""))
+                    self.showError(title: Localization("Error"), message: Localization("CheckInternet"))
                 }
             })
     }
@@ -328,7 +328,7 @@ extension WorkListController: UISearchResultsUpdating, UISearchBarDelegate {
     func updateSearchResults(for searchController: UISearchController) {
 //        if let txt = searchController.searchBar.text {
 //            if (txt.isEmpty) {
-//                showNotification(in: self, title:  NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CannotBeEmpty", comment: ""), type: .error, duration: 2.0)
+//                showNotification(in: self, title:  Localization("Error"), subtitle: Localization("CannotBeEmpty"), type: .error, duration: 2.0)
 //            } else {
 //                searchAndFilter(txt)
 //            }
@@ -362,7 +362,7 @@ extension WorkListController: UISearchResultsUpdating, UISearchBarDelegate {
             }
         }
         
-        showLoadingView(msg: NSLocalizedString("GettingWorks", comment: ""))
+        showLoadingView(msg: Localization("GettingWorks"))
         
         //http://archiveofourown.org/works?utf8=%E2%9C%93&work_search%5Bsort_column%5D=revised_at&work_search%5Bother_tag_names%5D=&work_search%5Bquery%5D=tian&work_search%5Blanguage_id%5D=&work_search%5Bcomplete%5D=0&commit=Sort+and+Filter&tag_id=19%E5%A4%A9+-+Old%E5%85%88+%7C+19+Days+-+Old+Xian
 
@@ -404,7 +404,7 @@ extension WorkListController: UISearchResultsUpdating, UISearchBarDelegate {
                     self.showWorks()
                 } else {
                     self.hideLoadingView()
-                    self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CheckInternet", comment: ""))
+                    self.showError(title: Localization("Error"), message: Localization("CheckInternet"))
                     
                 }
                 self.refreshControl.endRefreshing()
@@ -417,7 +417,7 @@ extension WorkListController: UISearchResultsUpdating, UISearchBarDelegate {
 
             searchBar.endEditing(true)
         } else {
-            self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CannotBeEmpty", comment: ""))
+            self.showError(title: Localization("Error"), message: Localization("CannotBeEmpty"))
         }
     }
 

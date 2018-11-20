@@ -11,6 +11,7 @@ import CoreData
 import Alamofire
 import Crashlytics
 import UserNotifications
+import Firebase
 
 class RecommendationsController : ListViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
@@ -44,8 +45,8 @@ class RecommendationsController : ListViewController, UITableViewDataSource, UIT
         self.refreshControl.addTarget(self, action: #selector(RecommendationsController.refresh(_:)), for: UIControl.Event.valueChanged)
         self.tableView.addSubview(self.refreshControl)
         
-        self.title = NSLocalizedString("Recommendations", comment: "")
-        descLabel.text = NSLocalizedString("RecommendationsExplainedShort", comment: "")
+        self.title = Localization("Recommendations")
+        descLabel.text = Localization("RecommendationsExplainedShort")
         
         //test!
         scheduleLocal()
@@ -79,7 +80,7 @@ class RecommendationsController : ListViewController, UITableViewDataSource, UIT
                 } else if donated == true {
                     self.generateRecommendations(noFound: noFound)
                 } else {
-                    self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("NotPurchased", comment: ""))
+                    self.showError(title: Localization("Error"), message: Localization("NotPurchased"))
                     
                     refreshControl.endRefreshing()
                 }
@@ -87,7 +88,7 @@ class RecommendationsController : ListViewController, UITableViewDataSource, UIT
     }
     
     @IBAction func infoTouched(_ sender: AnyObject) {
-        let refreshAlert = UIAlertController(title: NSLocalizedString("Recommendations", comment: ""), message: NSLocalizedString("RecommendationsExplained", comment: ""), preferredStyle: UIAlertController.Style.alert)
+        let refreshAlert = UIAlertController(title: Localization("Recommendations"), message: Localization("RecommendationsExplained"), preferredStyle: UIAlertController.Style.alert)
         
         refreshAlert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { (action: UIAlertAction!) in
             DefaultsManager.putBool(true, key: DefaultsManager.CONTENT_SHOWSN)
@@ -124,8 +125,8 @@ class RecommendationsController : ListViewController, UITableViewDataSource, UIT
         }
         
         let content = UNMutableNotificationContent()
-        content.title = NSString.localizedUserNotificationString(forKey: NSLocalizedString("TimeForRecommendations", comment: ""), arguments: nil)
-        content.body = NSString.localizedUserNotificationString(forKey: NSLocalizedString("SeeThem", comment: ""),
+        content.title = NSString.localizedUserNotificationString(forKey: Localization("TimeForRecommendations"), arguments: nil)
+        content.body = NSString.localizedUserNotificationString(forKey: Localization("SeeThem"),
                                                                 arguments: nil)
       //  content.badge = NSNumber(value: UIApplication.shared.applicationIconBadgeNumber + 1)
         
@@ -148,8 +149,8 @@ class RecommendationsController : ListViewController, UITableViewDataSource, UIT
         
 //        let notification = UILocalNotification()
 //        notification.fireDate = Date(timeIntervalSinceNow: 84600 * 7)
-//        notification.alertBody = NSLocalizedString("SeeThem", comment: "")
-//        notification.alertAction = NSLocalizedString("TimeForRecommendations", comment: "")
+//        notification.alertBody = Localization("SeeThem")
+//        notification.alertAction = Localization("TimeForRecommendations")
 //        notification.applicationIconBadgeNumber = UIApplication.shared.applicationIconBadgeNumber + 1
 //        notification.soundName = UILocalNotificationDefaultSoundName
 //        notification.repeatInterval = .weekOfMonth // .WeekOfMonth //Minute
@@ -167,7 +168,7 @@ class RecommendationsController : ListViewController, UITableViewDataSource, UIT
             generateNewRecs(noFound: noFound)
             DefaultsManager.putObject(Date() as AnyObject, key: DefaultsManager.LAST_DATE)
             
-            descLabel.text = "\(NSLocalizedString("RecommendationsExplainedShort", comment: "")) \(NSLocalizedString("LastUpdate_", comment: "")) \(dateFormatter.string(from:  Date()))"
+            descLabel.text = "\(Localization("RecommendationsExplainedShort")) \(Localization("LastUpdate_")) \(dateFormatter.string(from:  Date()))"
             
             
             //UIApplication.shared.cancelAllLocalNotifications()
@@ -179,7 +180,7 @@ class RecommendationsController : ListViewController, UITableViewDataSource, UIT
         
         let days = howManyDaysHavePassed(lastDate as? Date ?? Date(), today: Date())
         
-        descLabel.text = "\(NSLocalizedString("RecommendationsExplainedShort", comment: "")) \(NSLocalizedString("LastUpdate_", comment: "")) \(dateFormatter.string(from: lastDate as? Date ?? Date()))"
+        descLabel.text = "\(Localization("RecommendationsExplainedShort")) \(Localization("LastUpdate_")) \(dateFormatter.string(from: lastDate as? Date ?? Date()))"
         
         if (days >= 7 || noFound) {
             
@@ -210,7 +211,7 @@ class RecommendationsController : ListViewController, UITableViewDataSource, UIT
                 Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
             }
             
-            showLoadingView(msg: NSLocalizedString("GettingWorks", comment: ""))
+            showLoadingView(msg: Localization("GettingWorks"))
             
             let mutableURLRequest = NSMutableURLRequest(url: URL( string: (encodedURLRequest!.url?.absoluteString)!)!)
             mutableURLRequest.httpMethod = "GET"
@@ -230,7 +231,7 @@ class RecommendationsController : ListViewController, UITableViewDataSource, UIT
                         self.showWorks()
                     } else {
                         self.hideLoadingView()
-                        self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CheckInternet", comment: ""))
+                        self.showError(title: Localization("Error"), message: Localization("CheckInternet"))
                     }
                 })
         }
@@ -331,6 +332,7 @@ class RecommendationsController : ListViewController, UITableViewDataSource, UIT
         Answers.logCustomEvent(withName: "Recs_generated",
                                customAttributes: [
                                 "query_tag": searchQuery.tag])
+        Analytics.logEvent("Recommendations: Generated", parameters: ["query_tag" : searchQuery.tag as NSObject])
         
         applySearch(searchQuery)
     }
@@ -352,7 +354,7 @@ class RecommendationsController : ListViewController, UITableViewDataSource, UIT
             Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
         }
         
-        showLoadingView(msg: NSLocalizedString("GettingWorks", comment: ""))
+        showLoadingView(msg: Localization("GettingWorks"))
         
         let urlStr: String = (encodedURLRequest?.url?.absoluteString)!
         
@@ -375,7 +377,7 @@ class RecommendationsController : ListViewController, UITableViewDataSource, UIT
                     //self.getFeed(d)
                 } else {
                     self.hideLoadingView()
-                    self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CheckInternet", comment: ""))
+                    self.showError(title: Localization("Error"), message: Localization("CheckInternet"))
                 }
                 self.showWorks()
                 self.refreshControl.endRefreshing()

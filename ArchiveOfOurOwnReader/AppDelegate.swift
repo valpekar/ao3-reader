@@ -88,6 +88,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             }
         }
         
+        let _ = Localisator.sharedInstance.currentLanguage //init localizator
+        
         //let worksToReload = DefaultsManager.getStringArray(DefaultsManager.NOTIF_IDS_ARR)
        // application.applicationIconBadgeNumber = worksToReload.count
         
@@ -525,7 +527,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                  */
                 debugLog(message: "Unresolved error \(error), \(error.userInfo)")
                 
-                if (error.code == 134110 || error.code == 259 ) {
+                if (error.code == 134110 || error.code == 259 || error.code == 256 || error.code == 11) {
                     debugLog(message: "error to load old db, try to create new: \(error.userInfo)")
                     container = self.createNewContainer()
                     self.showError(message: "Error while trying to load database. More Info: \(error.userInfo)")

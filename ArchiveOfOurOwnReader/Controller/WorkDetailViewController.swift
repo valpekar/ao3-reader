@@ -11,6 +11,7 @@ import CoreData
 import GoogleMobileAds
 import Alamofire
 import Crashlytics
+import Firebase
 
 class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -71,6 +72,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     
     var downloadUrls: [String:String] = [:]
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -84,6 +86,8 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         }
         
         if (purchased == false && donated == false) {
+            loadAdMobRewared()
+            
             //loadAdMobInterstitial()
             bannerView.adUnitID = "ca-app-pub-8760316520462117/1990583589"
             bannerView.rootViewController = self
@@ -163,6 +167,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         if (self.fromNotif == true) {
             Answers.logCustomEvent(withName: "WorkDetail: from notification",
                                    customAttributes: [:])
+            Analytics.logEvent("WorkDetail: from notification", parameters: [:])
         }
     }
     
@@ -239,6 +244,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         Answers.logCustomEvent(withName: "WorkDetail: Kudos add",
                                customAttributes: [
                                 "workId": workId])
+        Analytics.logEvent("WorkDetail: Kudos add", parameters: ["workId": workId as NSObject])
         
         doLeaveKudos(workId: workId)
     }
@@ -255,7 +261,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         updateAppBadge()
         
         if (downloadedWorkItem.needsUpdate ?? 0 == 1) {
-            self.showSuccess(title: NSLocalizedString("Update", comment: ""), message: NSLocalizedString("UpdateAvail", comment: ""))
+            self.showSuccess(title: Localization("Update"), message: Localization("UpdateAvail"))
         }
         
         let auth = downloadedWorkItem.author ?? ""
@@ -354,7 +360,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         params["view_adult"] = "true" as AnyObject?
         vadult = "?view_adult=true"
         
-        showLoadingView(msg: NSLocalizedString("LoadingWrk", comment: ""))
+        showLoadingView(msg: Localization("LoadingWrk"))
         
         var workUrl = url
         if (url.isEmpty) {
@@ -371,7 +377,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                     self.hideLoadingView()
                 } else {
                     self.hideLoadingView()
-                    self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CheckInternet", comment: ""))
+                    self.showError(title: Localization("Error"), message: Localization("CheckInternet"))
                 }
             })
         
@@ -384,6 +390,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
         if (workItem == nil) {
             Answers.logCustomEvent(withName: "WorkDetail: Show Online", customAttributes: ["downloadCurWork" : "is nil"])
+            Analytics.logEvent("WorkDetail: Show Online", parameters: ["downloadCurWork" : "is nil" as NSObject])
             return
         }
         
@@ -394,8 +401,8 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         if let sorrydiv = doc.search(withXPathQuery: "//div[@class='flash error']") {
         
         if(sorrydiv.count>0 && (sorrydiv[0] as? TFHppleElement)?.text().range(of: "Sorry") != nil) {
-            workItem.author = NSLocalizedString("Sorry", comment: "")
-            workItem.workTitle = NSLocalizedString("WrkAvailOnlyRegistered", comment: "");
+            workItem.author = Localization("Sorry")
+            workItem.workTitle = Localization("WrkAvailOnlyRegistered");
             workItem.complete = "";
          //   return NEXT_CHAPTER_NOT_EXIST;
             return
@@ -406,8 +413,8 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             caution.count > 0,
             let _ = caution[0].text().range(of: "adult content")  {
             
-            workItem.author = NSLocalizedString("Sorry", comment: "")
-            workItem.workTitle = NSLocalizedString("ContainsAdultContent", comment: "")
+            workItem.author = Localization("Sorry")
+            workItem.workTitle = Localization("ContainsAdultContent")
             workItem.complete = ""
             
             return
@@ -416,8 +423,8 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         if let errH = doc.search(withXPathQuery: "//h2[@class='heading']") {
         
         if (errH.count>0 && (errH[0] as! TFHppleElement).text().range(of: "Error") != nil) {
-            workItem.author = NSLocalizedString("Sorry", comment: "")
-            workItem.workTitle = NSLocalizedString("AO3Issue", comment: "")
+            workItem.author = Localization("Sorry")
+            workItem.workTitle = Localization("AO3Issue")
             workItem.complete = ""
             
             return
@@ -552,7 +559,9 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 
                 if(statsElDt.count > 0 && statsElDd.count > 0) {
                     for i in 0..<statsElDt.count {
-                        workItem.stats += statsElDt[i].text() + " "
+                        if let txt = statsElDt[i].text() {
+                            workItem.stats += txt + " "
+                        }
                         if ((statsElDd.count > i) && (statsElDd[i].text() != nil)) {
                             workItem.stats += statsElDd[i].text() + " "
                         }
@@ -752,7 +761,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                         let time = DispatchTime.now() + Double(Int64(delay)) / Double(NSEC_PER_SEC)
                         DispatchQueue.main.asyncAfter(deadline: time) {
                             
-                            self.showSuccess(title: NSLocalizedString("Update", comment: ""), message: NSLocalizedString("UpdateAvail", comment: ""))
+                            self.showSuccess(title: Localization("Update"), message: Localization("UpdateAvail"))
                         }
                     }
                 }
@@ -845,7 +854,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
         if let noticediv: [TFHppleElement] = doc.search(withXPathQuery: "//div[@class='flash notice']") as? [TFHppleElement] {
             if(noticediv.count > 0) {
-                self.showSuccess(title: NSLocalizedString("AddingBmk", comment: ""), message: noticediv[0].content)
+                self.showSuccess(title: Localization("AddingBmk"), message: noticediv[0].content)
             
                 changedSmth = true
             }
@@ -854,13 +863,13 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         if let sorrydiv = doc.search(withXPathQuery: "//div[@class='flash error']") {
             
             if(sorrydiv.count>0 && (sorrydiv[0] as! TFHppleElement).text().range(of: "Sorry") != nil) {
-                self.showError(title: NSLocalizedString("AddingBmk", comment: ""), message: (sorrydiv[0] as AnyObject).content)
+                self.showError(title: Localization("AddingBmk"), message: (sorrydiv[0] as AnyObject).content)
                 return
             }
         }
         
         if (data.isEmpty) {
-            self.showError(title: NSLocalizedString("CannotAddBmk", comment: ""), message: "Response Is Empty")
+            self.showError(title: Localization("CannotAddBmk"), message: "Response Is Empty")
         }
         return
     }
@@ -904,7 +913,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             readButton.isEnabled = false
             readButton.alpha = 0.5
             
-            self.showError(title:  NSLocalizedString("Error", comment: ""), message: NSLocalizedString("SensitiveContent", comment: ""))
+            self.showError(title:  Localization("Error"), message: Localization("SensitiveContent"))
             
         }
     }
@@ -964,11 +973,13 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                     cController.serieId = workItem.serieUrl
                     
                     Answers.logCustomEvent(withName: "WorkDetail: view serie", customAttributes: ["work" : "online", "id" : cController.serieId ])
+                    Analytics.logEvent("WorkDetail: view serie", parameters: ["work" : "online" as NSObject, "id" : cController.serieId as NSObject])
                     
                 } else if (downloadedWorkItem != nil) {
                     cController.serieId = downloadedWorkItem.serieUrl ?? ""
                     
                     Answers.logCustomEvent(withName: "WorkDetail: view serie", customAttributes: ["work" : "downloaded", "id" : cController.serieId ])
+                    Analytics.logEvent("WorkDetail: view serie", parameters: ["work" : "downloaded" as NSObject, "id" : cController.serieId as NSObject])
                 }
              }
         }
@@ -1187,7 +1198,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                         cell!.label.text = "No Preview"
                     }
                 } else {
-                    cell!.label.text = NSLocalizedString("SensitiveContent", comment: "")
+                    cell!.label.text = Localization("SensitiveContent")
                 }
             } else if (downloadedWorkItem != nil) {
                 cell!.label.text = downloadedWorkItem.topicPreview ?? "No Preview"
@@ -1256,7 +1267,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             
         case 7:
             if (workItem != nil) {
-                cell!.label.text = "\(workItem.words) \(NSLocalizedString("Words", comment: ""))"
+                cell!.label.text = "\(workItem.words) \(Localization("Words"))"
             } else if (downloadedWorkItem != nil) {
                 cell!.label.text = downloadedWorkItem.words ?? ""
             }
@@ -1404,6 +1415,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         Answers.logCustomEvent(withName: "WorkDetail: author touched",
                                customAttributes: [
                                 "author": authorName])
+         Analytics.logEvent("WorkDetail: author touched", parameters: ["author": authorName as NSObject])
         
         if (authorName.contains(" ") && !authorName.contains(",")) {
             let nameArr = authorName.split{$0 == " "}.map(String.init)
@@ -1468,7 +1480,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             return
         }
         
-        showLoadingView(msg: NSLocalizedString("MarkingForLater", comment: ""))
+        showLoadingView(msg: Localization("MarkingForLater"))
         
         var requestStr = "https://archiveofourown.org/works/"
         var bid = ""
@@ -1506,6 +1518,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         Answers.logCustomEvent(withName: "WorkDetail: MarkAsRead",
                                customAttributes: [
                                 "workId": bid])
+        Analytics.logEvent("WorkDetail: MarkAsRead", parameters: ["workId": bid as NSObject])
         
         
         if let del = UIApplication.shared.delegate as? AppDelegate {
@@ -1534,7 +1547,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                             
                         } else {
                             self.hideLoadingView()
-                            self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CheckInternet", comment: ""))
+                            self.showError(title: Localization("Error"), message: Localization("CheckInternet"))
                         }
                     })
             }
@@ -1550,20 +1563,20 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
         if let noticediv: [TFHppleElement] = doc.search(withXPathQuery: "//div[@class='flash notice']") as? [TFHppleElement] {
             if(noticediv.count > 0) {
-                showSuccess(title: NSLocalizedString("MarkingForLater", comment: ""), message: noticediv[0].content)
+                showSuccess(title: Localization("MarkingForLater"), message: noticediv[0].content)
             }
         }
         
         if let sorrydiv = doc.search(withXPathQuery: "//div[@class='flash error']") {
             
             if(sorrydiv.count>0 && (sorrydiv[0] as! TFHppleElement).text().range(of: "Sorry") != nil) {
-                self.showError(title: NSLocalizedString("MarkingForLater", comment: ""), message: (sorrydiv[0] as AnyObject).content)
+                self.showError(title: Localization("MarkingForLater"), message: (sorrydiv[0] as AnyObject).content ?? "")
                 return
             }
         }
         
         if (data.isEmpty) {
-            self.showError(title: NSLocalizedString("CannotMark", comment: ""), message: "Response Is Empty")
+            self.showError(title: Localization("CannotMark"), message: "Response Is Empty")
         }
         return
     }
@@ -1577,7 +1590,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             return
         }
         
-        showLoadingView(msg: NSLocalizedString("MarkingForLater", comment: ""))
+        showLoadingView(msg: Localization("MarkingForLater"))
         
         var requestStr = "https://archiveofourown.org/works/"
         var bid = ""
@@ -1615,6 +1628,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         Answers.logCustomEvent(withName: "WorkDetail: MarkForLater add",
                                customAttributes: [
                                 "workId": bid])
+        Analytics.logEvent("WorkDetail: MarkForLater add", parameters: ["workId": bid as NSObject])
         
         
         if let del = UIApplication.shared.delegate as? AppDelegate {
@@ -1643,7 +1657,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                             
                         } else {
                             self.hideLoadingView()
-                            self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CheckInternet", comment: ""))
+                            self.showError(title: Localization("Error"), message: Localization("CheckInternet"))
                         }
                     })
             }
@@ -1663,13 +1677,13 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     }
     
     func deletebookmarkWorkAction() {
-        let deleteAlert = UIAlertController(title: NSLocalizedString("AreYouSure", comment: ""), message: NSLocalizedString("SureDeleteWrkFromBmks", comment: ""), preferredStyle: UIAlertController.Style.alert)
+        let deleteAlert = UIAlertController(title: Localization("AreYouSure"), message: Localization("SureDeleteWrkFromBmks"), preferredStyle: UIAlertController.Style.alert)
         
-        deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: { (action: UIAlertAction) in
+        deleteAlert.addAction(UIAlertAction(title: Localization("Cancel"), style: .cancel, handler: { (action: UIAlertAction) in
             print("Cancel")
         }))
         
-        deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Yes", comment: ""), style: .default, handler: { (action: UIAlertAction) in
+        deleteAlert.addAction(UIAlertAction(title: Localization("Yes"), style: .default, handler: { (action: UIAlertAction) in
             
             self.sendDeleteBookmarkRequest()
         }))
@@ -1687,7 +1701,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             return
         }
         
-        showLoadingView(msg: NSLocalizedString("AddingBmk", comment: ""))
+        showLoadingView(msg: Localization("AddingBmk"))
         
         var requestStr = "https://archiveofourown.org/works/"
         var bid = ""
@@ -1725,6 +1739,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         Answers.logCustomEvent(withName: "WorkDetail: Bookmark add",
                                customAttributes: [
                                 "boomarkableId": bid])
+        Analytics.logEvent("WorkDetail: Bookmark add", parameters: ["boomarkableId": bid as NSObject])
         
         var params:[String:Any] = [String:Any]()
         params["utf8"] = "✓" as AnyObject?
@@ -1768,7 +1783,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                         
                     } else {
                         self.hideLoadingView()
-                        self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CheckInternet", comment: ""))
+                        self.showError(title: Localization("Error"), message: Localization("CheckInternet"))
                     }
                 })
             }
@@ -1783,7 +1798,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             return
         }
         
-        showLoadingView(msg: NSLocalizedString("DeletingBmk", comment: ""))
+        showLoadingView(msg: Localization("DeletingBmk"))
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
             Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
@@ -1802,6 +1817,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
         Answers.logCustomEvent(withName: "WorkDetail: Bookmark delete",
                                customAttributes: [:])
+        Analytics.logEvent("WorkDetail: Bookmark delete", parameters: [:])
         
         var params:[String:AnyObject] = [String:AnyObject]()
         params["utf8"] = "✓" as AnyObject?
@@ -1822,7 +1838,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                     self.hideLoadingView()
                 } else {
                     self.hideLoadingView()
-                    self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CheckInternet", comment: ""))
+                    self.showError(title: Localization("Error"), message: Localization("CheckInternet"))
                 }
             })
     }
@@ -1834,18 +1850,18 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             if(noticediv.count > 0) {
                 bookmarked = false
                 changedSmth = true
-//                showNotification(in: self, title: NSLocalizedString("DeleteFromBmk", comment: ""), subtitle: noticediv[0].content, type: Type.success, customTypeName: "", callback: {
+//                showNotification(in: self, title: Localization("DeleteFromBmk"), subtitle: noticediv[0].content, type: Type.success, customTypeName: "", callback: {
 //
 //                })
                 
-                showSuccess(title: NSLocalizedString("DeleteFromBmk", comment: ""), message: noticediv[0].content)
+                showSuccess(title: Localization("DeleteFromBmk"), message: noticediv[0].content)
             }
         }
         
         if let sorrydiv = doc.search(withXPathQuery: "//div[@class='flash error']") {
             
             if(sorrydiv.count>0 && (sorrydiv[0] as? TFHppleElement)?.text().range(of: "Sorry") != nil) {
-                self.showError(title: NSLocalizedString("DeleteFromBmk", comment: ""), message: (sorrydiv[0] as AnyObject).content)
+                self.showError(title: Localization("DeleteFromBmk"), message: (sorrydiv[0] as AnyObject).content ?? "")
 
                 return
             }
@@ -1872,7 +1888,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         Answers.logCustomEvent(withName: "WorkDetail: download",
                                customAttributes: [
                                 "workId": wId])
-
+        Analytics.logEvent("WorkDetail: download", parameters: ["workId": wId as NSObject])
     }
     
    override func onSavedWorkLoaded(_ response: DefaultDataResponse) {
@@ -1899,7 +1915,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             }
         } else {
             self.hideLoadingView()
-            self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CheckInternet", comment: ""))
+            self.showError(title: Localization("Error"), message: Localization("CheckInternet"))
         }
     }
     
@@ -1914,27 +1930,37 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             self.parseCookies(response)
             let _ = self.downloadWork(d, workItemOld: self.workItem)
             
+            var worksToReload = DefaultsManager.getStringArray(DefaultsManager.NOTIF_IDS_ARR)
+            let workId = self.workItem.workId
+            if worksToReload.contains(workId), let idx = worksToReload.index(of: workId) {
+                worksToReload.remove(at: idx)
+            }
+            DefaultsManager.putStringArray(worksToReload, key: DefaultsManager.NOTIF_IDS_ARR)
+            
+            updateAppBadge()
+            
         } else {
             self.hideLoadingView()
-            self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CheckInternet", comment: ""))
+            self.showError(title: Localization("Error"), message: Localization("CheckInternet"))
         }
     }
     
     func deleteWork() {
         if (downloadedWorkItem != nil) {
-            let deleteAlert = UIAlertController(title: NSLocalizedString("AreYouSure", comment: ""), message: NSLocalizedString("SureDeleteWrk", comment: ""), preferredStyle: UIAlertController.Style.alert)
+            let deleteAlert = UIAlertController(title: Localization("AreYouSure"), message: Localization("SureDeleteWrk"), preferredStyle: UIAlertController.Style.alert)
             
-            deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .default, handler: { (action: UIAlertAction) in
+            deleteAlert.addAction(UIAlertAction(title: Localization("Cancel"), style: .default, handler: { (action: UIAlertAction) in
                 print("Cancel")
             }))
             
-            deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Yes", comment: ""), style: .default, handler: { (action: UIAlertAction) in
+            deleteAlert.addAction(UIAlertAction(title: Localization("Yes"), style: .default, handler: { (action: UIAlertAction) in
                 
                 let wId = self.downloadedWorkItem.workId ?? "0"
                 
                 Answers.logCustomEvent(withName: "WorkDetail: delete from db",
                                        customAttributes: [
                                         "workId": self.downloadedWorkItem.workId ?? "0"])
+                Analytics.logEvent("WorkDetail: delete from db", parameters: ["workId": self.downloadedWorkItem.workId ?? "0" as NSObject])
                 
                 guard let appDel:AppDelegate = UIApplication.shared.delegate as? AppDelegate else {
                     return
@@ -1945,13 +1971,13 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                     try context.save()
                 } catch _ {
                     NSLog("Cannot delete saved work")
-                    self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CannotDeleteWrk", comment: ""))
+                    self.showError(title: Localization("Error"), message: Localization("CannotDeleteWrk"))
                 }
                 
                 self.saveWorkNotifItem(workId: wId, wasDeleted: NSNumber(booleanLiteral: true))
                 self.sendAllNotSentForDelete()
                 
-                self.showSuccess(title: NSLocalizedString("Success", comment: ""), message: NSLocalizedString("WorkDeletedFromDownloads", comment: ""))
+                self.showSuccess(title: Localization("Success"), message: Localization("WorkDeletedFromDownloads"))
             }))
             
             deleteAlert.view.tintColor = AppDelegate.redColor
@@ -1991,11 +2017,11 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     }
     
     @IBAction func settingsButtonTouched(_ sender: AnyObject) {
-        let optionMenu = UIAlertController(title: nil, message: NSLocalizedString("WrkOptions", comment: ""), preferredStyle: .actionSheet)
+        let optionMenu = UIAlertController(title: nil, message: Localization("WrkOptions"), preferredStyle: .actionSheet)
         optionMenu.view.tintColor = AppDelegate.redColor
         
         if (downloadedWorkItem != nil) {
-            let deleteAction = UIAlertAction(title: NSLocalizedString("DeleteWrk", comment: ""), style: .default, handler: {
+            let deleteAction = UIAlertAction(title: Localization("DeleteWrk"), style: .default, handler: {
                 (alert: UIAlertAction!) -> Void in
                 self.deleteWork()
             })
@@ -2009,39 +2035,39 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         optionMenu.addAction(markNotifAction)
         
         if (workItem != nil  && !isSensitive) {
-            let saveAction = UIAlertAction(title: NSLocalizedString("DownloadWrk", comment: ""), style: .default, handler: {
+            let saveAction = UIAlertAction(title: Localization("DownloadWrk"), style: .default, handler: {
                 (alert: UIAlertAction!) -> Void in
                 self.downloadWorkAction()
             })
             optionMenu.addAction(saveAction)
         } else if (downloadedWorkItem != nil) {
-            let reloadAction = UIAlertAction(title: NSLocalizedString("ReloadWrk", comment: ""), style: .default, handler: {
+            let reloadAction = UIAlertAction(title: Localization("ReloadWrk"), style: .default, handler: {
                 (alert: UIAlertAction!) -> Void in
                 self.downloadWorkAction()
             })
             optionMenu.addAction(reloadAction)
         }
         
-        let commentAction = UIAlertAction(title: NSLocalizedString("ViewComments", comment: ""), style: .default, handler: {
+        let commentAction = UIAlertAction(title: Localization("ViewComments"), style: .default, handler: {
             (alert: UIAlertAction!) -> Void in
             self.commentWorkAction()
         })
         optionMenu.addAction(commentAction)
         
-        let kudosAction = UIAlertAction(title: NSLocalizedString("LeaveKudos", comment: ""), style: .default, handler: {
+        let kudosAction = UIAlertAction(title: Localization("LeaveKudos"), style: .default, handler: {
             (alert: UIAlertAction!) -> Void in
             self.leaveKudos()
         })
         optionMenu.addAction(kudosAction)
         
         if (!bookmarked) {
-            let bookmarkAction = UIAlertAction(title: NSLocalizedString("Bookmark", comment: ""), style: .default, handler: {
+            let bookmarkAction = UIAlertAction(title: Localization("Bookmark"), style: .default, handler: {
                 (alert: UIAlertAction!) -> Void in
                 self.bookmarkWorkAction()
             })
             optionMenu.addAction(bookmarkAction)
         } else {
-            let bookmarkAction = UIAlertAction(title: NSLocalizedString("DeleteBmk", comment: ""), style: .default, handler: {
+            let bookmarkAction = UIAlertAction(title: Localization("DeleteBmk"), style: .default, handler: {
                 (alert: UIAlertAction!) -> Void in
                 self.deletebookmarkWorkAction()
             })
@@ -2049,13 +2075,13 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         }
         
         if (self.markedForLater == false) {
-            let markForLaterAction = UIAlertAction(title: NSLocalizedString("MarkForLater", comment: ""), style: .default, handler: {
+            let markForLaterAction = UIAlertAction(title: Localization("MarkForLater"), style: .default, handler: {
                 (alert: UIAlertAction!) -> Void in
                 self.markForLaterWorkAction()
             })
             optionMenu.addAction(markForLaterAction)
         } else {
-            let markAsReadAction = UIAlertAction(title: NSLocalizedString("MarkAsRead", comment: ""), style: .default, handler: {
+            let markAsReadAction = UIAlertAction(title: Localization("MarkAsRead"), style: .default, handler: {
                 (alert: UIAlertAction!) -> Void in
                 self.markAsReadWorkAction()
             })
@@ -2063,27 +2089,27 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         }
         
         if (downloadUrls.count > 0 && !isSensitive) {
-            let downloadAction = UIAlertAction(title: NSLocalizedString("DownloadFile", comment: ""), style: .default, handler: {
+            let downloadAction = UIAlertAction(title: Localization("DownloadFile"), style: .default, handler: {
                 (alert: UIAlertAction!) -> Void in
                 self.showDownloadDialog()
             })
             optionMenu.addAction(downloadAction)
         }
         
-        let browserAction = UIAlertAction(title: NSLocalizedString("OpenInBrowser", comment: ""), style: .default, handler: {
+        let browserAction = UIAlertAction(title: Localization("OpenInBrowser"), style: .default, handler: {
             (alert: UIAlertAction!) -> Void in
             self.openBrowserAction()
         })
         optionMenu.addAction(browserAction)
         
-        let shareAction = UIAlertAction(title: NSLocalizedString("Share", comment: ""), style: .default, handler: {
+        let shareAction = UIAlertAction(title: Localization("Share"), style: .default, handler: {
             (alert: UIAlertAction!) -> Void in
             self.shareFic()
         })
         optionMenu.addAction(shareAction)
         
         //
-        let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: {
+        let cancelAction = UIAlertAction(title: Localization("Cancel"), style: .cancel, handler: {
             (alert: UIAlertAction!) -> Void in
             print("Cancelled")
         })
@@ -2101,7 +2127,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
         let keys: [String] = Array(downloadUrls.keys)
         
-        let optionMenu = UIAlertController(title: nil, message: NSLocalizedString("WrkOptions", comment: ""), preferredStyle: .actionSheet)
+        let optionMenu = UIAlertController(title: nil, message: Localization("WrkOptions"), preferredStyle: .actionSheet)
         optionMenu.view.tintColor = AppDelegate.redColor
         
         for key in keys {
@@ -2112,7 +2138,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             optionMenu.addAction(downloadAction)
         }
         
-        let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: {
+        let cancelAction = UIAlertAction(title: Localization("Cancel"), style: .cancel, handler: {
             (alert: UIAlertAction!) -> Void in
             print("Cancelled")
         })
@@ -2137,6 +2163,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         Answers.logCustomEvent(withName: "WorkDetail: Kudos add",
                                customAttributes: [
                                 "workId": workId])
+        Analytics.logEvent("WorkDetail: Kudos add", parameters: ["workId": workId as NSObject])
         
         doLeaveKudos(workId: workId)
         
@@ -2161,10 +2188,10 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             let time = DispatchTime.now() + Double(Int64(delay)) / Double(NSEC_PER_SEC)
             DispatchQueue.main.asyncAfter(deadline: time) {
                 DispatchQueue.main.asyncAfter(deadline: time) {
-//                    showNotification(in: self, title: NSLocalizedString("Update", comment: ""), subtitle: NSLocalizedString("UpdateAvail", comment: ""), type: Type.success, customTypeName: "", duration: 15.0, callback: {
+//                    showNotification(in: self, title: Localization("Update"), subtitle: Localization("UpdateAvail"), type: Type.success, customTypeName: "", duration: 15.0, callback: {
 //
 //                    } , canBeDismissedByUser: true)
-                    self.showSuccess(title: NSLocalizedString("Update", comment: ""), message: NSLocalizedString("UpdateAvail", comment: ""))
+                    self.showSuccess(title: Localization("Update"), message: Localization("UpdateAvail"))
                 }
             }
         }
@@ -2232,6 +2259,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         Answers.logCustomEvent(withName: "Work Detail: download file",
                                        customAttributes: [
                                         "url": downloadUrl])
+        Analytics.logEvent("WorkDetail: download file", parameters: ["url": downloadUrl as NSObject])
         
         if let url = URL(string: finalPath) {
             UIApplication.shared.open(url, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([ : ]), completionHandler: { (res) in
@@ -2285,6 +2313,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         Answers.logCustomEvent(withName: "WorkDetail: browser open",
                                customAttributes: [
                                 "workId": wId])
+        Analytics.logEvent("WorkDetail: browser open", parameters: ["workId": wId as NSObject])
         
         UIApplication.shared.open(URL(string: "https://archiveofourown.org/works/\(wId)")!, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([ : ]), completionHandler: { (res) in
             print("open url \(res)")
@@ -2294,7 +2323,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     
     func shareFic() {
         var wId = ""
-        var wname = ""
+      //  var wname = ""
         if (workItem != nil) {
             wId = workItem.workId
         } else if (downloadedWorkItem != nil) {
@@ -2304,6 +2333,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         Answers.logCustomEvent(withName: "WorkDetail: share",
                                customAttributes: [
                                 "workId": wId])
+        Analytics.logEvent("WorkDetail: share", parameters: ["workId": wId as NSObject])
         
         let url = URL(string: "https://archiveofourown.org/works/\(wId)")!
         
@@ -2359,3 +2389,4 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
 fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
 	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
 }
+

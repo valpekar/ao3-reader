@@ -149,17 +149,17 @@ class ViewFoldersController: BaseFolderController {
     }
     
     @IBAction func sortFoldersTouched(_ sender: AnyObject) {
-        let optionMenu = UIAlertController(title: nil, message: NSLocalizedString("Sort Options", comment: ""), preferredStyle: .actionSheet)
+        let optionMenu = UIAlertController(title: nil, message: Localization("Sort Options"), preferredStyle: .actionSheet)
         optionMenu.view.tintColor = AppDelegate.redColor
         
-        let dateAction = UIAlertAction(title: NSLocalizedString("By Date Added", comment: ""), style: .default, handler: {
+        let dateAction = UIAlertAction(title: Localization("By Date Added"), style: .default, handler: {
             (alert: UIAlertAction!) -> Void in
             self.sortBy = "date"
             
             self.saveSortOptionsAndReload()
         })
         
-        let azAction = UIAlertAction(title: NSLocalizedString("By Name", comment: ""), style: .default, handler: {
+        let azAction = UIAlertAction(title: Localization("By Name"), style: .default, handler: {
             (alert: UIAlertAction!) -> Void in
             self.sortBy = "name"
             
@@ -168,7 +168,7 @@ class ViewFoldersController: BaseFolderController {
         optionMenu.addAction(azAction)
         optionMenu.addAction(dateAction)
         
-//        let authorAction = UIAlertAction(title: NSLocalizedString("By Works Count", comment: ""), style: .default, handler: {
+//        let authorAction = UIAlertAction(title: Localization("By Works Count"), style: .default, handler: {
 //            (alert: UIAlertAction!) -> Void in
 //            self.sortBy = "works.count"
 //
@@ -176,7 +176,7 @@ class ViewFoldersController: BaseFolderController {
 //        })
 //        optionMenu.addAction(authorAction)
         
-        let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: {
+        let cancelAction = UIAlertAction(title: Localization("Cancel"), style: .cancel, handler: {
             (alert: UIAlertAction!) -> Void in
             print("Cancelled")
         })

@@ -13,7 +13,7 @@ import RMessage
 
 class HistoryViewController : ListViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
-    var boomarksAddedStr = NSLocalizedString("History", comment: "")
+    var boomarksAddedStr = Localization("History")
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var tableView:UITableView!
     @IBOutlet weak var errView:UIView!
@@ -26,13 +26,13 @@ class HistoryViewController : ListViewController, UITableViewDataSource, UITable
         self.worksElement = "reading work"
         self.itemsCountHeading = "h2"
                 
-        self.title = NSLocalizedString("History", comment: "")
+        self.title = Localization("History")
         
         self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.estimatedRowHeight = 200
         
         self.refreshControl = UIRefreshControl()
-        self.refreshControl.attributedTitle = NSAttributedString(string: NSLocalizedString("PullToRefresh", comment: ""))
+        self.refreshControl.attributedTitle = NSAttributedString(string: Localization("PullToRefresh"))
         self.refreshControl.addTarget(self, action: #selector(HistoryViewController.refresh(_:)), for: UIControl.Event.valueChanged)
         self.tableView.addSubview(self.refreshControl)
         
@@ -94,7 +94,7 @@ class HistoryViewController : ListViewController, UITableViewDataSource, UITable
         
         let username = DefaultsManager.getString(DefaultsManager.LOGIN)
         
-        showLoadingView(msg: NSLocalizedString("GettingHistory", comment: ""))
+        showLoadingView(msg: Localization("GettingHistory"))
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
             Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
@@ -118,7 +118,7 @@ class HistoryViewController : ListViewController, UITableViewDataSource, UITable
                     self.showWorks()
                 } else {
                     self.hideLoadingView()
-                    RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                    RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("CheckInternet"), type: RMessageType.error, customTypeName: "", callback: {
                         
                     })
                 }
@@ -240,7 +240,7 @@ class HistoryViewController : ListViewController, UITableViewDataSource, UITable
     @IBAction func downloadButtonTouched(_ sender: UIButton) {
         
         let curWork:NewsFeedItem = works[sender.tag]
-        showLoadingView(msg: "\(NSLocalizedString("DwnloadingWrk", comment: "")) \(curWork.title)")
+        showLoadingView(msg: "\(Localization("DwnloadingWrk")) \(curWork.title)")
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
             Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
@@ -262,7 +262,7 @@ class HistoryViewController : ListViewController, UITableViewDataSource, UITable
                     let _ = self.downloadWork(d, curWork: curWork)
                 } else {
                     self.hideLoadingView()
-                    RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                    RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("CheckInternet"), type: RMessageType.error, customTypeName: "", callback: {
                         
                     })
                 }
@@ -274,15 +274,15 @@ class HistoryViewController : ListViewController, UITableViewDataSource, UITable
     
     @IBAction func deleteButtonTouched(_ sender: UIButton) {
         
-        let deleteAlert = UIAlertController(title: NSLocalizedString("AreYouSure", comment: ""), message: NSLocalizedString("SureDeleteFromHistory", comment: ""), preferredStyle: UIAlertController.Style.alert)
+        let deleteAlert = UIAlertController(title: Localization("AreYouSure"), message: Localization("SureDeleteFromHistory"), preferredStyle: UIAlertController.Style.alert)
         
-        deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: { (action: UIAlertAction) in
+        deleteAlert.addAction(UIAlertAction(title: Localization("Cancel"), style: .cancel, handler: { (action: UIAlertAction) in
             #if DEBUG
             print("Cancel")
             #endif
         }))
         
-        deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Yes", comment: ""), style: .default, handler: { (action: UIAlertAction) in
+        deleteAlert.addAction(UIAlertAction(title: Localization("Yes"), style: .default, handler: { (action: UIAlertAction) in
             
             let curWork:NewsFeedItem = self.works[sender.tag]
             self.deleteItemFromHistory(curWork)
@@ -296,7 +296,7 @@ class HistoryViewController : ListViewController, UITableViewDataSource, UITable
     }
     
     func deleteItemFromHistory(_ curWork: NewsFeedItem) {
-        showLoadingView(msg: NSLocalizedString("DeletingFromHistory", comment: ""))
+        showLoadingView(msg: Localization("DeletingFromHistory"))
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
             Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
@@ -339,7 +339,7 @@ class HistoryViewController : ListViewController, UITableViewDataSource, UITable
                     self.hideLoadingView()
                 } else {
                     self.hideLoadingView()
-                    RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                    RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("CheckInternet"), type: RMessageType.error, customTypeName: "", callback: {
                         
                     })
                 }
@@ -359,12 +359,12 @@ class HistoryViewController : ListViewController, UITableViewDataSource, UITable
             if let index = self.works.index( where: {$0.workId == curWork.workId}) {
                 self.works.remove(at: index)
             }
-            self.showSuccess(title: NSLocalizedString("DeletingFromHistory", comment: ""), message: noticediv?[0].content ?? "")
+            self.showSuccess(title: Localization("DeletingFromHistory"), message: noticediv?[0].content ?? "")
         } else {
             if let sorrydiv = doc.search(withXPathQuery: "//div[@class='flash error']") as? [TFHppleElement] {
             
                 if(sorrydiv.count>0 && sorrydiv[0].text().range(of: "Sorry") != nil) {
-                    self.showError(title: NSLocalizedString("DeletingFromHistory", comment: ""), message: sorrydiv[0].content)
+                    self.showError(title: Localization("DeletingFromHistory"), message: sorrydiv[0].content)
                     return
                 }
             }
@@ -373,15 +373,15 @@ class HistoryViewController : ListViewController, UITableViewDataSource, UITable
     
     
     override func deleteTouched(rowIndex: Int) {
-        let deleteAlert = UIAlertController(title: NSLocalizedString("AreYouSure", comment: ""), message: NSLocalizedString("SureDeleteFromHistory", comment: ""), preferredStyle: UIAlertController.Style.alert)
+        let deleteAlert = UIAlertController(title: Localization("AreYouSure"), message: Localization("SureDeleteFromHistory"), preferredStyle: UIAlertController.Style.alert)
         
-        deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: { (action: UIAlertAction) in
+        deleteAlert.addAction(UIAlertAction(title: Localization("Cancel"), style: .cancel, handler: { (action: UIAlertAction) in
             #if DEBUG
                 print("Cancel")
             #endif
         }))
         
-        deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Yes", comment: ""), style: .default, handler: { (action: UIAlertAction) in
+        deleteAlert.addAction(UIAlertAction(title: Localization("Yes"), style: .default, handler: { (action: UIAlertAction) in
             
             let curWork:NewsFeedItem = self.works[rowIndex]
             self.deleteItemFromHistory(curWork)

@@ -104,7 +104,7 @@ class ImportWorkController : UserMessagesController {
                         }
                 }
             } else {
-                self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CheckLink", comment: ""))
+                self.showError(title: Localization("Error"), message: Localization("CheckLink"))
                 
             }
         }

@@ -15,7 +15,7 @@
 "Error" = "錯誤 👻";
 "CannotBeEmpty" = "請輸入內容！";
 "CheckInternet" = "檢查您的Internet連接";
-"Only30Stroies" = "你只能下載30個故事。 請升級下載更多。";
+"Only30Stroies" = "你只能下載30個故事。 請升級下載更多。 或觀看獎勵視頻1個免費下載。";
 "DwnloadingWrk" = "下載工作";
 "CannotDwnldWrk" = "無法下載工作！";
 "Chapters_" = "章節： ";
@@ -73,7 +73,7 @@
 "DownloadWrk" = "下載工作";
 "ReloadWrk" = "重新加載工作";
 "ViewComments" = "查看評論";
-"LeaveKudos" = "休假";
+"LeaveKudos" = "添加榮譽";
 "LeavingKudos" = "離開榮譽";
 "LeftKudosAlready" = "你已經離開了這裡。:)";
 "KudosAdded" = "榮譽加 :)";
@@ -176,6 +176,35 @@
 "MarkAsRead" = "標記為已讀";
 "Reading Now" = "現在閱讀";
 "ThankYouForSub" = "感謝您購買訂閱！ 感謝您的應用程序將變得更好！🙏";
+"FavoriteAuthors" = "最喜歡的作者";
+"NoFavoriteAuthors" = "你沒有最喜歡的作家！ 從作者的個人資料屏幕中將任何人添加到收藏夾，它們將顯示在此處。";
+"ViewWorks" = "查看作品";
+"AddAuthToFav" = "+ 加入收藏夾作者";
+"RemAuthFromFav" = "- 從喜歡的作者中刪除";
+"ChoosePrefWarn" = "I need to know it so I can give you first portion of fics you might like. You can always choose anything else on  Search screen.";
+"ImportFrm" = "從AO3導入";
+"Works" = "Works";
+"Series" = "Series";
+"Share" = "Share";
+"SecuritySettings" = "Security Settings";
+"MyAO3" = "My AO3 Account";
+"MyPseud" = "Pseud for bookmarks, history etc";
+"Theme" = "Theme";
+"AboutSub" = "About Subscription";
+"Day" = "Day";
+"Night" = "Night";
+"PPolicy" = "Privacy Policy and Terms of Use";
+"Inbox" = "Inbox";
+"MyHighlights" = "My Highlights";
+"MyWorks" = "My Works";
+"ClearAllNotif" = "Clear All Notifications";
+"ProtectBio" = "Protect with Biometric ID or passcode";
+"PremiumFeaturesDesc" = " • Get work recommendations every week \n • No ads, premium fonts \n • Unlimited offline reading";
+"RestorePrevPurchase" = "Restore Previous Purchase";
+"SystemLanguage" = "系統語言";
+"English" = "English";
+"LangChanged" = "語言成功更改。 請重新啟動應用以使更改生效。";
+"ErrLangChanged" = "無法改變語言。 請從支持屏幕給我發電子郵件告訴我！";
 
 
 

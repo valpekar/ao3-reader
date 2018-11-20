@@ -46,9 +46,9 @@ class FavoriteAuthorsController : ListViewController, NSFetchedResultsController
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = NSLocalizedString("FavoriteAuthors", comment: "")
+        self.title = Localization("FavoriteAuthors")
         
-        self.messageLabel.text = NSLocalizedString("NoFavoriteAuthors", comment: "")
+        self.messageLabel.text = Localization("NoFavoriteAuthors")
         
         self.createDrawerButton()
         
@@ -111,6 +111,9 @@ class FavoriteAuthorsController : ListViewController, NSFetchedResultsController
             let item = fetchedResultsController?.object(at: IndexPath(row: selectedRow, section: 0))
             let tagUrl = "https://archiveofourown.org/users/\(item?.name ?? "")/works"
              CLSLogv("FavAuthors: works Tapped = %@", getVaList([tagUrl]))
+            Answers.logCustomEvent(withName: "Fav Authors: works",
+                                   customAttributes: [
+                                    "urlStr": tagUrl])
             if let cController: WorkListController = segue.destination as? WorkListController {
                 cController.tagUrl = tagUrl
             }
@@ -150,7 +153,7 @@ extension FavoriteAuthorsController: UITableViewDelegate, UITableViewDataSource 
     func configureCell(cell: AuthorCell, author: DBFavAuthor?, indexPath: IndexPath) {
         cell.authorNameLabel.text = author?.name ?? ""
         cell.worksButton.tag = indexPath.row
-        cell.worksButton.setTitle("View Works", for: .normal)
+        cell.worksButton.setTitle(Localization("ViewWorks"), for: .normal)
         
         cell.worksButton.addTarget(self, action: #selector( FavoriteAuthorsController.worksTouched), for: UIControl.Event.touchUpInside)
         
@@ -173,8 +176,8 @@ extension FavoriteAuthorsController: UITableViewDelegate, UITableViewDataSource 
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 60
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return Localization("FavoriteAuthors")
     }
     
     //MARK: - NSFetchedResultsControllerDelegate

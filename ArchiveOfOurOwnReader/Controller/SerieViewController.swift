@@ -86,7 +86,7 @@ class SerieViewController: ListViewController, UITableViewDataSource, UITableVie
         
         let checkItems = self.getDownloadedStats()
         
-        showLoadingView(msg: NSLocalizedString("GettingWorks", comment: ""))
+        showLoadingView(msg: Localization("GettingWorks"))
         
         let urlStr = "https://archiveofourown.org\(serieId)"
         
@@ -101,7 +101,7 @@ class SerieViewController: ListViewController, UITableViewDataSource, UITableVie
                     self.showSerie()
                 } else {
                     self.hideLoadingView()
-                    RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                    RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("CheckInternet"), type: RMessageType.error, customTypeName: "", callback: {
                         
                     })
                 }
@@ -148,7 +148,7 @@ class SerieViewController: ListViewController, UITableViewDataSource, UITableVie
         }
         
         let curWork:NewsFeedItem = works[sender.tag]
-        showLoadingView(msg: "\(NSLocalizedString("DwnloadingWrk", comment: "")) \(curWork.title)")
+        showLoadingView(msg: "\(Localization("DwnloadingWrk")) \(curWork.title)")
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
             Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
@@ -171,7 +171,7 @@ class SerieViewController: ListViewController, UITableViewDataSource, UITableVie
                     //self.saveWork()
                 } else {
                     self.hideLoadingView()
-                    RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                    RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("CheckInternet"), type: RMessageType.error, customTypeName: "", callback: {
                         
                     })
                 }
@@ -298,7 +298,7 @@ class SerieViewController: ListViewController, UITableViewDataSource, UITableVie
             
             let checkItems = self.getDownloadedStats()
             
-            showLoadingView(msg: "\(NSLocalizedString("GettingWorks", comment: "")) \(page.name)")
+            showLoadingView(msg: "\(Localization("GettingWorks")) \(page.name)")
             
             Alamofire.request("https://archiveofourown.org" + page.url, method: .get).response(completionHandler: { response in
                 print(response.request ?? "")
@@ -309,7 +309,7 @@ class SerieViewController: ListViewController, UITableViewDataSource, UITableVie
                     self.showSerie()
                 } else {
                     self.hideLoadingView()
-                    RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                    RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("CheckInternet"), type: RMessageType.error, customTypeName: "", callback: {
                         
                     })
                 }

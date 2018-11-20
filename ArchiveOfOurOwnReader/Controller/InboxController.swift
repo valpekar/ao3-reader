@@ -14,7 +14,7 @@ import Crashlytics
 
 class InboxController : ListViewController  {
     
-    var titleStr = NSLocalizedString("Inbox", comment: "")
+    var titleStr = Localization("Inbox")
     
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var tableView:UITableView!
@@ -30,10 +30,10 @@ class InboxController : ListViewController  {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = NSLocalizedString("Inbox", comment: "")
+        self.title = Localization("Inbox")
         
         self.refreshControl = UIRefreshControl()
-        self.refreshControl.attributedTitle = NSAttributedString(string: NSLocalizedString("PullToRefresh", comment: ""))
+        self.refreshControl.attributedTitle = NSAttributedString(string: Localization("PullToRefresh"))
         self.refreshControl.addTarget(self, action: #selector(InboxController.refresh(_:)), for: UIControl.Event.valueChanged)
         self.tableView.addSubview(self.refreshControl)
         
@@ -93,7 +93,7 @@ class InboxController : ListViewController  {
     func requestInbox() {
         let username = DefaultsManager.getString(DefaultsManager.LOGIN)
         
-        showLoadingView(msg: NSLocalizedString("GettingInbox", comment: ""))
+        showLoadingView(msg: Localization("GettingInbox"))
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
             Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: AppDelegate.ao3SiteUrl), mainDocumentURL: nil)
@@ -116,7 +116,7 @@ class InboxController : ListViewController  {
                     self.showInbox()
                 } else {
                     self.hideLoadingView()
-                    RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                    RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("CheckInternet"), type: RMessageType.error, customTypeName: "", callback: {
                         
                     })
                     
@@ -468,24 +468,24 @@ extension InboxController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func selectItem(inboxItem: InboxItem, isRead: Bool, view: UIView) {
-        let optionMenu = UIAlertController(title: nil, message: NSLocalizedString("Options", comment: ""), preferredStyle: .actionSheet)
+        let optionMenu = UIAlertController(title: nil, message: Localization("Options"), preferredStyle: .actionSheet)
         optionMenu.view.tintColor = AppDelegate.redColor
         
         if (isRead == true) {
-            let unreadAction = UIAlertAction(title: NSLocalizedString("MarkAsUnread", comment: ""), style: .default, handler: {
+            let unreadAction = UIAlertAction(title: Localization("MarkAsUnread"), style: .default, handler: {
                 (alert: UIAlertAction!) -> Void in
                 self.markItem(asRead: false, commentId: inboxItem.commentId)
             })
             optionMenu.addAction(unreadAction)
         } else {
-            let readAction = UIAlertAction(title: NSLocalizedString("MarkAsRead", comment: ""), style: .default, handler: {
+            let readAction = UIAlertAction(title: Localization("MarkAsRead"), style: .default, handler: {
                 (alert: UIAlertAction!) -> Void in
                 self.markItem(asRead: true, commentId: inboxItem.commentId)
             })
             optionMenu.addAction(readAction)
         }
         
-        let deleteAction = UIAlertAction(title: NSLocalizedString("DeleteFromInbox", comment: ""), style: .default, handler: {
+        let deleteAction = UIAlertAction(title: Localization("DeleteFromInbox"), style: .default, handler: {
             (alert: UIAlertAction!) -> Void in
             
             let delayTime = DispatchTime.now() + Double(Int64(0.3 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
@@ -496,13 +496,13 @@ extension InboxController: UITableViewDataSource, UITableViewDelegate {
         optionMenu.addAction(deleteAction)
         
         if (inboxItem.approved == false) {
-            let approveAction = UIAlertAction(title: NSLocalizedString("Approve", comment: ""), style: .default, handler: {
+            let approveAction = UIAlertAction(title: Localization("Approve"), style: .default, handler: {
                 (alert: UIAlertAction!) -> Void in
                 self.approveItem(approveUrl: inboxItem.approveUrl)
             })
             optionMenu.addAction(approveAction)
         } else {
-            let replyAction = UIAlertAction(title: NSLocalizedString("Reply", comment: ""), style: .default, handler: {
+            let replyAction = UIAlertAction(title: Localization("Reply"), style: .default, handler: {
                 (alert: UIAlertAction!) -> Void in
                 self.replyToItem(replyUrl: inboxItem.replyUrl, commentId: inboxItem.commentId)
             })
@@ -510,7 +510,7 @@ extension InboxController: UITableViewDataSource, UITableViewDelegate {
         }
         
         //
-        let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: {
+        let cancelAction = UIAlertAction(title: Localization("Cancel"), style: .cancel, handler: {
             (alert: UIAlertAction!) -> Void in
             print("Cancelled")
         })
@@ -554,7 +554,7 @@ extension InboxController: UICollectionViewDataSource, UICollectionViewDelegate,
                 Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
             }
             
-            showLoadingView(msg: "\(NSLocalizedString("LoadingPage", comment: "")) \(page.name)")
+            showLoadingView(msg: "\(Localization("LoadingPage")) \(page.name)")
             
             Alamofire.request("https://archiveofourown.org" + page.url, method: .get).response(completionHandler: { response in
                 print(response.error ?? "")
@@ -564,7 +564,7 @@ extension InboxController: UICollectionViewDataSource, UICollectionViewDelegate,
                     self.showInbox()
                 } else {
                     self.hideLoadingView()
-                    RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                    RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("CheckInternet"), type: RMessageType.error, customTypeName: "", callback: {
                         
                     })
                 }
@@ -594,7 +594,7 @@ extension InboxController {
     func sendMarkItem(_ asRead: Bool, commentId: String) {
         let username = DefaultsManager.getString(DefaultsManager.LOGIN)
         
-        showLoadingView(msg: NSLocalizedString("MarkItem", comment: ""))
+        showLoadingView(msg: Localization("MarkItem"))
         
         let urlStr: String = "https://archiveofourown.org/users/" + username + "/inbox"
         
@@ -634,7 +634,7 @@ extension InboxController {
                         
                     } else {
                         self.hideLoadingView()
-                        RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CannotMarkItem", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                        RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("CannotMarkItem"), type: RMessageType.error, customTypeName: "", callback: {
                             
                         })
                     }
@@ -643,7 +643,7 @@ extension InboxController {
         } else {
             
             self.hideLoadingView()
-            RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CannotMarkItem", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+            RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("CannotMarkItem"), type: RMessageType.error, customTypeName: "", callback: {
                 
             })
         }
@@ -660,14 +660,14 @@ extension InboxController {
         
         if let noticeEls = doc.search(withXPathQuery: "//div[@class='flash notice']") as? [TFHppleElement], noticeEls.count > 0,
             let noticeStr = noticeEls[0].content, noticeStr.contains("successfully") {
-            RMessage.showNotification(in: self, title: NSLocalizedString("Success", comment: ""), subtitle: NSLocalizedString("InboxUpdated", comment: ""), type: RMessageType.success, customTypeName: "", callback: {
+            RMessage.showNotification(in: self, title: Localization("Success"), subtitle: Localization("InboxUpdated"), type: RMessageType.success, customTypeName: "", callback: {
                 
             })
             
             self.refresh(self.tableView)
         } else {
             
-            RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CouldNotReply", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+            RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("CouldNotReply"), type: RMessageType.error, customTypeName: "", callback: {
                 
             })
         }
@@ -680,7 +680,7 @@ extension InboxController {
     
     func sendItemApprove(approveUrl: String) {
         
-        showLoadingView(msg: NSLocalizedString("MarkItem", comment: ""))
+        showLoadingView(msg: Localization("MarkItem"))
         
         var urlStr: String = approveUrl
         if (urlStr.contains("http") == false) {
@@ -712,7 +712,7 @@ extension InboxController {
                         //self.parseMarkRequest(d)
                         self.hideLoadingView()
                         
-                        RMessage.showNotification(in: self, title: NSLocalizedString("Success", comment: ""), subtitle: NSLocalizedString("CommentApproved", comment: ""), type: RMessageType.success, customTypeName: "", callback: {
+                        RMessage.showNotification(in: self, title: Localization("Success"), subtitle: Localization("CommentApproved"), type: RMessageType.success, customTypeName: "", callback: {
                             
                         })
                         
@@ -720,7 +720,7 @@ extension InboxController {
                         
                     } else {
                         self.hideLoadingView()
-                        RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: response.error?.localizedDescription, type: RMessageType.error, customTypeName: "", callback: {
+                        RMessage.showNotification(in: self, title: Localization("Error"), subtitle: response.error?.localizedDescription, type: RMessageType.error, customTypeName: "", callback: {
                             
                         })
                         
@@ -730,7 +730,7 @@ extension InboxController {
         } else {
             
             self.hideLoadingView()
-            RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CannotMarkItem", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+            RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("CannotMarkItem"), type: RMessageType.error, customTypeName: "", callback: {
                 
             })
         }
@@ -748,13 +748,13 @@ extension InboxController {
     
     func showSureDelete(commentId: String) {
         
-        let deleteAlert = UIAlertController(title: NSLocalizedString("AreYouSure", comment: ""), message: NSLocalizedString("SureDeleteItem", comment: ""), preferredStyle: UIAlertController.Style.alert)
+        let deleteAlert = UIAlertController(title: Localization("AreYouSure"), message: Localization("SureDeleteItem"), preferredStyle: UIAlertController.Style.alert)
         
-        deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .default, handler: { (action: UIAlertAction) in
+        deleteAlert.addAction(UIAlertAction(title: Localization("Cancel"), style: .default, handler: { (action: UIAlertAction) in
             print("Cancel")
         }))
         
-        deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Yes", comment: ""), style: .default, handler: { (action: UIAlertAction) in
+        deleteAlert.addAction(UIAlertAction(title: Localization("Yes"), style: .default, handler: { (action: UIAlertAction) in
             
             Answers.logCustomEvent(withName: "Inbox: Delete Touched", customAttributes: [:])
             
@@ -766,7 +766,7 @@ extension InboxController {
     }
     
     func sendDeleteItem(commentId: String) {
-        showLoadingView(msg: NSLocalizedString("DeletingFromInox", comment: ""))
+        showLoadingView(msg: Localization("DeletingFromInox"))
         
         let username = DefaultsManager.getString(DefaultsManager.LOGIN)
         let urlStr: String = "https://archiveofourown.org/users/" + username + "/inbox"
@@ -793,7 +793,7 @@ extension InboxController {
                     
                     if (response.response?.statusCode == 302) {
                         self.hideLoadingView()
-                        RMessage.showNotification(in: self, title: NSLocalizedString("Success", comment: ""), subtitle: NSLocalizedString("ItemDeleted", comment: ""), type: RMessageType.success, customTypeName: "", callback: {
+                        RMessage.showNotification(in: self, title: Localization("Success"), subtitle: Localization("ItemDeleted"), type: RMessageType.success, customTypeName: "", callback: {
                             
                         })
                         
@@ -808,7 +808,7 @@ extension InboxController {
                         
                     } else {
                         self.hideLoadingView()
-                        RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CouldNotDelete", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                        RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("CouldNotDelete"), type: RMessageType.error, customTypeName: "", callback: {
                             
                         })
                     }
@@ -817,7 +817,7 @@ extension InboxController {
         } else {
             
             self.hideLoadingView()
-            RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CouldNotDelete", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+            RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("CouldNotDelete"), type: RMessageType.error, customTypeName: "", callback: {
                 
             })
         }
@@ -833,13 +833,13 @@ extension InboxController {
         
         if let noticeEls = doc.search(withXPathQuery: "//div[@class='flash notice']") as? [TFHppleElement], noticeEls.count > 0,
             let noticeStr = noticeEls[0].content, (noticeStr.contains("successfully")) {
-            RMessage.showNotification(in: self, title: NSLocalizedString("Success", comment: ""), subtitle: NSLocalizedString("ItemDeleted", comment: ""), type: RMessageType.success, customTypeName: "", callback: {
+            RMessage.showNotification(in: self, title: Localization("Success"), subtitle: Localization("ItemDeleted"), type: RMessageType.success, customTypeName: "", callback: {
                 
             })
             
         } else {
             
-            RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CouldNotDelete", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+            RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("CouldNotDelete"), type: RMessageType.error, customTypeName: "", callback: {
                 
             })
         }

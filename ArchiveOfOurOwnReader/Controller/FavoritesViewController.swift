@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 import Crashlytics
+import Firebase
 
 class FavoritesViewController: LoadingViewController, UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating, UISearchBarDelegate, EditFoldersProtocol {
     
@@ -134,7 +135,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         
         let titleDict: [NSAttributedString.Key : Any] = [NSAttributedString.Key.foregroundColor: UIColor.white]
         self.navigationController?.navigationBar.titleTextAttributes = titleDict
-        self.title = String(self.fetchedResultsController?.fetchedObjects?.count ?? 0) + " " + NSLocalizedString("Downloaded", comment: "")
+        self.title = String(self.fetchedResultsController?.fetchedObjects?.count ?? 0) + " " + Localization("Downloaded")
         
     }
     
@@ -227,7 +228,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
                 }
             }
         }
-        cell.fandomsLabel.text = NSLocalizedString("Fandoms_", comment: "") + fandomsStr
+        cell.fandomsLabel.text = Localization("Fandoms_") + fandomsStr
         
         cell.wordsLabel.text = curWork?.words ?? "-"
         
@@ -392,7 +393,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
 //            self.copyOldWorksFromDB()
 //            //self.deleteOldSaves()
 //            self.hideLoadingView()
-//            self.title = String(self.fetchedResultsController?.fetchedObjects?.count ?? 0) + " " + NSLocalizedString("Downloaded", comment: "")
+//            self.title = String(self.fetchedResultsController?.fetchedObjects?.count ?? 0) + " " + Localization("Downloaded")
 //        }))
 //
 //        deleteAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction) in
@@ -713,9 +714,9 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
     
     @IBAction func deleteButtonTouched(_ sender: UIButton) {
             
-            let deleteAlert = UIAlertController(title: NSLocalizedString("AreYouSure", comment: ""), message: NSLocalizedString("DeleteFromDownloaded", comment: ""), preferredStyle: UIAlertController.Style.alert)
+            let deleteAlert = UIAlertController(title: Localization("AreYouSure"), message: Localization("DeleteFromDownloaded"), preferredStyle: UIAlertController.Style.alert)
             
-            deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .default, handler: { (action: UIAlertAction) in
+            deleteAlert.addAction(UIAlertAction(title: Localization("Cancel"), style: .default, handler: { (action: UIAlertAction) in
                 #if DEBUG
                 print("Cancel")
                 #endif
@@ -761,7 +762,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
             
             //self.tableView.reloadData()
             // self.tableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: .Fade)
-            self.title = String(fetchedResultsController?.fetchedObjects?.count ?? 0) + " " + NSLocalizedString("Downloaded", comment: "")
+            self.title = String(fetchedResultsController?.fetchedObjects?.count ?? 0) + " " + Localization("Downloaded")
         }
     }
     
@@ -851,13 +852,14 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         self.tableView.reloadData()
         
         Answers.logCustomEvent(withName: "Downloaded: Sort", customAttributes: ["sortBy" : self.sortBy])
+        Analytics.logEvent("Downloaded: Sort", parameters: ["sortBy" : self.sortBy as NSObject])
     }
     
     @IBAction func sortClicked(_ sender: AnyObject) {
-        let optionMenu = UIAlertController(title: nil, message: NSLocalizedString("Sort Options", comment: ""), preferredStyle: .actionSheet)
+        let optionMenu = UIAlertController(title: nil, message: Localization("Sort Options"), preferredStyle: .actionSheet)
         optionMenu.view.tintColor = AppDelegate.redColor
         
-        let azAction = UIAlertAction(title: NSLocalizedString("Alphabetically", comment: ""), style: .default, handler: {
+        let azAction = UIAlertAction(title: Localization("Alphabetically"), style: .default, handler: {
             (alert: UIAlertAction!) -> Void in
             self.sortBy = "workTitle"
             self.sortOrderAscendic = true
@@ -866,7 +868,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         })
         optionMenu.addAction(azAction)
         
-        let dateAction = UIAlertAction(title: NSLocalizedString("By Date Added", comment: ""), style: .default, handler: {
+        let dateAction = UIAlertAction(title: Localization("By Date Added"), style: .default, handler: {
             (alert: UIAlertAction!) -> Void in
             self.sortBy = "dateAdded"
             self.sortOrderAscendic = false
@@ -875,7 +877,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         })
         optionMenu.addAction(dateAction)
         
-        let authorAction = UIAlertAction(title: NSLocalizedString("By Author", comment: ""), style: .default, handler: {
+        let authorAction = UIAlertAction(title: Localization("By Author"), style: .default, handler: {
             (alert: UIAlertAction!) -> Void in
             self.sortBy = "author"
             self.sortOrderAscendic = true
@@ -885,7 +887,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         optionMenu.addAction(authorAction)
         
         //!!!!https://stackoverflow.com/questions/23005107/sort-descriptors-not-sorting-numbers-in-the-form-of-string-iphone !!!
-        let kudosAction = UIAlertAction(title: NSLocalizedString("Kudos Count", comment: ""), style: .default, handler: {
+        let kudosAction = UIAlertAction(title: Localization("Kudos Count"), style: .default, handler: {
             (alert: UIAlertAction!) -> Void in
             self.sortBy = "kudos"
             self.sortOrderAscendic = true
@@ -894,7 +896,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         })
         optionMenu.addAction(kudosAction)
         
-        let chaptersAction = UIAlertAction(title: NSLocalizedString("Word Count", comment: ""), style: .default, handler: {
+        let chaptersAction = UIAlertAction(title: Localization("Word Count"), style: .default, handler: {
             (alert: UIAlertAction!) -> Void in
             self.sortBy = "words"
             self.sortOrderAscendic = true
@@ -903,7 +905,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         })
         optionMenu.addAction(chaptersAction)
         
-//        let fandomsAction = UIAlertAction(title: NSLocalizedString("Fandom", comment: ""), style: .default, handler: {
+//        let fandomsAction = UIAlertAction(title: Localization("Fandom"), style: .default, handler: {
 //            (alert: UIAlertAction!) -> Void in
 //            self.sortBy = kp// "fandoms.name"
 //            self.sortOrderAscendic = true
@@ -912,7 +914,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
 //        })
 //        optionMenu.addAction(fandomsAction)
         
-        let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: {
+        let cancelAction = UIAlertAction(title: Localization("Cancel"), style: .cancel, handler: {
             (alert: UIAlertAction!) -> Void in
             print("Cancelled")
         })
@@ -927,7 +929,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
     
     @IBAction func folderTouched(sender: ButtonWithSection) {
         /*if (folders.count == 0) {
-            showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("NoFolders", comment: ""), type: .error)
+            showNotification(in: self, title: Localization("Error"), subtitle: Localization("NoFolders"), type: .error)
             return
         }
         
@@ -946,14 +948,14 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
             return
         }
         
-        let alert = UIAlertController(title: NSLocalizedString("MoveWork", comment: ""), message: NSLocalizedString("ChooseFolder", comment: ""), preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: Localization("MoveWork"), message: Localization("ChooseFolder"), preferredStyle: .actionSheet)
         
         for folder in folders {
             alert.addAction(UIAlertAction(title: folder.name ?? "No Name", style: .default, handler: { (action) in
                 self.moveToFolder(folder: folder, curWork: cWork)
             }))
         }
-        alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: { (action) in
+        alert.addAction(UIAlertAction(title: Localization("Cancel"), style: .cancel, handler: { (action) in
             #if DEBUG
                 print("cancel")
             #endif

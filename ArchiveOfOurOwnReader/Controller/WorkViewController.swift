@@ -13,6 +13,7 @@ import Crashlytics
 import WebKit
 import Spring
 import PopupDialog
+import Firebase
 
 class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUIDelegate, WKNavigationDelegate, UIScrollViewDelegate {
     
@@ -202,7 +203,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
     }
     
     func showContentAlert() {
-        let refreshAlert = UIAlertController(title: NSLocalizedString("Attention", comment: ""), message: "Enter/Leave Fullscreen mode with 2 taps; swipe to switch Next/Previous chapter", preferredStyle: UIAlertController.Style.alert)
+        let refreshAlert = UIAlertController(title: Localization("Attention"), message: "Enter/Leave Fullscreen mode with 2 taps; swipe to switch Next/Previous chapter", preferredStyle: UIAlertController.Style.alert)
         
         refreshAlert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { (action: UIAlertAction!) in
             DefaultsManager.putBool(true, key: "featuresShown")
@@ -653,7 +654,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
         currentOnlineChapter = chapterId
         currentOnlineChapterIdx = index
         
-        showLoadingView(msg: NSLocalizedString("LoadingChapter", comment: ""))
+        showLoadingView(msg: Localization("LoadingChapter"))
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
             Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: AppDelegate.ao3SiteUrl), mainDocumentURL: nil)
@@ -705,7 +706,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
             
         } else {
             self.hideLoadingView()
-            showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CheckInternet", comment: ""))
+            showError(title: Localization("Error"), message: Localization("CheckInternet"))
         }
         
     }
@@ -879,6 +880,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
         Answers.logCustomEvent(withName: "WorkView: Kudos add",
                                customAttributes: [
                                 "workId": workId])
+        Analytics.logEvent("WorkView: Kudos add", parameters: ["workId": workId as NSObject])
         
         doLeaveKudos(workId: workId)
     
@@ -920,7 +922,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
         Answers.logCustomEvent(withName: "WorkView: Comments touched",
                                customAttributes: [:])
         
-        let alert = UIAlertController(title: NSLocalizedString("Comments", comment: ""), message: "View Comments For:", preferredStyle: UIAlertController.Style.actionSheet)
+        let alert = UIAlertController(title: Localization("Comments"), message: "View Comments For:", preferredStyle: UIAlertController.Style.actionSheet)
         alert.addAction(UIAlertAction(title: "Entire Work", style: UIAlertAction.Style.default, handler: { action in
             self.commentsForEntireWork = true
             self.performSegue(withIdentifier: "leaveComment", sender: self)
@@ -930,7 +932,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
             self.performSegue(withIdentifier: "leaveComment", sender: self)
         }))
         
-        alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: UIAlertAction.Style.cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: Localization("Cancel"), style: UIAlertAction.Style.cancel, handler: nil))
         
         alert.popoverPresentationController?.sourceView = self.view
         alert.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.size.width / 2.0, y: self.view.bounds.size.height / 2.0, width: 1.0, height: 1.0)
@@ -948,7 +950,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
                 return
             }
             
-            showLoadingView(msg: NSLocalizedString("LoadingNxtChapter", comment: ""))
+            showLoadingView(msg: Localization("LoadingNxtChapter"))
             
             currentOnlineChapter = nextChapter
             if (currentOnlineChapterIdx < onlineChapters.count - 1) {
@@ -989,7 +991,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
                 return
             }
             
-            showLoadingView(msg: NSLocalizedString("LoadingPrevChapter", comment: ""))
+            showLoadingView(msg: Localization("LoadingPrevChapter"))
             
             currentOnlineChapter = prevChapter
             if (currentOnlineChapterIdx > 0) {
@@ -1050,7 +1052,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
             
         } else {
             self.hideLoadingView()
-            showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CheckInternet", comment: ""))
+            showError(title: Localization("Error"), message: Localization("CheckInternet"))
         }
     }
     
@@ -1088,7 +1090,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
             
         } else {
             self.hideLoadingView()
-            showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CheckInternet", comment: ""))
+            showError(title: Localization("Error"), message: Localization("CheckInternet"))
         }
     }
     
@@ -1366,7 +1368,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
             }
         }
         
-       /* let alert = UIAlertController(title: NSLocalizedString("FontSize", comment: ""), message: String(format: "%d", fontSize) + "%", preferredStyle: UIAlertControllerStyle.actionSheet)
+       /* let alert = UIAlertController(title: Localization("FontSize"), message: String(format: "%d", fontSize) + "%", preferredStyle: UIAlertControllerStyle.actionSheet)
         alert.addAction(UIAlertAction(title: "+", style: UIAlertActionStyle.default, handler: { action in
             switch action.style{
             case .default:
@@ -1400,7 +1402,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
             self.loadCurrentTheme()
         }))
         
-        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: UIAlertActionStyle.cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: Localization("OK"), style: UIAlertActionStyle.cancel, handler: nil))
         
         alert.popoverPresentationController?.sourceView = self.view
         alert.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.size.width / 2.0, y: self.view.bounds.size.height / 2.0, width: 1.0, height: 1.0)
@@ -1409,7 +1411,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
     }
     
     @objc func changeTextFamilyTouched() {
-        let popup = PopupDialog(title: NSLocalizedString("FontFamily", comment: ""), message: "Select font family (\(fontFamily)")
+        let popup = PopupDialog(title: Localization("FontFamily"), message: "Select font family (\(fontFamily)")
         
         let buttonCancel = CancelButton(title: "CANCEL") {
             print("You canceled the car dialog.")
@@ -1521,7 +1523,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
         
         self.present(popup, animated: true, completion: nil)
         
-//        let alert = UIAlertController(title: NSLocalizedString("FontFamily", comment: ""), message: "Select font family (\(fontFamily)", preferredStyle: UIAlertControllerStyle.actionSheet)
+//        let alert = UIAlertController(title: Localization("FontFamily"), message: "Select font family (\(fontFamily)", preferredStyle: UIAlertControllerStyle.actionSheet)
 //        alert.addAction(UIAlertAction(title: "Verdana (default)", style: UIAlertActionStyle.default, handler: { action in
 //
 //            self.fontFamily = "Verdana"
@@ -1632,7 +1634,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
 //            }
 //        }))
 //
-//        alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: UIAlertActionStyle.cancel, handler: nil))
+//        alert.addAction(UIAlertAction(title: Localization("Cancel"), style: UIAlertActionStyle.cancel, handler: nil))
         
 //        alert.popoverPresentationController?.sourceView = self.view
 //        alert.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.size.width / 2.0, y: self.view.bounds.size.height / 2.0, width: 1.0, height: 1.0)
@@ -1872,13 +1874,13 @@ extension WorkViewController {
         if (text.isEmpty == true) {
             return
         }
-        let deleteAlert = UIAlertController(title: NSLocalizedString("AreYouSure", comment: ""), message: NSLocalizedString("You want to save this lines to your Highlights?", comment: ""), preferredStyle: UIAlertController.Style.alert)
+        let deleteAlert = UIAlertController(title: Localization("AreYouSure"), message: Localization("You want to save this lines to your Highlights?"), preferredStyle: UIAlertController.Style.alert)
         
-        deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: { (action: UIAlertAction) in
+        deleteAlert.addAction(UIAlertAction(title: Localization("Cancel"), style: .cancel, handler: { (action: UIAlertAction) in
             print("Cancel")
         }))
         
-        deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Yes", comment: ""), style: .default, handler: { (action: UIAlertAction) in
+        deleteAlert.addAction(UIAlertAction(title: Localization("Yes"), style: .default, handler: { (action: UIAlertAction) in
             self.saveQuote(text: text)
         }))
         
@@ -1926,10 +1928,10 @@ extension WorkViewController {
             print("Could not save \(String(describing: error.userInfo))")
         } 
         
-//        showNotification(in: self, title: NSLocalizedString("Success", comment: ""), subtitle: "Highlight was successfully saved!", type: Type.success, customTypeName: "", callback: {
+//        showNotification(in: self, title: Localization("Success"), subtitle: "Highlight was successfully saved!", type: Type.success, customTypeName: "", callback: {
 //
 //        })
-        showSuccess(title: NSLocalizedString("Success", comment: ""), message: "Highlight was successfully saved!")
+        showSuccess(title: Localization("Success"), message: "Highlight was successfully saved!")
         
     }
 }

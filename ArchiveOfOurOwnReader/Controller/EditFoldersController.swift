@@ -53,7 +53,7 @@ class EditFoldersController: BaseFolderController {
             if let folder = fetchedResultsController?.object(at: indexPath) {
                 folderTouched(folder: folder)
             } else {
-                RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("FolderNotFound", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("FolderNotFound"), type: RMessageType.error, customTypeName: "", callback: {
                     
                 })
             }
@@ -91,13 +91,13 @@ class EditFoldersController: BaseFolderController {
     
     func deleteFolderTouched(folder: Folder) {
         
-        let deleteAlert = UIAlertController(title: NSLocalizedString("AreYouSure", comment: ""), message: NSLocalizedString("Do you want to delete works too?", comment: ""), preferredStyle: UIAlertController.Style.alert)
+        let deleteAlert = UIAlertController(title: Localization("AreYouSure"), message: Localization("Do you want to delete works too?"), preferredStyle: UIAlertController.Style.alert)
         
-        deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: { (action: UIAlertAction) in
+        deleteAlert.addAction(UIAlertAction(title: Localization("Cancel"), style: .cancel, handler: { (action: UIAlertAction) in
             print("Cancel")
         }))
         
-        deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Delete folder, keep works", comment: ""), style: .default, handler: { (action: UIAlertAction) in
+        deleteAlert.addAction(UIAlertAction(title: Localization("Delete folder, keep works"), style: .default, handler: { (action: UIAlertAction) in
             
             self.deleteFolder(folder: folder, withWorks: false)
             
@@ -105,7 +105,7 @@ class EditFoldersController: BaseFolderController {
             })
         }))
         
-        deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Delete with works", comment: ""), style: .default, handler: { (action: UIAlertAction) in
+        deleteAlert.addAction(UIAlertAction(title: Localization("Delete with works"), style: .default, handler: { (action: UIAlertAction) in
             
             self.deleteFolder(folder: folder, withWorks: true)
             
@@ -137,7 +137,7 @@ class EditFoldersController: BaseFolderController {
         do {
             try managedContext.save()
         } catch _ {
-            RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Could not delete the folder!", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+            RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("Could not delete the folder!"), type: RMessageType.error, customTypeName: "", callback: {
                 
             })
         }
@@ -169,7 +169,7 @@ class EditFoldersController: BaseFolderController {
                                         "name_new": txt,
                                         "name_old": folder.name ?? "No Name"])
             } else {
-                RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("FolderNameEmpty", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("FolderNameEmpty"), type: RMessageType.error, customTypeName: "", callback: {
                     
                 })
             }
@@ -200,7 +200,7 @@ class EditFoldersController: BaseFolderController {
         do {
             if let fetchedWorks = try managedContext.fetch(req) as? [Folder] {
                 if (fetchedWorks.count > 0) {
-                    RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("FolderAlreadyExists", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                    RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("FolderAlreadyExists"), type: RMessageType.error, customTypeName: "", callback: {
                         
                     })
                     return
@@ -218,7 +218,7 @@ class EditFoldersController: BaseFolderController {
             #if DEBUG
                 print("Could not save \(String(describing: error.userInfo))")
             #endif
-            RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("Could not rename the folder!", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+            RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("Could not rename the folder!"), type: RMessageType.error, customTypeName: "", callback: {
                 
             })
         }

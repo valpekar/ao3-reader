@@ -167,7 +167,7 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
             }
             
             pseudsTableView.reloadData()
-            loginButton.setTitle(NSLocalizedString("LogOut", comment: ""), for: UIControl.State())
+            loginButton.setTitle(Localization("LogOut"), for: UIControl.State())
             
             notifSwitch.isEnabled = true
             
@@ -195,10 +195,10 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
     }
     
     func setNotAuthorizedUI() {
-        usernameLabel.text = NSLocalizedString("NotAuthorized", comment: "")
-        loginButton.setTitle(NSLocalizedString("LogIn", comment: ""), for: UIControl.State())
+        usernameLabel.text = Localization("NotAuthorized")
+        loginButton.setTitle(Localization("LogIn"), for: UIControl.State())
         
-        self.title = NSLocalizedString("NotAuthorized", comment: "")
+        //self.title = Localization("NotAuthorized")
         
         notifSwitch.isEnabled = false
     }
@@ -239,13 +239,13 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
     }
     
     func showSureClearDialog() {
-        let deleteAlert = UIAlertController(title: NSLocalizedString("AreYouSure", comment: ""), message: "You want to clear all notifications from this app?", preferredStyle: UIAlertController.Style.alert)
+        let deleteAlert = UIAlertController(title: Localization("AreYouSure"), message: "You want to clear all notifications from this app?", preferredStyle: UIAlertController.Style.alert)
         
-        deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: { (action: UIAlertAction) in
+        deleteAlert.addAction(UIAlertAction(title: Localization("Cancel"), style: .cancel, handler: { (action: UIAlertAction) in
             print("Cancel")
         }))
         
-        deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Yes", comment: ""), style: .default, handler: { (action: UIAlertAction) in
+        deleteAlert.addAction(UIAlertAction(title: Localization("Yes"), style: .default, handler: { (action: UIAlertAction) in
             DefaultsManager.putStringArray([], key: DefaultsManager.NOTIF_IDS_ARR)
             self.updateAppBadge()
         }))
@@ -262,10 +262,10 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
         switch (indexPath.section) {
         case 0:
             if (indexPath.row == 0) {
-                cell.titleLabel.text = "Clear All Notifications"
+                cell.titleLabel.text = Localization("ClearAllNotif")
                 cell.accessoryType = .none
             } else {
-                cell.titleLabel.text = "Protect with Biometric ID or passcode"
+                cell.titleLabel.text = Localization("ProtectBio")
                 cell.accessoryType = .disclosureIndicator
             }
         case 1:
@@ -280,19 +280,19 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
         case 2:
             switch (indexPath.row) {
             case 0:
-                cell.titleLabel.text = "My Works"
+                cell.titleLabel.text = Localization("MyWorks")
             case 1:
-                cell.titleLabel.text = "Inbox"
+                cell.titleLabel.text = Localization("Inbox")
             case 2:
-                cell.titleLabel.text = "My Highlights"
+                cell.titleLabel.text = Localization("MyHighlights")
             case 3:
-                cell.titleLabel.text = NSLocalizedString("History", comment: "")
+                cell.titleLabel.text = Localization("History")
             default: break
             }
             cell.accessoryType = .none
         case 3:
             if (indexPath.row == 0) {
-                cell.titleLabel.text = "Night"
+                cell.titleLabel.text = Localization("Night")
                 
                 if (theme == DefaultsManager.THEME_DAY) {
                     cell.accessoryType = .none
@@ -301,7 +301,7 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
                 }
                 
             } else if (indexPath.row == 1) {
-                cell.titleLabel.text = "Day"
+                cell.titleLabel.text = Localization("Day")
                 
                 if (theme == DefaultsManager.THEME_DAY) {
                     cell.accessoryType = .checkmark
@@ -311,11 +311,34 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
             }
             
         case 4:
+            var langId = ""
+            langId = Localisator.sharedInstance.currentLanguage
+            
+            if (indexPath.row == 0) {
+                cell.titleLabel.text = Localization("SystemLanguage")
+                
+                if (langId == "DeviceLanguage") {
+                    cell.accessoryType = .checkmark
+                } else {
+                    cell.accessoryType = .none
+                }
+                
+            } else if (indexPath.row == 1) {
+                cell.titleLabel.text = Localization("English")
+                
+                if (langId == "DeviceLanguage") {
+                    cell.accessoryType = .none
+                } else {
+                    cell.accessoryType = .checkmark
+                }
+            }
+            
+        case 5:
             cell.accessoryType = .none
             if (indexPath.row == 0) {
                 cell.titleLabel.text = subTxt
             } else if (indexPath.row == 1) {
-                cell.titleLabel.text = "Privacy Policy and Terms of Use"
+                cell.titleLabel.text = Localization("PPolicy")
             }
             
         default: break
@@ -343,6 +366,8 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
         case 3:
             return 2
         case 4:
+            return 2
+        case 5:
             return 2
         default: return 0
         }
@@ -391,6 +416,19 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
             
             applyTheme()
         case 4:
+            var langID = ""
+            if (indexPath.row == 0) {
+                langID = "DeviceLanguage"
+            } else if (indexPath.row == 1) {
+                langID = "English_en"
+            }
+            if (SetLanguage(langID) == true) {
+                showSuccess(title: Localization("Language"), message: Localization("LangChanged"))
+            } else {
+                showError(title: Localization("Language"), message: Localization("ErrLangChanged"))
+            }
+            tableView.reloadRows(at: [IndexPath(row: 0, section: 4), IndexPath(row: 1, section: 4)], with: UITableView.RowAnimation.automatic)
+        case 5:
             if (indexPath.row == 1) {
                 if let url = URL(string: "http://simpleappalliance.blogspot.com/2016/05/unofficial-ao3-reader-privacy-policy.html") {
                     UIApplication.shared.open(url, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: { (res) in
@@ -406,15 +444,17 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch (section) {
         case 0:
-            return "Security Settings"
+            return Localization("SecuritySettings")
         case 1:
-            return "Pseud for bookmarks, history etc"
+            return Localization("MyPseud")
         case 2:
-            return "My AO3 Account"
+            return Localization("MyAO3")
         case 3:
-            return "Theme"
+            return Localization("Theme")
         case 4:
-            return "About Subscription"
+            return Localization("Language")
+        case 5:
+            return Localization("AboutSub")
         default: return ""
         }
     }
@@ -424,7 +464,7 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 5
+        return 6
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -448,7 +488,7 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
     
     @IBAction func removeAdsTouched(_ sender: AnyObject) {
         
-        showLoadingView(msg: NSLocalizedString("RequestingData", comment: ""))
+        showLoadingView(msg: Localization("RequestingData"))
         
         products = []
         
@@ -476,7 +516,7 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
     
     @IBAction func smallTipTouched(_ sender: AnyObject) {
         
-        showLoadingView(msg: NSLocalizedString("PleaseWait", comment: ""))
+        showLoadingView(msg: Localization("PleaseWait"))
         
         products = []
         
@@ -504,7 +544,7 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
     
     @IBAction func mediumTipTouched(_ sender: AnyObject) {
         
-        showLoadingView(msg: NSLocalizedString("PleaseWait", comment: ""))
+        showLoadingView(msg: Localization("PleaseWait"))
         
         products = []
         
@@ -531,7 +571,7 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
     }
     
     @IBAction func largeTipTouched(_ sender: AnyObject) {
-        showLoadingView(msg: NSLocalizedString("PleaseWait", comment: ""))
+        showLoadingView(msg: Localization("PleaseWait"))
         
         products = []
         
@@ -558,12 +598,12 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
     }
     
     func showErrorAlert(productId: String) {
-        let refreshAlert = UIAlertController(title: NSLocalizedString("Error", comment: ""), message: "Cannot get product list. Please check your Internet connection", preferredStyle: UIAlertController.Style.alert)
-        refreshAlert.addAction(UIAlertAction(title: "Try again", style: .default, handler: { (action: UIAlertAction!) in
+        let refreshAlert = UIAlertController(title: Localization("Error"), message: "Cannot get product list. Please check your Internet connection", preferredStyle: UIAlertController.Style.alert)
+        refreshAlert.addAction(UIAlertAction(title: "Try Again", style: .default, handler: { (action: UIAlertAction!) in
             self.reload(true, productId: productId)
         }))
         
-        refreshAlert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: { (action: UIAlertAction!) in
+        refreshAlert.addAction(UIAlertAction(title: Localization("Cancel"), style: .cancel, handler: { (action: UIAlertAction!) in
         }))
         
         present(refreshAlert, animated: true, completion: nil)
@@ -607,10 +647,10 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
         SKPaymentQueue.default().add(self)
         ReaderProducts.store.restoreCompletedTransactions { error in
             if let err = error {
-                self.showError(title: NSLocalizedString("Error", comment: ""), message: err.localizedDescription)
+                self.showError(title: Localization("Error"), message: err.localizedDescription)
             } else {
                 
-                self.showSuccess(title: NSLocalizedString("Finished", comment: ""), message: NSLocalizedString("RestoreProcess", comment: ""))
+                self.showSuccess(title: Localization("Finished"), message: Localization("RestoreProcess"))
                 
                 self.refreshUI()
                 
@@ -620,12 +660,12 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
     
     /// Initiates purchase of a product.
     func purchaseProduct(_ product: SKProduct) {
-       // self.view.makeToast(message: NSLocalizedString("NeedToRestart", comment: ""), duration: 1, position: "center" as AnyObject, title: NSLocalizedString("Attention", comment: ""))
+       // self.view.makeToast(message: Localization("NeedToRestart"), duration: 1, position: "center" as AnyObject, title: Localization("Attention"))
         
         let success = MessageView.viewFromNib(layout: .messageView)
         success.configureTheme(.info)
         success.configureDropShadow()
-        success.configureContent(title: NSLocalizedString("Attention", comment: ""), body: NSLocalizedString("NeedToRestart", comment: ""))
+        success.configureContent(title: Localization("Attention"), body: Localization("NeedToRestart"))
         success.button?.isHidden = true
         var successConfig = SwiftMessages.defaultConfig
         successConfig.presentationStyle = .top
@@ -677,22 +717,22 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
             refreshUI()
         } else {
             removeAdsItem.isEnabled = true
-            removeAdsItem.title = NSLocalizedString("Upgrade", comment: "")
+            removeAdsItem.title = Localization("Upgrade")
         }
     }
     
     func showBuyAlert(_ product: SKProduct, restore: Bool) {
         let alertController = UIAlertController(title: product.localizedTitle, message:
             product.localizedDescription, preferredStyle: UIAlertController.Style.alert)
-        alertController.addAction(UIAlertAction(title: NSLocalizedString("Buy", comment: ""), style: UIAlertAction.Style.default, handler: { (action: UIAlertAction!) in
+        alertController.addAction(UIAlertAction(title: Localization("Buy"), style: UIAlertAction.Style.default, handler: { (action: UIAlertAction!) in
             self.purchaseProduct(product)
         } ))
         if (restore) {
-            alertController.addAction(UIAlertAction(title: NSLocalizedString("Restore", comment: ""), style: UIAlertAction.Style.default, handler: { (action: UIAlertAction!) in
+            alertController.addAction(UIAlertAction(title: Localization("Restore"), style: UIAlertAction.Style.default, handler: { (action: UIAlertAction!) in
                 self.restoreTapped(self)
             } ))
         }
-        alertController.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: UIAlertAction.Style.cancel, handler: nil))
+        alertController.addAction(UIAlertAction(title: Localization("Cancel"), style: UIAlertAction.Style.cancel, handler: nil))
         
         self.present(alertController, animated: true, completion: nil)
     }
@@ -713,7 +753,7 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
                     Answers.logCustomEvent(withName: "ProSub", customAttributes: ["donated" : donated])
                     
                     if (purchased == true) {
-                        self.showSuccess(title: NSLocalizedString("ThankYou", comment: ""), message: NSLocalizedString("ThankYouForSub", comment: ""))
+                        self.showSuccess(title: Localization("ThankYou"), message: Localization("ThankYouForSub"))
                     }
                     
                 } else if (product.productIdentifier == "tip.small" ||
@@ -726,7 +766,7 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
                     UserDefaults.standard.set(donated, forKey: "donated")
                     UserDefaults.standard.synchronize()
                     
-                    self.showSuccess(title: NSLocalizedString("ThankYou", comment: ""), message: NSLocalizedString("ThankYouForTip", comment: ""))
+                    self.showSuccess(title: Localization("ThankYou"), message: Localization("ThankYouForTip"))
                     
                 }
                 

@@ -28,7 +28,7 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
     
     var shouldScroll = false
     
-    var htmlStr = NSLocalizedString("NoComments", comment: "")
+    var htmlStr = Localization("NoComments")
     var fontSize: Int = 100
     var workId = ""
     var chapterId = ""
@@ -48,7 +48,7 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
         webView.heightAnchor.constraint(equalTo: webViewContainer.heightAnchor).isActive = true
         webView.uiDelegate = self
         
-        self.title = NSLocalizedString("Comments", comment: "")
+        self.title = Localization("Comments")
         
         makeRoundView(view: sendBtn)
         makeRoundView(view: commentTv)
@@ -114,7 +114,7 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
             requestStr = "https://archiveofourown.org/comments/show_comments?" + "chapter_id=\(chapterId)"
         }
         
-        showLoadingView(msg: NSLocalizedString("GettingComments", comment: ""))
+        showLoadingView(msg: Localization("GettingComments"))
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
             Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
@@ -134,7 +134,7 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
                     self.hideLoadingView()
                 } else {
                     self.hideLoadingView()
-                    RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                    RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("CheckInternet"), type: RMessageType.error, customTypeName: "", callback: {
                         
                     })
                 }
@@ -186,7 +186,7 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
         }
         if (htmlStr.count == 16) { //"<html><body><ol>"
             htmlStr.append("<h2 align=\"center\">")
-            htmlStr.append(NSLocalizedString("NoComments", comment: ""))
+            htmlStr.append(Localization("NoComments"))
             htmlStr.append("</h2>")
         }
         
@@ -338,14 +338,14 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
         if(commentTv.text != nil && commentTv.text.count > 0) {
             sendComment()
         } else {
-            RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("PleaseWriteComment", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+            RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("PleaseWriteComment"), type: RMessageType.error, customTypeName: "", callback: {
                 
             })
         }
     }
     
     func sendComment() {
-        showLoadingView(msg: NSLocalizedString("SendingComment", comment: ""))
+        showLoadingView(msg: Localization("SendingComment"))
         
         //https://archiveofourown.org/chapters/31047816?show_comments=true&view_full_work=false#comment_147517083
         var requestStr = ""
@@ -404,7 +404,7 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
                         
                     } else {
                         self.hideLoadingView()
-                        RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                        RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("CheckInternet"), type: RMessageType.error, customTypeName: "", callback: {
                             
                         })
                     }
@@ -419,7 +419,7 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
         
         var noticediv: [TFHppleElement] = doc.search(withXPathQuery: "//div[@class='flash notice']") as! [TFHppleElement]
         if(noticediv.count > 0) {
-           // self.view.makeToast(message: noticediv[0].content, duration: 3.0, position: "center" as AnyObject, title: NSLocalizedString("AddingComment", comment: ""))
+           // self.view.makeToast(message: noticediv[0].content, duration: 3.0, position: "center" as AnyObject, title: Localization("AddingComment"))
             
             let error = MessageView.viewFromNib(layout: .messageView)
             error.configureTheme(.info)
@@ -482,7 +482,7 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
                 Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
             }
             
-            showLoadingView(msg: "\(NSLocalizedString("LoadingPage", comment: "")) \(page.name)")
+            showLoadingView(msg: "\(Localization("LoadingPage")) \(page.name)")
             
             Alamofire.request("https://archiveofourown.org" + page.url, method: .get).response(completionHandler: { response in
                 print(response.request ?? "")
@@ -494,7 +494,7 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
                     self.loadCurrentTheme()
                 } else {
                     self.hideLoadingView()
-                    RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                    RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("CheckInternet"), type: RMessageType.error, customTypeName: "", callback: {
                         
                     })
                 }

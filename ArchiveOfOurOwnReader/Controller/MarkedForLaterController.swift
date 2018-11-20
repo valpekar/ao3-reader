@@ -27,15 +27,15 @@ class MarkedForLaterController: ListViewController , UITableViewDataSource, UITa
         
         self.worksElement = "reading work"
         self.itemsCountHeading = "h2"
-        self.foundItems = NSLocalizedString("MarkedForLater", comment: "")
+        self.foundItems = Localization("MarkedForLater")
         
-        self.title = NSLocalizedString("MarkedForLater", comment: "")
+        self.title = Localization("MarkedForLater")
         
         self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.estimatedRowHeight = 200
         
         self.refreshControl = UIRefreshControl()
-        self.refreshControl.attributedTitle = NSAttributedString(string: NSLocalizedString("PullToRefresh", comment: ""))
+        self.refreshControl.attributedTitle = NSAttributedString(string: Localization("PullToRefresh"))
         self.refreshControl.addTarget(self, action: #selector(MarkedForLaterController.refresh(_:)), for: UIControl.Event.valueChanged)
         self.tableView.addSubview(self.refreshControl)
         
@@ -97,7 +97,7 @@ class MarkedForLaterController: ListViewController , UITableViewDataSource, UITa
         
         let username = DefaultsManager.getString(DefaultsManager.LOGIN)
         
-        showLoadingView(msg: NSLocalizedString("GettingHistory", comment: ""))
+        showLoadingView(msg: Localization("GettingHistory"))
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
             Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: AppDelegate.ao3SiteUrl), mainDocumentURL: nil)
@@ -125,7 +125,7 @@ class MarkedForLaterController: ListViewController , UITableViewDataSource, UITa
                     self.showWorks()
                 } else {
                     self.hideLoadingView()
-                    RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                    RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("CheckInternet"), type: RMessageType.error, customTypeName: "", callback: {
                         
                     })
                 }
@@ -149,7 +149,7 @@ class MarkedForLaterController: ListViewController , UITableViewDataSource, UITa
         collectionView.reloadData()
         
         hideLoadingView()
-        self.navigationItem.title = "\(NSLocalizedString("MarkedForLater", comment: ""))"
+        self.navigationItem.title = "\(Localization("MarkedForLater"))"
         
         if (tableView.numberOfSections > 0 && tableView.numberOfRows(inSection: 0) > 0) {
             tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
@@ -247,7 +247,7 @@ class MarkedForLaterController: ListViewController , UITableViewDataSource, UITa
     @IBAction func downloadButtonTouched(_ sender: UIButton) {
         
         let curWork:NewsFeedItem = works[sender.tag]
-        showLoadingView(msg: "\(NSLocalizedString("DwnloadingWrk", comment: "")) \(curWork.title)")
+        showLoadingView(msg: "\(Localization("DwnloadingWrk")) \(curWork.title)")
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
             Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
@@ -269,7 +269,7 @@ class MarkedForLaterController: ListViewController , UITableViewDataSource, UITa
                     let _ = self.downloadWork(d, curWork: curWork)
                 } else {
                     self.hideLoadingView()
-                    RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                    RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("CheckInternet"), type: RMessageType.error, customTypeName: "", callback: {
                         
                     })
                 }
@@ -281,15 +281,15 @@ class MarkedForLaterController: ListViewController , UITableViewDataSource, UITa
     
     @IBAction func deleteButtonTouched(_ sender: UIButton) {
         
-        let deleteAlert = UIAlertController(title: NSLocalizedString("AreYouSure", comment: ""), message: NSLocalizedString("SureDeleteFromHistory", comment: ""), preferredStyle: UIAlertController.Style.alert)
+        let deleteAlert = UIAlertController(title: Localization("AreYouSure"), message: Localization("SureDeleteFromHistory"), preferredStyle: UIAlertController.Style.alert)
         
-        deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: { (action: UIAlertAction) in
+        deleteAlert.addAction(UIAlertAction(title: Localization("Cancel"), style: .cancel, handler: { (action: UIAlertAction) in
             #if DEBUG
                 print("Cancel")
             #endif
         }))
         
-        deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Yes", comment: ""), style: .default, handler: { (action: UIAlertAction) in
+        deleteAlert.addAction(UIAlertAction(title: Localization("Yes"), style: .default, handler: { (action: UIAlertAction) in
             
             let curWork:NewsFeedItem = self.works[sender.tag]
             self.deleteItemFromHistory(curWork)
@@ -303,7 +303,7 @@ class MarkedForLaterController: ListViewController , UITableViewDataSource, UITa
     }
     
     func deleteItemFromHistory(_ curWork: NewsFeedItem) {
-        showLoadingView(msg: NSLocalizedString("DeletingFromHistory", comment: ""))
+        showLoadingView(msg: Localization("DeletingFromHistory"))
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
             Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
@@ -346,7 +346,7 @@ class MarkedForLaterController: ListViewController , UITableViewDataSource, UITa
                     self.hideLoadingView()
                 } else {
                     self.hideLoadingView()
-                    RMessage.showNotification(in: self, title: NSLocalizedString("Error", comment: ""), subtitle: NSLocalizedString("CheckInternet", comment: ""), type: RMessageType.error, customTypeName: "", callback: {
+                    RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("CheckInternet"), type: RMessageType.error, customTypeName: "", callback: {
                         
                     })
                 }
@@ -366,14 +366,14 @@ class MarkedForLaterController: ListViewController , UITableViewDataSource, UITa
             if let index = self.works.index( where: {$0.workId == curWork.workId}) {
                 self.works.remove(at: index)
             }
-            RMessage.showNotification(in: self, title: NSLocalizedString("DeletingFromHistory", comment: ""), subtitle: noticediv?[0].content ?? "", type: RMessageType.success, customTypeName: "", callback: {
+            RMessage.showNotification(in: self, title: Localization("DeletingFromHistory"), subtitle: noticediv?[0].content ?? "", type: RMessageType.success, customTypeName: "", callback: {
                 
             })
         } else {
             if let sorrydiv = doc.search(withXPathQuery: "//div[@class='flash error']") as? [TFHppleElement] {
                 
                 if(sorrydiv.count>0 && sorrydiv[0].text().range(of: "Sorry") != nil) {
-                    RMessage.showNotification(in: self, title: NSLocalizedString("DeletingFromHistory", comment: ""), subtitle: sorrydiv[0].content, type: RMessageType.error, customTypeName: "", callback: {
+                    RMessage.showNotification(in: self, title: Localization("DeletingFromHistory"), subtitle: sorrydiv[0].content, type: RMessageType.error, customTypeName: "", callback: {
                         
                     })
                     return
@@ -384,15 +384,15 @@ class MarkedForLaterController: ListViewController , UITableViewDataSource, UITa
     
     
     override func deleteTouched(rowIndex: Int) {
-        let deleteAlert = UIAlertController(title: NSLocalizedString("AreYouSure", comment: ""), message: NSLocalizedString("SureDeleteFromHistory", comment: ""), preferredStyle: UIAlertController.Style.alert)
+        let deleteAlert = UIAlertController(title: Localization("AreYouSure"), message: Localization("SureDeleteFromHistory"), preferredStyle: UIAlertController.Style.alert)
         
-        deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: { (action: UIAlertAction) in
+        deleteAlert.addAction(UIAlertAction(title: Localization("Cancel"), style: .cancel, handler: { (action: UIAlertAction) in
             #if DEBUG
                 print("Cancel")
             #endif
         }))
         
-        deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Yes", comment: ""), style: .default, handler: { (action: UIAlertAction) in
+        deleteAlert.addAction(UIAlertAction(title: Localization("Yes"), style: .default, handler: { (action: UIAlertAction) in
             
             let curWork:NewsFeedItem = self.works[rowIndex]
             self.deleteItemFromHistory(curWork)

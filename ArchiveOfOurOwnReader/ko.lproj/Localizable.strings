@@ -15,7 +15,7 @@
 "Error" = "오류 👻";
 "CannotBeEmpty" = "뭔가 입력 해주세요!";
 "CheckInternet" = "인터넷 연결 확인";
-"Only30Stroies" = "30 개의 스토리 만 다운로드 할 수 있습니다. 더 많은 것을 다운로드하려면 업그레이드하십시오.";
+"Only30Stroies" = "30 개의 스토리 만 다운로드 할 수 있습니다. 더 많은 것을 다운로드하려면 업그레이드하십시오. 또는 1 회 무료 다운로드에 대한 보상 비디오를 시청하십시오.";
 "DwnloadingWrk" = "다운로드 작업";
 "CannotDwnldWrk" = "다운로드 할 수 없습니다!";
 "Chapters_" = "챕터: ";
@@ -177,6 +177,35 @@
 "MarkAsRead" = "Mark As Read";
 "Reading Now" = "Reading Now";
 "ThankYouForSub" = "Thank you for buying subscription! Thanks to you the app will become better! 🙏";
+"FavoriteAuthors" = "Favorite Authors";
+"NoFavoriteAuthors" = "You have no favorite authors! Add anyone to favorites from author's profile screen and they will appear here.";
+"ViewWorks" = "View Works";
+"AddAuthToFav" = "+ Add to Favorite Authors";
+"RemAuthFromFav" = "- Remove from Favorite Authors";
+"ChoosePrefWarn" = "I need to know it so I can give you first portion of fics you might like. You can always choose anything else on  Search screen.";
+"ImportFrm" = "Import From AO3";
+"Works" = "Works";
+"Series" = "Series";
+"Share" = "Share";
+"SecuritySettings" = "Security Settings";
+"MyAO3" = "My AO3 Account";
+"MyPseud" = "Pseud for bookmarks, history etc";
+"Theme" = "Theme";
+"AboutSub" = "About Subscription";
+"Day" = "Day";
+"Night" = "Night";
+"PPolicy" = "Privacy Policy and Terms of Use";
+"Inbox" = "Inbox";
+"MyHighlights" = "My Highlights";
+"MyWorks" = "My Works";
+"ClearAllNotif" = "Clear All Notifications";
+"ProtectBio" = "Protect with Biometric ID or passcode";
+"PremiumFeaturesDesc" = " • Get work recommendations every week \n • No ads, premium fonts \n • Unlimited offline reading";
+"RestorePrevPurchase" = "Restore Previous Purchase";
+"SystemLanguage" = "System Language";
+"English" = "English";
+"LangChanged" = "Language successfully changed. Please restart the app for changes to take effect.";
+"ErrLangChanged" = "Cannot change language. Please email me from support screen to let me know!";
 
 
 

@@ -99,7 +99,7 @@ class WorksParser {
                 }
             }
         } else {
-            worksCountStr = NSLocalizedString("0Found", comment: "")
+            worksCountStr = Localization("0Found")
         }
         
         return (pages, works, worksCountStr)

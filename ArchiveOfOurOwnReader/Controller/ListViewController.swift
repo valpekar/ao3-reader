@@ -57,7 +57,7 @@ class ListViewController: LoadingViewController, PageSelectDelegate, UIPopoverPr
         }
         
         if (!curWork.chapters.isEmpty) {
-            cell.chaptersLabel.text = NSLocalizedString("Chapters_", comment: "") + curWork.chapters
+            cell.chaptersLabel.text = Localization("Chapters_") + curWork.chapters
         } else {
             cell.chaptersLabel.text = ""
         }
@@ -457,7 +457,7 @@ class ListViewController: LoadingViewController, PageSelectDelegate, UIPopoverPr
         
         let urlStr = AppDelegate.ao3SiteUrl + pageUrl
         
-        showLoadingView(msg: ("\(NSLocalizedString("LoadingPage", comment: "")) \(name)"))
+        showLoadingView(msg: ("\(Localization("LoadingPage")) \(name)"))
         
         Alamofire.request(urlStr)
             .response(completionHandler: { response in
@@ -477,7 +477,7 @@ class ListViewController: LoadingViewController, PageSelectDelegate, UIPopoverPr
                 
                 } else {
                     self.hideLoadingView()
-                    self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CheckInternet", comment: ""))
+                    self.showError(title: Localization("Error"), message: Localization("CheckInternet"))
                 }
             })
     }
@@ -497,23 +497,23 @@ class ListViewController: LoadingViewController, PageSelectDelegate, UIPopoverPr
         self.curRow = rowIndex
         
         if (curWork?.isDownloaded == true) {
-            let optionMenu = UIAlertController(title: nil, message: NSLocalizedString("WrkOptions", comment: ""), preferredStyle: .actionSheet)
+            let optionMenu = UIAlertController(title: nil, message: Localization("WrkOptions"), preferredStyle: .actionSheet)
             optionMenu.view.tintColor = AppDelegate.redColor
             
-            let deleteAction = UIAlertAction(title: NSLocalizedString("DeleteWrk", comment: ""), style: .default, handler: {
+            let deleteAction = UIAlertAction(title: Localization("DeleteWrk"), style: .default, handler: {
                 (alert: UIAlertAction!) -> Void in
                 self.doDeleteWork()
                 self.reload(row: rowIndex)
             })
             optionMenu.addAction(deleteAction)
             
-            let reloadAction = UIAlertAction(title: NSLocalizedString("ReloadWrk", comment: ""), style: .default, handler: {
+            let reloadAction = UIAlertAction(title: Localization("ReloadWrk"), style: .default, handler: {
                 (alert: UIAlertAction!) -> Void in
                 self.doDownloadWork()
             })
             optionMenu.addAction(reloadAction)
             
-            optionMenu.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: { (action: UIAlertAction) in
+            optionMenu.addAction(UIAlertAction(title: Localization("Cancel"), style: .cancel, handler: { (action: UIAlertAction) in
                 print("Cancel")
             }))
             
@@ -540,7 +540,7 @@ class ListViewController: LoadingViewController, PageSelectDelegate, UIPopoverPr
                 #endif
             } else {
                 if (countWroksFromDB() > 29) {
-                    self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("Only30Stroies", comment: ""))
+                    self.showError(title: Localization("Error"), message: Localization("Only30Stroies"))
                 
                     return
                 }
@@ -553,7 +553,7 @@ class ListViewController: LoadingViewController, PageSelectDelegate, UIPopoverPr
     func doDownloadWork() {
         curWork?.isDownloaded = true
         
-        showLoadingView(msg: "\(NSLocalizedString("DwnloadingWrk", comment: "")) \(curWork?.title ?? "")")
+        showLoadingView(msg: "\(Localization("DwnloadingWrk")) \(curWork?.title ?? "")")
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
             Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
@@ -581,7 +581,7 @@ class ListViewController: LoadingViewController, PageSelectDelegate, UIPopoverPr
             }
             self.reload(row: curRow)
         } else {
-            self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CannotDwnldWrk", comment: ""))
+            self.showError(title: Localization("Error"), message: Localization("CannotDwnldWrk"))
             self.hideLoadingView()
         }
         
@@ -622,7 +622,7 @@ class ListViewController: LoadingViewController, PageSelectDelegate, UIPopoverPr
                 try managedContext.save()
             } catch _ {
                 NSLog("Cannot delete saved work")
-                self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CannotDeleteWrk", comment: ""))
+                self.showError(title: Localization("Error"), message: Localization("CannotDeleteWrk"))
             }
             
             curWork?.isDownloaded = false
@@ -633,13 +633,13 @@ class ListViewController: LoadingViewController, PageSelectDelegate, UIPopoverPr
                 self.works[curRow].needReload = false
             }
             
-            showSuccess(title: NSLocalizedString("Success", comment: ""), message: NSLocalizedString("WorkDeletedFromDownloads", comment: ""))
+            showSuccess(title: Localization("Success"), message: Localization("WorkDeletedFromDownloads"))
             
             self.saveWorkNotifItem(workId: wId, wasDeleted: NSNumber(booleanLiteral: true))
             self.sendAllNotSentForDelete()
         
         } else {
-            self.showError(title: NSLocalizedString("Error", comment: ""), message: NSLocalizedString("CannotFindWrk", comment: ""))
+            self.showError(title: Localization("Error"), message: Localization("CannotFindWrk"))
         }
     }
     

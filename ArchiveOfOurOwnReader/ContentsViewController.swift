@@ -8,6 +8,7 @@
 
 import UIKit
 import Crashlytics
+import Firebase
 
 class ContentsViewController: UIViewController, UIPopoverPresentationControllerDelegate, UITableViewDataSource, UITableViewDelegate {
     
@@ -35,6 +36,7 @@ class ContentsViewController: UIViewController, UIPopoverPresentationControllerD
             return downloadedChapters.count
         } else {
             Answers.logCustomEvent(withName: "Contents: empty", customAttributes: [:])
+            Analytics.logEvent("Contents: Empty", parameters: [:])
             return 0
         }
     }

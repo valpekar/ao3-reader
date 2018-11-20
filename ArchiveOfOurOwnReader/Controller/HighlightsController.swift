@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 import Crashlytics
+import Firebase
 
 class HighlightsController: LoadingViewController, NSFetchedResultsControllerDelegate {
     
@@ -86,6 +87,7 @@ class HighlightsController: LoadingViewController, NSFetchedResultsControllerDel
          self.updateView()
         
         Answers.logCustomEvent(withName: "Highlights", customAttributes: ["count" : fetchedResultsController?.fetchedObjects?.count ?? 0])
+        Analytics.logEvent("Highlights", parameters: ["count" : fetchedResultsController?.fetchedObjects?.count ?? 0 as NSObject])
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -103,17 +105,17 @@ class HighlightsController: LoadingViewController, NSFetchedResultsControllerDel
 //    }
     
     @IBAction func sortHighlightsTouched(_ sender: AnyObject) {
-        let optionMenu = UIAlertController(title: nil, message: NSLocalizedString("Sort Options", comment: ""), preferredStyle: .actionSheet)
+        let optionMenu = UIAlertController(title: nil, message: Localization("Sort Options"), preferredStyle: .actionSheet)
         optionMenu.view.tintColor = AppDelegate.redColor
         
-        let dateAction = UIAlertAction(title: NSLocalizedString("By Date Added", comment: ""), style: .default, handler: {
+        let dateAction = UIAlertAction(title: Localization("By Date Added"), style: .default, handler: {
             (alert: UIAlertAction!) -> Void in
             self.sortBy = "date"
             
             self.saveSortOptionsAndReload()
         })
         
-        let azAction = UIAlertAction(title: NSLocalizedString("By Work Title", comment: ""), style: .default, handler: {
+        let azAction = UIAlertAction(title: Localization("By Work Title"), style: .default, handler: {
             (alert: UIAlertAction!) -> Void in
             self.sortBy = "workName"
             
@@ -122,7 +124,7 @@ class HighlightsController: LoadingViewController, NSFetchedResultsControllerDel
         optionMenu.addAction(azAction)
         optionMenu.addAction(dateAction)
         
-        let authorAction = UIAlertAction(title: NSLocalizedString("By Author", comment: ""), style: .default, handler: {
+        let authorAction = UIAlertAction(title: Localization("By Author"), style: .default, handler: {
             (alert: UIAlertAction!) -> Void in
             self.sortBy = "author"
             
@@ -130,7 +132,7 @@ class HighlightsController: LoadingViewController, NSFetchedResultsControllerDel
         })
         optionMenu.addAction(authorAction)
         
-        let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: {
+        let cancelAction = UIAlertAction(title: Localization("Cancel"), style: .cancel, handler: {
             (alert: UIAlertAction!) -> Void in
             print("Cancelled")
         })
@@ -143,13 +145,13 @@ class HighlightsController: LoadingViewController, NSFetchedResultsControllerDel
     }
     
     @IBAction func deleteAllHighlights(_ sender: AnyObject) {
-        let deleteAlert = UIAlertController(title: NSLocalizedString("AreYouSure", comment: ""), message: NSLocalizedString("You want to delete all your highlights?", comment: ""), preferredStyle: UIAlertController.Style.alert)
+        let deleteAlert = UIAlertController(title: Localization("AreYouSure"), message: Localization("You want to delete all your highlights?"), preferredStyle: UIAlertController.Style.alert)
         
-        deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: { (action: UIAlertAction) in
+        deleteAlert.addAction(UIAlertAction(title: Localization("Cancel"), style: .cancel, handler: { (action: UIAlertAction) in
             print("Cancel")
         }))
         
-        deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Yes", comment: ""), style: .default, handler: { (action: UIAlertAction) in
+        deleteAlert.addAction(UIAlertAction(title: Localization("Yes"), style: .default, handler: { (action: UIAlertAction) in
             self.deleteAllHighlights()
             self.tableView.reloadData()
         }))
@@ -210,7 +212,7 @@ class HighlightsController: LoadingViewController, NSFetchedResultsControllerDel
             NSLog("Cannot delete notif item")
         }
 
-        self.showSuccess(title: NSLocalizedString("Success", comment: ""), message: "Highlight was successfully deleted!")
+        self.showSuccess(title: Localization("Success"), message: "Highlight was successfully deleted!")
         
     }
     
@@ -222,6 +224,7 @@ class HighlightsController: LoadingViewController, NSFetchedResultsControllerDel
         let managedContext = appDelegate.persistentContainer.viewContext
         
         Answers.logCustomEvent(withName: "Highlights", customAttributes: ["deleteAll,count" : fetchedResultsController?.fetchedObjects?.count ?? 0])
+        Analytics.logEvent("Highlights: Delete All", parameters: ["count" : fetchedResultsController?.fetchedObjects?.count ?? 0 as NSObject])
         
         let fetch = NSFetchRequest<NSFetchRequestResult>(entityName: "DBHighlightItem")
         let request = NSBatchDeleteRequest(fetchRequest: fetch)
@@ -251,6 +254,7 @@ class HighlightsController: LoadingViewController, NSFetchedResultsControllerDel
         let textToShare = [ "\(highlightItem.content ?? "") \n- \(highlightItem.author ?? ""), \"\(highlightItem.workName ?? "")\"" ]
         
         Answers.logCustomEvent(withName: "Highlights: Share", customAttributes: ["text" : textToShare])
+        Analytics.logEvent("Highlights: Share", parameters: ["text" : textToShare as NSObject])
         
         let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
         activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
@@ -263,13 +267,13 @@ class HighlightsController: LoadingViewController, NSFetchedResultsControllerDel
     }
     
     func showDeleteDialog(highlightItem: DBHighlightItem) {
-        let deleteAlert = UIAlertController(title: NSLocalizedString("AreYouSure", comment: ""), message: NSLocalizedString("You want to delete the highlight?", comment: ""), preferredStyle: UIAlertController.Style.alert)
+        let deleteAlert = UIAlertController(title: Localization("AreYouSure"), message: Localization("You want to delete the highlight?"), preferredStyle: UIAlertController.Style.alert)
         
-        deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: { (action: UIAlertAction) in
+        deleteAlert.addAction(UIAlertAction(title: Localization("Cancel"), style: .cancel, handler: { (action: UIAlertAction) in
             print("Cancel")
         }))
         
-        deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Yes", comment: ""), style: .default, handler: { (action: UIAlertAction) in
+        deleteAlert.addAction(UIAlertAction(title: Localization("Yes"), style: .default, handler: { (action: UIAlertAction) in
             self.deleteHighlight(highlightItem: highlightItem)
             
 //            self.highlights = self.getAllHighlights()
@@ -298,6 +302,7 @@ class HighlightsController: LoadingViewController, NSFetchedResultsControllerDel
 //        self.updateView()
         
         Answers.logCustomEvent(withName: "Highlights: Sort", customAttributes: ["sortBy" : self.sortBy])
+        Analytics.logEvent("Highlights: Sort", parameters: ["sortBy" : self.sortBy as NSObject])
     }
     
     //MARK: - copy olds
@@ -425,17 +430,17 @@ extension HighlightsController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func showQuoteDialog(selectedHighlight: DBHighlightItem) {
-        let deleteAlert = UIAlertController(title: NSLocalizedString("Highlight Options", comment: ""), message: selectedHighlight.workName, preferredStyle: UIAlertController.Style.actionSheet)
+        let deleteAlert = UIAlertController(title: Localization("Highlight Options"), message: selectedHighlight.workName, preferredStyle: UIAlertController.Style.actionSheet)
         
-        deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Delete", comment: ""), style: .default, handler: { (action: UIAlertAction) in
+        deleteAlert.addAction(UIAlertAction(title: Localization("Delete"), style: .default, handler: { (action: UIAlertAction) in
             self.showDeleteDialog(highlightItem: selectedHighlight)
         }))
         
-        deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Share", comment: ""), style: .default, handler: { (action: UIAlertAction) in
+        deleteAlert.addAction(UIAlertAction(title: Localization("Share"), style: .default, handler: { (action: UIAlertAction) in
             self.shareHighlight(highlightItem: selectedHighlight)
         }))
         
-        deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: { (action: UIAlertAction) in
+        deleteAlert.addAction(UIAlertAction(title: Localization("Cancel"), style: .cancel, handler: { (action: UIAlertAction) in
             print("Cancel")
         }))
         
