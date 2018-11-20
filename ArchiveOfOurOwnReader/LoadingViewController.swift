@@ -123,7 +123,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         rewardBasedVideo?.delegate = self
         // Load a reward based video ad.
         rewardBasedVideo?.load(GADRequest(),
-                               withAdUnitID: "ca-app-pub-3940256099942544/1712485313")
+                               withAdUnitID: "ca-app-pub-3940256099942544/1712485313") //ours - ca-app-pub-8760316520462117/1920096965 //test -- ca-app-pub-3940256099942544/1712485313
     }
 
     func showAdMobInterstitial() {
@@ -1236,7 +1236,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
     }
     
     
-    func doDownloadWork(wId: String, isOnline: Bool) {
+    func doDownloadWork(wId: String, isOnline: Bool, wasSaved: Bool) {
         let cC = self.getCountryCode()
         
         let pseuds = DefaultsManager.getObject(DefaultsManager.PSEUD_IDS) as? [String:String] ?? [:]
@@ -1251,7 +1251,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
                 print("premium")
             #endif
         } else {
-            if (isOnline == true && countWroksFromDB() > 29) {
+            if (wasSaved == false && countWroksFromDB() > 29) {
                 idBeforeLimit = wId
                 self.showLimitError()
                 
@@ -1755,12 +1755,12 @@ extension String: ParameterEncoding {
  extension LoadingViewController: GADRewardBasedVideoAdDelegate {
     
     func rewardBasedVideoAd(_ rewardBasedVideoAd: GADRewardBasedVideoAd, didRewardUserWith reward: GADAdReward) {
-        if (reward.amount.doubleValue > 0.0) {
-            self.doDownloadWork(wId: idBeforeLimit, isOnline: true)
-        }
+      //  if (reward.amount.doubleValue > 0.0) {
+            self.downloadWorkForSure(wId: idBeforeLimit, isOnline: true)
+      //  }
         
         Answers.logCustomEvent(withName: "Rewarded: Received Reward", customAttributes: ["result" : "watched"])
-        Analytics.logEvent("Rewarded: Received Reward", parameters: ["result" : "watched"])
+        Analytics.logEvent("Rewarded_Received_Reward", parameters: ["result" : "watched"])
         
         self.loadAdMobRewared()
     }
@@ -1770,11 +1770,12 @@ extension String: ParameterEncoding {
     }
     
     func showRewardedAd() {
-        Answers.logCustomEvent(withName: "Rewarded: Start ", customAttributes: [:])
-        Analytics.logEvent("Rewarded: Start", parameters: [:])
         
         if rewardBasedVideo?.isReady == true {
-            rewardBasedVideo?.present(fromRootViewController: self)
+            Answers.logCustomEvent(withName: "Rewarded: Start ", customAttributes: [:])
+            Analytics.logEvent("Rewarded_Start", parameters: [:])
+            
+            rewardBasedVideo?.present(fromRootViewController: UIApplication.shared.keyWindow?.rootViewController ?? self)
         }
     }
     

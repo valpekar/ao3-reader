@@ -1874,21 +1874,24 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
         var wId = ""
         var isOnline = true
+        var wasSaved = false
         
         if let workItem = self.workItem {
             wId = workItem.workId
             isOnline = true
+            wasSaved = false
         } else if let downloadedWorkItem = self.downloadedWorkItem {
             wId = downloadedWorkItem.workId ?? "0"
             isOnline = false
+            wasSaved = true
         }
         
-        doDownloadWork(wId: wId, isOnline: isOnline)
+        doDownloadWork(wId: wId, isOnline: false, wasSaved: wasSaved)
         
         Answers.logCustomEvent(withName: "WorkDetail: download",
                                customAttributes: [
                                 "workId": wId])
-        Analytics.logEvent("WorkDetail: download", parameters: ["workId": wId as NSObject])
+        Analytics.logEvent("WorkDetail_download", parameters: ["workId": wId as NSObject])
     }
     
    override func onSavedWorkLoaded(_ response: DefaultDataResponse) {
@@ -1902,6 +1905,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             self.parseCookies(response)
             if let dd = self.downloadWork(d, workItemToReload: self.downloadedWorkItem) {
                 self.downloadedWorkItem = dd
+                self.workItem = nil
                 showDownloadedWork()
                 
                 var worksToReload = DefaultsManager.getStringArray(DefaultsManager.NOTIF_IDS_ARR)
@@ -2034,18 +2038,18 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         })
         optionMenu.addAction(markNotifAction)
         
-        if (workItem != nil  && !isSensitive) {
-            let saveAction = UIAlertAction(title: Localization("DownloadWrk"), style: .default, handler: {
-                (alert: UIAlertAction!) -> Void in
-                self.downloadWorkAction()
-            })
-            optionMenu.addAction(saveAction)
-        } else if (downloadedWorkItem != nil) {
+        if (downloadedWorkItem != nil) {
             let reloadAction = UIAlertAction(title: Localization("ReloadWrk"), style: .default, handler: {
                 (alert: UIAlertAction!) -> Void in
                 self.downloadWorkAction()
             })
             optionMenu.addAction(reloadAction)
+        } else if (workItem != nil  && !isSensitive) {
+            let saveAction = UIAlertAction(title: Localization("DownloadWrk"), style: .default, handler: {
+                (alert: UIAlertAction!) -> Void in
+                self.downloadWorkAction()
+            })
+            optionMenu.addAction(saveAction)
         }
         
         let commentAction = UIAlertAction(title: Localization("ViewComments"), style: .default, handler: {

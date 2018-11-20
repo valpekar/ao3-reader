@@ -127,6 +127,10 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
         if let tf = self.searchBar.value(forKey: "_searchField") as? UITextField {
             addDoneButtonOnKeyboardTf(tf)
         }
+        
+        if (purchased == false && donated == false) {
+            loadAdMobRewared()
+        }
     }
     
     override func doneButtonAction() {
@@ -913,7 +917,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
                                customAttributes: [
                                 "workId": workId])
         
-        doDownloadWork(wId: workId, isOnline: isOnline)
+        doDownloadWork(wId: workId, isOnline: false, wasSaved: !isOnline)
     }
     
     var commentsForEntireWork = true
@@ -1035,6 +1039,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
             if let dd = self.downloadWork(d, workItemToReload: self.downloadedWorkItem),
                 let downloadedChapters = dd.chapters?.allObjects as? [DBChapter] {
                 self.downloadedWorkItem = dd
+                self.workItem = nil
                 if (self.beforeDownloadChapter >= 0) {
                     self.downloadedWorkItem?.currentChapter = NSNumber(value: self.beforeDownloadChapter)
                     self.beforeDownloadChapter = -1

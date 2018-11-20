@@ -153,6 +153,7 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
         //
         
         if (purchased == false && donated == false) {
+            
             print("not purchased")
             //self.setupAdPlacer()
             if (i % 4 == 0) {
