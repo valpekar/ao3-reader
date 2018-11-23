@@ -123,7 +123,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         rewardBasedVideo?.delegate = self
         // Load a reward based video ad.
         rewardBasedVideo?.load(GADRequest(),
-                               withAdUnitID: "ca-app-pub-3940256099942544/1712485313") //ours - ca-app-pub-8760316520462117/1920096965 //test -- ca-app-pub-3940256099942544/1712485313
+                               withAdUnitID: "ca-app-pub-8760316520462117/1920096965") //ours - ca-app-pub-8760316520462117/1920096965 //test -- ca-app-pub-3940256099942544/1712485313
     }
 
     func showAdMobInterstitial() {
