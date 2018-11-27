@@ -684,6 +684,15 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         }
         }
         
+        if let summaryEl = doc.search(withXPathQuery: "//div[@class='summary module']//blockquote[@class='userstuff']") as? [TFHppleElement],
+            summaryEl.count > 0 {
+            let summaryStr = summaryEl[0].content.replacingOccurrences(of: "\n", with:"")
+                .trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+                .replacingOccurrences(of: "\\s+", with: " ", options: NSString.CompareOptions.regularExpression, range: nil)
+            
+            workItem.topicPreview = summaryStr
+        }
+        
         if let workContentEl = doc.search(withXPathQuery: "//div[@id='chapters']") as? [TFHppleElement] {
             if (workContentEl.count > 0) {
             var workContentStr = workContentEl[0].raw ?? ""

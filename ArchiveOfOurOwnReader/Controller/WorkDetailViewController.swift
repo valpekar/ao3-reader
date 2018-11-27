@@ -144,6 +144,24 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 showOnlineWork(workUrl)
             }
         } else if (workItem != nil) {
+            
+            let checkItems = self.getDownloadedStats()
+            for downloadedItem in checkItems {
+                if (downloadedItem.workId == workItem.workId) {
+                    workItem.isDownloaded = true
+                    
+                    if (downloadedItem.date != workItem.datetime) {
+                        let dateFormatter = DateFormatter()
+                        dateFormatter.dateFormat = "dd MMM yyyy"
+                        if let oldDate = dateFormatter.date(from: downloadedItem.date),
+                            let newDate = dateFormatter.date(from: workItem.datetime),
+                            oldDate <= newDate {
+                            workItem.needReload = true
+                        }
+                    }
+                }
+            }
+            
             if (workItem.isDownloaded == true) {
                 
                 if let downloadedWork = getWorkById(workId: workItem.workId) {
@@ -1873,16 +1891,16 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     func downloadWorkAction() {
         
         var wId = ""
-        var isOnline = true
+    //    var isOnline = true
         var wasSaved = false
         
         if let workItem = self.workItem {
             wId = workItem.workId
-            isOnline = true
+         //   isOnline = true
             wasSaved = false
         } else if let downloadedWorkItem = self.downloadedWorkItem {
             wId = downloadedWorkItem.workId ?? "0"
-            isOnline = false
+         //   isOnline = false
             wasSaved = true
         }
         
