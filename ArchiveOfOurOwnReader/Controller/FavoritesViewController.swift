@@ -14,9 +14,7 @@ import Firebase
 class FavoritesViewController: LoadingViewController, UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating, UISearchBarDelegate, EditFoldersProtocol {
     
     @IBOutlet weak var tableView:UITableView!
-    
-    
-    
+        
     var downloadedFandoms: [DBFandom] = []
     
     var selectedWork: DBWorkItem? = nil

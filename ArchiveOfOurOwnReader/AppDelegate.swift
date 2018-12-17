@@ -587,6 +587,45 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         })
         return container
     }
+    
+    func getDownloadedWorksCount() -> Int {
+        var res = 0
+        
+        let fetchRequest: NSFetchRequest <NSFetchRequestResult> = NSFetchRequest(entityName:"DBWorkItem")
+        do {
+            let countReq = try persistentContainer.viewContext.count(for: fetchRequest)
+            if countReq != NSNotFound {
+                res = countReq
+            }
+        } catch {
+            #if DEBUG
+            print("cannot count favorites.")
+            #endif
+        }
+        
+        return res
+    }
+    
+    func getNeedReloadWorksCount() -> Int {
+        var res = 0
+        
+        let fetchRequest: NSFetchRequest <NSFetchRequestResult> = NSFetchRequest(entityName:"DBWorkItem")
+        let predicate = NSPredicate(format: "needsUpdate == 1")
+        fetchRequest.predicate = predicate
+        
+        do {
+            let countReq = try persistentContainer.viewContext.count(for: fetchRequest)
+            if countReq != NSNotFound {
+                res = countReq
+            }
+        } catch {
+            #if DEBUG
+            print("cannot count favorites.")
+            #endif
+        }
+        
+        return res
+    }
 
 //    lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator? = {
 //        // The persistent store coordinator for the application. This implementation creates and return a coordinator, having added the store for the application to it. This property is optional since there are legitimate error conditions that could cause the creation of the store to fail.

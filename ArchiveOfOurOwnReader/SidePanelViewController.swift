@@ -111,19 +111,7 @@ class SidePanelViewController: UIViewController, UITableViewDataSource, UITableV
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
                 return res
         }
-        let managedContext = appDelegate.persistentContainer.viewContext
-        
-        let fetchRequest: NSFetchRequest <NSFetchRequestResult> = NSFetchRequest(entityName:"DBWorkItem")
-        do {
-            let countReq = try managedContext.count(for: fetchRequest)
-            if countReq != NSNotFound {
-                res = countReq
-            }
-        } catch {
-            #if DEBUG
-                print("cannot count favorites.")
-            #endif
-        }
+        res = appDelegate.getDownloadedWorksCount()
         
         return res
     }

@@ -97,13 +97,16 @@ class ViewFoldersController: BaseFolderController {
         
         unCatButton.setTitle("\(LoadingViewController.uncategorized) (\(unCatCount) works) →", for: UIControl.State.normal)
         
-        let worksToReload = DefaultsManager.getStringArray(DefaultsManager.NOTIF_IDS_ARR)
-        if (worksToReload.count == 0) {
+        var needUpdatesCount = 0
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+            needUpdatesCount = appDelegate.getNeedReloadWorksCount()
+        }
+        if (needUpdatesCount == 0) {
             updButton.isEnabled = false
         } else {
             updButton.isEnabled = true
         }
-        updButton.setTitle("Latest Updates (\(worksToReload.count))", for: UIControl.State.normal)
+        updButton.setTitle("Latest Updates (\(needUpdatesCount))", for: UIControl.State.normal)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
