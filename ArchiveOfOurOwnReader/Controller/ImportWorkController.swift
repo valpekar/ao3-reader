@@ -85,8 +85,14 @@ class ImportWorkController : UserMessagesController {
     }
     
     @IBAction func importTouched(_ sender: AnyObject) {
-        if var txt: String = textField.text {
-            if (txt.isEmpty == false && (txt.contains(AppDelegate.ao3SiteUrl) || txt.contains("archiveofourown.org"))) {
+        if var txt: String = textField.text, txt.isEmpty == false {
+            if (txt.contains("google")) {
+                if let idx = txt.index(of: "url=") {
+                    txt = String(txt[idx...]).removingPercentEncoding ?? txt
+                }
+            }
+            
+            if (txt.contains(AppDelegate.ao3SiteUrl) || txt.contains("archiveofourown.org")) {
                 if (txt.contains(" ")) {
                     let arr = txt.split(separator: " ")
                     if (arr.count > 0) {

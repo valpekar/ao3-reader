@@ -77,12 +77,17 @@ class FavoriteAuthorsController : ListViewController, NSFetchedResultsController
         self.tableView.estimatedRowHeight = 200
         self.tableView.tableFooterView = UIView()
         
+       
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
         do {
             try fetchedResultsController?.performFetch()
         } catch {
             print("An error occurred")
         }
-        
         
         self.updateView()
         

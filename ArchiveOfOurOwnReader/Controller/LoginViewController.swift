@@ -26,7 +26,6 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
       // makeRoundButton(button: loginButton)
         makeRoundView(view: bgView)
         
-        self.loginButton.applyGradient(colours: [AppDelegate.redDarkColor, AppDelegate.redLightColor], cornerRadius: AppDelegate.mediumCornerRadius)
         
         loginTextField.delegate = self
         passTextField.delegate = self
@@ -64,6 +63,9 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
         
         //underlineTextField(loginTextField)
         //underlineTextField(passTextField)
+        self.loginButton.applyGradient(colours: [AppDelegate.redDarkColor, AppDelegate.redLightColor], cornerRadius: AppDelegate.mediumCornerRadius)
+        self.loginButton.setTitle(NSLocalizedString("Login", comment: ""), for: .normal)
+
     }
     
     func underlineTextField(_ textField: UITextField) {
