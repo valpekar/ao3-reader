@@ -230,14 +230,24 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
     
     func parseResponse(_ data: Data) {
         let doc : TFHpple = TFHpple(htmlData: data)
-        guard let flashnoticediv: [TFHppleElement] = doc.search(withXPathQuery: "//div[@class='flash notice']") as? [TFHppleElement] else {
+        let flashnoticediv: [TFHppleElement]? = doc.search(withXPathQuery: "//div[@class='flash notice']") as? [TFHppleElement]
+        let flashalertdiv: [TFHppleElement]? = doc.search(withXPathQuery: "//div[@class='flash alert']") as? [TFHppleElement]
+        
+        if (flashnoticediv == nil || flashalertdiv == nil){
             showError()
             self.showError()
             return
         }
-        if (flashnoticediv.count > 0) {
-            let noticeTxt = flashnoticediv[0].content as String
-            if (noticeTxt.contains("Successfully logged")) {
+        var flashRes: [TFHppleElement] = [TFHppleElement]()
+        if (flashnoticediv != nil) {
+            flashRes = flashnoticediv!
+        } else {
+            flashRes = flashalertdiv!
+        }
+        
+        if (flashRes.count > 0) {
+             let noticeTxt = flashRes[0].content as String
+             if (noticeTxt.contains("Successfully logged") || noticeTxt.contains("already signed")) {
         
                 let login = DefaultsManager.getString(DefaultsManager.LOGIN)
                 if (login.contains("@")) {
