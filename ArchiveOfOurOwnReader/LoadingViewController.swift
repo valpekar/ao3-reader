@@ -194,6 +194,29 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         super.applyTheme()
     }
     
+    func logout() {
+        
+        Alamofire.request("https://archiveofourown.org/users/logout", method: .get, parameters: [:])
+            .response(completionHandler: { response in
+                #if DEBUG
+                print(response.request ?? "")
+                print(response.error ?? "")
+                #endif
+        })
+        
+        let s: [String:String] = [:]
+        
+        DefaultsManager.putString("", key: DefaultsManager.LOGIN)
+        DefaultsManager.putString("", key: DefaultsManager.PSWD)
+        DefaultsManager.putString("", key: DefaultsManager.PSEUD_ID)
+        DefaultsManager.putString("", key: DefaultsManager.TOKEN)
+        DefaultsManager.putObject(s as AnyObject, key: DefaultsManager.PSEUD_IDS)
+        
+        (UIApplication.shared.delegate as! AppDelegate).cookies = [HTTPCookie]()
+        (UIApplication.shared.delegate as! AppDelegate).token = ""
+        DefaultsManager.putObject([HTTPCookie]() as AnyObject, key: DefaultsManager.COOKIES)
+    }
+    
     func showLoadingView(msg: String) {
         
         if (loadingView != nil) {

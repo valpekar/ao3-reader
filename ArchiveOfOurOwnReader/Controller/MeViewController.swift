@@ -100,20 +100,11 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
     }
     
     //MARK: - log in / out
-    func logout() {
-        let s: [String:String] = [:]
+   
+    override func logout() {
+        super.logout()
         
-        DefaultsManager.putString("", key: DefaultsManager.LOGIN)
-        DefaultsManager.putString("", key: DefaultsManager.PSWD)
-        DefaultsManager.putString("", key: DefaultsManager.PSEUD_ID)
-        DefaultsManager.putString("", key: DefaultsManager.TOKEN)
-        DefaultsManager.putObject(s as AnyObject, key: DefaultsManager.PSEUD_IDS)
-        
-        pseuds = s
-        
-        (UIApplication.shared.delegate as! AppDelegate).cookies = [HTTPCookie]()
-        (UIApplication.shared.delegate as! AppDelegate).token = ""
-        DefaultsManager.putObject([HTTPCookie]() as AnyObject, key: DefaultsManager.COOKIES)
+        pseuds = [:]
         
         pseudsTableView.reloadData()
     }
@@ -132,7 +123,7 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
         let pass = DefaultsManager.getString(DefaultsManager.PSWD)
         
         if (!login.isEmpty && !pass.isEmpty) {
-            logout()
+            self.logout()
             refreshUI()
         } else {
             self.login()

@@ -80,7 +80,7 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
     }
     
     func getLoginParams() {
-        Alamofire.request("https://archiveofourown.org/user_sessions/new", method: .get)
+        Alamofire.request("https://archiveofourown.org/users/login", method: .get)
             .response(completionHandler: { response in
                 #if DEBUG
                     print(response.request ?? "")
@@ -129,13 +129,13 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
         DefaultsManager.putString(login, key: DefaultsManager.LOGIN)
         DefaultsManager.putString(pass, key: DefaultsManager.PSWD)
         
-        params["user_session"] = ["login": login,
+        params["user"] = ["login": login,
             "password": pass,
             "remember_me": "1"]
         
      //   showLoadingView()
         
-        Alamofire.request("https://archiveofourown.org/user_sessions/", method: .post, parameters: params)
+        Alamofire.request("https://archiveofourown.org/users/login", method: .post, parameters: params)
             .response(completionHandler: { response in
                 #if DEBUG
                 print(response.request ?? "")
@@ -165,6 +165,8 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
                             err = "\(response.response?.statusCode ?? -1): \(errMsg.localizedDescription)"
                         }
                         self.showError(title: Localization("Error"), message: err)
+                        
+                        self.logout()
                     }
                 }
             })
@@ -227,16 +229,30 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
     }
     
     func parseResponse(_ data: Data) {
-//        let doc : TFHpple = TFHpple(htmlData: data)
-//        guard let flashnoticediv: [TFHppleElement] = doc.search(withXPathQuery: "//div[@class='flash notice']") as? [TFHppleElement] else {
-//            showError()
-//            return
-//        }
-//        if (flashnoticediv.count > 0) {
-//            let noticeTxt = flashnoticediv[0].content as String
-//            if (noticeTxt.contains("Successfully logged")) {
+        let doc : TFHpple = TFHpple(htmlData: data)
+        guard let flashnoticediv: [TFHppleElement] = doc.search(withXPathQuery: "//div[@class='flash notice']") as? [TFHppleElement] else {
+            showError()
+            self.showError()
+            return
+        }
+        if (flashnoticediv.count > 0) {
+            let noticeTxt = flashnoticediv[0].content as String
+            if (noticeTxt.contains("Successfully logged")) {
         
-        
+                let login = DefaultsManager.getString(DefaultsManager.LOGIN)
+                if (login.contains("@")) {
+                
+                if let menudiv: [TFHppleElement] = doc.search(withXPathQuery: "//ul[@class='user navigation actions']//li[@class='dropdown']//a") as? [TFHppleElement],
+                    let firstToggle = menudiv.first {
+                    let attributes : NSDictionary = firstToggle.attributes as NSDictionary
+                    let loginAttr = (attributes["href"] as? String)?.replacingOccurrences(of: "/users/", with: "") ?? ""
+                    
+                    if (loginAttr.count > 0) {
+                        DefaultsManager.putString(loginAttr, key: DefaultsManager.LOGIN)
+                    }
+                }
+                }
+                
                 self.showSuccess(title: Localization("LogIn"), message: Localization("LoggedInScs"))
                 
                 let delayTime = DispatchTime.now() + Double(Int64(1.500 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
@@ -250,10 +266,11 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
                     self.controllerDelegate.controllerDidClosedWithLogin!()
                 })
                }
-//            }
-//        } else {
-//           showError()
-//        }
+            }
+        } else {
+           showError()
+            self.logout()
+        }
     }
     
     func showError() {
