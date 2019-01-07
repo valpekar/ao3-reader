@@ -315,6 +315,7 @@ class SearchQuery : NSObject, NSCoding {
         self.init()
         
         self.include_tags = (decoder.decodeObject(forKey: "include_tags") as? String) ?? ""
+        self.quick_tags = (decoder.decodeObject(forKey: "quick_tags") as? String) ?? ""
         self.exclude_tags = (decoder.decodeObject(forKey: "exclude_tags") as? String) ?? ""
         self.tag = (decoder.decodeObject(forKey: "tag") as? String) ?? ""
         self.title = (decoder.decodeObject(forKey: "title") as? String) ?? ""
@@ -342,6 +343,7 @@ class SearchQuery : NSObject, NSCoding {
     
     @objc func encode(with coder: NSCoder) {
         coder.encode(self.include_tags, forKey: "include_tags")
+        coder.encode(self.quick_tags, forKey: "quick_tags")
         coder.encode(self.exclude_tags, forKey: "exclude_tags")
         coder.encode(self.tag, forKey: "tag")
         coder.encode(self.title, forKey: "title")

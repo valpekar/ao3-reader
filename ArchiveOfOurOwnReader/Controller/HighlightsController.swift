@@ -479,15 +479,15 @@ extension HighlightsController: UITableViewDelegate, UITableViewDataSource {
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         
         switch type {
-        case .insert:
-            if let indexPath = newIndexPath {
-                tableView.insertRows(at: [indexPath], with: .automatic)
-            }
         case .update:
             if let indexPath = indexPath {
                 let workItem = fetchedResultsController?.object(at: indexPath)
                 guard let cell = tableView.cellForRow(at: indexPath) as? HighlightCell else { break }
                 configureCell(cell: cell, highlightItem: workItem, indexPath: indexPath)
+            }
+        case .insert:
+            if let indexPath = newIndexPath {
+                tableView.insertRows(at: [indexPath], with: .automatic)
             }
         case .move:
             if let indexPath = indexPath {

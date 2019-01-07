@@ -2172,17 +2172,17 @@ Please check your Internet connection and also make sure you are logged into you
                         <viewControllerLayoutGuide type="bottom" id="Yoc-3C-4q5"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="7oc-1t-9bM">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="724"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nothing Found" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="etO-j1-oPB">
-                                <rect key="frame" x="36" y="284" width="303" height="21"/>
+                                <rect key="frame" x="36" y="328" width="303" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7BG-8k-w0K">
-                                <rect key="frame" x="133" y="345" width="109" height="34"/>
+                                <rect key="frame" x="133" y="389" width="109" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <state key="normal" title="Try Again  🤔">
                                     <color key="titleColor" red="0.70196078429999997" green="0.27450980390000002" blue="0.27450980390000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -2192,7 +2192,7 @@ Please check your Internet connection and also make sure you are logged into you
                                 </connections>
                             </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="RmA-Nc-iEP">
-                                <rect key="frame" x="0.0" y="646" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="734" width="375" height="44"/>
                                 <color key="backgroundColor" red="0.92000001669999998" green="0.92000001669999998" blue="0.92000001669999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="K3h-4G-MaI"/>
@@ -2236,7 +2236,7 @@ Please check your Internet connection and also make sure you are logged into you
                                 </connections>
                             </collectionView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="240" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="dVv-Wb-Czg">
-                                <rect key="frame" x="0.0" y="56" width="375" height="590"/>
+                                <rect key="frame" x="0.0" y="100" width="375" height="634"/>
                                 <color key="backgroundColor" red="0.92000001669999998" green="0.92000001669999998" blue="0.92000001669999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="FeedCell1" rowHeight="240" id="3mG-9j-QZh" customClass="FeedTableViewCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
@@ -2757,7 +2757,7 @@ Please check your Internet connection and also make sure you are logged into you
                                 </connections>
                             </tableView>
                             <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="vQc-EY-Nta">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
+                                <rect key="frame" x="0.0" y="44" width="375" height="56"/>
                                 <color key="barTintColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <textInputTraits key="textInputTraits" spellCheckingType="no" returnKeyType="search"/>
                                 <connections>
@@ -8346,18 +8346,18 @@ Please check your Internet connection and also make sure you are logged into you
                         <viewControllerLayoutGuide type="bottom" id="Gs6-T4-X76"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="4sV-SK-QjO">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="724"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="user_pic" translatesAutoresizingMaskIntoConstraints="NO" id="XOF-rt-EpD">
-                                <rect key="frame" x="147.66666666666666" y="16" width="80" height="80"/>
+                                <rect key="frame" x="147.66666666666666" y="60" width="80" height="80"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="80" id="2Bf-bg-Eju"/>
                                     <constraint firstAttribute="height" constant="80" id="P5p-Yt-vD1"/>
                                 </constraints>
                             </imageView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="2j0-R9-1bd">
-                                <rect key="frame" x="0.0" y="208" width="375" height="482"/>
+                                <rect key="frame" x="0.0" y="252" width="375" height="526"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="pseudCell" id="Fi8-go-aQj" customClass="MyProfileCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
@@ -8392,7 +8392,7 @@ Please check your Internet connection and also make sure you are logged into you
                                 </connections>
                             </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zkd-U1-2h2" customClass="ExpandableLabel" customModule="ExpandableLabel">
-                                <rect key="frame" x="24" y="176.33333333333331" width="327" height="15.666666666666657"/>
+                                <rect key="frame" x="24" y="220.33333333333334" width="327" height="15.666666666666657"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -8401,13 +8401,13 @@ Please check your Internet connection and also make sure you are logged into you
                                 </variation>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="42T-Uj-baC">
-                                <rect key="frame" x="36" y="108" width="303" height="20.333333333333343"/>
+                                <rect key="frame" x="36" y="152" width="303" height="20.333333333333343"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HQ1-Eh-fIQ">
-                                <rect key="frame" x="105.66666666666669" y="136.33333333333334" width="164" height="30"/>
+                                <rect key="frame" x="105.66666666666669" y="180.33333333333334" width="164" height="30"/>
                                 <state key="normal" title="Add To Favorite Authors"/>
                                 <connections>
                                     <action selector="addToFavTouched:" destination="DQz-ru-iJG" eventType="touchUpInside" id="i6f-Kf-gst"/>
@@ -10751,11 +10751,11 @@ Please check your Internet connection and also make sure you are logged into you
         <image name="word" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="M8N-jh-N0S"/>
+        <segue reference="HbR-qB-8iA"/>
         <segue reference="ic4-Dp-HfH"/>
         <segue reference="AVD-tc-abp"/>
         <segue reference="GYH-Ae-w0j"/>
-        <segue reference="5rQ-gu-17N"/>
+        <segue reference="Bg0-27-r1E"/>
         <segue reference="GOa-zO-Fy6"/>
         <segue reference="hCS-wp-Ndf"/>
         <segue reference="b3W-0z-TKl"/>

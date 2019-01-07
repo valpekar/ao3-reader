@@ -48,6 +48,10 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
     // MARK: - UIViewController Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //Load query
+        loadQueryFromDefaults()
+        
         self.createDrawerButton()
         
         self.foundItems = "0 Found"
@@ -92,10 +96,6 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
             
             return controller
         })()
-        
-        
-        //Load query
-        loadQueryFromDefaults()
         
        // let pseud_id = DefaultsManager.getString(DefaultsManager.PSEUD_ID)
         #if DEBUG

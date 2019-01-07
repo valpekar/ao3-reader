@@ -1147,11 +1147,13 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         guard let resp = response.response else {
             return
         }
-        guard let allHeaders = resp.allHeaderFields as? [String: String] else {
+        guard var allHeaders = resp.allHeaderFields as? [String: String] else {
             return
         }
         
-        let cookiesH: [HTTPCookie] = HTTPCookie.cookies(withResponseHeaderFields: allHeaders, for: URL(string: "https://archiveofourown.org")!)
+        allHeaders["accepted_tos"] = "20180523"
+        
+        var cookiesH: [HTTPCookie] = HTTPCookie.cookies(withResponseHeaderFields: allHeaders, for: URL(string: "https://archiveofourown.org")!)
             //let cookies = headers["Set-Cookie"]
         if (cookiesH.count > 0) {
             (UIApplication.shared.delegate as! AppDelegate).cookies = cookiesH
@@ -1608,7 +1610,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         }
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-            Alamofire.request(requestStr, method: .post, parameters: params, encoding:URLEncoding.queryString /*ParameterEncoding.Custom(encodeParams)*/)
+            Alamofire.request(requestStr, method: .post, parameters: params, encoding:URLEncoding.httpBody /*ParameterEncoding.Custom(encodeParams)*/)
                 .response(completionHandler: { response in
                     #if DEBUG
                         print(response.request ?? "")
@@ -1641,7 +1643,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         //print("the string is: \(dta)")
         
         if (dta.contains("errors") == true) {
-            self.showError(title: Localization("Error"), message: Localization("LeftKudosAlready"))
+            self.showError(title: Localization("Error"), message: dta as String)
         } else if (dta.contains("#kudos") == true) {
             
             self.showSuccess(title: Localization("Kudos"), message: Localization("KudosAdded"))

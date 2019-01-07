@@ -1043,15 +1043,15 @@ extension FavoritesViewController: NSFetchedResultsControllerDelegate {
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         
         switch type {
-        case .insert:
-            if let indexPath = newIndexPath {
-                tableView.insertRows(at: [indexPath], with: .automatic)
-            }
         case .update:
             if let indexPath = indexPath {
                 let work = fetchedResultsController?.object(at: indexPath)
                 guard let cell = tableView.cellForRow(at: indexPath) as? DownloadedCell else { break }
                 configureCell(curWork: work, cell: cell, indexPath: indexPath)
+            }
+        case .insert:
+            if let indexPath = newIndexPath {
+                tableView.insertRows(at: [indexPath], with: .automatic)
             }
         case .move:
             if let indexPath = indexPath {

@@ -77,12 +77,6 @@ class FavoriteAuthorsController : ListViewController, NSFetchedResultsController
         self.tableView.estimatedRowHeight = 200
         self.tableView.tableFooterView = UIView()
         
-       
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
         do {
             try fetchedResultsController?.performFetch()
         } catch {
@@ -94,6 +88,10 @@ class FavoriteAuthorsController : ListViewController, NSFetchedResultsController
         Answers.logCustomEvent(withName: "Favorite Authors", customAttributes: ["count" : fetchedResultsController?.fetchedObjects?.count ?? 0])
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+    }
+    
     private func updateView() {
         let hasAuthors = fetchedResultsController?.fetchedObjects?.count ?? 0 > 0
         
@@ -101,6 +99,10 @@ class FavoriteAuthorsController : ListViewController, NSFetchedResultsController
         self.messageLabel.isHidden = hasAuthors
         
         self.title = "Favorite Authors (\(fetchedResultsController?.fetchedObjects?.count ?? 0))"
+        
+        Answers.logCustomEvent(withName: "Fav Authors",
+                               customAttributes: [
+                                "count": fetchedResultsController?.fetchedObjects?.count ?? 0])
     }
     
     var selectedRow = 0
@@ -137,6 +139,10 @@ class FavoriteAuthorsController : ListViewController, NSFetchedResultsController
 //MARK: Tableview
 
 extension FavoriteAuthorsController: UITableViewDelegate, UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let sections = fetchedResultsController?.sections {
@@ -213,15 +219,15 @@ extension FavoriteAuthorsController: UITableViewDelegate, UITableViewDataSource 
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         
         switch type {
-        case .insert:
-            if let indexPath = newIndexPath {
-                tableView.insertRows(at: [indexPath], with: .automatic)
-            }
         case .update:
             if let indexPath = indexPath {
                 let item = fetchedResultsController?.object(at: indexPath)
                 guard let cell = tableView.cellForRow(at: indexPath) as? AuthorCell else { break }
                 configureCell(cell: cell, author: item, indexPath: indexPath)
+            }
+        case .insert:
+            if let indexPath = newIndexPath {
+                tableView.insertRows(at: [indexPath], with: .automatic)
             }
         case .move:
             if let indexPath = indexPath {
