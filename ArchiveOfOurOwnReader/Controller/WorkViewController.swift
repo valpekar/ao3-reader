@@ -503,10 +503,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
         })
         
         if (self.layoutView.tag == 1) {
-            self.navigationController?.setNavigationBarHidden(false, animated: true)
-            animateLayoutDown()
-            
-            self.layoutView.tag = 0
+           self.showBars()
             
         } else {
            hideAllBars()
@@ -556,6 +553,13 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
         self.navigationController?.setNavigationBarHidden(true, animated: true)
         
         self.layoutView.tag = 1
+    }
+    
+    func showBars() {
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
+        animateLayoutDown()
+        
+        self.layoutView.tag = 0
     }
     
     @objc func handleSwipe(_ recognizer: UISwipeGestureRecognizer) {
@@ -1780,6 +1784,8 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "leaveComment") {
+            self.showBars()
+            
             let cController: CommentViewController = segue.destination as! CommentViewController
             
             var workId = ""

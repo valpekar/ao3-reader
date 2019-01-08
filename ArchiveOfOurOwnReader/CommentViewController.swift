@@ -160,6 +160,20 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
             }
         }
         
+        if let tokenIdEls = doc.search(withXPathQuery: "//div[@id='add_comment_placeholder']") as? [TFHppleElement],
+            tokenIdEls.count > 0 {
+            if let formEls = tokenIdEls[0].search(withXPathQuery: "//form[@id='new_comment']") as? [TFHppleElement],
+                formEls.count > 0 {
+                if let inputTokenEls = formEls[0].search(withXPathQuery: "//input[@name='authenticity_token']") as? [TFHppleElement],
+                    inputTokenEls.count > 0 {
+                    if let attrs : NSDictionary = inputTokenEls[0].attributes as NSDictionary?  {
+                        self.commentsToken = (attrs["value"] as? String ?? "")
+                    }
+                }
+            }
+            
+        }
+        
         htmlStr.append("<html><body><ol>")
         
         if let commentsSection: [TFHppleElement] = doc.search(withXPathQuery: "//div[@id='comments_placeholder']") as? [TFHppleElement] {
@@ -233,7 +247,7 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
     func loadCurrentTheme() {
         var theme: Int
         
-        if let th = DefaultsManager.getInt(DefaultsManager.THEME_APP) {
+        if let th = DefaultsManager.getInt(DefaultsManager.THEME) {
             theme = th
         } else {
             theme = DefaultsManager.THEME_DAY
@@ -248,25 +262,27 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
         switch (theme) {
         case DefaultsManager.THEME_DAY :
             self.bgView.backgroundColor = AppDelegate.greyLightBg
+            self.view.backgroundColor = AppDelegate.greyLightBg
             self.collectionView.backgroundColor = AppDelegate.greyLightBg
             self.commentTv.textColor = AppDelegate.dayTextColor
             
-            self.webView.backgroundColor = UIColor.clear
+            webView.backgroundColor = AppDelegate.greyLightBg
             self.webView.isOpaque = false
             
             let fontStr = "font-size: " + String(format:"%d", fontSize) + "%;"
-            worktext = String(format:"<style>body { color: #021439; %@ }</style>%@", fontStr, htmlStr)
+            worktext = String(format:"<style>body, table { color: #021439; %@ }</style>%@", fontStr, htmlStr)
             
         case DefaultsManager.THEME_NIGHT :
-            self.bgView.backgroundColor = AppDelegate.redDarkColor
-            self.collectionView.backgroundColor = AppDelegate.redDarkColor
+            self.bgView.backgroundColor = AppDelegate.nightBgColor
+            self.view.backgroundColor = AppDelegate.nightBgColor
+            self.collectionView.backgroundColor = AppDelegate.nightBgColor
             self.commentTv.textColor = AppDelegate.nightTextColor
             
-            self.webView.backgroundColor = UIColor(red: 50/255, green: 52/255, blue: 57/255, alpha: 1)
+            self.webView.backgroundColor = AppDelegate.nightBgColor
             self.webView.isOpaque = false
             
             let fontStr = "font-size: " + String(format:"%d", fontSize) + "%;"
-            worktext = String(format:"<style>body { color: #f5f5e9; %@ }</style>%@", fontStr, htmlStr)
+            worktext = String(format:"<style>body, table { color: #e1e1ce; %@ }</style>%@", fontStr, htmlStr)
             
         default:
             break
@@ -361,7 +377,7 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
         
         var params:[String:Any] = [String:Any]()
         params["utf8"] = "✓" as AnyObject?
-        params["authenticity_token"] = (UIApplication.shared.delegate as! AppDelegate).token as AnyObject?
+        params["authenticity_token"] = self.commentsToken
         
         params["comment"] = ["pseud_id": pseud_id,
                               "content": txt,
