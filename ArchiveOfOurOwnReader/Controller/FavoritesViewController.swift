@@ -236,9 +236,9 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         case "Teen And Up Audiences":
             cell.ratingImg.image = UIImage(named: "PG13")
         case "Mature":
-            cell.ratingImg.image = UIImage(named: "NC17")
-        case "Explicit":
             cell.ratingImg.image = UIImage(named: "R")
+        case "Explicit":
+            cell.ratingImg.image = UIImage(named: "NC17")
         default:
             cell.ratingImg.image = UIImage(named: "NotRated")
         }
@@ -850,7 +850,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         self.tableView.reloadData()
         
         Answers.logCustomEvent(withName: "Downloaded: Sort", customAttributes: ["sortBy" : self.sortBy])
-        Analytics.logEvent("Downloaded: Sort", parameters: ["sortBy" : self.sortBy as NSObject])
+        Analytics.logEvent("Downloaded_Sort", parameters: ["sortBy" : self.sortBy as NSObject])
     }
     
     @IBAction func sortClicked(_ sender: AnyObject) {

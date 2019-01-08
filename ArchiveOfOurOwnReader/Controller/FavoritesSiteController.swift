@@ -488,7 +488,7 @@ extension FavoritesSiteController: UISearchBarDelegate {
         searched = true
         
         Answers.logCustomEvent(withName: "Bookmarks: search", customAttributes: ["query" : query])
-        Analytics.logEvent("Bookmarks: search", parameters: ["query" : query as NSObject])
+        Analytics.logEvent("Bookmarks_search", parameters: ["query" : query as NSObject])
         
         if let del = UIApplication.shared.delegate as? AppDelegate {
             if (del.cookies.count > 0) {

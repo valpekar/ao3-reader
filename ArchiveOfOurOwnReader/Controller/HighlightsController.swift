@@ -223,8 +223,8 @@ class HighlightsController: LoadingViewController, NSFetchedResultsControllerDel
         
         let managedContext = appDelegate.persistentContainer.viewContext
         
-        Answers.logCustomEvent(withName: "Highlights", customAttributes: ["deleteAll,count" : fetchedResultsController?.fetchedObjects?.count ?? 0])
-        Analytics.logEvent("Highlights: Delete All", parameters: ["count" : fetchedResultsController?.fetchedObjects?.count ?? 0 as NSObject])
+        Answers.logCustomEvent(withName: "Highlights", customAttributes: ["deleteAll_count" : fetchedResultsController?.fetchedObjects?.count ?? 0])
+        Analytics.logEvent("Highlights_Delete_All", parameters: ["count" : fetchedResultsController?.fetchedObjects?.count ?? 0 as NSObject])
         
         let fetch = NSFetchRequest<NSFetchRequestResult>(entityName: "DBHighlightItem")
         let request = NSBatchDeleteRequest(fetchRequest: fetch)
@@ -254,7 +254,7 @@ class HighlightsController: LoadingViewController, NSFetchedResultsControllerDel
         let textToShare = [ "\(highlightItem.content ?? "") \n- \(highlightItem.author ?? ""), \"\(highlightItem.workName ?? "")\"" ]
         
         Answers.logCustomEvent(withName: "Highlights: Share", customAttributes: ["text" : textToShare])
-        Analytics.logEvent("Highlights: Share", parameters: ["text" : textToShare as NSObject])
+        Analytics.logEvent("Highlights_Share", parameters: ["text" : textToShare as NSObject])
         
         let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
         activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
@@ -302,7 +302,7 @@ class HighlightsController: LoadingViewController, NSFetchedResultsControllerDel
 //        self.updateView()
         
         Answers.logCustomEvent(withName: "Highlights: Sort", customAttributes: ["sortBy" : self.sortBy])
-        Analytics.logEvent("Highlights: Sort", parameters: ["sortBy" : self.sortBy as NSObject])
+        Analytics.logEvent("Highlights_Sort", parameters: ["sortBy" : self.sortBy as NSObject])
     }
     
     //MARK: - copy olds

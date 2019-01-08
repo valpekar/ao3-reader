@@ -33,6 +33,8 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
     var workId = ""
     var chapterId = ""
     
+    var commentsToken = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -134,9 +136,7 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
                     self.hideLoadingView()
                 } else {
                     self.hideLoadingView()
-                    RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("CheckInternet"), type: RMessageType.error, customTypeName: "", callback: {
-                        
-                    })
+                    self.showError(title: Localization("Error"), message: Localization("CheckInternet"))
                 }
             })
         
@@ -338,9 +338,7 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
         if(commentTv.text != nil && commentTv.text.count > 0) {
             sendComment()
         } else {
-            RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("PleaseWriteComment"), type: RMessageType.error, customTypeName: "", callback: {
-                
-            })
+            self.showError(title: Localization("Error"), message: Localization("PleaseWriteComment"))
         }
     }
     

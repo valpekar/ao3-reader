@@ -36,7 +36,7 @@ class ContentsViewController: UIViewController, UIPopoverPresentationControllerD
             return downloadedChapters.count
         } else {
             Answers.logCustomEvent(withName: "Contents: empty", customAttributes: [:])
-            Analytics.logEvent("Contents: Empty", parameters: [:])
+            Analytics.logEvent("Contents_Empty", parameters: [:])
             return 0
         }
     }

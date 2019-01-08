@@ -353,6 +353,7 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
             return
         }
         
+        self.view.endEditing(true)
         showLoadingView(msg: Localization("PleaseWait"))
         getLoginParams()
         

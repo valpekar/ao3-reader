@@ -208,7 +208,7 @@ class ContainerViewController: UserMessagesController, CenterViewControllerDeleg
                                        customAttributes: [
                                         "workId": work.id ?? 0])
                 
-                Analytics.logEvent("Reading Now", parameters: ["workId": work.id ?? 0 as NSObject])
+                Analytics.logEvent("Reading_Now", parameters: ["workId": work.id ?? 0 as NSObject])
                 
                 
                  if let controller = self.instantiatedControllers[0] {
@@ -267,7 +267,7 @@ extension ContainerViewController : WorkImportDelegate {
             
             if let instcontroller = self.instantiatedControllers[0] {
                 Answers.logCustomEvent(withName: "Import Work Link Pasted", customAttributes: ["url" : workUrl])
-                Analytics.logEvent("Import Work Link Pasted", parameters: ["url": workUrl as NSObject])
+                Analytics.logEvent("Import_Work_Link_Pasted", parameters: ["url": workUrl as NSObject])
                 
                 instcontroller.navigationController?.pushViewController(controller, animated: true)
                 

@@ -1151,9 +1151,9 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
             return
         }
         
-        allHeaders["accepted_tos"] = "20180523"
+        allHeaders["user_credentials"] = "1"
         
-        var cookiesH: [HTTPCookie] = HTTPCookie.cookies(withResponseHeaderFields: allHeaders, for: URL(string: "https://archiveofourown.org")!)
+        let cookiesH: [HTTPCookie] = HTTPCookie.cookies(withResponseHeaderFields: allHeaders, for: URL(string: AppDelegate.ao3SiteUrl)!)
             //let cookies = headers["Set-Cookie"]
         if (cookiesH.count > 0) {
             (UIApplication.shared.delegate as! AppDelegate).cookies = cookiesH
@@ -1583,7 +1583,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
  
  extension LoadingViewController {
     
-    func doLeaveKudos(workId: String) {
+    func doLeaveKudos(workId: String, kudosToken: String) {
         if ((UIApplication.shared.delegate as? AppDelegate)?.cookies.count == 0 || ((UIApplication.shared.delegate as? AppDelegate)?.token ?? "").isEmpty) {
             triedTo = 0
             openLoginController() //openLoginController()
@@ -1597,7 +1597,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         
         var params:[String:Any] = [String:Any]()
         params["utf8"] = "✓" as AnyObject?
-        params["authenticity_token"] = (UIApplication.shared.delegate as! AppDelegate).token as AnyObject?
+        params["authenticity_token"] = kudosToken
         
         params["kudo"] = ["commentable_id": workId,
                           "commentable_type": "Work",
@@ -1609,8 +1609,14 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
             Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies(cookies, for:  URL(string: AppDelegate.ao3SiteUrl), mainDocumentURL: nil)
         }
         
+        let headers: HTTPHeaders = [
+            "Referer": "https://archiveofourown.org/works/\(workId)",
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+            "content-type": "application/x-www-form-urlencoded"
+        ]
+        
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-            Alamofire.request(requestStr, method: .post, parameters: params, encoding:URLEncoding.httpBody /*ParameterEncoding.Custom(encodeParams)*/)
+            Alamofire.request(requestStr, method: .post, parameters: params, encoding:URLEncoding.httpBody /*ParameterEncoding.Custom(encodeParams)*/, headers: headers)
                 .response(completionHandler: { response in
                     #if DEBUG
                         print(response.request ?? "")

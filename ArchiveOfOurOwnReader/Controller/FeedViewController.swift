@@ -227,7 +227,7 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
         searchApplied(self.query, shouldAddKeyword: true)
         
         if (Reachability.isConnectedToNetwork()) {
-            if (!DefaultsManager.getString(DefaultsManager.PSEUD_ID).isEmpty &&  (/*(UIApplication.shared.delegate as! AppDelegate).cookies.count == 0 ||*/ (UIApplication.shared.delegate as! AppDelegate).token.isEmpty)) {
+            if (!DefaultsManager.getString(DefaultsManager.PSEUD_ID).isEmpty &&  (/*(UIApplication.shared.delegate as! AppDelegate).cookies.count == 0 ||*/ (UIApplication.shared.delegate as! AppDelegate).cookies.count == 0)) {
                 
                 if (triedToLogin < 2) {
                     openLoginController(force:true)
@@ -431,7 +431,7 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
                 
                 Answers.logCustomEvent(withName: "Search: Extended Opened",
                                        customAttributes: [:])
-                Analytics.logEvent("Search: Extended Opened", parameters: [:])
+                Analytics.logEvent("Search_Extended_Opened", parameters: [:])
             }
         } else if (segue.identifier == "choosePref") {
             if let choosePref: UINavigationController = segue.destination as? UINavigationController {
@@ -471,6 +471,7 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
             Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: AppDelegate.ao3SiteUrl), mainDocumentURL: nil)
         }
+        //Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies([HTTPCookie](), for:  URL(string: AppDelegate.ao3SiteUrl), mainDocumentURL: nil)
        
         showLoadingView(msg: Localization("Searching"))
         
@@ -580,7 +581,7 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
         Answers.logCustomEvent(withName: "Fandom Chosen",
                                customAttributes: [
                                 "pref": pref])
-        Analytics.logEvent("Fandom Chosen", parameters: ["pref": pref as NSObject])
+        Analytics.logEvent("Fandom_Chosen", parameters: ["pref": pref as NSObject])
         
         self.searchApplied(self.query, shouldAddKeyword: true)
     }
@@ -605,7 +606,7 @@ extension FeedViewController : UISearchBarDelegate, UISearchResultsUpdating {
             Answers.logCustomEvent(withName: "Search: Quick",
                                    customAttributes: [
                                     "txt": txt])
-            Analytics.logEvent("Search: Quick", parameters: ["txt": txt as NSObject])
+            Analytics.logEvent("Search_Quick", parameters: ["txt": txt as NSObject])
             
             searchApplied(query, shouldAddKeyword: false)
             
@@ -619,7 +620,7 @@ extension FeedViewController : UISearchBarDelegate, UISearchResultsUpdating {
             Answers.logCustomEvent(withName: "Search: Quick",
                                    customAttributes: [
                                     "txt": txt])
-            Analytics.logEvent("Search: Quick", parameters: ["txt": txt as NSObject])
+            Analytics.logEvent("Search_Quick", parameters: ["txt": txt as NSObject])
             
             searchApplied(query, shouldAddKeyword: false)
             

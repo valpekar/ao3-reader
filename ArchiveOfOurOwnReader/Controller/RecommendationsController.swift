@@ -332,7 +332,7 @@ class RecommendationsController : ListViewController, UITableViewDataSource, UIT
         Answers.logCustomEvent(withName: "Recs_generated",
                                customAttributes: [
                                 "query_tag": searchQuery.tag])
-        Analytics.logEvent("Recommendations: Generated", parameters: ["query_tag" : searchQuery.tag as NSObject])
+        Analytics.logEvent("Recommendations_Generated", parameters: ["query_tag" : searchQuery.tag as NSObject])
         
         applySearch(searchQuery)
     }

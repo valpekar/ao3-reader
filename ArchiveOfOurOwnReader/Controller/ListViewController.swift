@@ -190,9 +190,9 @@ class ListViewController: LoadingViewController, PageSelectDelegate, UIPopoverPr
         case "Teen And Up Audiences":
             cell.workCellView.ratingImg.image = UIImage(named: "PG13")
         case "Mature":
-            cell.workCellView.ratingImg.image = UIImage(named: "NC17")
-        case "Explicit":
             cell.workCellView.ratingImg.image = UIImage(named: "R")
+        case "Explicit":
+            cell.workCellView.ratingImg.image = UIImage(named: "NC17")
         default:
             cell.workCellView.ratingImg.image = UIImage(named: "NotRated")
         }

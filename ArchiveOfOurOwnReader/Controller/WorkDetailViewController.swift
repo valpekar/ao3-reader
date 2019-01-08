@@ -56,6 +56,10 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     var markedForLater = false
     var needReload = false
     var bookmarkId = ""
+    
+    var bookmarkToken = ""
+    var kudosToken = ""
+    
     var changedSmth = false
     
     var onlineChapters = [Int:ChapterOnline]()
@@ -264,7 +268,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                                 "workId": workId])
         Analytics.logEvent("WorkDetail_Kudos_add", parameters: ["workId": workId as NSObject])
         
-        doLeaveKudos(workId: workId)
+        doLeaveKudos(workId: workId, kudosToken: self.kudosToken)
     }
     
     func showDownloadedWork() {
@@ -303,9 +307,9 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         case "Teen And Up Audiences":
             ratingImg.image = UIImage(named: "PG13")
         case "Mature":
-            ratingImg.image = UIImage(named: "NC17")
-        case "Explicit":
             ratingImg.image = UIImage(named: "R")
+        case "Explicit":
+            ratingImg.image = UIImage(named: "NC17")
         default:
             ratingImg.image = UIImage(named: "NotRated")
         }
@@ -742,7 +746,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     func checkBookmarkAndUpdate() {
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
+            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: AppDelegate.ao3SiteUrl), mainDocumentURL: nil)
         }
         
         var params:[String:AnyObject] = [String:AnyObject]()
@@ -795,11 +799,16 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
         if let bookmarkIdEls = doc.search(withXPathQuery: "//div[@id='bookmark-form']") as? [TFHppleElement] {
             if (bookmarkIdEls.count > 0) {
-                if let formEls = bookmarkIdEls[0].search(withXPathQuery: "//form") as? [TFHppleElement] {
-                    if (formEls.count > 0) {
+                if let formEls = bookmarkIdEls[0].search(withXPathQuery: "//form") as? [TFHppleElement],
+                    formEls.count > 0 {
                         if let attributes : NSDictionary = formEls[0].attributes as NSDictionary?  {
                             bookmarkId = (attributes["action"] as? String ?? "")
                         }
+                }
+                if let inputTokenEls = bookmarkIdEls[0].search(withXPathQuery: "//input[@name='authenticity_token']") as? [TFHppleElement],
+                    inputTokenEls.count > 0 {
+                    if let attrs : NSDictionary = inputTokenEls[0].attributes as NSDictionary?  {
+                        self.bookmarkToken = (attrs["value"] as? String ?? "")
                     }
                 }
             }
@@ -813,6 +822,20 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 }
             }
         }
+        }
+        
+        if let kudosIdEls = doc.search(withXPathQuery: "//div[@id='feedback']") as? [TFHppleElement],
+            kudosIdEls.count > 0 {
+                if let formEls = kudosIdEls[0].search(withXPathQuery: "//form[@id='new_kudo']") as? [TFHppleElement],
+                    formEls.count > 0 {
+                    if let inputTokenEls = formEls[0].search(withXPathQuery: "//input[@name='authenticity_token']") as? [TFHppleElement],
+                        inputTokenEls.count > 0 {
+                        if let attrs : NSDictionary = inputTokenEls[0].attributes as NSDictionary?  {
+                            self.kudosToken = (attrs["value"] as? String ?? "")
+                        }
+                    }
+                }
+            
         }
         
         self.markedForLater = false
@@ -910,9 +933,9 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         case "Teen And Up Audiences":
             ratingImg.image = UIImage(named: "PG13")
         case "Mature":
-            ratingImg.image = UIImage(named: "NC17")
-        case "Explicit":
             ratingImg.image = UIImage(named: "R")
+        case "Explicit":
+            ratingImg.image = UIImage(named: "NC17")
         default:
             ratingImg.image = UIImage(named: "NotRated")
         }
@@ -942,6 +965,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         if (segue.identifier == "readSegue") {
                         
             let workController: WorkViewController = segue.destination as! WorkViewController
+            workController.kudosToken = self.kudosToken
             
             if (workItem != nil) {
                 
@@ -1761,12 +1785,12 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
         var params:[String:Any] = [String:Any]()
         params["utf8"] = "✓" as AnyObject?
-        params["authenticity_token"] = (UIApplication.shared.delegate as! AppDelegate).token as AnyObject?
+        params["authenticity_token"] = self.bookmarkToken
         
         params["bookmark"] = ["pseud_id": pseud_id,
             "bookmarkable_id": bid,
             "bookmarkable_type": "Work",
-            "notes": "",
+            "bookmarker_notes": "",
             "tag_string": "",
             "collection_names": "",
             "private": "0",
@@ -1776,7 +1800,9 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         params["commit"] = "Create" as AnyObject?
         
         let headers: HTTPHeaders = [
-            "Referer": "https://archiveofourown.org/works/\(bid)"
+            "Referer": "https://archiveofourown.org/works/\(bid)",
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+            "content-type": "application/x-www-form-urlencoded"
         ]
         
         if let del = UIApplication.shared.delegate as? AppDelegate {
@@ -1784,11 +1810,11 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 guard let cStorage = Alamofire.SessionManager.default.session.configuration.httpCookieStorage else {
                     return
                 }
-                cStorage.setCookies(del.cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
+                cStorage.setCookies(del.cookies, for:  URL(string: AppDelegate.ao3SiteUrl), mainDocumentURL: nil)
             }
         
         if (del.cookies.count > 0) {
-            Alamofire.request(requestStr, method: .post, parameters: params, encoding: URLEncoding.queryString /*ParameterEncoding.Custom(encodeParams)*/, headers: headers)
+            Alamofire.request(requestStr, method: .post, parameters: params, encoding: URLEncoding.httpBody /*ParameterEncoding.Custom(encodeParams)*/, headers: headers)
                 .response(completionHandler: { response in
                     #if DEBUG
                     print(response.request ?? "")
@@ -2191,7 +2217,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                                 "workId": workId])
         Analytics.logEvent("WorkDetail_Kudos_add", parameters: ["workId": workId as NSObject])
         
-        doLeaveKudos(workId: workId)
+        doLeaveKudos(workId: workId, kudosToken: self.kudosToken)
         
     }
     

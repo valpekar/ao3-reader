@@ -58,7 +58,7 @@ class ChoosePrefController : LoadingViewController {
         Answers.logCustomEvent(withName: "prefChosen",
                                customAttributes: [
                                 "fandom": txt])
-        Analytics.logEvent("ChoosePref: Chosen", parameters: ["fandom" : txt as NSObject])
+        Analytics.logEvent("ChoosePref_Chosen", parameters: ["fandom" : txt as NSObject])
         
         self.dismiss(animated: true) {
             print(self.chosenFandoms)

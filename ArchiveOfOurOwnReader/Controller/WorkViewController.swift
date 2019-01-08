@@ -46,6 +46,8 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
     var currentOnlineChapter = ""
     var currentOnlineChapterIdx = 0
     
+    var kudosToken = ""
+    
     var workItem: WorkItem?
     var workChapters: [Chapter] = [Chapter]()
     
@@ -884,9 +886,9 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
         Answers.logCustomEvent(withName: "WorkView: Kudos add",
                                customAttributes: [
                                 "workId": workId])
-        Analytics.logEvent("WorkView: Kudos add", parameters: ["workId": workId as NSObject])
+        Analytics.logEvent("WorkView_Kudos_add", parameters: ["workId": workId as NSObject])
         
-        doLeaveKudos(workId: workId)
+        doLeaveKudos(workId: workId, kudosToken: self.kudosToken)
     
     }
     
