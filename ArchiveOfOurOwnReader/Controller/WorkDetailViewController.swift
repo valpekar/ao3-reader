@@ -130,7 +130,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         self.authorView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.authorTouched(_:))))
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
+            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: AppDelegate.ao3SiteUrl), mainDocumentURL: nil)
         }
         
         if (workUrl.isEmpty == false) {
@@ -143,6 +143,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             if (downloadedWorkItem != nil) {
                 
                 showDownloadedWork()
+                self.checkBookmarkAndUpdate()
             } else {
                 workItem = WorkItem()
                 showOnlineWork(workUrl)
@@ -173,6 +174,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                     self.updateWork(workItem: workItem)
                     self.workItem = nil
                     self.showDownloadedWork()
+                    self.checkBookmarkAndUpdate()
                 } else {
                     showOnlineWork()
                 }
@@ -182,9 +184,9 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             }
         } else if (downloadedWorkItem != nil) {
             showDownloadedWork()
+            self.checkBookmarkAndUpdate()
         }
         
-        self.checkBookmarkAndUpdate()
         
         if (self.fromNotif == true) {
             Answers.logCustomEvent(withName: "WorkDetail: from notification",
@@ -218,7 +220,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             authorView.backgroundColor = AppDelegate.whiteTransparentColor
            // readButton.backgroundColor = AppDelegate.whiteTransparentColor
           //  readButton.setTitleColor(AppDelegate.redColor, for: .normal)
-            downloadTrashButton.setImage(UIImage(named: "settings"), for: UIControl.State.normal)
+            downloadTrashButton.setImage(UIImage(named: "edit"), for: UIControl.State.normal)
             titleLabel.textColor = UIColor.black
             authorLabel.textColor = AppDelegate.darkerGreyColor
             dateLabel.textColor = AppDelegate.greyColor
@@ -230,7 +232,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
            // readButton.backgroundColor = AppDelegate.greyTransparentColor
             titleLabel.textColor = UIColor.white
           //  readButton.setTitleColor(UIColor.white, for: .normal)
-            downloadTrashButton.setImage(UIImage(named: "settings_light"), for: UIControl.State.normal)
+            downloadTrashButton.setImage(UIImage(named: "edit_light"), for: UIControl.State.normal)
             authorLabel.textColor = UIColor.white
             dateLabel.textColor = AppDelegate.nightTextColor
             authorView.layer.shadowColor = AppDelegate.redColor.cgColor
@@ -371,7 +373,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
+            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: AppDelegate.ao3SiteUrl), mainDocumentURL: nil)
         }
         
         var params:[String:AnyObject] = [String:AnyObject]()
@@ -396,6 +398,9 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                     self.parseCookies(response)
                     self.downloadCurWork(d)
                     self.showWork()
+                    
+                    self.checkBookmarkAndUpdate()
+                    
                     self.hideLoadingView()
                 } else {
                     self.hideLoadingView()
@@ -824,7 +829,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         }
         }
         
-        if let kudosIdEls = doc.search(withXPathQuery: "//div[@id='feedback']") as? [TFHppleElement],
+        if let kudosIdEls = doc.search(withXPathQuery: "//div[@class='feedback']") as? [TFHppleElement],
             kudosIdEls.count > 0 {
                 if let formEls = kudosIdEls[0].search(withXPathQuery: "//form[@id='new_kudo']") as? [TFHppleElement],
                     formEls.count > 0 {

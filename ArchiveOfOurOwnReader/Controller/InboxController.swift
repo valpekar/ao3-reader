@@ -9,7 +9,6 @@
 import UIKit
 import Alamofire
 import AlamofireImage
-import RMessage
 import Crashlytics
 
 class InboxController : ListViewController  {
@@ -23,6 +22,7 @@ class InboxController : ListViewController  {
     var inboxItemsRead: [InboxItem] = [InboxItem]()
     var inboxItemsUnread: [InboxItem] = [InboxItem]()
     
+    var inboxToken = ""
     var xcsrfToken = ""
     
     var refreshControl: UIRefreshControl!
@@ -116,10 +116,7 @@ class InboxController : ListViewController  {
                     self.showInbox()
                 } else {
                     self.hideLoadingView()
-                    RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("CheckInternet"), type: RMessageType.error, customTypeName: "", callback: {
-                        
-                    })
-                    
+                    self.showError(title: Localization("Error"), message: Localization("CheckInternet"))
                 }
             })
     }
@@ -150,6 +147,16 @@ class InboxController : ListViewController  {
                     }
                 }
             }
+        }
+        
+        if let tokenIdEls = doc.search(withXPathQuery: "//form[@id='inbox-form']") as? [TFHppleElement],
+            tokenIdEls.count > 0 {
+                if let inputTokenEls = tokenIdEls[0].search(withXPathQuery: "//input[@name='authenticity_token']") as? [TFHppleElement],
+                    inputTokenEls.count > 0 {
+                    if let attrs : NSDictionary = inputTokenEls[0].attributes as NSDictionary?  {
+                        self.inboxToken = (attrs["value"] as? String ?? "")
+                    }
+                }
         }
         
         if let inboxlist : [TFHppleElement] = doc.search(withXPathQuery: "//ol[@class='comment index group']//li") as? [TFHppleElement] {
@@ -551,7 +558,7 @@ extension InboxController: UICollectionViewDataSource, UICollectionViewDelegate,
         if (!page.url.isEmpty) {
             
             if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-                Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
+                Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: AppDelegate.ao3SiteUrl), mainDocumentURL: nil)
             }
             
             showLoadingView(msg: "\(Localization("LoadingPage")) \(page.name)")
@@ -564,9 +571,7 @@ extension InboxController: UICollectionViewDataSource, UICollectionViewDelegate,
                     self.showInbox()
                 } else {
                     self.hideLoadingView()
-                    RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("CheckInternet"), type: RMessageType.error, customTypeName: "", callback: {
-                        
-                    })
+                    self.showError(title: Localization("Error"), message: Localization("CheckInternet"))
                 }
             })
             
@@ -601,7 +606,7 @@ extension InboxController {
         var params:[String:Any] = [String:Any]()
         params["utf8"] = "✓" as AnyObject
         params["_method"] = "put" as AnyObject
-        params["authenticity_token"] = (UIApplication.shared.delegate as! AppDelegate).token as AnyObject?
+        params["authenticity_token"] = self.inboxToken
         params["inbox_comments"] = [ "": commentId ]
         
         if (asRead == true) {
@@ -634,18 +639,14 @@ extension InboxController {
                         
                     } else {
                         self.hideLoadingView()
-                        RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("CannotMarkItem"), type: RMessageType.error, customTypeName: "", callback: {
-                            
-                        })
+                        self.showError(title: Localization("Error"), message: Localization("CannotMarkItem"))
                     }
                 })
             
         } else {
             
             self.hideLoadingView()
-            RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("CannotMarkItem"), type: RMessageType.error, customTypeName: "", callback: {
-                
-            })
+            self.showError(title: Localization("Error"), message: Localization("CannotMarkItem"))
         }
     }
     
@@ -660,16 +661,11 @@ extension InboxController {
         
         if let noticeEls = doc.search(withXPathQuery: "//div[@class='flash notice']") as? [TFHppleElement], noticeEls.count > 0,
             let noticeStr = noticeEls[0].content, noticeStr.contains("successfully") {
-            RMessage.showNotification(in: self, title: Localization("Success"), subtitle: Localization("InboxUpdated"), type: RMessageType.success, customTypeName: "", callback: {
-                
-            })
+            self.showSuccess(title: Localization("Success"), message: Localization("InboxUpdated"))
             
             self.refresh(self.tableView)
         } else {
-            
-            RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("CouldNotReply"), type: RMessageType.error, customTypeName: "", callback: {
-                
-            })
+            self.showError(title: Localization("Error"), message: Localization("CouldNotReply"))
         }
     }
 }
@@ -690,16 +686,14 @@ extension InboxController {
         var headers: HTTPHeaders = HTTPHeaders()
         headers["X-Requested-With"] = "XMLHttpRequest"
         headers["X-CSRF-Token"] = xcsrfToken
-        
-        var params:[String:Any] = [String:Any]()
-        params["approved_from"] = "inbox"
+
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
             Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: AppDelegate.ao3SiteUrl), mainDocumentURL: nil)
         }
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-            Alamofire.request(urlStr, method: .put, parameters: [:], encoding: URLEncoding.queryString, headers: headers)
+            Alamofire.request(urlStr, method: .put, parameters: [:], encoding: URLEncoding.httpBody, headers: headers)
                 .response(completionHandler: { response in
                     #if DEBUG
                         print(response.request ?? "")
@@ -707,22 +701,24 @@ extension InboxController {
                         print(response.error ?? "")
                     #endif
                     
-                    if let _ = response.data, response.response?.statusCode == 200 || response.response?.statusCode == 302 || response.response?.statusCode == 301 {
+                    if let d = response.data, response.response?.statusCode == 200 || response.response?.statusCode == 302 || response.response?.statusCode == 301 {
+                        
+                        #if DEBUG
+                        let string1 = NSString(data: d, encoding: String.Encoding.utf8.rawValue)
+                        print(string1 ?? "")
+                        #endif
+                        
                         self.parseCookies(response)
                         //self.parseMarkRequest(d)
                         self.hideLoadingView()
                         
-                        RMessage.showNotification(in: self, title: Localization("Success"), subtitle: Localization("CommentApproved"), type: RMessageType.success, customTypeName: "", callback: {
-                            
-                        })
+                        self.showSuccess(title: Localization("Success"), message: Localization("CommentApproved"))
                         
                         self.refresh(self.tableView)
                         
                     } else {
                         self.hideLoadingView()
-                        RMessage.showNotification(in: self, title: Localization("Error"), subtitle: response.error?.localizedDescription, type: RMessageType.error, customTypeName: "", callback: {
-                            
-                        })
+                        self.showError(title: Localization("Error"), message: response.error?.localizedDescription ?? "")
                         
                     }
                 })
@@ -730,9 +726,7 @@ extension InboxController {
         } else {
             
             self.hideLoadingView()
-            RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("CannotMarkItem"), type: RMessageType.error, customTypeName: "", callback: {
-                
-            })
+            self.showError(title: Localization("Error"), message: Localization("CannotMarkItem"))
         }
     }
     
@@ -773,13 +767,13 @@ extension InboxController {
         
         var params:[String:Any] = [String:Any]()
         params["utf8"] = "✓" as AnyObject
-        params["authenticity_token"] = (UIApplication.shared.delegate as! AppDelegate).token as AnyObject?
+        params["authenticity_token"] = self.inboxToken
         params["inbox_comments"] = ["": commentId
         ]
         params["delete"] = "Delete From Inbox"
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
+            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: AppDelegate.ao3SiteUrl), mainDocumentURL: nil)
         }
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
@@ -793,9 +787,7 @@ extension InboxController {
                     
                     if (response.response?.statusCode == 302) {
                         self.hideLoadingView()
-                        RMessage.showNotification(in: self, title: Localization("Success"), subtitle: Localization("ItemDeleted"), type: RMessageType.success, customTypeName: "", callback: {
-                            
-                        })
+                        self.showSuccess(title: Localization("Success"), message: Localization("ItemDeleted"))
                         
                         self.refresh(self.tableView)
                         
@@ -808,18 +800,14 @@ extension InboxController {
                         
                     } else {
                         self.hideLoadingView()
-                        RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("CouldNotDelete"), type: RMessageType.error, customTypeName: "", callback: {
-                            
-                        })
+                        self.showError(title: Localization("Error"), message: Localization("CouldNotDelete"))
                     }
                 })
             
         } else {
             
             self.hideLoadingView()
-            RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("CouldNotDelete"), type: RMessageType.error, customTypeName: "", callback: {
-                
-            })
+            self.showError(title: Localization("Error"), message: Localization("CouldNotDelete"))
         }
     }
     
@@ -833,15 +821,10 @@ extension InboxController {
         
         if let noticeEls = doc.search(withXPathQuery: "//div[@class='flash notice']") as? [TFHppleElement], noticeEls.count > 0,
             let noticeStr = noticeEls[0].content, (noticeStr.contains("successfully")) {
-            RMessage.showNotification(in: self, title: Localization("Success"), subtitle: Localization("ItemDeleted"), type: RMessageType.success, customTypeName: "", callback: {
-                
-            })
+            self.showSuccess(title: Localization("Success"), message: Localization("ItemDeleted"))
             
         } else {
-            
-            RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("CouldNotDelete"), type: RMessageType.error, customTypeName: "", callback: {
-                
-            })
+            self.showError(title: Localization("Error"), message: Localization("CouldNotDelete"))
         }
     }
 }

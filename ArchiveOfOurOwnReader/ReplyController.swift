@@ -25,6 +25,8 @@ class ReplyController: LoadingViewController {
     
     var commentLimit = 4300
     
+    var replyToken = ""
+    
     var replyDelegate: ReplyDelegate! = nil
     
     override func viewDidLoad() {
@@ -98,9 +100,7 @@ class ReplyController: LoadingViewController {
             
             self.sendReply(text: txt)
         } else {
-            RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("CannotSendComment"), type: RMessageType.error, customTypeName: "", callback: {
-                
-            })
+            self.showError(title: Localization("Error"), message: Localization("CannotSendComment"))
         }
     }
     
@@ -129,9 +129,7 @@ class ReplyController: LoadingViewController {
                     self.parseCommentBox(d)
                 } else {
                     self.hideLoadingView()
-                    RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("CheckInternet"), type: RMessageType.error, customTypeName: "", callback: {
-                        
-                    })
+                    self.showError(title: Localization("Error"), message: Localization("CheckInternet"))
                     
                 }
             })
@@ -167,6 +165,20 @@ class ReplyController: LoadingViewController {
             }
         }
         
+        if let tokenIdEls = doc.search(withXPathQuery: "//div[@class='post comment']") as? [TFHppleElement],
+            tokenIdEls.count > 0 {
+            if let formEls = tokenIdEls[0].search(withXPathQuery: "//form[@class='new_comment']") as? [TFHppleElement],
+                formEls.count > 0 {
+                if let inputTokenEls = formEls[0].search(withXPathQuery: "//input[@name='authenticity_token']") as? [TFHppleElement],
+                    inputTokenEls.count > 0 {
+                    if let attrs : NSDictionary = inputTokenEls[0].attributes as NSDictionary?  {
+                        self.replyToken = (attrs["value"] as? String ?? "")
+                    }
+                }
+            }
+            
+        }
+        
         self.hideLoadingView()
     }
     
@@ -182,19 +194,19 @@ class ReplyController: LoadingViewController {
         
         var params:[String:Any] = [String:Any]()
         params["utf8"] = "✓" as AnyObject
-        params["authenticity_token"] = (UIApplication.shared.delegate as! AppDelegate).token as AnyObject?
+        params["authenticity_token"] = self.replyToken
         params["comment"] = ["pseud_id": pseud_id,
-                             "content": text
+                             "comment_content": text
         ]
         params["controller_name"] = "inbox"
         params["commit"] = "Comment"
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
+            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: AppDelegate.ao3SiteUrl), mainDocumentURL: nil)
         }
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-            Alamofire.request(urlStr, method: .post, parameters: params, encoding:URLEncoding.queryString)
+            Alamofire.request(urlStr, method: .post, parameters: params, encoding:URLEncoding.httpBody)
                 .response(completionHandler: { response in
                     #if DEBUG
                         print(response.request ?? "")

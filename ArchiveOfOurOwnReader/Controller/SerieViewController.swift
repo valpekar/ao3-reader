@@ -309,9 +309,7 @@ class SerieViewController: ListViewController, UITableViewDataSource, UITableVie
                     self.showSerie()
                 } else {
                     self.hideLoadingView()
-                    RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("CheckInternet"), type: RMessageType.error, customTypeName: "", callback: {
-                        
-                    })
+                    self.showError(title: Localization("Error"), message: Localization("CheckInternet"))
                 }
             })
         }

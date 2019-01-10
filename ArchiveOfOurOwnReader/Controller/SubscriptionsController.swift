@@ -245,9 +245,7 @@ class SubscriptionsViewController: ListViewController, UITableViewDataSource, UI
             #endif
         } else {
             if (countWroksFromDB() > 29) {
-                RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("Only30Stroies"), type: RMessageType.error, customTypeName: "", callback: {
-                    
-                })
+                self.showError(title: Localization("Error"), message: Localization("Only30Stories"))
                 
                 return
             }
@@ -357,9 +355,7 @@ class SubscriptionsViewController: ListViewController, UITableViewDataSource, UI
                     self.showSubs()
                 } else {
                     self.hideLoadingView()
-                    RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("CheckInternet"), type: RMessageType.error, customTypeName: "", callback: {
-                        
-                    })
+                    self.showError(title: Localization("Error"), message: Localization("CheckInternet"))
                 }
             })
             

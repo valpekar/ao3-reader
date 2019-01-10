@@ -8,7 +8,6 @@
 
 import Foundation
 import Alamofire
-import RMessage
 
 
 class HistoryViewController : ListViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
@@ -118,9 +117,7 @@ class HistoryViewController : ListViewController, UITableViewDataSource, UITable
                     self.showWorks()
                 } else {
                     self.hideLoadingView()
-                    RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("CheckInternet"), type: RMessageType.error, customTypeName: "", callback: {
-                        
-                    })
+                    self.showError(title: Localization("Error"), message: Localization("CheckInternet"))
                 }
             })
     }
@@ -262,9 +259,7 @@ class HistoryViewController : ListViewController, UITableViewDataSource, UITable
                     let _ = self.downloadWork(d, curWork: curWork)
                 } else {
                     self.hideLoadingView()
-                    RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("CheckInternet"), type: RMessageType.error, customTypeName: "", callback: {
-                        
-                    })
+                    self.showError(title: Localization("Error"), message: Localization("CheckInternet"))
                 }
             })
         
@@ -339,9 +334,7 @@ class HistoryViewController : ListViewController, UITableViewDataSource, UITable
                     self.hideLoadingView()
                 } else {
                     self.hideLoadingView()
-                    RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("CheckInternet"), type: RMessageType.error, customTypeName: "", callback: {
-                        
-                    })
+                    self.showError(title: Localization("Error"), message: Localization("CheckInternet"))
                 }
             })
     }

@@ -8,7 +8,6 @@
 
 import UIKit
 import Alamofire
-import RMessage
 import WebKit
 import SwiftMessages
 
@@ -24,12 +23,21 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var bgView: UIView!
     
+    // Constraints
+    @IBOutlet weak var constraintContentHeight: NSLayoutConstraint!
+    
+    var lastOffset: CGPoint!
+    var keyboardHeight: CGFloat!
+    
     var pages : [PageItem] = [PageItem]()
     
     var shouldScroll = false
     
     var htmlStr = Localization("NoComments")
-    var fontSize: Int = 100
+    
+    var fontSize: Int = 200
+    var fontFamily: String = "Verdana"
+    
     var workId = ""
     var chapterId = ""
     
@@ -49,14 +57,15 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
         webView.bottomAnchor.constraint(equalTo: webViewContainer.bottomAnchor).isActive = true
         webView.heightAnchor.constraint(equalTo: webViewContainer.heightAnchor).isActive = true
         webView.uiDelegate = self
+        webView.navigationDelegate = self
         
         self.title = Localization("Comments")
-        
-        makeRoundView(view: sendBtn)
         makeRoundView(view: commentTv)
         
         commentTv.layer.borderColor = UIColor.purple.cgColor
         commentTv.layer.borderWidth = 1
+        
+        commentTv.delegate = self
         
        // commentsWebView.delegate = self
         
@@ -64,6 +73,9 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
         NotificationCenter.default.addObserver(self, selector: #selector(CommentViewController.keyboardWillHide(_:)), name:UIResponder.keyboardWillHideNotification, object: nil);
         
         addDoneButtonOnKeyboard(commentTv)
+        
+        // Add touch gesture for contentView
+        self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(returnTextView(gesture:))))
         
         getAllComments()
         //loadCurrentTheme()
@@ -83,10 +95,21 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
             
             openLoginController(force: false)
         }
+        
+        self.sendBtn.applyGradient(colours: [AppDelegate.redDarkColor, AppDelegate.redLightColor], cornerRadius: AppDelegate.mediumCornerRadius)
     }
     
     func controllerDidClosedWithLogin() {
         //TODO: 
+    }
+    
+    @objc func returnTextView(gesture: UIGestureRecognizer) {
+        guard commentTv != nil else {
+            return
+        }
+        
+        commentTv?.resignFirstResponder()
+        commentTv = nil
     }
     
     //MARK: tableview
@@ -162,7 +185,7 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
         
         if let tokenIdEls = doc.search(withXPathQuery: "//div[@id='add_comment_placeholder']") as? [TFHppleElement],
             tokenIdEls.count > 0 {
-            if let formEls = tokenIdEls[0].search(withXPathQuery: "//form[@id='new_comment']") as? [TFHppleElement],
+            if let formEls = tokenIdEls[0].search(withXPathQuery: "//form[@class='new_comment']") as? [TFHppleElement],
                 formEls.count > 0 {
                 if let inputTokenEls = formEls[0].search(withXPathQuery: "//input[@name='authenticity_token']") as? [TFHppleElement],
                     inputTokenEls.count > 0 {
@@ -257,7 +280,31 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
             fontSize = DefaultsManager.getInt(DefaultsManager.FONT_SIZE)!
         }
         
+        let ffam = DefaultsManager.getString(DefaultsManager.FONT_FAMILY)
+        if (ffam.isEmpty == false) {
+            fontFamily = ffam
+        }
+        
         var worktext: String = htmlStr
+        
+        var fontCss = ""
+        let fontFamilyStr = "font-family: \"\(fontFamily)\""
+        if (fontFamily.contains("Rooney")) {
+            fontCss = "@font-face { font-family: \"\(fontFamily)\"; src: url(Rooney-Regular.ttf); format('truetype')} "
+        } else if (fontFamily.contains("OpenDyslexic")) {
+            fontCss = "@font-face { font-family: \"\(fontFamily)\"; src: url(OpenDyslexic-Regular.ttf); format('truetype'); } "
+        } else if (fontFamily.contains("Futura")) {
+            fontCss = "@font-face { font-family: \"\(fontFamily)\"; src: url(FuturaBook.ttf); format('truetype')} "
+        }
+        else if (fontFamily.contains("Burton\'s Nightmare")) {
+            fontCss = "@font-face { font-family: \"\(fontFamily)\"; src: url(NITEMARE.TTF); format('truetype')} "
+        } else if (fontFamily.contains("Star Jedi")) {
+            fontCss = "@font-face { font-family: \"\(fontFamily)\"; src: url(Starjedi.ttf); format('truetype')} "
+        } else if (fontFamily.contains("Romance Fatal Serif")) {
+            fontCss = "@font-face { font-family: \"\(fontFamily)\"; src: url(RFS_Juan_Casco.ttf); format('truetype')} "
+        }
+        
+        let fontStr = "font-size: " + String(format:"%d", fontSize) + "%; \(fontFamilyStr); "
         
         switch (theme) {
         case DefaultsManager.THEME_DAY :
@@ -269,8 +316,7 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
             webView.backgroundColor = AppDelegate.greyLightBg
             self.webView.isOpaque = false
             
-            let fontStr = "font-size: " + String(format:"%d", fontSize) + "%;"
-            worktext = String(format:"<style>body, table { color: #021439; %@ }</style>%@", fontStr, htmlStr)
+            worktext = String(format:"<style>\(fontCss) body, table { color: #021439; %@; padding:5em 1.5em 4em 1.5em; text-align: left; line-height: 1.5em;  overflow-y: scroll; -webkit-overflow-scrolling: touch; } p {margin-bottom:1.0em}</style>%@", fontStr, htmlStr)
             
         case DefaultsManager.THEME_NIGHT :
             self.bgView.backgroundColor = AppDelegate.nightBgColor
@@ -281,8 +327,7 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
             self.webView.backgroundColor = AppDelegate.nightBgColor
             self.webView.isOpaque = false
             
-            let fontStr = "font-size: " + String(format:"%d", fontSize) + "%;"
-            worktext = String(format:"<style>body, table { color: #e1e1ce; %@ }</style>%@", fontStr, htmlStr)
+            worktext = String(format:"<style>\(fontCss) body, table { color: #e1e1ce; %@; padding:5em 1.5em 4em 1.5em; text-align: left; line-height: 1.5em; overflow-y: scroll; -webkit-overflow-scrolling: touch; } p {margin-bottom:1.0em} </style>%@", fontStr, htmlStr)
             
         default:
             break
@@ -294,55 +339,75 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
         collectionView.reloadData()
     }
     
-    //MARK: - UIWebViewDelegate
+    //MARK: - WKWebViewDelegate
     
-    func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebView.NavigationType) -> Bool {
-        return true
-    }
-    
-    func webViewDidFinishLoad(_ webView: UIWebView) {
-        //webView.stringByEvaluatingJavaScriptFromString("var links = document.getElementsByTagName('a');for (var i = 0; i < links.length; ++i) {links[i].style = 'text-decoration:none;color:#000;';} alert('a');")
-        
-        if (shouldScroll) {
-        let bottomOffset = CGPoint(x: 0, y: self.scrollView.contentSize.height - webView.scrollView.bounds.size.height);
-        webView.scrollView.setContentOffset(bottomOffset, animated:true)
-        
-        let height = Int(webView.stringByEvaluatingJavaScript(from: "document.body.offsetHeight;")!)
-
-        let javascript = String(format:"window.scrollBy(0, %d);", height!)
-        webView.stringByEvaluatingJavaScript(from: javascript)
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        switch navigationAction.navigationType {
+        case .linkActivated:
+            if navigationAction.targetFrame == nil {
+                self.webView?.load(navigationAction.request)
+            }
+            if let url = navigationAction.request.url, !url.absoluteString.hasPrefix(AppDelegate.ao3SiteUrl) {
+                UIApplication.shared.open(url, options: [:]) { (result) in
+                    print("Comments link open \(url)")
+                }
+                print(url.absoluteString)
+                decisionHandler(.cancel)
+                return
+            }
+        default:
+            break
         }
         
-        webView.scrollView.flashScrollIndicators()
+        if let url = navigationAction.request.url {
+            print(url.absoluteString)
+        }
+        decisionHandler(.allow)
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        if (shouldScroll) {
+            let bottomOffset = CGPoint(x: 0, y: self.scrollView.contentSize.height - webView.scrollView.bounds.size.height);
+            webView.scrollView.setContentOffset(bottomOffset, animated:true)
+            
+            webView.evaluateJavaScript("document.body.offsetHeight;") { (result, error) in
+                let height: Int = (result as? Int) ?? 0
+                
+                let javascript = String(format:"window.scrollBy(0, %d);", height)
+                
+                webView.evaluateJavaScript(javascript, completionHandler: { (result, error) in
+                    webView.scrollView.flashScrollIndicators()
+                })
+            }
+            
+        }
         
     }
     
     //MARK: - move textview on keyboard
     
     @objc func keyboardWillShow(_ sender: Notification) {
-        let info: NSDictionary = (sender as NSNotification).userInfo! as NSDictionary
-        let kbSize: CGSize = (info.object(forKey: UIResponder.keyboardFrameBeginUserInfoKey)! as AnyObject).cgRectValue.size
-        let contentInsets: UIEdgeInsets = UIEdgeInsets.init(top: 0.0, left: 0.0, bottom: kbSize.height, right: 0.0)
-        scrollView.contentInset = contentInsets
-        scrollView.scrollIndicatorInsets = contentInsets
-        
-        // If active text field is hidden by keyboard, scroll it so it's visible
-        // Your application might not need or want this behavior.
-        var aRect: CGRect = self.view.frame
-        aRect.size.height -= kbSize.height
-        if (!aRect.contains(commentTv.frame.origin) ) {
-            let scrollPoint: CGPoint = CGPoint(x: 0.0, y: commentTv.frame.origin.y - kbSize.height/8)
-            scrollView.setContentOffset(scrollPoint, animated:true)
+        if keyboardHeight != nil {
+            return
+        }
+        if let keyboardSize = sender.keyboardSize {
+            keyboardHeight = keyboardSize.height
+            self.constraintContentHeight.constant += self.keyboardHeight
+            
+            // so increase contentView's height by keyboard height
+            UIView.animate(withDuration: 0.3, animations: {
+                self.view.layoutIfNeeded()
+            })
         }
     }
     
     @objc func keyboardWillHide(_ sender: Notification) {
-        let contentInsets: UIEdgeInsets = UIEdgeInsets.zero
-        scrollView.contentInset = contentInsets
-        scrollView.scrollIndicatorInsets = contentInsets
+        self.constraintContentHeight.constant -= keyboardHeight
+        UIView.animate(withDuration: 0.3) {
+            self.view.layoutIfNeeded()
+        }
+        
+        keyboardHeight = nil
     }
 
     
@@ -380,7 +445,7 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
         params["authenticity_token"] = self.commentsToken
         
         params["comment"] = ["pseud_id": pseud_id,
-                              "content": txt,
+                              "comment_content": txt,
                               
         ] as AnyObject?
         
@@ -399,11 +464,11 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
         params["commit"] = "Comment" as AnyObject?
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
+            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: AppDelegate.ao3SiteUrl), mainDocumentURL: nil)
         }
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-            Alamofire.request(requestStr, method: .post, parameters: params, encoding: URLEncoding.queryString /*ParameterEncoding.Custom(encodeParams)*/)
+            Alamofire.request(requestStr, method: .post, parameters: params, encoding: URLEncoding.httpBody /*ParameterEncoding.Custom(encodeParams)*/)
                 .response(completionHandler: { response in
                     print(response.request ?? "")
                     // print(response ?? "")
@@ -418,9 +483,7 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
                         
                     } else {
                         self.hideLoadingView()
-                        RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("CheckInternet"), type: RMessageType.error, customTypeName: "", callback: {
-                            
-                        })
+                        self.showError(title: Localization("Error"), message: Localization("CheckInternet"))
                     }
                 })
         }
@@ -431,27 +494,23 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
         print("parseAddCommentResponse is: \(dta ?? "")")
         let doc : TFHpple = TFHpple(htmlData: data)
         
-        var noticediv: [TFHppleElement] = doc.search(withXPathQuery: "//div[@class='flash notice']") as! [TFHppleElement]
-        if(noticediv.count > 0) {
-           // self.view.makeToast(message: noticediv[0].content, duration: 3.0, position: "center" as AnyObject, title: Localization("AddingComment"))
+        if let successdiv: [TFHppleElement] = doc.search(withXPathQuery: "//div[@class='flash comment_notice']") as? [TFHppleElement],
+            successdiv.count > 0 {
+            self.showSuccess(title: NSLocalizedString("AddingComment", comment: ""), message: successdiv[0].content)
+            self.shouldScroll = true
             
-            let error = MessageView.viewFromNib(layout: .messageView)
-            error.configureTheme(.info)
-            error.configureContent(title: "Adding Comment", body: noticediv[0].content)
+        } else if let noticediv: [TFHppleElement] = doc.search(withXPathQuery: "//div[@class='flash']") as? [TFHppleElement],
+            noticediv.count > 0 {
             
-            SwiftMessages.show(config: SwiftMessages.defaultConfig, view: error)
+            self.showError(title: NSLocalizedString("AddingComment", comment: ""), message: noticediv[0].content)
             
             //changedSmth = true
         } else {
             var sorrydiv = doc.search(withXPathQuery: "//div[@class='flash error']")
             
             if(sorrydiv != nil && (sorrydiv?.count)!>0 && (sorrydiv?[0] as! TFHppleElement).text().range(of: "Sorry") != nil) {
-              //  self.view.makeToast(message: (sorrydiv![0] as AnyObject).content, duration: 3.0, position: "center" as AnyObject, title: "Adding Comment")
-                let error = MessageView.viewFromNib(layout: .tabView)
-                error.configureTheme(.error)
-                error.configureContent(title: "Adding Comment", body: (sorrydiv![0] as AnyObject).content)
                 
-                SwiftMessages.show(config: SwiftMessages.defaultConfig, view: error)
+                self.showError(title: NSLocalizedString("AddingComment", comment: ""), message: (sorrydiv![0] as AnyObject).content)
                 
                 return
             }
@@ -508,9 +567,7 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
                     self.loadCurrentTheme()
                 } else {
                     self.hideLoadingView()
-                    RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("CheckInternet"), type: RMessageType.error, customTypeName: "", callback: {
-                        
-                    })
+                    self.showError(title: Localization("Error"), message: Localization("CheckInternet"))
                 }
             })
         }
@@ -523,5 +580,26 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
         default:
             return CGSize(width: 50, height: 28)
         }
+    }
+}
+
+extension CommentViewController: UITextViewDelegate {
+    func textViewShouldBeginEditing(_ textField: UITextView) -> Bool {
+        lastOffset = self.scrollView.contentOffset
+        return true
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.commentTv.resignFirstResponder()
+        return true
+    }
+}
+
+extension Notification {
+    var keyboardSize: CGSize? {
+        return (userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size
+    }
+    var keyboardAnimationDuration: Double? {
+        return userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double
     }
 }

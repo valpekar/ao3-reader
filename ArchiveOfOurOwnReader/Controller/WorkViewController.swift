@@ -1243,12 +1243,13 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
             fontCss = "@font-face { font-family: \"\(fontFamily)\"; src: url(RFS_Juan_Casco.ttf); format('truetype')} "
         }
         
+        let fontStr = "font-size: " + String(format:"%d", fontSize) + "%; \(fontFamilyStr); "
+        
         switch (theme) {
             case DefaultsManager.THEME_DAY :
                 webView.backgroundColor = AppDelegate.greyLightBg
                 webView.isOpaque = false
                 
-                let fontStr = "font-size: " + String(format:"%d", fontSize) + "%; \(fontFamilyStr); "
                 worktext = String(format:"<style>\(fontCss) body, table { color: #021439; %@; padding:5em 1.5em 4em 1.5em; text-align: left; line-height: 1.5em;  overflow-y: scroll; -webkit-overflow-scrolling: touch; } p {margin-bottom:1.0em}</style>%@", fontStr, work)
             
                 bgColor = AppDelegate.greyLightColor
@@ -1263,7 +1264,6 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
                 self.webView.backgroundColor = AppDelegate.nightBgColor
                 self.webView.isOpaque = false
                 
-                let fontStr = "font-size: " + String(format:"%d", fontSize) + "%; \(fontFamilyStr); "
                 worktext = String(format:"<style>\(fontCss) body, table { color: #e1e1ce; %@; padding:5em 1.5em 4em 1.5em; text-align: left; line-height: 1.5em; overflow-y: scroll; -webkit-overflow-scrolling: touch; } p {margin-bottom:1.0em} </style>%@", fontStr, work)
             
                 bgColor = AppDelegate.greyDarkBg
