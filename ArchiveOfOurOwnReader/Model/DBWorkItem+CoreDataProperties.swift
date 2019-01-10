@@ -2,8 +2,8 @@
 //  DBWorkItem+CoreDataProperties.swift
 //  ArchiveOfOurOwnReader
 //
-//  Created by Valeriya Pekar on 9/17/18.
-//  Copyright © 2018 Sergei Pekar. All rights reserved.
+//  Created by Valeriya Pekar on 1/10/19.
+//  Copyright © 2019 Sergei Pekar. All rights reserved.
 //
 //
 
@@ -50,6 +50,7 @@ extension DBWorkItem {
     @NSManaged public var workContent: String?
     @NSManaged public var workId: String?
     @NSManaged public var workTitle: String?
+    @NSManaged public var progress: NSNumber?
     @NSManaged public var chapters: NSSet?
     @NSManaged public var characters: NSSet?
     @NSManaged public var fandoms: NSSet?

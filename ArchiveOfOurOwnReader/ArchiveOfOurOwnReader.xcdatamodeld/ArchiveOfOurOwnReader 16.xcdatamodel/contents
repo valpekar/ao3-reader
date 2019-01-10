@@ -67,6 +67,7 @@
         <attribute name="language" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="needsUpdate" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="nextChapter" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="progress" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="published" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="ratingTags" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="scrollProgress" optional="YES" attributeType="String" syncable="YES"/>
@@ -123,7 +124,7 @@
         <element name="DBFavAuthor" positionX="-108" positionY="234" width="128" height="90"/>
         <element name="DBHighlightItem" positionX="-108" positionY="234" width="128" height="120"/>
         <element name="DBRelationship" positionX="162" positionY="507" width="128" height="30"/>
-        <element name="DBWorkItem" positionX="-72" positionY="78" width="135" height="630"/>
+        <element name="DBWorkItem" positionX="-72" positionY="78" width="135" height="645"/>
         <element name="DBWorkNotifItem" positionX="-108" positionY="234" width="128" height="75"/>
         <element name="Folder" positionX="-108" positionY="234" width="128" height="90"/>
         <element name="HistoryItem" positionX="-108" positionY="234" width="128" height="120"/>

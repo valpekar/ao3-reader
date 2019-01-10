@@ -373,6 +373,12 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         }
         
         cell.fandomsLabel.textColor = AppDelegate.greenColor
+        
+        var readProgress = 0
+        
+        
+        let currentPosition = curWork?.progress ?? NSNumber(value:0)
+        cell.readProgress.setProgress(currentPosition.floatValue, animated: false)
     }
     
     

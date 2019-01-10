@@ -49,6 +49,8 @@ class DownloadedCell: UITableViewCell {
     @IBOutlet weak var folderButton: ButtonWithSection!
     @IBOutlet weak var deleteButton: ButtonWithSection!
     
+    @IBOutlet weak var readProgress: UIProgressView!
+    
     convenience init(reuseIdentifier: String?) {
         self.init(style: .default, reuseIdentifier: reuseIdentifier)
     }

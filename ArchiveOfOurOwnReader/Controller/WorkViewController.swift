@@ -793,6 +793,35 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
             currentWork.currentChapter = NSNumber(value: currentChapterIndex as Int)
             currentWork.scrollProgress = NSCoder.string(for: webView.scrollView.contentOffset)
                 currentWork.dateUpdated = Date() as NSDate
+                
+                let maxBottomYOffset = webView.scrollView.contentSize.height - webView.scrollView.bounds.size.height + webView.scrollView.contentInset.bottom
+                let readOffset = maxBottomYOffset - webView.scrollView.contentOffset.y
+                
+                let chptCount = currentWork.chapters?.count ?? 0
+                if (chptCount == 1 || chptCount == 0) {
+                    
+                    currentWork.progress = NSNumber(value: Float(readOffset/maxBottomYOffset))
+                } else {
+                    if (currentChapterIndex == 0) {
+                        
+                        let progressInChapter: Float = Float(readOffset/maxBottomYOffset)
+                        currentWork.progress = NSNumber(value: progressInChapter/Float(chptCount))
+                        
+                    } else {
+                        if (readOffset == maxBottomYOffset) {
+                            let progress: Float = Float(currentChapterIndex )/Float(chptCount)
+                            currentWork.progress = NSNumber(value: progress)
+                        } else if (readOffset >= 0 && readOffset <= 40) {
+                            let progress: Float = Float(currentChapterIndex + 1)/Float(chptCount)
+                            currentWork.progress = NSNumber(value: progress)
+                        } else {
+                            let progress: Float = Float(currentChapterIndex)/Float(chptCount) + (Float(readOffset/maxBottomYOffset)/Float(chptCount))
+                            currentWork.progress = NSNumber(value: progress)
+                        }
+                        
+                    }
+                }
+
             
             do {
                 try managedContext.save()

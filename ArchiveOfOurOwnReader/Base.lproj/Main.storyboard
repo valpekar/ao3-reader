@@ -7177,7 +7177,7 @@ Major Problems:
                                                             </constraints>
                                                         </view>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Label" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yxf-WI-AV9">
-                                                            <rect key="frame" x="8" y="165.66666666666666" width="329" height="14.333333333333343"/>
+                                                            <rect key="frame" x="8" y="159.66666666666666" width="329" height="14.333333333333343"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -7186,7 +7186,7 @@ Major Problems:
                                                             </variation>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Label" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B4h-2r-oZZ">
-                                                            <rect key="frame" x="8" y="90" width="329" height="71.666666666666686"/>
+                                                            <rect key="frame" x="8" y="90" width="329" height="65.666666666666686"/>
                                                             <fontDescription key="fontDescription" name="HelveticaNeue-LightItalic" family="Helvetica Neue" pointSize="12"/>
                                                             <color key="textColor" red="0.42745098039215684" green="0.42745098039215684" blue="0.42745098039215684" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -7231,16 +7231,20 @@ Major Problems:
                                                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="16"/>
                                                             </variation>
                                                         </label>
+                                                        <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="JWG-Rj-d88">
+                                                            <rect key="frame" x="8" y="180" width="307" height="2"/>
+                                                        </progressView>
                                                     </subviews>
                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstItem="B4h-2r-oZZ" firstAttribute="leading" secondItem="e43-xT-xfS" secondAttribute="leadingMargin" id="1fK-eW-swn"/>
+                                                        <constraint firstItem="Dms-oX-Eos" firstAttribute="top" secondItem="JWG-Rj-d88" secondAttribute="bottom" id="2cD-M7-eW1"/>
                                                         <constraint firstItem="4VT-L1-fAL" firstAttribute="leading" secondItem="kcb-0Y-sjL" secondAttribute="trailing" constant="8" id="3Uz-JD-xab"/>
                                                         <constraint firstItem="yxf-WI-AV9" firstAttribute="leading" secondItem="e43-xT-xfS" secondAttribute="leadingMargin" id="4Mi-aZ-6KX"/>
                                                         <constraint firstAttribute="trailing" secondItem="Dms-oX-Eos" secondAttribute="trailing" id="4ks-MN-8KD"/>
                                                         <constraint firstItem="kcb-0Y-sjL" firstAttribute="top" secondItem="hHJ-3A-iJ2" secondAttribute="bottom" constant="8" id="96C-ky-uFc"/>
                                                         <constraint firstAttribute="trailing" secondItem="4VT-L1-fAL" secondAttribute="trailing" constant="8" id="Cgc-ft-hOh"/>
-                                                        <constraint firstItem="Dms-oX-Eos" firstAttribute="top" secondItem="yxf-WI-AV9" secondAttribute="bottom" constant="2" id="Erj-el-uGr"/>
+                                                        <constraint firstAttribute="trailing" secondItem="JWG-Rj-d88" secondAttribute="trailing" constant="30" id="Ecm-rT-Q2Q"/>
                                                         <constraint firstItem="yxf-WI-AV9" firstAttribute="top" secondItem="B4h-2r-oZZ" secondAttribute="bottom" constant="4" id="HQl-a6-934"/>
                                                         <constraint firstAttribute="bottom" secondItem="Dms-oX-Eos" secondAttribute="bottom" id="Hrq-qb-Yec"/>
                                                         <constraint firstItem="h1l-gt-NVP" firstAttribute="leading" secondItem="kcb-0Y-sjL" secondAttribute="trailing" constant="9" id="I58-85-dkX"/>
@@ -7251,9 +7255,11 @@ Major Problems:
                                                         <constraint firstItem="hHJ-3A-iJ2" firstAttribute="top" secondItem="e43-xT-xfS" secondAttribute="top" id="Qra-WB-5zL"/>
                                                         <constraint firstItem="Dms-oX-Eos" firstAttribute="leading" secondItem="e43-xT-xfS" secondAttribute="leading" id="dLu-Cb-kce"/>
                                                         <constraint firstItem="yxf-WI-AV9" firstAttribute="top" secondItem="B4h-2r-oZZ" secondAttribute="bottom" constant="4" id="dnp-DL-uHH"/>
+                                                        <constraint firstItem="JWG-Rj-d88" firstAttribute="leading" secondItem="e43-xT-xfS" secondAttribute="leading" constant="8" id="eYI-hb-qwo"/>
                                                         <constraint firstItem="hHJ-3A-iJ2" firstAttribute="leading" secondItem="e43-xT-xfS" secondAttribute="leading" id="k0o-Wb-ZyZ"/>
                                                         <constraint firstAttribute="trailingMargin" secondItem="yxf-WI-AV9" secondAttribute="trailing" id="lqj-ly-iJP"/>
                                                         <constraint firstItem="B4h-2r-oZZ" firstAttribute="trailing" secondItem="e43-xT-xfS" secondAttribute="trailingMargin" id="qOx-Ny-qSv"/>
+                                                        <constraint firstItem="JWG-Rj-d88" firstAttribute="top" secondItem="yxf-WI-AV9" secondAttribute="bottom" constant="6" id="qTT-vb-SXu"/>
                                                         <constraint firstItem="4VT-L1-fAL" firstAttribute="top" secondItem="hHJ-3A-iJ2" secondAttribute="bottom" constant="6" id="sFT-aS-sOQ"/>
                                                         <constraint firstItem="kcb-0Y-sjL" firstAttribute="leading" secondItem="e43-xT-xfS" secondAttribute="leading" constant="8" id="sdH-Ls-3v7"/>
                                                         <constraint firstItem="B4h-2r-oZZ" firstAttribute="top" secondItem="h1l-gt-NVP" secondAttribute="bottom" constant="6" id="u6W-kU-M6q"/>
@@ -7291,6 +7297,7 @@ Major Problems:
                                             <outlet property="kudosLabel" destination="8zv-1z-prL" id="KMP-yg-ldK"/>
                                             <outlet property="languageLabel" destination="X4z-9n-kqG" id="mfT-ZX-J5H"/>
                                             <outlet property="ratingImg" destination="kcb-0Y-sjL" id="pvt-0x-Ldy"/>
+                                            <outlet property="readProgress" destination="JWG-Rj-d88" id="I0O-65-tXp"/>
                                             <outlet property="tagsLabel" destination="B4h-2r-oZZ" id="4b4-ph-r1M"/>
                                             <outlet property="topicLabel" destination="4VT-L1-fAL" id="R2j-mc-aA4"/>
                                             <outlet property="topicPreviewLabel" destination="yxf-WI-AV9" id="Yne-8F-5Zq"/>

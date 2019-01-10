@@ -68,12 +68,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         Fabric.with([Crashlytics.self])
         FirebaseApp.configure()
         
-       // TFTTapForTap.initializeWithAPIKey("ecd826723b670f9d750ce1eb02d9558a")
-        
-        //UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
-        
-        UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white], for: UIControl.State())
-        UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white], for: UIControl.State.selected)        
+        self.window?.tintColor = AppDelegate.redColor
         
         //create the notificationCenter
         let center  = UNUserNotificationCenter.current()

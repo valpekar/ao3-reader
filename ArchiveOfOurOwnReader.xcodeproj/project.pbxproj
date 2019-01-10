@@ -266,6 +266,7 @@
 		28E1C7141B8D9257001E2E5A /* WorkViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WorkViewController.swift; path = Controller/WorkViewController.swift; sourceTree = "<group>"; };
 		2AE29593C1A0E3817499DA6B /* Pods-ArchiveOfOurOwnReaderTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArchiveOfOurOwnReaderTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ArchiveOfOurOwnReaderTests/Pods-ArchiveOfOurOwnReaderTests.debug.xcconfig"; sourceTree = "<group>"; };
 		30E187E4D36CFAF1BB4EAFF8 /* Pods-ArchiveOfOurOwnReaderTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArchiveOfOurOwnReaderTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ArchiveOfOurOwnReaderTests/Pods-ArchiveOfOurOwnReaderTests.release.xcconfig"; sourceTree = "<group>"; };
+		3C00313421E7745A00926432 /* ArchiveOfOurOwnReader 16.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ArchiveOfOurOwnReader 16.xcdatamodel"; sourceTree = "<group>"; };
 		3C00E9C21D9C05FA00B0BBDF /* CustomEncoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomEncoding.swift; sourceTree = "<group>"; };
 		3C0448F51C634209005DCE5F /* ReaderProducts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReaderProducts.swift; sourceTree = "<group>"; };
 		3C0448F61C634209005DCE5F /* IAPHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IAPHelper.swift; sourceTree = "<group>"; };
@@ -1543,6 +1544,7 @@
 		28B6DC2B1B4E3F5900F34529 /* ArchiveOfOurOwnReader.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				3C00313421E7745A00926432 /* ArchiveOfOurOwnReader 16.xcdatamodel */,
 				3C6644E4219AC10000BD85AC /* ArchiveOfOurOwnReader 15.xcdatamodel */,
 				3C51E08D214FD23800A081B5 /* ArchiveOfOurOwnReader 14.xcdatamodel */,
 				3CCBD88F20AF0BB1006DF419 /* ArchiveOfOurOwnReader 13.xcdatamodel */,
@@ -1559,7 +1561,7 @@
 				3C9C87BB1CE35D8800C10410 /* ArchiveOfOurOwnReader 2.xcdatamodel */,
 				28B6DC2C1B4E3F5900F34529 /* ArchiveOfOurOwnReader.xcdatamodel */,
 			);
-			currentVersion = 3C6644E4219AC10000BD85AC /* ArchiveOfOurOwnReader 15.xcdatamodel */;
+			currentVersion = 3C00313421E7745A00926432 /* ArchiveOfOurOwnReader 16.xcdatamodel */;
 			path = ArchiveOfOurOwnReader.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
