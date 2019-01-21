@@ -178,6 +178,8 @@
 		3CDF1FAB1F39AA57004D858F /* WorksParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CDF1FAA1F39AA57004D858F /* WorksParser.swift */; };
 		3CEAA530200F7975003FEFDE /* CheckDownloadItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEAA52F200F7975003FEFDE /* CheckDownloadItem.swift */; };
 		3CF1D00E1C87182300D219B2 /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF1D00D1C87182300D219B2 /* HistoryViewController.swift */; };
+		3CF49D4E21F5AFA4007C1357 /* ChoosePublishOptionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF49D4D21F5AFA4007C1357 /* ChoosePublishOptionController.swift */; };
+		3CF49D5021F5C86C007C1357 /* PlainTextController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF49D4F21F5C86C007C1357 /* PlainTextController.swift */; };
 		3CFD2A631CB55A0F0072FEC5 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CFD2A621CB55A0F0072FEC5 /* Twitter.framework */; };
 		3CFD2A651CB55A2F0072FEC5 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CFD2A641CB55A2F0072FEC5 /* MessageUI.framework */; };
 		B6277E5735632C3272D520D9 /* Pods_ArchiveOfOurOwnReaderTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 261FBF4E8A62D2F746F44908 /* Pods_ArchiveOfOurOwnReaderTests.framework */; };
@@ -432,6 +434,8 @@
 		3CDF1FAA1F39AA57004D858F /* WorksParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WorksParser.swift; path = Utils/WorksParser.swift; sourceTree = "<group>"; };
 		3CEAA52F200F7975003FEFDE /* CheckDownloadItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CheckDownloadItem.swift; path = Object/CheckDownloadItem.swift; sourceTree = "<group>"; };
 		3CF1D00D1C87182300D219B2 /* HistoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HistoryViewController.swift; path = Controller/HistoryViewController.swift; sourceTree = "<group>"; };
+		3CF49D4D21F5AFA4007C1357 /* ChoosePublishOptionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChoosePublishOptionController.swift; path = Controller/ChoosePublishOptionController.swift; sourceTree = "<group>"; };
+		3CF49D4F21F5C86C007C1357 /* PlainTextController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PlainTextController.swift; path = Controller/PlainTextController.swift; sourceTree = "<group>"; };
 		3CFD2A621CB55A0F0072FEC5 /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
 		3CFD2A641CB55A2F0072FEC5 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		9E1D849EEED1E11AF03F02B0 /* Pods_ArchiveOfOurOwnReader.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ArchiveOfOurOwnReader.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -687,6 +691,8 @@
 				3C6B997B20CFF23700985390 /* UserMessagesController.swift */,
 				3C6E1E8620E3CC130051B42E /* UpgradesController.swift */,
 				3C6644E2219AB98100BD85AC /* FavoriteAuthorsController.swift */,
+				3CF49D4D21F5AFA4007C1357 /* ChoosePublishOptionController.swift */,
+				3CF49D4F21F5C86C007C1357 /* PlainTextController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -1081,6 +1087,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3CDC4A2C1E825F5100D9438E /* AboutSubscriptionController.swift in Sources */,
+				3CF49D5021F5C86C007C1357 /* PlainTextController.swift in Sources */,
 				3C2548D11E71872D00B872A3 /* WorkListController.swift in Sources */,
 				3C0A80931C85D14200BBCF2B /* MeViewController.swift in Sources */,
 				1D7BDD371B5E755F0017C346 /* TFHppleElement.m in Sources */,
@@ -1121,6 +1128,7 @@
 				3C04659A1F8CBD5D003B6AE7 /* SerieItem.swift in Sources */,
 				3C89958C1E95169B00D511CD /* DBRelationship+CoreDataClass.swift in Sources */,
 				28B6DC581B4E480F00F34529 /* ArticleDetailsViewController.swift in Sources */,
+				3CF49D4E21F5AFA4007C1357 /* ChoosePublishOptionController.swift in Sources */,
 				1D3476671BAC460E006AAF1A /* SearchSwitchCell.swift in Sources */,
 				3CB773631C8480C300DC15C4 /* CenterViewController.swift in Sources */,
 				1D3476691BAC4D39006AAF1A /* SearchFandomsCell.swift in Sources */,

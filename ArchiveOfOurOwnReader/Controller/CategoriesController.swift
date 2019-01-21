@@ -168,9 +168,11 @@ class CategoriesController: LoadingViewController, UITableViewDataSource, UITabl
         if (theme == DefaultsManager.THEME_DAY) {
             cell.backgroundColor = AppDelegate.greyLightBg
             cell.titleLabel.textColor = AppDelegate.dayTextColor
+            cell.tintColor = AppDelegate.redColor
         } else {
             cell.backgroundColor = AppDelegate.greyDarkBg
             cell.titleLabel.textColor = AppDelegate.nightTextColor
+            cell.tintColor = AppDelegate.purpleLightColor
         }
         
         return cell

@@ -30,13 +30,14 @@ class SidePanelViewController: UIViewController, UITableViewDataSource, UITableV
                        Localization("Recommendations"),
                        Localization("FavoriteAuthors"),
                        Localization("Support"),
-                       Localization("Reading Now")
+                       Localization("Reading Now"),
+                       Localization("Publish")
         /*, "Publish"*/]
     
     let sections = ["", ""]
     let secondSectionRows = [Localization("ImportFrm")]
     let secondSectionRowsImgs = ["import"]
-    let imgs = ["browse", "bmk", "history" , "subscriptions", "downloaded", "profile", "recomm", "star", "support", "book_open"/*, "shortstory"*/]
+    let imgs = ["browse", "bmk", "history" , "subscriptions", "downloaded", "profile", "recomm", "star", "support", "book_open", "shortstory"]
     
     struct TableView {
         struct CellIdentifiers {

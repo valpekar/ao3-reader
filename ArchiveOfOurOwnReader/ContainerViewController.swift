@@ -27,7 +27,7 @@ class ContainerViewController: UserMessagesController, CenterViewControllerDeleg
     var currentState: SlideOutState = .bothCollapsed
     var leftViewController: SidePanelViewController?
     
-    var viewControllers = ["FeedViewController", "FavoritesSiteController", "MarkedForLaterController", "SubscriptionsViewController", "ViewFoldersController", "MeViewController", "RecommendationsController", "FavoriteAuthorsController", "SupportController"/*, "PublishWorkController"*/];
+    var viewControllers = ["FeedViewController", "FavoritesSiteController", "MarkedForLaterController", "SubscriptionsViewController", "ViewFoldersController", "MeViewController", "RecommendationsController", "FavoriteAuthorsController", "SupportController", "PublishWorkController"];
     
     var instantiatedControllers: [Int: CenterViewController] = [Int: CenterViewController]()
     
@@ -47,7 +47,7 @@ class ContainerViewController: UserMessagesController, CenterViewControllerDeleg
         
         self.centerNavigationController.setViewControllers([controller], animated: true)
 
-        self.instantiatedControllers[0]!.didMove(toParent: self)
+        self.instantiatedControllers[0]?.didMove(toParent: self)
         /*
         centerViewController = centerNavigationController.viewControllers[0] as? CenterViewController //UIStoryboard.centerViewController()
         centerViewController.delegate = self
@@ -222,8 +222,13 @@ class ContainerViewController: UserMessagesController, CenterViewControllerDeleg
         if let controller = self.instantiatedControllers[indexPath.row] {
                 self.centerNavigationController.setViewControllers([controller], animated: true)
             } else {
-                let controller = UIStoryboard.mainStoryboard().instantiateViewController(withIdentifier: self.viewControllers[indexPath.row]) as! CenterViewController
-                self.instantiatedControllers[indexPath.row] = controller
+            var idx = indexPath.row
+            //test
+            if (idx == 10) {
+                idx = 9
+            }
+                let controller = UIStoryboard.mainStoryboard().instantiateViewController(withIdentifier: self.viewControllers[idx]) as! CenterViewController
+                self.instantiatedControllers[idx] = controller
                 controller.delegate = self
                 controller.applyTheme()
             

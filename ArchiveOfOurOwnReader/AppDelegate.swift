@@ -287,8 +287,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             //   }
         else {
         
+            //open recommendations controller
             if let currentViewController: ContainerViewController = self.window?.rootViewController as? ContainerViewController {
-                currentViewController.selectedControllerAtIndex(IndexPath(row: 7, section: 0))
+                currentViewController.selectedControllerAtIndex(IndexPath(row: 6, section: 0))
             }
         }
         
