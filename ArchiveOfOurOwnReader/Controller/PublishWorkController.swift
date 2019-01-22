@@ -15,6 +15,10 @@ class PublishWorkController: LoadingViewController {
     @IBOutlet weak var saveItem: UIBarButtonItem!
     @IBOutlet weak var publishItem: UIBarButtonItem!
     
+    var publishWork: PublishWork?
+    
+    var lastSelectedIndex = 0
+    
     var tableItems: [String] = ["Title", "Summary", "Rating", "Archive Warnings", "Fandoms", "Category", "Relationships", "Characters", "Additional Tags"]
     
     override func viewDidLoad() {
@@ -37,18 +41,97 @@ class PublishWorkController: LoadingViewController {
         } else {
             openLoginController() //openLoginController()
         }
+        
+        self.createNewPublishWork()
     }
     
     @IBAction func closeClicked(_ sender: AnyObject) {
         
+        self.showSureDialog()
         
-        self.dismiss(animated: true, completion: { () -> Void in
-            
-            NSLog("closeClicked")
-        })
     }
     
+    @IBAction func saveDraftTouched(_ sender: AnyObject) {
+       self.saveDraft()
+    }
     
+    func saveDraft() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        
+        let context = appDelegate.persistentContainer.viewContext
+        
+        do {
+            try context.save()
+        } catch {
+            print("Failed saving")
+        }
+    }
+    
+    func deletePublishWork() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,
+        let _ = self.publishWork else {
+            return
+        }
+        let context = appDelegate.persistentContainer.viewContext
+        context.delete(self.publishWork!)
+        self.publishWork = nil
+        
+        do {
+            try context.save()
+        } catch {
+            print("Failed saving")
+        }
+    }
+    
+    func showSureDialog() {
+        let refreshAlert = UIAlertController(title: "Are you sure?", message: "You want to delete this draft?", preferredStyle: UIAlertController.Style.alert)
+        
+        refreshAlert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { (action: UIAlertAction!) in
+            self.deletePublishWork()
+            self.dismiss(animated: true, completion: { () -> Void in
+            })
+        }))
+        
+        refreshAlert.addAction(UIAlertAction(title: "Save As Draft", style: .default, handler: { (action: UIAlertAction!) in
+            self.saveDraft()
+            self.dismiss(animated: true, completion: { () -> Void in
+            })
+        }))
+        
+        present(refreshAlert, animated: true, completion: nil)
+    }
+    
+    func createNewPublishWork() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        
+        let context = appDelegate.persistentContainer.viewContext
+        /*let entityDes=NSEntityDescription.entity(forEntityName: "TestEntity", in: context) let entity=TestEntity(entity: entityDes!, insertInto: context) entity.testAtt="test attribute"*/
+        
+        publishWork = PublishWork(context: context)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "plainTextSegue") {
+            let controller: PlainTextController = segue.destination as! PlainTextController
+            controller.plainTextDelegate = self
+            
+            var txt = ""
+            
+            switch (self.lastSelectedIndex) {
+            case 0:
+                txt = self.publishWork?.title ?? ""
+            default: break
+            }
+            
+            if (txt.isEmpty == false) {
+                controller.textToEdit = txt
+            }
+        }
+    }
 }
 
 extension PublishWorkController: UITableViewDataSource, UITableViewDelegate {
@@ -58,13 +141,19 @@ extension PublishWorkController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cellIdentifier: String = "CategoryCell"
+        let cellIdentifier: String = "PublishItemCell"
         
-        let cell:CategoryCell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier) as! CategoryCell
+        let cell:PublishItemCell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier) as! PublishItemCell
         
         let curCat:String = tableItems[indexPath.row]
-        
         cell.titleLabel.text = curCat
+        
+        switch (indexPath.row) {
+        case 0:
+            cell.contentLabel.text = publishWork?.title ?? ""
+        default:
+            cell.contentLabel.text = ""
+        }
         
         if (theme == DefaultsManager.THEME_DAY) {
             cell.backgroundColor = AppDelegate.greyLightBg
@@ -81,6 +170,7 @@ extension PublishWorkController: UITableViewDataSource, UITableViewDelegate {
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.lastSelectedIndex = indexPath.row
         
         if (indexPath.row < 1) {
             performSegue(withIdentifier: "plainTextSegue", sender: self)
@@ -95,6 +185,12 @@ extension PublishWorkController: UITableViewDataSource, UITableViewDelegate {
 extension PublishWorkController: PlainTextDelegate {
     
     func plainTextSelected(text: String) {
+        switch (self.lastSelectedIndex) {
+        case 0:
+           publishWork?.title = text
+        default: break
+        }
         
+        self.tableView.reloadRows(at: [IndexPath(row: self.lastSelectedIndex, section: 0)], with: .none)
     }
 }

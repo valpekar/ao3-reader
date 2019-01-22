@@ -12,17 +12,34 @@ class PlainTextController: LoadingViewController {
     
     @IBOutlet weak var textView: UITextView!
     var plainTextDelegate: PlainTextDelegate?
+    var textToEdit = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        textView.layer.cornerRadius = 5.0
-        textView.layer.borderColor = UIColor.purple.cgColor
-        textView.layer.borderWidth = 0.7
+        self.title = ""
         
         addDoneButtonOnKeyboard(self.textView)
         
         textView.delegate = self
+        
+        if (self.textToEdit.isEmpty == false) {
+            self.textView.text = self.textToEdit
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.view.backgroundColor = AppDelegate.redColor
+    
+        if (theme == DefaultsManager.THEME_NIGHT) {
+            self.textView.backgroundColor = AppDelegate.nightBgColor
+            self.textView.textColor = AppDelegate.nightTextColor
+        } else {
+             self.textView.backgroundColor = AppDelegate.dayBgColor
+             self.textView.textColor = AppDelegate.dayTextColor
+        }
     }
     
     @IBAction func checkTouched(_ sender: AnyObject) {

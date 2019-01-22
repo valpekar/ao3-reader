@@ -9350,7 +9350,7 @@ Please check your Internet connection and also make sure you are logged into you
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="690"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="CategoryCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="CategoryCell" id="rmo-FT-qbY" customClass="CategoryCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="PublishItemCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="PublishItemCell" id="rmo-FT-qbY" customClass="PublishItemCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="rmo-FT-qbY" id="xPG-lW-8df">
@@ -9358,20 +9358,30 @@ Please check your Internet connection and also make sure you are logged into you
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="M0u-Bp-MbI">
-                                                    <rect key="frame" x="15" y="11" width="319" height="22"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <rect key="frame" x="15" y="11" width="36" height="22"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
                                                     <color key="textColor" red="0.31764705879999999" green="0.20392156859999999" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xs6-g5-oQk">
+                                                    <rect key="frame" x="67" y="11" width="267" height="22"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <color key="textColor" red="0.33640350149999998" green="0.34974721469999998" blue="0.63356136659999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="M0u-Bp-MbI" firstAttribute="top" secondItem="xPG-lW-8df" secondAttribute="topMargin" id="Scy-GR-aSm"/>
+                                                <constraint firstItem="xs6-g5-oQk" firstAttribute="top" secondItem="xPG-lW-8df" secondAttribute="topMargin" id="UAn-kq-aGI"/>
                                                 <constraint firstItem="M0u-Bp-MbI" firstAttribute="leading" secondItem="xPG-lW-8df" secondAttribute="leadingMargin" id="Ykh-BH-3hT"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="xs6-g5-oQk" secondAttribute="bottom" id="bq9-DF-OlV"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="xs6-g5-oQk" secondAttribute="trailing" id="d9F-i9-WoQ"/>
+                                                <constraint firstItem="xs6-g5-oQk" firstAttribute="leading" secondItem="M0u-Bp-MbI" secondAttribute="trailing" constant="16" id="eVu-NE-tYQ"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="M0u-Bp-MbI" secondAttribute="bottom" id="fa2-lU-ApY"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="M0u-Bp-MbI" secondAttribute="trailing" id="pLd-bT-6BE"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="contentLabel" destination="xs6-g5-oQk" id="loo-fR-YkR"/>
                                             <outlet property="titleLabel" destination="M0u-Bp-MbI" id="7IX-dH-Y6C"/>
                                         </connections>
                                     </tableViewCell>
@@ -9398,10 +9408,16 @@ Please check your Internet connection and also make sure you are logged into you
                         </barButtonItem>
                         <rightBarButtonItems>
                             <barButtonItem title="Publish" id="vct-wj-feb"/>
-                            <barButtonItem title="Save Draft" id="HQd-iU-otL"/>
+                            <barButtonItem title="Save Draft" id="HQd-iU-otL">
+                                <connections>
+                                    <action selector="saveDraftTouched:" destination="13h-Pb-eDN" id="MnD-rx-A4Q"/>
+                                </connections>
+                            </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
+                        <outlet property="publishItem" destination="vct-wj-feb" id="FFd-oI-41t"/>
+                        <outlet property="saveItem" destination="HQd-iU-otL" id="tTt-f3-TG7"/>
                         <outlet property="tableView" destination="yu1-cr-XOT" id="sLh-UG-Skf"/>
                         <segue destination="qlx-fH-dVG" kind="show" identifier="publishOptionSegue" id="buG-SV-SEQ"/>
                         <segue destination="3XI-jk-eAt" kind="presentation" identifier="plainTextSegue" id="Z9U-Gm-Kbl"/>
@@ -9409,7 +9425,7 @@ Please check your Internet connection and also make sure you are logged into you
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3tc-TH-s74" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1050" y="5355"/>
+            <point key="canvasLocation" x="1048.8" y="5354.9261083743841"/>
         </scene>
         <!-- -->
         <scene sceneID="6et-TD-S2u">
@@ -9442,7 +9458,7 @@ Please check your Internet connection and also make sure you are logged into you
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Type here..." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="WV7-Ot-3fx">
-                                <rect key="frame" x="20" y="108" width="335" height="510"/>
+                                <rect key="frame" x="0.0" y="88" width="375" height="490"/>
                                 <color key="backgroundColor" red="0.93852830524815545" green="0.95433224996800026" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -9474,12 +9490,12 @@ Please check your Internet connection and also make sure you are logged into you
                         <color key="backgroundColor" red="0.31764705879999999" green="0.20392156859999999" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="4SC-Vj-gHZ" firstAttribute="leading" secondItem="Q3h-EQ-Rxb" secondAttribute="leading" id="7Va-jU-Waw"/>
-                            <constraint firstAttribute="trailing" secondItem="WV7-Ot-3fx" secondAttribute="trailing" constant="20" id="HFX-nw-lH4"/>
-                            <constraint firstItem="WV7-Ot-3fx" firstAttribute="leading" secondItem="Q3h-EQ-Rxb" secondAttribute="leading" constant="20" id="R7Q-rZ-Rc4"/>
-                            <constraint firstItem="1oS-3P-m9f" firstAttribute="top" secondItem="WV7-Ot-3fx" secondAttribute="bottom" constant="160" id="gYl-gB-aHE"/>
+                            <constraint firstAttribute="trailing" secondItem="WV7-Ot-3fx" secondAttribute="trailing" id="HFX-nw-lH4"/>
+                            <constraint firstItem="WV7-Ot-3fx" firstAttribute="leading" secondItem="Q3h-EQ-Rxb" secondAttribute="leading" id="R7Q-rZ-Rc4"/>
+                            <constraint firstItem="1oS-3P-m9f" firstAttribute="top" secondItem="WV7-Ot-3fx" secondAttribute="bottom" constant="200" id="gYl-gB-aHE"/>
                             <constraint firstItem="4SC-Vj-gHZ" firstAttribute="top" secondItem="e0b-PQ-TNT" secondAttribute="bottom" id="iW5-73-CUH"/>
                             <constraint firstAttribute="trailing" secondItem="4SC-Vj-gHZ" secondAttribute="trailing" id="msM-bt-Q2P"/>
-                            <constraint firstItem="WV7-Ot-3fx" firstAttribute="top" secondItem="4SC-Vj-gHZ" secondAttribute="bottom" constant="20" id="sRN-pU-c0V"/>
+                            <constraint firstItem="WV7-Ot-3fx" firstAttribute="top" secondItem="4SC-Vj-gHZ" secondAttribute="bottom" id="sRN-pU-c0V"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Title" id="SGP-Z8-DGM">
