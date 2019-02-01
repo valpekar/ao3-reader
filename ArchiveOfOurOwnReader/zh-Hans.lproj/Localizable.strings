@@ -210,4 +210,5 @@
 "English" = "English";
 "LangChanged" = "Language successfully changed. Please restart the app for changes to take effect.";
 "ErrLangChanged" = "Cannot change language. Please email me from support screen to let me know!";
+"Fandom Not Specified" = "Fandom Not Specified";
 
