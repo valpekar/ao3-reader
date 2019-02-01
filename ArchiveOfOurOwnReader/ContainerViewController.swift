@@ -27,7 +27,7 @@ class ContainerViewController: UserMessagesController, CenterViewControllerDeleg
     var currentState: SlideOutState = .bothCollapsed
     var leftViewController: SidePanelViewController?
     
-    var viewControllers = ["FeedViewController", "FavoritesSiteController", "MarkedForLaterController", "SubscriptionsViewController", "ViewFoldersController", "MeViewController", "RecommendationsController", "FavoriteAuthorsController", "SupportController", "PublishWorkController"];
+    var viewControllers = ["FeedViewController", "FavoritesSiteController", "MarkedForLaterController", "SubscriptionsViewController", "ViewFoldersController", "MeViewController", "RecommendationsController", "FavoriteAuthorsController", "SupportController"/*, "PublishWorkController"*/]
     
     var instantiatedControllers: [Int: CenterViewController] = [Int: CenterViewController]()
     

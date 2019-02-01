@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UITextViewDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
     
@@ -152,6 +153,8 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
         switch (indexPath.section) {
         case 0:
             cell = (tableView.dequeueReusableCell(withIdentifier: "searchTagCell") as? SearchTagCell)!
+            cell?.accessoryType = .none
+            
            (cell as? SearchTagCell)?.textView.text = searchQuery.include_tags
             (cell as? SearchTagCell)?.textView.tag = TAG_INCLUDE_TAGS
             
@@ -166,6 +169,8 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
             
         case 1:
             cell = (tableView.dequeueReusableCell(withIdentifier: "searchTagCell") as? SearchTagCell)!
+            cell?.accessoryType = .none
+            
             //if (excludeTags.count > indexPath.row) {
                 (cell as? SearchTagCell)?.textView.text = searchQuery.exclude_tags
            // }
@@ -182,6 +187,9 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
             
         case 2:
             cell = (tableView.dequeueReusableCell(withIdentifier: "searchTagTextCell") as? SearchTagWithTextCell)!
+            
+            cell?.accessoryType = .none
+            
             if (indexPath.row < labelTitlesWithText.count) {
                 (cell as? SearchTagWithTextCell)?.label.text = labelTitlesWithText[indexPath.row]
             }
@@ -238,6 +246,9 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
             
         case 3:
             cell = (tableView.dequeueReusableCell(withIdentifier: "serachFromToCell") as? SearchFromToCell)!
+            
+            cell?.accessoryType = .none
+            
             (cell as? SearchFromToCell)?.nameLabel.text = labelTitlesFromTo[indexPath.row]
             (cell as? SearchFromToCell)?.imgView.image = UIImage(named:imgTitlesFromTo[indexPath.row])
             (cell as? SearchFromToCell)?.fromTextView.delegate = self
@@ -304,6 +315,8 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
         case 4:
             cell = (tableView.dequeueReusableCell(withIdentifier: "searchSwitchesCell") as? SearchSwitchesCell)!
             
+            cell?.accessoryType = .none
+            
             setWarningSwitchState((cell as? SearchSwitchesCell)!.ffSwitch)
             setWarningSwitchState((cell as? SearchSwitchesCell)!.fmSwitch)
             setWarningSwitchState((cell as? SearchSwitchesCell)!.genSwitch)
@@ -330,6 +343,8 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
             
         case 5:
             cell = (tableView.dequeueReusableCell(withIdentifier: "searchSwitchCell") as? SearchSwitchCell)!
+            cell?.accessoryType = .none
+            
             (cell as? SearchSwitchCell)?.label.text = labelTitlesSwitch[indexPath.row]
             
             if (theme == DefaultsManager.THEME_DAY) {
@@ -359,9 +374,21 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
             setCategorySwitchState((cell as? SearchSwitchCell)!.switchItem)
             
         case 6:
-            cell = (tableView.dequeueReusableCell(withIdentifier: "searchFandomsCell") as? SearchFandomsCell)!
+            if (indexPath.row == 0) {
+                cell = tableView.dequeueReusableCell(withIdentifier: "SearchTagsListCell") as? SearchTagsListCell
+                    if (theme == DefaultsManager.THEME_DAY) {
+                        (cell as? SearchTagsListCell)?.nameLabel.textColor = UIColor.black
+                        
+                    } else {
+                        (cell as? SearchTagsListCell)!.nameLabel.textColor = AppDelegate.textLightColor
+                    }
+                cell?.accessoryType = .disclosureIndicator
+            } else {
+             cell = (tableView.dequeueReusableCell(withIdentifier: "searchFandomsCell") as? SearchFandomsCell)
             (cell as? SearchFandomsCell)?.nameLabel.text = worktagsTitlesWithText[indexPath.row]
             (cell as? SearchFandomsCell)?.textfield.delegate = self
+                
+                cell?.accessoryType = .none
             
             if (theme == DefaultsManager.THEME_DAY) {
                 (cell as? SearchFandomsCell)?.nameLabel.textColor = AppDelegate.greyColor
@@ -369,15 +396,22 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
                 (cell as? SearchFandomsCell)?.textfield.backgroundColor = UIColor.white
                 
             } else {
-                (cell as? SearchFandomsCell)?.nameLabel.textColor = AppDelegate.textLightColor
-                (cell as? SearchFandomsCell)?.textfield.textColor = UIColor.white
-                (cell as? SearchFandomsCell)?.textfield.backgroundColor = AppDelegate.greyBg
+                (cell as! SearchFandomsCell).nameLabel.textColor = AppDelegate.textLightColor
+                (cell as? SearchFandomsCell)!.textfield.textColor = UIColor.white
+                (cell as? SearchFandomsCell)!.textfield.backgroundColor = AppDelegate.greyBg
+            }
             }
             
             switch (indexPath.row) {
             case 0:
-                (cell as? SearchFandomsCell)?.textfield.tag = TAG_FANDOMS
-                (cell as? SearchFandomsCell)?.textfield.text = searchQuery.fandom_names
+                (cell as? SearchTagsListCell)?.nameLabel.tag = TAG_FANDOMS
+                
+                if (searchQuery.fandom_names.count > 0) {
+                    (cell as? SearchTagsListCell)?.nameLabel.text = searchQuery.fandom_names
+                } else {
+                    (cell as? SearchTagsListCell)?.nameLabel.text = NSLocalizedString("FandomNotSpecified", comment: "")
+                }
+                
             case 1:
                 (cell as? SearchFandomsCell)?.textfield.tag = TAG_RELATIONSHIPS
                 (cell as? SearchFandomsCell)?.textfield.text = searchQuery.relationship_names
@@ -511,6 +545,17 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
             break
         }
         return res
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch (indexPath.section) {
+        case 6:
+            if (indexPath.row == 0){
+                self.performSegue(withIdentifier: "popoverSegue", sender: self)
+            }
+        default: break
+        }
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     //MARK: - loading search query
@@ -918,5 +963,45 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
             self.delegate?.searchApplied(self.searchQuery, shouldAddKeyword: false)
             self.modalDelegate?.controllerDidClosed()
         })
+    }
+}
+
+extension SearchViewController {
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "popoverSegue") {
+             if let controller: PopOverViewController = segue.destination as? PopOverViewController {
+                
+                let arr = self.searchQuery.fandom_names.components(separatedBy: ",")
+                var objects: [FandomObject] = []
+                for i in 0..<arr.count {
+                    if (arr[i].condenseWhitespace().isEmpty == false) { //condenseWhitespace - Remove leading, trailing and repeated whitespace from a string
+                        objects.append(FandomObject(sectionName: arr[i], sectionObject: "", isSelected: true))
+                    }
+                }
+                
+                controller.fandoms = objects
+                controller.selectedFandoms = objects
+                
+                controller.selectionProtocol = self
+            }
+        }
+    }
+    
+}
+
+extension SearchViewController: SelectionProtocol {
+    func itemsSelected(items: [FandomObject]) {
+        self.searchQuery.fandom_names = ""
+        
+        for i in 0..<items.count {
+            self.searchQuery.fandom_names.append(items[i].sectionName)
+            if (i != items.count - 1) {
+                self.searchQuery.fandom_names.append(", ")
+            }
+        }
+        
+        self.tableView.reloadRows(at: [IndexPath(row: 0, section: 6)], with: .none)
     }
 }

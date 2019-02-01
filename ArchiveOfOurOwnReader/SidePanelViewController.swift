@@ -31,7 +31,7 @@ class SidePanelViewController: UIViewController, UITableViewDataSource, UITableV
                        Localization("FavoriteAuthors"),
                        Localization("Support"),
                        Localization("Reading Now"),
-                       Localization("Publish")
+                      /* Localization("Publish")*/
         /*, "Publish"*/]
     
     let sections = ["", ""]

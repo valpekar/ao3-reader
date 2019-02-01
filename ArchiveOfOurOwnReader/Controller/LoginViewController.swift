@@ -247,7 +247,7 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
         
         if (flashRes.count > 0) {
              let noticeTxt = flashRes[0].content as String
-             if (noticeTxt.contains("Successfully logged") || noticeTxt.contains("already signed")) {
+             if (noticeTxt.contains("Successfully logged") || noticeTxt.contains("already signed") || noticeTxt.contains("just logged into")) {
         
                 let login = DefaultsManager.getString(DefaultsManager.LOGIN)
                 if (login.contains("@")) {

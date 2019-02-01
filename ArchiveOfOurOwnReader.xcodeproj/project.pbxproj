@@ -183,6 +183,12 @@
 		3CDF1FAB1F39AA57004D858F /* WorksParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CDF1FAA1F39AA57004D858F /* WorksParser.swift */; };
 		3CEAA530200F7975003FEFDE /* CheckDownloadItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEAA52F200F7975003FEFDE /* CheckDownloadItem.swift */; };
 		3CF1D00E1C87182300D219B2 /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF1D00D1C87182300D219B2 /* HistoryViewController.swift */; };
+		3CF2ECF02202EC3A00481C03 /* PopOverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF2ECEF2202EC3A00481C03 /* PopOverViewController.swift */; };
+		3CF2ECF22202F57A00481C03 /* AutoCompleteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF2ECF12202F57A00481C03 /* AutoCompleteController.swift */; };
+		3CF2ECF52203E6EC00481C03 /* SearchTagsListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF2ECF42203E6EC00481C03 /* SearchTagsListCell.swift */; };
+		3CF2ECF92203E94A00481C03 /* NWSToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF2ECF72203E94900481C03 /* NWSToken.swift */; };
+		3CF2ECFA2203E94A00481C03 /* NWSTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF2ECF82203E94A00481C03 /* NWSTokenView.swift */; };
+		3CF2ECFC2204363700481C03 /* NWSSelToken.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CF2ECFB2204363700481C03 /* NWSSelToken.xib */; };
 		3CF49D4E21F5AFA4007C1357 /* ChoosePublishOptionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF49D4D21F5AFA4007C1357 /* ChoosePublishOptionController.swift */; };
 		3CF49D5021F5C86C007C1357 /* PlainTextController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF49D4F21F5C86C007C1357 /* PlainTextController.swift */; };
 		3CFD2A631CB55A0F0072FEC5 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CFD2A621CB55A0F0072FEC5 /* Twitter.framework */; };
@@ -445,6 +451,12 @@
 		3CDF1FAA1F39AA57004D858F /* WorksParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WorksParser.swift; path = Utils/WorksParser.swift; sourceTree = "<group>"; };
 		3CEAA52F200F7975003FEFDE /* CheckDownloadItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CheckDownloadItem.swift; path = Object/CheckDownloadItem.swift; sourceTree = "<group>"; };
 		3CF1D00D1C87182300D219B2 /* HistoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HistoryViewController.swift; path = Controller/HistoryViewController.swift; sourceTree = "<group>"; };
+		3CF2ECEF2202EC3A00481C03 /* PopOverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PopOverViewController.swift; path = Controller/PopOverViewController.swift; sourceTree = "<group>"; };
+		3CF2ECF12202F57A00481C03 /* AutoCompleteController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoCompleteController.swift; sourceTree = "<group>"; };
+		3CF2ECF42203E6EC00481C03 /* SearchTagsListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SearchTagsListCell.swift; path = View/Custom/Cells/SearchTagsListCell.swift; sourceTree = "<group>"; };
+		3CF2ECF72203E94900481C03 /* NWSToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NWSToken.swift; sourceTree = "<group>"; };
+		3CF2ECF82203E94A00481C03 /* NWSTokenView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NWSTokenView.swift; sourceTree = "<group>"; };
+		3CF2ECFB2204363700481C03 /* NWSSelToken.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NWSSelToken.xib; sourceTree = "<group>"; };
 		3CF49D4D21F5AFA4007C1357 /* ChoosePublishOptionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChoosePublishOptionController.swift; path = Controller/ChoosePublishOptionController.swift; sourceTree = "<group>"; };
 		3CF49D4F21F5C86C007C1357 /* PlainTextController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PlainTextController.swift; path = Controller/PlainTextController.swift; sourceTree = "<group>"; };
 		3CFD2A621CB55A0F0072FEC5 /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
@@ -708,6 +720,8 @@
 				3C6644E2219AB98100BD85AC /* FavoriteAuthorsController.swift */,
 				3CF49D4D21F5AFA4007C1357 /* ChoosePublishOptionController.swift */,
 				3CF49D4F21F5C86C007C1357 /* PlainTextController.swift */,
+				3CF2ECEF2202EC3A00481C03 /* PopOverViewController.swift */,
+				3CF2ECF12202F57A00481C03 /* AutoCompleteController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -715,6 +729,8 @@
 		28B6DC4F1B4E424D00F34529 /* Custom */ = {
 			isa = PBXGroup;
 			children = (
+				3CF2ECF82203E94A00481C03 /* NWSTokenView.swift */,
+				3CF2ECF62203E94900481C03 /* NWSToken */,
 				28B6DC501B4E425500F34529 /* Cells */,
 				3C93D4AB1F22297A00948D08 /* ButtonWithSection.swift */,
 				3C04659B1F8CE230003B6AE7 /* RoundImageView.swift */,
@@ -747,6 +763,7 @@
 				3CD6BBAD2063D89C00958973 /* HighlightCell.swift */,
 				3C6644E9219AF4F600BD85AC /* AuthorCell.swift */,
 				3C5C859621F708CA005B6EBF /* PublishItemCell.swift */,
+				3CF2ECF42203E6EC00481C03 /* SearchTagsListCell.swift */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -805,6 +822,15 @@
 				1D04502D1BC50C4000ECE572 /* ModalControllerDelegate.swift */,
 			);
 			name = Delegate;
+			sourceTree = "<group>";
+		};
+		3CF2ECF62203E94900481C03 /* NWSToken */ = {
+			isa = PBXGroup;
+			children = (
+				3CF2ECF72203E94900481C03 /* NWSToken.swift */,
+				3CF2ECFB2204363700481C03 /* NWSSelToken.xib */,
+			);
+			path = NWSToken;
 			sourceTree = "<group>";
 		};
 		D6B53C2178E9322985FEE5F0 /* Pods */ = {
@@ -977,6 +1003,7 @@
 				3CB5073120876A69004AE0B8 /* OpenDyslexic-Regular.ttf in Resources */,
 				28B6DC371B4E3F5900F34529 /* LaunchScreen.xib in Resources */,
 				3CB5073320876CAD004AE0B8 /* NITEMARE.TTF in Resources */,
+				3CF2ECFC2204363700481C03 /* NWSSelToken.xib in Resources */,
 				3CAEB2CB1FFE505C00C7035C /* workCell.xib in Resources */,
 				1D7C4ED41BB182C400F4ECFA /* sortby_map.plist in Resources */,
 				1D03127F1BB57D640008027E /* sortdirection_map.plist in Resources */,
@@ -1132,7 +1159,9 @@
 				3C93D4B01F223AB000948D08 /* EditFoldersController.swift in Sources */,
 				3C082A531F20E21100CA717D /* Folder+CoreDataClass.swift in Sources */,
 				3CB7735F1C847CCD00DC15C4 /* ContainerViewController.swift in Sources */,
+				3CF2ECF22202F57A00481C03 /* AutoCompleteController.swift in Sources */,
 				3C6644E7219AC16900BD85AC /* DBFavAuthor+CoreDataClass.swift in Sources */,
+				3CF2ECF52203E6EC00481C03 /* SearchTagsListCell.swift in Sources */,
 				3C22BBEE1FED2BD60012CBA4 /* PagesController.swift in Sources */,
 				3C6644EC21A428B600BD85AC /* Localisator.swift in Sources */,
 				3C0448F71C634209005DCE5F /* ReaderProducts.swift in Sources */,
@@ -1214,10 +1243,12 @@
 				3C3105481C7F3D260065256E /* LoginViewController.swift in Sources */,
 				3C8FF85620063BE8006C01DF /* ExtensionsHelper.swift in Sources */,
 				3CBDC9B01E9E265B00A97C24 /* AnalyticsItem+CoreDataProperties.swift in Sources */,
+				3CF2ECF02202EC3A00481C03 /* PopOverViewController.swift in Sources */,
 				3C6644E8219AC16900BD85AC /* DBFavAuthor+CoreDataProperties.swift in Sources */,
 				28E1C7151B8D9257001E2E5A /* WorkViewController.swift in Sources */,
 				1D1C2FEB1B8DA3E70076D10C /* WorkCharacter.swift in Sources */,
 				1D7BDD401B5E83AC0017C346 /* NewsFeedItem.swift in Sources */,
+				3CF2ECFA2203E94A00481C03 /* NWSTokenView.swift in Sources */,
 				3CD6BBAC2063D7A700958973 /* HighlightsController.swift in Sources */,
 				3C60ADE1207F4A5300158419 /* BaseFolderController.swift in Sources */,
 				3C0448F81C634209005DCE5F /* IAPHelper.swift in Sources */,
@@ -1226,6 +1257,7 @@
 				3C8995901E95169B00D511CD /* DBWorkItem+CoreDataClass.swift in Sources */,
 				3CD6BBA92063D72600958973 /* DBHighlightItem+CoreDataClass.swift in Sources */,
 				28E1C7131B8D9246001E2E5A /* WorkDetailViewController.swift in Sources */,
+				3CF2ECF92203E94A00481C03 /* NWSToken.swift in Sources */,
 				3C5C859521F70620005B6EBF /* PublishChapter+CoreDataProperties.swift in Sources */,
 				1D8582D11BB4238E0005B05B /* ButtonCell.swift in Sources */,
 				3CBC35BD2004EA7400A115EC /* InboxItem.swift in Sources */,

@@ -1109,16 +1109,6 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         }
     }
     
-    
-//    func encodesParametersInURL(_ method: Method) -> Bool {
-//        switch method {
-//        case .get, .head, .delete:
-//            return true
-//        default:
-//            return false
-//        }
-//    }
-    
     func encode(_ one:URLRequestConvertible, parameters:[String: AnyObject]?) -> (NSMutableURLRequest, NSError?) {
         let str: String = (one.urlRequest?.url?.absoluteString)!
         let mutableURLRequest = NSMutableURLRequest(url: URL(string: str)!) //one.urlRequest.mutableCopy() as! NSMutableURLRequest
@@ -1659,7 +1649,6 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         
     }
     
-    
     func getCountryCode() -> String {
         if let countryCode = NSLocale.current.regionCode {
             print("country code = \(countryCode)")
@@ -1819,4 +1808,16 @@ extension String: ParameterEncoding {
         }
     }
     
+ }
+ 
+struct FandomObject {
+    
+    var sectionName : String!
+    var sectionObject : String!
+    
+    var isSelected = false
+ }
+
+ protocol GetFandomsProtocol {
+    func fandomsGot(fandoms:[FandomObject])
  }
