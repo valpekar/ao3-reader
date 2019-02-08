@@ -420,18 +420,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-        let systemVersion = UIDevice.current.systemVersion
-        if (systemVersion.contains("10.0") == true || systemVersion.contains("10.1") == true) {
-            print("version 10.0.x contains bugs with audio")
-            let shown: Bool = DefaultsManager.getBool(DefaultsManager.SHOW_ERR_AVFAUDIO) ?? false
-            if (shown == false) {
-                showError(message: "Your operating system is not up-to-date and is known to have bugs with Audio. You will have problems with listening music while using other apps like mine. Please consider updating.")
-                DefaultsManager.putBool(true, key: DefaultsManager.SHOW_ERR_AVFAUDIO)
-            }
-        } else  {
-            do { try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category(rawValue: convertFromAVAudioSessionCategory(AVAudioSession.Category.ambient)), mode: AVAudioSession.Mode.default) } catch let error as NSError {debugLog(error.description)}
-            do { try AVAudioSession.sharedInstance().setActive(true) } catch let error as NSError {debugLog(error.description)}
-        }
+//        let systemVersion = UIDevice.current.systemVersion
+//        if (systemVersion.contains("10.0") == true || systemVersion.contains("10.1") == true) {
+//            print("version 10.0.x contains bugs with audio")
+//            let shown: Bool = DefaultsManager.getBool(DefaultsManager.SHOW_ERR_AVFAUDIO) ?? false
+//            if (shown == false) {
+//                showError(message: "Your operating system is not up-to-date and is known to have bugs with Audio. You will have problems with listening music while using other apps like mine. Please consider updating.")
+//                DefaultsManager.putBool(true, key: DefaultsManager.SHOW_ERR_AVFAUDIO)
+//            }
+//        } else  {
+//            do { try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category(rawValue: convertFromAVAudioSessionCategory(AVAudioSession.Category.ambient)), mode: AVAudioSession.Mode.default) } catch let error as NSError {debugLog(error.description)}
+//            do { try AVAudioSession.sharedInstance().setActive(true) } catch let error as NSError {debugLog(error.description)}
+//        }
     }
 
     func applicationWillTerminate(_ application: UIApplication) {

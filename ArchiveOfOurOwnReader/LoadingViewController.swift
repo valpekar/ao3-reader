@@ -836,9 +836,13 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
                 curworkItem.setValue(workChapters, forKey: "chapters")
             }*/
         
-            if (workChapters.count > 0) {
-                workChapters.removeAllObjects()
+            for item in workChapters {
+                managedContext.delete(item as! NSManagedObject)
             }
+            
+//            if (workChapters.count > 0) {
+//                workChapters.removeAllObjects()
+//            }
             do {
                 try managedContext.save()
             } catch let error as NSError {

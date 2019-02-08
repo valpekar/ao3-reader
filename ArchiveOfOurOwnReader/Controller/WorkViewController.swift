@@ -193,6 +193,12 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
                 currentChapterIndex = 0
             }
             work = self.downloadedChapters?[currentChapterIndex].chapterContent ?? ""
+            
+            if let chapter = self.downloadedChapters?[currentChapterIndex] {
+                chapter.setValue(NSNumber(value: 1), forKey: "unread")
+                saveWorkChanged()
+            }
+            
             loadCurrentTheme()
             
             if (nextButton != nil && (downloadedChapters.count == 1 || currentChapterIndex == downloadedChapters.count - 1)) {
@@ -795,12 +801,16 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
                 currentWork.dateUpdated = Date() as NSDate
                 
                 let maxBottomYOffset = webView.scrollView.contentSize.height - webView.scrollView.bounds.size.height + webView.scrollView.contentInset.bottom
-                let readOffset = maxBottomYOffset - webView.scrollView.contentOffset.y
+                let readOffset = /*maxBottomYOffset -*/ webView.scrollView.contentOffset.y
                 
                 let chptCount = currentWork.chapters?.count ?? 0
                 if (chptCount == 1 || chptCount == 0) {
                     
-                    currentWork.progress = NSNumber(value: Float(readOffset/maxBottomYOffset))
+                    if (readOffset >= 0 && (maxBottomYOffset - readOffset) <= 50) {
+                        currentWork.progress = NSNumber(value: 1.0)
+                    } else {
+                        currentWork.progress = NSNumber(value: Float(readOffset/maxBottomYOffset))
+                    }
                 } else {
                     if (currentChapterIndex == 0) {
                         
@@ -811,7 +821,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
                         if (readOffset == maxBottomYOffset) {
                             let progress: Float = Float(currentChapterIndex )/Float(chptCount)
                             currentWork.progress = NSNumber(value: progress)
-                        } else if (readOffset >= 0 && readOffset <= 40) {
+                        } else if (readOffset >= 0 && (maxBottomYOffset - readOffset) <= 50) {
                             let progress: Float = Float(currentChapterIndex + 1)/Float(chptCount)
                             currentWork.progress = NSNumber(value: progress)
                         } else {
