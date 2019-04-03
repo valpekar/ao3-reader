@@ -510,7 +510,7 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
             
             if(sorrydiv != nil && (sorrydiv?.count)!>0 && (sorrydiv?[0] as! TFHppleElement).text().range(of: "Sorry") != nil) {
                 
-                self.showError(title: NSLocalizedString("AddingComment", comment: ""), message: (sorrydiv![0] as AnyObject).content)
+                self.showError(title: NSLocalizedString("AddingComment", comment: ""), message: (sorrydiv![0] as AnyObject).content ?? "")
                 
                 return
             }

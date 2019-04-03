@@ -797,8 +797,11 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
             if (selectWorks.count > 0) {
             let currentWork = selectWorks[0] as DBWorkItem
             currentWork.currentChapter = NSNumber(value: currentChapterIndex as Int)
-            currentWork.scrollProgress = NSCoder.string(for: webView.scrollView.contentOffset)
-                currentWork.dateUpdated = Date() as NSDate
+                if (webView.scrollView.contentOffset != CGPoint(x:0.0, y:0.0)) {
+                    let offset = NSCoder.string(for: webView.scrollView.contentOffset)
+                    currentWork.scrollProgress = offset
+                }
+            currentWork.dateUpdated = Date() as NSDate
                 
                 let maxBottomYOffset = webView.scrollView.contentSize.height - webView.scrollView.bounds.size.height + webView.scrollView.contentInset.bottom
                 let readOffset = /*maxBottomYOffset -*/ webView.scrollView.contentOffset.y

@@ -909,7 +909,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         if let sorrydiv = doc.search(withXPathQuery: "//div[@class='flash error']") {
             
             if(sorrydiv.count>0 && (sorrydiv[0] as! TFHppleElement).text().range(of: "Sorry") != nil) {
-                self.showError(title: Localization("AddingBmk"), message: (sorrydiv[0] as AnyObject).content)
+                self.showError(title: Localization("AddingBmk"), message: (sorrydiv[0] as AnyObject).content ?? "")
                 return
             }
         }
