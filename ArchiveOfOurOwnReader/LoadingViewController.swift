@@ -824,8 +824,8 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         print("save chapters begin")
             #endif
         
-        if let appDelegate = UIApplication.shared.delegate as? AppDelegate
-        {
+     //   if let appDelegate = UIApplication.shared.delegate as? AppDelegate
+      //  {
         
             var err: NSError?
         
@@ -884,11 +884,11 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
             #if DEBUG
             print("save chapters end")
             #endif
-        } else {
+        /*} else {
             #if DEBUG
             print("save chapters end with error")
             #endif
-        }
+        }*/
     }
     
     func parseNxtChapter(_ data: Data, curworkItem: NSManagedObject, managedContext: NSManagedObjectContext) {

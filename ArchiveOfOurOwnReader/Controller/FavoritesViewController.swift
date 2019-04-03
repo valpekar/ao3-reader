@@ -105,7 +105,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         }
         self.fetchedResultsController?.fetchRequest.predicate = folderPredicate
         
-        if (sortBy != "dateAdded") {
+        if (sortBy != "dateAdded" && sortBy != "progress") {
             self.fetchedResultsController?.fetchRequest.sortDescriptors = [NSSortDescriptor(key: sortBy, ascending: sortOrderAscendic, selector: #selector(NSString.localizedStandardCompare(_:)))]
         } else {
             self.fetchedResultsController?.fetchRequest.sortDescriptors = [NSSortDescriptor(key: sortBy, ascending: sortOrderAscendic)]
@@ -872,7 +872,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         })
         optionMenu.addAction(azAction)
         
-        let dateAction = UIAlertAction(title: Localization("By Date Added"), style: .default, handler: {
+        let dateAction = UIAlertAction(title: Localization("Date Added"), style: .default, handler: {
             (alert: UIAlertAction!) -> Void in
             self.sortBy = "dateAdded"
             self.sortOrderAscendic = false
@@ -881,7 +881,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         })
         optionMenu.addAction(dateAction)
         
-        let authorAction = UIAlertAction(title: Localization("By Author"), style: .default, handler: {
+        let authorAction = UIAlertAction(title: Localization("Author"), style: .default, handler: {
             (alert: UIAlertAction!) -> Void in
             self.sortBy = "author"
             self.sortOrderAscendic = true
@@ -889,6 +889,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
             self.saveSortOptionsAndReload()
         })
         optionMenu.addAction(authorAction)
+        
         
         //!!!!https://stackoverflow.com/questions/23005107/sort-descriptors-not-sorting-numbers-in-the-form-of-string-iphone !!!
         let kudosAction = UIAlertAction(title: Localization("Kudos Count"), style: .default, handler: {
@@ -917,6 +918,15 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
 //            self.saveSortOptionsAndReload()
 //        })
 //        optionMenu.addAction(fandomsAction)
+        
+        let rpAction = UIAlertAction(title: Localization("Read Progress"), style: .default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            self.sortBy = "progress"
+            self.sortOrderAscendic = false
+            
+            self.saveSortOptionsAndReload()
+        })
+        optionMenu.addAction(rpAction)
         
         let cancelAction = UIAlertAction(title: Localization("Cancel"), style: .cancel, handler: {
             (alert: UIAlertAction!) -> Void in
