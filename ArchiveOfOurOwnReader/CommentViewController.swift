@@ -99,7 +99,7 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
         self.sendBtn.applyGradient(colours: [AppDelegate.redDarkColor, AppDelegate.redLightColor], cornerRadius: AppDelegate.mediumCornerRadius)
     }
     
-    func controllerDidClosedWithLogin() {
+    @objc func controllerDidClosedWithLogin() {
         //TODO: 
     }
     

@@ -159,11 +159,11 @@ class MarkedForLaterController: ListViewController , UITableViewDataSource, UITa
     
     override func controllerDidClosed() {}
     
-    func controllerDidClosedWithLogin() {
+    @objc func controllerDidClosedWithLogin() {
         requestFavs()
     }
     
-    func controllerDidClosedWithChange() {
+    @objc func controllerDidClosedWithChange() {
     }
     
     //MARK: - tableview

@@ -544,14 +544,14 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
         
     }
     
-    func controllerDidClosedWithLogin() {
+   @objc func controllerDidClosedWithLogin() {
         if (self.query.isEmpty()) {
             loadQueryFromDefaults()
         }
         self.searchApplied(self.query, shouldAddKeyword: true)
     }
     
-    func controllerDidClosedWithChange() {
+    @objc func controllerDidClosedWithChange() {
         
     }
     

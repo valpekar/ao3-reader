@@ -134,7 +134,7 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
         
     }
     
-    func controllerDidClosedWithLogin() {
+    @objc func controllerDidClosedWithLogin() {
         refreshUI()
     }
     

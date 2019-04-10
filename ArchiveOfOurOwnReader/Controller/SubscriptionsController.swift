@@ -224,11 +224,11 @@ class SubscriptionsViewController: ListViewController, UITableViewDataSource, UI
     
     override func controllerDidClosed() {}
     
-    func controllerDidClosedWithLogin() {
+    @objc func controllerDidClosedWithLogin() {
         requestFavs()
     }
     
-    func controllerDidClosedWithChange() {
+    @objc func controllerDidClosedWithChange() {
     }
     
     //MARK: - download work

@@ -117,7 +117,6 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
 //        self.readButton.layer.cornerRadius = AppDelegate.smallCornerRadius
         
-        self.readButton.applyGradient(colours: [AppDelegate.redDarkColor, AppDelegate.redLightColor], cornerRadius: AppDelegate.mediumCornerRadius)
         
         self.bgView.layer.cornerRadius = AppDelegate.smallCornerRadius
         self.authorView.layer.cornerRadius = AppDelegate.smallCornerRadius
@@ -193,6 +192,13 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                                    customAttributes: [:])
             Analytics.logEvent("WorkDetail_from_notification", parameters: [:])
         }
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        self.readButton.applyGradient(colours: [AppDelegate.redDarkColor, AppDelegate.redLightColor], cornerRadius: AppDelegate.mediumCornerRadius)
+
     }
     
     override func viewWillAppear(_ animated: Bool) {

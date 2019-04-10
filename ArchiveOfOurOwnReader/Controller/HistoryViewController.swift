@@ -149,11 +149,11 @@ class HistoryViewController : ListViewController, UITableViewDataSource, UITable
     
     override func controllerDidClosed() {}
     
-    func controllerDidClosedWithLogin() {
+    @objc func controllerDidClosedWithLogin() {
         requestFavs()
     }
     
-    func controllerDidClosedWithChange() {
+    @objc func controllerDidClosedWithChange() {
     }
     
     //MARK: - tableview

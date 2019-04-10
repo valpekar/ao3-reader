@@ -938,7 +938,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
     
     }
     
-     func controllerDidClosedWithLogin() {
+     @objc func controllerDidClosedWithLogin() {
         
     }
     

@@ -730,7 +730,7 @@ extension InboxController {
         }
     }
     
-    func controllerDidClosedWithLogin() {
+    @objc func controllerDidClosedWithLogin() {
         requestInbox()
     }
     

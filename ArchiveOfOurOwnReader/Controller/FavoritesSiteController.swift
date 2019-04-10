@@ -221,7 +221,7 @@ class FavoritesSiteController : ListViewController, UITableViewDataSource, UITab
     
     override func controllerDidClosed() {}
     
-    func controllerDidClosedWithLogin() {
+    @objc func controllerDidClosedWithLogin() {
         requestFavs()
     }
     
