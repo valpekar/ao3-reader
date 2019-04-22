@@ -2292,13 +2292,13 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
 //    }
     
     
-    override func controllerDidClosed() {
+    @objc override func controllerDidClosed() {
         //if (!purchased) {
         //    showMoPubInterstitial()
         //}
     }
     
-    func controllerDidClosedWithLogin() {
+    @objc func controllerDidClosedWithLogin() {
         switch (triedTo) {
         case 0:
             leaveKudos()

@@ -97,8 +97,11 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
             showOnlineWork(workItem: workItem)
             
         } else if let downloadedWork = self.downloadedWorkItem,
-            let downloadedChapters = downloadedWork.mutableSetValue(forKey: "chapters").allObjects as? [DBChapter] {
+            var downloadedChapters = downloadedWork.mutableSetValue(forKey: "chapters").allObjects as? [DBChapter] {
             
+            downloadedChapters = downloadedChapters.sorted(by: { (chapter1, chapter2) -> Bool in
+                return chapter1.chapterIndex?.int64Value ?? 0 > chapter2.chapterIndex?.int64Value ?? 0
+            })
             showDownloadedWork(downloadedWork: downloadedWork, downloadedChapters: downloadedChapters)
         }
         
@@ -1744,7 +1747,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
     
     override func controllerDidClosed() { }
     
-    func controllerDidClosedWithChapter(_ chapter: Int) {
+    @objc func controllerDidClosedWithChapter(_ chapter: Int) {
         currentChapterIndex = chapter
         if (downloadedChapters != nil) {
             self.turnOnChapter(currentChapterIndex)

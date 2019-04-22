@@ -87,7 +87,7 @@ class ContentsViewController: UIViewController, UIPopoverPresentationControllerD
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        modalDelegate.controllerDidClosedWithChapter!((indexPath as NSIndexPath).row)
+        modalDelegate.controllerDidClosedWithChapter?(indexPath.row)
         self.dismiss(animated: true, completion: nil)
     }
     
