@@ -10,6 +10,7 @@ import UIKit
 import Alamofire
 import RMessage
 import Crashlytics
+import Firebase
 
 class SerieViewController: ListViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
@@ -21,6 +22,7 @@ class SerieViewController: ListViewController, UITableViewDataSource, UITableVie
     @IBOutlet weak var errView:UIView!
     var refreshControl: UIRefreshControl!
     
+    var lastAction = ""
     
     @IBOutlet weak var stackHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var bottomViewConstraint: NSLayoutConstraint!
@@ -68,6 +70,38 @@ class SerieViewController: ListViewController, UITableViewDataSource, UITableVie
             self.tableView.backgroundColor = AppDelegate.greyDarkBg
             self.collectionView.backgroundColor = AppDelegate.redDarkColor
         }
+    }
+    
+    @IBAction func editTouched(_ sender: AnyObject) {
+        let optionMenu = UIAlertController(title: nil, message: Localization("WrkOptions"), preferredStyle: .actionSheet)
+        optionMenu.view.tintColor = AppDelegate.redColor
+        
+        if (serieItem.subscribed == false) {
+            let shareAction = UIAlertAction(title: Localization("Subscribe"), style: .default, handler: {
+                (alert: UIAlertAction!) -> Void in
+                self.subscribeToSerie(action: "Subscribe")
+            })
+            optionMenu.addAction(shareAction)
+        } else {
+            let unSubAction = UIAlertAction(title: Localization("Unsubscribe"), style: .default, handler: {
+                (alert: UIAlertAction!) -> Void in
+                self.subscribeToSerie(action: "Unsubscribe")
+            })
+            optionMenu.addAction(unSubAction)
+        }
+        
+        let cancelAction = UIAlertAction(title: Localization("Cancel"), style: .cancel, handler: {
+            (alert: UIAlertAction!) -> Void in
+            print("Cancelled")
+        })
+        optionMenu.addAction(cancelAction)
+        
+        optionMenu.popoverPresentationController?.sourceView =  self.tableView
+        optionMenu.popoverPresentationController?.sourceRect = CGRect(x: self.tableView.bounds.size.width / 2.0, y: self.tableView.bounds.size.height / 2.0, width: 1.0, height: 1.0)
+        
+        optionMenu.view.tintColor = AppDelegate.redColor
+        
+        self.present(optionMenu, animated: true, completion: nil)
     }
     
     @objc func refresh(_ sender:AnyObject) {
@@ -140,6 +174,115 @@ class SerieViewController: ListViewController, UITableViewDataSource, UITableVie
             bottomButtonsConstraint.isActive = true
             bottomViewConstraint.isActive = false
         }
+    }
+    
+    func subscribeToSerie(action: String) {
+        if ((UIApplication.shared.delegate as! AppDelegate).cookies.count == 0 || (UIApplication.shared.delegate as! AppDelegate).token.isEmpty) {
+            
+            openLoginController()
+            self.lastAction = action
+            return
+        }
+        
+        showLoadingView(msg: Localization("Subscribing"))
+        
+        let requestStr = "https://archiveofourown.org\(serieItem.subscribeActionUrl)"
+        
+        Answers.logCustomEvent(withName: "Serie: Subscribe",
+                               customAttributes: [
+                                "serieId": serieItem.serieId])
+        Analytics.logEvent("Serie_Subscribe", parameters: ["serieId": serieItem.serieId as NSObject])
+        
+        var params:[String:Any] = [String:Any]()
+        params["utf8"] = "✓" as AnyObject?
+        params["authenticity_token"] = serieItem.subscribeAuthToken
+        
+        params["subscription"] = ["subscribable_id": serieItem.subscribableId,
+                              "subscribable_type": serieItem.subscribableType
+            ]  as AnyObject?
+        
+        params["commit"] = action as AnyObject?
+        
+        if (action.contains("Unsubscribe")) {
+            params["_method"] = "delete"
+        }
+        
+        let headers: HTTPHeaders = [
+            "Referer": "https://archiveofourown.org/series/\(serieItem.subscribableId)",
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+            "content-type": "application/x-www-form-urlencoded"
+        ]
+        
+        if let del = UIApplication.shared.delegate as? AppDelegate {
+            if (del.cookies.count > 0) {
+                guard let cStorage = Alamofire.SessionManager.default.session.configuration.httpCookieStorage else {
+                    return
+                }
+                cStorage.setCookies(del.cookies, for:  URL(string: AppDelegate.ao3SiteUrl), mainDocumentURL: nil)
+            }
+            
+            if (del.cookies.count > 0) {
+                Alamofire.request(requestStr, method: .post, parameters: params, encoding: URLEncoding.httpBody /*ParameterEncoding.Custom(encodeParams)*/, headers: headers)
+                    .response(completionHandler: { response in
+                        #if DEBUG
+                        print(response.request ?? "")
+                        // print(response)
+                        print(response.error ?? "")
+                        #endif
+                        
+                        if let d = response.data {
+                            self.parseCookies(response)
+                            self.parseSubscribeSerieResponse(d)
+                            self.hideLoadingView()
+                            
+                        } else {
+                            self.hideLoadingView()
+                            self.showError(title: Localization("Error"), message: Localization("CheckInternet"))
+                        }
+                    })
+            }
+        }
+    }
+    
+    func controllerDidClosedWithLogin() {
+        self.subscribeToSerie(action: self.lastAction)
+    }
+    
+    func parseSubscribeSerieResponse(_ data: Data) {
+        #if DEBUG
+        let dta = NSString(data: data, encoding: String.Encoding.utf8.rawValue)
+        print("the string is: \(String(describing: dta))")
+        #endif
+        let doc : TFHpple = TFHpple(htmlData: data)
+        
+        if let noticediv: [TFHppleElement] = doc.search(withXPathQuery: "//div[@class='flash notice']") as? [TFHppleElement] {
+            if(noticediv.count > 0) {
+                self.showSuccess(title: Localization("Subscribing"), message: noticediv[0].content)
+                
+                if (noticediv[0].content.contains("following")) {
+                    self.serieItem.subscribed = true
+                } else if (noticediv[0].content.contains("successfully unsubscribed")) {
+                    self.serieItem.subscribed = false
+                }
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                    self.refresh(self.tableView)
+                }
+            }
+        }
+        
+        if let sorrydiv = doc.search(withXPathQuery: "//div[@class='flash error']") {
+            
+            if(sorrydiv.count>0 && (sorrydiv[0] as! TFHppleElement).text().range(of: "Sorry") != nil) {
+                self.showError(title: Localization("Subscribing"), message: (sorrydiv[0] as AnyObject).content ?? "")
+                return
+            }
+        }
+        
+        if (data.isEmpty) {
+            self.showError(title: Localization("CannotSubscribe"), message: "Response Is Empty")
+        }
+        return
     }
     
     @IBAction func downloadButtonTouched(_ sender: UIButton) {

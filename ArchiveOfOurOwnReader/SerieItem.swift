@@ -18,4 +18,9 @@ struct SerieItem {
     var serieId = ""
     var notes = ""
     var stats = ""
+    var subscribed = false
+    var subscribableId = ""
+    var subscribableType = ""
+    var subscribeActionUrl = ""
+    var subscribeAuthToken = ""
 }

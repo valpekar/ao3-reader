@@ -16,7 +16,7 @@ class WorksParser {
         var works : [NewsFeedItem] = [NewsFeedItem]()
         var worksCountStr = ""
         
-        guard let dta = NSString(data: data, encoding: String.Encoding.utf8.rawValue) else {
+        guard let _ = NSString(data: data, encoding: String.Encoding.utf8.rawValue) else {
             return (pages, works, worksCountStr)
         }
        /* #if DEBUG
@@ -124,6 +124,45 @@ class WorksParser {
             if (itemsCount.count > 0) {
                 serieItem.title = itemsCount[0].content.trimmingCharacters(
                     in: CharacterSet.whitespacesAndNewlines)
+            }
+        }
+        
+        if let subscribeEls = doc.search(withXPathQuery: "//form[@class='ajax-create-destroy']") as? [TFHppleElement] {
+            if (subscribeEls.count > 0) {
+                if let attributes : NSDictionary = subscribeEls[0].attributes as NSDictionary?  {
+                    let subscAction = (attributes["action"] as? String ?? "")
+                    serieItem.subscribeActionUrl = subscAction
+                }
+                if let inputTokenEls = subscribeEls[0].search(withXPathQuery: "//input[@name='authenticity_token']") as? [TFHppleElement],
+                    inputTokenEls.count > 0 {
+                    if let attrs : NSDictionary = inputTokenEls[0].attributes as NSDictionary?  {
+                        serieItem.subscribeAuthToken = (attrs["value"] as? String ?? "")
+                    }
+                }
+                
+                if let inputTokenElsSId = subscribeEls[0].search(withXPathQuery: "//input[@id='subscription_subscribable_id']") as? [TFHppleElement],
+                    inputTokenElsSId.count > 0 {
+                    if let attrs : NSDictionary = inputTokenElsSId[0].attributes as NSDictionary?  {
+                        serieItem.subscribableId = (attrs["value"] as? String ?? "")
+                    }
+                }
+                
+                if let inputTokenElsSType = subscribeEls[0].search(withXPathQuery: "//input[@id='subscription_subscribable_type']") as? [TFHppleElement],
+                    inputTokenElsSType.count > 0 {
+                    if let attrs : NSDictionary = inputTokenElsSType[0].attributes as NSDictionary?  {
+                        serieItem.subscribableType = (attrs["value"] as? String ?? "")
+                    }
+                }
+                
+                if let inputTokenElsSubmtType = subscribeEls[0].search(withXPathQuery: "//input[@type='submit']") as? [TFHppleElement],
+                    inputTokenElsSubmtType.count > 0 {
+                    if let attrs : NSDictionary = inputTokenElsSubmtType[0].attributes as NSDictionary?  {
+                        let val = (attrs["value"] as? String ?? "")
+                        if (val.contains("Unsubscribe")) {
+                            serieItem.subscribed = true
+                        }
+                    }
+                }
             }
         }
         
