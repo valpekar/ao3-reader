@@ -842,7 +842,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         DefaultsManager.putBool(self.sortOrderAscendic, key: DefaultsManager.SORT_DWNLD_ASC)
         DefaultsManager.putString(self.sortBy, key: DefaultsManager.SORT_DWNLD_BY)
         
-        if (sortBy != "dateAdded") {
+        if (sortBy != "dateAdded" && sortBy != "progress") {
             self.fetchedResultsController?.fetchRequest.sortDescriptors = [NSSortDescriptor(key: sortBy, ascending: sortOrderAscendic, selector: #selector(NSString.localizedStandardCompare(_:)))]
         } else {
             self.fetchedResultsController?.fetchRequest.sortDescriptors = [NSSortDescriptor(key: sortBy, ascending: sortOrderAscendic)]
@@ -868,6 +868,8 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
             self.sortBy = "workTitle"
             self.sortOrderAscendic = true
             
+            debugLog(message: "Sort order set \(self.sortBy), asc \(self.sortOrderAscendic)")
+            
             self.saveSortOptionsAndReload()
         })
         optionMenu.addAction(azAction)
@@ -877,6 +879,8 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
             self.sortBy = "dateAdded"
             self.sortOrderAscendic = false
             
+            debugLog(message: "Sort order set \(self.sortBy), asc \(self.sortOrderAscendic)")
+            
             self.saveSortOptionsAndReload()
         })
         optionMenu.addAction(dateAction)
@@ -885,6 +889,8 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
             (alert: UIAlertAction!) -> Void in
             self.sortBy = "author"
             self.sortOrderAscendic = true
+            
+            debugLog(message: "Sort order set \(self.sortBy), asc \(self.sortOrderAscendic)")
             
             self.saveSortOptionsAndReload()
         })
@@ -897,6 +903,8 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
             self.sortBy = "kudos"
             self.sortOrderAscendic = true
             
+            debugLog(message: "Sort order set \(self.sortBy), asc \(self.sortOrderAscendic)")
+            
             self.saveSortOptionsAndReload()
         })
         optionMenu.addAction(kudosAction)
@@ -905,6 +913,8 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
             (alert: UIAlertAction!) -> Void in
             self.sortBy = "words"
             self.sortOrderAscendic = true
+            
+            debugLog(message: "Sort order set \(self.sortBy), asc \(self.sortOrderAscendic)")
             
             self.saveSortOptionsAndReload()
         })
@@ -923,6 +933,8 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
             (alert: UIAlertAction!) -> Void in
             self.sortBy = "progress"
             self.sortOrderAscendic = false
+            
+            debugLog(message: "Sort order set \(self.sortBy), asc \(self.sortOrderAscendic)")
             
             self.saveSortOptionsAndReload()
         })

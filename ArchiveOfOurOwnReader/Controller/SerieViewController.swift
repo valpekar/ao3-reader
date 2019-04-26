@@ -77,13 +77,13 @@ class SerieViewController: ListViewController, UITableViewDataSource, UITableVie
         optionMenu.view.tintColor = AppDelegate.redColor
         
         if (serieItem.subscribed == false) {
-            let shareAction = UIAlertAction(title: Localization("Subscribe"), style: .default, handler: {
+            let shareAction = UIAlertAction(title: Localization("SubscribeonAO3"), style: .default, handler: {
                 (alert: UIAlertAction!) -> Void in
                 self.subscribeToSerie(action: "Subscribe")
             })
             optionMenu.addAction(shareAction)
         } else {
-            let unSubAction = UIAlertAction(title: Localization("Unsubscribe"), style: .default, handler: {
+            let unSubAction = UIAlertAction(title: Localization("UnsubscribeonAO3"), style: .default, handler: {
                 (alert: UIAlertAction!) -> Void in
                 self.subscribeToSerie(action: "Unsubscribe")
             })
@@ -245,7 +245,10 @@ class SerieViewController: ListViewController, UITableViewDataSource, UITableVie
     }
     
     func controllerDidClosedWithLogin() {
-        self.subscribeToSerie(action: self.lastAction)
+        self.refresh(self.tableView)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            self.subscribeToSerie(action: self.lastAction)
+        }
     }
     
     func parseSubscribeSerieResponse(_ data: Data) {

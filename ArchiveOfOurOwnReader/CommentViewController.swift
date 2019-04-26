@@ -402,12 +402,15 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
     }
     
     @objc func keyboardWillHide(_ sender: Notification) {
-        self.constraintContentHeight.constant -= keyboardHeight
-        UIView.animate(withDuration: 0.3) {
-            self.view.layoutIfNeeded()
-        }
+        if (self.constraintContentHeight != nil && self.keyboardHeight != nil) {
+            self.constraintContentHeight.constant -= keyboardHeight
+       
+            UIView.animate(withDuration: 0.3) {
+                self.view.layoutIfNeeded()
+            }
         
-        keyboardHeight = nil
+            keyboardHeight = nil
+        }
     }
 
     

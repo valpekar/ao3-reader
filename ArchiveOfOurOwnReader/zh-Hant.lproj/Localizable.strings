@@ -206,6 +206,10 @@
 "LangChanged" = "語言成功更改。 請重新啟動應用以使更改生效。";
 "ErrLangChanged" = "無法改變語言。 請從支持屏幕給我發電子郵件告訴我！";
 "Fandom Not Specified" = "Fandom Not Specified";
+"Subscribing" = "Subscribing";
+"CannotSubscribe" = "Cannot Subscribe";
+"SubscribeonAO3" = "Subscribe via AO3";
+"UnsubscribeonAO3" = "Unsubscribe via AO3";
 
 
 

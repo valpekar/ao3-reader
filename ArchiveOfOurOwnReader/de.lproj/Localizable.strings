@@ -211,4 +211,8 @@
 "LangChanged" = "Sprache erfolgreich geändert. Bitte starten Sie die App neu, damit die Änderungen wirksam werden.";
 "ErrLangChanged" = "Sprache kann nicht geändert werden. Bitte senden Sie mir eine E-Mail vom Support-Bildschirm, um mich darüber zu informieren!";
 "Fandom Not Specified" = "Fandom Not Specified";
+"Subscribing" = "Subscribing";
+"CannotSubscribe" = "Cannot Subscribe";
+"SubscribeonAO3" = "Subscribe via AO3";
+"UnsubscribeonAO3" = "Unsubscribe via AO3";
 

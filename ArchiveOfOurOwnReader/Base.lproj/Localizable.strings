@@ -213,3 +213,5 @@
 "FandomNotSpecified" = "Fandom Not Specified";
 "Subscribing" = "Subscribing";
 "CannotSubscribe" = "Cannot Subscribe";
+"SubscribeonAO3" = "Subscribe via AO3";
+"UnsubscribeonAO3" = "Unsubscribe via AO3";
