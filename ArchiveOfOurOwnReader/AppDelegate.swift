@@ -89,7 +89,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
        // application.applicationIconBadgeNumber = worksToReload.count
         
        //  Flurry.startSession("DW87V8SZQC24X83XPSXB")
-        GADMobileAds.configure(withApplicationID: "ca-app-pub-8760316520462117~7329426789");
+         GADMobileAds.sharedInstance().start(completionHandler: nil)
         
         if (DefaultsManager.getObject(DefaultsManager.PSEUD_IDS) == nil) {
             let s: [String:String] = [:]

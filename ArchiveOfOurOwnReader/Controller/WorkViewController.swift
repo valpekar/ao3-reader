@@ -1164,10 +1164,12 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
         if let  chaptersEl: [TFHppleElement] = doc.search(withXPathQuery: "//div[@id='chapters']") as? [TFHppleElement] {
         
         if (chaptersEl.count > 0) {
-            work = chaptersEl[0].raw
-          //  work = work.stringByReplacingOccurrencesOfString("<a.*\"\\s*>", withString:"")
+            work = chaptersEl[0].raw ?? ""
+        
+            //  work = work.stringByReplacingOccurrencesOfString("<a.*\"\\s*>", withString:"")
           //  work = work.stringByReplacingOccurrencesOfString("</a>", withString: "")
          //   var error:NSErrorPointer = NSErrorPointer()
+           
             if let regex:NSRegularExpression = try? NSRegularExpression(pattern: "<a href=\"[^\"]+\">([^<]+)</a>", options: NSRegularExpression.Options.caseInsensitive) {
                 work = regex.stringByReplacingMatches(in: work, options: NSRegularExpression.MatchingOptions.withoutAnchoringBounds, range: NSRange(location: 0, length: work.count), withTemplate: "$1")
                 
@@ -1699,7 +1701,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
     }
     
     @IBAction func contentsClicked(_ sender: UIButton) {
-        if (downloadedChapters != nil || onlineChapters != nil) {
+        
             let storyboard : UIStoryboard = UIStoryboard(
                 name: "Main",
                 bundle: nil)
@@ -1711,8 +1713,13 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
                 contentsViewController.onlineChapters = onlineChapters
                 contentsViewController.downloadedChapters = nil
             } else {
+                
+                if (self.downloadedChapters == nil) {
+                    self.downloadedChapters = [DBChapter]()
+                }
+                
                 contentsViewController.onlineChapters = nil
-                contentsViewController.downloadedChapters = downloadedChapters
+                contentsViewController.downloadedChapters = self.downloadedChapters
             }
             contentsViewController.modalDelegate = self
             contentsViewController.theme = theme
@@ -1742,7 +1749,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
             contentsViewController,
             animated: true,
             completion: nil)
-        }
+        
     }
     
     override func controllerDidClosed() { }

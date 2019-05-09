@@ -413,7 +413,6 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
         }
     }
 
-    
     override func doneButtonAction() {
         commentTv.endEditing(true)
     }

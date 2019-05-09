@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import PopupDialog
 
 class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UITextViewDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
     
@@ -85,6 +86,7 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
     let TAG_COMPLETE = 25
     let TAG_EXCLUDE_TAGS = 26
     let TAG_INCLUDE_TAGS = 27
+    let TAG_RATINGS = 28
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -211,8 +213,7 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
                 (cell as? SearchTagWithTextCell)?.textField.inputView = langPickerView
                 (cell as? SearchTagWithTextCell)?.textField.text = selectedLang
             case 4:
-                (cell as? SearchTagWithTextCell)?.textField.tag = TAG_NONE
-                (cell as? SearchTagWithTextCell)?.textField.inputView = ratingPickerView
+                (cell as? SearchTagWithTextCell)?.textField.tag = TAG_RATINGS
                 (cell as? SearchTagWithTextCell)?.textField.text = selectedRaiting
             case 5:
                 cell = (tableView.dequeueReusableCell(withIdentifier: "searchSwitchCell") as? SearchSwitchCell)!
@@ -626,10 +627,43 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
         tableView.scrollToRow(at: tableView.indexPath(for: cell)!, at:UITableView.ScrollPosition.middle, animated:true)
     }
     
+    func showChooseRatingPopup(textField: UITextField) {
+        let popup = PopupDialog(title: Localization("Rating"), message: "Selected rating (\(selectedRaiting)")
+        
+        let buttonCancel = CancelButton(title: "CANCEL") {
+            print("You canceled the car dialog.")
+        }
+        
+        guard let ratingKeys = ratingDict.keysSortedByValue(comparator: compareKeys ) as? [String] else {
+            return
+        }
+        
+        var buttons: [PopupDialogButton] = [PopupDialogButton]()
+        buttons.append(buttonCancel)
+        
+        for key in ratingKeys {
+            let buttonOne = DefaultButton(title: key) {
+                self.selectedRaiting = key
+                self.searchQuery.rating_ids = self.ratingDict[self.selectedRaiting] as? String ?? ""
+                textField.text = self.selectedRaiting
+            }
+            buttons.append(buttonOne)
+        }
+        
+        popup.addButtons(buttons)
+        
+        self.present(popup, animated: true, completion: nil)
+    }
+    
     func textFieldDidBeginEditing(_ textField: UITextField) {
         currentTextField = textField
         
         scrollTableView(textField)
+        
+        if (textField.tag == TAG_RATINGS) {
+            showChooseRatingPopup(textField: textField)
+            textField.endEditing(true)
+        }
     }
     
     func textViewDidBeginEditing(_ textView: UITextView) {

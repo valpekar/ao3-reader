@@ -281,9 +281,10 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     
     func showDownloadedWork() {
         
-        var worksToReload = DefaultsManager.getStringArray(DefaultsManager.NOTIF_IDS_ARR)
-        let wId = downloadedWorkItem.workId ?? ""
-//        if worksToReload.contains(wId), let idx = worksToReload.index(of: wId) {
+        //var worksToReload = DefaultsManager.getStringArray(DefaultsManager.NOTIF_IDS_ARR)
+        //let wId = downloadedWorkItem.workId ?? ""
+
+        //        if worksToReload.contains(wId), let idx = worksToReload.index(of: wId) {
 //            worksToReload.remove(at: idx)
 //        }
 //        DefaultsManager.putStringArray(worksToReload, key: DefaultsManager.NOTIF_IDS_ARR)
