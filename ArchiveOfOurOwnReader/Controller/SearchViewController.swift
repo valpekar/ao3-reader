@@ -87,6 +87,8 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
     let TAG_EXCLUDE_TAGS = 26
     let TAG_INCLUDE_TAGS = 27
     let TAG_RATINGS = 28
+    let TAG_SORT_BY = 29
+    let TAG_SORT_DIRECTION = 30
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -440,11 +442,11 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
             }
             
             if (indexPath.row == 0) {
-                (cell as? SearchTagWithTextCell)?.textField.inputView = sortbyPickerView
                 (cell as? SearchTagWithTextCell)?.textField.text = selectedSortBy
+                (cell as? SearchTagWithTextCell)?.textField.tag = TAG_SORT_BY
             } else if (indexPath.row == 1) {
-                (cell as? SearchTagWithTextCell)?.textField.inputView = sortdirectionPickerView
                 (cell as? SearchTagWithTextCell)?.textField.text = selectedSortDirection
+                (cell as? SearchTagWithTextCell)?.textField.tag = TAG_SORT_DIRECTION
             }
         case 8:
             cell = (tableView.dequeueReusableCell(withIdentifier: "buttonCell") as? ButtonCell)!
@@ -627,8 +629,64 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
         tableView.scrollToRow(at: tableView.indexPath(for: cell)!, at:UITableView.ScrollPosition.middle, animated:true)
     }
     
+    func showChooseSortDirectionPopup(textField: UITextField) {
+        let popup = PopupDialog(title: Localization("SortDirection"), message: "Sort direction (\(selectedSortDirection))")
+        
+        let buttonCancel = CancelButton(title: "CANCEL") {
+            print("You canceled the car dialog.")
+        }
+        
+        guard let ratingKeys = sortDirectionDict.keysSortedByValue(comparator: compareKeys ) as? [String] else {
+            return
+        }
+        
+        var buttons: [PopupDialogButton] = [PopupDialogButton]()
+        buttons.append(buttonCancel)
+        
+        for key in ratingKeys {
+            let buttonOne = DefaultButton(title: key) {
+                self.selectedSortDirection = key
+                self.searchQuery.sort_direction = self.sortDirectionDict[self.selectedSortDirection] as? String ?? ""
+                textField.text = self.selectedSortDirection
+            }
+            buttons.append(buttonOne)
+        }
+        
+        popup.addButtons(buttons)
+        
+        self.present(popup, animated: true, completion: nil)
+    }
+    
+    func showChooseSortByPopup(textField: UITextField) {
+        let popup = PopupDialog(title: Localization("SortBy"), message: "Sorting by (\(selectedSortBy))")
+        
+        let buttonCancel = CancelButton(title: "CANCEL") {
+            print("You canceled the car dialog.")
+        }
+        
+        guard let ratingKeys = sortByDict.keysSortedByValue(comparator: compareKeys ) as? [String] else {
+            return
+        }
+        
+        var buttons: [PopupDialogButton] = [PopupDialogButton]()
+        buttons.append(buttonCancel)
+        
+        for key in ratingKeys {
+            let buttonOne = DefaultButton(title: key) {
+                self.selectedSortBy = key
+                self.searchQuery.sort_column = self.sortByDict[self.selectedSortBy] as? String ?? ""
+                textField.text = self.selectedSortBy
+            }
+            buttons.append(buttonOne)
+        }
+        
+        popup.addButtons(buttons)
+        
+        self.present(popup, animated: true, completion: nil)
+    }
+    
     func showChooseRatingPopup(textField: UITextField) {
-        let popup = PopupDialog(title: Localization("Rating"), message: "Selected rating (\(selectedRaiting)")
+        let popup = PopupDialog(title: Localization("Rating"), message: "Selected rating (\(selectedRaiting))")
         
         let buttonCancel = CancelButton(title: "CANCEL") {
             print("You canceled the car dialog.")
@@ -662,6 +720,12 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
         
         if (textField.tag == TAG_RATINGS) {
             showChooseRatingPopup(textField: textField)
+            textField.endEditing(true)
+        } else if (textField.tag == TAG_SORT_BY) {
+            showChooseSortByPopup(textField: textField)
+            textField.endEditing(true)
+        } else if (textField.tag == TAG_SORT_DIRECTION) {
+            showChooseSortDirectionPopup(textField: textField)
             textField.endEditing(true)
         }
     }

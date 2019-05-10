@@ -55,7 +55,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
     var downloadedChapters: [DBChapter]?
     
     var work: String = ""
-    var fontSize: Int = 200
+    var fontSize: Int = 16
     var fontFamily: String = "Verdana"
     
     var onlineChapters = [Int:ChapterOnline]()
@@ -630,6 +630,8 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
     
     func turnOnChapter(_ chapterIndex: Int) {
         
+        showLoadingView(msg: Localization("LoadingNxtChapter"))
+        
         currentChapterIndex = chapterIndex
         
         if (downloadedChapters != nil && chapterIndex == downloadedChapters!.count - 1) {
@@ -666,6 +668,8 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
             
            // self.title = downloadedChapters[chapterIndex].chapterName
         }
+        
+        self.hideLoadingView()
     }
     
     
@@ -741,11 +745,13 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
             if (workContentEl.count > 0) {
                 workContentStr = workContentEl[0].raw ?? ""
             
-                let regex:NSRegularExpression = try! NSRegularExpression(pattern: "<a href=\"[^\"]+\">([^<]+)</a>", options: NSRegularExpression.Options.caseInsensitive)
+                if let regex:NSRegularExpression = try? NSRegularExpression(pattern: "<a href=\"[^\"]+\">([^<]+)</a>", options: NSRegularExpression.Options.caseInsensitive) {
                 workContentStr = regex.stringByReplacingMatches(in: workContentStr, options: NSRegularExpression.MatchingOptions.withoutAnchoringBounds, range: NSRange(location: 0, length: workContentStr.count), withTemplate: "$1")
+                }
                 
-                let regex1:NSRegularExpression = try! NSRegularExpression(pattern: "<a href=.*/>", options: NSRegularExpression.Options.caseInsensitive)
+                if let regex1:NSRegularExpression = try? NSRegularExpression(pattern: "<a href=.*/>", options: NSRegularExpression.Options.caseInsensitive) {
                 workContentStr = regex1.stringByReplacingMatches(in: workContentStr, options: NSRegularExpression.MatchingOptions.withoutAnchoringBounds, range: NSRange(location: 0, length: workContentStr.count), withTemplate: "$1")
+                }
             
                 workContentStr = workContentStr.replacingOccurrences(of: "(?i)<strike\\b[^<]*>\\s*</strike>", with: "", options: .regularExpression, range: nil)
                 //workContentStr = workContentStr.replacingOccurrences(of: "<strike/>", with: "")
@@ -1290,14 +1296,14 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
             fontCss = "@font-face { font-family: \"\(fontFamily)\"; src: url(RFS_Juan_Casco.ttf); format('truetype')} "
         }
         
-        let fontStr = "font-size: " + String(format:"%d", fontSize) + "%; \(fontFamilyStr); "
+        let fontStr = "font-size: " + String(format:"%d", fontSize) + "pt; \(fontFamilyStr); "
         
         switch (theme) {
             case DefaultsManager.THEME_DAY :
                 webView.backgroundColor = AppDelegate.greyLightBg
                 webView.isOpaque = false
                 
-                worktext = String(format:"<style>\(fontCss) body, table { color: #021439; %@; padding:5em 1.5em 4em 1.5em; text-align: left; line-height: 1.5em;  overflow-y: scroll; -webkit-overflow-scrolling: touch; } p {margin-bottom:1.0em}</style>%@", fontStr, work)
+                worktext = String(format:"<style>\(fontCss) body, table { color: #021439; %@; padding:5em 1.5em 4em 1.5em; text-align: left; line-height: 1.5em;  overflow-y: scroll; -webkit-overflow-scrolling: touch; word-wrap:break-word; } p {margin-bottom:1.0em;}</style>%@", fontStr, work)
             
                 bgColor = AppDelegate.greyLightColor
                 txtColor = AppDelegate.redColor
@@ -1311,7 +1317,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
                 self.webView.backgroundColor = AppDelegate.nightBgColor
                 self.webView.isOpaque = false
                 
-                worktext = String(format:"<style>\(fontCss) body, table { color: #e1e1ce; %@; padding:5em 1.5em 4em 1.5em; text-align: left; line-height: 1.5em; overflow-y: scroll; -webkit-overflow-scrolling: touch; } p {margin-bottom:1.0em} </style>%@", fontStr, work)
+                worktext = String(format:"<style>\(fontCss) body, table { color: #e1e1ce; %@; padding:5em 1.5em 4em 1.5em; text-align: left; line-height: 1.5em; overflow-y: scroll; -webkit-overflow-scrolling: touch; word-wrap:break-word; } p {margin-bottom:1.0em} </style>%@", fontStr, work)
             
                 bgColor = AppDelegate.greyDarkBg
                 txtColor = AppDelegate.textLightColor
@@ -1324,6 +1330,8 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
             default:
                 break
         }
+        
+        worktext.append("<p style='margin-bottom:30%;'><br/></p>")
         
        // let _ = webView(wview: webView, enableGL: false)
         layoutView.backgroundColor = bgColor
@@ -1385,10 +1393,10 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
     }
     
     @IBAction func fontSizeAddTouched(_ sender: AnyObject) {
-        if (self.fontSize < 450) {
-            self.fontSize += 25
+        if (self.fontSize < 72) {
+            self.fontSize += 2
         } else {
-            self.fontSize = 450
+            self.fontSize = 72
         }
         DefaultsManager.putInt(self.fontSize, key: DefaultsManager.FONT_SIZE)
         
@@ -1396,10 +1404,10 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
     }
     
     @IBAction func fontSizeMinusTouched(_ sender: AnyObject) {
-        if (self.fontSize > 50) {
-            self.fontSize -= 25
+        if (self.fontSize > 8) {
+            self.fontSize -= 2
         } else {
-            self.fontSize = 50
+            self.fontSize = 8
         }
         DefaultsManager.putInt(self.fontSize, key: DefaultsManager.FONT_SIZE)
         
@@ -1894,6 +1902,14 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
         
         if (velocity > 2000 && shouldStartTrackVelocity == true && self.layoutView.tag == 0) {
             hideAllBars()
+        }
+        
+        if (( abs((scrollView.contentSize.height - scrollView.frame.size.height) - scrollView.contentOffset.y) <= 4)
+            && velocity < 5 && distance < 5) {
+            let delayTime = DispatchTime.now() + Double(Int64(0.0 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+            DispatchQueue.main.asyncAfter(deadline: delayTime) {
+            self.nextButtonTouched(self)
+            }
         }
     }
     

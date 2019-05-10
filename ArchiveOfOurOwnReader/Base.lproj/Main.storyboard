@@ -2986,9 +2986,9 @@ Please check your Internet connection and also make sure you are logged into you
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="70"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4YJ-Cm-pnq">
-                                        <rect key="frame" x="234" y="12" width="45" height="38"/>
+                                        <rect key="frame" x="204" y="12" width="65" height="38"/>
                                         <color key="backgroundColor" white="0.5" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
+                                        <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
                                         <state key="normal" title="Aa-">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
@@ -2997,9 +2997,9 @@ Please check your Internet connection and also make sure you are logged into you
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qc6-DB-2IT">
-                                        <rect key="frame" x="283" y="12" width="48" height="38"/>
+                                        <rect key="frame" x="277" y="12" width="68" height="38"/>
                                         <color key="backgroundColor" white="0.5" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
+                                        <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
                                         <state key="normal" title="Aa+">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
@@ -3013,8 +3013,8 @@ Please check your Internet connection and also make sure you are logged into you
                                     <constraint firstItem="4YJ-Cm-pnq" firstAttribute="top" secondItem="iXh-gl-Lcm" secondAttribute="top" constant="12" id="Dbc-Uj-xmw"/>
                                     <constraint firstAttribute="height" constant="70" id="EtK-gv-tDi"/>
                                     <constraint firstItem="Qc6-DB-2IT" firstAttribute="top" secondItem="iXh-gl-Lcm" secondAttribute="top" constant="12" id="NPl-vA-YCO"/>
-                                    <constraint firstAttribute="trailing" secondItem="Qc6-DB-2IT" secondAttribute="trailing" constant="44" id="PST-Ed-a13"/>
-                                    <constraint firstItem="Qc6-DB-2IT" firstAttribute="leading" secondItem="4YJ-Cm-pnq" secondAttribute="trailing" constant="4" id="ZAJ-6Q-O8G"/>
+                                    <constraint firstAttribute="trailing" secondItem="Qc6-DB-2IT" secondAttribute="trailing" constant="30" id="PST-Ed-a13"/>
+                                    <constraint firstItem="Qc6-DB-2IT" firstAttribute="leading" secondItem="4YJ-Cm-pnq" secondAttribute="trailing" constant="8" id="ZAJ-6Q-O8G"/>
                                     <constraint firstItem="4YJ-Cm-pnq" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="iXh-gl-Lcm" secondAttribute="leadingMargin" constant="20" id="udC-Uk-6Qi"/>
                                 </constraints>
                             </view>
@@ -10603,7 +10603,7 @@ Please check your Internet connection and also make sure you are logged into you
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="252" image="highlights_explained" translatesAutoresizingMaskIntoConstraints="NO" id="lFV-u5-mLt">
-                                        <rect key="frame" x="0.0" y="66.333333333333357" width="311" height="200.00000000000003"/>
+                                        <rect key="frame" x="0.0" y="66.333333333333343" width="311" height="200.00000000000003"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="200" id="5gw-ea-DVb"/>
                                         </constraints>
@@ -10742,7 +10742,7 @@ Please check your Internet connection and also make sure you are logged into you
         <segue reference="eWX-6J-Lt5"/>
         <segue reference="MlO-FU-stp"/>
         <segue reference="Zz6-01-vau"/>
-        <segue reference="aEt-Fa-YHa"/>
+        <segue reference="b3W-0z-TKl"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.31764705879999999" green="0.20392156859999999" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>
