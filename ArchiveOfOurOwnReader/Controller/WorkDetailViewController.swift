@@ -15,7 +15,7 @@ import Firebase
 
 class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UITableViewDelegate {
     
-    var modalDelegate:ModalControllerDelegate?
+    var modalDelegate: ModalControllerDelegate?
     
     @IBOutlet weak var downloadTrashButton: UIButton!
     
@@ -2300,6 +2300,8 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     }
     
     @objc func controllerDidClosedWithLogin() {
+        self.checkBookmarkAndUpdate()
+        
         switch (triedTo) {
         case 0:
             leaveKudos()

@@ -5,59 +5,59 @@ PODS:
   - Appirater (2.3.1)
   - DynamicBlurView (3.0.1)
   - ExpandableLabel (0.5.2)
-  - Firebase (5.20.1):
-    - Firebase/Core (= 5.20.1)
-  - Firebase/AdMob (5.20.1):
-    - Firebase/Core
-    - Google-Mobile-Ads-SDK (~> 7.42)
-  - Firebase/Analytics (5.20.1):
-    - Firebase/Core
-  - Firebase/Core (5.20.1):
+  - Firebase (6.0.0):
+    - Firebase/Core (= 6.0.0)
+  - Firebase/AdMob (6.0.0):
     - Firebase/CoreOnly
-    - FirebaseAnalytics (= 5.8.0)
-  - Firebase/CoreOnly (5.20.1):
-    - FirebaseCore (= 5.4.1)
-  - FirebaseAnalytics (5.8.0):
-    - FirebaseCore (~> 5.4)
-    - FirebaseInstanceID (~> 3.8)
-    - GoogleAppMeasurement (= 5.8.0)
-    - GoogleUtilities/AppDelegateSwizzler (~> 5.2)
-    - GoogleUtilities/MethodSwizzler (~> 5.2)
-    - GoogleUtilities/Network (~> 5.2)
-    - "GoogleUtilities/NSData+zlib (~> 5.2)"
+    - Google-Mobile-Ads-SDK (~> 7.43)
+  - Firebase/Analytics (6.0.0):
+    - Firebase/Core
+  - Firebase/Core (6.0.0):
+    - Firebase/CoreOnly
+    - FirebaseAnalytics (= 6.0.0)
+  - Firebase/CoreOnly (6.0.0):
+    - FirebaseCore (= 6.0.0)
+  - FirebaseAnalytics (6.0.0):
+    - FirebaseCore (~> 6.0)
+    - FirebaseInstanceID (~> 4.0)
+    - GoogleAppMeasurement (= 6.0.0)
+    - GoogleUtilities/AppDelegateSwizzler (~> 6.0)
+    - GoogleUtilities/MethodSwizzler (~> 6.0)
+    - GoogleUtilities/Network (~> 6.0)
+    - "GoogleUtilities/NSData+zlib (~> 6.0)"
     - nanopb (~> 0.3)
-  - FirebaseCore (5.4.1):
-    - GoogleUtilities/Environment (~> 5.2)
-    - GoogleUtilities/Logger (~> 5.2)
-  - FirebaseInstanceID (3.8.1):
-    - FirebaseCore (~> 5.2)
-    - GoogleUtilities/Environment (~> 5.2)
-    - GoogleUtilities/UserDefaults (~> 5.2)
-  - Google-Mobile-Ads-SDK (7.42.2):
-    - GoogleAppMeasurement (~> 5.7)
-  - GoogleAppMeasurement (5.8.0):
-    - GoogleUtilities/AppDelegateSwizzler (~> 5.2)
-    - GoogleUtilities/MethodSwizzler (~> 5.2)
-    - GoogleUtilities/Network (~> 5.2)
-    - "GoogleUtilities/NSData+zlib (~> 5.2)"
+  - FirebaseCore (6.0.0):
+    - GoogleUtilities/Environment (~> 6.0)
+    - GoogleUtilities/Logger (~> 6.0)
+  - FirebaseInstanceID (4.0.0):
+    - FirebaseCore (~> 6.0)
+    - GoogleUtilities/Environment (~> 6.0)
+    - GoogleUtilities/UserDefaults (~> 6.0)
+  - Google-Mobile-Ads-SDK (7.44.0):
+    - GoogleAppMeasurement (~> 6.0)
+  - GoogleAppMeasurement (6.0.0):
+    - GoogleUtilities/AppDelegateSwizzler (~> 6.0)
+    - GoogleUtilities/MethodSwizzler (~> 6.0)
+    - GoogleUtilities/Network (~> 6.0)
+    - "GoogleUtilities/NSData+zlib (~> 6.0)"
     - nanopb (~> 0.3)
-  - GoogleUtilities/AppDelegateSwizzler (5.5.0):
+  - GoogleUtilities/AppDelegateSwizzler (6.0.0):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
     - GoogleUtilities/Network
-  - GoogleUtilities/Environment (5.5.0)
-  - GoogleUtilities/Logger (5.5.0):
+  - GoogleUtilities/Environment (6.0.0)
+  - GoogleUtilities/Logger (6.0.0):
     - GoogleUtilities/Environment
-  - GoogleUtilities/MethodSwizzler (5.5.0):
+  - GoogleUtilities/MethodSwizzler (6.0.0):
     - GoogleUtilities/Logger
-  - GoogleUtilities/Network (5.5.0):
+  - GoogleUtilities/Network (6.0.0):
     - GoogleUtilities/Logger
     - "GoogleUtilities/NSData+zlib"
     - GoogleUtilities/Reachability
-  - "GoogleUtilities/NSData+zlib (5.5.0)"
-  - GoogleUtilities/Reachability (5.5.0):
+  - "GoogleUtilities/NSData+zlib (6.0.0)"
+  - GoogleUtilities/Reachability (6.0.0):
     - GoogleUtilities/Logger
-  - GoogleUtilities/UserDefaults (5.5.0):
+  - GoogleUtilities/UserDefaults (6.0.0):
     - GoogleUtilities/Logger
   - HexColors (4.0.0)
   - nanopb (0.3.901):
@@ -72,6 +72,7 @@ PODS:
     - HexColors (~> 4.0)
     - PPTopMostController
   - RSLoadingView (1.1.3)
+  - RxSwift (5.0.0)
   - Spring (1.0.6)
   - SwiftMessages (6.0.2):
     - SwiftMessages/App (= 6.0.2)
@@ -89,6 +90,7 @@ DEPENDENCIES:
   - PopupDialog (~> 0.7)
   - RMessage
   - RSLoadingView
+  - RxSwift
   - Spring (from `https://github.com/MengTo/Spring.git`)
   - SwiftMessages
 
@@ -112,6 +114,7 @@ SPEC REPOS:
     - PPTopMostController
     - RMessage
     - RSLoadingView
+    - RxSwift
     - SwiftMessages
 
 EXTERNAL SOURCES:
@@ -129,22 +132,23 @@ SPEC CHECKSUMS:
   Appirater: 44a4651f7912a17dc906b655f0c215d5bb768b84
   DynamicBlurView: b1df5415f9bd31897549e5d7077e5ec120a4d636
   ExpandableLabel: c2fab6d27860c572d67134b30522a5917746171d
-  Firebase: 2f5235e62f141cb86181c3af0dfe4509706351ac
-  FirebaseAnalytics: fd72a26bf8dac84cefba2f0864366f718555a5b0
-  FirebaseCore: f1a9a8be1aee4bf71a2fc0f4096df6788bdfda61
-  FirebaseInstanceID: a122b0c258720cf250551bb2bedf48c699f80d90
-  Google-Mobile-Ads-SDK: 8f4f7e793bfd3fff5b082181b54112f81b579a67
-  GoogleAppMeasurement: 1624046ab1bcc5e170061a56ef5679000b079c8e
-  GoogleUtilities: 6481e6318c5fcabaaa8513ef8120f329055d7c10
+  Firebase: fa80b9d987ca014a1ba9357496ef2a0178b28b12
+  FirebaseAnalytics: 1743c5f4de3687d0745709dfdc4b1dea1484f44c
+  FirebaseCore: e38f025287b413255a53acc1945d048a112047f7
+  FirebaseInstanceID: 0e0348a3c00a734fa376a070f5ad4533ad975cb5
+  Google-Mobile-Ads-SDK: 1e72b4f438d997ab0f2ee62b3a7b0cbcc87c47cb
+  GoogleAppMeasurement: 7f028ea162b72c8f326daec74afc95d94f7a47d6
+  GoogleUtilities: f1faafc033ea203adf1783ce00af455bb99d0e5b
   HexColors: 5f95843ef89aff6a72e1fd3a8ebabf205cc43379
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   PopupDialog: f4bb461bf70ff422be0b56656566424ee9273080
   PPTopMostController: 4e6f1e5f8c645bdcc74cd837a20f607ff262c048
   RMessage: 761f8ff71247b8d72d0c4a0be5a8e6ce8dfdedd0
   RSLoadingView: c7749afdd455229643e8f34277d0695973a15b1a
+  RxSwift: 8b0671caa829a763bbce7271095859121cbd895f
   Spring: 3d113f14575ef79aec9c5f906dfa4f5001c03254
   SwiftMessages: 8b3cc68dba2f1c91aac1a74c90b10287aac35371
 
-PODFILE CHECKSUM: 94e59a7a5a7164a2fba14154f94a32ef0356dfcd
+PODFILE CHECKSUM: 9ec579fa357788dd6df92adc638e10b152ce2997
 
 COCOAPODS: 1.5.2
