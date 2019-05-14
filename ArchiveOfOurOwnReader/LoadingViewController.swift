@@ -15,6 +15,7 @@ import RSLoadingView
 import CoreTelephony
 import Crashlytics
  import Firebase
+ import RxSwift
 
 class LoadingViewController: CenterViewController, ModalControllerDelegate, AuthProtocol, UIAlertViewDelegate, GADInterstitialDelegate {
     
@@ -1577,11 +1578,11 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
  
  extension LoadingViewController {
     
-    func doLeaveKudos(workId: String, kudosToken: String) {
+    func doLeaveKudos(workId: String, kudosToken: String) -> Observable<Void> {
         if ((UIApplication.shared.delegate as? AppDelegate)?.cookies.count == 0 || ((UIApplication.shared.delegate as? AppDelegate)?.token ?? "").isEmpty) {
             triedTo = 0
-            openLoginController() //openLoginController()
-            return
+            openLoginController() 
+            return Observable.empty()
         }
         
         showLoadingView(msg: Localization("LeavingKudos"))
@@ -1610,29 +1611,40 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         ]
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-            Alamofire.request(requestStr, method: .post, parameters: params, encoding:URLEncoding.httpBody /*ParameterEncoding.Custom(encodeParams)*/, headers: headers)
-                .response(completionHandler: { response in
-                    #if DEBUG
+            return Observable.create({ (observer) -> Disposable in
+                Alamofire.request(requestStr, method: .post, parameters: params, encoding:URLEncoding.httpBody /*ParameterEncoding.Custom(encodeParams)*/, headers: headers)
+                    .response(completionHandler: { response in
+                        #if DEBUG
                         print(response.request ?? "")
                         // print(response.response ?? "")
                         print(response.error ?? "")
-                    #endif
-                    
-                    if let d = response.data {
-                        self.parseCookies(response)
-                        self.parseAddKudosResponse(d)
-                        self.hideLoadingView()
+                        #endif
                         
-                    } else {
-                        self.hideLoadingView()
-                        self.showError(title: Localization("Error"), message: Localization("CheckInternet"))
-                    }
-                })
+                        if let d = response.data {
+                            self.parseCookies(response)
+                            self.parseAddKudosResponse(d)
+                            self.hideLoadingView()
+                            
+                            observer.onNext(())
+                            observer.onCompleted()
+                            
+                        } else {
+                            self.hideLoadingView()
+                            self.showError(title: Localization("Error"), message: Localization("CheckInternet"))
+                            
+                            observer.onError(ErrorsAF.noResponseData)
+                        }
+                    })
+                return Disposables.create()
+            })
+           
             
         } else {
             
             self.hideLoadingView()
             self.showError(title: Localization("Error"), message: Localization("CheckInternet"))
+            
+            return Observable.error(ErrorsAF.noInternet)
         }
     }
     
@@ -1825,3 +1837,4 @@ struct FandomObject {
  protocol GetFandomsProtocol {
     func fandomsGot(fandoms:[FandomObject])
  }
+

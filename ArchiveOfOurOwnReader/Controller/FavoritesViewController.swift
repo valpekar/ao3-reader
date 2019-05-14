@@ -89,7 +89,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
             return controller
         })()
         
-       // sortBy = DefaultsManager.getString(DefaultsManager.SORT_DWNLD_BY)
+        sortBy = DefaultsManager.getString(DefaultsManager.SORT_DWNLD_BY)
         sortOrderAscendic = DefaultsManager.getBool(DefaultsManager.SORT_DWNLD_ASC) ?? false
         
         if (sortBy.isEmpty) {

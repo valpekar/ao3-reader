@@ -14,9 +14,11 @@ import WebKit
 import Spring
 import PopupDialog
 import Firebase
+import RxSwift
 
 class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUIDelegate, WKNavigationDelegate, UIScrollViewDelegate {
     
+    let disposeBag = DisposeBag()
     
     @IBOutlet weak var webViewContainer: UIView!
     var webView: WKWebView!
@@ -55,7 +57,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
     var downloadedChapters: [DBChapter]?
     
     var work: String = ""
-    var fontSize: Int = 16
+    var fontSize: Int = 200
     var fontFamily: String = "Verdana"
     
     var onlineChapters = [Int:ChapterOnline]()
@@ -943,7 +945,8 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
                                 "workId": workId])
         Analytics.logEvent("WorkView_Kudos_add", parameters: ["workId": workId as NSObject])
         
-        doLeaveKudos(workId: workId, kudosToken: self.kudosToken)
+        doLeaveKudos(workId: workId, kudosToken: self.kudosToken).subscribe { (_) in
+            }.disposed(by: self.disposeBag)
     
     }
     
@@ -1296,7 +1299,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
             fontCss = "@font-face { font-family: \"\(fontFamily)\"; src: url(RFS_Juan_Casco.ttf); format('truetype')} "
         }
         
-        let fontStr = "font-size: " + String(format:"%d", fontSize) + "pt; \(fontFamilyStr); "
+        let fontStr = "font-size: " + String(format:"%d", fontSize) + "%; \(fontFamilyStr); "
         
         switch (theme) {
             case DefaultsManager.THEME_DAY :
@@ -1393,10 +1396,10 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
     }
     
     @IBAction func fontSizeAddTouched(_ sender: AnyObject) {
-        if (self.fontSize < 72) {
-            self.fontSize += 2
+        if (self.fontSize < 420) {
+            self.fontSize += 10
         } else {
-            self.fontSize = 72
+            self.fontSize = 400
         }
         DefaultsManager.putInt(self.fontSize, key: DefaultsManager.FONT_SIZE)
         
@@ -1404,10 +1407,10 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
     }
     
     @IBAction func fontSizeMinusTouched(_ sender: AnyObject) {
-        if (self.fontSize > 8) {
-            self.fontSize -= 2
+        if (self.fontSize > 20) {
+            self.fontSize -= 10
         } else {
-            self.fontSize = 8
+            self.fontSize = 20
         }
         DefaultsManager.putInt(self.fontSize, key: DefaultsManager.FONT_SIZE)
         

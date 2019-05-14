@@ -12,10 +12,22 @@ import GoogleMobileAds
 import Alamofire
 import Crashlytics
 import Firebase
+import RxSwift
+
+enum ErrorsAF : Error {
+    case noResponseData
+    case noInternet
+    case noWorkId
+    case noCookies
+}
 
 class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UITableViewDelegate {
     
+    let disposeBag = DisposeBag()
+    
     var modalDelegate: ModalControllerDelegate?
+    
+    var loginPublishSubject = PublishSubject<Void>()
     
     @IBOutlet weak var downloadTrashButton: UIButton!
     
@@ -142,7 +154,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             if (downloadedWorkItem != nil) {
                 
                 showDownloadedWork()
-                self.checkBookmarkAndUpdate()
+                self.checkBookmarkAndUpdate().subscribe(onNext: {}).disposed(by: self.disposeBag)
             } else {
                 workItem = WorkItem()
                 showOnlineWork(workUrl)
@@ -173,7 +185,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                     self.updateWork(workItem: workItem)
                     self.workItem = nil
                     self.showDownloadedWork()
-                    self.checkBookmarkAndUpdate()
+                    self.checkBookmarkAndUpdate().subscribe(onNext: {}).disposed(by: self.disposeBag)
                 } else {
                     showOnlineWork()
                 }
@@ -183,7 +195,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             }
         } else if (downloadedWorkItem != nil) {
             showDownloadedWork()
-            self.checkBookmarkAndUpdate()
+            self.checkBookmarkAndUpdate().subscribe(onNext: {}).disposed(by: self.disposeBag)
         }
         
         
@@ -273,10 +285,11 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
         Answers.logCustomEvent(withName: "WorkDetail: Kudos add",
                                customAttributes: [
-                                "workId": workId])
-        Analytics.logEvent("WorkDetail_Kudos_add", parameters: ["workId": workId as NSObject])
+                                "workId": workId, "origin" : "btn"])
+        Analytics.logEvent("WorkDetail_Kudos_add", parameters: ["workId": workId as NSObject, "origin" : "btn" as NSObject])
         
-        doLeaveKudos(workId: workId, kudosToken: self.kudosToken)
+        doLeaveKudos(workId: workId, kudosToken: self.kudosToken).subscribe { (_) in
+        }.disposed(by: self.disposeBag)
     }
     
     func showDownloadedWork() {
@@ -406,7 +419,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                     self.downloadCurWork(d)
                     self.showWork()
                     
-                    self.checkBookmarkAndUpdate()
+                    self.checkBookmarkAndUpdate().subscribe(onNext: {}).disposed(by: self.disposeBag)
                     
                     self.hideLoadingView()
                 } else {
@@ -755,7 +768,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
     }
     
-    func checkBookmarkAndUpdate() {
+    func checkBookmarkAndUpdate() -> Observable<Void> {
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
             Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: AppDelegate.ao3SiteUrl), mainDocumentURL: nil)
@@ -781,27 +794,37 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             wid = downloadedWorkItem.workId ?? ""
         }
         
-        Alamofire.request("https://archiveofourown.org/works/" + wid + vadult + "#bookmark-form", method: .get, parameters: params)
-            .response(completionHandler: { response in
-                // print(response.request)
-                if let d = response.data {
-                    self.parseCookies(response)
-                    self.parseCheckBookmarkAndUpdate(d)
-                    //self.showWork()
-                    //self.hideLoadingView()
-                    
-                    if (self.needReload) {
-                        let delay = 0.2 * Double(NSEC_PER_SEC)
-                        let time = DispatchTime.now() + Double(Int64(delay)) / Double(NSEC_PER_SEC)
-                        DispatchQueue.main.asyncAfter(deadline: time) {
-                            
-                            self.showSuccess(title: Localization("Update"), message: Localization("UpdateAvail"))
+        return Observable.create({ (observer) -> Disposable in
+            
+            Alamofire.request("https://archiveofourown.org/works/" + wid + vadult + "#bookmark-form", method: .get, parameters: params)
+                .response(completionHandler: { response in
+                    // print(response.request)
+                    if let d = response.data {
+                        self.parseCookies(response)
+                        self.parseCheckBookmarkAndUpdate(d)
+                        //self.showWork()
+                        //self.hideLoadingView()
+                        
+                        if (self.needReload) {
+                            let delay = 0.2 * Double(NSEC_PER_SEC)
+                            let time = DispatchTime.now() + Double(Int64(delay)) / Double(NSEC_PER_SEC)
+                            DispatchQueue.main.asyncAfter(deadline: time) {
+                                
+                                self.showSuccess(title: Localization("Update"), message: Localization("UpdateAvail"))
+                            }
                         }
+                        
+                        observer.onNext(())
+                        observer.onCompleted()
+                    } else {
+                        observer.onError(ErrorsAF.noResponseData)
                     }
-                }
-            })
+                })
+            
+            return Disposables.create()
+        })
         
-       
+        
     }
     
     func parseCheckBookmarkAndUpdate(_ data: Data) {
@@ -1597,7 +1620,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                             self.parseMarkForLaterResponse(d)
                             self.hideLoadingView()
                             
-                            self.checkBookmarkAndUpdate()
+                            self.checkBookmarkAndUpdate().subscribe(onNext: {}).disposed(by: self.disposeBag)
                             
                         } else {
                             self.hideLoadingView()
@@ -1707,7 +1730,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                             self.parseMarkForLaterResponse(d)
                             self.hideLoadingView()
                             
-                            self.checkBookmarkAndUpdate()
+                            self.checkBookmarkAndUpdate().subscribe(onNext: {}).disposed(by: self.disposeBag)
                             
                         } else {
                             self.hideLoadingView()
@@ -1726,7 +1749,9 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             openLoginController()
             triedTo = 1
         } else {
-            sendAddBookmarkRequest()
+            sendAddBookmarkRequest().subscribe { (event) in
+                print(event)
+            }.disposed(by: self.disposeBag)
         }
     }
     
@@ -1746,13 +1771,13 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         present(deleteAlert, animated: true, completion: nil)
     }
     
-    func sendAddBookmarkRequest() {
+    func sendAddBookmarkRequest() -> Observable<Void> {
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count == 0 || (UIApplication.shared.delegate as! AppDelegate).token.isEmpty) {
             
             triedTo = 1
             openLoginController() //openLoginController()
-            return
+            return Observable.empty()
         }
         
         showLoadingView(msg: Localization("AddingBmk"))
@@ -1780,7 +1805,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             
         } else if (downloadedWorkItem != nil) {
             guard let bd = downloadedWorkItem.workId else {
-                return
+                return Observable.error(ErrorsAF.noWorkId)
             }
             bid = bd
             requestStr += bid + "/bookmarks"
@@ -1820,34 +1845,43 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         if let del = UIApplication.shared.delegate as? AppDelegate {
             if (del.cookies.count > 0) {
                 guard let cStorage = Alamofire.SessionManager.default.session.configuration.httpCookieStorage else {
-                    return
+                    return Observable.error(ErrorsAF.noCookies)
                 }
                 cStorage.setCookies(del.cookies, for:  URL(string: AppDelegate.ao3SiteUrl), mainDocumentURL: nil)
             }
+            
         
         if (del.cookies.count > 0) {
-            Alamofire.request(requestStr, method: .post, parameters: params, encoding: URLEncoding.httpBody /*ParameterEncoding.Custom(encodeParams)*/, headers: headers)
-                .response(completionHandler: { response in
-                    #if DEBUG
-                    print(response.request ?? "")
-                    // print(response)
-                    print(response.error ?? "")
+            
+            return Observable.create({ (observer) -> Disposable in
+                Alamofire.request(requestStr, method: .post, parameters: params, encoding: URLEncoding.httpBody /*ParameterEncoding.Custom(encodeParams)*/, headers: headers)
+                    .response(completionHandler: { response in
+                        #if DEBUG
+                        print(response.request ?? "")
+                        // print(response)
+                        print(response.error ?? "")
                         #endif
-                    
-                    if let d = response.data {
-                        self.parseCookies(response)
-                        self.parseAddBookmarkResponse(d)
-                        self.hideLoadingView()
                         
-                        self.checkBookmarkAndUpdate()
-                        
-                    } else {
-                        self.hideLoadingView()
-                        self.showError(title: Localization("Error"), message: Localization("CheckInternet"))
-                    }
-                })
+                        if let d = response.data {
+                            self.parseCookies(response)
+                            self.parseAddBookmarkResponse(d)
+                            self.hideLoadingView()
+                            
+                            observer.onNext(())
+                            observer.onCompleted()
+                            
+                        } else {
+                            self.hideLoadingView()
+                            self.showError(title: Localization("Error"), message: Localization("CheckInternet"))
+                        }
+                    })
+                return Disposables.create()
+            }).flatMap{self.checkBookmarkAndUpdate()}
+            
             }
         }
+        
+        return Observable.error(ErrorsAF.noCookies)
     }
     
     func sendDeleteBookmarkRequest() {
@@ -1915,6 +1949,9 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
 //                })
                 
                 showSuccess(title: Localization("DeleteFromBmk"), message: noticediv[0].content)
+                self.checkBookmarkAndUpdate().subscribe { (_) in
+                    
+                }.disposed(by: self.disposeBag)
             }
         }
         
@@ -2120,7 +2157,9 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
         let kudosAction = UIAlertAction(title: Localization("LeaveKudos"), style: .default, handler: {
             (alert: UIAlertAction!) -> Void in
-            self.leaveKudos()
+            
+            self.leaveKudos().subscribe({ (_) in
+            }).disposed(by: self.disposeBag)
         })
         optionMenu.addAction(kudosAction)
         
@@ -2215,7 +2254,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         self.present(optionMenu, animated: true, completion: nil)
     }
     
-    func leaveKudos() {
+    func leaveKudos() -> Observable<Void> {
         var workId = ""
         
         if (workItem != nil) {
@@ -2228,8 +2267,8 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                                customAttributes: [
                                 "workId": workId])
         Analytics.logEvent("WorkDetail_Kudos_add", parameters: ["workId": workId as NSObject])
-        
-        doLeaveKudos(workId: workId, kudosToken: self.kudosToken)
+                
+        return doLeaveKudos(workId: workId, kudosToken: self.kudosToken)
         
     }
     
@@ -2300,13 +2339,20 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     }
     
     @objc func controllerDidClosedWithLogin() {
-        self.checkBookmarkAndUpdate()
+        
         
         switch (triedTo) {
         case 0:
-            leaveKudos()
+            self.checkBookmarkAndUpdate()
+                .flatMap { self.leaveKudos() }
+                .subscribe { (_) in
+            }.disposed(by: self.disposeBag)
+            
         case 1:
-            sendAddBookmarkRequest()
+            self.checkBookmarkAndUpdate()
+                .flatMap { self.sendAddBookmarkRequest() }
+                .subscribe { (_) in
+                }.disposed(by: self.disposeBag)
         case 2:
             sendDeleteBookmarkRequest()
         case 3:
@@ -2316,6 +2362,8 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         default: break
         }
         triedTo = -1
+        
+        self.loginPublishSubject.onNext(())
     }
     
     func downloadFile(downloadUrl: String) {

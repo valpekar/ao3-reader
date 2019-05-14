@@ -20,6 +20,8 @@ class PopOverViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     @IBOutlet weak var tokenViewHeightConstraint: NSLayoutConstraint!
     
+    var sectionNameToSearch = "fandom"
+    
     let tokenViewMinHeight: CGFloat = 40.0
     let tokenViewMaxHeight: CGFloat = 150.0
     
@@ -237,7 +239,7 @@ extension PopOverViewController: NWSTokenDelegate, NWSTokenDataSource {
     }
     
     func tokenView(_ tokenView: NWSTokenView, viewForTokenAtIndex index: Int) -> UIView? {
-        let fandomObject = fandoms[index]
+        let fandomObject = selectedFandoms[index]
         if let token = NWSSelToken.initWithTitle(title: fandomObject.sectionName)
         {
             return token
@@ -292,7 +294,7 @@ extension PopOverViewController: GetFandomsProtocol {
 extension PopOverViewController {
     
     func getFandomByText(text: String, listener: GetFandomsProtocol) {
-        let requestStr = "https://archiveofourown.org/autocomplete/fandom"
+        let requestStr = "https://archiveofourown.org/autocomplete/\(self.sectionNameToSearch)"
         
         var params:[String:Any] = [String:Any]()
         params["term"] = text

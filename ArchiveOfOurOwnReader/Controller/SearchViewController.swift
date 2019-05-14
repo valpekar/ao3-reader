@@ -9,6 +9,14 @@
 import UIKit
 import Alamofire
 import PopupDialog
+import Crashlytics
+
+enum SelectedEntity {
+    case fandom
+    case relationship
+    case character
+    case none
+}
 
 class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UITextViewDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
     
@@ -16,6 +24,8 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
     var modalDelegate:ModalControllerDelegate?
     
     var theme: Int = DefaultsManager.THEME_DAY
+    
+    var selectedEntity:SelectedEntity = .none
     
     @IBOutlet weak var langPickerView: UIPickerView!
     @IBOutlet weak var sortbyPickerView: UIPickerView!
@@ -377,7 +387,7 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
             setCategorySwitchState((cell as? SearchSwitchCell)!.switchItem)
             
         case 6:
-            if (indexPath.row == 0) {
+            if (indexPath.row == 0 || indexPath.row == 1 || indexPath.row == 2) {
                 cell = tableView.dequeueReusableCell(withIdentifier: "SearchTagsListCell") as? SearchTagsListCell
                     if (theme == DefaultsManager.THEME_DAY) {
                         (cell as? SearchTagsListCell)?.nameLabel.textColor = UIColor.black
@@ -417,10 +427,18 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
                 
             case 1:
                 (cell as? SearchFandomsCell)?.textfield.tag = TAG_RELATIONSHIPS
-                (cell as? SearchFandomsCell)?.textfield.text = searchQuery.relationship_names
+                if (searchQuery.relationship_names.count > 0) {
+                    (cell as? SearchTagsListCell)?.nameLabel.text = searchQuery.relationship_names
+                } else {
+                    (cell as? SearchTagsListCell)?.nameLabel.text = NSLocalizedString("RelationshipNotSpecified", comment: "")
+                }
             case 2:
                 (cell as? SearchFandomsCell)?.textfield.tag = TAG_CHARACTERS
-                (cell as? SearchFandomsCell)?.textfield.text = searchQuery.character_names
+                if (searchQuery.character_names.count > 0) {
+                    (cell as? SearchTagsListCell)?.nameLabel.text = searchQuery.character_names
+                } else {
+                    (cell as? SearchTagsListCell)?.nameLabel.text = NSLocalizedString("CharacterNotSpecified", comment: "")
+                }
             default:
                 break
             }
@@ -554,6 +572,13 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
         switch (indexPath.section) {
         case 6:
             if (indexPath.row == 0){
+                selectedEntity = .fandom
+                self.performSegue(withIdentifier: "popoverSegue", sender: self)
+            } else if (indexPath.row == 1){
+                selectedEntity = .relationship
+                self.performSegue(withIdentifier: "popoverSegue", sender: self)
+            } else if (indexPath.row == 2){
+                selectedEntity = .character
                 self.performSegue(withIdentifier: "popoverSegue", sender: self)
             }
         default: break
@@ -1071,7 +1096,18 @@ extension SearchViewController {
         if (segue.identifier == "popoverSegue") {
              if let controller: PopOverViewController = segue.destination as? PopOverViewController {
                 
-                let arr = self.searchQuery.fandom_names.components(separatedBy: ",")
+                var arr: [String] = [String]()
+                if (self.selectedEntity == .fandom) {
+                    arr = self.searchQuery.fandom_names.components(separatedBy: ",")
+                    controller.sectionNameToSearch = "fandom"
+                } else if (self.selectedEntity == .relationship) {
+                    arr = self.searchQuery.relationship_names.components(separatedBy: ",")
+                    controller.sectionNameToSearch = "relationship"
+                } else if (self.selectedEntity == .character) {
+                    arr = self.searchQuery.character_names.components(separatedBy: ",")
+                    controller.sectionNameToSearch = "character"
+                }
+                
                 var objects: [FandomObject] = []
                 for i in 0..<arr.count {
                     if (arr[i].condenseWhitespace().isEmpty == false) { //condenseWhitespace - Remove leading, trailing and repeated whitespace from a string
@@ -1091,6 +1127,13 @@ extension SearchViewController {
 
 extension SearchViewController: SelectionProtocol {
     func itemsSelected(items: [FandomObject]) {
+        
+        Answers.logCustomEvent(withName: "SearchViewController SelectionProtocol",
+                               customAttributes: [
+                                "items_count": items.count,
+                                "selectedEntity" : self.selectedEntity])
+        
+       if (self.selectedEntity == .fandom) {
         self.searchQuery.fandom_names = ""
         
         for i in 0..<items.count {
@@ -1101,5 +1144,31 @@ extension SearchViewController: SelectionProtocol {
         }
         
         self.tableView.reloadRows(at: [IndexPath(row: 0, section: 6)], with: .none)
+        
+       } else if (self.selectedEntity == .relationship) {
+        self.searchQuery.relationship_names = ""
+        
+        for i in 0..<items.count {
+            self.searchQuery.relationship_names.append(items[i].sectionName)
+            if (i != items.count - 1) {
+                self.searchQuery.relationship_names.append(", ")
+            }
+        }
+        
+        self.tableView.reloadRows(at: [IndexPath(row: 1, section: 6)], with: .none)
+       } else if (self.selectedEntity == .character) {
+        self.searchQuery.character_names = ""
+        
+        for i in 0..<items.count {
+            self.searchQuery.character_names.append(items[i].sectionName)
+            if (i != items.count - 1) {
+                self.searchQuery.character_names.append(", ")
+            }
+        }
+        
+        self.tableView.reloadRows(at: [IndexPath(row: 2, section: 6)], with: .none)
+        }
+        
+        self.selectedEntity = .none
     }
 }
