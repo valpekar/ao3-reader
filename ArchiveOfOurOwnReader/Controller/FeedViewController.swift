@@ -366,7 +366,7 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
     
     var selectedRow = 0
     
-    func interstitialDidDismissScreen(_ ad: GADInterstitial) {
+    override func adClosed() {
         showWorkDetail()
     }
     

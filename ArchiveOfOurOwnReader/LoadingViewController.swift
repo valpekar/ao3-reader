@@ -119,6 +119,15 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         interstitial?.load(request)
     }
     
+    
+    func interstitialDidDismissScreen(_ ad: GADInterstitial) {
+        self.adClosed()
+    }
+    
+    func adClosed() {
+        
+    }
+    
     func loadAdMobRewared() {
         rewardBasedVideo = GADRewardBasedVideoAd.sharedInstance()
         rewardBasedVideo?.delegate = self

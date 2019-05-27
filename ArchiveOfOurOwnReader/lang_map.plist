@@ -52,5 +52,27 @@
 	<string>16</string>
 	<key>Bahasa Indonesia</key>
 	<string>38</string>
+    <key>Italiano</key>
+    <string>13</string>
+    <key>Íslenska</key>
+    <string>12</string>
+    <key>日本語</key>
+    <string>36</string>
+    <key>한국어</key>
+    <string>35</string>
+    <key>Lietuvių</key>
+    <string>15</string>
+    <key>Latviešu valoda</key>
+    <string>14</string>
+    <key>Polski</key>
+    <string>19</string>
+    <key>Русский</key>
+    <string>30</string>
+    <key>中文</key>
+    <string>40</string>
+    <key>Tiếng Việt</key>
+    <string>44</string>
+    <key>ไทย</key>
+    <string>47</string>
 </dict>
 </plist>

@@ -99,6 +99,7 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
     let TAG_RATINGS = 28
     let TAG_SORT_BY = 29
     let TAG_SORT_DIRECTION = 30
+    let TAG_LANGUAGE = 31
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -221,8 +222,7 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
                 (cell as? SearchTagWithTextCell)?.textField.tag = TAG_AUTHOR
                 (cell as? SearchTagWithTextCell)?.textField.text = searchQuery.creators
             case 3:
-                (cell as? SearchTagWithTextCell)?.textField.tag = TAG_NONE
-                (cell as? SearchTagWithTextCell)?.textField.inputView = langPickerView
+                (cell as? SearchTagWithTextCell)?.textField.tag = TAG_LANGUAGE
                 (cell as? SearchTagWithTextCell)?.textField.text = selectedLang
             case 4:
                 (cell as? SearchTagWithTextCell)?.textField.tag = TAG_RATINGS
@@ -601,7 +601,7 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
         }
         
         if (langDict.allKeys(for: searchQuery.language_id).count > 0) {
-            selectedLang = langDict.allKeys(for: searchQuery.language_id)[0] as! String
+            selectedLang = langDict.allKeys(for: searchQuery.language_id)[0] as? String ?? ""
         }
         
         if (ratingDict.allKeys(for: searchQuery.rating_ids).count > 0) {
@@ -661,7 +661,7 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
             print("You canceled the car dialog.")
         }
         
-        guard let ratingKeys = sortDirectionDict.keysSortedByValue(comparator: compareKeys ) as? [String] else {
+        guard let ratingKeys = sortDirectionDict.keysSortedByValue(comparator: Utils.compareKeys ) as? [String] else {
             return
         }
         
@@ -689,7 +689,7 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
             print("You canceled the car dialog.")
         }
         
-        guard let ratingKeys = sortByDict.keysSortedByValue(comparator: compareKeys ) as? [String] else {
+        guard let ratingKeys = sortByDict.keysSortedByValue(comparator: Utils.compareKeys ) as? [String] else {
             return
         }
         
@@ -717,7 +717,7 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
             print("You canceled the car dialog.")
         }
         
-        guard let ratingKeys = ratingDict.keysSortedByValue(comparator: compareKeys ) as? [String] else {
+        guard let ratingKeys = ratingDict.keysSortedByValue(comparator: Utils.compareKeys ) as? [String] else {
             return
         }
         
@@ -729,6 +729,34 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
                 self.selectedRaiting = key
                 self.searchQuery.rating_ids = self.ratingDict[self.selectedRaiting] as? String ?? ""
                 textField.text = self.selectedRaiting
+            }
+            buttons.append(buttonOne)
+        }
+        
+        popup.addButtons(buttons)
+        
+        self.present(popup, animated: true, completion: nil)
+    }
+    
+    func showChooseLangPopup(textField: UITextField) {
+        let popup = PopupDialog(title: Localization("Language"), message: "Selected language (\(selectedRaiting))", panGestureDismissal: false)
+        
+        let buttonCancel = CancelButton(title: "CANCEL") {
+            print("You canceled the car dialog.")
+        }
+        
+        guard let langKeys = langDict.keysSortedByValue(comparator: Utils.compareKeys ) as? [String] else {
+            return
+        }
+        
+        var buttons: [PopupDialogButton] = [PopupDialogButton]()
+        buttons.append(buttonCancel)
+        
+        for key in langKeys {
+            let buttonOne = DefaultButton(title: key) {
+                self.selectedLang = key
+                self.searchQuery.language_id = self.langDict[self.selectedLang] as? String ?? ""
+                textField.text = self.selectedLang
             }
             buttons.append(buttonOne)
         }
@@ -751,6 +779,10 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
             textField.endEditing(true)
         } else if (textField.tag == TAG_SORT_DIRECTION) {
             showChooseSortDirectionPopup(textField: textField)
+            textField.endEditing(true)
+        } else if (textField.tag == TAG_LANGUAGE) {
+           // showChooseLangPopup(textField: textField)
+            self.performSegue(withIdentifier: "showChooseLangController", sender: self)
             textField.endEditing(true)
         }
     }
@@ -939,17 +971,17 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         
         if(pickerView == langPickerView) {
-            let sortedKeys = langDict.keysSortedByValue(comparator: compareKeys )
+            let sortedKeys = langDict.keysSortedByValue(comparator: Utils.compareKeys )
             return sortedKeys[row] as? String
         } else
             if(pickerView == ratingPickerView) {
-                return ratingDict.keysSortedByValue(comparator: compareKeys )[row] as? String
+                return ratingDict.keysSortedByValue(comparator: Utils.compareKeys )[row] as? String
             } else
                 if(pickerView == sortbyPickerView) {
-                return sortByDict.keysSortedByValue(comparator: compareKeys )[row] as? String
+                return sortByDict.keysSortedByValue(comparator: Utils.compareKeys )[row] as? String
             } else
                 if(pickerView == sortdirectionPickerView) {
-                    return sortDirectionDict.keysSortedByValue(comparator: compareKeys )[row] as? String
+                    return sortDirectionDict.keysSortedByValue(comparator: Utils.compareKeys )[row] as? String
         }
         
         return ""
@@ -960,22 +992,24 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
         if (currentTextField != nil) {
         
         if(pickerView == langPickerView && currentTextField!.text != nil) {
-            currentTextField?.text = langDict.keysSortedByValue(comparator: compareKeys )[row] as? String
-            selectedLang = currentTextField!.text!
+            currentTextField?.text = langDict.keysSortedByValue(comparator: Utils.compareKeys )[row] as? String
+            selectedLang = currentTextField!.text ?? ""
             searchQuery.language_id = langDict[selectedLang] as! String
+            
+            Answers.logCustomEvent(withName: "Lang_chosen", customAttributes: ["lang" : selectedLang])
         } else
             if(pickerView == ratingPickerView) {
-                currentTextField?.text = ratingDict.keysSortedByValue(comparator: compareKeys )[row] as? String
+                currentTextField?.text = ratingDict.keysSortedByValue(comparator: Utils.compareKeys )[row] as? String
                 selectedRaiting = currentTextField!.text!
                 searchQuery.rating_ids = ratingDict[selectedRaiting] as! String
             } else
             if(pickerView == sortbyPickerView) {
-                currentTextField?.text = sortByDict.keysSortedByValue(comparator: compareKeys )[row] as? String
+                currentTextField?.text = sortByDict.keysSortedByValue(comparator: Utils.compareKeys )[row] as? String
                 selectedSortBy = currentTextField!.text!
                 searchQuery.sort_column = sortByDict[selectedSortBy] as! String
             } else
                 if(pickerView == sortdirectionPickerView) {
-                    currentTextField?.text = sortDirectionDict.keysSortedByValue(comparator: compareKeys )[row] as? String
+                    currentTextField?.text = sortDirectionDict.keysSortedByValue(comparator: Utils.compareKeys )[row] as? String
                     selectedSortDirection = currentTextField!.text!
                     searchQuery.sort_direction = sortDirectionDict[selectedSortDirection] as! String
         }
@@ -986,12 +1020,7 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
         }
     }
     
-    func compareKeys(_ obj1:Any, obj2:Any) -> ComparisonResult {
-        let p1 = obj1 as! String
-        let p2 = obj2 as! String
-        let result = p1.compare(p2)
-        return result
-    }
+   
 
     
     @IBAction func ffSwitchChanged(_ sender: UISwitch) {
@@ -1120,6 +1149,11 @@ extension SearchViewController {
                 
                 controller.selectionProtocol = self
             }
+        } else if (segue.identifier == "showChooseLangController") {
+             if let controller: ChooseLangController = segue.destination as? ChooseLangController {
+                controller.dict = self.langDict
+                controller.itemChooseDelegate = self
+            }
         }
     }
     
@@ -1171,4 +1205,15 @@ extension SearchViewController: SelectionProtocol {
         
         self.selectedEntity = .none
     }
+}
+
+extension SearchViewController: ItemChooseDelegate {
+    func itemChosen(itemId: String, itemVal: String) {
+        self.selectedLang = itemVal
+        self.searchQuery.language_id = self.langDict[self.selectedLang] as? String ?? ""
+        self.tableView.reloadRows(at: [IndexPath(row: 3, section: 2)], with: .automatic)
+    }
+    
+    
+    
 }

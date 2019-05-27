@@ -143,6 +143,8 @@
 		3C9C87BA1CE3557D00C10410 /* RecommendationsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9C87B91CE3557D00C10410 /* RecommendationsController.swift */; };
 		3C9DFC362004B62500AE15AD /* InboxController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9DFC352004B62500AE15AD /* InboxController.swift */; };
 		3C9FEDCB2048357000D8C91E /* AuthorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9FEDCA2048357000D8C91E /* AuthorViewController.swift */; };
+		3CA1EC7F229ABA0800B7DFE2 /* ChooseLangController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CA1EC7E229ABA0800B7DFE2 /* ChooseLangController.swift */; };
+		3CA1EC81229ABEA800B7DFE2 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CA1EC80229ABEA800B7DFE2 /* Utils.swift */; };
 		3CAEB2C91FFE501C00C7035C /* XibView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CAEB2C81FFE501C00C7035C /* XibView.swift */; };
 		3CAEB2CB1FFE505C00C7035C /* workCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CAEB2CA1FFE505C00C7035C /* workCell.xib */; };
 		3CB2A74B1F8BB237004A6F76 /* SerieViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB2A74A1F8BB237004A6F76 /* SerieViewController.swift */; };
@@ -402,6 +404,8 @@
 		3CA0A7B31F7BCC7900ADEE04 /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "pt-PT"; path = "pt-PT.lproj/LaunchScreen.xib"; sourceTree = "<group>"; };
 		3CA0A7B41F7BCC7A00ADEE04 /* ko */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ko; path = ko.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		3CA0A7B51F7BCCBC00ADEE04 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3CA1EC7E229ABA0800B7DFE2 /* ChooseLangController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChooseLangController.swift; path = Controller/ChooseLangController.swift; sourceTree = "<group>"; };
+		3CA1EC80229ABEA800B7DFE2 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		3CAEB2C81FFE501C00C7035C /* XibView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = XibView.swift; path = View/Custom/XibView.swift; sourceTree = "<group>"; };
 		3CAEB2CA1FFE505C00C7035C /* workCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = workCell.xib; path = View/workCell.xib; sourceTree = "<group>"; };
 		3CB2A74A1F8BB237004A6F76 /* SerieViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SerieViewController.swift; path = Controller/SerieViewController.swift; sourceTree = "<group>"; };
@@ -723,6 +727,7 @@
 				3CF49D4F21F5C86C007C1357 /* PlainTextController.swift */,
 				3CF2ECEF2202EC3A00481C03 /* PopOverViewController.swift */,
 				3CF2ECF12202F57A00481C03 /* AutoCompleteController.swift */,
+				3CA1EC7E229ABA0800B7DFE2 /* ChooseLangController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -779,6 +784,7 @@
 				1D8777911B99EDF600CEA738 /* DefaultsManager.swift */,
 				3C8FF85520063BE8006C01DF /* ExtensionsHelper.swift */,
 				3C6644EB21A428B600BD85AC /* Localisator.swift */,
+				3CA1EC80229ABEA800B7DFE2 /* Utils.swift */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -1190,6 +1196,7 @@
 				3CB2A74F1F8BB4F8004A6F76 /* SerieInfoCell.swift in Sources */,
 				3CDF1FAB1F39AA57004D858F /* WorksParser.swift in Sources */,
 				3CBDC9AC1E9E244500A97C24 /* DBChapter+CoreDataProperties.swift in Sources */,
+				3CA1EC7F229ABA0800B7DFE2 /* ChooseLangController.swift in Sources */,
 				3C80880F205A945800B172B3 /* DBWorkNotifItem+CoreDataProperties.swift in Sources */,
 				3C6644EA219AF4F600BD85AC /* AuthorCell.swift in Sources */,
 				3CF1D00E1C87182300D219B2 /* HistoryViewController.swift in Sources */,
@@ -1244,6 +1251,7 @@
 				3C74C71E1FD05E67008D191B /* FandomListController.swift in Sources */,
 				3C13D2CE1CCA1D0D008B023B /* CommentCell.swift in Sources */,
 				3C80880E205A945800B172B3 /* DBWorkNotifItem+CoreDataClass.swift in Sources */,
+				3CA1EC81229ABEA800B7DFE2 /* Utils.swift in Sources */,
 				3C89958F1E95169B00D511CD /* DBCharacterItem+CoreDataProperties.swift in Sources */,
 				3C3105481C7F3D260065256E /* LoginViewController.swift in Sources */,
 				3C8FF85620063BE8006C01DF /* ExtensionsHelper.swift in Sources */,
