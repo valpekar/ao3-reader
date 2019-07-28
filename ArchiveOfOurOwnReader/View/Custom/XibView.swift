@@ -75,6 +75,10 @@ class XibView : UIView {
             [.flexibleWidth, .flexibleHeight]
         addSubview(view)
         contentView = view
+        
+        self.downloadButton.accessibilityLabel = NSLocalizedString("DownloadWrk", comment: "")
+        self.deleteButton.accessibilityLabel = NSLocalizedString("DeleteWrk", comment: "")
+
     }
     
     func loadViewFromNib() -> UIView? {

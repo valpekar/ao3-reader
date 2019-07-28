@@ -5,59 +5,59 @@ PODS:
   - Appirater (2.3.1)
   - DynamicBlurView (3.0.1)
   - ExpandableLabel (0.5.2)
-  - Firebase (6.1.0):
-    - Firebase/Core (= 6.1.0)
-  - Firebase/AdMob (6.1.0):
+  - Firebase (6.5.0):
+    - Firebase/Core (= 6.5.0)
+  - Firebase/AdMob (6.5.0):
     - Firebase/CoreOnly
-    - Google-Mobile-Ads-SDK (~> 7.43)
-  - Firebase/Analytics (6.1.0):
+    - Google-Mobile-Ads-SDK (~> 7.47)
+  - Firebase/Analytics (6.5.0):
     - Firebase/Core
-  - Firebase/Core (6.1.0):
+  - Firebase/Core (6.5.0):
     - Firebase/CoreOnly
-    - FirebaseAnalytics (= 6.0.1)
-  - Firebase/CoreOnly (6.1.0):
-    - FirebaseCore (= 6.0.1)
-  - FirebaseAnalytics (6.0.1):
-    - FirebaseCore (~> 6.0)
-    - FirebaseInstanceID (~> 4.1)
-    - GoogleAppMeasurement (= 6.0.1)
+    - FirebaseAnalytics (= 6.0.4)
+  - Firebase/CoreOnly (6.5.0):
+    - FirebaseCore (= 6.1.0)
+  - FirebaseAnalytics (6.0.4):
+    - FirebaseCore (~> 6.1)
+    - FirebaseInstanceID (~> 4.2)
+    - GoogleAppMeasurement (= 6.0.4)
     - GoogleUtilities/AppDelegateSwizzler (~> 6.0)
     - GoogleUtilities/MethodSwizzler (~> 6.0)
     - GoogleUtilities/Network (~> 6.0)
     - "GoogleUtilities/NSData+zlib (~> 6.0)"
     - nanopb (~> 0.3)
-  - FirebaseCore (6.0.1):
+  - FirebaseCore (6.1.0):
     - GoogleUtilities/Environment (~> 6.0)
     - GoogleUtilities/Logger (~> 6.0)
-  - FirebaseInstanceID (4.1.0):
+  - FirebaseInstanceID (4.2.2):
     - FirebaseCore (~> 6.0)
     - GoogleUtilities/Environment (~> 6.0)
     - GoogleUtilities/UserDefaults (~> 6.0)
-  - Google-Mobile-Ads-SDK (7.44.0):
+  - Google-Mobile-Ads-SDK (7.47.0):
     - GoogleAppMeasurement (~> 6.0)
-  - GoogleAppMeasurement (6.0.1):
+  - GoogleAppMeasurement (6.0.4):
     - GoogleUtilities/AppDelegateSwizzler (~> 6.0)
     - GoogleUtilities/MethodSwizzler (~> 6.0)
     - GoogleUtilities/Network (~> 6.0)
     - "GoogleUtilities/NSData+zlib (~> 6.0)"
     - nanopb (~> 0.3)
-  - GoogleUtilities/AppDelegateSwizzler (6.1.0):
+  - GoogleUtilities/AppDelegateSwizzler (6.2.3):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
     - GoogleUtilities/Network
-  - GoogleUtilities/Environment (6.1.0)
-  - GoogleUtilities/Logger (6.1.0):
+  - GoogleUtilities/Environment (6.2.3)
+  - GoogleUtilities/Logger (6.2.3):
     - GoogleUtilities/Environment
-  - GoogleUtilities/MethodSwizzler (6.1.0):
+  - GoogleUtilities/MethodSwizzler (6.2.3):
     - GoogleUtilities/Logger
-  - GoogleUtilities/Network (6.1.0):
+  - GoogleUtilities/Network (6.2.3):
     - GoogleUtilities/Logger
     - "GoogleUtilities/NSData+zlib"
     - GoogleUtilities/Reachability
-  - "GoogleUtilities/NSData+zlib (6.1.0)"
-  - GoogleUtilities/Reachability (6.1.0):
+  - "GoogleUtilities/NSData+zlib (6.2.3)"
+  - GoogleUtilities/Reachability (6.2.3):
     - GoogleUtilities/Logger
-  - GoogleUtilities/UserDefaults (6.1.0):
+  - GoogleUtilities/UserDefaults (6.2.3):
     - GoogleUtilities/Logger
   - HexColors (4.0.0)
   - nanopb (0.3.901):
@@ -132,13 +132,13 @@ SPEC CHECKSUMS:
   Appirater: 44a4651f7912a17dc906b655f0c215d5bb768b84
   DynamicBlurView: b1df5415f9bd31897549e5d7077e5ec120a4d636
   ExpandableLabel: c2fab6d27860c572d67134b30522a5917746171d
-  Firebase: 8d77bb33624ae9b62d745d82ec023de5f70f7e4f
-  FirebaseAnalytics: 629301c2b9925f3537d4093a17a72751ae5b7084
-  FirebaseCore: 66bdef3b310a026880e2a5bc8aa586ab62ce4543
-  FirebaseInstanceID: 27bed93a59b6685f5c3e0c028a878a764fd75c33
-  Google-Mobile-Ads-SDK: 1e72b4f438d997ab0f2ee62b3a7b0cbcc87c47cb
-  GoogleAppMeasurement: 51d8d9ea48f0ca44484d29cfbdef976fbd4fc336
-  GoogleUtilities: 84df567c76ca84f67b7bb40e769fdd4acc746a10
+  Firebase: dedc9e48ea3f3649ad5f6b982f8a0c73508a14b5
+  FirebaseAnalytics: 3fb375bc9d13779add4039716f868d233a473fad
+  FirebaseCore: aecf02fb2274ec361b9bebeac112f5daa18273bd
+  FirebaseInstanceID: 662b8108a09fe9ed01aafdedba100fde8536b0f6
+  Google-Mobile-Ads-SDK: a10b30f4a51a3283df7df3c9ea7e84553b508e4b
+  GoogleAppMeasurement: 183bd916af7f80deb67c01888368f1108d641832
+  GoogleUtilities: d2b0e277a95962e09bb27f5cd42f5f0b6a506c7d
   HexColors: 5f95843ef89aff6a72e1fd3a8ebabf205cc43379
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   PopupDialog: 42fb7a0bc4fafdf89fef8b5b2b127a6023f3e1cc
@@ -151,4 +151,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 8575eed14da8fb1fa5c40f66e1c415c87fd84265
 
-COCOAPODS: 1.5.2
+COCOAPODS: 1.7.1

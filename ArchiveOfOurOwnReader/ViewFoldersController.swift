@@ -15,6 +15,10 @@ class ViewFoldersController: BaseFolderController {
     @IBOutlet weak var unCatButton:UIButton!
     @IBOutlet weak var updButton:UIButton!
     
+    @IBOutlet weak var editFButtonItem: UIBarButtonItem!
+    @IBOutlet weak var addButtonItem: UIBarButtonItem!
+    @IBOutlet weak var sortButtonItem: UIBarButtonItem!
+    
     var showUpdates = false
     
     override func viewDidLoad() {
@@ -60,6 +64,8 @@ class ViewFoldersController: BaseFolderController {
         self.updateView()
         
         Answers.logCustomEvent(withName: "View Folders", customAttributes: ["count" : fetchedResultsController?.fetchedObjects?.count ?? 0])
+   
+        setupAccessibility()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -68,6 +74,13 @@ class ViewFoldersController: BaseFolderController {
         showUpdates = false
         
         updateView()
+    }
+    
+    func setupAccessibility() {
+        self.searchBar.accessibilityLabel = NSLocalizedString("Search", comment: "")
+        self.sortButtonItem.accessibilityLabel = NSLocalizedString("SortBy", comment: "")
+        self.addButtonItem.accessibilityLabel = NSLocalizedString("AddFolder", comment: "")
+        self.editFButtonItem.accessibilityLabel = NSLocalizedString("EditFolders", comment: "")
     }
     
     private func updateView() {

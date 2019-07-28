@@ -44,7 +44,7 @@ class FavoritesSiteController : ListViewController, UITableViewDataSource, UITab
         
         self.title = Localization("Bookmarks")
         
-        
+        setupAccessibility()
         
     }
     
@@ -69,6 +69,10 @@ class FavoritesSiteController : ListViewController, UITableViewDataSource, UITab
             requestFavs()
         }
         }
+    }
+    
+    func setupAccessibility() {
+        self.searchBar.accessibilityLabel = NSLocalizedString("Search", comment: "")
     }
     
     @objc func refresh(_ sender:AnyObject) {

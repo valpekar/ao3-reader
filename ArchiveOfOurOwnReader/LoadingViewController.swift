@@ -108,7 +108,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
     }
     
     func loadAdMobInterstitial() {
-        interstitial = GADInterstitial(adUnitID: "ca-app-pub-8760316520462117/1282893180")
+        interstitial = GADInterstitial(adUnitID: "ca-app-pub-8760316520462117/5435044991" ) //old - "ca-app-pub-8760316520462117/1282893180"
         interstitial?.delegate = self
         let request = GADRequest()
         

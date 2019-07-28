@@ -214,6 +214,13 @@
 "UnsubscribeonAO3" = "Unsubscribe via AO3";
 "RelationshipNotSpecified" = "Relationship Not Specified";
 "CharacterNotSpecified" = "Character Not Specified";
+"StoryOptions" = "Story Options";
+"ExtSearch" = "Advanced Search";
+"FanficsCategories" = "Fanfics Categories";
+"AuthorView" = "Touch Author View to Open Author Profile";
+"AddFolder" = "Create New Group";
+"EditFolders" = "Edit Existing Groups";
+"WorkFolder" = "Move Story to Folder";
 
 
 

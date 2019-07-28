@@ -33,7 +33,13 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
     @IBOutlet weak var tryAgainButton:UIButton!
     @IBOutlet weak var checkStatusButton:UIButton!
     
+    @IBOutlet weak var extSearchItem: UIBarButtonItem!
+    @IBOutlet weak var categoriesItem: UIBarButtonItem!
+    
     var resultSearchController = UISearchController()
+    
+    /// The view that holds the native ad.
+    @IBOutlet weak var nativeAdPlaceholder: UIView!
     
     var query: SearchQuery = SearchQuery()
     
@@ -134,6 +140,7 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
             openWorkDetails(workId: mWorkId, fromNotif: false)
         }
         
+         setupAccessibility()
     }
     
     var triedOpenDetails = 0
@@ -173,6 +180,11 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
             }
         }
         self.updateAppBadge()
+    }
+    
+    func setupAccessibility() {
+        extSearchItem.accessibilityLabel = NSLocalizedString("ExtSearch", comment: "")
+        categoriesItem.accessibilityLabel = NSLocalizedString("FanficsCategories", comment: "")
     }
     
     func openWorkDetails(workId: String, fromNotif: Bool) {
@@ -300,6 +312,10 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        return createFeedCell(tableView: tableView, indexPath: indexPath)
+    }
+    
+    func createFeedCell(tableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
         let cellIdentifier: String = "FeedCell"
         
         var cell: FeedTableViewCell! = nil
@@ -316,7 +332,7 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
         let curWork:NewsFeedItem = works[indexPath.row]
         
         cell = fillCellXib(cell: cell, curWork: curWork, needsDelete: false, index: indexPath.row)
-        
+         
         cell.workCellView.tag = indexPath.row
         cell.workCellView.downloadButtonDelegate = self
         

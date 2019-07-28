@@ -57,6 +57,9 @@ class DownloadedCell: UITableViewCell {
     
     override func layoutSubviews() {
         self.bgView.layer.cornerRadius = 5
+        
+        self.deleteButton.accessibilityLabel = NSLocalizedString("DeleteWrk", comment: "")
+        self.folderButton.accessibilityLabel = NSLocalizedString("WorkFolder", comment: "")
     }
 }
 

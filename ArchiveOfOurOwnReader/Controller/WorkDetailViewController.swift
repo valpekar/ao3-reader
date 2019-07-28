@@ -36,6 +36,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     @IBOutlet weak var authorLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var readButton: UIButton!
+    @IBOutlet weak var kudosButton: UIButton!
     @IBOutlet weak var titleLabel: UILabel!
     
     @IBOutlet weak var langLabel: UILabel!
@@ -204,6 +205,8 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                                    customAttributes: [:])
             Analytics.logEvent("WorkDetail_from_notification", parameters: [:])
         }
+        
+        setupAccessibility()
     }
     
     override func viewDidLayoutSubviews() {
@@ -272,6 +275,12 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         DefaultsManager.putString("", key: DefaultsManager.LASTWRKCHAPTER)
         
          self.modalDelegate?.controllerDidClosed()
+    }
+    
+    func setupAccessibility() {
+        self.downloadTrashButton.accessibilityLabel = NSLocalizedString("StoryOptions", comment: "")
+        self.kudosButton.accessibilityLabel = NSLocalizedString("AddKudos", comment: "")
+        self.authorView.accessibilityLabel = NSLocalizedString("AuthorView", comment: "")
     }
     
     @IBAction func kudosTouched(_ sender: AnyObject) {

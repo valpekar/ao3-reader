@@ -183,6 +183,8 @@
 		3CD808541D804F310099F778 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3CD808531D804F310099F778 /* GoogleService-Info.plist */; };
 		3CDC4A2C1E825F5100D9438E /* AboutSubscriptionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CDC4A2B1E825F5100D9438E /* AboutSubscriptionController.swift */; };
 		3CDF1FAB1F39AA57004D858F /* WorksParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CDF1FAA1F39AA57004D858F /* WorksParser.swift */; };
+		3CE5399C22AD215A00C62C06 /* comic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3CE5399B22AD215A00C62C06 /* comic.ttf */; };
+		3CE5399E22AD390F00C62C06 /* UnifiedNativeAdView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CE5399D22AD390F00C62C06 /* UnifiedNativeAdView.xib */; };
 		3CEAA530200F7975003FEFDE /* CheckDownloadItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEAA52F200F7975003FEFDE /* CheckDownloadItem.swift */; };
 		3CF1D00E1C87182300D219B2 /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF1D00D1C87182300D219B2 /* HistoryViewController.swift */; };
 		3CF2ECF02202EC3A00481C03 /* PopOverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF2ECEF2202EC3A00481C03 /* PopOverViewController.swift */; };
@@ -454,6 +456,8 @@
 		3CD8F8CE1CE4808F00C3D5BB /* ArchiveOfOurOwnReader 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ArchiveOfOurOwnReader 3.xcdatamodel"; sourceTree = "<group>"; };
 		3CDC4A2B1E825F5100D9438E /* AboutSubscriptionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AboutSubscriptionController.swift; path = Controller/AboutSubscriptionController.swift; sourceTree = "<group>"; };
 		3CDF1FAA1F39AA57004D858F /* WorksParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WorksParser.swift; path = Utils/WorksParser.swift; sourceTree = "<group>"; };
+		3CE5399B22AD215A00C62C06 /* comic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = comic.ttf; sourceTree = "<group>"; };
+		3CE5399D22AD390F00C62C06 /* UnifiedNativeAdView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = UnifiedNativeAdView.xib; path = View/UnifiedNativeAdView.xib; sourceTree = "<group>"; };
 		3CEAA52F200F7975003FEFDE /* CheckDownloadItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CheckDownloadItem.swift; path = Object/CheckDownloadItem.swift; sourceTree = "<group>"; };
 		3CF1D00D1C87182300D219B2 /* HistoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HistoryViewController.swift; path = Controller/HistoryViewController.swift; sourceTree = "<group>"; };
 		3CF2ECEF2202EC3A00481C03 /* PopOverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PopOverViewController.swift; path = Controller/PopOverViewController.swift; sourceTree = "<group>"; };
@@ -673,6 +677,7 @@
 				28B6DC351B4E3F5900F34529 /* LaunchScreen.xib */,
 				28B6DC301B4E3F5900F34529 /* Main.storyboard */,
 				3CAEB2CA1FFE505C00C7035C /* workCell.xib */,
+				3CE5399D22AD390F00C62C06 /* UnifiedNativeAdView.xib */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -812,6 +817,7 @@
 		3CB5072720875C1A004AE0B8 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				3CE5399B22AD215A00C62C06 /* comic.ttf */,
 				3C230AF620E537CA008B9476 /* RFS_Juan_Casco.ttf */,
 				3CB5073420876D9A004AE0B8 /* Starjedi.ttf */,
 				3CB5073220876CA2004AE0B8 /* NITEMARE.TTF */,
@@ -1017,6 +1023,7 @@
 				1D7C4ED41BB182C400F4ECFA /* sortby_map.plist in Resources */,
 				1D03127F1BB57D640008027E /* sortdirection_map.plist in Resources */,
 				3CB5072B20875ED6004AE0B8 /* Rooney-Regular.ttf in Resources */,
+				3CE5399C22AD215A00C62C06 /* comic.ttf in Resources */,
 				3C3073391EE7EB6600D1509E /* Localizable.strings in Resources */,
 				3CD808541D804F310099F778 /* GoogleService-Info.plist in Resources */,
 				28B6DC341B4E3F5900F34529 /* Images.xcassets in Resources */,
@@ -1025,6 +1032,7 @@
 				3CB5073520876DA5004AE0B8 /* Starjedi.ttf in Resources */,
 				3C230AF720E537D5008B9476 /* RFS_Juan_Casco.ttf in Resources */,
 				3CB5072F208760FA004AE0B8 /* FuturaBook.ttf in Resources */,
+				3CE5399E22AD390F00C62C06 /* UnifiedNativeAdView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1093,7 +1101,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-ArchiveOfOurOwnReader/Pods-ArchiveOfOurOwnReader-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-ArchiveOfOurOwnReader/Pods-ArchiveOfOurOwnReader-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework",
 				"${BUILT_PRODUCTS_DIR}/Appirater/Appirater.framework",
@@ -1130,7 +1138,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ArchiveOfOurOwnReader/Pods-ArchiveOfOurOwnReader-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ArchiveOfOurOwnReader/Pods-ArchiveOfOurOwnReader-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */

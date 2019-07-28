@@ -138,6 +138,14 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
         if (purchased == false && donated == false) {
             loadAdMobRewared()
         }
+        
+        setupAccessibility()
+    }
+    
+    func setupAccessibility() {
+        self.downloadButton.accessibilityLabel = NSLocalizedString("DownloadWrk", comment: "")
+        self.commentsButton.accessibilityLabel = NSLocalizedString("ViewComments", comment: "")
+        self.kudosButton.accessibilityLabel = NSLocalizedString("AddKudos", comment: "")
     }
     
     override func doneButtonAction() {
@@ -1297,6 +1305,8 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
             fontCss = "@font-face { font-family: \"\(fontFamily)\"; src: url(Starjedi.ttf); format('truetype')} "
         } else if (fontFamily.contains("Romance Fatal Serif")) {
             fontCss = "@font-face { font-family: \"\(fontFamily)\"; src: url(RFS_Juan_Casco.ttf); format('truetype')} "
+        } else if (fontFamily.contains("Comic")) {
+            fontCss = "@font-face { font-family: \"\(fontFamily)\"; src: url(comic.ttf); format('truetype')} "
         }
         
         let fontStr = "font-size: " + String(format:"%d", fontSize) + "%; \(fontFamilyStr); "
@@ -1498,6 +1508,12 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
             self.loadCurrentTheme()
         }
         
+        let buttonC = DefaultButton(title: "Comic Sans") {
+            self.fontFamily = "Comic"
+            DefaultsManager.putString(self.fontFamily, key: DefaultsManager.FONT_FAMILY)
+            self.loadCurrentTheme()
+        }
+        
         let buttonThree = DefaultButton(title: "Courier New") {
             self.fontFamily = "Courier New"
             DefaultsManager.putString(self.fontFamily, key: DefaultsManager.FONT_FAMILY)
@@ -1588,7 +1604,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
             }
         }
         
-        popup.addButtons([buttonOne, buttonTwo, buttonThree, button4, button5, button6, button7, button8, button9, button10, button11, button12, button13, buttonCancel])
+        popup.addButtons([buttonOne, buttonTwo, buttonC, buttonThree, button4, button5, button6, button7, button8, button9, button10, button11, button12, button13, buttonCancel])
         
         self.present(popup, animated: true, completion: nil)
         

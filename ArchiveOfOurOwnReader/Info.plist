@@ -17,11 +17,11 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.96</string>
+	<string>1.97</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>145</string>
+	<string>146</string>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>
@@ -42,6 +42,8 @@
 			</dict>
 		</array>
 	</dict>
+	<key>GADApplicationIdentifier</key>
+	<string>ca-app-pub-8760316520462117~7329426789</string>
 	<key>GADIsAdManagerApp</key>
 	<true/>
 	<key>LSRequiresIPhoneOS</key>

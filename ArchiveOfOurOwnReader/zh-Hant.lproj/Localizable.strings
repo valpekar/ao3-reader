@@ -152,8 +152,8 @@
 "MarkAsUnread" = "標記為未讀";
 "DeleteFromInbox" = "從收件箱中刪除";
 "Reply" = "回复";
-"Approve" = "Approve";
-"Decline" = "Decline";
+"Approve" = "批准";
+"Decline" = "下降";
 "CouldNotReply" = "Could Not Reply";
 "CannotMarkItem" = "Could Not Mark Item";
 "SendingReply" = "Sending Reply";
@@ -186,21 +186,21 @@
 "Works" = "Works";
 "Series" = "Series";
 "Share" = "Share";
-"SecuritySettings" = "Security Settings";
+"SecuritySettings" = "安全設定";
 "MyAO3" = "My AO3 Account";
 "MyPseud" = "Pseud for bookmarks, history etc";
 "Theme" = "Theme";
-"AboutSub" = "About Subscription";
-"Day" = "Day";
-"Night" = "Night";
-"PPolicy" = "Privacy Policy and Terms of Use";
+"AboutSub" = "關於訂閱";
+"Day" = "天";
+"Night" = "晚";
+"PPolicy" = "隱私政策和使用條款";
 "Inbox" = "Inbox";
 "MyHighlights" = "My Highlights";
 "MyWorks" = "My Works";
-"ClearAllNotif" = "Clear All Notifications";
+"ClearAllNotif" = "清除所有通知";
 "ProtectBio" = "Protect with Biometric ID or passcode";
 "PremiumFeaturesDesc" = " • Get work recommendations every week \n • No ads, premium fonts \n • Unlimited offline reading";
-"RestorePrevPurchase" = "Restore Previous Purchase";
+"RestorePrevPurchase" = "恢復以前的購買";
 "SystemLanguage" = "系統語言";
 "English" = "English";
 "LangChanged" = "語言成功更改。 請重新啟動應用以使更改生效。";
@@ -212,6 +212,13 @@
 "UnsubscribeonAO3" = "Unsubscribe via AO3";
 "RelationshipNotSpecified" = "Relationship Not Specified";
 "CharacterNotSpecified" = "Character Not Specified";
+"StoryOptions" = "故事選項";
+"ExtSearch" = "高級搜索";
+"FanficsCategories" = "Fanfics Categories";
+"AuthorView" = "Touch Author View to Open Author Profile";
+"AddFolder" = "Create New Group";
+"EditFolders" = "Edit Existing Groups";
+"WorkFolder" = "Move Story to Folder";
 
 
 

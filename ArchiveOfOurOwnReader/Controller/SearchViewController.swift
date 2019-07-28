@@ -173,6 +173,8 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
            (cell as? SearchTagCell)?.textView.text = searchQuery.include_tags
             (cell as? SearchTagCell)?.textView.tag = TAG_INCLUDE_TAGS
             
+            (cell as? SearchTagCell)?.textView.accessibilityLabel = "\(NSLocalizedString("IncludeTags", comment: "")) input area"
+            
             if (theme == DefaultsManager.THEME_DAY) {
                 (cell as? SearchTagCell)?.textView.textColor = UIColor.black
                 (cell as? SearchTagCell)?.textView.backgroundColor = UIColor.white
@@ -190,6 +192,7 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
                 (cell as? SearchTagCell)?.textView.text = searchQuery.exclude_tags
            // }
             (cell as? SearchTagCell)?.textView.tag = TAG_EXCLUDE_TAGS
+            (cell as? SearchTagCell)?.textView.accessibilityLabel = "\(NSLocalizedString("ExcludeTags", comment: "")) input area"
             
             if (theme == DefaultsManager.THEME_DAY) {
                 (cell as? SearchTagCell)?.textView.textColor = UIColor.black
@@ -215,18 +218,23 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
             case 0:
                 (cell as? SearchTagWithTextCell)?.textField.tag = TAG_ANYFIELD
                 (cell as? SearchTagWithTextCell)?.textField.text = searchQuery.tag
+                (cell as? SearchTagWithTextCell)?.textField.accessibilityLabel = "\(NSLocalizedString("AnyField", comment: "")) input area"
             case 1:
                 (cell as? SearchTagWithTextCell)?.textField.tag = TAG_TITLE
                 (cell as? SearchTagWithTextCell)?.textField.text = searchQuery.title
+                (cell as? SearchTagWithTextCell)?.textField.accessibilityLabel = "\(NSLocalizedString("Title", comment: "")) input area"
             case 2:
                 (cell as? SearchTagWithTextCell)?.textField.tag = TAG_AUTHOR
                 (cell as? SearchTagWithTextCell)?.textField.text = searchQuery.creators
+                (cell as? SearchTagWithTextCell)?.textField.accessibilityLabel = "\(NSLocalizedString("Author", comment: "")) input area"
             case 3:
                 (cell as? SearchTagWithTextCell)?.textField.tag = TAG_LANGUAGE
                 (cell as? SearchTagWithTextCell)?.textField.text = selectedLang
+                (cell as? SearchTagWithTextCell)?.textField.accessibilityLabel = "\(NSLocalizedString("Language", comment: "")) input area"
             case 4:
                 (cell as? SearchTagWithTextCell)?.textField.tag = TAG_RATINGS
                 (cell as? SearchTagWithTextCell)?.textField.text = selectedRaiting
+                (cell as? SearchTagWithTextCell)?.textField.accessibilityLabel = "\(NSLocalizedString("Rating", comment: "")) input area"
             case 5:
                 cell = (tableView.dequeueReusableCell(withIdentifier: "searchSwitchCell") as? SearchSwitchCell)!
                 (cell as? SearchSwitchCell)?.label.text = Localization("SingleChpt")

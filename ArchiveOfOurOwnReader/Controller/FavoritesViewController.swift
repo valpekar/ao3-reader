@@ -14,6 +14,7 @@ import Firebase
 class FavoritesViewController: LoadingViewController, UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating, UISearchBarDelegate, EditFoldersProtocol {
     
     @IBOutlet weak var tableView:UITableView!
+    @IBOutlet weak var sortButtonItem: UIBarButtonItem!
         
     var downloadedFandoms: [DBFandom] = []
     
@@ -118,6 +119,8 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         }
         // Reload the table
         //self.tableView.reloadData()
+        
+        setupAccessibility()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -156,6 +159,10 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         } else {
             self.tableView.backgroundColor = AppDelegate.greyDarkBg
         }
+    }
+    
+    func setupAccessibility() {
+        self.sortButtonItem.accessibilityLabel = NSLocalizedString("SortBy", comment: "")
     }
     
 //    @IBAction func restoreTouched(_ sender: AnyObject) {

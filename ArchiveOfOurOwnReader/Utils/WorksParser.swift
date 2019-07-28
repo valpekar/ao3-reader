@@ -54,11 +54,11 @@ class WorksParser {
             if (workGroup.count > 0) {
                 
                 var worksList : [TFHppleElement]? = nil
-                if let wList = workGroup[0].search(withXPathQuery: "//li[@class='\(liEl) blurb group']") as? [TFHppleElement],
-                    wList.count > 0 {
+                let txtEl: String = "//li[@class='\(liEl) blurb group']"
+
+                if let wList = workGroup[0].search(withXPathQuery: txtEl) as? [TFHppleElement] {
                     worksList = wList
-                } else if let ownList = workGroup[0].search(withXPathQuery: "//li[@class='own \(liEl) blurb group']") as? [TFHppleElement],
-                    ownList.count > 0 {
+                } else if let ownList = workGroup[0].search(withXPathQuery: "//li[@class='own \(liEl) blurb group']") as? [TFHppleElement] {
                     worksList = ownList
                 }
                 if let worksList : [TFHppleElement] = worksList {
