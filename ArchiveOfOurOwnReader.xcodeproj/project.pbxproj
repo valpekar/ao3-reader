@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0827356023096881008554A0 /* NativeAdTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0827355F23096881008554A0 /* NativeAdTableViewCell.swift */; };
+		082735622309812B008554A0 /* NativeAdTableViewCell2.xib in Resources */ = {isa = PBXBuildFile; fileRef = 082735612309812A008554A0 /* NativeAdTableViewCell2.xib */; };
+		08273564230989B0008554A0 /* NativeAdsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08273563230989B0008554A0 /* NativeAdsManager.swift */; };
 		1D03127F1BB57D640008027E /* sortdirection_map.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1D03127E1BB57D640008027E /* sortdirection_map.plist */; };
 		1D0312811BB57D9A0008027E /* rating_map.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1D0312801BB57D9A0008027E /* rating_map.plist */; };
 		1D04502E1BC50C4000ECE572 /* ModalControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D04502D1BC50C4000ECE572 /* ModalControllerDelegate.swift */; };
@@ -184,7 +187,7 @@
 		3CDC4A2C1E825F5100D9438E /* AboutSubscriptionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CDC4A2B1E825F5100D9438E /* AboutSubscriptionController.swift */; };
 		3CDF1FAB1F39AA57004D858F /* WorksParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CDF1FAA1F39AA57004D858F /* WorksParser.swift */; };
 		3CE5399C22AD215A00C62C06 /* comic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3CE5399B22AD215A00C62C06 /* comic.ttf */; };
-		3CE5399E22AD390F00C62C06 /* UnifiedNativeAdView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CE5399D22AD390F00C62C06 /* UnifiedNativeAdView.xib */; };
+		3CE5399E22AD390F00C62C06 /* NativeAdTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CE5399D22AD390F00C62C06 /* NativeAdTableViewCell.xib */; };
 		3CEAA530200F7975003FEFDE /* CheckDownloadItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEAA52F200F7975003FEFDE /* CheckDownloadItem.swift */; };
 		3CF1D00E1C87182300D219B2 /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF1D00D1C87182300D219B2 /* HistoryViewController.swift */; };
 		3CF2ECF02202EC3A00481C03 /* PopOverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF2ECEF2202EC3A00481C03 /* PopOverViewController.swift */; };
@@ -225,6 +228,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0827355F23096881008554A0 /* NativeAdTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NativeAdTableViewCell.swift; path = View/NativeAdTableViewCell.swift; sourceTree = "<group>"; };
+		082735612309812A008554A0 /* NativeAdTableViewCell2.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NativeAdTableViewCell2.xib; path = View/NativeAdTableViewCell2.xib; sourceTree = "<group>"; };
+		08273563230989B0008554A0 /* NativeAdsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NativeAdsManager.swift; sourceTree = "<group>"; };
 		1835FFB38634AE9749554A5C /* Pods-ArchiveOfOurOwnReader.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArchiveOfOurOwnReader.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ArchiveOfOurOwnReader/Pods-ArchiveOfOurOwnReader.debug.xcconfig"; sourceTree = "<group>"; };
 		1D03127E1BB57D640008027E /* sortdirection_map.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = sortdirection_map.plist; sourceTree = "<group>"; };
 		1D0312801BB57D9A0008027E /* rating_map.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = rating_map.plist; sourceTree = "<group>"; };
@@ -457,7 +463,7 @@
 		3CDC4A2B1E825F5100D9438E /* AboutSubscriptionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AboutSubscriptionController.swift; path = Controller/AboutSubscriptionController.swift; sourceTree = "<group>"; };
 		3CDF1FAA1F39AA57004D858F /* WorksParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WorksParser.swift; path = Utils/WorksParser.swift; sourceTree = "<group>"; };
 		3CE5399B22AD215A00C62C06 /* comic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = comic.ttf; sourceTree = "<group>"; };
-		3CE5399D22AD390F00C62C06 /* UnifiedNativeAdView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = UnifiedNativeAdView.xib; path = View/UnifiedNativeAdView.xib; sourceTree = "<group>"; };
+		3CE5399D22AD390F00C62C06 /* NativeAdTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = NativeAdTableViewCell.xib; path = View/NativeAdTableViewCell.xib; sourceTree = "<group>"; };
 		3CEAA52F200F7975003FEFDE /* CheckDownloadItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CheckDownloadItem.swift; path = Object/CheckDownloadItem.swift; sourceTree = "<group>"; };
 		3CF1D00D1C87182300D219B2 /* HistoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HistoryViewController.swift; path = Controller/HistoryViewController.swift; sourceTree = "<group>"; };
 		3CF2ECEF2202EC3A00481C03 /* PopOverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PopOverViewController.swift; path = Controller/PopOverViewController.swift; sourceTree = "<group>"; };
@@ -677,7 +683,8 @@
 				28B6DC351B4E3F5900F34529 /* LaunchScreen.xib */,
 				28B6DC301B4E3F5900F34529 /* Main.storyboard */,
 				3CAEB2CA1FFE505C00C7035C /* workCell.xib */,
-				3CE5399D22AD390F00C62C06 /* UnifiedNativeAdView.xib */,
+				082735612309812A008554A0 /* NativeAdTableViewCell2.xib */,
+				3CE5399D22AD390F00C62C06 /* NativeAdTableViewCell.xib */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -746,6 +753,7 @@
 				3C93D4AB1F22297A00948D08 /* ButtonWithSection.swift */,
 				3C04659B1F8CE230003B6AE7 /* RoundImageView.swift */,
 				3CAEB2C81FFE501C00C7035C /* XibView.swift */,
+				0827355F23096881008554A0 /* NativeAdTableViewCell.swift */,
 			);
 			name = Custom;
 			sourceTree = "<group>";
@@ -782,6 +790,7 @@
 		3C00E9C11D9C05E300B0BBDF /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				08273563230989B0008554A0 /* NativeAdsManager.swift */,
 				3C58BF39210F30A000A66EFA /* Logger.swift */,
 				3C00E9C21D9C05FA00B0BBDF /* CustomEncoding.swift */,
 				3CC6A2871E66800F005D1255 /* Reachability.swift */,
@@ -956,7 +965,7 @@
 					28B6DC231B4E3F5900F34529 = {
 						CreatedOnToolsVersion = 6.4;
 						DevelopmentTeam = DL7Z77P4W8;
-						LastSwiftMigration = 1000;
+						LastSwiftMigration = 1030;
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -1023,6 +1032,7 @@
 				1D7C4ED41BB182C400F4ECFA /* sortby_map.plist in Resources */,
 				1D03127F1BB57D640008027E /* sortdirection_map.plist in Resources */,
 				3CB5072B20875ED6004AE0B8 /* Rooney-Regular.ttf in Resources */,
+				082735622309812B008554A0 /* NativeAdTableViewCell2.xib in Resources */,
 				3CE5399C22AD215A00C62C06 /* comic.ttf in Resources */,
 				3C3073391EE7EB6600D1509E /* Localizable.strings in Resources */,
 				3CD808541D804F310099F778 /* GoogleService-Info.plist in Resources */,
@@ -1032,7 +1042,7 @@
 				3CB5073520876DA5004AE0B8 /* Starjedi.ttf in Resources */,
 				3C230AF720E537D5008B9476 /* RFS_Juan_Casco.ttf in Resources */,
 				3CB5072F208760FA004AE0B8 /* FuturaBook.ttf in Resources */,
-				3CE5399E22AD390F00C62C06 /* UnifiedNativeAdView.xib in Resources */,
+				3CE5399E22AD390F00C62C06 /* NativeAdTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1227,6 +1237,7 @@
 				3C0465971F8CBCBA003B6AE7 /* Serie+CoreDataClass.swift in Sources */,
 				3C9FEDCB2048357000D8C91E /* AuthorViewController.swift in Sources */,
 				3C89958A1E95169B00D511CD /* DBFandom+CoreDataClass.swift in Sources */,
+				0827356023096881008554A0 /* NativeAdTableViewCell.swift in Sources */,
 				28B6DC2A1B4E3F5900F34529 /* AppDelegate.swift in Sources */,
 				3C89958D1E95169B00D511CD /* DBRelationship+CoreDataProperties.swift in Sources */,
 				3C5C859721F708CA005B6EBF /* PublishItemCell.swift in Sources */,
@@ -1270,6 +1281,7 @@
 				1D1C2FEB1B8DA3E70076D10C /* WorkCharacter.swift in Sources */,
 				1D7BDD401B5E83AC0017C346 /* NewsFeedItem.swift in Sources */,
 				3CF2ECFA2203E94A00481C03 /* NWSTokenView.swift in Sources */,
+				08273564230989B0008554A0 /* NativeAdsManager.swift in Sources */,
 				3CD6BBAC2063D7A700958973 /* HighlightsController.swift in Sources */,
 				3C60ADE1207F4A5300158419 /* BaseFolderController.swift in Sources */,
 				3C0448F81C634209005DCE5F /* IAPHelper.swift in Sources */,
@@ -1505,7 +1517,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "Unofficial Reader for AO3 Development";
 				STRIP_INSTALLED_PRODUCT = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "./ArchiveOfOurOwnReader/Swift-HTML-Parser-Bridging-Header.h";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1545,7 +1557,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "Unofficial Reader for AO3 Distribution Profile";
 				STRIP_INSTALLED_PRODUCT = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "./ArchiveOfOurOwnReader/Swift-HTML-Parser-Bridging-Header.h";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

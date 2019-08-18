@@ -2016,7 +2016,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 
                 var worksToReload = DefaultsManager.getStringArray(DefaultsManager.NOTIF_IDS_ARR)
                 let workId = dd.workId ?? "0"
-                if worksToReload.contains(workId), let idx = worksToReload.index(of: workId) {
+                if worksToReload.contains(workId), let idx = worksToReload.firstIndex(of: workId) {
                     worksToReload.remove(at: idx)
                 }
                 DefaultsManager.putStringArray(worksToReload, key: DefaultsManager.NOTIF_IDS_ARR)
@@ -2042,7 +2042,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             
             var worksToReload = DefaultsManager.getStringArray(DefaultsManager.NOTIF_IDS_ARR)
             let workId = self.workItem.workId
-            if worksToReload.contains(workId), let idx = worksToReload.index(of: workId) {
+            if worksToReload.contains(workId), let idx = worksToReload.firstIndex(of: workId) {
                 worksToReload.remove(at: idx)
             }
             DefaultsManager.putStringArray(worksToReload, key: DefaultsManager.NOTIF_IDS_ARR)
@@ -2115,10 +2115,10 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             workId = downloadedWorkItem.workId ?? "0"
         }
         
-        if worksToReload.contains(workId), let idx = worksToReload.index(of: workId) {
+        if worksToReload.contains(workId), let idx = worksToReload.firstIndex(of: workId) {
             worksToReload.remove(at: idx)
         }
-        if worksToReload.contains(""), let idx = worksToReload.index(of: "") {
+        if worksToReload.contains(""), let idx = worksToReload.firstIndex(of: "") {
             worksToReload.remove(at: idx)
         }
         DefaultsManager.putStringArray(worksToReload, key: DefaultsManager.NOTIF_IDS_ARR)

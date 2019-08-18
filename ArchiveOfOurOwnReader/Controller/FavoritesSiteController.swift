@@ -419,7 +419,7 @@ class FavoritesSiteController : ListViewController, UITableViewDataSource, UITab
         
         let noticediv: [TFHppleElement]? = doc.search(withXPathQuery: "//div[@class='flash notice']") as? [TFHppleElement]
         if(noticediv != nil && (noticediv?.count)! > 0) {
-            if let index = self.works.index( where: {$0.workId == curWork.workId}) {
+            if let index = self.works.firstIndex( where: {$0.workId == curWork.workId}) {
                 self.works.remove(at: index)
             }
             self.showSuccess(title: Localization("DeleteFromBmk"), message: noticediv?[0].content ?? "")

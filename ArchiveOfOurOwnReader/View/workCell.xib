@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -532,18 +532,18 @@
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
-            <point key="canvasLocation" x="23.5" y="-72.5"/>
+            <point key="canvasLocation" x="23.199999999999999" y="-73.313343328335833"/>
         </view>
     </objects>
     <resources>
-        <image name="NotRated" width="20.827930450439453" height="20.827930450439453"/>
+        <image name="NotRated" width="38.666667938232422" height="38.666667938232422"/>
         <image name="bookmark" width="32" height="32"/>
         <image name="chapters" width="24" height="24"/>
-        <image name="download-100" width="100" height="100"/>
+        <image name="download-100" width="33.333332061767578" height="33.333332061767578"/>
         <image name="hits" width="74" height="74"/>
         <image name="lang" width="42.666667938232422" height="42.666667938232422"/>
         <image name="likes" width="32" height="32"/>
-        <image name="trash" width="96" height="96"/>
+        <image name="trash" width="32" height="32"/>
         <image name="word" width="32" height="32"/>
     </resources>
 </document>

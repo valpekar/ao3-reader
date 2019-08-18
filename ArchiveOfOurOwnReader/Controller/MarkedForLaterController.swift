@@ -363,7 +363,7 @@ class MarkedForLaterController: ListViewController , UITableViewDataSource, UITa
         
         var noticediv: [TFHppleElement]? = doc.search(withXPathQuery: "//div[@class='flash notice']") as? [TFHppleElement]
         if(noticediv?.count ?? 0 > 0) {
-            if let index = self.works.index( where: {$0.workId == curWork.workId}) {
+            if let index = self.works.firstIndex( where: {$0.workId == curWork.workId}) {
                 self.works.remove(at: index)
             }
             RMessage.showNotification(in: self, title: Localization("DeletingFromHistory"), subtitle: noticediv?[0].content ?? "", type: RMessageType.success, customTypeName: "", callback: {

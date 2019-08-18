@@ -15,6 +15,8 @@ import Crashlytics
 import GoogleMobileAds
 import Firebase
 
+let NUMBER_OF_ELEMENTS_BETWEEN_ADS = 3
+
 protocol SearchControllerDelegate {
     func searchApplied(_ searchQuery:SearchQuery, shouldAddKeyword: Bool)
 }
@@ -51,9 +53,14 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
     
     var openingPrevWork = false
     
+    var nativeAdsManager: NativeAdsManager!
+    
     // MARK: - UIViewController Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        nativeAdsManager = NativeAdsManager(viewController: self)
+        nativeAdsManager.delegate = self
         
         //Load query
         loadQueryFromDefaults()
@@ -66,6 +73,7 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
         
         self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.estimatedRowHeight = 200
+        self.tableView.register(UINib(nibName: "NativeAdTableViewCell", bundle: nil), forCellReuseIdentifier: "NativeAdTableViewCell")
         
         self.refreshControl = UIRefreshControl()
         self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
@@ -308,11 +316,40 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
     
     // MARK: - UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return works.count
+        if nativeAdsManager.nativeAds.count > 0 {
+            let numberOfAdPlaces = works.count / NUMBER_OF_ELEMENTS_BETWEEN_ADS
+            let numberOfAds = min(nativeAdsManager.nativeAds.count, numberOfAdPlaces)
+            
+            return works.count + numberOfAds
+        } else {
+            return works.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return createFeedCell(tableView: tableView, indexPath: indexPath)
+        let numberOfAdPlaces = works.count / NUMBER_OF_ELEMENTS_BETWEEN_ADS
+        let numberOfAds = min(nativeAdsManager.nativeAds.count, numberOfAdPlaces)
+        let adIndex = (indexPath.row + 1) / (NUMBER_OF_ELEMENTS_BETWEEN_ADS + 1) - 1
+        
+        if indexPath.row > 0 &&
+            (indexPath.row + 1) % (NUMBER_OF_ELEMENTS_BETWEEN_ADS + 1) == 0 &&
+            nativeAdsManager.nativeAds.count > 0 &&
+            adIndex < numberOfAds &&
+            adIndex >= 0 {
+            
+            print("Native Ad index \(adIndex) real \(indexPath.row)")
+            
+            return createAdCell(tableView: tableView, indexPath: indexPath ,adIndex: adIndex)
+        }
+        else {
+            let numberOfAdsShown = (indexPath.row + 1) / (NUMBER_OF_ELEMENTS_BETWEEN_ADS + 1)
+            let workIndexCorrection = min(numberOfAdsShown, numberOfAds)
+            let newIndexPath = IndexPath(row: indexPath.row - workIndexCorrection, section: indexPath.section)
+            
+            print("Native Work index \(newIndexPath.row) real \(indexPath.row)")
+            
+            return createFeedCell(tableView: tableView, indexPath: newIndexPath)
+        }
     }
     
     func createFeedCell(tableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
@@ -335,6 +372,19 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
          
         cell.workCellView.tag = indexPath.row
         cell.workCellView.downloadButtonDelegate = self
+        
+        return cell
+    }
+    
+    func createAdCell(tableView: UITableView, indexPath: IndexPath, adIndex: Int) -> UITableViewCell {
+        let cellIdentifier: String = "NativeAdTableViewCell"
+        
+        var cell: NativeAdTableViewCell! = nil
+        if let c:NativeAdTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? NativeAdTableViewCell {
+            cell = c
+        }
+        
+        cell.setup(with: nativeAdsManager.nativeAds[adIndex], and: theme)
         
         return cell
     }
@@ -658,4 +708,10 @@ extension FeedViewController : UISearchBarDelegate, UISearchResultsUpdating {
 // Helper function inserted by Swift 4.2 migrator.
 fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
 	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
+}
+
+extension FeedViewController: NativeAdsManagerDelegate {
+    func nativeAdsManagerDidReceivedAds(_ adsManager: NativeAdsManager) {
+        self.tableView.reloadData()
+    }
 }
