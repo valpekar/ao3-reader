@@ -244,6 +244,8 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
     }
     
     @objc func refresh(_ sender:AnyObject) {
+        nativeAdsManager.redreshAds()
+        
         searchApplied(self.query, shouldAddKeyword: true)
         
         if (Reachability.isConnectedToNetwork()) {

@@ -34,6 +34,8 @@ class NativeAdsManager: NSObject {
     /// The ad loader that loads the native ads.
     fileprivate var adLoader: GADAdLoader!
     
+    var isPremiumUser: Bool = false
+    
     init(viewController: UIViewController) {
         let options = GADMultipleAdsAdLoaderOptions()
         options.numberOfAds = numAdsToLoad
@@ -49,8 +51,30 @@ class NativeAdsManager: NSObject {
         adLoader.delegate = self
         
         UserDefaults.standard.synchronize()
-        if let isPro = UserDefaults.standard.value(forKey: "pro") as? Bool,
-            isPro == true {
+        
+        if let pp = UserDefaults.standard.value(forKey: "pro") as? Bool {
+            isPremiumUser = pp || isPremiumUser
+        }
+        
+        if let py = UserDefaults.standard.value(forKey: "yearly_sub") as? Bool {
+            isPremiumUser = py || isPremiumUser
+        }
+        
+        if let pq = UserDefaults.standard.value(forKey: "quarter_sub") as? Bool {
+            isPremiumUser = pq || isPremiumUser
+        }
+        
+        if let dd = UserDefaults.standard.value(forKey: "donated") as? Bool {
+            isPremiumUser = dd || isPremiumUser
+        }
+        
+        redreshAds()
+    }
+    
+    func redreshAds() {
+        self.nativeAds.removeAll()
+        
+        if isPremiumUser {
             // Do nothing because we use pro version
         } else {
             let request:GADRequest = GADRequest()
