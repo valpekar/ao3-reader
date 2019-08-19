@@ -184,19 +184,19 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         UserDefaults.standard.synchronize()
         
         if let pp = UserDefaults.standard.value(forKey: "pro") as? Bool {
-            purchased = pp
+            purchased = pp || purchased
         }
         
         if let py = UserDefaults.standard.value(forKey: "yearly_sub") as? Bool {
-            purchased = py
+            purchased = py || purchased
         }
         
         if let pq = UserDefaults.standard.value(forKey: "quarter_sub") as? Bool {
-            purchased = pq
+            purchased = pq || purchased
         }
         
         if let dd = UserDefaults.standard.value(forKey: "donated") as? Bool {
-            donated = dd
+            donated = dd || donated
         }
     }
     
