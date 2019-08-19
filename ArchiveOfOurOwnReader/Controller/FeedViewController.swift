@@ -15,7 +15,7 @@ import Crashlytics
 import GoogleMobileAds
 import Firebase
 
-let NUMBER_OF_ELEMENTS_BETWEEN_ADS = 3
+let NUMBER_OF_ELEMENTS_BETWEEN_ADS = 7
 
 protocol SearchControllerDelegate {
     func searchApplied(_ searchQuery:SearchQuery, shouldAddKeyword: Bool)
