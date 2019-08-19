@@ -339,7 +339,7 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
             adIndex < numberOfAds &&
             adIndex >= 0 {
             
-            print("Native Ad index \(adIndex) real \(indexPath.row)")
+            //print("Native Ad index \(adIndex) real \(indexPath.row)")
             
             return createAdCell(tableView: tableView, indexPath: indexPath ,adIndex: adIndex)
         }
@@ -348,7 +348,7 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
             let workIndexCorrection = min(numberOfAdsShown, numberOfAds)
             let newIndexPath = IndexPath(row: indexPath.row - workIndexCorrection, section: indexPath.section)
             
-            print("Native Work index \(newIndexPath.row) real \(indexPath.row)")
+//            print("Native Work index \(newIndexPath.row) real \(indexPath.row)")
             
             return createFeedCell(tableView: tableView, indexPath: newIndexPath)
         }
