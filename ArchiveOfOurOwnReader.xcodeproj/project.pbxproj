@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		0827356023096881008554A0 /* NativeAdTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0827355F23096881008554A0 /* NativeAdTableViewCell.swift */; };
-		082735622309812B008554A0 /* NativeAdTableViewCell2.xib in Resources */ = {isa = PBXBuildFile; fileRef = 082735612309812A008554A0 /* NativeAdTableViewCell2.xib */; };
 		08273564230989B0008554A0 /* NativeAdsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08273563230989B0008554A0 /* NativeAdsManager.swift */; };
 		1D03127F1BB57D640008027E /* sortdirection_map.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1D03127E1BB57D640008027E /* sortdirection_map.plist */; };
 		1D0312811BB57D9A0008027E /* rating_map.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1D0312801BB57D9A0008027E /* rating_map.plist */; };
@@ -229,7 +228,6 @@
 
 /* Begin PBXFileReference section */
 		0827355F23096881008554A0 /* NativeAdTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NativeAdTableViewCell.swift; path = View/NativeAdTableViewCell.swift; sourceTree = "<group>"; };
-		082735612309812A008554A0 /* NativeAdTableViewCell2.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NativeAdTableViewCell2.xib; path = View/NativeAdTableViewCell2.xib; sourceTree = "<group>"; };
 		08273563230989B0008554A0 /* NativeAdsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NativeAdsManager.swift; sourceTree = "<group>"; };
 		1835FFB38634AE9749554A5C /* Pods-ArchiveOfOurOwnReader.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArchiveOfOurOwnReader.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ArchiveOfOurOwnReader/Pods-ArchiveOfOurOwnReader.debug.xcconfig"; sourceTree = "<group>"; };
 		1D03127E1BB57D640008027E /* sortdirection_map.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = sortdirection_map.plist; sourceTree = "<group>"; };
@@ -683,7 +681,6 @@
 				28B6DC351B4E3F5900F34529 /* LaunchScreen.xib */,
 				28B6DC301B4E3F5900F34529 /* Main.storyboard */,
 				3CAEB2CA1FFE505C00C7035C /* workCell.xib */,
-				082735612309812A008554A0 /* NativeAdTableViewCell2.xib */,
 				3CE5399D22AD390F00C62C06 /* NativeAdTableViewCell.xib */,
 			);
 			name = View;
@@ -1032,7 +1029,6 @@
 				1D7C4ED41BB182C400F4ECFA /* sortby_map.plist in Resources */,
 				1D03127F1BB57D640008027E /* sortdirection_map.plist in Resources */,
 				3CB5072B20875ED6004AE0B8 /* Rooney-Regular.ttf in Resources */,
-				082735622309812B008554A0 /* NativeAdTableViewCell2.xib in Resources */,
 				3CE5399C22AD215A00C62C06 /* comic.ttf in Resources */,
 				3C3073391EE7EB6600D1509E /* Localizable.strings in Resources */,
 				3CD808541D804F310099F778 /* GoogleService-Info.plist in Resources */,
