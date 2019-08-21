@@ -419,7 +419,13 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        selectCell(row: indexPath.row, works: works)
+        let numberOfAdPlaces = works.count / NUMBER_OF_ELEMENTS_BETWEEN_ADS
+        let numberOfAds = min(nativeAdsManager.nativeAds.count, numberOfAdPlaces)
+        let numberOfAdsShown = (indexPath.row + 1) / (NUMBER_OF_ELEMENTS_BETWEEN_ADS + 1)
+        let workIndexCorrection = min(numberOfAdsShown, numberOfAds)
+        let newIndexPath = IndexPath(row: indexPath.row - workIndexCorrection, section: indexPath.section)
+        
+        selectCell(row: newIndexPath.row, works: works)
     }
     
     // MARK: - UICollectionViewDelegateFlowLayout
