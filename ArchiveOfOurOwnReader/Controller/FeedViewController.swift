@@ -419,11 +419,7 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let numberOfAdPlaces = works.count / NUMBER_OF_ELEMENTS_BETWEEN_ADS
-        let numberOfAds = min(nativeAdsManager.nativeAds.count, numberOfAdPlaces)
-        let numberOfAdsShown = (indexPath.row + 1) / (NUMBER_OF_ELEMENTS_BETWEEN_ADS + 1)
-        let workIndexCorrection = min(numberOfAdsShown, numberOfAds)
-        let newIndexPath = IndexPath(row: indexPath.row - workIndexCorrection, section: indexPath.section)
+        let newIndexPath = correctIndexPathAccordingToAds(originalIndexPath: indexPath)
         
         selectCell(row: newIndexPath.row, works: works)
     }
@@ -436,6 +432,16 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
 //        default:
             return CGSize(width: AppDelegate.smallCollCellWidth, height: 28)
 //        }
+    }
+    
+    func correctIndexPathAccordingToAds(originalIndexPath indexPath:IndexPath) -> IndexPath {
+        let numberOfAdPlaces = works.count / NUMBER_OF_ELEMENTS_BETWEEN_ADS
+        let numberOfAds = min(nativeAdsManager.nativeAds.count, numberOfAdPlaces)
+        let numberOfAdsShown = (indexPath.row + 1) / (NUMBER_OF_ELEMENTS_BETWEEN_ADS + 1)
+        let workIndexCorrection = min(numberOfAdsShown, numberOfAds)
+        let newIndexPath = IndexPath(row: indexPath.row - workIndexCorrection, section: indexPath.section)
+        
+        return newIndexPath
     }
     
     var selectedRow = 0
@@ -594,9 +600,14 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
     }
     
     override func reload(row: Int) {
+        
+        let indexCorrection = row / NUMBER_OF_ELEMENTS_BETWEEN_ADS
+        
+        let rowIndexToUpdate = row + indexCorrection
+        
         if self.works.count > row {
             self.tableView.beginUpdates()
-            self.tableView.reloadRows(at: [ IndexPath(row: row, section: 0)], with: UITableView.RowAnimation.automatic)
+            self.tableView.reloadRows(at: [ IndexPath(row: rowIndexToUpdate, section: 0)], with: UITableView.RowAnimation.automatic)
             self.tableView.endUpdates()
         }
     }
@@ -604,7 +615,11 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
     
     //MARK: - SAVE WORK TO DB
     
-
+    override func downloadTouched(rowIndex: Int) {
+        //let correctedIndexPath = correctIndexPathAccordingToAds(originalIndexPath: IndexPath(row: rowIndex, section: 0))
+        
+        super.downloadTouched(rowIndex: rowIndex)
+    }
     
     func saveWork() {
         hideLoadingView()
@@ -708,6 +723,7 @@ extension FeedViewController : UISearchBarDelegate, UISearchResultsUpdating {
         
     }
     
+    //
 }
 
 
