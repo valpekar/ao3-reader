@@ -11,25 +11,37 @@ import Foundation
 
 class WorksParser {
     
-    class func parseWorks(_ data: Data, itemsCountHeading: String, worksElement: String, liWorksElement: String? = "", downloadedCheckItems: [CheckDownloadItem]? = nil) -> ([PageItem], [NewsFeedItem], String) {
+    class func parseWorks(_ data: Data, itemsCountHeading: String, worksElement: String, liWorksElement: String? = "", downloadedCheckItems: [CheckDownloadItem]? = nil) -> ([PageItem], [NewsFeedItem], String, String) {
         var pages : [PageItem] = [PageItem]()
         var works : [NewsFeedItem] = [NewsFeedItem]()
         var worksCountStr = ""
         
-        guard let _ = NSString(data: data, encoding: String.Encoding.utf8.rawValue) else {
-            return (pages, works, worksCountStr)
+        var authToken = ""
+        
+        guard let dta = NSString(data: data, encoding: String.Encoding.utf8.rawValue) else {
+            return (pages, works, worksCountStr, authToken)
         }
-       /* #if DEBUG
+        #if DEBUG
             print(dta)
-        #endif*/
+        #endif
         guard let doc : TFHpple = TFHpple(htmlData: data) else {
-            return (pages, works, worksCountStr)
+            return (pages, works, worksCountStr, authToken)
         }
         
         var liEl = worksElement
         if let l = liWorksElement {
             if (l.isEmpty == false) {
                 liEl = l
+            }
+        }
+        
+        if let xTokenEls: [TFHppleElement] = doc.search(withXPathQuery: "//meta[@name='csrf-token']") as? [TFHppleElement] {
+            if (xTokenEls.count > 0) {
+                if let attrs = xTokenEls[0].attributes as NSDictionary? {
+                    if let tokenStr = attrs["content"] as? String, tokenStr.isEmpty == false {
+                        authToken = tokenStr
+                    }
+                }
             }
         }
         
@@ -90,7 +102,7 @@ class WorksParser {
                     if let paginationActions: [TFHppleElement] = doc.search(withXPathQuery: "//ol[@class='pagination actions']") as? [TFHppleElement] {
                         if((paginationActions.count) > 0) {
                             guard let paginationArr = (paginationActions[0] as AnyObject).search(withXPathQuery: "//li") as? [TFHppleElement] else {
-                                return (pages, works, worksCountStr)
+                                return (pages, works, worksCountStr, authToken)
                             }
                             
                             pages = parsePages(paginationArr: paginationArr)
@@ -102,7 +114,7 @@ class WorksParser {
             worksCountStr = Localization("0Found")
         }
         
-        return (pages, works, worksCountStr)
+        return (pages, works, worksCountStr, authToken)
     }
     
     class func parseSerie(_ data: Data, downloadedCheckItems: [CheckDownloadItem]? = nil) -> ([PageItem], [NewsFeedItem], SerieItem) {

@@ -226,7 +226,8 @@ class RecommendationsController : ListViewController, UITableViewDataSource, UIT
                     if let d = response.data {
                         self.parseCookies(response)
                         let checkItems = self.getDownloadedStats()
-                        (self.pages, self.works, self.foundItems) = WorksParser.parseWorks(d, itemsCountHeading: "h3", worksElement: "work", downloadedCheckItems: checkItems)
+                        var str = ""
+                        (self.pages, self.works, self.foundItems, str) = WorksParser.parseWorks(d, itemsCountHeading: "h3", worksElement: "work", downloadedCheckItems: checkItems)
                         //self.getFeed(d)
                         self.showWorks()
                     } else {
@@ -373,7 +374,8 @@ class RecommendationsController : ListViewController, UITableViewDataSource, UIT
                 if let d = response.data {
                     self.parseCookies(response)
                     let checkItems = self.getDownloadedStats()
-                    (self.pages, self.works, self.foundItems) = WorksParser.parseWorks(d, itemsCountHeading: "h3", worksElement: "work", downloadedCheckItems: checkItems)
+                    var str = ""
+                    (self.pages, self.works, self.foundItems, str) = WorksParser.parseWorks(d, itemsCountHeading: "h3", worksElement: "work", downloadedCheckItems: checkItems)
                     //self.getFeed(d)
                 } else {
                     self.hideLoadingView()

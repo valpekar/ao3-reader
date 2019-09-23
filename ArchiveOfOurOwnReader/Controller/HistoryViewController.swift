@@ -19,6 +19,8 @@ class HistoryViewController : ListViewController, UITableViewDataSource, UITable
     
     var refreshControl: UIRefreshControl!
     
+    var authToken = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -111,7 +113,7 @@ class HistoryViewController : ListViewController, UITableViewDataSource, UITable
                 if let d = response.data {
                     self.parseCookies(response)
                     let checkItems = self.getDownloadedStats()
-                    (self.pages, self.works, self.boomarksAddedStr) = WorksParser.parseWorks(d, itemsCountHeading: "h2", worksElement: "reading work", downloadedCheckItems: checkItems)
+                    (self.pages, self.works, self.boomarksAddedStr, self.authToken) = WorksParser.parseWorks(d, itemsCountHeading: "h2", worksElement: "reading work", downloadedCheckItems: checkItems)
                     //self.parseHistory(d)
                     self.refreshControl.endRefreshing()
                     self.showWorks()
@@ -314,8 +316,7 @@ class HistoryViewController : ListViewController, UITableViewDataSource, UITable
         }
         
         var params:[String:AnyObject] = [String:AnyObject]()
-        params["utf8"] = "✓" as AnyObject?
-        params["authenticity_token"] = (UIApplication.shared.delegate as? AppDelegate)?.token as AnyObject 
+        params["authenticity_token"] = self.authToken as AnyObject?
         params["_method"] = "delete" as AnyObject?
         params["reading"] = curWork.readingId as AnyObject?
         

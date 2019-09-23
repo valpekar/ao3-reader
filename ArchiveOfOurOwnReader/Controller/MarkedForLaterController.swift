@@ -20,6 +20,8 @@ class MarkedForLaterController: ListViewController , UITableViewDataSource, UITa
     
     var refreshControl: UIRefreshControl!
     
+    var authToken = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -119,7 +121,7 @@ class MarkedForLaterController: ListViewController , UITableViewDataSource, UITa
                 if let d = response.data {
                     self.parseCookies(response)
                     let checkItems = self.getDownloadedStats()
-                    (self.pages, self.works, self.foundItems) = WorksParser.parseWorks(d, itemsCountHeading: self.itemsCountHeading, worksElement: self.worksElement, downloadedCheckItems: checkItems)
+                    (self.pages, self.works, self.foundItems, self.authToken) = WorksParser.parseWorks(d, itemsCountHeading: self.itemsCountHeading, worksElement: self.worksElement, downloadedCheckItems: checkItems)
                     //self.parseHistory(d)
                     self.refreshControl.endRefreshing()
                     self.showWorks()
@@ -303,7 +305,7 @@ class MarkedForLaterController: ListViewController , UITableViewDataSource, UITa
     }
     
     func deleteItemFromHistory(_ curWork: NewsFeedItem) {
-        showLoadingView(msg: Localization("DeletingFromHistory"))
+        showLoadingView(msg: Localization("DeletingFromMarked"))
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
             Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
@@ -327,7 +329,7 @@ class MarkedForLaterController: ListViewController , UITableViewDataSource, UITa
         
         var params:[String:AnyObject] = [String:AnyObject]()
         params["utf8"] = "✓" as AnyObject?
-        params["authenticity_token"] = (UIApplication.shared.delegate as? AppDelegate)?.token as AnyObject
+        params["authenticity_token"] = self.authToken as AnyObject?
         params["_method"] = "delete" as AnyObject?
         params["reading"] = curWork.readingId as AnyObject?
         
@@ -366,16 +368,13 @@ class MarkedForLaterController: ListViewController , UITableViewDataSource, UITa
             if let index = self.works.firstIndex( where: {$0.workId == curWork.workId}) {
                 self.works.remove(at: index)
             }
-            RMessage.showNotification(in: self, title: Localization("DeletingFromHistory"), subtitle: noticediv?[0].content ?? "", type: RMessageType.success, customTypeName: "", callback: {
-                
-            })
+            self.showSuccess(title: Localization("DeletingFromMarked"), message: noticediv?[0].content ?? "")
         } else {
             if let sorrydiv = doc.search(withXPathQuery: "//div[@class='flash error']") as? [TFHppleElement] {
                 
                 if(sorrydiv.count>0 && sorrydiv[0].text().range(of: "Sorry") != nil) {
-                    RMessage.showNotification(in: self, title: Localization("DeletingFromHistory"), subtitle: sorrydiv[0].content, type: RMessageType.error, customTypeName: "", callback: {
-                        
-                    })
+                    
+                    self.showError(title: Localization("DeletingFromMarked"), message: sorrydiv[0].content)
                     return
                 }
             }

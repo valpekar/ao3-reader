@@ -133,6 +133,8 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
             "password": pass,
             "remember_me": "1"]
         
+        params["commit"] = "Log In"
+        
      //   showLoadingView()
         
         Alamofire.request("https://archiveofourown.org/users/login", method: .post, parameters: params)
@@ -230,6 +232,10 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
     
     func parseResponse(_ data: Data) {
         let doc : TFHpple = TFHpple(htmlData: data)
+        
+      //  let dta = String(data: data, encoding: .utf8)
+       // print("the string is: \(dta)")
+        
         let flashnoticediv: [TFHppleElement]? = doc.search(withXPathQuery: "//div[@class='flash notice']") as? [TFHppleElement]
         let flashalertdiv: [TFHppleElement]? = doc.search(withXPathQuery: "//div[@class='flash alert']") as? [TFHppleElement]
         
@@ -299,7 +305,7 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
         
         let doc : TFHpple = TFHpple(htmlData: data)
         
-        var workActions: [TFHppleElement] = doc.search(withXPathQuery: "//select[@id='work_author_attributes_ids_']") as! [TFHppleElement]
+        var workActions: [TFHppleElement] = doc.search(withXPathQuery: "//select[@id='work_author_attributes_ids']") as! [TFHppleElement]
         if (workActions.count > 0) {
             #if DEBUG
             print(workActions[0].raw)
@@ -337,6 +343,18 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
                 })
             }
             
+        } else {
+            var pseuds: [String:String] = [:]
+            pseuds["1"] = DefaultsManager.getString(DefaultsManager.LOGIN)
+            DefaultsManager.putString("1", key: DefaultsManager.PSEUD_ID)
+            DefaultsManager.putObject(pseuds as AnyObject, key: DefaultsManager.PSEUD_IDS)
+            
+            let delayTime = DispatchTime.now() + Double(Int64(1.0 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+            DispatchQueue.main.asyncAfter(deadline: delayTime) {
+                self.dismiss(animated: true, completion: {
+                    self.controllerDelegate.controllerDidClosedWithLogin!()
+                })
+            }
         }
     }
     

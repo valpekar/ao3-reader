@@ -89,6 +89,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     
     var downloadUrls: [String:String] = [:]
     
+    var authToken = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -441,7 +442,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     
     func downloadCurWork(_ data: Data) {
         
-        //let dta = NSString(data: data, encoding: NSUTF8StringEncoding)
+        //let dta = String(data: data, encoding: .utf8)
         //print("the string is: \(dta)")
         
         if (workItem == nil) {
@@ -840,6 +841,17 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         downloadUrls.removeAll()
         
         let doc : TFHpple = TFHpple(htmlData: data)
+        
+        if let xTokenEls: [TFHppleElement] = doc.search(withXPathQuery: "//meta[@name='csrf-token']") as? [TFHppleElement] {
+            if (xTokenEls.count > 0) {
+                if let attrs = xTokenEls[0].attributes as NSDictionary? {
+                    if let tokenStr = attrs["content"] as? String, tokenStr.isEmpty == false {
+                        self.authToken = tokenStr
+                    }
+                }
+            }
+        }
+        
         
         if let bookmarkIdEls = doc.search(withXPathQuery: "//div[@id='bookmark-form']") as? [TFHppleElement] {
             if (bookmarkIdEls.count > 0) {
@@ -1873,8 +1885,9 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                         
                         if let d = response.data {
                             self.parseCookies(response)
-                            self.parseAddBookmarkResponse(d)
                             self.hideLoadingView()
+                            
+                            self.parseAddBookmarkResponse(d)
                             
                             observer.onNext(())
                             observer.onCompleted()
@@ -1904,7 +1917,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         showLoadingView(msg: Localization("DeletingBmk"))
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
+            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: AppDelegate.ao3SiteUrl), mainDocumentURL: nil)
         }
         
         //let username = DefaultsManager.getString(DefaultsManager.LOGIN)
@@ -1923,11 +1936,11 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         Analytics.logEvent("WorkDetail_Bookmark_delete", parameters: [:])
         
         var params:[String:AnyObject] = [String:AnyObject]()
-        params["utf8"] = "✓" as AnyObject?
-        params["authenticity_token"] = (UIApplication.shared.delegate as! AppDelegate).token as AnyObject?
+     //   params["utf8"] = "✓" as AnyObject?
+        params["authenticity_token"] = self.authToken as AnyObject?
         params["_method"] = "delete" as AnyObject?
         
-        request("https://archiveofourown.org" + bookmarkId, method: .post, parameters: params)
+        request("\(AppDelegate.ao3SiteUrl)\(bookmarkId)", method: .post, parameters: params)
             .response(completionHandler: { response in
                 #if DEBUG
                 print(response.request ?? "")

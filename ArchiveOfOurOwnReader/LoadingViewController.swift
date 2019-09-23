@@ -11,7 +11,7 @@ import iAd
 import CoreData
 import GoogleMobileAds
 import Alamofire
-import RSLoadingView
+import KRProgressHUD
 import CoreTelephony
 import Crashlytics
  import Firebase
@@ -32,8 +32,6 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
     
     /// The reward-based video ad.
     var rewardBasedVideo: GADRewardBasedVideoAd?
-    
-    var rloadingView: RSLoadingView!
     
    // var interstitial: MPInterstitialAdController =
    //     MPInterstitialAdController(forAdUnitId: "24f81f4beba548248fc64cfcf5d4d8f5")
@@ -225,6 +223,8 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         (UIApplication.shared.delegate as! AppDelegate).cookies = [HTTPCookie]()
         (UIApplication.shared.delegate as! AppDelegate).token = ""
         DefaultsManager.putObject([HTTPCookie]() as AnyObject, key: DefaultsManager.COOKIES)
+        
+        Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies([HTTPCookie](), for:  URL(string: AppDelegate.ao3SiteUrl), mainDocumentURL: nil)
     }
     
     func showLoadingView(msg: String) {
@@ -235,13 +235,13 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         
-        let screenSize: CGRect = UIScreen.main.bounds
+        /*let screenSize: CGRect = UIScreen.main.bounds
         let screenWidth = screenSize.width
-        let screenHeight = screenSize.height
+        let screenHeight = screenSize.height*/
         
-        loadingView = UIView(frame:CGRect(x: screenWidth/2 - 170/2, y: screenHeight/2 - 60, width: 180, height: 170))
-        loadingView.backgroundColor = UIColor.clear
-        loadingView.clipsToBounds = true
+       loadingView = UIView(frame:CGRect(x: 100, y: 100, width: 180, height: 170))
+        /* loadingView.backgroundColor = UIColor.clear
+        loadingView.clipsToBounds = true*/
        // loadingView.layer.cornerRadius = 10.0
         
        // activityView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.whiteLarge)
@@ -253,12 +253,11 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
 //        activityView?.frame = CGRect(x: 65, y: 40, width: aView.bounds.size.width, height: aView.bounds.size.height)
 //        loadingView.addSubview(activityView!)
         
+//        DispatchQueue.main.async {
+             KRProgressHUD.show(withMessage: msg)
+    //    }
         
-        rloadingView = RSLoadingView(effectType: RSLoadingView.Effect.twins)
-       // rloadingView.shouldDimBackground = false
-        rloadingView.show(on: self.view)
-        
-        loadingLabel = UILabel(frame:CGRect(x: 20, y: 110, width: 140, height: 44))
+       /* loadingLabel = UILabel(frame:CGRect(x: 20, y: 110, width: 140, height: 44))
         loadingLabel.backgroundColor = UIColor.clear
         loadingLabel.textColor = UIColor.white
         loadingLabel.adjustsFontSizeToFitWidth = true
@@ -266,9 +265,9 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         loadingLabel.textAlignment = .center
         loadingLabel.text = msg
         loadingLabel.backgroundColor = UIColor.clear
-        loadingView.addSubview(loadingLabel)
+        loadingView.addSubview(loadingLabel)*/
         
-        self.view.addSubview(loadingView)
+       // self.view.addSubview(loadingView)
        // activityView?.startAnimating()
     }
     
@@ -278,13 +277,13 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
             #endif
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
         
-        RSLoadingView.hide(from: self.view)
+        KRProgressHUD.dismiss()
         
 //        if (activityView != nil && activityView.isAnimating) {
 //            activityView.stopAnimating()
 //        }
         if (loadingView != nil && loadingView.superview != nil) {
-            loadingView.removeFromSuperview()
+           // loadingView.removeFromSuperview()
             loadingView = nil
         }
     }
@@ -516,7 +515,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
                 workFandoms.add(f)
                 
                 let works = f.value(forKeyPath: "workItems") as! NSMutableSet
-                works.add(workItem)
+                works.add(workItem!)
             }
             }
             
@@ -544,7 +543,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
                 workRel.add(r)
                 
                 let works = r.value(forKeyPath: "workItems") as! NSMutableSet
-                works.add(workItem)
+                works.add(workItem!)
             }
             }
             

@@ -457,6 +457,7 @@ class ListViewController: LoadingViewController, PageSelectDelegate, UIPopoverPr
         
         let urlStr = AppDelegate.ao3SiteUrl + pageUrl
         
+        
         showLoadingView(msg: ("\(Localization("LoadingPage")) \(name)"))
         
         Alamofire.request(urlStr)
@@ -471,7 +472,8 @@ class ListViewController: LoadingViewController, PageSelectDelegate, UIPopoverPr
                 
                 if let data = response.data {
                     let checkItems = self.getDownloadedStats()
-                    (self.pages, self.works, self.foundItems) = WorksParser.parseWorks(data, itemsCountHeading: self.itemsCountHeading, worksElement: self.worksElement, downloadedCheckItems: checkItems)
+                    var str = ""
+                    (self.pages, self.works, self.foundItems, str) = WorksParser.parseWorks(data, itemsCountHeading: self.itemsCountHeading, worksElement: self.worksElement, downloadedCheckItems: checkItems)
                     
                     self.showWorks()
                 

@@ -39,6 +39,7 @@ class UserMessagesController: UIViewController {
         config.presentationStyle = .top
      //   config.presentationContext = .window(windowLevel: UIWindowLevelNormal)
         
+        config.duration = .seconds(seconds: 1.5)
         SwiftMessages.show(config: config, view: error)
     }
     
@@ -51,6 +52,8 @@ class UserMessagesController: UIViewController {
         var config = SwiftMessages.defaultConfig
         config.presentationStyle = .top
     //    config.presentationContext = .window(windowLevel: UIWindowLevelNormal)
+        
+        config.duration = .seconds(seconds: 1.5)
         
         SwiftMessages.show(config: config, view: warn)
     }

@@ -161,7 +161,8 @@ class WorkListController: ListViewController, UITableViewDataSource, UITableView
                 if let d = response.data {
                     self.parseCookies(response)
                     let checkItems = self.getDownloadedStats()
-                    (self.pages, self.works, self.worksStr) = WorksParser.parseWorks(d, itemsCountHeading: "h2", worksElement: self.worksElement, liWorksElement: self.liWorksElement, downloadedCheckItems: checkItems)
+                    var str = ""
+                    (self.pages, self.works, self.worksStr, str) = WorksParser.parseWorks(d, itemsCountHeading: "h2", worksElement: self.worksElement, liWorksElement: self.liWorksElement, downloadedCheckItems: checkItems)
                     //self.parseWorks(d)
                     self.showWorks()
                 } else {
@@ -399,7 +400,8 @@ extension WorkListController: UISearchResultsUpdating, UISearchBarDelegate {
                 if let d = response.data {
                     self.parseCookies(response)
                     let checkItems = self.getDownloadedStats()
-                    (self.pages, self.works, self.worksStr) = WorksParser.parseWorks(d, itemsCountHeading: "h2", worksElement: self.worksElement, liWorksElement: self.worksElement, downloadedCheckItems: checkItems)
+                    var str = ""
+                    (self.pages, self.works, self.worksStr, str) = WorksParser.parseWorks(d, itemsCountHeading: "h2", worksElement: self.worksElement, liWorksElement: self.worksElement, downloadedCheckItems: checkItems)
                     //self.parseWorks(d)
                     self.showWorks()
                 } else {

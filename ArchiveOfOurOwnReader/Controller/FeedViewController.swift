@@ -576,7 +576,8 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
         if let d = response.data {
             self.parseCookies(response)
             let checkItems = self.getDownloadedStats()
-            (self.pages, self.works, self.foundItems) = WorksParser.parseWorks(d, itemsCountHeading: "h3", worksElement: self.worksElement, downloadedCheckItems: checkItems)
+            var str = ""
+            (self.pages, self.works, self.foundItems, str) = WorksParser.parseWorks(d, itemsCountHeading: "h3", worksElement: self.worksElement, downloadedCheckItems: checkItems)
             //self.getFeed(d)
         } else {
             self.hideLoadingView()

@@ -24,6 +24,8 @@ class FavoritesSiteController : ListViewController, UITableViewDataSource, UITab
     
     var refreshControl: UIRefreshControl!
     
+    var authToken = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -144,7 +146,7 @@ class FavoritesSiteController : ListViewController, UITableViewDataSource, UITab
             guard let cStorage = Alamofire.SessionManager.default.session.configuration.httpCookieStorage else {
                 return
             }
-            cStorage.setCookies(del.cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
+            cStorage.setCookies(del.cookies, for:  URL(string: AppDelegate.ao3SiteUrl), mainDocumentURL: nil)
         }
         }
         
@@ -174,6 +176,9 @@ class FavoritesSiteController : ListViewController, UITableViewDataSource, UITab
         }
         
         let urlStr = "https://archiveofourown.org/users/\(login)/pseuds/\(curPseud)/bookmarks" // + pseuds[currentPseud]! + "/bookmarks"
+        
+        Answers.logCustomEvent(withName: "Bookmarks: load", customAttributes: ["url" : urlStr])
+        Analytics.logEvent("Bookmarks_load", parameters: ["url" : urlStr as NSObject])
        
         
         Alamofire.request(urlStr) //default is get
@@ -183,7 +188,7 @@ class FavoritesSiteController : ListViewController, UITableViewDataSource, UITab
                 if let d = response.data {
                     self.parseCookies(response)
                     let checkItems = self.getDownloadedStats()
-                    (self.pages, self.works, self.foundItems) = WorksParser.parseWorks(d, itemsCountHeading: "h2", worksElement: "bookmark", downloadedCheckItems: checkItems)
+                    (self.pages, self.works, self.foundItems, self.authToken) = WorksParser.parseWorks(d, itemsCountHeading: "h2", worksElement: "bookmark", downloadedCheckItems: checkItems)
                     //self.parseBookmarks(d)
                     self.showWorks()
                 } else {
@@ -374,7 +379,7 @@ class FavoritesSiteController : ListViewController, UITableViewDataSource, UITab
         showLoadingView(msg: Localization("DeletingFromBmks"))
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
-            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: "https://archiveofourown.org"), mainDocumentURL: nil)
+            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: AppDelegate.ao3SiteUrl), mainDocumentURL: nil)
         }
         
         //let username = DefaultsManager.getString(DefaultsManager.LOGIN)
@@ -388,14 +393,18 @@ class FavoritesSiteController : ListViewController, UITableViewDataSource, UITab
             }
         }
         
+        var headers:HTTPHeaders = HTTPHeaders()
+//        headers["upgrade-insecure-requests"] = "1"
+        headers["content-type"] = "application/x-www-form-urlencoded"
+        
         var params:[String:AnyObject] = [String:AnyObject]()
-        params["utf8"] = "✓" as AnyObject?
-        params["authenticity_token"] = (UIApplication.shared.delegate as! AppDelegate).token as AnyObject?
+      //  params["utf8"] = "✓" as AnyObject?
+        params["authenticity_token"] = self.authToken as AnyObject?
         params["_method"] = "delete" as AnyObject?
         
-        let urlStr = "https://archiveofourown.org" + curWork.readingId
+        let urlStr = "\(AppDelegate.ao3SiteUrl)\(curWork.readingId)"
         
-        Alamofire.request(urlStr, method: .post, parameters: params)
+        Alamofire.request(urlStr, method: .post, parameters: params, headers: headers)
             .response(completionHandler: { response in
                 print(response.request ?? "")
                 print(response.error ?? "")
@@ -413,25 +422,35 @@ class FavoritesSiteController : ListViewController, UITableViewDataSource, UITab
     }
     
     func parseDeleteResponse(_ data: Data, curWork: NewsFeedItem) {
-        // let dta = NSString(data: data, encoding: NSUTF8StringEncoding)
-        // print("the string is: \(dta)")
+       //  let dta = String(data: data, encoding: .utf8)
+      //   print("the string is: \(dta)")
         let doc : TFHpple = TFHpple(htmlData: data)
         
         let noticediv: [TFHppleElement]? = doc.search(withXPathQuery: "//div[@class='flash notice']") as? [TFHppleElement]
+        let sorrydiv = doc.search(withXPathQuery: "//div[@class='flash error']")
+        
         if(noticediv != nil && (noticediv?.count)! > 0) {
             if let index = self.works.firstIndex( where: {$0.workId == curWork.workId}) {
                 self.works.remove(at: index)
             }
             self.showSuccess(title: Localization("DeleteFromBmk"), message: noticediv?[0].content ?? "")
-        } else {
-            if let sorrydiv = doc.search(withXPathQuery: "//div[@class='flash error']") {
-            
-                if(sorrydiv.count>0 && (sorrydiv[0] as? TFHppleElement)?.text().range(of: "Sorry") != nil) {
-                    self.showError(title: Localization("DeleteFromBmk"), message: (sorrydiv[0] as AnyObject).content ?? "")
+        } else if  (sorrydiv != nil && (sorrydiv?.count)! > 0){
+                
+            if(sorrydiv!.count>0 && (sorrydiv![0] as? TFHppleElement)?.text().range(of: "Sorry") != nil) {
+                    self.showError(title: Localization("DeleteFromBmk"), message: (sorrydiv![0] as AnyObject).content ?? "")
                     return
                 }
-            }
+            } else {
+                if let sorrydiv = doc.search(withXPathQuery: "//div[@class='flash']") {
+                    
+                    if(sorrydiv.count>0 ) {
+                        self.showError(title: Localization("DeleteFromBmk"), message: "Could Not Delete")
+                        return
+                    }
+                }
         }
+        
+        
     }
     
     override func deleteTouched(rowIndex: Int) {
@@ -548,7 +567,7 @@ extension FavoritesSiteController: UISearchBarDelegate {
                 if let d = response.data {
                     self.parseCookies(response)
                     let checkItems = self.getDownloadedStats()
-                    (self.pages, self.works, self.foundItems) = WorksParser.parseWorks(d, itemsCountHeading: "h2", worksElement: "bookmark", downloadedCheckItems: checkItems)
+                    (self.pages, self.works, self.foundItems, self.authToken) = WorksParser.parseWorks(d, itemsCountHeading: "h2", worksElement: "bookmark", downloadedCheckItems: checkItems)
                     //self.parseBookmarks(d)
                     self.showWorks()
                 } else {

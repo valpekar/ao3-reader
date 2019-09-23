@@ -121,6 +121,8 @@ class BaseFolderController: LoadingViewController, NSFetchedResultsControllerDel
                 tableView.deleteRows(at: [indexPath], with: .automatic)
                 tableView.reloadSections([indexPath.section], with: .none)
             }
+        @unknown default:
+            print("unknown")
         }
     }
 }

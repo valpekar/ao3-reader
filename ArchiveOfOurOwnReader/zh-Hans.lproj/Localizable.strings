@@ -224,4 +224,5 @@
 "AddFolder" = "Create New Group";
 "EditFolders" = "Edit Existing Groups";
 "WorkFolder" = "Move Story to Folder";
+"DeletingFromMarked" = "Deleting From Marked for Later";
 
