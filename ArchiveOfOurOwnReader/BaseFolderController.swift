@@ -44,7 +44,7 @@ class BaseFolderController: LoadingViewController, NSFetchedResultsControllerDel
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let tf = self.searchBar.value(forKey: "_searchField") as? UITextField {
+        if let tf = self.searchBar.textField {
             addDoneButtonOnKeyboardTf(tf)
         }
         

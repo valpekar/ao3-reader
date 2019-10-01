@@ -61,7 +61,7 @@ class WorkListController: ListViewController, UITableViewDataSource, UITableView
 //            searchController.dimsBackgroundDuringPresentation = false
 //            definesPresentationContext = true
         
-            if let tf = self.searchBar.value(forKey: "_searchField") as? UITextField {
+            if let tf = self.searchBar.textField {
                 addDoneButtonOnKeyboardTf(tf)
                 
                 if (theme == DefaultsManager.THEME_DAY) {

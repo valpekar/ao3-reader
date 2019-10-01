@@ -93,7 +93,7 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
             controller.searchBar.backgroundImage = UIImage()
             controller.searchBar.delegate = self
             
-            if let tf = controller.searchBar.value(forKey: "_searchField") as? UITextField {
+            if let tf = controller.searchBar.textField {
                 addDoneButtonOnKeyboardTf(tf)
                 
                 if (theme == DefaultsManager.THEME_DAY) {

@@ -131,7 +131,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
         self.webView.scrollView.delegate = self
         self.searchBar.delegate = self
         
-        if let tf = self.searchBar.value(forKey: "_searchField") as? UITextField {
+        if let tf = self.searchBar.textField {
             addDoneButtonOnKeyboardTf(tf)
         }
         

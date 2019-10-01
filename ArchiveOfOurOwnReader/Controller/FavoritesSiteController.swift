@@ -96,7 +96,7 @@ class FavoritesSiteController : ListViewController, UITableViewDataSource, UITab
             self.collectionView.backgroundColor = AppDelegate.redDarkColor
         }
         
-        if let tf = searchBar.value(forKey: "_searchField") as? UITextField {
+        if let tf = searchBar.textField {
             addDoneButtonOnKeyboardTf(tf)
             
             if (theme == DefaultsManager.THEME_DAY) {
