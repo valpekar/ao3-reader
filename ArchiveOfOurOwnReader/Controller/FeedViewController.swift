@@ -59,7 +59,7 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        nativeAdsManager = NativeAdsManager(viewController: self)
+        nativeAdsManager = NativeAdsManager(viewController: self, adUnitId: .feed)
         nativeAdsManager.delegate = self
         
         //Load query

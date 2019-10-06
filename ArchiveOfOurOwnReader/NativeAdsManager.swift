@@ -9,6 +9,12 @@
 import Foundation
 import Firebase
 
+enum NativeAdUnitId: String {
+    case feed = "ca-app-pub-8760316520462117/4563802093"
+    case workDetail = "ca-app-pub-8760316520462117/9152249910"
+    case debug = "ca-app-pub-3940256099942544/8407707713"
+}
+
 protocol NativeAdsManagerDelegate: class {
     func nativeAdsManagerDidReceivedAds(_ adsManager: NativeAdsManager)
 }
@@ -17,13 +23,7 @@ class NativeAdsManager: NSObject {
     
     weak var delegate: NativeAdsManagerDelegate?
     
-    #if DEBUG
-    /// The ad unit ID from the AdMob UI.
-    fileprivate let adUnitID = "ca-app-pub-3940256099942544/8407707713"
-    #else
-    /// Release Ad Unit
-    fileprivate let adUnitID = "ca-app-pub-8760316520462117/4563802093"
-    #endif
+    fileprivate let adUnitID: String
     
     /// The number of native ads to load (between 1 and 5 for this example).
     fileprivate let numAdsToLoad = 5
@@ -36,7 +36,13 @@ class NativeAdsManager: NSObject {
     
     var isPremiumUser: Bool = false
     
-    init(viewController: UIViewController) {
+    init(viewController: UIViewController, adUnitId: NativeAdUnitId) {
+        #if DEBUG
+        self.adUnitID = NativeAdUnitId.debug.rawValue
+        #else
+        self.adUnitID = adUnitId.rawValue
+        #endif
+        
         let options = GADMultipleAdsAdLoaderOptions()
         options.numberOfAds = numAdsToLoad
         

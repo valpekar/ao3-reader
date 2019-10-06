@@ -48,7 +48,6 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var bgView: UIView!
     @IBOutlet weak var authorView: UIView!
-     @IBOutlet weak var bannerView: GADBannerView!
     
     var downloadedWorkItem: DBWorkItem! = nil
     var downloadedFandoms: [DBFandom]! = nil
@@ -91,8 +90,14 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     
     var authToken = ""
     
+//    @IBOutlet weak var nativeAdView: NativeAdView!
+    var nativeAdsManager: NativeAdsManager!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.nativeAdsManager = NativeAdsManager(viewController: self, adUnitId: .workDetail)
+        self.nativeAdsManager.delegate = self
         
         loadPurchasedSettings()
         
@@ -107,8 +112,6 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             loadAdMobRewared()
             
             //loadAdMobInterstitial()
-            bannerView.adUnitID = "ca-app-pub-8760316520462117/1990583589"
-            bannerView.rootViewController = self
             let request = GADRequest()
             request.testDevices = [ kGADSimulatorID ]
            
@@ -116,10 +119,9 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             extras.additionalParameters = ["max_ad_content_rating": "MA"];
             request.register(extras)
            
-            bannerView.load(request)
             
         } else {
-            self.bannerView.isHidden = true
+//            self.bannerView.isHidden = true
         }
         //self.bannerView.isHidden = true
         let name = String(format:"b%d", Int(arc4random_uniform(4)))
@@ -131,7 +133,8 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
 //        self.readButton.layer.cornerRadius = AppDelegate.smallCornerRadius
         
-        
+        self.tableView.register(UINib(nibName: "SmallNativeAdTableViewCell", bundle: nil), forCellReuseIdentifier: "SmallNativeAdCell")
+                
         self.bgView.layer.cornerRadius = AppDelegate.smallCornerRadius
         self.authorView.layer.cornerRadius = AppDelegate.smallCornerRadius
         
@@ -345,8 +348,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         default:
             ratingImg.image = UIImage(named: "NotRated")
         }
-        
-        
+                
         warnings = [String]()
         if let warn = downloadedWorkItem.archiveWarnings {
             if (!warn.isEmpty) {
@@ -974,7 +976,6 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     //MARK: - show work
     
     func showWork() {
-        
         authorLabel.text = "\(workItem.author)"
         dateLabel.text = workItem.datetime
         titleLabel.text = workItem.workTitle
@@ -1011,7 +1012,6 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             readButton.alpha = 0.5
             
             self.showError(title:  Localization("Error"), message: Localization("SensitiveContent"))
-            
         }
     }
     
@@ -1152,20 +1152,34 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     // MARK: - tableview
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell: WorkDetailCell! = nil
+        var createdCell: UITableViewCell! = nil
         
-        if (indexPath.section == 0 || indexPath.section == 1 || indexPath.section == 9) {
-            cell = tableView.dequeueReusableCell(withIdentifier: "txtCell") as? WorkDetailCell
+        let adsSection = self.nativeAdsManager.nativeAds.isEmpty ? -1 : 0
+        let authorSection = adsSection + 1
+        let firstTxtSection = authorSection + 1
+        let secondTxtSection = firstTxtSection  + 1
+        let lastTxtSection = firstTxtSection + 8
+        
+        if (indexPath.section == adsSection) {
+            createdCell = tableView.dequeueReusableCell(withIdentifier: "SmallNativeAdCell") as? SmallNativeAdCell
+        } else if (indexPath.section == authorSection) {
+            createdCell = tableView.dequeueReusableCell(withIdentifier: "WorkDetailsAuthorCell") as? WorkDetailsAuthorCell
+        } else if (indexPath.section == firstTxtSection || indexPath.section == secondTxtSection || indexPath.section == lastTxtSection) {
+            createdCell = tableView.dequeueReusableCell(withIdentifier: "txtCell") as? WorkDetailCell
         } else {
-            cell = tableView.dequeueReusableCell(withIdentifier: "cell") as? WorkDetailCell
+            createdCell = tableView.dequeueReusableCell(withIdentifier: "cell") as? WorkDetailCell
         }
         
-        if (cell == nil) {
-            if (indexPath.section == 0 || indexPath.section == 1 || indexPath.section == 9) {
-                cell = WorkDetailTxtCell(style: UITableViewCell.CellStyle.default, reuseIdentifier: "txtCell")
+        if (createdCell == nil) {
+            if (indexPath.section == adsSection) {
+                createdCell = SmallNativeAdCell(style: .default, reuseIdentifier: "SmallNativeAdCell")
+            } else if (indexPath.section == authorSection) {
+                createdCell = WorkDetailsAuthorCell(style: .default, reuseIdentifier: "WorkDetailsAuthorCell")
+            } else if (indexPath.section == firstTxtSection || indexPath.section == secondTxtSection || indexPath.section == lastTxtSection) {
+                createdCell = WorkDetailTxtCell(style: UITableViewCell.CellStyle.default, reuseIdentifier: "txtCell")
             } else {
-                if(cell == nil) {
-                    cell = WorkDetailCell(style: UITableViewCell.CellStyle.default, reuseIdentifier: "cell")
+                if(createdCell == nil) {
+                    createdCell = WorkDetailCell(style: UITableViewCell.CellStyle.default, reuseIdentifier: "cell")
                 }
             }
         }
@@ -1182,10 +1196,31 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         } else {
             txtColor = AppDelegate.nightTextColor
         }
+        
+        if (indexPath.section == adsSection) {
+            if let ad = self.nativeAdsManager.nativeAds.first {
+                (createdCell as? SmallNativeAdCell)?.setup(with: ad, and: theme)
+            }
+            
+            return createdCell
+        }
+        
+        if (indexPath.section == authorSection) {
+            if let wrk = self.workItem {
+                (createdCell as? WorkDetailsAuthorCell)?.setup(with: wrk, and: theme)
+            }
+            
+            return createdCell
+        }
+               
+        let cell: WorkDetailCell! = createdCell as? WorkDetailCell
+        
         cell.label.textColor = txtColor
         cell.backgroundColor = UIColor.clear
         
-        switch (indexPath.section) {
+        let cellSection = indexPath.section - (authorSection + 1)
+        
+        switch (cellSection) {
         case 0:
             
             cell.label.textColor = txtColor
@@ -1299,7 +1334,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                     cell!.label.text = Localization("SensitiveContent")
                 }
             } else if (downloadedWorkItem != nil) {
-                cell!.label.text = downloadedWorkItem.topicPreview ?? "No Preview"
+                cell!.label.text = downloadedWorkItem.topicPreview ?? "No Preview" + " Hello!!!"
             }
             
         case 2:
@@ -1390,7 +1425,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 cell.label.font = UIFont.systemFont(ofSize: 14.0, weight: UIFont.Weight.regular)
             }
             
-            cell!.imgView.image = nil
+            cell!.imgView?.image = nil
             
         default:
             break
@@ -1401,20 +1436,33 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
+        var numberOfSections = 9
+        
         if (workItem != nil && workItem.serieUrl.isEmpty) {
-            return 8
+            numberOfSections = 9
         } else if (downloadedWorkItem != nil && (downloadedWorkItem.serieUrl ?? "").isEmpty) {
-            return 8
+            numberOfSections = 9
         } else {
-            return 9
+            numberOfSections = 10
         }
+        
+        if !self.nativeAdsManager.nativeAds.isEmpty { // include ads section
+            numberOfSections += 1
+        }
+        
+        return numberOfSections
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         var res:Int = 1
         
-        switch (section) {
+        let adsSection = self.nativeAdsManager.nativeAds.isEmpty ? -1 : 0
+        let authorSection = adsSection + 1
+        
+        let sectionNumber = section - (authorSection + 1) // skip author and ads section (if present)
+        
+        switch (sectionNumber) {
         case 4:
             if (workItem != nil) {
                 if (fandoms != nil) {
@@ -1451,7 +1499,12 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
         self.tagUrl = ""
         
-        switch indexPath.section {
+        let adsSection = self.nativeAdsManager.nativeAds.isEmpty ? -1 : 0
+        let authorSection = adsSection + 1
+        
+        let sectionNumber = indexPath.section - (authorSection + 1) // skip author and ads section (if present)
+        
+        switch sectionNumber {
         case 4:
                 if (fandoms != nil && fandoms.count > pos) {
                     tagUrl = fandoms[pos].fandomUrl
@@ -1501,7 +1554,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         }
     }
     
-    @objc func authorTouched(_ sender: UITapGestureRecognizer) {
+    @objc @IBAction func authorTouched(_ sender: UITapGestureRecognizer) {
         var authorName = ""
         
         if(workItem != nil) {
@@ -2526,3 +2579,14 @@ fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ inp
 	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
 }
 
+
+extension WorkDetailViewController: NativeAdsManagerDelegate {
+    func nativeAdsManagerDidReceivedAds(_ adsManager: NativeAdsManager) {
+        
+        if let _ = adsManager.nativeAds.first {
+//            nativeAdView.setup(with: ad, and: theme)
+            
+            self.tableView.reloadData()
+        }
+    }
+}
