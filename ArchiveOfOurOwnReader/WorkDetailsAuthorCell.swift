@@ -24,6 +24,13 @@ class WorkDetailsAuthorCell: UITableViewCell {
     
     @IBOutlet weak var authorView: UIView!
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        self.downloadTrashButton.accessibilityLabel = NSLocalizedString("StoryOptions", comment: "")
+        self.authorView.accessibilityLabel = NSLocalizedString("AuthorView", comment: "")
+    }
+    
     func setup(with downloadedWorkItem:WorkItem, and theme: Int) {
         
         self.contentView.layer.masksToBounds = true

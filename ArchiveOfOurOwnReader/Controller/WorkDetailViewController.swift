@@ -29,25 +29,13 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     
     var loginPublishSubject = PublishSubject<Void>()
     
-    @IBOutlet weak var downloadTrashButton: UIButton!
     
     @IBOutlet weak var bgImage: UIImageView!
-    @IBOutlet weak var authorImage: RoundImageView!
-    @IBOutlet weak var authorLabel: UILabel!
-    @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var readButton: UIButton!
     @IBOutlet weak var kudosButton: UIButton!
-    @IBOutlet weak var titleLabel: UILabel!
-    
-    @IBOutlet weak var langLabel: UILabel!
-    @IBOutlet weak var categoryLabel: UILabel!
-    @IBOutlet weak var completeLabel: UILabel!
-    
-    @IBOutlet weak var ratingImg: UIImageView!
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var bgView: UIView!
-    @IBOutlet weak var authorView: UIView!
     
     var downloadedWorkItem: DBWorkItem! = nil
     var downloadedFandoms: [DBFandom]! = nil
@@ -136,14 +124,6 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         self.tableView.register(UINib(nibName: "SmallNativeAdTableViewCell", bundle: nil), forCellReuseIdentifier: "SmallNativeAdCell")
                 
         self.bgView.layer.cornerRadius = AppDelegate.smallCornerRadius
-        self.authorView.layer.cornerRadius = AppDelegate.smallCornerRadius
-        
-        self.authorView.layer.shadowRadius = AppDelegate.smallCornerRadius
-        self.authorView.layer.shadowOffset = CGSize(width: 2.0, height: 1.5)
-        self.authorView.layer.shadowOpacity = 0.7
-        self.authorView.layer.shadowColor = AppDelegate.darkerGreyColor.cgColor
-        
-        self.authorView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.authorTouched(_:))))
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
             Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: AppDelegate.ao3SiteUrl), mainDocumentURL: nil)
@@ -242,25 +222,13 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         if (theme == DefaultsManager.THEME_DAY) {
             tableView.separatorColor = AppDelegate.greyLightColor
             bgView.backgroundColor = AppDelegate.whiteTransparentColor
-            authorView.backgroundColor = AppDelegate.whiteTransparentColor
            // readButton.backgroundColor = AppDelegate.whiteTransparentColor
           //  readButton.setTitleColor(AppDelegate.redColor, for: .normal)
-            downloadTrashButton.setImage(UIImage(named: "edit"), for: UIControl.State.normal)
-            titleLabel.textColor = UIColor.black
-            authorLabel.textColor = AppDelegate.darkerGreyColor
-            dateLabel.textColor = AppDelegate.greyColor
-            authorView.layer.shadowColor = AppDelegate.darkerGreyColor.cgColor
         } else {
             tableView.separatorColor = AppDelegate.greyBg
             bgView.backgroundColor = AppDelegate.greyTransparentColor
-            authorView.backgroundColor = AppDelegate.greyTransparentColor
            // readButton.backgroundColor = AppDelegate.greyTransparentColor
-            titleLabel.textColor = UIColor.white
           //  readButton.setTitleColor(UIColor.white, for: .normal)
-            downloadTrashButton.setImage(UIImage(named: "edit_light"), for: UIControl.State.normal)
-            authorLabel.textColor = UIColor.white
-            dateLabel.textColor = AppDelegate.nightTextColor
-            authorView.layer.shadowColor = AppDelegate.redColor.cgColor
         }
         
     }
@@ -282,9 +250,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     }
     
     func setupAccessibility() {
-        self.downloadTrashButton.accessibilityLabel = NSLocalizedString("StoryOptions", comment: "")
         self.kudosButton.accessibilityLabel = NSLocalizedString("AddKudos", comment: "")
-        self.authorView.accessibilityLabel = NSLocalizedString("AuthorView", comment: "")
     }
     
     @IBAction func kudosTouched(_ sender: AnyObject) {
@@ -322,32 +288,11 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         }
         
         let auth = downloadedWorkItem.author ?? ""
-        authorLabel.text = "\(auth)" // = underlineAttributedString
-        langLabel.text = downloadedWorkItem.language ?? "-"
-        dateLabel.text = downloadedWorkItem.datetime ?? ""
         
         let title = downloadedWorkItem.workTitle ?? ""
         let trimmedTitle = title.trimmingCharacters(
             in: CharacterSet.whitespacesAndNewlines
         )
-        
-        titleLabel.text = trimmedTitle
-        
-        categoryLabel.text = downloadedWorkItem.category ?? ""
-        completeLabel.text = downloadedWorkItem.complete ?? ""
-        
-        switch (downloadedWorkItem.ratingTags ?? "").trimmingCharacters(in: .whitespacesAndNewlines) {
-        case "General Audiences":
-            ratingImg.image = UIImage(named: "G")
-        case "Teen And Up Audiences":
-            ratingImg.image = UIImage(named: "PG13")
-        case "Mature":
-            ratingImg.image = UIImage(named: "R")
-        case "Explicit":
-            ratingImg.image = UIImage(named: "NC17")
-        default:
-            ratingImg.image = UIImage(named: "NotRated")
-        }
                 
         warnings = [String]()
         if let warn = downloadedWorkItem.archiveWarnings {
@@ -976,27 +921,6 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     //MARK: - show work
     
     func showWork() {
-        authorLabel.text = "\(workItem.author)"
-        dateLabel.text = workItem.datetime
-        titleLabel.text = workItem.workTitle
-        langLabel.text = workItem.language
-        
-        categoryLabel.text = workItem.category
-        completeLabel.text = workItem.complete
-        
-        switch workItem.ratingTags.trimmingCharacters(in: .whitespacesAndNewlines) {
-        case "General Audiences":
-            ratingImg.image = UIImage(named: "G")
-        case "Teen And Up Audiences":
-            ratingImg.image = UIImage(named: "PG13")
-        case "Mature":
-            ratingImg.image = UIImage(named: "R")
-        case "Explicit":
-            ratingImg.image = UIImage(named: "NC17")
-        default:
-            ratingImg.image = UIImage(named: "NotRated")
-        }
-        
         tableView.reloadData()
         
         hideLoadingView()
@@ -2293,8 +2217,14 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         })
         optionMenu.addAction(cancelAction)
         
-        optionMenu.popoverPresentationController?.sourceView =  self.titleLabel
-        optionMenu.popoverPresentationController?.sourceRect = CGRect(x: self.titleLabel.bounds.size.width / 2.0, y: self.titleLabel.bounds.size.height / 2.0, width: 1.0, height: 1.0)
+        
+        let authorCellIndexPath = IndexPath(row: 0, section: self.nativeAdsManager.nativeAds.isEmpty ? 0 : 1)
+        self.tableView.rectForRow(at: authorCellIndexPath)
+        
+        let senderView = (sender as! UIView)
+        
+        optionMenu.popoverPresentationController?.sourceView = self.tableView
+        optionMenu.popoverPresentationController?.sourceRect =  self.tableView.convert(senderView.frame, from: senderView.superview)
         
         optionMenu.view.tintColor = AppDelegate.redColor
         
