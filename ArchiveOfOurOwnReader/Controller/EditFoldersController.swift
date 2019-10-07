@@ -8,7 +8,6 @@
 
 import UIKit
 import CoreData
-import RMessage
 import Crashlytics
 
 class EditFoldersController: BaseFolderController {
@@ -53,9 +52,8 @@ class EditFoldersController: BaseFolderController {
             if let folder = fetchedResultsController?.object(at: indexPath) {
                 folderTouched(folder: folder)
             } else {
-                RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("FolderNotFound"), type: RMessageType.error, customTypeName: "", callback: {
-                    
-                })
+                self.showError(title: Localization("Error"), message: Localization("FolderNotFound"))
+                
             }
         }
         tableView.deselectRow(at: indexPath, animated: true)
@@ -137,9 +135,7 @@ class EditFoldersController: BaseFolderController {
         do {
             try managedContext.save()
         } catch _ {
-            RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("Could not delete the folder!"), type: RMessageType.error, customTypeName: "", callback: {
-                
-            })
+            self.showError(title: Localization("Error"), message: Localization("Could not delete the folder!"))
         }
         
         self.tableView.reloadData()
@@ -169,9 +165,7 @@ class EditFoldersController: BaseFolderController {
                                         "name_new": txt,
                                         "name_old": folder.name ?? "No Name"])
             } else {
-                RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("FolderNameEmpty"), type: RMessageType.error, customTypeName: "", callback: {
-                    
-                })
+                self.showError(title: Localization("Error"), message: Localization("FolderNameEmpty"))
             }
             
         }))
@@ -200,9 +194,9 @@ class EditFoldersController: BaseFolderController {
         do {
             if let fetchedWorks = try managedContext.fetch(req) as? [Folder] {
                 if (fetchedWorks.count > 0) {
-                    RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("FolderAlreadyExists"), type: RMessageType.error, customTypeName: "", callback: {
-                        
-                    })
+                    
+                    self.showError(title: Localization("Error"), message: Localization("FolderAlreadyExists"))
+
                     return
                 } else {
                     folder.name = newName
@@ -218,9 +212,9 @@ class EditFoldersController: BaseFolderController {
             #if DEBUG
                 print("Could not save \(String(describing: error.userInfo))")
             #endif
-            RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("Could not rename the folder!"), type: RMessageType.error, customTypeName: "", callback: {
-                
-            })
+           
+            self.showError(title: Localization("Error"), message: Localization("Could not rename the folder!"))
+
         }
         
         tableView.reloadData()

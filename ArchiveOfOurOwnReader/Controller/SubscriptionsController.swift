@@ -8,7 +8,6 @@
 
 import UIKit
 import Alamofire
-import RMessage
 
 class SubscriptionsViewController: ListViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
@@ -272,9 +271,8 @@ class SubscriptionsViewController: ListViewController, UITableViewDataSource, UI
                     let _ = self.downloadWork(d, curWork: curWork)
                     self.hideLoadingView()
                 } else {
-                    RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("CannotDwnldWrk"), type: RMessageType.error, customTypeName: "", callback: {
-                        
-                    })
+                    self.showError(title: Localization("Error"), message: Localization("CannotDwnldWrk"))
+
                     self.hideLoadingView()
                 }
             })

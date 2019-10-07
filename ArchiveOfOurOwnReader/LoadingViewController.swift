@@ -253,9 +253,10 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
 //        activityView?.frame = CGRect(x: 65, y: 40, width: aView.bounds.size.width, height: aView.bounds.size.height)
 //        loadingView.addSubview(activityView!)
         
-//        DispatchQueue.main.async {
-             KRProgressHUD.show(withMessage: msg)
-    //    }
+        DispatchQueue.main.async {
+            KRProgressHUD.set(activityIndicatorViewColors: [AppDelegate.redColor, AppDelegate.purpleLightColor, AppDelegate.redBrightTextColor])
+                .show(withMessage: msg)
+        }
         
        /* loadingLabel = UILabel(frame:CGRect(x: 20, y: 110, width: 140, height: 44))
         loadingLabel.backgroundColor = UIColor.clear

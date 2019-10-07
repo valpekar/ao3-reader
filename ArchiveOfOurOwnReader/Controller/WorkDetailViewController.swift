@@ -101,7 +101,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             
             //loadAdMobInterstitial()
             let request = GADRequest()
-            request.testDevices = [ kGADSimulatorID ]
+            request.testDevices = [ (kGADSimulatorID as! String) ]
            
             let extras = GADExtras();
             extras.additionalParameters = ["max_ad_content_rating": "MA"];

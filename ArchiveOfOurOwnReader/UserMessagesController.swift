@@ -16,6 +16,8 @@ class UserMessagesController: UIViewController {
     
     func showSuccess(title: String, message: String) {
         
+        DispatchQueue.main.async {
+        
         let success = MessageView.viewFromNib(layout: .cardView)
         success.configureTheme(.success)
         success.configureDropShadow()
@@ -27,9 +29,12 @@ class UserMessagesController: UIViewController {
         successConfig.duration = .seconds(seconds: 1.5)
         
         SwiftMessages.show(config: successConfig, view: success)
+        }
     }
     
     func showError(title: String, message: String) {
+        DispatchQueue.main.async {
+            
         let error = MessageView.viewFromNib(layout: .tabView)
         error.configureTheme(.error)
         error.configureContent(title: title, body: message)
@@ -41,9 +46,13 @@ class UserMessagesController: UIViewController {
         
         config.duration = .seconds(seconds: 1.5)
         SwiftMessages.show(config: config, view: error)
+            
+        }
     }
     
     func showWarning(title: String, message: String) {
+        DispatchQueue.main.async {
+            
         let warn = MessageView.viewFromNib(layout: .cardView)
         warn.configureTheme(.warning)
         warn.button?.isHidden = true
@@ -56,9 +65,11 @@ class UserMessagesController: UIViewController {
         config.duration = .seconds(seconds: 1.5)
         
         SwiftMessages.show(config: config, view: warn)
+        }
     }
     
     func showInfo(title: String, message: String) {
+        DispatchQueue.main.async {
         let warn = MessageView.viewFromNib(layout: .messageView)
         warn.configureTheme(.info)
         warn.configureContent(title: title, body: message)
@@ -70,5 +81,6 @@ class UserMessagesController: UIViewController {
         config.duration = .seconds(seconds: 1.5)
         
         SwiftMessages.show(config: config, view: warn)
+        }
     }
 }

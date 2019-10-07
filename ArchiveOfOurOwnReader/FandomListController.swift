@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import RMessage
 import Alamofire
 import Crashlytics
 
@@ -72,9 +71,8 @@ class FandomListController: LoadingViewController, UITableViewDataSource, UITabl
                 self.showCategories()
             } else {
                 self.showCategories()
-                RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("CheckInternet"), type: RMessageType.error, customTypeName: "", callback: {
-                    
-                })
+                self.showError(title: Localization("Error"), message: Localization("CheckInternet"))
+                
             }
         })
     }

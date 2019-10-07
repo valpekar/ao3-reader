@@ -8,7 +8,6 @@
 
 import UIKit
 import Alamofire
-import RMessage
 
 class MarkedForLaterController: ListViewController , UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
@@ -127,9 +126,9 @@ class MarkedForLaterController: ListViewController , UITableViewDataSource, UITa
                     self.showWorks()
                 } else {
                     self.hideLoadingView()
-                    RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("CheckInternet"), type: RMessageType.error, customTypeName: "", callback: {
-                        
-                    })
+                    
+                    self.showError(title: Localization("Error"), message: Localization("CheckInternet"))
+
                 }
             })
     }
@@ -271,9 +270,9 @@ class MarkedForLaterController: ListViewController , UITableViewDataSource, UITa
                     let _ = self.downloadWork(d, curWork: curWork)
                 } else {
                     self.hideLoadingView()
-                    RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("CheckInternet"), type: RMessageType.error, customTypeName: "", callback: {
-                        
-                    })
+                   
+                    self.showError(title: Localization("Error"), message: Localization("CheckInternet"))
+
                 }
             })
         
@@ -348,9 +347,9 @@ class MarkedForLaterController: ListViewController , UITableViewDataSource, UITa
                     self.hideLoadingView()
                 } else {
                     self.hideLoadingView()
-                    RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("CheckInternet"), type: RMessageType.error, customTypeName: "", callback: {
-                        
-                    })
+                    
+                    self.showError(title: Localization("Error"), message: Localization("CheckInternet"))
+
                 }
             })
     }

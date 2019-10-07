@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import RMessage
 import Alamofire
 import Crashlytics
 
@@ -221,18 +220,18 @@ class ReplyController: LoadingViewController {
                         
                     } else {
                         self.hideLoadingView()
-                        RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("CouldNotReply"), type: RMessageType.error, customTypeName: "", callback: {
-                            
-                        })
+                        
+                        self.showError(title: Localization("Error"), message: Localization("CouldNotReply"))
+
                     }
                 })
             
         } else {
             
             self.hideLoadingView()
-            RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("CouldNotReply"), type: RMessageType.error, customTypeName: "", callback: {
-                
-            })
+           
+            self.showError(title: Localization("Error"), message: Localization("CouldNotReply"))
+
         }
     }
     
@@ -246,9 +245,9 @@ class ReplyController: LoadingViewController {
         
         if let noticeEls = doc.search(withXPathQuery: "//div[@class='flash comment_notice']") as? [TFHppleElement], noticeEls.count > 0,
             let noticeStr = noticeEls[0].content, (noticeStr.contains("created") || noticeStr.contains("received")) {
-            RMessage.showNotification(in: self, title: Localization("Success"), subtitle: Localization("CommentCreated"), type: RMessageType.success, customTypeName: "", callback: {
-                
-            })
+            
+            self.showSuccess(title: Localization("Success"), message: Localization("CommentCreated"))
+
             
             let delayTime = DispatchTime.now() + Double(Int64(1.5 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
             DispatchQueue.main.asyncAfter(deadline: delayTime) {
@@ -257,10 +256,7 @@ class ReplyController: LoadingViewController {
                 })
             }
         } else {
-        
-            RMessage.showNotification(in: self, title: Localization("Error"), subtitle: Localization("CouldNotReply"), type: RMessageType.error, customTypeName: "", callback: {
-                
-            })
+            self.showError(title: Localization("Error"), message: Localization("CouldNotReply"))
             
             let string1 = NSString(data: data, encoding: String.Encoding.utf8.rawValue)
             Answers.logCustomEvent(withName: "Reply: Reply Error", customAttributes: ["doc":string1 ?? "data empty"])

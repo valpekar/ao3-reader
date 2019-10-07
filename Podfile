@@ -19,7 +19,6 @@ pod 'Spring', :git => 'https://github.com/MengTo/Spring.git'
 pod 'KRProgressHUD'
 pod 'ExpandableLabel'
 pod 'PopupDialog'
-pod 'RMessage'
 pod 'SwiftMessages'
 pod 'RxSwift'
 
