@@ -97,7 +97,7 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
                 addDoneButtonOnKeyboardTf(tf)
                 
                 if (theme == DefaultsManager.THEME_DAY) {
-                    tf.textColor = AppDelegate.redColor
+                    tf.textColor = UIColor(named: "global_tint")
                     tf.backgroundColor = UIColor.white
                     
                 } else {
@@ -124,11 +124,11 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
         }*/
         
         tryAgainButton.layer.borderWidth = 1.0
-        tryAgainButton.layer.borderColor = AppDelegate.redColor.cgColor
+        tryAgainButton.layer.borderColor = UIColor(named: "global_tint")!.cgColor
         tryAgainButton.layer.cornerRadius = AppDelegate.smallCornerRadius
         
         checkStatusButton.layer.borderWidth = 1.0
-        checkStatusButton.layer.borderColor = AppDelegate.redColor.cgColor
+        checkStatusButton.layer.borderColor = UIColor(named: "global_tint")!.cgColor
         checkStatusButton.layer.cornerRadius = AppDelegate.smallCornerRadius
         
 //        let shown: Bool = DefaultsManager.getBool(DefaultsManager.CONTENT_SHOWSN) ?? false

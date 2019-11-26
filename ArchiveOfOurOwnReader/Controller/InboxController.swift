@@ -476,7 +476,7 @@ extension InboxController: UITableViewDataSource, UITableViewDelegate {
     
     func selectItem(inboxItem: InboxItem, isRead: Bool, view: UIView) {
         let optionMenu = UIAlertController(title: nil, message: Localization("Options"), preferredStyle: .actionSheet)
-        optionMenu.view.tintColor = AppDelegate.redColor
+        optionMenu.view.tintColor = UIColor(named: "global_tint")
         
         if (isRead == true) {
             let unreadAction = UIAlertAction(title: Localization("MarkAsUnread"), style: .default, handler: {
@@ -526,7 +526,7 @@ extension InboxController: UITableViewDataSource, UITableViewDelegate {
         optionMenu.popoverPresentationController?.sourceView =  view
         optionMenu.popoverPresentationController?.sourceRect = CGRect(x: view.bounds.size.width / 2.0, y: view.bounds.size.height / 2.0, width: 1.0, height: 1.0)
         
-        optionMenu.view.tintColor = AppDelegate.redColor
+        optionMenu.view.tintColor = UIColor(named: "global_tint")
         
         self.present(optionMenu, animated: true, completion: nil)
     }
@@ -755,7 +755,7 @@ extension InboxController {
             self.sendDeleteItem(commentId: commentId)
         }))
         
-        deleteAlert.view.tintColor = AppDelegate.redColor
+        deleteAlert.view.tintColor = UIColor(named: "global_tint")
         self.present(deleteAlert, animated: true, completion: nil)
     }
     

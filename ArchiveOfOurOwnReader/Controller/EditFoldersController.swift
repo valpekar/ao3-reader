@@ -78,7 +78,7 @@ class EditFoldersController: BaseFolderController {
             #endif
         }))
         
-        alert.view.tintColor = AppDelegate.redColor
+        alert.view.tintColor = UIColor(named: "global_tint")
         alert.popoverPresentationController?.sourceView = self.tableView
         alert.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.size.width / 2.0, y: self.navigationController?.navigationBar.bounds.height ?? 64, width: 1.0, height: 1.0)
         
@@ -111,7 +111,7 @@ class EditFoldersController: BaseFolderController {
             })
         }))
         
-        deleteAlert.view.tintColor = AppDelegate.redColor
+        deleteAlert.view.tintColor = UIColor(named: "global_tint")
         
         present(deleteAlert, animated: true, completion: nil)
     }
@@ -176,7 +176,7 @@ class EditFoldersController: BaseFolderController {
             #endif
         }))
         
-        alert.view.tintColor = AppDelegate.redColor
+        alert.view.tintColor = UIColor(named: "global_tint")
         
         self.present(alert, animated: true, completion: nil)
     }

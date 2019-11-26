@@ -68,7 +68,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         Fabric.with([Crashlytics.self])
         FirebaseApp.configure()
         
-        self.window?.tintColor = AppDelegate.redColor
+        self.window?.tintColor = UIColor(named: "global_tint")
         
         //create the notificationCenter
         let center  = UNUserNotificationCenter.current()

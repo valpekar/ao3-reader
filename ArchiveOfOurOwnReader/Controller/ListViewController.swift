@@ -500,7 +500,7 @@ class ListViewController: LoadingViewController, PageSelectDelegate, UIPopoverPr
         
         if (curWork?.isDownloaded == true) {
             let optionMenu = UIAlertController(title: nil, message: Localization("WrkOptions"), preferredStyle: .actionSheet)
-            optionMenu.view.tintColor = AppDelegate.redColor
+            optionMenu.view.tintColor = UIColor(named: "global_tint")
             
             let deleteAction = UIAlertAction(title: Localization("DeleteWrk"), style: .default, handler: {
                 (alert: UIAlertAction!) -> Void in
@@ -522,7 +522,7 @@ class ListViewController: LoadingViewController, PageSelectDelegate, UIPopoverPr
             optionMenu.popoverPresentationController?.sourceView =  self.view
             optionMenu.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.size.width / 2.0, y: self.view.bounds.size.height / 2.0, width: 1.0, height: 1.0)
             
-            optionMenu.view.tintColor = AppDelegate.redColor
+            optionMenu.view.tintColor = UIColor(named: "global_tint")
             
             self.present(optionMenu, animated: true, completion: nil)
         } else {

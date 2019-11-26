@@ -1765,7 +1765,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             self.sendDeleteBookmarkRequest()
         }))
         
-        deleteAlert.view.tintColor = AppDelegate.redColor
+        deleteAlert.view.tintColor = UIColor(named: "global_tint")
         present(deleteAlert, animated: true, completion: nil)
     }
     
@@ -2080,7 +2080,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 self.showSuccess(title: Localization("Success"), message: Localization("WorkDeletedFromDownloads"))
             }))
             
-            deleteAlert.view.tintColor = AppDelegate.redColor
+            deleteAlert.view.tintColor = UIColor(named: "global_tint")
             
             present(deleteAlert, animated: true, completion: nil)
         }
@@ -2118,7 +2118,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     
     @IBAction func settingsButtonTouched(_ sender: AnyObject) {
         let optionMenu = UIAlertController(title: nil, message: Localization("WrkOptions"), preferredStyle: .actionSheet)
-        optionMenu.view.tintColor = AppDelegate.redColor
+        optionMenu.view.tintColor = UIColor(named: "global_tint")
         
         if (downloadedWorkItem != nil) {
             let deleteAction = UIAlertAction(title: Localization("DeleteWrk"), style: .default, handler: {
@@ -2226,7 +2226,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         optionMenu.popoverPresentationController?.sourceView = self.tableView
         optionMenu.popoverPresentationController?.sourceRect =  self.tableView.convert(senderView.frame, from: senderView.superview)
         
-        optionMenu.view.tintColor = AppDelegate.redColor
+        optionMenu.view.tintColor = UIColor(named: "global_tint")
         
         self.present(optionMenu, animated: true, completion: nil)
     }
@@ -2236,7 +2236,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         let keys: [String] = Array(downloadUrls.keys)
         
         let optionMenu = UIAlertController(title: nil, message: Localization("WrkOptions"), preferredStyle: .actionSheet)
-        optionMenu.view.tintColor = AppDelegate.redColor
+        optionMenu.view.tintColor = UIColor(named: "global_tint")
         
         for key in keys {
             let downloadAction = UIAlertAction(title: key, style: .default, handler: {
@@ -2255,7 +2255,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         optionMenu.popoverPresentationController?.sourceView = self.view
         optionMenu.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.size.width / 2.0, y: self.view.bounds.size.height / 2.0, width: 1.0, height: 1.0)
         
-        optionMenu.view.tintColor = AppDelegate.redColor
+        optionMenu.view.tintColor = UIColor(named: "global_tint")
         self.present(optionMenu, animated: true, completion: nil)
     }
     

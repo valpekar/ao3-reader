@@ -148,6 +148,7 @@
 		3C93ED5C1FCF0C5D00F1F4D4 /* CategoriesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C93ED5B1FCF0C5D00F1F4D4 /* CategoriesController.swift */; };
 		3C93ED5E1FCF12EF00F1F4D4 /* CategoryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C93ED5D1FCF12EF00F1F4D4 /* CategoryItem.swift */; };
 		3C93ED601FCF140100F1F4D4 /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C93ED5F1FCF140100F1F4D4 /* CategoryCell.swift */; };
+		3C9870B1238D4CBE00280A01 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3C9870B0238D4CBE00280A01 /* Media.xcassets */; };
 		3C9C87BA1CE3557D00C10410 /* RecommendationsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9C87B91CE3557D00C10410 /* RecommendationsController.swift */; };
 		3C9DFC362004B62500AE15AD /* InboxController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9DFC352004B62500AE15AD /* InboxController.swift */; };
 		3C9FEDCB2048357000D8C91E /* AuthorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9FEDCA2048357000D8C91E /* AuthorViewController.swift */; };
@@ -410,6 +411,7 @@
 		3C93ED5B1FCF0C5D00F1F4D4 /* CategoriesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CategoriesController.swift; path = Controller/CategoriesController.swift; sourceTree = "<group>"; };
 		3C93ED5D1FCF12EF00F1F4D4 /* CategoryItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryItem.swift; sourceTree = "<group>"; };
 		3C93ED5F1FCF140100F1F4D4 /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CategoryCell.swift; path = View/Custom/Cells/CategoryCell.swift; sourceTree = "<group>"; };
+		3C9870B0238D4CBE00280A01 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		3C9C87B91CE3557D00C10410 /* RecommendationsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RecommendationsController.swift; path = Controller/RecommendationsController.swift; sourceTree = "<group>"; };
 		3C9C87BB1CE35D8800C10410 /* ArchiveOfOurOwnReader 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ArchiveOfOurOwnReader 2.xcdatamodel"; sourceTree = "<group>"; };
 		3C9DFC352004B62500AE15AD /* InboxController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = InboxController.swift; path = Controller/InboxController.swift; sourceTree = "<group>"; };
@@ -616,6 +618,7 @@
 				28B6DC4E1B4E3F9700F34529 /* Controller */,
 				28B6DC331B4E3F5900F34529 /* Images.xcassets */,
 				28B6DC271B4E3F5900F34529 /* Supporting Files */,
+				3C9870B0238D4CBE00280A01 /* Media.xcassets */,
 			);
 			path = ArchiveOfOurOwnReader;
 			sourceTree = "<group>";
@@ -1048,6 +1051,7 @@
 				08AAB174234A099C0042E556 /* SmallNativeAdTableViewCell.xib in Resources */,
 				1D03127F1BB57D640008027E /* sortdirection_map.plist in Resources */,
 				3CB5072B20875ED6004AE0B8 /* Rooney-Regular.ttf in Resources */,
+				3C9870B1238D4CBE00280A01 /* Media.xcassets in Resources */,
 				3CE5399C22AD215A00C62C06 /* comic.ttf in Resources */,
 				3C3073391EE7EB6600D1509E /* Localizable.strings in Resources */,
 				3CD808541D804F310099F778 /* GoogleService-Info.plist in Resources */,
@@ -1433,7 +1437,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				"OTHER_SWIFT_FLAGS[arch=*]" = "-D DEBUG";
@@ -1488,7 +1492,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PROVISIONING_PROFILE = "3a2d16d4-3e58-4758-8d8e-5d2c7a136c18";
 				SDKROOT = iphoneos;

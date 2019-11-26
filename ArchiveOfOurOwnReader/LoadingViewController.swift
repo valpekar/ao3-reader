@@ -254,7 +254,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
 //        loadingView.addSubview(activityView!)
         
         DispatchQueue.main.async {
-            KRProgressHUD.set(activityIndicatorViewColors: [AppDelegate.redColor, AppDelegate.purpleLightColor, AppDelegate.redBrightTextColor])
+            KRProgressHUD.set(activityIndicatorViewColors: [UIColor(named: "global_tint")!, AppDelegate.purpleLightColor, AppDelegate.redBrightTextColor])
                 .show(withMessage: msg)
         }
         
@@ -1193,7 +1193,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         
         let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
         let done: UIBarButtonItem = UIBarButtonItem(title: Localization("Done"), style: UIBarButtonItem.Style.done, target: self, action: #selector(LoadingViewController.doneButtonAction))
-        done.tintColor = AppDelegate.redColor
+        done.tintColor = UIColor(named: "global_tint")
         
         var items: [UIBarButtonItem] = [UIBarButtonItem]()
         items.append(flexSpace)
@@ -1213,7 +1213,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         
         let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
         let done: UIBarButtonItem = UIBarButtonItem(title: Localization("Done"), style: UIBarButtonItem.Style.done, target: self, action: #selector(LoadingViewController.doneButtonAction))
-        done.tintColor = AppDelegate.redColor
+        done.tintColor = UIColor(named: "global_tint")
         
         var items: [UIBarButtonItem] = [UIBarButtonItem]()
         items.append(flexSpace)
@@ -1714,7 +1714,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
             #endif
         }))
         
-        alert.view.tintColor = AppDelegate.redColor
+        alert.view.tintColor = UIColor(named: "global_tint")
         self.present(alert, animated: true, completion: nil)
     }
     

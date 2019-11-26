@@ -178,7 +178,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
 //                        print("Cancel")
 //                    }))
 //
-//                    deleteAlert.view.tintColor = AppDelegate.redColor
+//                    deleteAlert.view.tintColor = UIColor(named: "global_tint")
 //
 //                    self.present(deleteAlert, animated: true, completion: nil)
 //                }
@@ -330,18 +330,18 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         if (theme == DefaultsManager.THEME_DAY) {
             cell.backgroundColor = AppDelegate.greyLightBg
             cell.bgView.backgroundColor = UIColor.white
-            cell.topicLabel.textColor = AppDelegate.redColor
-            cell.languageLabel.textColor = AppDelegate.redColor
-            cell.datetimeLabel.textColor = AppDelegate.redColor
-            cell.chaptersLabel.textColor = AppDelegate.redColor
-            cell.authorLabel.textColor = AppDelegate.redColor
+            cell.topicLabel.textColor = UIColor(named: "global_tint")
+            cell.languageLabel.textColor = UIColor(named: "global_tint")
+            cell.datetimeLabel.textColor = UIColor(named: "global_tint")
+            cell.chaptersLabel.textColor = UIColor(named: "global_tint")
+            cell.authorLabel.textColor = UIColor(named: "global_tint")
             cell.topicPreviewLabel.textColor = UIColor.black
             cell.tagsLabel.textColor = AppDelegate.darkerGreyColor
-            cell.kudosLabel.textColor = AppDelegate.redColor
-            cell.chaptersLabel.textColor = AppDelegate.redColor
-            cell.bookmarksLabel.textColor = AppDelegate.redColor
-            cell.hitsLabel.textColor = AppDelegate.redColor
-            cell.wordsLabel.textColor = AppDelegate.redColor
+            cell.kudosLabel.textColor = UIColor(named: "global_tint")
+            cell.chaptersLabel.textColor = UIColor(named: "global_tint")
+            cell.bookmarksLabel.textColor = UIColor(named: "global_tint")
+            cell.hitsLabel.textColor = UIColor(named: "global_tint")
+            cell.wordsLabel.textColor = UIColor(named: "global_tint")
             
             cell.wordImg.image = UIImage(named: "word")
             cell.chaptersImg.image = UIImage(named: "chapters")
@@ -408,7 +408,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
 //            print("Cancel")
 //        }))
 //
-//        deleteAlert.view.tintColor = AppDelegate.redColor
+//        deleteAlert.view.tintColor = UIColor(named: "global_tint")
 //
 //        present(deleteAlert, animated: true, completion: nil)
 //    }
@@ -740,7 +740,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
                 })
             }))
         
-        deleteAlert.view.tintColor = AppDelegate.redColor
+        deleteAlert.view.tintColor = UIColor(named: "global_tint")
         
             present(deleteAlert, animated: true, completion: nil)
         
@@ -865,7 +865,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
     
     @IBAction func sortClicked(_ sender: AnyObject) {
         let optionMenu = UIAlertController(title: nil, message: Localization("Sort Options"), preferredStyle: .actionSheet)
-        optionMenu.view.tintColor = AppDelegate.redColor
+        optionMenu.view.tintColor = UIColor(named: "global_tint")
         
         let azAction = UIAlertAction(title: Localization("Alphabetically"), style: .default, handler: {
             (alert: UIAlertAction!) -> Void in
@@ -990,7 +990,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
                 print("cancel")
             #endif
         }))
-        alert.view.tintColor = AppDelegate.redColor
+        alert.view.tintColor = UIColor(named: "global_tint")
         
         alert.popoverPresentationController?.sourceView = self.tableView
         alert.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.size.width / 2.0, y: self.navigationController?.navigationBar.bounds.height ?? 64, width: 1.0, height: 1.0)

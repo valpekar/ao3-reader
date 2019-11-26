@@ -26,7 +26,7 @@ class ChoosePrefController : LoadingViewController {
         super.viewDidLoad()
         
 //        nextButton.layer.borderWidth = 1.0
-//        nextButton.layer.borderColor = AppDelegate.redColor.cgColor
+//        nextButton.layer.borderColor = UIColor(named: "global_tint").cgColor
         self.nextButton.applyGradient(colours: [AppDelegate.redDarkColor, AppDelegate.redLightColor], cornerRadius: AppDelegate.mediumCornerRadius)
         
         addDoneButtonOnKeyboardTf(textField)

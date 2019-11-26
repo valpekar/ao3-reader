@@ -1984,7 +1984,7 @@ extension WorkViewController {
             self.saveQuote(text: text)
         }))
         
-        deleteAlert.view.tintColor = AppDelegate.redColor
+        deleteAlert.view.tintColor = UIColor(named: "global_tint")
         present(deleteAlert, animated: true, completion: nil)
     }
     

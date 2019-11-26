@@ -166,7 +166,7 @@ class ViewFoldersController: BaseFolderController {
     
     @IBAction func sortFoldersTouched(_ sender: AnyObject) {
         let optionMenu = UIAlertController(title: nil, message: Localization("Sort Options"), preferredStyle: .actionSheet)
-        optionMenu.view.tintColor = AppDelegate.redColor
+        optionMenu.view.tintColor = UIColor(named: "global_tint")
         
         let dateAction = UIAlertAction(title: Localization("By Date Added"), style: .default, handler: {
             (alert: UIAlertAction!) -> Void in

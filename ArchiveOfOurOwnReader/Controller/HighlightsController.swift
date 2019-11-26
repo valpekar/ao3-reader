@@ -106,7 +106,7 @@ class HighlightsController: LoadingViewController, NSFetchedResultsControllerDel
     
     @IBAction func sortHighlightsTouched(_ sender: AnyObject) {
         let optionMenu = UIAlertController(title: nil, message: Localization("Sort Options"), preferredStyle: .actionSheet)
-        optionMenu.view.tintColor = AppDelegate.redColor
+        optionMenu.view.tintColor = UIColor(named: "global_tint")
         
         let dateAction = UIAlertAction(title: Localization("By Date Added"), style: .default, handler: {
             (alert: UIAlertAction!) -> Void in
@@ -156,7 +156,7 @@ class HighlightsController: LoadingViewController, NSFetchedResultsControllerDel
             self.tableView.reloadData()
         }))
         
-        deleteAlert.view.tintColor = AppDelegate.redColor
+        deleteAlert.view.tintColor = UIColor(named: "global_tint")
         present(deleteAlert, animated: true, completion: nil)
     }
     
@@ -280,7 +280,7 @@ class HighlightsController: LoadingViewController, NSFetchedResultsControllerDel
 //            self.tableView.reloadData()
         }))
         
-        deleteAlert.view.tintColor = AppDelegate.redColor
+        deleteAlert.view.tintColor = UIColor(named: "global_tint")
         present(deleteAlert, animated: true, completion: nil)
     }
     
@@ -444,7 +444,7 @@ extension HighlightsController: UITableViewDelegate, UITableViewDataSource {
             print("Cancel")
         }))
         
-        deleteAlert.view.tintColor = AppDelegate.redColor
+        deleteAlert.view.tintColor = UIColor(named: "global_tint")
         deleteAlert.popoverPresentationController?.sourceView = self.tableView
         deleteAlert.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.size.width / 2.0, y: self.navigationController?.navigationBar.bounds.height ?? 64, width: 1.0, height: 1.0)
         

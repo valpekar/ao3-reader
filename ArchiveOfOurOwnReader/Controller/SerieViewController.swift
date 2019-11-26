@@ -73,7 +73,7 @@ class SerieViewController: ListViewController, UITableViewDataSource, UITableVie
     
     @IBAction func editTouched(_ sender: AnyObject) {
         let optionMenu = UIAlertController(title: nil, message: Localization("WrkOptions"), preferredStyle: .actionSheet)
-        optionMenu.view.tintColor = AppDelegate.redColor
+        optionMenu.view.tintColor = UIColor(named: "global_tint")
         
         if (serieItem.subscribed == false) {
             let shareAction = UIAlertAction(title: Localization("SubscribeonAO3"), style: .default, handler: {
@@ -98,7 +98,7 @@ class SerieViewController: ListViewController, UITableViewDataSource, UITableVie
         optionMenu.popoverPresentationController?.sourceView =  self.tableView
         optionMenu.popoverPresentationController?.sourceRect = CGRect(x: self.tableView.bounds.size.width / 2.0, y: self.tableView.bounds.size.height / 2.0, width: 1.0, height: 1.0)
         
-        optionMenu.view.tintColor = AppDelegate.redColor
+        optionMenu.view.tintColor = UIColor(named: "global_tint")
         
         self.present(optionMenu, animated: true, completion: nil)
     }
