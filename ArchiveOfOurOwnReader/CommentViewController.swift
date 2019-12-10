@@ -418,7 +418,7 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
     }
     
     @IBAction func sendCommentTouched(_ sender: AnyObject) {
-        if(commentTv.text != nil && commentTv.text.count > 0) {
+        if let txt = commentTv.text, txt.count > 0 {
             sendComment()
         } else {
             self.showError(title: Localization("Error"), message: Localization("PleaseWriteComment"))

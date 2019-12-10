@@ -1130,8 +1130,10 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         }
         
         if (indexPath.section == authorSection) {
-            if let wrk = self.workItem {
+            if let wrk = workItem {
                 (createdCell as? WorkDetailsAuthorCell)?.setup(with: wrk, and: theme)
+            } else if let wrkd = downloadedWorkItem {
+                (createdCell as? WorkDetailsAuthorCell)?.setupDwnl(with: wrkd, and: theme)
             }
             
             return createdCell

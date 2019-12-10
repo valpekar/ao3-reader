@@ -602,14 +602,17 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
     
     override func reload(row: Int) {
         
-        let indexCorrection = row / NUMBER_OF_ELEMENTS_BETWEEN_ADS
+        var  indexCorrection = 0
+        if (nativeAdsManager.nativeAds.count > 0) {
+            indexCorrection = row / NUMBER_OF_ELEMENTS_BETWEEN_ADS
+        }
         
         let rowIndexToUpdate = row + indexCorrection
         
         if self.works.count > row {
-            self.tableView.beginUpdates()
+        //    self.tableView.beginUpdates()
             self.tableView.reloadRows(at: [ IndexPath(row: rowIndexToUpdate, section: 0)], with: UITableView.RowAnimation.automatic)
-            self.tableView.endUpdates()
+        //    self.tableView.endUpdates()
         }
     }
     
