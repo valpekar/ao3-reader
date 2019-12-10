@@ -118,7 +118,7 @@ class WorkDetailsAuthorCell: UITableViewCell {
             authorView.layer.shadowColor = AppDelegate.redColor.cgColor
         }
         
-        let auth = downloadedWorkItem.author
+        let auth = downloadedWorkItem.author ?? ""
         authorLabel.text = "\(auth)" // = underlineAttributedString
         langLabel.text = downloadedWorkItem.language
         dateLabel.text = downloadedWorkItem.datetime

@@ -2001,10 +2001,12 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
         if let d = response.data {
             self.parseCookies(response)
-            if let dd = self.downloadWork(d, workItemToReload: self.downloadedWorkItem) {
+            if let dd = self.downloadWork(d, workItemOld: self.workItem, workItemToReload: self.downloadedWorkItem) {
                 self.downloadedWorkItem = dd
                 self.workItem = nil
                 showDownloadedWork()
+                
+                self.hideLoadingView()
                 
                 var worksToReload = DefaultsManager.getStringArray(DefaultsManager.NOTIF_IDS_ARR)
                 let workId = dd.workId ?? "0"

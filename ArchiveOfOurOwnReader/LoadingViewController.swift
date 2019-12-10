@@ -278,13 +278,15 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
             #endif
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
         
+        DispatchQueue.main.async {
         KRProgressHUD.dismiss()
+        }
         
 //        if (activityView != nil && activityView.isAnimating) {
 //            activityView.stopAnimating()
 //        }
         if (loadingView != nil && loadingView.superview != nil) {
-           // loadingView.removeFromSuperview()
+            loadingView.removeFromSuperview()
             loadingView = nil
         }
     }
@@ -789,7 +791,10 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
                         }
                         
                 })
-            }
+            } /*else {
+                saveChapters(workItem, managedContext: managedContext)
+                hideLoadingView()
+            }*/
         } else {
             saveChapters(workItem, managedContext: managedContext)
             hideLoadingView()
@@ -966,7 +971,10 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
                         
                     } else {
                         saveChapters(curworkItem, managedContext: managedContext)
-                        hideLoadingView()
+            DispatchQueue.main.async {
+                self.hideLoadingView()
+            }
+                        
                     }
     }
     

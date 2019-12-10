@@ -94,5 +94,7 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>gad_preferred_webview</key>
+	<string>wkwebview</string>
 </dict>
 </plist>
