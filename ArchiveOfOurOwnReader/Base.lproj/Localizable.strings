@@ -135,8 +135,8 @@
 "Me" = "My Profile";
 "Support" = "Support";
 "NoComments" = "No Comments 😛";
-"Subscriptions" = "Subscribed to Read";
-"GettingSubs" = "Getting Subscriptions";
+"Subscriptions" = "Works You Follow";
+"GettingSubs" = "Getting Works";
 "OpenInBrowser" = "Open In Browser";
 "Success" = "Success";
 "FolderNameEmpty" = "Group Name Cannot Be Empty";
@@ -211,10 +211,10 @@
 "LangChanged" = "Language successfully changed. Please restart the app for changes to take effect.";
 "ErrLangChanged" = "Cannot change language. Please email me from support screen to let me know!";
 "FandomNotSpecified" = "Fandom Not Specified";
-"Subscribing" = "Subscribing";
-"CannotSubscribe" = "Cannot Subscribe";
-"SubscribeonAO3" = "Subscribe via AO3";
-"UnsubscribeonAO3" = "Unsubscribe via AO3";
+"Subscribing" = "Following";
+"CannotSubscribe" = "Cannot Follow";
+"SubscribeonAO3" = "Follow via AO3";
+"UnsubscribeonAO3" = "Unfollow via AO3";
 "RelationshipNotSpecified" = "Relationship Not Specified";
 "CharacterNotSpecified" = "Character Not Specified";
 "StoryOptions" = "Story Options";

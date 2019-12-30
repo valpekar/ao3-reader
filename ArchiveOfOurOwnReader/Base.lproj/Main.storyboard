@@ -10676,7 +10676,7 @@ Please check your Internet connection and also make sure you are logged into you
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="252" image="highlights_explained" translatesAutoresizingMaskIntoConstraints="NO" id="lFV-u5-mLt">
-                                        <rect key="frame" x="0.0" y="66.499999999999986" width="311" height="200.00000000000003"/>
+                                        <rect key="frame" x="0.0" y="66.5" width="311" height="200"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="200" id="5gw-ea-DVb"/>
                                         </constraints>
