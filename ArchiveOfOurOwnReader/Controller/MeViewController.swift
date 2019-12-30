@@ -499,12 +499,17 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
                             product = p
                         }
                     }
-                    self.hideLoadingView()
-                    self.showBuyAlert(product, restore: true)
+                    DispatchQueue.main.async {
+                        self.hideLoadingView()
+                        self.showBuyAlert(product, restore: true)
+                    }
+                    
                 }
             } else {
-                self.hideLoadingView()
-                self.showErrorAlert(productId: "prosub")
+                DispatchQueue.main.async {
+                    self.hideLoadingView()
+                    self.showErrorAlert(productId: "prosub")
+                }
             }
         }
     }
@@ -527,12 +532,16 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
                             product = p
                         }
                     }
+                    DispatchQueue.main.async {
                     self.hideLoadingView()
                     self.showBuyAlert(product, restore: false)
+                    }
                 }
             } else {
+                DispatchQueue.main.async {
                 self.hideLoadingView()
                 self.showErrorAlert(productId: "tip.small")
+                }
             }
         }
     }
@@ -555,12 +564,16 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
                             product = p
                         }
                     }
+                    DispatchQueue.main.async {
                     self.hideLoadingView()
                     self.showBuyAlert(product, restore: false)
+                    }
                 }
             } else {
+                DispatchQueue.main.async {
                 self.hideLoadingView()
                 self.showErrorAlert(productId: "tip.medium")
+                }
             }
         }
     }
@@ -582,12 +595,16 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
                             product = p
                         }
                     }
+                    DispatchQueue.main.async {
                     self.hideLoadingView()
                     self.showBuyAlert(product, restore: false)
+                    }
                 }
             } else {
+                DispatchQueue.main.async {
                 self.hideLoadingView()
                 self.showErrorAlert(productId: "tip.large")
+                }
             }
         }
     }

@@ -133,6 +133,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             
         }
         
+        #if DEBUG
+        self.sendRequestRegisterForPushes()
+        #endif
+        
         // Check if launched from notification
 //        if let notification = launchOptions?[.remoteNotification] as? [String: AnyObject] {
 //            if let workId = notification["workId"] as? String {
@@ -328,7 +332,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     //MARK: - send register for pushes on our server
     
     func sendRequestRegisterForPushes() {
+        
+        #if DEBUG
+        let deviceToken = "myiphone"
+        #else
         let deviceToken = DefaultsManager.getString(DefaultsManager.NOTIF_DEVICE_TOKEN)
+        #endif
+        
         let localTimeZoneName = TimeZone.current.identifier
         
         var params:[String:Any] = [String:Any]()

@@ -1512,7 +1512,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 153;
+				CURRENT_PROJECT_VERSION = 154;
 				DEVELOPMENT_TEAM = DL7Z77P4W8;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1532,7 +1532,7 @@
 					"$(PROJECT_DIR)/Flurry-iOS-7.6.0/FlurryAds",
 					"$(PROJECT_DIR)/Flurry",
 				);
-				MARKETING_VERSION = 1.104;
+				MARKETING_VERSION = 1.105;
 				PRODUCT_BUNDLE_IDENTIFIER = "sergei.pekar.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "a057db4d-da3a-4950-8a3e-221bc683fa9a";
@@ -1554,7 +1554,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 153;
+				CURRENT_PROJECT_VERSION = 154;
 				DEVELOPMENT_TEAM = DL7Z77P4W8;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1574,7 +1574,7 @@
 					"$(PROJECT_DIR)/Flurry-iOS-7.6.0/FlurryAds",
 					"$(PROJECT_DIR)/Flurry",
 				);
-				MARKETING_VERSION = 1.104;
+				MARKETING_VERSION = 1.105;
 				PRODUCT_BUNDLE_IDENTIFIER = "sergei.pekar.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "449c73e5-ec28-41af-a9de-c0c5cfa4ae6d";
