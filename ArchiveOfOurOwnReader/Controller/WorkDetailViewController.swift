@@ -101,7 +101,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             
             //loadAdMobInterstitial()
             let request = GADRequest()
-            request.testDevices = [ (kGADSimulatorID as! String) ]
+            GADMobileAds.sharedInstance().requestConfiguration.testDeviceIdentifiers = [ (kGADSimulatorID as! String) ]
            
             let extras = GADExtras();
             extras.additionalParameters = ["max_ad_content_rating": "MA"];
@@ -348,7 +348,6 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             }
         }
         
-        
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
             Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: AppDelegate.ao3SiteUrl), mainDocumentURL: nil)
         }
@@ -374,6 +373,13 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 if let d = response.data {
                     self.parseCookies(response)
                     self.downloadCurWork(d)
+                    
+                    if let wItem = self.workItem {
+                        //send update details to our server
+                        self.sendUpdateWorkRequest(id: wItem.workId, title: wItem.workTitle, published: wItem.published, updated: wItem.updated, chapters: wItem.chaptersCount)
+                        
+                    }
+                    
                     self.showWork()
                     
                     self.checkBookmarkAndUpdate().subscribe(onNext: {}).disposed(by: self.disposeBag)
@@ -384,7 +390,6 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                     self.showError(title: Localization("Error"), message: Localization("CheckInternet"))
                 }
             })
-        
     }
     
     func downloadCurWork(_ data: Data) {
@@ -585,8 +590,14 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             
             if let datesEl = stats?.search(withXPathQuery: "//dd[@class='status']") as? [TFHppleElement], datesEl.count > 0 {
                 workItem.datetime = datesEl[0].text() ?? ""
-            } else if let datesEl: [TFHppleElement] = stats?.search(withXPathQuery: "//dd[@class='published']") as? [TFHppleElement], datesEl.count > 0 {
-                workItem.datetime = datesEl[0].text() ?? ""
+                workItem.updated = workItem.datetime
+            }
+            
+            if let datesEl: [TFHppleElement] = stats?.search(withXPathQuery: "//dd[@class='published']") as? [TFHppleElement], datesEl.count > 0 {
+                if (workItem.datetime.isEmpty) {
+                    workItem.datetime = datesEl[0].text() ?? ""
+                }
+                workItem.published = datesEl[0].text() ?? ""
             }
             
             if (workItem.datetime.isEmpty == false) {
@@ -706,7 +717,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         }
         }
         
-        if var chaptersEl: [TFHppleElement] = doc.search(withXPathQuery: "//ul[@id='chapter_index']") as? [TFHppleElement] {
+        if let chaptersEl: [TFHppleElement] = doc.search(withXPathQuery: "//ul[@id='chapter_index']") as? [TFHppleElement] {
         if (chaptersEl.count > 0) {
             if let optionsEl: [TFHppleElement] = chaptersEl[0].search(withXPathQuery: "//select/option") as? [TFHppleElement] {
             for i in 0..<optionsEl.count {
@@ -2504,35 +2515,6 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             self.hideLoadingView()
             showOnlineWork()
         }
-    }
-    
-    func sendUpdateWorkRequest() {
-        let reqDeviceToken = DefaultsManager.getString(DefaultsManager.REQ_DEVICE_TOKEN)
-        
-        var params:[String:Any] = [String:Any]()
-        params["id"] = "1"
-        params["title"] = "hello"
-        params["published"] = "2016-05-24"
-        params["updated"] = "2016-05-24"
-        params["chapters"] = "10"
-        
-        var headers:[String:String] = [String:String]()
-        headers["auth"] = reqDeviceToken
-        headers["Content-Type"] = "application/x-www-form-urlencoded"
-        let url = "https://fanfic-pocket-reader.herokuapp.com/api/works"
-        
-        Alamofire.request(url, method: HTTPMethod.put, parameters: params, headers: headers).response(completionHandler: { (response) in
-            print(response.error ?? "")
-            
-            if let data = response.data, let responseString = String(data: data, encoding: .utf8) {
-                print(responseString)
-                
-            }
-            
-            if (response.response?.statusCode == 200) {
-                print("update work ok")
-            }
-        })
     }
    
 }

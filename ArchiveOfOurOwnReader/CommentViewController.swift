@@ -414,7 +414,9 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
     }
 
     override func doneButtonAction() {
-        commentTv.endEditing(true)
+        if let _ = commentTv {
+            commentTv.endEditing(true)
+        }
     }
     
     @IBAction func sendCommentTouched(_ sender: AnyObject) {

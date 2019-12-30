@@ -333,6 +333,39 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
 //        }
  //   }
     
+    
+    
+    func sendUpdateWorkRequest(id: String, title: String, published: String, updated: String, chapters: String) {
+        let reqDeviceToken = DefaultsManager.getString(DefaultsManager.REQ_DEVICE_TOKEN)
+        
+        var params:[String:Any] = [String:Any]()
+        params["id"] = id
+        params["title"] = title
+        params["published"] = published
+        if (updated.isEmpty == false) {
+            params["updated"] = updated
+        }
+        params["chapters"] = chapters
+        
+        var headers:[String:String] = [String:String]()
+        headers["auth"] = reqDeviceToken
+        headers["Content-Type"] = "application/x-www-form-urlencoded"
+        let url = "https://fanfic-pocket-reader.herokuapp.com/api/works"
+        
+        Alamofire.request(url, method: HTTPMethod.put, parameters: params, headers: headers).response(completionHandler: { (response) in
+            print(response.error ?? "")
+            
+            if let data = response.data, let responseString = String(data: data, encoding: .utf8) {
+                print(responseString)
+                
+            }
+            
+            if (response.response?.statusCode == 200) {
+                print("update work ok")
+            }
+        })
+    }
+    
     // MARK: - Downloading work
     
     var chapters: [ChapterOnline] = [ChapterOnline]()
@@ -565,7 +598,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
                 workCharacters.add(c)
                 
                 let works = c.value(forKeyPath: "workItems") as! NSMutableSet
-                works.add(workItem)
+                works.add(workItem!)
             }
             }
             
