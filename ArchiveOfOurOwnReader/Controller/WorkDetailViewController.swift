@@ -2505,6 +2505,35 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             showOnlineWork()
         }
     }
+    
+    func sendUpdateWorkRequest() {
+        let reqDeviceToken = DefaultsManager.getString(DefaultsManager.REQ_DEVICE_TOKEN)
+        
+        var params:[String:Any] = [String:Any]()
+        params["id"] = "1"
+        params["title"] = "hello"
+        params["published"] = "2016-05-24"
+        params["updated"] = "2016-05-24"
+        params["chapters"] = "10"
+        
+        var headers:[String:String] = [String:String]()
+        headers["auth"] = reqDeviceToken
+        headers["Content-Type"] = "application/x-www-form-urlencoded"
+        let url = "https://fanfic-pocket-reader.herokuapp.com/api/works"
+        
+        Alamofire.request(url, method: HTTPMethod.put, parameters: params, headers: headers).response(completionHandler: { (response) in
+            print(response.error ?? "")
+            
+            if let data = response.data, let responseString = String(data: data, encoding: .utf8) {
+                print(responseString)
+                
+            }
+            
+            if (response.response?.statusCode == 200) {
+                print("update work ok")
+            }
+        })
+    }
    
 }
 
