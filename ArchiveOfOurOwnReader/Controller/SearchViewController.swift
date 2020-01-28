@@ -140,8 +140,8 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
         self.title = ""
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         
         DefaultsManager.putObject(searchQuery, key: DefaultsManager.SEARCH_Q)
     }

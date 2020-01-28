@@ -502,8 +502,10 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
         } else if(segue.identifier == "searchSegue") {
             if let searchController: SearchViewController = segue.destination as? SearchViewController {
                 
-                self.query.include_tags = self.query.quick_tags.split(separator: " ").joined(separator: ", ")
-                self.query.quick_tags = ""
+                if (self.query.quick_tags.isEmpty == false) {
+                    self.query.include_tags = self.query.quick_tags.split(separator: " ").joined(separator: ", ")
+                    self.query.quick_tags = ""
+                }
                 DefaultsManager.putObject(self.query, key: DefaultsManager.SEARCH_Q)
                 
                 searchController.delegate = self
