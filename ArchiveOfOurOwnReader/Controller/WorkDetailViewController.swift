@@ -10,7 +10,6 @@ import UIKit
 import CoreData
 import GoogleMobileAds
 import Alamofire
-import Crashlytics
 import Firebase
 import RxSwift
 
