@@ -52,8 +52,8 @@ class WorksParser {
         }
         
         if let itemsCount: [TFHppleElement] = doc.search(withXPathQuery: "//\(itemsCountHeading)[@class='heading']") as? [TFHppleElement] {
-            if (itemsCount.count > 0) {
-                worksCountStr = itemsCount[0].content.trimmingCharacters(
+            if (itemsCount.count > 1) {
+                worksCountStr = itemsCount[1].content.trimmingCharacters(
                     in: CharacterSet.whitespacesAndNewlines
                 )
                 worksCountStr = worksCountStr.replacingOccurrences(of: "?", with: "")
@@ -66,7 +66,8 @@ class WorksParser {
             if (workGroup.count > 0) {
                 
                 var worksList : [TFHppleElement]? = nil
-                let txtEl: String = "//li[@class='\(liEl) blurb group']"
+            //    let txtEl: String = "//li[@class='\(liEl) blurb group']"
+                let txtEl: String = "//li[@role='article']"
 
                 if let wList = workGroup[0].search(withXPathQuery: txtEl) as? [TFHppleElement] {
                     worksList = wList
@@ -76,7 +77,7 @@ class WorksParser {
                 if let worksList : [TFHppleElement] = worksList {
                 
                     //sometimes they have extra space " " after group ("group ") >.<
-                    if (worksList.count == 0) {
+                    if (worksList.count == 1) {
                         if let newList: [TFHppleElement] = workGroup[0].search(withXPathQuery: "//li[@class='\(liEl) blurb group ']") as? [TFHppleElement] {
                            
                             for workListItem in newList {
@@ -315,8 +316,8 @@ class WorksParser {
                     if (isBanner == false) {
                         item.topicPreview = userstuff.content
                     } else {
-                        if userstuffArr.count > 1,
-                            let userstuff1 : TFHppleElement = userstuffArr[1] as? TFHppleElement {
+                        if userstuffArr.count > 0,
+                            let userstuff1 : TFHppleElement = userstuffArr[0] as? TFHppleElement {
                             item.topicPreview = userstuff1.content
                         }
                     }

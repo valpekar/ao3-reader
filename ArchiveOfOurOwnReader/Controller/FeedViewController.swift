@@ -40,9 +40,6 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
     
     var resultSearchController = UISearchController()
     
-    /// The view that holds the native ad.
-    @IBOutlet weak var nativeAdPlaceholder: UIView!
-    
     var query: SearchQuery = SearchQuery()
     
     var i = 0 //counts page transitions, display ads every 3rd time
@@ -53,14 +50,10 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
     
     var openingPrevWork = false
     
-    var nativeAdsManager: NativeAdsManager!
     
     // MARK: - UIViewController Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        nativeAdsManager = NativeAdsManager(viewController: self, adUnitId: .feed)
-        nativeAdsManager.delegate = self
         
         //Load query
         loadQueryFromDefaults()
@@ -244,7 +237,6 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
     }
     
     @objc func refresh(_ sender:AnyObject) {
-        nativeAdsManager.redreshAds()
         
         searchApplied(self.query, shouldAddKeyword: true)
         
@@ -318,40 +310,14 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
     
     // MARK: - UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if nativeAdsManager.nativeAds.count > 0 {
-            let numberOfAdPlaces = works.count / NUMBER_OF_ELEMENTS_BETWEEN_ADS
-            let numberOfAds = min(nativeAdsManager.nativeAds.count, numberOfAdPlaces)
-            
-            return works.count + numberOfAds
-        } else {
-            return works.count
-        }
+        
+        return works.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let numberOfAdPlaces = works.count / NUMBER_OF_ELEMENTS_BETWEEN_ADS
-        let numberOfAds = min(nativeAdsManager.nativeAds.count, numberOfAdPlaces)
-        let adIndex = (indexPath.row + 1) / (NUMBER_OF_ELEMENTS_BETWEEN_ADS + 1) - 1
+                    
+        return createFeedCell(tableView: tableView, indexPath: indexPath)
         
-        if indexPath.row > 0 &&
-            (indexPath.row + 1) % (NUMBER_OF_ELEMENTS_BETWEEN_ADS + 1) == 0 &&
-            nativeAdsManager.nativeAds.count > 0 &&
-            adIndex < numberOfAds &&
-            adIndex >= 0 {
-            
-            //print("Native Ad index \(adIndex) real \(indexPath.row)")
-            
-            return createAdCell(tableView: tableView, indexPath: indexPath ,adIndex: adIndex)
-        }
-        else {
-            let numberOfAdsShown = (indexPath.row + 1) / (NUMBER_OF_ELEMENTS_BETWEEN_ADS + 1)
-            let workIndexCorrection = min(numberOfAdsShown, numberOfAds)
-            let newIndexPath = IndexPath(row: indexPath.row - workIndexCorrection, section: indexPath.section)
-            
-//            print("Native Work index \(newIndexPath.row) real \(indexPath.row)")
-            
-            return createFeedCell(tableView: tableView, indexPath: newIndexPath)
-        }
     }
     
     func createFeedCell(tableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
@@ -381,12 +347,12 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
     func createAdCell(tableView: UITableView, indexPath: IndexPath, adIndex: Int) -> UITableViewCell {
         let cellIdentifier: String = "NativeAdTableViewCell"
         
-        var cell: NativeAdTableViewCell! = nil
-        if let c:NativeAdTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? NativeAdTableViewCell {
+        var cell: FeedTableViewCell! = nil
+        if let c:FeedTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? FeedTableViewCell {
             cell = c
         }
         
-        cell.setup(with: nativeAdsManager.nativeAds[adIndex], and: theme)
+      //  cell.setup .setup(with: nativeAdsManager.nativeAds[adIndex], and: theme)
         
         return cell
     }
@@ -419,9 +385,9 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let newIndexPath = correctIndexPathAccordingToAds(originalIndexPath: indexPath)
+       // let newIndexPath = correctIndexPathAccordingToAds(originalIndexPath: indexPath)
         
-        selectCell(row: newIndexPath.row, works: works)
+        selectCell(row: indexPath.row, works: works)
     }
     
     // MARK: - UICollectionViewDelegateFlowLayout
@@ -434,7 +400,7 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
 //        }
     }
     
-    func correctIndexPathAccordingToAds(originalIndexPath indexPath:IndexPath) -> IndexPath {
+    /*func correctIndexPathAccordingToAds(originalIndexPath indexPath:IndexPath) -> IndexPath {
         let numberOfAdPlaces = works.count / NUMBER_OF_ELEMENTS_BETWEEN_ADS
         let numberOfAds = min(nativeAdsManager.nativeAds.count, numberOfAdPlaces)
         let numberOfAdsShown = (indexPath.row + 1) / (NUMBER_OF_ELEMENTS_BETWEEN_ADS + 1)
@@ -442,7 +408,7 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
         let newIndexPath = IndexPath(row: indexPath.row - workIndexCorrection, section: indexPath.section)
         
         return newIndexPath
-    }
+    }*/
     
     var selectedRow = 0
     
@@ -604,12 +570,7 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
     
     override func reload(row: Int) {
         
-        var  indexCorrection = 0
-        if (nativeAdsManager.nativeAds.count > 0) {
-            indexCorrection = row / NUMBER_OF_ELEMENTS_BETWEEN_ADS
-        }
-        
-        let rowIndexToUpdate = row + indexCorrection
+        let rowIndexToUpdate = row
         
         if self.works.count > row {
         //    self.tableView.beginUpdates()
