@@ -233,8 +233,8 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
     func parseResponse(_ data: Data) {
         let doc : TFHpple = TFHpple(htmlData: data)
         
-      //  let dta = String(data: data, encoding: .utf8)
-       // print("the string is: \(dta)")
+        let dta = String(data: data, encoding: .utf8)
+        print("the string is: \(dta)")
         
         let flashnoticediv: [TFHppleElement]? = doc.search(withXPathQuery: "//div[@class='flash notice']") as? [TFHppleElement]
         let flashalertdiv: [TFHppleElement]? = doc.search(withXPathQuery: "//div[@class='flash alert']") as? [TFHppleElement]

@@ -12,35 +12,21 @@ import CoreData
 import Crashlytics
 import SwiftMessages
 
-class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewDataSource, SKPaymentTransactionObserver {
+class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var notifSwitch: UISwitch!
     @IBOutlet weak var notifLabel: UILabel!
     @IBOutlet weak var pseudsTableView: UITableView!
+    @IBOutlet weak var footerView: UIView!
+    @IBOutlet weak var supportLabel: UILabel!
+    @IBOutlet weak var supportButton: UIButton!
     
-    let subTxt = "Application has Auto-Renewable Subscription (Prosub) named Pro Subscription. The subscription price is 1.99$ per month, 4.99$ for quarter (3 month), 17.99$ for year + your country Taxes. \nOnce you have purchased it, the subscription starts. Since then every week you will get digitally generated recommendations of fanfics (fanfiction works) to read. \nThe auto-renewable subscription nature: Get work recommendations every week based on what you have read and liked, no ads, download unlimited works. \nSubscription length is 1 month and it is auto-renewable. \n\nPayment will be charged to iTunes Account at confirmation of purchase. \nSubscription automatically renews unless auto-renew is turned off at least 24-hours before the end of the current period. \nAccount will be charged for renewal within 24-hours prior to the end of the current period, and identify the cost of the renewal. \nSubscriptions may be managed by the user and auto-renewal may be turned off by going to the user's Account Settings after purchase.\nNo cancellation of the current subscription is allowed during active subscription period. \n\nAny unused portion of a free trial period, if offered, will be forfeited when the user purchases a subscription to that publication. \n\nTo Unsubscribe: \n1. Go to Settings > iTunes & App Store. \n2. Tap your Apple ID at the top of the screen. \n3. Tap View Apple ID. \n4. Tap the subscription that you want to manage. \nIf you don't see a subscription but are still being charged, make sure that you're signed in with the correct Apple ID. \n5. Use the options to manage your subscription. You can tap Cancel Subscription. If you cancel, your subscription will stop at the end of the current billing cycle."
     
     var pseuds: [String:String] = [:]
     var currentPseud = ""
     
-    // This list of available in-app purchases
-    var products: Array <SKProduct> = [SKProduct]()
-    
-    @IBOutlet weak var removeAdsItem: UIBarButtonItem! {
-        didSet {
-//            let icon = UIImage(named: "star")
-//            let iconSize = CGRect(origin: CGPoint.zero, size: icon!.size)
-//            let iconButton = UIButton(frame: iconSize)
-//            iconButton.setBackgroundImage(icon, for: .normal)
-//            removeAdsItem.customView = iconButton
-        }
-    }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,52 +37,28 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
         self.pseudsTableView.rowHeight = UITableView.automaticDimension
         self.pseudsTableView.estimatedRowHeight = 44
         
-        loadPurchasedSettings()
-        isPurchased = purchased
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(MeViewController.productPurchased(_:)), name: NSNotification.Name(rawValue: IAPHelperProductPurchasedNotification), object: nil)
-        //SKPaymentQueue.default().add(self)
+        applyTheme()
         
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        loadPurchasedSettings()
-        
-        if ((purchased || donated)  && DefaultsManager.getBool(DefaultsManager.ADULT) == nil) {
-            DefaultsManager.putBool(true, key: DefaultsManager.ADULT)
-        }
-                
-        if (purchased == false && donated == false) {
-            reload(false, productId: "")
-        }
-        
         UserDefaults.standard.synchronize()
         
         refreshUI()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        
-        SKPaymentQueue.default().remove(self)
-    }
     
     override func applyTheme() {
         super.applyTheme()
         
-        if (theme == DefaultsManager.THEME_DAY) {
-            self.pseudsTableView.backgroundColor = AppDelegate.greyLightBg
-            self.notifLabel.textColor = UIColor.black
-           // loginButton.setTitleColor(AppDelegate.redColor, for: .normal)
-        } else {
-            self.pseudsTableView.backgroundColor = AppDelegate.greyDarkBg
-            self.notifLabel.textColor = AppDelegate.textLightColor
-          //  loginButton.setTitleColor(AppDelegate.purpleLightColor, for: .normal)
-        }
+        self.pseudsTableView.backgroundColor = UIColor(named: "tableViewBg")
+        self.notifLabel.textColor = UIColor(named: "textMain")
+        self.footerView.backgroundColor = UIColor(named: "tableViewBg")
+        self.supportLabel.textColor = UIColor(named: "textMain")
+        self.supportButton.setTitleColor(UIColor(named: "greenTitle"), for: .normal)
         
-        self.pseudsTableView.reloadData()
     }
     
     //MARK: - log in / out
@@ -177,13 +139,6 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
             setNotAuthorizedUI()
         }
         
-        if (purchased == false && donated == false) {
-            print("refreshUI: not purchased")
-        } else {
-            print("refreshUI: purchased = \(purchased), donated = \(donated)")
-            removeAdsItem.isEnabled = false
-            removeAdsItem.title = ""
-        }
     }
     
     func setNotAuthorizedUI() {
@@ -220,15 +175,7 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
         }
     }
     
-    @IBAction func nightSwitchChanged(_ sender: UISwitch) {
-        if (sender.isOn) {
-            DefaultsManager.putInt(DefaultsManager.THEME_NIGHT, key: DefaultsManager.THEME_APP)
-            Answers.logCustomEvent(withName: "ME_Theme", customAttributes: ["theme" : "night"])
-        } else {
-            DefaultsManager.putInt(DefaultsManager.THEME_DAY, key: DefaultsManager.THEME_APP)
-            Answers.logCustomEvent(withName: "ME_Theme", customAttributes: ["theme" : "day"])
-        }
-    }
+    
     
     func showSureClearDialog() {
         let deleteAlert = UIAlertController(title: Localization("AreYouSure"), message: "You want to clear all notifications from this app?", preferredStyle: UIAlertController.Style.alert)
@@ -282,27 +229,9 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
             default: break
             }
             cell.accessoryType = .none
-        case 3:
-            if (indexPath.row == 0) {
-                cell.titleLabel.text = Localization("Night")
-                
-                if (theme == DefaultsManager.THEME_DAY) {
-                    cell.accessoryType = .none
-                } else {
-                    cell.accessoryType = .checkmark
-                }
-                
-            } else if (indexPath.row == 1) {
-                cell.titleLabel.text = Localization("Day")
-                
-                if (theme == DefaultsManager.THEME_DAY) {
-                    cell.accessoryType = .checkmark
-                } else {
-                    cell.accessoryType = .none
-                }
-            }
+        
             
-        case 4:
+        case 3:
             var langId = ""
             langId = Localisator.sharedInstance.currentLanguage
             
@@ -325,24 +254,17 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
                 }
             }
             
-        case 5:
+        case 4:
             cell.accessoryType = .none
             if (indexPath.row == 0) {
-                cell.titleLabel.text = subTxt
-            } else if (indexPath.row == 1) {
                 cell.titleLabel.text = Localization("PPolicy")
             }
             
         default: break
         }
         
-        if (theme == DefaultsManager.THEME_DAY) {
-            cell.backgroundColor = AppDelegate.greyLightBg
-            cell.titleLabel.textColor = AppDelegate.redTextColor
-        } else {
-            cell.backgroundColor = AppDelegate.greyDarkBg
-            cell.titleLabel.textColor = AppDelegate.textLightColor
-        }
+        cell.titleLabel.textColor = UIColor(named: "cellTitle")
+        cell.backgroundColor = UIColor(named: "greyBg")
         
         return cell
     }
@@ -360,7 +282,7 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
         case 4:
             return 2
         case 5:
-            return 2
+            return 1
         default: return 0
         }
     }
@@ -393,21 +315,8 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
                 self.performSegue(withIdentifier: "showHistory", sender: self)
             default: break 
             }
+        
         case 3:
-            if (indexPath.row == 0) {
-                theme = DefaultsManager.THEME_NIGHT
-                DefaultsManager.putInt(DefaultsManager.THEME_NIGHT, key: DefaultsManager.THEME_APP)
-                Answers.logCustomEvent(withName: "ME_Theme", customAttributes: ["theme" : "night"])
-            
-            } else if (indexPath.row == 1) {
-                
-                theme = DefaultsManager.THEME_DAY
-                DefaultsManager.putInt(DefaultsManager.THEME_DAY, key: DefaultsManager.THEME_APP)
-                Answers.logCustomEvent(withName: "ME_Theme", customAttributes: ["theme" : "day"])
-            }
-            
-            applyTheme()
-        case 4:
             var langID = ""
             if (indexPath.row == 0) {
                 langID = "DeviceLanguage"
@@ -423,8 +332,8 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
                 showError(title: Localization("Language"), message: Localization("ErrLangChanged"))
             }
             tableView.reloadRows(at: [IndexPath(row: 0, section: 4), IndexPath(row: 1, section: 4)], with: UITableView.RowAnimation.automatic)
-        case 5:
-            if (indexPath.row == 1) {
+        case 4:
+            if (indexPath.row == 0) {
                 if let url = URL(string: "http://simpleappalliance.blogspot.com/2016/05/unofficial-ao3-reader-privacy-policy.html") {
                     UIApplication.shared.open(url, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: { (res) in
                         print("open url simpleappalliance.blogspot.com")
@@ -445,11 +354,9 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
         case 2:
             return Localization("MyAO3")
         case 3:
-            return Localization("Theme")
-        case 4:
             return Localization("Language")
-        case 5:
-            return Localization("AboutSub")
+        case 4:
+            return Localization("About")
         default: return ""
         }
     }
@@ -459,7 +366,7 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 6
+        return 5
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -470,351 +377,24 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
                 cController.liWorksElement = "own work"
                 cController.worksElement = "work"
             }
-        } else if (segue.identifier == "upgradesSegue") {
-            if let uController = segue.destination as? UpgradesController {
-                uController.products = self.products
-                uController.donated = donated
-            }
         }
     }
     
     
-    // MARK: - InApp
-    
-    @IBAction func removeAdsTouched(_ sender: AnyObject) {
-        
-        showLoadingView(msg: Localization("RequestingData"))
-        
-        products = []
-        
-        ReaderProducts.store.requestProductsWithCompletionHandler { success, products in
-            if success {
-                self.products = products
-                self.reloadUI()
-                
-                if (products.count > 0) {
-                    var product = products[products.startIndex]
-                    for p in products {
-                        if (p.productIdentifier == "prosub") {
-                            product = p
-                        }
-                    }
-                    DispatchQueue.main.async {
-                        self.hideLoadingView()
-                        self.showBuyAlert(product, restore: true)
-                    }
-                    
-                }
-            } else {
-                DispatchQueue.main.async {
-                    self.hideLoadingView()
-                    self.showErrorAlert(productId: "prosub")
-                }
-            }
-        }
-    }
     
     @IBAction func smallTipTouched(_ sender: AnyObject) {
+        let urlStr = "https://linktr.ee/riyapekar"
         
-        showLoadingView(msg: Localization("PleaseWait"))
-        
-        products = []
-        
-        ReaderProducts.store.requestProductsWithCompletionHandler { success, products in
-            if success {
-                self.products = products
-                self.reloadUI()
-                
-                if (products.count > 0) {
-                    var product = products[products.startIndex]
-                    for p in products {
-                        if (p.productIdentifier == "tip.small") {
-                            product = p
-                        }
-                    }
-                    DispatchQueue.main.async {
-                    self.hideLoadingView()
-                    self.showBuyAlert(product, restore: false)
-                    }
-                }
-            } else {
-                DispatchQueue.main.async {
-                self.hideLoadingView()
-                self.showErrorAlert(productId: "tip.small")
-                }
-            }
+        if let url = URL(string: urlStr) {
+            UIApplication.shared.open(url, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: { (res) in
+                print("open url simpleappalliance.blogspot.com")
+            })
         }
     }
-    
-    @IBAction func mediumTipTouched(_ sender: AnyObject) {
-        
-        showLoadingView(msg: Localization("PleaseWait"))
-        
-        products = []
-        
-        ReaderProducts.store.requestProductsWithCompletionHandler { success, products in
-            if success {
-                self.products = products
-                self.reloadUI()
-                
-                if (products.count > 0) {
-                    var product = products[products.startIndex]
-                    for p in products {
-                        if (p.productIdentifier == "tip.medium") {
-                            product = p
-                        }
-                    }
-                    DispatchQueue.main.async {
-                    self.hideLoadingView()
-                    self.showBuyAlert(product, restore: false)
-                    }
-                }
-            } else {
-                DispatchQueue.main.async {
-                self.hideLoadingView()
-                self.showErrorAlert(productId: "tip.medium")
-                }
-            }
-        }
-    }
-    
-    @IBAction func largeTipTouched(_ sender: AnyObject) {
-        showLoadingView(msg: Localization("PleaseWait"))
-        
-        products = []
-        
-        ReaderProducts.store.requestProductsWithCompletionHandler { success, products in
-            if success {
-                self.products = products
-                self.reloadUI()
-                
-                if (products.count > 0) {
-                    var product = products[products.startIndex]
-                    for p in products {
-                        if (p.productIdentifier == "tip.large") {
-                            product = p
-                        }
-                    }
-                    DispatchQueue.main.async {
-                    self.hideLoadingView()
-                    self.showBuyAlert(product, restore: false)
-                    }
-                }
-            } else {
-                DispatchQueue.main.async {
-                self.hideLoadingView()
-                self.showErrorAlert(productId: "tip.large")
-                }
-            }
-        }
-    }
-    
-    func showErrorAlert(productId: String) {
-        let refreshAlert = UIAlertController(title: Localization("Error"), message: "Cannot get product list. Please check your Internet connection", preferredStyle: UIAlertController.Style.alert)
-        refreshAlert.addAction(UIAlertAction(title: "Try Again", style: .default, handler: { (action: UIAlertAction!) in
-            self.reload(true, productId: productId)
-        }))
-        
-        refreshAlert.addAction(UIAlertAction(title: Localization("Cancel"), style: .cancel, handler: { (action: UIAlertAction!) in
-        }))
-        
-        present(refreshAlert, animated: true, completion: nil)
-    }
-    
-    // Fetch the products from iTunes connect, redisplay the table on successful completion
-    func reload(_ tryToBuy: Bool, productId: String) {
-        products = []
-        //tableView.reloadData()
-        
-        ReaderProducts.store.requestProductsWithCompletionHandler { success, products in
-            if success {
-                self.products = products
-                self.reloadUI()
-                
-                if (tryToBuy && products.count > 0) {
-                    var product = products[products.startIndex]
-                    for p in products {
-                        if (p.productIdentifier == productId) {
-                            product = p
-                        }
-                    }
-                    var restore = false
-                    if (productId.contains("pro") || productId.contains("sub")) {
-                        restore = true
-                    }
-                    self.showBuyAlert(product, restore: restore)
-                }
-            } else {
-                if (tryToBuy) {
-                    self.showErrorAlert(productId: productId)
-                }
-            }
-        }
-    }
+
     
     
-    // Restore purchases to this device.
-    func restoreTapped(_ sender: AnyObject) {
-        SKPaymentQueue.default().remove(self)
-        SKPaymentQueue.default().add(self)
-        ReaderProducts.store.restoreCompletedTransactions { error in
-            if let err = error {
-                self.showError(title: Localization("Error"), message: err.localizedDescription)
-            } else {
-                
-                self.showSuccess(title: Localization("Finished"), message: Localization("RestoreProcess"))
-                
-                self.refreshUI()
-                
-            }
-        }
-    }
     
-    /// Initiates purchase of a product.
-    func purchaseProduct(_ product: SKProduct) {
-       // self.view.makeToast(message: Localization("NeedToRestart"), duration: 1, position: "center" as AnyObject, title: Localization("Attention"))
-        
-        let success = MessageView.viewFromNib(layout: .messageView)
-        success.configureTheme(.info)
-        success.configureDropShadow()
-        success.configureContent(title: Localization("Attention"), body: Localization("NeedToRestart"))
-        success.button?.isHidden = true
-        var successConfig = SwiftMessages.defaultConfig
-        successConfig.presentationStyle = .top
-     //   successConfig.presentationContext = .window(windowLevel: UIWindowLevelNormal)
-        
-        print("Buying \(product.productIdentifier)...")
-        let payment = SKPayment(product: product)
-        SKPaymentQueue.default().add(payment)
-    }
-    
-    
-    var isPurchased = false
-    
-    func reloadUI() {
-        if (products.count > 0) {
-            
-            for product in products {
-                
-                if (product.productIdentifier == "prosub" || product.productIdentifier == "sergei.pekar.ArchiveOfOurOwnReader.pro" || product.productIdentifier == "yearly_sub" || product.productIdentifier == "quarter_sub") {
-                    isPurchased = ReaderProducts.store.isProductPurchased(product.productIdentifier)
-                    UserDefaults.standard.set(isPurchased, forKey: "pro")
-                    UserDefaults.standard.synchronize()
-                    
-                    purchased = isPurchased
-                    
-                } else if (product.productIdentifier == "tip.small" ||
-                    product.productIdentifier == "tip.medium" ||
-                    product.productIdentifier == "tip.large") {
-                    donated = ReaderProducts.store.isProductPurchased(product.productIdentifier)
-                    UserDefaults.standard.set(donated, forKey: "donated")
-                    UserDefaults.standard.synchronize()
-                }
-                
-                if ((purchased || donated)  && DefaultsManager.getBool(DefaultsManager.ADULT) == nil) {
-                    DefaultsManager.putBool(true, key: DefaultsManager.ADULT)
-                }
-            }
-            
-            
-        } else {
-            purchased = false
-            isPurchased = false
-        }
-        
-        if (isPurchased || donated) {
-            removeAdsItem.isEnabled = false
-            removeAdsItem.title = ""
-            
-            refreshUI()
-        } else {
-            removeAdsItem.isEnabled = true
-            removeAdsItem.title = Localization("Upgrade")
-        }
-    }
-    
-    func showBuyAlert(_ product: SKProduct, restore: Bool) {
-        let alertController = UIAlertController(title: product.localizedTitle, message:
-            product.localizedDescription, preferredStyle: UIAlertController.Style.alert)
-        alertController.addAction(UIAlertAction(title: Localization("Buy"), style: UIAlertAction.Style.default, handler: { (action: UIAlertAction!) in
-            self.purchaseProduct(product)
-        } ))
-        if (restore) {
-            alertController.addAction(UIAlertAction(title: Localization("Restore"), style: UIAlertAction.Style.default, handler: { (action: UIAlertAction!) in
-                self.restoreTapped(self)
-            } ))
-        }
-        alertController.addAction(UIAlertAction(title: Localization("Cancel"), style: UIAlertAction.Style.cancel, handler: nil))
-        
-        self.present(alertController, animated: true, completion: nil)
-    }
-    
-    // When a product is purchased, this notification fires, redraw the correct row
-    @objc func productPurchased(_ notification: Notification) {
-        let productIdentifier = notification.object as! String
-        for (_, product) in products.enumerated() {
-            if product.productIdentifier == productIdentifier {
-               // reload(false, productId: "")
-                
-                if (product.productIdentifier == "prosub" || product.productIdentifier == "sergei.pekar.ArchiveOfOurOwnReader.pro" || product.productIdentifier == "yearly_sub" || product.productIdentifier == "quarter_sub") {
-                    isPurchased = ReaderProducts.store.isProductPurchased(product.productIdentifier)
-                    UserDefaults.standard.set(isPurchased, forKey: "pro")
-                    UserDefaults.standard.synchronize()
-                    
-                    purchased = isPurchased
-                    Answers.logCustomEvent(withName: "ProSub", customAttributes: ["donated" : donated])
-                    
-                    if (purchased == true) {
-                        self.showSuccess(title: Localization("ThankYou"), message: Localization("ThankYouForSub"))
-                    }
-                    
-                } else if (product.productIdentifier == "tip.small" ||
-                    product.productIdentifier == "tip.medium" ||
-                    product.productIdentifier == "tip.large") {
-                    
-                    Answers.logCustomEvent(withName: "Tip", customAttributes: ["donated" : donated, "purchased" : isPurchased])
-                    
-                    donated = ReaderProducts.store.isProductPurchased(product.productIdentifier)
-                    UserDefaults.standard.set(donated, forKey: "donated")
-                    UserDefaults.standard.synchronize()
-                    
-                    self.showSuccess(title: Localization("ThankYou"), message: Localization("ThankYouForTip"))
-                    
-                }
-                
-                if ((purchased || donated ) && DefaultsManager.getBool(DefaultsManager.ADULT) == nil) {
-                    DefaultsManager.putBool(true, key: DefaultsManager.ADULT)
-                }
-                
-                refreshUI()
-                break
-            }
-        }
-    }
-    
-    //restore protocol
-    
-    func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
-        print("Received Payment Transaction Response from Apple");
-        for transaction:AnyObject in transactions {
-            if let trans:SKPaymentTransaction = transaction as? SKPaymentTransaction{
-                switch trans.transactionState {
-                case .purchased, .restored:
-                    print("Purchased purchase/restored")
-                    SKPaymentQueue.default().finishTransaction(transaction as! SKPaymentTransaction)
-                    break
-                case .failed:
-                    print("Purchased Failed")
-                    SKPaymentQueue.default().finishTransaction(transaction as! SKPaymentTransaction)
-                    break
-                default:
-                    print("default")
-                    break
-                }
-            }
-            
-        }
-    }
 }
 
 // Helper function inserted by Swift 4.2 migrator.
