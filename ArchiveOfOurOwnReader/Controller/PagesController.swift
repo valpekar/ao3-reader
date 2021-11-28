@@ -70,7 +70,7 @@ class PagesController: UIViewController, UIPopoverPresentationControllerDelegate
         
         if (theme == DefaultsManager.THEME_DAY) {
             cell?.backgroundColor = AppDelegate.greyLightBg
-            cell?.textLabel?.textColor = AppDelegate.redColor
+            cell?.textLabel?.textColor = UIColor(named: "global_tint")
         } else {
             cell?.backgroundColor = AppDelegate.greyDarkBg
             cell?.textLabel?.textColor = AppDelegate.textLightColor

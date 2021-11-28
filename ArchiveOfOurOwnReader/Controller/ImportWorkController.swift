@@ -38,7 +38,7 @@ class ImportWorkController : UserMessagesController {
             label.textColor = AppDelegate.textLightColor
         } else {
             bgView.backgroundColor = UIColor.white
-            label.textColor = AppDelegate.redColor
+            label.textColor = UIColor(named: "global_tint")
         }
         
         NotificationCenter.default.addObserver(self, selector: #selector(ImportWorkController.applicationWillEnter(notification:)), name: UIApplication.willEnterForegroundNotification, object: UIApplication.shared)

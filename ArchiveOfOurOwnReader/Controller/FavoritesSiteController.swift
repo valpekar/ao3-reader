@@ -100,7 +100,7 @@ class FavoritesSiteController : ListViewController, UITableViewDataSource, UITab
             addDoneButtonOnKeyboardTf(tf)
             
             if (theme == DefaultsManager.THEME_DAY) {
-                tf.textColor = AppDelegate.redColor
+                tf.textColor = UIColor(named: "global_tint")
                 tf.backgroundColor = UIColor.white
                 
             } else {

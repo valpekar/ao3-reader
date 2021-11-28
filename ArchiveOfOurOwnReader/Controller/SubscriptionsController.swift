@@ -238,18 +238,6 @@ class SubscriptionsViewController: ListViewController, UITableViewDataSource, UI
             return
         }
         
-        if (purchased || donated) {
-            #if DEBUG
-            print("premium")
-            #endif
-        } else {
-            if (countWroksFromDB() > 29) {
-                self.showError(title: Localization("Error"), message: Localization("Only30Stories"))
-                
-                return
-            }
-        }
-        
         let curWork:NewsFeedItem = works[sender.tag]
         
         showLoadingView(msg: "\(Localization("DwnloadingWrk")) \(curWork.title)")

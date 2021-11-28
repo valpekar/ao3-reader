@@ -64,12 +64,6 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.estimatedRowHeight = 200
         
-        loadPurchasedSettings()
-        
-        if (purchased == false && donated == false) {
-            loadAdMobInterstitial()
-        }
-        
         //search
         self.resultSearchController = ({
             let controller = UISearchController(searchResultsController: nil)
@@ -774,11 +768,6 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         }
     }
     
-    override func controllerDidClosed() {
-        if (!purchased && !donated) {
-            showAdMobInterstitial()
-        }
-    }
     
     func controllerDidClosedWithChange() {
     }

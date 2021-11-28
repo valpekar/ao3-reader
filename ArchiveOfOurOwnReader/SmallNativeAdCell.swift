@@ -51,11 +51,11 @@ class SmallNativeAdCell: UITableViewCell {
         nativeAdView.callToActionView?.isUserInteractionEnabled = false
         
         if (theme == DefaultsManager.THEME_DAY) {
-            (nativeAdView.headlineView as? UILabel)?.textColor = AppDelegate.redColor
-            (nativeAdView.bodyView as? UILabel)?.textColor = AppDelegate.redColor
-            (nativeAdView.storeView as? UILabel)?.textColor = AppDelegate.redColor
-            (nativeAdView.priceView as? UILabel)?.textColor = AppDelegate.redColor
-            (nativeAdView.advertiserView as? UILabel)?.textColor = AppDelegate.redColor
+            (nativeAdView.headlineView as? UILabel)?.textColor = UIColor(named: "global_tint")
+            (nativeAdView.bodyView as? UILabel)?.textColor = UIColor(named: "global_tint")
+            (nativeAdView.storeView as? UILabel)?.textColor = UIColor(named: "global_tint")
+            (nativeAdView.priceView as? UILabel)?.textColor = UIColor(named: "global_tint")
+            (nativeAdView.advertiserView as? UILabel)?.textColor = UIColor(named: "global_tint")
         } else {
             (nativeAdView.headlineView as? UILabel)?.textColor = AppDelegate.nightTextColor
             (nativeAdView.bodyView as? UILabel)?.textColor = AppDelegate.nightTextColor

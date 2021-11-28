@@ -51,7 +51,7 @@ class SidePanelViewController: UIViewController, UITableViewDataSource, UITableV
         tableView.reloadData()
         tableView.tableFooterView = UIView()
         
-        tableView.backgroundColor = AppDelegate.redColor
+        tableView.backgroundColor = UIColor(named:"onlyDarkBlue")
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -76,7 +76,7 @@ class SidePanelViewController: UIViewController, UITableViewDataSource, UITableV
         let cell = tableView.dequeueReusableCell(withIdentifier: TableView.CellIdentifiers.TagCell, for: indexPath) as! TagCell
         
         let customColorView : UIView = UIView()
-        customColorView.backgroundColor = AppDelegate.redColor
+        customColorView.backgroundColor = UIColor(named: "onlyDarkBlue")
         cell.selectedBackgroundView =  customColorView;
         
         cell.preservesSuperviewLayoutMargins = false

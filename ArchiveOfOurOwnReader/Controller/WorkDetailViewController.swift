@@ -77,40 +77,13 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     
     var authToken = ""
     
-//    @IBOutlet weak var nativeAdView: NativeAdView!
-    var nativeAdsManager: NativeAdsManager!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.nativeAdsManager = NativeAdsManager(viewController: self, adUnitId: .workDetail)
-        self.nativeAdsManager.delegate = self
-        
-        loadPurchasedSettings()
-        
-       // donated = false
-      //  purchased = true
-        
-        if ((purchased || donated) && DefaultsManager.getBool(DefaultsManager.ADULT) == nil) {
+        if (DefaultsManager.getBool(DefaultsManager.ADULT) == nil) {
             DefaultsManager.putBool(true, key: DefaultsManager.ADULT)
         }
         
-        if (purchased == false && donated == false) {
-            loadAdMobRewared()
-            
-            //loadAdMobInterstitial()
-            let request = GADRequest()
-            GADMobileAds.sharedInstance().requestConfiguration.testDeviceIdentifiers = [ (kGADSimulatorID as! String) ]
-           
-            let extras = GADExtras();
-            extras.additionalParameters = ["max_ad_content_rating": "MA"];
-            request.register(extras)
-           
-            
-        } else {
-//            self.bannerView.isHidden = true
-        }
-        //self.bannerView.isHidden = true
         let name = String(format:"b%d", Int(arc4random_uniform(4)))
         bgImage.image = UIImage(named:name)
         
@@ -352,9 +325,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         }
         
         var params:[String:AnyObject] = [String:AnyObject]()
-        
-       loadPurchasedSettings()
-        
+                
         var vadult = ""
         params["view_adult"] = "true" as AnyObject?
         vadult = "?view_adult=true"
@@ -742,9 +713,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         }
         
         var params:[String:AnyObject] = [String:AnyObject]()
-        
-        loadPurchasedSettings()
-        
+                
         var vadult = ""
         if let isAdult = DefaultsManager.getBool(DefaultsManager.ADULT)  {
             if (isAdult == true) {
@@ -1088,15 +1057,12 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var createdCell: UITableViewCell! = nil
         
-        let adsSection = self.nativeAdsManager.nativeAds.isEmpty ? -1 : 0
-        let authorSection = adsSection + 1
+        let authorSection = 0
         let firstTxtSection = authorSection + 1
         let secondTxtSection = firstTxtSection  + 1
         let lastTxtSection = firstTxtSection + 8
         
-        if (indexPath.section == adsSection) {
-            createdCell = tableView.dequeueReusableCell(withIdentifier: "SmallNativeAdCell") as? SmallNativeAdCell
-        } else if (indexPath.section == authorSection) {
+        if (indexPath.section == authorSection) {
             createdCell = tableView.dequeueReusableCell(withIdentifier: "WorkDetailsAuthorCell") as? WorkDetailsAuthorCell
         } else if (indexPath.section == firstTxtSection || indexPath.section == secondTxtSection || indexPath.section == lastTxtSection) {
             createdCell = tableView.dequeueReusableCell(withIdentifier: "txtCell") as? WorkDetailCell
@@ -1105,9 +1071,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         }
         
         if (createdCell == nil) {
-            if (indexPath.section == adsSection) {
-                createdCell = SmallNativeAdCell(style: .default, reuseIdentifier: "SmallNativeAdCell")
-            } else if (indexPath.section == authorSection) {
+            if (indexPath.section == authorSection) {
                 createdCell = WorkDetailsAuthorCell(style: .default, reuseIdentifier: "WorkDetailsAuthorCell")
             } else if (indexPath.section == firstTxtSection || indexPath.section == secondTxtSection || indexPath.section == lastTxtSection) {
                 createdCell = WorkDetailTxtCell(style: UITableViewCell.CellStyle.default, reuseIdentifier: "txtCell")
@@ -1126,18 +1090,11 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
         var txtColor: UIColor = UIColor.white
         if (theme == DefaultsManager.THEME_DAY) {
-            txtColor = AppDelegate.redColor
+            txtColor = UIColor(named: "global_tint")!
         } else {
             txtColor = AppDelegate.nightTextColor
         }
         
-        if (indexPath.section == adsSection) {
-            if let ad = self.nativeAdsManager.nativeAds.first {
-                (createdCell as? SmallNativeAdCell)?.setup(with: ad, and: theme)
-            }
-            
-            return createdCell
-        }
         
         if (indexPath.section == authorSection) {
             if let wrk = workItem {
@@ -1382,9 +1339,6 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             numberOfSections = 10
         }
         
-        if !self.nativeAdsManager.nativeAds.isEmpty { // include ads section
-            numberOfSections += 1
-        }
         
         return numberOfSections
     }
@@ -1393,8 +1347,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
         var res:Int = 1
         
-        let adsSection = self.nativeAdsManager.nativeAds.isEmpty ? -1 : 0
-        let authorSection = adsSection + 1
+        let authorSection = 0
         
         let sectionNumber = section - (authorSection + 1) // skip author and ads section (if present)
         
@@ -1435,8 +1388,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
         self.tagUrl = ""
         
-        let adsSection = self.nativeAdsManager.nativeAds.isEmpty ? -1 : 0
-        let authorSection = adsSection + 1
+        let authorSection = 0
         
         let sectionNumber = indexPath.section - (authorSection + 1) // skip author and ads section (if present)
         
@@ -2232,7 +2184,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         optionMenu.addAction(cancelAction)
         
         
-        let authorCellIndexPath = IndexPath(row: 0, section: self.nativeAdsManager.nativeAds.isEmpty ? 0 : 1)
+        let authorCellIndexPath = IndexPath(row: 0, section: 0)
         self.tableView.rectForRow(at: authorCellIndexPath)
         
         let senderView = (sender as! UIView)

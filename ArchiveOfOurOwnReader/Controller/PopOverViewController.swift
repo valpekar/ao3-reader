@@ -48,7 +48,7 @@ class PopOverViewController: UIViewController, UITableViewDelegate, UITableViewD
         tokenView.delegate = self
         tokenView.reloadData()
         
-        tokenView.layer.borderColor = AppDelegate.redColor.cgColor
+        tokenView.layer.borderColor = UIColor(named: "global_tint")?.cgColor
         tokenView.layer.borderWidth = 0.5
         tokenView.layer.cornerRadius = 5.0
         

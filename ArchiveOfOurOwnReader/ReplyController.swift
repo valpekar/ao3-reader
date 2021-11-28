@@ -52,7 +52,7 @@ class ReplyController: LoadingViewController {
             leftLabel.textColor = AppDelegate.textLightColor
         } else {
             bgView.backgroundColor = UIColor.white
-            label.textColor = AppDelegate.redColor
+            label.textColor = UIColor(named: "global_tint")
             leftLabel.textColor = UIColor.black
         }
         

@@ -63,7 +63,11 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
         
         //underlineTextField(loginTextField)
         //underlineTextField(passTextField)
-        self.loginButton.applyGradient(colours: [AppDelegate.redDarkColor, AppDelegate.redLightColor], cornerRadius: AppDelegate.mediumCornerRadius)
+        if let colorDark = UIColor(named: "onlyDarkBlue"),
+        let colorLight = UIColor(named: "onlyLightBlue") {
+            
+            self.loginButton.applyGradient(colours: [colorDark, colorLight], cornerRadius: AppDelegate.mediumCornerRadius)
+        }
         self.loginButton.setTitle(NSLocalizedString("Login", comment: ""), for: .normal)
 
     }

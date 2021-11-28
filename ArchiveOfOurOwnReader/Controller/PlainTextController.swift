@@ -31,7 +31,7 @@ class PlainTextController: LoadingViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.view.backgroundColor = AppDelegate.redColor
+        self.view.backgroundColor = UIColor(named: "global_tint")
     
         if (theme == DefaultsManager.THEME_NIGHT) {
             self.textView.backgroundColor = AppDelegate.nightBgColor

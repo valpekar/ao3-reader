@@ -156,19 +156,8 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
         navVC.navigationBar.shadowImage = UIImage()
         navVC.navigationBar.isTranslucent = false
         
-        loadPurchasedSettings()
         
         //
-        
-        if (purchased == false && donated == false) {
-            
-            print("not purchased")
-            //self.setupAdPlacer()
-            if (i % 4 == 0) {
-                loadAdMobInterstitial()
-                //adsShown += 1
-            }
-        }
         
         self.tableView.reloadData()
         self.collectionView.reloadData()
@@ -203,13 +192,8 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
     override func applyTheme() {
         super.applyTheme()
         
-        if (theme == DefaultsManager.THEME_DAY) {
-            self.tableView.backgroundColor = AppDelegate.greyLightBg
-            self.collectionView.backgroundColor = AppDelegate.greyLightBg
-        } else {
-            self.tableView.backgroundColor = AppDelegate.greyDarkBg
-            self.collectionView.backgroundColor = AppDelegate.redDarkColor
-        }
+        self.tableView.backgroundColor = UIColor(named: "tableViewBg")
+        self.collectionView.backgroundColor = UIColor(named: "tableViewBg")
     }
     
     deinit {
@@ -352,8 +336,6 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
             cell = c
         }
         
-      //  cell.setup .setup(with: nativeAdsManager.nativeAds[adIndex], and: theme)
-        
         return cell
     }
     
@@ -400,21 +382,8 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
 //        }
     }
     
-    /*func correctIndexPathAccordingToAds(originalIndexPath indexPath:IndexPath) -> IndexPath {
-        let numberOfAdPlaces = works.count / NUMBER_OF_ELEMENTS_BETWEEN_ADS
-        let numberOfAds = min(nativeAdsManager.nativeAds.count, numberOfAdPlaces)
-        let numberOfAdsShown = (indexPath.row + 1) / (NUMBER_OF_ELEMENTS_BETWEEN_ADS + 1)
-        let workIndexCorrection = min(numberOfAdsShown, numberOfAds)
-        let newIndexPath = IndexPath(row: indexPath.row - workIndexCorrection, section: indexPath.section)
-        
-        return newIndexPath
-    }*/
-    
     var selectedRow = 0
     
-    override func adClosed() {
-        showWorkDetail()
-    }
     
     override func doInsteadOfAd() {
         showWorkDetail()
@@ -437,12 +406,7 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
     override func selectCell(row: Int, works: [NewsFeedItem]) {
         selectedRow = row
         
-        if (i % 5 == 0 && (purchased == false && donated == false)) {
-            showAdMobInterstitial()
-            adsShown += 1
-        } else {
-            doInsteadOfAd()
-        }
+        doInsteadOfAd()
     }
     
     // MARK: - navigation

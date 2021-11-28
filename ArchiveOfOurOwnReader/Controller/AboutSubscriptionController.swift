@@ -27,12 +27,11 @@ class AboutSubscriptionController: UIViewController {
         if (theme == DefaultsManager.THEME_DAY) {
             self.view.backgroundColor = AppDelegate.greyLightBg
             self.lbl.textColor = UIColor.black
-            self.btn.setTitleColor(AppDelegate.redColor, for: .normal)
         } else {
             self.view.backgroundColor = AppDelegate.greyDarkBg
             self.lbl.textColor = AppDelegate.nightTextColor
-            self.btn.setTitleColor(AppDelegate.purpleLightColor, for: .normal)
         }
+        self.btn.setTitleColor(UIColor(named: "global_tint"), for: UIControl.State.normal)
     }
     
      @IBAction func aboutSubsTouched(_ sender: AnyObject) {

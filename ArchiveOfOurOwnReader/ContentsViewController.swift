@@ -68,7 +68,7 @@ class ContentsViewController: UIViewController, UIPopoverPresentationControllerD
         cell?.textLabel?.font = UIFont.systemFont(ofSize: 14.0, weight: UIFont.Weight.light)
         
         if (theme == DefaultsManager.THEME_DAY) {
-            cell?.textLabel?.textColor = AppDelegate.redColor
+            cell?.textLabel?.textColor = UIColor(named: "global_tint")
             if (chapterIsRead == false) {
                 cell?.backgroundColor = AppDelegate.greyLightBg
             } else {

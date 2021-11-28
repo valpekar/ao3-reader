@@ -62,9 +62,9 @@ class AuthorViewController: LoadingViewController {
         super.applyTheme()
         
         if (theme == DefaultsManager.THEME_DAY) {
-            nameLabel.textColor = AppDelegate.redColor
+            nameLabel.textColor = UIColor(named: "global_tint")
             bioLabel.textColor = AppDelegate.greyColor
-            favButton.setTitleColor(AppDelegate.redColor, for: UIControl.State.normal)
+            favButton.setTitleColor(UIColor(named: "global_tint"), for: UIControl.State.normal)
             
             self.tableView.backgroundColor = AppDelegate.greyLightBg
         

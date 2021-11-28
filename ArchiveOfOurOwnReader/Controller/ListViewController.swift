@@ -10,6 +10,7 @@ import Foundation
 import Alamofire
 import Crashlytics
 import CoreData
+import UIKit
 
 class ListViewController: LoadingViewController, PageSelectDelegate, UIPopoverPresentationControllerDelegate, DownloadButtonDelegate {
     
@@ -100,17 +101,17 @@ class ListViewController: LoadingViewController, PageSelectDelegate, UIPopoverPr
         if (theme == DefaultsManager.THEME_DAY) {
             cell.backgroundColor = AppDelegate.greyLightBg
             cell.bgView.backgroundColor = UIColor.white
-            cell.topicLabel.textColor = AppDelegate.redColor
-            cell.languageLabel.textColor = AppDelegate.redColor
-            cell.datetimeLabel.textColor = AppDelegate.redColor
-            cell.chaptersLabel.textColor = AppDelegate.redColor
+            cell.topicLabel.textColor = UIColor(named: "global_tint")
+            cell.languageLabel.textColor = UIColor(named: "global_tint")
+            cell.datetimeLabel.textColor = UIColor(named: "global_tint")
+            cell.chaptersLabel.textColor = UIColor(named: "global_tint")
             cell.topicPreviewLabel.textColor = UIColor.black
             cell.tagsLabel.textColor = AppDelegate.darkerGreyColor
-            cell.kudosLabel.textColor = AppDelegate.redColor
-            cell.commentsLabel.textColor = AppDelegate.redColor
-            cell.bookmarksLabel.textColor = AppDelegate.redColor
-            cell.hitsLabel.textColor = AppDelegate.redColor
-            cell.wordsLabel.textColor = AppDelegate.redColor
+            cell.kudosLabel.textColor = UIColor(named: "global_tint")
+            cell.commentsLabel.textColor = UIColor(named: "global_tint")
+            cell.bookmarksLabel.textColor = UIColor(named: "global_tint")
+            cell.hitsLabel.textColor = UIColor(named: "global_tint")
+            cell.wordsLabel.textColor = UIColor(named: "global_tint")
             
         } else {
             cell.backgroundColor = AppDelegate.greyDarkBg
@@ -128,6 +129,9 @@ class ListViewController: LoadingViewController, PageSelectDelegate, UIPopoverPr
             cell.hitsLabel.textColor = AppDelegate.darkerGreyColor
             cell.wordsLabel.textColor = AppDelegate.darkerGreyColor
         }
+        
+        cell.backgroundColor = UIColor(named: "tableViewBg")
+        cell.bgView.backgroundColor = UIColor(named: "itemBg")
         
         cell.fandomsLabel.textColor = AppDelegate.greenColor
         
@@ -209,18 +213,18 @@ class ListViewController: LoadingViewController, PageSelectDelegate, UIPopoverPr
             cell.contentView.backgroundColor = AppDelegate.greyLightBg
             cell.workCellView.backgroundColor = AppDelegate.greyLightBg
             cell.workCellView.bgView.backgroundColor = UIColor.white
-            cell.workCellView.topicLabel.textColor = AppDelegate.redColor
-            cell.workCellView.languageLabel.textColor = AppDelegate.redColor
-            cell.workCellView.datetimeLabel.textColor = AppDelegate.redColor
-            cell.workCellView.chaptersLabel.textColor = AppDelegate.redColor
-            cell.workCellView.authorLabel.textColor = AppDelegate.redColor
+            cell.workCellView.topicLabel.textColor = UIColor(named: "global_tint")
+            cell.workCellView.languageLabel.textColor = UIColor(named: "global_tint")
+            cell.workCellView.datetimeLabel.textColor = UIColor(named: "global_tint")
+            cell.workCellView.chaptersLabel.textColor = UIColor(named: "global_tint")
+            cell.workCellView.authorLabel.textColor = UIColor(named: "global_tint")
             cell.workCellView.topicPreviewLabel.textColor = UIColor.black
             cell.workCellView.tagsLabel.textColor = AppDelegate.darkerGreyColor
-            cell.workCellView.kudosLabel.textColor = AppDelegate.redColor
-            cell.workCellView.chaptersLabel.textColor = AppDelegate.redColor
-            cell.workCellView.bookmarksLabel.textColor = AppDelegate.redColor
-            cell.workCellView.hitsLabel.textColor = AppDelegate.redColor
-            cell.workCellView.wordsLabel.textColor = AppDelegate.redColor
+            cell.workCellView.kudosLabel.textColor = UIColor(named: "global_tint")
+            cell.workCellView.chaptersLabel.textColor = UIColor(named: "global_tint")
+            cell.workCellView.bookmarksLabel.textColor = UIColor(named: "global_tint")
+            cell.workCellView.hitsLabel.textColor = UIColor(named: "global_tint")
+            cell.workCellView.wordsLabel.textColor = UIColor(named: "global_tint")
             
             cell.workCellView.wordImg.image = UIImage(named: "word")
             cell.workCellView.chaptersImg.image = UIImage(named: "chapters")
@@ -354,6 +358,8 @@ class ListViewController: LoadingViewController, PageSelectDelegate, UIPopoverPr
             }
             cell.backgroundColor = AppDelegate.redDarkColor
         }
+        
+        cell.backgroundColor = UIColor(named: "tableViewBg")
         
         cell.titleLabel.text = page.name
         
@@ -534,18 +540,6 @@ class ListViewController: LoadingViewController, PageSelectDelegate, UIPopoverPr
             if (pseuds.keys.count > 0) {
                 let curKey = Array(pseuds.keys)[0]
                 curPseud = pseuds[curKey] ?? ""
-            }
-            
-            if (purchased || donated || cC.contains("IR") || curPseud == "sankopay") {
-                #if DEBUG
-                    print("premium")
-                #endif
-            } else {
-                if (countWroksFromDB() > 29) {
-                    self.showError(title: Localization("Error"), message: Localization("Only30Stroies"))
-                
-                    return
-                }
             }
         
             doDownloadWork()

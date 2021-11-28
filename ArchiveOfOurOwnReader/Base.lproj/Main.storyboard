@@ -16,8 +16,9 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="VFR-IH-oeg">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" name="onlyDarkBlue"/>
                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <color key="barTintColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" name="onlyDarkBlue"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </textAttributes>
@@ -45,7 +46,7 @@
                             <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z2d-ic-USg">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
                                 <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <color key="barTintColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="barTintColor" name="onlyDarkBlue"/>
                                 <textAttributes key="titleTextAttributes">
                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </textAttributes>
@@ -595,7 +596,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <color key="barTintColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" name="onlyDarkBlue"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </textAttributes>
@@ -652,7 +653,7 @@
                             <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="o67-3W-at7">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="51"/>
                                 <color key="tintColor" red="0.81377610980000004" green="0.64405626760000001" blue="0.9439766839" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <color key="barTintColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="barTintColor" name="onlyDarkBlue"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
                                     <outlet property="delegate" destination="OIQ-Vr-lpG" id="57T-gj-OMM"/>
@@ -3596,9 +3597,9 @@ Please check your Internet connection and also make sure you are logged into you
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="0Lt-Lf-0cs">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
-                                <color key="tintColor" red="0.51177360384944381" green="0.32856875011783893" blue="0.63539022842639592" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <color key="separatorColor" red="0.5725490196078431" green="0.32941176470588235" blue="0.70588235294117641" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <color key="sectionIndexTrackingBackgroundColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="tintColor" name="global_tint"/>
+                                <color key="separatorColor" name="onlyLightBlue"/>
+                                <color key="sectionIndexTrackingBackgroundColor" name="onlyDarkBlue"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NavigationCell" id="AIV-Ty-CBp" customClass="TagCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="49.5" width="375" height="44"/>
@@ -3621,7 +3622,8 @@ Please check your Internet connection and also make sure you are logged into you
                                                     </constraints>
                                                 </imageView>
                                             </subviews>
-                                            <color key="backgroundColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="backgroundColor" name="onlyDarkBlue"/>
+                                            <color key="tintColor" name="global_tint"/>
                                             <constraints>
                                                 <constraint firstItem="VFd-qE-5pi" firstAttribute="leading" secondItem="iUS-Sq-Nt3" secondAttribute="trailing" constant="16" id="9Me-A0-2Bq"/>
                                                 <constraint firstItem="VFd-qE-5pi" firstAttribute="top" secondItem="R1q-eH-Kkc" secondAttribute="topMargin" id="Ava-pJ-MrG"/>
@@ -3652,7 +3654,7 @@ Please check your Internet connection and also make sure you are logged into you
                                 </connections>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" name="onlyDarkBlue"/>
                         <constraints>
                             <constraint firstItem="0Lt-Lf-0cs" firstAttribute="top" secondItem="b5o-p3-S4K" secondAttribute="bottom" id="BZn-wN-dRD"/>
                             <constraint firstItem="0Lt-Lf-0cs" firstAttribute="top" secondItem="b5o-p3-S4K" secondAttribute="bottom" id="L2X-fh-nLI"/>
@@ -4339,7 +4341,7 @@ Please check your Internet connection and also make sure you are logged into you
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" red="0.92000001668930054" green="0.92000001668930054" blue="0.92000001668930054" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" name="tableViewBg"/>
                         <constraints>
                             <constraint firstItem="fql-nO-Cal" firstAttribute="top" secondItem="83n-aJ-0hQ" secondAttribute="bottom" id="F5k-58-kws"/>
                             <constraint firstItem="Rhh-2h-d5K" firstAttribute="top" secondItem="fql-nO-Cal" secondAttribute="bottom" id="G9s-x1-U0U"/>
@@ -5140,7 +5142,7 @@ Please check your Internet connection and also make sure you are logged into you
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="ji9-WR-nk5">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" name="onlyDarkBlue"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </textAttributes>
@@ -5161,7 +5163,7 @@ Please check your Internet connection and also make sure you are logged into you
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <color key="barTintColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" name="onlyDarkBlue"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </textAttributes>
@@ -5222,7 +5224,7 @@ Please check your Internet connection and also make sure you are logged into you
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" name="onlyDarkBlue"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="ydx-2q-z32" secondAttribute="trailing" constant="16" id="Bcv-m2-Lbo"/>
                                     <constraint firstItem="ydx-2q-z32" firstAttribute="top" secondItem="oYA-OO-1fX" secondAttribute="top" id="LbF-66-Bbz"/>
@@ -5260,7 +5262,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                 <constraint firstItem="mu3-7i-zXm" firstAttribute="top" secondItem="9sQ-0B-Fmq" secondAttribute="topMargin" constant="4" id="eiY-Vn-FRy"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <color key="tintColor" red="0.39215686274509803" green="0.11372549019607843" blue="0.54509803921568623" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="tintColor" name="onlyLightBlue"/>
                                         <connections>
                                             <outlet property="titleLabel" destination="mu3-7i-zXm" id="O4w-c5-euk"/>
                                         </connections>
@@ -5282,7 +5284,7 @@ Please check your Internet connection and also make sure you are logged into you
                             </label>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QI5-Oe-bD7">
                                 <rect key="frame" x="310" y="504.5" width="51" height="31"/>
-                                <color key="onTintColor" red="0.39215686274509803" green="0.11372549019607843" blue="0.54509803921568623" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="onTintColor" name="global_tint"/>
                                 <color key="thumbTintColor" red="1" green="1" blue="1" alpha="0.90000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
                                     <action selector="notifSwitchChanged:" destination="aAL-eX-Mdc" eventType="valueChanged" id="acg-Yt-aDq"/>
@@ -5835,7 +5837,7 @@ Please check your Internet connection and also make sure you are logged into you
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ksp-fG-KYC">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <color key="barTintColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="barTintColor" name="global_tint"/>
                                 <items>
                                     <navigationItem title=" " id="fVc-bJ-ZVg">
                                         <barButtonItem key="rightBarButtonItem" systemItem="stop" id="Ir0-VV-UtM">
@@ -6118,7 +6120,7 @@ Please check your Internet connection and also make sure you are logged into you
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sync with AO3" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="35J-U3-wfK">
                                 <rect key="frame" x="91.5" y="34" width="192.5" height="33.5"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="28"/>
-                                <color key="textColor" red="0.57254901960000004" green="0.3294117647" blue="0.70588235290000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="textColor" name="onlyDarkBlue"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="heightClass=regular-widthClass=regular">
                                     <fontDescription key="fontDescription" type="system" pointSize="34"/>
@@ -6154,7 +6156,7 @@ Please check your Internet connection and also make sure you are logged into you
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoDark" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lhA-qx-8Oj">
                                 <rect key="frame" x="292" y="34" width="20" height="20"/>
-                                <color key="tintColor" red="0.5725490196078431" green="0.32941176470588235" blue="0.70588235294117641" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="tintColor" name="onlyLightBlue"/>
                                 <connections>
                                     <action selector="infoTouched:" destination="J09-NV-9xf" eventType="touchUpInside" id="Ant-o9-3J0"/>
                                 </connections>
@@ -6164,8 +6166,8 @@ Please check your Internet connection and also make sure you are logged into you
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                 <size key="titleShadowOffset" width="1" height="1"/>
                                 <state key="normal" title="Don't have an account? Get invite">
-                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" red="0.17318369289340096" green="0.17318369289340096" blue="0.17318369289340096" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="titleColor" name="onlyDarkBlue"/>
+                                    <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
                                     <action selector="inviteTouched:" destination="J09-NV-9xf" eventType="touchUpInside" id="C20-SS-V3V"/>
@@ -6183,7 +6185,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                 <constraints>
                                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="38" id="2Vg-2H-5rU"/>
                                                 </constraints>
-                                                <color key="textColor" name="global_tint"/>
+                                                <color key="textColor" name="onlyDarkBlue"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
                                                 <variation key="heightClass=regular-widthClass=regular">
@@ -6204,7 +6206,7 @@ Please check your Internet connection and also make sure you are logged into you
                                                 <constraints>
                                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="38" id="7ng-ws-oiQ"/>
                                                 </constraints>
-                                                <color key="textColor" name="global_tint"/>
+                                                <color key="textColor" name="onlyDarkBlue"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                                 <variation key="heightClass=regular-widthClass=regular">
@@ -6249,8 +6251,8 @@ Please check your Internet connection and also make sure you are logged into you
                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
                                 <size key="titleShadowOffset" width="1" height="1"/>
                                 <state key="normal" title="Forgot Password?">
-                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="titleColor" name="onlyDarkBlue"/>
+                                    <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
                                     <action selector="forgotPassTouched:" destination="J09-NV-9xf" eventType="touchUpInside" id="odI-IK-FfB"/>
@@ -6329,7 +6331,7 @@ Please check your Internet connection and also make sure you are logged into you
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="gUV-uk-gN9">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" name="onlyDarkBlue"/>
                     </navigationBar>
                     <connections>
                         <segue destination="nSG-lm-yHh" kind="relationship" relationship="rootViewController" id="Kxr-Zg-Lku"/>
@@ -6743,7 +6745,7 @@ Major Problems:
                             <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D4A-dC-A2w">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
                                 <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <color key="barTintColor" red="0.31764705879999999" green="0.20392156859999999" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="barTintColor" name="onlyDarkBlue"/>
                                 <textAttributes key="titleTextAttributes">
                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </textAttributes>
@@ -6831,7 +6833,7 @@ Major Problems:
                             <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="tmI-ep-s1X">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="51"/>
                                 <color key="tintColor" red="0.81377610980000004" green="0.64405626760000001" blue="0.9439766839" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <color key="barTintColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="barTintColor" name="onlyDarkBlue"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
                                     <outlet property="delegate" destination="7S3-aS-PpM" id="3Xm-f4-yhC"/>
@@ -7618,7 +7620,7 @@ Major Problems:
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <color key="barTintColor" red="0.31764705882352939" green="0.20392156862745098" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" name="onlyDarkBlue"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </textAttributes>
@@ -10650,18 +10652,18 @@ Please check your Internet connection and also make sure you are logged into you
     <inferredMetricsTieBreakers>
         <segue reference="M8N-jh-N0S"/>
         <segue reference="ic4-Dp-HfH"/>
-        <segue reference="AVD-tc-abp"/>
-        <segue reference="GYH-Ae-w0j"/>
-        <segue reference="jXE-kt-jek"/>
+        <segue reference="243-5y-110"/>
+        <segue reference="Mk3-Ot-1ke"/>
+        <segue reference="5rQ-gu-17N"/>
         <segue reference="GOa-zO-Fy6"/>
-        <segue reference="ZjT-ZS-xG2"/>
+        <segue reference="hCS-wp-Ndf"/>
         <segue reference="aEt-Fa-YHa"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" name="global_tint"/>
     <resources>
         <image name="NotRated" width="38.666667938232422" height="38.666667938232422"/>
         <image name="bmk" width="32" height="32"/>
-        <image name="book_bg" width="295.66665649414062" height="640"/>
+        <image name="book_bg" width="375" height="812"/>
         <image name="bookmark" width="32" height="32"/>
         <image name="categories" width="48" height="48"/>
         <image name="chapters" width="24" height="24"/>
@@ -10689,7 +10691,16 @@ Please check your Internet connection and also make sure you are logged into you
         <image name="user_pic" width="60" height="60"/>
         <image name="word" width="32" height="32"/>
         <namedColor name="global_tint">
-            <color red="0.31799998879432678" green="0.20399999618530273" blue="0.3880000114440918" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.16862745098039217" green="0.24313725490196078" blue="0.40784313725490196" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="onlyDarkBlue">
+            <color red="0.16862745098039217" green="0.24313725490196078" blue="0.40784313725490196" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="onlyLightBlue">
+            <color red="0.24705882352941178" green="0.43137254901960786" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="tableViewBg">
+            <color red="0.92156862745098034" green="0.92156862745098034" blue="0.92156862745098034" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="groupTableViewBackgroundColor">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

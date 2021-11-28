@@ -363,7 +363,7 @@ class SerieViewController: ListViewController, UITableViewDataSource, UITableVie
                 cell.notesLabel.textColor = UIColor.black
                 cell.begunLabel.textColor = UIColor.black
                 cell.endedLabel.textColor = UIColor.black
-                cell.statsLabel.textColor = AppDelegate.redColor
+                cell.statsLabel.textColor = UIColor(named: "global_tint")
                 
             } else {
                 cell.backgroundColor = AppDelegate.greyDarkBg

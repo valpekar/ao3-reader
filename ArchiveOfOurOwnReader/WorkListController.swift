@@ -65,13 +65,14 @@ class WorkListController: ListViewController, UITableViewDataSource, UITableView
                 addDoneButtonOnKeyboardTf(tf)
                 
                 if (theme == DefaultsManager.THEME_DAY) {
-                    tf.textColor = AppDelegate.redColor
                     tf.backgroundColor = UIColor.white
                     
                 } else {
                     tf.textColor = AppDelegate.textLightColor
                     tf.backgroundColor = AppDelegate.greyBg
                 }
+                
+                tf.textColor = UIColor(named: "global_tint")
             }
         
        //     self.tableView.tableHeaderView = searchController.searchBar
@@ -104,14 +105,16 @@ class WorkListController: ListViewController, UITableViewDataSource, UITableView
         if (theme == DefaultsManager.THEME_DAY) {
             self.tableView.backgroundColor = AppDelegate.greyLightBg
             self.collectionView.backgroundColor = AppDelegate.greyLightBg
-            self.tryAgainButton.setTitleColor(AppDelegate.redColor, for: UIControl.State.normal)
-            self.notFoundLabel.textColor = AppDelegate.redColor
         } else {
             self.tableView.backgroundColor = AppDelegate.greyDarkBg
             self.collectionView.backgroundColor = AppDelegate.redDarkColor
             self.tryAgainButton.setTitleColor(AppDelegate.purpleLightColor, for: UIControl.State.normal)
             self.notFoundLabel.textColor = AppDelegate.nightTextColor
         }
+        
+        self.tryAgainButton.setTitleColor( UIColor(named: "global_tint"), for: UIControl.State.normal)
+        self.notFoundLabel.textColor =  UIColor(named: "global_tint")
+        
     }
     
     @objc func refresh(_ sender: AnyObject) {

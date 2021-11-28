@@ -74,16 +74,8 @@ class RecommendationsController : ListViewController, UITableViewDataSource, UIT
     
     @objc func refresh(_ sender: AnyObject) {
         if (shouldReload || noFound) {
-            loadPurchasedSettings()
-            if purchased == true {
-                self.generateRecommendations(noFound: noFound)
-                } else if donated == true {
-                    self.generateRecommendations(noFound: noFound)
-                } else {
-                    self.showError(title: Localization("Error"), message: Localization("NotPurchased"))
-                    
-                    refreshControl.endRefreshing()
-                }
+            self.generateRecommendations(noFound: noFound)
+            
         }
     }
     

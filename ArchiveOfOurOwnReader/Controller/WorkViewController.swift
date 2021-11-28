@@ -135,10 +135,6 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
             addDoneButtonOnKeyboardTf(tf)
         }
         
-        if (purchased == false && donated == false) {
-            loadAdMobRewared()
-        }
-        
         setupAccessibility()
     }
     
@@ -1287,7 +1283,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
                                                                                 "font_size" : fontSize])
         
         var bgColor: UIColor = AppDelegate.greyLightColor
-        var txtColor = AppDelegate.redColor
+        var txtColor = UIColor(named: "global_tint")
         
         
         var fontCss = ""
@@ -1319,7 +1315,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
                 worktext = String(format:"<style>\(fontCss) body, table { color: #021439; %@; padding:5em 1.5em 4em 1.5em; text-align: left; line-height: 1.5em;  overflow-y: scroll; -webkit-overflow-scrolling: touch; word-wrap:break-word; } p {margin-bottom:1.0em;}</style>%@", fontStr, work)
             
                 bgColor = AppDelegate.greyLightColor
-                txtColor = AppDelegate.redColor
+                txtColor = UIColor(named: "global_tint")
             
                 commentsButton.setImage(UIImage(named: "comments"), for: UIControl.State.normal)
                 kudosButton.setImage(UIImage(named: "likes"), for: UIControl.State.normal)
@@ -1366,11 +1362,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
     }
     
     @objc func searchTouched() {
-        if (purchased == true || donated == true) {
-            self.searchBar.isHidden = false
-        } else {
-            self.showWarning(title: "Premium Feature", message: "Searching on the page is available to premium users only.")
-        }
+        self.searchBar.isHidden = false
     }
     
     @objc func changeThemeTouched() {
@@ -1544,65 +1536,47 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
             self.loadCurrentTheme()
         }
         
-        let button8 = DefaultButton(title: "Open Dyslexic Regular (Premium)") {
-            if (self.purchased == true) {
+        let button8 = DefaultButton(title: "Open Dyslexic Regular") {
             self.fontFamily = "OpenDyslexic"
             DefaultsManager.putString(self.fontFamily, key: DefaultsManager.FONT_FAMILY)
             self.loadCurrentTheme()
-            }  else {
-                self.showWarning(title: "Warning: This Font is Premium", message: "Please upgrade to be able to use it!")
-            }
         }
         
-        let button9 = DefaultButton(title: "Rooney (Premium)") {
-            if (self.purchased == true) {
+        
+        let button9 = DefaultButton(title: "Rooney") {
             self.fontFamily = "Rooney"
             DefaultsManager.putString(self.fontFamily, key: DefaultsManager.FONT_FAMILY)
             self.loadCurrentTheme()
-            }  else {
-                self.showWarning(title: "Warning: This Font is Premium", message: "Please upgrade to be able to use it!")
-            }
         }
         
-        let button10 = DefaultButton(title: "Futura (Premium)") {
-            if (self.purchased == true) {
+        
+        let button10 = DefaultButton(title: "Futura") {
             self.fontFamily = "Futura"
             DefaultsManager.putString(self.fontFamily, key: DefaultsManager.FONT_FAMILY)
             self.loadCurrentTheme()
-            }  else {
-                self.showWarning(title: "Warning: This Font is Premium", message: "Please upgrade to be able to use it!")
-            }
+            
         }
         
-        let button11 = DefaultButton(title: "Burton\'s Nightmare (Premium)") {
-            if (self.purchased == true) {
+        let button11 = DefaultButton(title: "Burton\'s Nightmare") {
             self.fontFamily = "Burton\'s Nightmare"
             DefaultsManager.putString(self.fontFamily, key: DefaultsManager.FONT_FAMILY)
             self.loadCurrentTheme()
-            }  else {
-                self.showWarning(title: "Warning: This Font is Premium", message: "Please upgrade to be able to use it!")
-            }
         }
         
-        let button12 = DefaultButton(title: "Star Wars (Premium)") {
-            if (self.purchased == true) {
+        
+        let button12 = DefaultButton(title: "Star Wars") {
             self.fontFamily = "Star Jedi"
             DefaultsManager.putString(self.fontFamily, key: DefaultsManager.FONT_FAMILY)
             self.loadCurrentTheme()
-            }  else {
-                self.showWarning(title: "Warning: This Font is Premium", message: "Please upgrade to be able to use it!")
-            }
         }
         
-        let button13 = DefaultButton(title: "Romance Fatal Serif (Premium)") {
-            if (self.purchased == true) {
+        
+        let button13 = DefaultButton(title: "Romance Fatal Serif") {
                 self.fontFamily = "Romance Fatal Serif"
                 DefaultsManager.putString(self.fontFamily, key: DefaultsManager.FONT_FAMILY)
                 self.loadCurrentTheme()
-            }  else {
-                self.showWarning(title: "Warning: This Font is Premium", message: "Please upgrade to be able to use it!")
-            }
         }
+        
         
         popup.addButtons([buttonOne, buttonTwo, buttonC, buttonThree, button4, button5, button6, button7, button8, button9, button10, button11, button12, button13, buttonCancel])
         
@@ -2077,6 +2051,4 @@ extension WorkViewController: UISearchBarDelegate {
         self.searchBar.text = ""
         self.searchBar.endEditing(true)
     }
-    
-    
 }

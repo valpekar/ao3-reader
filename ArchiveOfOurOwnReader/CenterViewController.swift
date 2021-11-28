@@ -26,11 +26,7 @@ class CenterViewController: UserMessagesController {
     }
     
     func applyTheme() {
-        if (theme == DefaultsManager.THEME_DAY) {
-            self.view.backgroundColor = AppDelegate.greyLightBg
-        } else {
-            self.view.backgroundColor = AppDelegate.redDarkColor
-        }
+        self.view.backgroundColor = UIColor(named: "tableViewBg")
     }
         
     func createDrawerButton() {

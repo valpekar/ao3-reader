@@ -83,13 +83,13 @@ class NativeAdTableViewCell: UITableViewCell {
             backgroundColor = AppDelegate.greyLightBg
             contentView.backgroundColor = AppDelegate.greyLightBg
             
-            googleAdsLabel.textColor = AppDelegate.redColor
+            googleAdsLabel.textColor = UIColor(named: "global_tint")
             
             adView.backgroundColor = UIColor.white
-            (adView.headlineView as? UILabel)?.textColor = AppDelegate.redColor
+            (adView.headlineView as? UILabel)?.textColor = UIColor(named: "global_tint")
             (adView.bodyView as? UILabel)?.textColor = AppDelegate.darkerGreyColor
-            (adView.storeView as? UILabel)?.textColor = AppDelegate.redColor
-            (adView.priceView as? UILabel)?.textColor = AppDelegate.redColor
+            (adView.storeView as? UILabel)?.textColor = UIColor(named: "global_tint")
+            (adView.priceView as? UILabel)?.textColor = UIColor(named: "global_tint")
         } else {
             backgroundColor = AppDelegate.greyDarkBg
             contentView.backgroundColor = AppDelegate.greyDarkBg

@@ -478,11 +478,12 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
             cell = (tableView.dequeueReusableCell(withIdentifier: "buttonCell") as? ButtonCell)!
             
             if (theme == DefaultsManager.THEME_DAY) {
-                (cell as? ButtonCell)?.btn.setTitleColor(AppDelegate.redColor, for: .normal)
+                (cell as? ButtonCell)?.btn.setTitleColor(UIColor(named: "global_tint"), for: .normal)
                 
             } else {
                 (cell as? ButtonCell)?.btn.setTitleColor(UIColor.white, for: .normal)
             }
+            
             
         default:
             break

@@ -36,9 +36,6 @@ class CategoriesController: LoadingViewController, UITableViewDataSource, UITabl
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        if (purchased == false && donated == false) {
-            loadAdMobInterstitial()
-        }
     }
     
     override func applyTheme() {
@@ -180,13 +177,6 @@ class CategoriesController: LoadingViewController, UITableViewDataSource, UITabl
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        if (!purchased && !donated) {
-            if (adsShown % 3 == 0) {
-                showAdMobInterstitial()
-                adsShown += 1
-            }
-        }
         
         let curCat: CategoryItem = categories[indexPath.row]
         if (curCat.isParent == false) {

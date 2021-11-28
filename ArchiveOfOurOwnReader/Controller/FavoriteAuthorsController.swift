@@ -65,7 +65,7 @@ class FavoriteAuthorsController : ListViewController, NSFetchedResultsController
         } else {
             self.view.backgroundColor = AppDelegate.greyLightBg
             self.tableView.backgroundColor = AppDelegate.greyLightBg
-            self.messageLabel.textColor = AppDelegate.redColor
+            self.messageLabel.textColor = UIColor(named: "global_tint")
         }
         
         self.sortBy = DefaultsManager.getString(DefaultsManager.SORT_AUTHORS)

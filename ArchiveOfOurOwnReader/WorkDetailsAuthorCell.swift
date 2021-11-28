@@ -57,7 +57,7 @@ class WorkDetailsAuthorCell: UITableViewCell {
             downloadTrashButton.setImage(UIImage(named: "edit_light"), for: UIControl.State.normal)
             authorLabel.textColor = UIColor.white
             dateLabel.textColor = AppDelegate.nightTextColor
-            authorView.layer.shadowColor = AppDelegate.redColor.cgColor
+            authorView.layer.shadowColor = UIColor(named: "global_tint")?.cgColor
         }
         
         let auth = downloadedWorkItem.author
@@ -115,7 +115,7 @@ class WorkDetailsAuthorCell: UITableViewCell {
             downloadTrashButton.setImage(UIImage(named: "edit_light"), for: UIControl.State.normal)
             authorLabel.textColor = UIColor.white
             dateLabel.textColor = AppDelegate.nightTextColor
-            authorView.layer.shadowColor = AppDelegate.redColor.cgColor
+            authorView.layer.shadowColor = UIColor(named: "global_tint")?.cgColor
         }
         
         let auth = downloadedWorkItem.author ?? ""

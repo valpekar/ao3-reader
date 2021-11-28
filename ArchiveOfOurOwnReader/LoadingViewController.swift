@@ -28,19 +28,10 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
     var activityView: UIActivityIndicatorView!
     var loadingView: UIView!
     var loadingLabel: UILabel!
-    var interstitial: GADInterstitial?
     
-    /// The reward-based video ad.
-    var rewardBasedVideo: GADRewardBasedVideoAd?
-    
-   // var interstitial: MPInterstitialAdController =
-   //     MPInterstitialAdController(forAdUnitId: "24f81f4beba548248fc64cfcf5d4d8f5")
     
     var isAdult = false
     var isSafe = true
-    
-    var purchased = false
-    var donated = false
     
     var triedTo = -1
     
@@ -48,7 +39,6 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //self.interstitialPresentationPolicy = ADInterstitialPresentationPolicy.Manual
         
         notification = NotificationCenter.default.addObserver(forName: UIApplication.willEnterForegroundNotification, object: nil, queue: .main) {
             [unowned self] notification in
@@ -105,98 +95,24 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         }
     }
     
-    func loadAdMobInterstitial() {
-        interstitial = GADInterstitial(adUnitID: "ca-app-pub-8760316520462117/5435044991" ) //old - "ca-app-pub-8760316520462117/1282893180"
-        interstitial?.delegate = self
-        let request = GADRequest()
-        
-        let extras = GADExtras();
-        extras.additionalParameters = ["max_ad_content_rating": "MA"];
-        request.register(extras)
-        
-        interstitial?.load(request)
-    }
-    
-    
-    func interstitialDidDismissScreen(_ ad: GADInterstitial) {
-        self.adClosed()
-    }
-    
-    func adClosed() {
-        
-    }
-    
-    func loadAdMobRewared() {
-        rewardBasedVideo = GADRewardBasedVideoAd.sharedInstance()
-        rewardBasedVideo?.delegate = self
-        // Load a reward based video ad.
-        rewardBasedVideo?.load(GADRequest(),
-                               withAdUnitID: "ca-app-pub-8760316520462117/1920096965") //ours - ca-app-pub-8760316520462117/1920096965 //test -- ca-app-pub-3940256099942544/1712485313
-    }
-
-    func showAdMobInterstitial() {
-        if interstitial?.isReady ?? false, (purchased == false && donated == false) {
-                interstitial?.present(fromRootViewController: self)
-        } else {
-            #if DEBUG
-            print("Ad wasn't ready")
-            #endif
-            doInsteadOfAd()
-        }
-    }
     
     func doInsteadOfAd() {
         
     }
     
-    func interstitialDidReceiveAd(_ ad: GADInterstitial) {
-        print("Ad Received")
-//        if ad.isReady && (self.donated == false && self.purchased == false) {
-//            interstitial?.present(fromRootViewController: self)
-//        }
-    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-       // cycleInterstitial()
-        
-        loadPurchasedSettings()
-        
+                        
         self.isAdult = true
         
         if let safe = DefaultsManager.getBool(DefaultsManager.SAFE) {
            self.isSafe = safe
         }
         
-        if let th = DefaultsManager.getInt(DefaultsManager.THEME_APP) {
-            theme = th
-        } else {
-            theme = DefaultsManager.THEME_DAY
-        }
-        
         applyTheme()
     }
     
-    func loadPurchasedSettings() {
-        UserDefaults.standard.synchronize()
-        
-        if let pp = UserDefaults.standard.value(forKey: "pro") as? Bool {
-            purchased = pp || purchased
-        }
-        
-        if let py = UserDefaults.standard.value(forKey: "yearly_sub") as? Bool {
-            purchased = py || purchased
-        }
-        
-        if let pq = UserDefaults.standard.value(forKey: "quarter_sub") as? Bool {
-            purchased = pq || purchased
-        }
-        
-        if let dd = UserDefaults.standard.value(forKey: "donated") as? Bool {
-            donated = dd || donated
-        }
-    }
     
     override func applyTheme() {
         super.applyTheme()
@@ -240,36 +156,13 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         let screenHeight = screenSize.height*/
         
        loadingView = UIView(frame:CGRect(x: 100, y: 100, width: 180, height: 170))
-        /* loadingView.backgroundColor = UIColor.clear
-        loadingView.clipsToBounds = true*/
-       // loadingView.layer.cornerRadius = 10.0
         
-       // activityView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.whiteLarge)
-        
-//        guard let aView = activityView else {
-//            return
-//        }
-        
-//        activityView?.frame = CGRect(x: 65, y: 40, width: aView.bounds.size.width, height: aView.bounds.size.height)
-//        loadingView.addSubview(activityView!)
+        let colorDark = UIColor(named: "global_tint")!
         
         DispatchQueue.main.async {
-            KRProgressHUD.set(activityIndicatorViewColors: [UIColor(named: "global_tint")!, AppDelegate.purpleLightColor, AppDelegate.redBrightTextColor])
+            KRProgressHUD.set(activityIndicatorViewColors: [colorDark, AppDelegate.redBrightTextColor])
                 .show(withMessage: msg)
         }
-        
-       /* loadingLabel = UILabel(frame:CGRect(x: 20, y: 110, width: 140, height: 44))
-        loadingLabel.backgroundColor = UIColor.clear
-        loadingLabel.textColor = UIColor.white
-        loadingLabel.adjustsFontSizeToFitWidth = true
-        loadingLabel.numberOfLines = 2
-        loadingLabel.textAlignment = .center
-        loadingLabel.text = msg
-        loadingLabel.backgroundColor = UIColor.clear
-        loadingView.addSubview(loadingLabel)*/
-        
-       // self.view.addSubview(loadingView)
-       // activityView?.startAnimating()
     }
     
     func hideLoadingView() {
@@ -1295,48 +1188,9 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
     func makeRoundView(view: UIView) {
         view.layer.cornerRadius = AppDelegate.smallCornerRadius
     }
-    
-    var idBeforeLimit = ""
-    func showLimitError() {
-        let alert = UIAlertController(title: Localization("Warning"), message: Localization("Only30Stroies"), preferredStyle: UIAlertController.Style.alert)
-        alert.addAction(UIAlertAction(title: Localization("Upgrade"), style: .destructive, handler: { action in
-            if UIApplication.shared.windows.count > 0,
-            let currentViewController: ContainerViewController = UIApplication.shared.windows[0].rootViewController as? ContainerViewController, currentViewController.instantiatedControllers.count > 0 {
-                currentViewController.selectedControllerAtIndex(IndexPath(row: 5, section: 0))
-            }
-            }))
-        alert.addAction(UIAlertAction(title: Localization("Watch Rewarded Ad"), style: .default, handler: { action in
-            self.showRewardedAd()
-        }))
-        alert.addAction(UIAlertAction(title: Localization("Cancel"), style: .cancel, handler: { action in
-        }))
-
-        self.present(alert, animated: true, completion: nil)
-    }
-    
+        
     
     func doDownloadWork(wId: String, isOnline: Bool, wasSaved: Bool) {
-        let cC = self.getCountryCode()
-        
-        let pseuds = DefaultsManager.getObject(DefaultsManager.PSEUD_IDS) as? [String:String] ?? [:]
-        var curPseud = ""
-        if (pseuds.keys.count > 0) {
-             let curKey = Array(pseuds.keys)[0]
-             curPseud = pseuds[curKey] ?? ""
-        }
-        
-        if (purchased || donated || cC.contains("IR") || curPseud == "sankopay") {
-            #if DEBUG
-                print("premium")
-            #endif
-        } else {
-            if (wasSaved == false && countWroksFromDB() > 29) {
-                idBeforeLimit = wId
-                self.showLimitError()
-                
-                return
-            }
-        }
         
         downloadWorkForSure(wId: wId, isOnline: isOnline)
         
@@ -1355,9 +1209,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         }
         
         var params:[String:AnyObject] = [String:AnyObject]()
-        
-        loadPurchasedSettings()
-        
+                
         var vadult = ""
         params["view_adult"] = "true" as AnyObject?
         vadult = "?view_adult=true"
@@ -1846,35 +1698,6 @@ extension String: ParameterEncoding {
  }
 
  
- 
- extension LoadingViewController: GADRewardBasedVideoAdDelegate {
-    
-    func rewardBasedVideoAd(_ rewardBasedVideoAd: GADRewardBasedVideoAd, didRewardUserWith reward: GADAdReward) {
-      //  if (reward.amount.doubleValue > 0.0) {
-            self.downloadWorkForSure(wId: idBeforeLimit, isOnline: true)
-      //  }
-        
-        Answers.logCustomEvent(withName: "Rewarded: Received Reward", customAttributes: ["result" : "watched"])
-        Analytics.logEvent("Rewarded_Received_Reward", parameters: ["result" : "watched"])
-        
-        self.loadAdMobRewared()
-    }
-    
-    func rewardBasedVideoAdDidClose(_ rewardBasedVideoAd: GADRewardBasedVideoAd) {
-        self.loadAdMobRewared()
-    }
-    
-    func showRewardedAd() {
-        
-        if rewardBasedVideo?.isReady == true {
-            Answers.logCustomEvent(withName: "Rewarded: Start ", customAttributes: [:])
-            Analytics.logEvent("Rewarded_Start", parameters: [:])
-            
-            rewardBasedVideo?.present(fromRootViewController: UIApplication.shared.keyWindow?.rootViewController ?? self)
-        }
-    }
-    
- }
  
 struct FandomObject {
     
