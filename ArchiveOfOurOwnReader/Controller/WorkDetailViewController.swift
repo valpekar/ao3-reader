@@ -168,7 +168,11 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        self.readButton.applyGradient(colours: [AppDelegate.redDarkColor, AppDelegate.redLightColor], cornerRadius: AppDelegate.mediumCornerRadius)
+        if let colorDark = UIColor(named: "onlyDarkBlue"),
+        let colorLight = UIColor(named: "onlyLightBlue") {
+            
+            self.readButton.applyGradient(colours: [colorDark, colorLight], cornerRadius: AppDelegate.mediumCornerRadius)
+        }
 
     }
     
@@ -191,18 +195,8 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
         tableView.backgroundColor = UIColor.clear
         
-        if (theme == DefaultsManager.THEME_DAY) {
-            tableView.separatorColor = AppDelegate.greyLightColor
-            bgView.backgroundColor = AppDelegate.whiteTransparentColor
-           // readButton.backgroundColor = AppDelegate.whiteTransparentColor
-          //  readButton.setTitleColor(AppDelegate.redColor, for: .normal)
-        } else {
-            tableView.separatorColor = AppDelegate.greyBg
-            bgView.backgroundColor = AppDelegate.greyTransparentColor
-           // readButton.backgroundColor = AppDelegate.greyTransparentColor
-          //  readButton.setTitleColor(UIColor.white, for: .normal)
-        }
-        
+        tableView.separatorColor = UIColor(named: "greyColor")
+        bgView.backgroundColor = UIColor(named: "transparentBg")
     }
     
     deinit {
@@ -1087,14 +1081,8 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         } else {
             indexesToHide = [Int]()
         }
-        
-        var txtColor: UIColor = UIColor.white
-        if (theme == DefaultsManager.THEME_DAY) {
-            txtColor = UIColor(named: "global_tint")!
-        } else {
-            txtColor = AppDelegate.nightTextColor
-        }
-        
+
+        let txtColor = UIColor(named: "textColorMedium")
         
         if (indexPath.section == authorSection) {
             if let wrk = workItem {

@@ -210,21 +210,7 @@ class ListViewController: LoadingViewController, PageSelectDelegate, UIPopoverPr
         
         
         if (theme == DefaultsManager.THEME_DAY) {
-            cell.contentView.backgroundColor = AppDelegate.greyLightBg
-            cell.workCellView.backgroundColor = AppDelegate.greyLightBg
-            cell.workCellView.bgView.backgroundColor = UIColor.white
-            cell.workCellView.topicLabel.textColor = UIColor(named: "global_tint")
-            cell.workCellView.languageLabel.textColor = UIColor(named: "global_tint")
-            cell.workCellView.datetimeLabel.textColor = UIColor(named: "global_tint")
-            cell.workCellView.chaptersLabel.textColor = UIColor(named: "global_tint")
-            cell.workCellView.authorLabel.textColor = UIColor(named: "global_tint")
-            cell.workCellView.topicPreviewLabel.textColor = UIColor.black
-            cell.workCellView.tagsLabel.textColor = AppDelegate.darkerGreyColor
-            cell.workCellView.kudosLabel.textColor = UIColor(named: "global_tint")
-            cell.workCellView.chaptersLabel.textColor = UIColor(named: "global_tint")
-            cell.workCellView.bookmarksLabel.textColor = UIColor(named: "global_tint")
-            cell.workCellView.hitsLabel.textColor = UIColor(named: "global_tint")
-            cell.workCellView.wordsLabel.textColor = UIColor(named: "global_tint")
+            
             
             cell.workCellView.wordImg.image = UIImage(named: "word")
             cell.workCellView.chaptersImg.image = UIImage(named: "chapters")
@@ -243,22 +229,6 @@ class ListViewController: LoadingViewController, PageSelectDelegate, UIPopoverPr
             }
             
         } else {
-            cell.contentView.backgroundColor = AppDelegate.greyDarkBg
-            cell.workCellView.backgroundColor = AppDelegate.greyDarkBg
-            cell.workCellView.bgView.backgroundColor = AppDelegate.greyBg
-            cell.workCellView.topicLabel.textColor = AppDelegate.textLightColor
-            cell.workCellView.languageLabel.textColor = AppDelegate.greyLightColor
-            cell.workCellView.datetimeLabel.textColor = AppDelegate.greyLightColor
-            cell.workCellView.chaptersLabel.textColor = AppDelegate.greyLightColor
-            cell.workCellView.authorLabel.textColor = AppDelegate.greyLightColor
-            cell.workCellView.topicPreviewLabel.textColor = AppDelegate.textLightColor
-            cell.workCellView.tagsLabel.textColor = AppDelegate.redTextColor
-            cell.workCellView.tagsLabel.textColor = AppDelegate.greyLightColor
-            cell.workCellView.kudosLabel.textColor = AppDelegate.darkerGreyColor
-            cell.workCellView.chaptersLabel.textColor = AppDelegate.darkerGreyColor
-            cell.workCellView.bookmarksLabel.textColor = AppDelegate.darkerGreyColor
-            cell.workCellView.hitsLabel.textColor = AppDelegate.darkerGreyColor
-            cell.workCellView.wordsLabel.textColor = AppDelegate.darkerGreyColor
             
             cell.workCellView.wordImg.image = UIImage(named: "word_light")
             cell.workCellView.chaptersImg.image = UIImage(named: "chapters_light")
@@ -276,6 +246,26 @@ class ListViewController: LoadingViewController, PageSelectDelegate, UIPopoverPr
                 cell.workCellView.downloadButton.setImage(UIImage(named: "download-100_light"), for: .normal)
             }
         }
+        
+        cell.contentView.backgroundColor = UIColor(named: "cellBgColor")
+        cell.workCellView.backgroundColor = UIColor(named: "cellBgColor")
+        cell.workCellView.bgView.backgroundColor = UIColor(named: "bgViewColor")
+        cell.workCellView.topicLabel.textColor = UIColor(named: "textTitleColor")
+        
+        cell.workCellView.languageLabel.textColor = UIColor(named: "textTagsColor")
+        cell.workCellView.datetimeLabel.textColor = UIColor(named: "textTagsColor")
+        cell.workCellView.chaptersLabel.textColor = UIColor(named: "textTagsColor")
+        cell.workCellView.authorLabel.textColor = UIColor(named: "textTagsColor")
+        
+        cell.workCellView.topicPreviewLabel.textColor = UIColor(named: "textTopicColor")
+        
+        cell.workCellView.kudosLabel.textColor = UIColor(named: "textWorkInfo")
+        cell.workCellView.chaptersLabel.textColor = UIColor(named: "textWorkInfo")
+        cell.workCellView.bookmarksLabel.textColor = UIColor(named: "textWorkInfo")
+        cell.workCellView.hitsLabel.textColor = UIColor(named: "textWorkInfo")
+        cell.workCellView.wordsLabel.textColor = UIColor(named: "textWorkInfo")
+         
+        cell.workCellView.tagsLabel.textColor = UIColor(named: "textAdditionalInfo")
         
         cell.workCellView.fandomsLabel.textColor = AppDelegate.greenColor
         
@@ -343,22 +333,12 @@ class ListViewController: LoadingViewController, PageSelectDelegate, UIPopoverPr
         
         cell.setNeedsDisplay()
         
-        if (theme == DefaultsManager.THEME_DAY) {
-            if (page.isCurrent && page.name != "…") {
-                cell.titleLabel.textColor = UIColor(red: 169/255, green: 164/255, blue: 164/255, alpha: 1)
-            } else {
-                cell.titleLabel.textColor = UIColor.black
-            }
-            cell.backgroundColor = AppDelegate.greyLightBg
+        if (page.isCurrent && page.name != "…") {
+            cell.titleLabel.textColor = UIColor(named: "collectionViewText")
         } else {
-            if (page.isCurrent && page.name != "…") {
-                cell.titleLabel.textColor = AppDelegate.greyColor
-            } else {
-                cell.titleLabel.textColor = UIColor.white
-            }
-            cell.backgroundColor = AppDelegate.redDarkColor
+            cell.titleLabel.textColor = UIColor(named: "collectionViewTextActive")
         }
-        
+                
         cell.backgroundColor = UIColor(named: "tableViewBg")
         
         cell.titleLabel.text = page.name

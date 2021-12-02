@@ -40,25 +40,16 @@ class WorkDetailsAuthorCell: UITableViewCell {
         self.authorView.layer.shadowRadius = AppDelegate.smallCornerRadius
         self.authorView.layer.shadowOffset = CGSize(width: 2.0, height: 1.5)
         self.authorView.layer.shadowOpacity = 0.7
-        self.authorView.layer.shadowColor = AppDelegate.darkerGreyColor.cgColor
+        authorView.layer.shadowColor = UIColor(named: "shadowColor")?.cgColor
         
         self.backgroundColor = UIColor.clear
         
-        if (theme == DefaultsManager.THEME_DAY) {
-            authorView.backgroundColor = AppDelegate.whiteTransparentColor
-            downloadTrashButton.setImage(UIImage(named: "edit"), for: UIControl.State.normal)
-            titleLabel.textColor = UIColor.black
-            authorLabel.textColor = AppDelegate.darkerGreyColor
-            dateLabel.textColor = AppDelegate.greyColor
-            authorView.layer.shadowColor = AppDelegate.darkerGreyColor.cgColor
-        } else {
-            authorView.backgroundColor = AppDelegate.greyTransparentColor
-            titleLabel.textColor = UIColor.white
-            downloadTrashButton.setImage(UIImage(named: "edit_light"), for: UIControl.State.normal)
-            authorLabel.textColor = UIColor.white
-            dateLabel.textColor = AppDelegate.nightTextColor
-            authorView.layer.shadowColor = UIColor(named: "global_tint")?.cgColor
-        }
+        downloadTrashButton.setImage(UIImage(named: "edit"), for: UIControl.State.normal)
+        authorView.backgroundColor = UIColor(named: "transparentBg")
+        titleLabel.textColor = UIColor(named: "textMain")
+        authorLabel.textColor = UIColor(named: "textSecondary")
+        dateLabel.textColor = UIColor(named: "textThirdLevel")
+        
         
         let auth = downloadedWorkItem.author
         authorLabel.text = "\(auth)" // = underlineAttributedString
@@ -98,25 +89,16 @@ class WorkDetailsAuthorCell: UITableViewCell {
         self.authorView.layer.shadowRadius = AppDelegate.smallCornerRadius
         self.authorView.layer.shadowOffset = CGSize(width: 2.0, height: 1.5)
         self.authorView.layer.shadowOpacity = 0.7
-        self.authorView.layer.shadowColor = AppDelegate.darkerGreyColor.cgColor
+        self.authorView.layer.shadowColor = UIColor(named: "shadowColor")?.cgColor
         
         self.backgroundColor = UIColor.clear
         
-        if (theme == DefaultsManager.THEME_DAY) {
-            authorView.backgroundColor = AppDelegate.whiteTransparentColor
-            downloadTrashButton.setImage(UIImage(named: "edit"), for: UIControl.State.normal)
-            titleLabel.textColor = UIColor.black
-            authorLabel.textColor = AppDelegate.darkerGreyColor
-            dateLabel.textColor = AppDelegate.greyColor
-            authorView.layer.shadowColor = AppDelegate.darkerGreyColor.cgColor
-        } else {
-            authorView.backgroundColor = AppDelegate.greyTransparentColor
-            titleLabel.textColor = UIColor.white
-            downloadTrashButton.setImage(UIImage(named: "edit_light"), for: UIControl.State.normal)
-            authorLabel.textColor = UIColor.white
-            dateLabel.textColor = AppDelegate.nightTextColor
-            authorView.layer.shadowColor = UIColor(named: "global_tint")?.cgColor
-        }
+        downloadTrashButton.setImage(UIImage(named: "edit"), for: UIControl.State.normal)
+        
+        authorView.backgroundColor = UIColor(named: "transparentBg")
+        titleLabel.textColor = UIColor(named: "textMain")
+        authorLabel.textColor = UIColor(named: "textSecondary")
+        dateLabel.textColor = UIColor(named: "textThirdLevel")
         
         let auth = downloadedWorkItem.author ?? ""
         authorLabel.text = "\(auth)" // = underlineAttributedString

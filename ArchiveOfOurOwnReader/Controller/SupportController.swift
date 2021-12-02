@@ -73,7 +73,7 @@ class SupportController: LoadingViewController, MFMailComposeViewControllerDeleg
     
     
     @IBAction func mailTouched(_ sender:AnyObject) {
-        let email = "info.catapps@gmail.com"
+        let email = "riyapekar@gmail.com"
         if let url = URL(string: "mailto:\(email)") {
             if #available(iOS 10.0, *) {
                 UIApplication.shared.open(url)

@@ -12,7 +12,6 @@ import Fabric
 import Crashlytics
 import Firebase
 import AVFoundation
-import Appirater
 import UserNotifications
 import Alamofire
 
@@ -113,14 +112,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         }
         
        // UIApplication.sharedApplication().cancelAllLocalNotifications()
-        
-        Appirater.setAppId("1047221122")
-        Appirater.setDaysUntilPrompt(1)
-        Appirater.setUsesUntilPrompt(3)
-        Appirater.setSignificantEventsUntilPrompt(-1)
-        Appirater.setTimeBeforeReminding(4)
-        Appirater.setDebug(false)
-        Appirater.appLaunched(true)
         
         let worksToReload = DefaultsManager.getStringArray(DefaultsManager.NOTIF_IDS_ARR)
         

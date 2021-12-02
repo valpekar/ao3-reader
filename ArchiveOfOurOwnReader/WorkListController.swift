@@ -103,14 +103,13 @@ class WorkListController: ListViewController, UITableViewDataSource, UITableView
         super.applyTheme()
         
         if (theme == DefaultsManager.THEME_DAY) {
-            self.tableView.backgroundColor = AppDelegate.greyLightBg
-            self.collectionView.backgroundColor = AppDelegate.greyLightBg
         } else {
-            self.tableView.backgroundColor = AppDelegate.greyDarkBg
-            self.collectionView.backgroundColor = AppDelegate.redDarkColor
             self.tryAgainButton.setTitleColor(AppDelegate.purpleLightColor, for: UIControl.State.normal)
             self.notFoundLabel.textColor = AppDelegate.nightTextColor
         }
+        
+        self.tableView.backgroundColor = UIColor(named: "tableViewBg")
+        self.collectionView.backgroundColor = UIColor(named: "tableViewBg")
         
         self.tryAgainButton.setTitleColor( UIColor(named: "global_tint"), for: UIControl.State.normal)
         self.notFoundLabel.textColor =  UIColor(named: "global_tint")

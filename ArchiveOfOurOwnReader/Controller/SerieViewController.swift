@@ -62,13 +62,8 @@ class SerieViewController: ListViewController, UITableViewDataSource, UITableVie
     override func applyTheme() {
         super.applyTheme()
         
-        if (theme == DefaultsManager.THEME_DAY) {
-            self.tableView.backgroundColor = AppDelegate.greyLightBg
-            self.collectionView.backgroundColor = AppDelegate.greyLightBg
-        } else {
-            self.tableView.backgroundColor = AppDelegate.greyDarkBg
-            self.collectionView.backgroundColor = AppDelegate.redDarkColor
-        }
+        self.tableView.backgroundColor = UIColor(named: "tableViewBg")
+        self.collectionView.backgroundColor = UIColor(named: "tableViewBg")
     }
     
     @IBAction func editTouched(_ sender: AnyObject) {

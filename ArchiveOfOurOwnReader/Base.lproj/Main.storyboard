@@ -6637,14 +6637,14 @@ Please check your Internet connection and also make sure you are logged into you
                                         <fragment>
                                             <string key="content">I am always working on fixing existing bugs but to improve the app's quality I need external testers. If you want to make the app better and are ready to tell me what steps it took to reproduce the bug, please leave me email: </string>
                                             <attributes>
-                                                <color key="NSColor" red="0.58487161495490914" green="0.54088111799108018" blue="0.71802137305699487" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="NSColor" red="0.52549019607843139" green="0.70588235294117641" blue="0.94901960784313721" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <font key="NSFont" size="13" name="HelveticaNeue"/>
                                                 <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
                                             </attributes>
                                         </fragment>
-                                        <fragment content="info.catapps@gmail.com">
+                                        <fragment content="riyapekar@gmail.com">
                                             <attributes>
-                                                <color key="NSColor" red="0.58487161495490914" green="0.54088111799108018" blue="0.71802137305699487" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="NSColor" red="0.52549019607843139" green="0.70588235294117641" blue="0.94901960784313721" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <font key="NSFont" size="13" name="HelveticaNeue-Bold"/>
                                                 <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
                                                 <integer key="NSUnderline" value="1"/>
@@ -6653,14 +6653,14 @@ Please check your Internet connection and also make sure you are logged into you
                                         <fragment>
                                             <string key="content"> 
 
-Thank you! Latest news here: https://www.tumblr.com/blog/unofficialao3app
+Thank you! Latest news here: https://www.patreon.com/malipkr
 
 Major Problems:
 1. Cannot view History: Try log in again (AO3 doesn’t have API so maybe your token has expired and you need to renew it). On Me screen check if the selected pseud is the one that has bookmarks.
 2. Search shows 0 Found: try cleaning all the fields on Search Screen and Search again
 3. Downloaded work is not full: Tap Settings icon on Work Details Scree, then Reload Work, wait few minutes for it to download. </string>
                                             <attributes>
-                                                <color key="NSColor" red="0.58487161495490914" green="0.54088111799108018" blue="0.71802137305699487" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="NSColor" red="0.52549019607843139" green="0.70588235294117641" blue="0.94901960784313721" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <font key="NSFont" size="13" name="HelveticaNeue"/>
                                                 <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
                                             </attributes>
@@ -6712,14 +6712,14 @@ Major Problems:
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="NWSTokenViewCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="0xr-xQ-WCQ" customClass="NWSTokenViewCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="44.5" width="375" height="43"/>
+                                        <rect key="frame" x="0.0" y="44.5" width="375" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="0xr-xQ-WCQ" id="hw1-MV-SgS">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZhI-LG-9wM">
-                                                    <rect key="frame" x="16" y="11" width="343" height="21"/>
+                                                    <rect key="frame" x="16" y="11" width="343" height="21.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -10654,9 +10654,9 @@ Please check your Internet connection and also make sure you are logged into you
         <segue reference="ic4-Dp-HfH"/>
         <segue reference="243-5y-110"/>
         <segue reference="Mk3-Ot-1ke"/>
-        <segue reference="5rQ-gu-17N"/>
-        <segue reference="GOa-zO-Fy6"/>
-        <segue reference="hCS-wp-Ndf"/>
+        <segue reference="VGm-jG-lPh"/>
+        <segue reference="hi6-p3-hy3"/>
+        <segue reference="s76-7m-Rm2"/>
         <segue reference="aEt-Fa-YHa"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" name="global_tint"/>

@@ -97,15 +97,10 @@ class RecommendationsController : ListViewController, UITableViewDataSource, UIT
     override func applyTheme() {
         super.applyTheme()
         
-        if (theme == DefaultsManager.THEME_DAY) {
-            self.tableView.backgroundColor = AppDelegate.greyLightBg
-            self.collectionView.backgroundColor = AppDelegate.greyLightBg
-            self.descLabel.textColor = UIColor.black
-        } else {
-            self.tableView.backgroundColor = AppDelegate.greyDarkBg
-            self.collectionView.backgroundColor = AppDelegate.redDarkColor
-            self.descLabel.textColor = UIColor.lightText
-        }
+        self.tableView.backgroundColor = UIColor(named: "tableViewBg")
+        self.collectionView.backgroundColor = UIColor(named: "tableViewBg")
+        
+        self.descLabel.textColor = UIColor(named: "collectionViewText")
     }
     
     func scheduleLocal() {

@@ -334,9 +334,9 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
             tableView.reloadRows(at: [IndexPath(row: 0, section: 4), IndexPath(row: 1, section: 4)], with: UITableView.RowAnimation.automatic)
         case 4:
             if (indexPath.row == 0) {
-                if let url = URL(string: "http://simpleappalliance.blogspot.com/2016/05/unofficial-ao3-reader-privacy-policy.html") {
+                if let url = URL(string: "https://riyapekar.blogspot.com/2021/12/app-privacy-policy.html") {
                     UIApplication.shared.open(url, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: { (res) in
-                        print("open url simpleappalliance.blogspot.com")
+                        print("open url blogspot.com")
                     })
                 }
             }
