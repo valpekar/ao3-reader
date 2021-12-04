@@ -87,6 +87,9 @@ class SubscriptionsViewController: ListViewController, UITableViewDataSource, UI
         }
         
         let urlStr: String = "https://archiveofourown.org/users/" + username + "/subscriptions"
+        #if DEBUG
+        print(urlStr)
+        #endif
         
         Alamofire.request(urlStr) //default is .get
             .response(completionHandler: { response in
@@ -286,11 +289,7 @@ class SubscriptionsViewController: ListViewController, UITableViewDataSource, UI
         cell?.topicLabel.text = curWork.topic.replacingOccurrences(of: "\n", with: "")
         cell?.downloadButton.tag = indexPath.row
         
-        if (theme == DefaultsManager.THEME_DAY) {
-            cell?.backgroundColor = AppDelegate.greyLightBg
-        } else {
-            cell?.backgroundColor = AppDelegate.greyDarkBg
-        }
+        cell?.backgroundColor = UIColor(named: "cellBgColor")
         
         return cell!
     }

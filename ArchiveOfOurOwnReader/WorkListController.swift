@@ -102,11 +102,8 @@ class WorkListController: ListViewController, UITableViewDataSource, UITableView
     override func applyTheme() {
         super.applyTheme()
         
-        if (theme == DefaultsManager.THEME_DAY) {
-        } else {
-            self.tryAgainButton.setTitleColor(AppDelegate.purpleLightColor, for: UIControl.State.normal)
-            self.notFoundLabel.textColor = AppDelegate.nightTextColor
-        }
+        self.tryAgainButton.setTitleColor(UIColor(named: "global_tint"), for: UIControl.State.normal)
+        self.notFoundLabel.textColor = UIColor(named: "global_tint")
         
         self.tableView.backgroundColor = UIColor(named: "tableViewBg")
         self.collectionView.backgroundColor = UIColor(named: "tableViewBg")
@@ -114,6 +111,14 @@ class WorkListController: ListViewController, UITableViewDataSource, UITableView
         self.tryAgainButton.setTitleColor( UIColor(named: "global_tint"), for: UIControl.State.normal)
         self.notFoundLabel.textColor =  UIColor(named: "global_tint")
         
+        self.searchBar.tintColor = UIColor(named: "global_tint")
+        
+        if let tf = searchBar.textField {
+            addDoneButtonOnKeyboardTf(tf)
+            
+            tf.textColor = UIColor(named: "textTitleColor")
+            tf.backgroundColor = UIColor(named: "tableViewBg")
+        }
     }
     
     @objc func refresh(_ sender: AnyObject) {

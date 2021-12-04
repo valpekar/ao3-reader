@@ -9,7 +9,6 @@ target 'ArchiveOfOurOwnReader' do
   # Pods for ArchiveOfOurOwnReader
 
 pod 'Firebase'
-pod 'Firebase/AdMob'
 pod 'Firebase/Core'
 pod 'Firebase/Analytics'
 pod 'Alamofire', '~> 4.0'

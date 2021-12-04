@@ -7,9 +7,7 @@
 //
 
 import UIKit
-import iAd
 import CoreData
-import GoogleMobileAds
 import Alamofire
 import KRProgressHUD
 import CoreTelephony
@@ -17,11 +15,8 @@ import Crashlytics
  import Firebase
  import RxSwift
 
-class LoadingViewController: CenterViewController, ModalControllerDelegate, AuthProtocol, UIAlertViewDelegate, GADInterstitialDelegate {
+class LoadingViewController: CenterViewController, ModalControllerDelegate, AuthProtocol, UIAlertViewDelegate {
     
-   // var interstitial: ADInterstitialAd! = nil
-    
-   // var tftinterstitial: TFTInterstitial? = nil
     
     static var uncategorized = "Uncategorized"
     
@@ -183,49 +178,6 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
             loadingView = nil
         }
     }
-    
-    //MARK: - tapfortap
-//    func loadtftInterstitial() {
-      //  TFTInterstitial.loadBreakInterstitialWithDelegate(self)
-//    }
-    
-//    func showftfInterstitial() {
-//        if let tftinterstitial = tftinterstitial {
-//            if (tftinterstitial.readyToShow()) {
-//                tftinterstitial.showAndLoadWithViewController(self)
-//            }
-//        } else {
-//            TFTInterstitial.loadBreakInterstitialWithDelegate(self)
-//            let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(1 * Double(NSEC_PER_SEC)))
-//            dispatch_after(delayTime, dispatch_get_main_queue()) {
-//                self.showftfInterstitial()
-//            }
-//        }
-//    }
-    
-    //pragma mark: -
-    //pragma MARK: - Interstitial Management
-    
- //   func cycleInterstitial() {
-//        // Clean up the old interstitial...
-//        if (interstitial != nil) {
-//            interstitial.delegate = nil
-//            interstitial = nil
-//        }
-//        
-//        // and create a new interstitial. We set the delegate so that we can be notified of when
-//        interstitial = ADInterstitialAd()
-//        interstitial.delegate = self
- //   }
-    
-//    func presentInterlude() {
-//        // If the interstitial managed to load, then we'll present it now.
-//        if (interstitial.loaded) {
-//            let res = self.requestInterstitialAdPresentation()
-//            NSLog("requestInterstitialAdPresentation %@",res)
-//        }
- //   }
-    
     
     
     func sendUpdateWorkRequest(id: String, title: String, published: String, updated: String, chapters: String) {

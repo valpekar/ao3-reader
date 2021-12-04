@@ -29,8 +29,12 @@ class AuthViewController: UserMessagesController {
             touchIDButton.isHidden = true
         }
         
-        self.touchIDButton.applyGradient(colours: [AppDelegate.redDarkColor, AppDelegate.redLightColor], cornerRadius: AppDelegate.mediumCornerRadius)
-        self.okButton.applyGradient(colours: [AppDelegate.redDarkColor, AppDelegate.redLightColor], cornerRadius: AppDelegate.mediumCornerRadius)
+        if let colorDark = UIColor(named: "onlyDarkBlue"),
+        let colorLight = UIColor(named: "onlyLightBlue") {
+            
+            self.okButton.applyGradient(colours: [colorDark, colorLight], cornerRadius: AppDelegate.mediumCornerRadius)
+            self.touchIDButton.applyGradient(colours: [colorDark, colorLight], cornerRadius: AppDelegate.mediumCornerRadius)
+        }
     }
     
     //MARK: - authenticate

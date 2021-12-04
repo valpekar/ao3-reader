@@ -68,10 +68,10 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         self.resultSearchController = ({
             let controller = UISearchController(searchResultsController: nil)
             controller.searchResultsUpdater = self
-            controller.dimsBackgroundDuringPresentation = false
+            controller.obscuresBackgroundDuringPresentation = false
             controller.hidesNavigationBarDuringPresentation = false
             controller.searchBar.sizeToFit()
-            controller.searchBar.tintColor = AppDelegate.redLightColor
+            controller.searchBar.tintColor =  UIColor(named: "global_tint")
             controller.searchBar.backgroundImage = UIImage()
             controller.searchBar.delegate = self
             
@@ -120,6 +120,8 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+        showNav()
+        
 //        if (self.folderName == FavoritesViewController.uncategorized) {
 //            loadWroksFromDB(predicate: nil, predicateWFolder: NSPredicate(format: "folder = nil"))
 //        } else {
@@ -137,7 +139,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        showNav()
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -148,11 +150,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
     override func applyTheme() {
         super.applyTheme()
         
-        if (theme == DefaultsManager.THEME_DAY) {
-            self.tableView.backgroundColor = AppDelegate.greyLightBg
-        } else {
-            self.tableView.backgroundColor = AppDelegate.greyDarkBg
-        }
+        self.tableView.backgroundColor = UIColor(named: "tableViewBg")
     }
     
     func setupAccessibility() {
@@ -321,59 +319,30 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         cell.deleteButton.btnIndexPath = indexPath
         cell.folderButton.btnIndexPath = indexPath
         
-        if (theme == DefaultsManager.THEME_DAY) {
-            cell.backgroundColor = AppDelegate.greyLightBg
-            cell.bgView.backgroundColor = UIColor.white
-            cell.topicLabel.textColor = UIColor(named: "global_tint")
-            cell.languageLabel.textColor = UIColor(named: "global_tint")
-            cell.datetimeLabel.textColor = UIColor(named: "global_tint")
-            cell.chaptersLabel.textColor = UIColor(named: "global_tint")
-            cell.authorLabel.textColor = UIColor(named: "global_tint")
-            cell.topicPreviewLabel.textColor = UIColor.black
-            cell.tagsLabel.textColor = AppDelegate.darkerGreyColor
-            cell.kudosLabel.textColor = UIColor(named: "global_tint")
-            cell.chaptersLabel.textColor = UIColor(named: "global_tint")
-            cell.bookmarksLabel.textColor = UIColor(named: "global_tint")
-            cell.hitsLabel.textColor = UIColor(named: "global_tint")
-            cell.wordsLabel.textColor = UIColor(named: "global_tint")
-            
-            cell.wordImg.image = UIImage(named: "word")
-            cell.chaptersImg.image = UIImage(named: "chapters")
-            cell.kudosImg.image = UIImage(named: "likes")
-            cell.bmkImg.image = UIImage(named: "bookmark")
-            cell.hitsImg.image = UIImage(named: "hits")
-            
-            cell.deleteButton.setImage(UIImage(named: "trash"), for: .normal)
-            cell.folderButton.setImage(UIImage(named: "folder"), for: .normal)
-            
-        } else {
-            cell.backgroundColor = AppDelegate.greyDarkBg
-            cell.bgView.backgroundColor = AppDelegate.greyBg
-            cell.topicLabel.textColor = AppDelegate.textLightColor
-            cell.languageLabel.textColor = AppDelegate.greyLightColor
-            cell.datetimeLabel.textColor = AppDelegate.greyLightColor
-            cell.chaptersLabel.textColor = AppDelegate.greyLightColor
-            cell.authorLabel.textColor = AppDelegate.greyLightColor
-            cell.topicPreviewLabel.textColor = AppDelegate.textLightColor
-            cell.tagsLabel.textColor = AppDelegate.redTextColor
-            cell.tagsLabel.textColor = AppDelegate.greyLightColor
-            cell.kudosLabel.textColor = AppDelegate.darkerGreyColor
-            cell.chaptersLabel.textColor = AppDelegate.darkerGreyColor
-            cell.bookmarksLabel.textColor = AppDelegate.darkerGreyColor
-            cell.hitsLabel.textColor = AppDelegate.darkerGreyColor
-            cell.wordsLabel.textColor = AppDelegate.darkerGreyColor
-            
-            cell.wordImg.image = UIImage(named: "word_light")
-            cell.chaptersImg.image = UIImage(named: "chapters_light")
-            cell.kudosImg.image = UIImage(named: "likes_light")
-            cell.bmkImg.image = UIImage(named: "bookmark_light")
-            cell.hitsImg.image = UIImage(named: "hits_light")
-            
-            cell.deleteButton.setImage(UIImage(named: "trash_light"), for: .normal)
-            cell.folderButton.setImage(UIImage(named: "folder_light"), for: .normal)
-        }
+        cell.contentView.backgroundColor = UIColor(named: "cellBgColor")
+        cell.backgroundColor = UIColor(named: "cellBgColor")
+        cell.bgView.backgroundColor = UIColor(named: "bgViewColor")
+        cell.topicLabel.textColor = UIColor(named: "textTitleColor")
+        
+        cell.languageLabel.textColor = UIColor(named: "textTagsColor")
+        cell.datetimeLabel.textColor = UIColor(named: "textTagsColor")
+        cell.chaptersLabel.textColor = UIColor(named: "textTagsColor")
+        cell.authorLabel.textColor = UIColor(named: "textTagsColor")
+        
+        cell.topicPreviewLabel.textColor = UIColor(named: "textTopicColor")
+        
+        cell.kudosLabel.textColor = UIColor(named: "textWorkInfo")
+        cell.chaptersLabel.textColor = UIColor(named: "textWorkInfo")
+        cell.bookmarksLabel.textColor = UIColor(named: "textWorkInfo")
+        cell.hitsLabel.textColor = UIColor(named: "textWorkInfo")
+        cell.wordsLabel.textColor = UIColor(named: "textWorkInfo")
+         
+        cell.tagsLabel.textColor = UIColor(named: "textAdditionalInfo")
         
         cell.fandomsLabel.textColor = AppDelegate.greenColor
+        
+        cell.deleteButton.setImage(UIImage(named: "trash"), for: .normal)
+        cell.folderButton.setImage(UIImage(named: "folder"), for: .normal)
         
         let currentPosition = curWork?.progress ?? NSNumber(value:0)
         cell.readProgress.setProgress(currentPosition.floatValue, animated: false)

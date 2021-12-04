@@ -92,8 +92,6 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         self.tableView.estimatedRowHeight = 64
         
 //        self.readButton.layer.cornerRadius = AppDelegate.smallCornerRadius
-        
-        self.tableView.register(UINib(nibName: "SmallNativeAdTableViewCell", bundle: nil), forCellReuseIdentifier: "SmallNativeAdCell")
                 
         self.bgView.layer.cornerRadius = AppDelegate.smallCornerRadius
         
@@ -2463,14 +2461,3 @@ fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ inp
 	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
 }
 
-
-extension WorkDetailViewController: NativeAdsManagerDelegate {
-    func nativeAdsManagerDidReceivedAds(_ adsManager: NativeAdsManager) {
-        
-        if let _ = adsManager.nativeAds.first {
-//            nativeAdView.setup(with: ad, and: theme)
-            
-            self.tableView.reloadData()
-        }
-    }
-}

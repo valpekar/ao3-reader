@@ -25,16 +25,12 @@ class ViewFoldersController: BaseFolderController {
         super.viewDidLoad()
         self.createDrawerButton()
         
-        if (theme == DefaultsManager.THEME_NIGHT) {
-            self.view.backgroundColor = AppDelegate.redDarkColor
-            self.tableView.backgroundColor = AppDelegate.greyDarkBg
-            self.unCatButton.setTitleColor(AppDelegate.textLightColor, for: UIControl.State.normal)
-            self.updButton.setTitleColor(AppDelegate.textLightColor, for: UIControl.State.normal)
-        } else {
-            self.view.backgroundColor = AppDelegate.greyLightBg
-            self.tableView.backgroundColor = AppDelegate.greyLightBg
-            self.unCatButton.setTitleColor(AppDelegate.redDarkColor, for: UIControl.State.normal)
-            self.updButton.setTitleColor(AppDelegate.redDarkColor, for: UIControl.State.normal)
+        self.view.backgroundColor = UIColor(named: "tableViewBg")
+        self.tableView.backgroundColor = UIColor(named: "tableViewBg")
+        
+        if let textColor = UIColor(named: "textTitleColor") {
+            self.unCatButton.setTitleColor(textColor, for: UIControl.State.normal)
+            self.updButton.setTitleColor(textColor, for: UIControl.State.normal)
         }
         
         self.sortBy = DefaultsManager.getString(DefaultsManager.SORT_FOLDERS)

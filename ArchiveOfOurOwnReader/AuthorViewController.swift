@@ -61,20 +61,13 @@ class AuthorViewController: LoadingViewController {
     override func applyTheme() {
         super.applyTheme()
         
-        if (theme == DefaultsManager.THEME_DAY) {
-            nameLabel.textColor = UIColor(named: "global_tint")
-            bioLabel.textColor = AppDelegate.greyColor
-            favButton.setTitleColor(UIColor(named: "global_tint"), for: UIControl.State.normal)
-            
-            self.tableView.backgroundColor = AppDelegate.greyLightBg
+        nameLabel.textColor = UIColor(named: "global_tint")
+        favButton.setTitleColor(UIColor(named: "global_tint"), for: UIControl.State.normal)
         
-        } else {
-            nameLabel.textColor = AppDelegate.purpleLightColor
-            bioLabel.textColor = AppDelegate.textLightColor
-            favButton.setTitleColor(AppDelegate.purpleLightColor, for: UIControl.State.normal)
-            
-            self.tableView.backgroundColor = AppDelegate.greyDarkBg
-        }
+        bioLabel.textColor = UIColor(named: "textAdditionalInfo")
+        
+        self.tableView.backgroundColor = UIColor(named: "cellBgColor")
+        
     }
     
     func getUserProfile() {
@@ -349,13 +342,8 @@ extension AuthorViewController: UITableViewDelegate, UITableViewDataSource {
         default: break
         }
         
-        if (theme == DefaultsManager.THEME_DAY) {
-            cell.backgroundColor = AppDelegate.greyLightBg
-            cell.titleLabel.textColor = AppDelegate.redTextColor
-        } else {
-            cell.backgroundColor = AppDelegate.greyDarkBg
-            cell.titleLabel.textColor = AppDelegate.textLightColor
-        }
+        cell.backgroundColor = UIColor(named: "cellBgColor")
+        cell.titleLabel.textColor = UIColor(named: "textTitleColor")
         
         return cell
     }

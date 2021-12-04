@@ -15,8 +15,6 @@ import Crashlytics
 import GoogleMobileAds
 import Firebase
 
-let NUMBER_OF_ELEMENTS_BETWEEN_ADS = 7
-
 protocol SearchControllerDelegate {
     func searchApplied(_ searchQuery:SearchQuery, shouldAddKeyword: Bool)
 }
@@ -42,8 +40,6 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
     
     var query: SearchQuery = SearchQuery()
     
-    var i = 0 //counts page transitions, display ads every 3rd time
-    var adsShown = 0
     var triedToLogin = 0
     
     var refreshControl: UIRefreshControl!
@@ -66,7 +62,6 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
         
         self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.estimatedRowHeight = 200
-        self.tableView.register(UINib(nibName: "NativeAdTableViewCell", bundle: nil), forCellReuseIdentifier: "NativeAdTableViewCell")
         
         self.refreshControl = UIRefreshControl()
         self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
@@ -79,24 +74,18 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
         self.resultSearchController = ({
             let controller = UISearchController(searchResultsController: nil)
             controller.searchResultsUpdater = self
-            controller.dimsBackgroundDuringPresentation = false
+            controller.obscuresBackgroundDuringPresentation = false
             controller.hidesNavigationBarDuringPresentation = false
             controller.searchBar.sizeToFit()
-            controller.searchBar.tintColor = AppDelegate.purpleLightColor
+            controller.searchBar.tintColor = UIColor(named: "global_tint")
             controller.searchBar.backgroundImage = UIImage()
             controller.searchBar.delegate = self
             
             if let tf = controller.searchBar.textField {
                 addDoneButtonOnKeyboardTf(tf)
                 
-                if (theme == DefaultsManager.THEME_DAY) {
-                    tf.textColor = UIColor(named: "global_tint")
-                    tf.backgroundColor = UIColor.white
-                    
-                } else {
-                    tf.textColor = AppDelegate.textLightColor
-                    tf.backgroundColor = AppDelegate.greyBg
-                }
+                tf.textColor = UIColor(named: "textTitleColor")
+                tf.backgroundColor = UIColor(named: "tableViewBg")
             }
             
             self.tableView.tableHeaderView = controller.searchBar
@@ -155,7 +144,6 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
         navVC.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         navVC.navigationBar.shadowImage = UIImage()
         navVC.navigationBar.isTranslucent = false
-        
         
         //
         
@@ -328,17 +316,6 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
         return cell
     }
     
-    func createAdCell(tableView: UITableView, indexPath: IndexPath, adIndex: Int) -> UITableViewCell {
-        let cellIdentifier: String = "NativeAdTableViewCell"
-        
-        var cell: FeedTableViewCell! = nil
-        if let c:FeedTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? FeedTableViewCell {
-            cell = c
-        }
-        
-        return cell
-    }
-    
     // MARK: - UICollectionViewDataSource
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return pages.count
@@ -450,9 +427,7 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
                 (choosePref.topViewController as! ChoosePrefController).chosenDelegate = self
             }
         }
-        
-        i += 1
-        
+                
         doneButtonAction()
         hideBackTitle()
     }
@@ -665,8 +640,3 @@ fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ inp
 	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
 }
 
-extension FeedViewController: NativeAdsManagerDelegate {
-    func nativeAdsManagerDidReceivedAds(_ adsManager: NativeAdsManager) {
-        self.tableView.reloadData()
-    }
-}

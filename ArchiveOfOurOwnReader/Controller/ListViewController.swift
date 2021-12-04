@@ -207,44 +207,14 @@ class ListViewController: LoadingViewController, PageSelectDelegate, UIPopoverPr
         }
         cell.workCellView.tagsLabel.text = tagsString
         
-        
-        
-        if (theme == DefaultsManager.THEME_DAY) {
-            
-            
-            cell.workCellView.wordImg.image = UIImage(named: "word")
-            cell.workCellView.chaptersImg.image = UIImage(named: "chapters")
-            cell.workCellView.kudosImg.image = UIImage(named: "likes")
-            cell.workCellView.bmkImg.image = UIImage(named: "bookmark")
-            cell.workCellView.hitsImg.image = UIImage(named: "hits")
-            
-            if (curWork.isDownloaded == true) {
-                if (curWork.needReload == true) {
-                    cell.workCellView.downloadButton.setImage(UIImage(named: "ic_refresh"), for: .normal)
-                } else {
-                    cell.workCellView.downloadButton.setImage(UIImage(named: "ic_yes"), for: .normal)
-                }
+        if (curWork.isDownloaded == true) {
+            if (curWork.needReload == true) {
+                cell.workCellView.downloadButton.setImage(UIImage(named: "ic_refresh"), for: .normal)
             } else {
-                cell.workCellView.downloadButton.setImage(UIImage(named: "download-100"), for: .normal)
+                cell.workCellView.downloadButton.setImage(UIImage(named: "ic_yes"), for: .normal)
             }
-            
         } else {
-            
-            cell.workCellView.wordImg.image = UIImage(named: "word_light")
-            cell.workCellView.chaptersImg.image = UIImage(named: "chapters_light")
-            cell.workCellView.kudosImg.image = UIImage(named: "likes_light")
-            cell.workCellView.bmkImg.image = UIImage(named: "bookmark_light")
-            cell.workCellView.hitsImg.image = UIImage(named: "hits_light")
-            
-            if (curWork.isDownloaded == true) {
-                if (curWork.needReload == true) {
-                    cell.workCellView.downloadButton.setImage(UIImage(named: "ic_refresh_light"), for: .normal)
-                } else {
-                    cell.workCellView.downloadButton.setImage(UIImage(named: "ic_yes_light"), for: .normal)
-                }
-            } else {
-                cell.workCellView.downloadButton.setImage(UIImage(named: "download-100_light"), for: .normal)
-            }
+            cell.workCellView.downloadButton.setImage(UIImage(named: "download-100"), for: .normal)
         }
         
         cell.contentView.backgroundColor = UIColor(named: "cellBgColor")
@@ -513,7 +483,6 @@ class ListViewController: LoadingViewController, PageSelectDelegate, UIPopoverPr
             self.present(optionMenu, animated: true, completion: nil)
         } else {
         
-            let cC = self.getCountryCode()
             
             let pseuds = DefaultsManager.getObject(DefaultsManager.PSEUD_IDS) as? [String:String] ?? [:]
             var curPseud = ""

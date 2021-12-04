@@ -55,7 +55,7 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
         
         self.pseudsTableView.backgroundColor = UIColor(named: "tableViewBg")
         self.notifLabel.textColor = UIColor(named: "textMain")
-        self.footerView.backgroundColor = UIColor(named: "tableViewBg")
+     //   self.footerView.backgroundColor = UIColor(named: "onlyDarkBlue")
         self.supportLabel.textColor = UIColor(named: "textMain")
         self.supportButton.setTitleColor(UIColor(named: "greenTitle"), for: .normal)
         

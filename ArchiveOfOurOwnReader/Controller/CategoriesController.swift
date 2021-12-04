@@ -15,7 +15,6 @@ class CategoriesController: LoadingViewController, UITableViewDataSource, UITabl
     @IBOutlet weak var tableView:UITableView!
     @IBOutlet weak var errView:UIView!
     
-    var adsShown = 0
     
     var categories: [CategoryItem] = []
     
@@ -41,12 +40,9 @@ class CategoriesController: LoadingViewController, UITableViewDataSource, UITabl
     override func applyTheme() {
         super.applyTheme()
         
-        if (theme == DefaultsManager.THEME_DAY) {
-            self.tableView.backgroundColor = AppDelegate.greyLightBg
-        } else {
-            self.tableView.backgroundColor = AppDelegate.greyDarkBg
-        }
+        self.tableView.backgroundColor = UIColor(named: "tableViewBg")
     }
+    
     
     @IBAction func tryAgainTouched(_ sender:AnyObject) {
         requestCategories()
@@ -162,15 +158,9 @@ class CategoriesController: LoadingViewController, UITableViewDataSource, UITabl
             cell.accessoryType = .none
         }
         
-        if (theme == DefaultsManager.THEME_DAY) {
-            cell.backgroundColor = AppDelegate.greyLightBg
-            cell.titleLabel.textColor = AppDelegate.dayTextColor
-            cell.tintColor = UIColor(named: "global_tint")
-        } else {
-            cell.backgroundColor = AppDelegate.greyDarkBg
-            cell.titleLabel.textColor = AppDelegate.nightTextColor
-            cell.tintColor = AppDelegate.purpleLightColor
-        }
+        cell.backgroundColor = UIColor(named: "tableViewBg")
+        cell.tintColor = UIColor(named: "global_tint")
+        cell.titleLabel.textColor = UIColor(named: "textColorMedium")
         
         return cell
     }

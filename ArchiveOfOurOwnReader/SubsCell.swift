@@ -27,7 +27,10 @@ class SubsCell : UITableViewCell {
         gradient.frame = CGRect(origin: CGPoint.zero, size: self.contentView.frame.size)// .frame.size)//self.bgView.bounds
         //gradient.startPoint = CGPoint(x: 1.0, y: 0.5)
         //gradient.endPoint = CGPoint(x: 0.0, y:0.5)
-        gradient.colors = [AppDelegate.redLightColor.cgColor, AppDelegate.purpleLightColor.cgColor]
+        if let startColor = UIColor(named: "onlyDarkBlue")?.cgColor,
+           let endColor = UIColor(named: "onlyLightBlue")?.cgColor {
+            gradient.colors = [startColor, endColor]
+        }
         
         self.bgView.layer.insertSublayer(gradient, at: 0)
     }

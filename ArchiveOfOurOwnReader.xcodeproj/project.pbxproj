@@ -61,8 +61,6 @@
 		28E1C7131B8D9246001E2E5A /* WorkDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28E1C7121B8D9246001E2E5A /* WorkDetailViewController.swift */; };
 		28E1C7151B8D9257001E2E5A /* WorkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28E1C7141B8D9257001E2E5A /* WorkViewController.swift */; };
 		3C00E9C31D9C05FA00B0BBDF /* CustomEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C00E9C21D9C05FA00B0BBDF /* CustomEncoding.swift */; };
-		3C0448F71C634209005DCE5F /* ReaderProducts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C0448F51C634209005DCE5F /* ReaderProducts.swift */; };
-		3C0448F81C634209005DCE5F /* IAPHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C0448F61C634209005DCE5F /* IAPHelper.swift */; };
 		3C0448FC1C637478005DCE5F /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C0448FB1C637478005DCE5F /* StoreKit.framework */; };
 		3C0449001C639080005DCE5F /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C0448FE1C639080005DCE5F /* Fabric.framework */; };
 		3C0449011C639080005DCE5F /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C0448FF1C639080005DCE5F /* Crashlytics.framework */; };
@@ -302,8 +300,6 @@
 		30E187E4D36CFAF1BB4EAFF8 /* Pods-ArchiveOfOurOwnReaderTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArchiveOfOurOwnReaderTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ArchiveOfOurOwnReaderTests/Pods-ArchiveOfOurOwnReaderTests.release.xcconfig"; sourceTree = "<group>"; };
 		3C00313421E7745A00926432 /* ArchiveOfOurOwnReader 16.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ArchiveOfOurOwnReader 16.xcdatamodel"; sourceTree = "<group>"; };
 		3C00E9C21D9C05FA00B0BBDF /* CustomEncoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomEncoding.swift; sourceTree = "<group>"; };
-		3C0448F51C634209005DCE5F /* ReaderProducts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReaderProducts.swift; sourceTree = "<group>"; };
-		3C0448F61C634209005DCE5F /* IAPHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IAPHelper.swift; sourceTree = "<group>"; };
 		3C0448FB1C637478005DCE5F /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		3C0448FE1C639080005DCE5F /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		3C0448FF1C639080005DCE5F /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
@@ -610,7 +606,6 @@
 				3C6D3D3B203D867100995985 /* ArchiveOfOurOwnReader.entitlements */,
 				3C00E9C11D9C05E300B0BBDF /* Utils */,
 				3CD808521D8016AA0099F778 /* Delegate */,
-				3C0448F41C6341F1005DCE5F /* InApp */,
 				1D7BDD3C1B5E7AC40017C346 /* Object */,
 				1D7BDD2F1B5E755F0017C346 /* Hpple */,
 				28B6DC4C1B4E3F8900F34529 /* Model */,
@@ -819,15 +814,6 @@
 				080691BB23436F8B002E6496 /* UISearchBar+Extensions.swift */,
 			);
 			name = Utils;
-			sourceTree = "<group>";
-		};
-		3C0448F41C6341F1005DCE5F /* InApp */ = {
-			isa = PBXGroup;
-			children = (
-				3C0448F51C634209005DCE5F /* ReaderProducts.swift */,
-				3C0448F61C634209005DCE5F /* IAPHelper.swift */,
-			);
-			name = InApp;
 			sourceTree = "<group>";
 		};
 		3C274CBD1CE4CCBA00F3AC68 /* Flurry */ = {
@@ -1219,7 +1205,6 @@
 				3CF2ECF52203E6EC00481C03 /* SearchTagsListCell.swift in Sources */,
 				3C22BBEE1FED2BD60012CBA4 /* PagesController.swift in Sources */,
 				3C6644EC21A428B600BD85AC /* Localisator.swift in Sources */,
-				3C0448F71C634209005DCE5F /* ReaderProducts.swift in Sources */,
 				3C5C859221F70620005B6EBF /* PublishWork+CoreDataClass.swift in Sources */,
 				3C6E1E8720E3CC130051B42E /* UpgradesController.swift in Sources */,
 				3C44A7A71F8F56F100AEAE7B /* SecuritySettingsController.swift in Sources */,
@@ -1313,7 +1298,6 @@
 				08273564230989B0008554A0 /* NativeAdsManager.swift in Sources */,
 				3CD6BBAC2063D7A700958973 /* HighlightsController.swift in Sources */,
 				3C60ADE1207F4A5300158419 /* BaseFolderController.swift in Sources */,
-				3C0448F81C634209005DCE5F /* IAPHelper.swift in Sources */,
 				1D2832111BBD6A7200FFC887 /* Fandom.swift in Sources */,
 				1D2832281BBD6CDA00FFC887 /* FavoritesViewController.swift in Sources */,
 				3C8995901E95169B00D511CD /* DBWorkItem+CoreDataClass.swift in Sources */,

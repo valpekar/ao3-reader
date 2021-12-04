@@ -8,7 +8,6 @@
 
 import UIKit
 import CoreData
-import Fabric
 import Crashlytics
 import Firebase
 import AVFoundation
@@ -63,10 +62,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         setenv("JSC_useJIT", "false", 0)
         
         // Override point for customization after application launch.
-        Fabric.with([Crashlytics.self])
         FirebaseApp.configure()
         
-        self.window?.tintColor = UIColor(named: "global_tint")
+      //  self.window?.tintColor = UIColor(named: "global_tint")
         
         //create the notificationCenter
         let center  = UNUserNotificationCenter.current()
@@ -87,7 +85,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
        // application.applicationIconBadgeNumber = worksToReload.count
         
        //  Flurry.startSession("DW87V8SZQC24X83XPSXB")
-         GADMobileAds.sharedInstance().start(completionHandler: nil)
         
         if (DefaultsManager.getObject(DefaultsManager.PSEUD_IDS) == nil) {
             let s: [String:String] = [:]
@@ -225,7 +222,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         UIApplication.shared.applicationIconBadgeNumber = worksToReload.count
         
-        completionHandler([.alert, .sound, .badge])
+        completionHandler([.banner, .sound, .badge])
     }
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {

@@ -91,17 +91,13 @@ class FavoritesSiteController : ListViewController, UITableViewDataSource, UITab
         self.tableView.backgroundColor = UIColor(named: "tableViewBg")
         self.collectionView.backgroundColor = UIColor(named: "tableViewBg")
         
+        self.searchBar.tintColor = UIColor(named: "global_tint")
+        
         if let tf = searchBar.textField {
             addDoneButtonOnKeyboardTf(tf)
             
-            if (theme == DefaultsManager.THEME_DAY) {
-                tf.textColor = UIColor(named: "global_tint")
-                tf.backgroundColor = UIColor.white
-                
-            } else {
-                tf.textColor = AppDelegate.textLightColor
-                tf.backgroundColor = AppDelegate.greyBg
-            }
+            tf.textColor = UIColor(named: "textTitleColor")
+            tf.backgroundColor = UIColor(named: "tableViewBg")
         }
     }
     

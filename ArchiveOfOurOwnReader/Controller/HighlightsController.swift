@@ -46,23 +46,10 @@ class HighlightsController: LoadingViewController, NSFetchedResultsControllerDel
         
         self.title = "Highlights"
         
-        if let th = DefaultsManager.getInt(DefaultsManager.THEME_APP) {
-            theme = th
-        } else {
-            theme = DefaultsManager.THEME_DAY
-        }
-        
-        if (theme == DefaultsManager.THEME_NIGHT) {
-            self.view.backgroundColor = AppDelegate.redDarkColor
-            self.tableView.backgroundColor = AppDelegate.greyDarkBg
-            self.messageView.backgroundColor = AppDelegate.greyDarkBg
-            self.messageLabel.textColor = AppDelegate.nightTextColor
-        } else {
-            self.view.backgroundColor = AppDelegate.greyLightBg
-            self.tableView.backgroundColor = AppDelegate.greyLightBg
-            self.messageView.backgroundColor = AppDelegate.greyLightBg
-            self.messageLabel.textColor = UIColor(named: "global_tint")
-        }
+        self.view.backgroundColor = UIColor(named: "tableViewBg")
+        self.tableView.backgroundColor = UIColor(named: "tableViewBg")
+        self.messageView.backgroundColor = UIColor(named: "tableViewBg")
+        self.messageLabel.textColor = UIColor(named: "global_tint")
         
         self.sortBy = DefaultsManager.getString(DefaultsManager.SORT_HIGHLIGHTS)
         if (self.sortBy.isEmpty) {
@@ -409,15 +396,9 @@ extension HighlightsController: UITableViewDelegate, UITableViewDataSource {
         cell.contentLabel.text = highlightItem?.content
         cell.authorLabel.text = "- \(highlightItem?.author ?? ""), \"\(highlightItem?.workName ?? "")\""
         
-        if (theme == DefaultsManager.THEME_DAY) {
-            cell.backgroundColor = AppDelegate.greyLightBg
-            cell.contentLabel.textColor = AppDelegate.redDarkColor
-            cell.authorLabel.textColor = AppDelegate.redTextColor
-        } else {
-            cell.backgroundColor = AppDelegate.greyDarkBg
-            cell.contentLabel.textColor = AppDelegate.textLightColor
-            cell.authorLabel.textColor = AppDelegate.purpleLightColor
-        }
+        cell.backgroundColor = UIColor(named: "tableViewBg")
+        cell.contentLabel.textColor = UIColor(named: "textTitleColor")
+        cell.authorLabel.textColor = UIColor(named: "textSecondary")
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

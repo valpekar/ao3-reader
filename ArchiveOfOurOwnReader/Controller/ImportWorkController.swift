@@ -33,13 +33,8 @@ class ImportWorkController : UserMessagesController {
         bgView.layer.shadowOpacity = 0.85
         bgView.layer.shadowRadius = 5
         
-        if (theme == DefaultsManager.THEME_NIGHT) {
-            bgView.backgroundColor = AppDelegate.redDarkColor
-            label.textColor = AppDelegate.textLightColor
-        } else {
-            bgView.backgroundColor = UIColor.white
-            label.textColor = UIColor(named: "global_tint")
-        }
+        bgView.backgroundColor = UIColor(named: "tableViewBg")
+        label.textColor = UIColor(named: "textTitleColor")
         
         NotificationCenter.default.addObserver(self, selector: #selector(ImportWorkController.applicationWillEnter(notification:)), name: UIApplication.willEnterForegroundNotification, object: UIApplication.shared)
 

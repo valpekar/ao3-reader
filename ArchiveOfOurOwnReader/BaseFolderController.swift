@@ -60,13 +60,8 @@ class BaseFolderController: LoadingViewController, NSFetchedResultsControllerDel
     func configureCell(cell: UITableViewCell, folder: Folder?, indexPath: IndexPath) {
         cell.textLabel?.text = "\(folder?.name ?? "") (\(folder?.works?.count ?? 0) works)"
         
-        if (theme == DefaultsManager.THEME_DAY) {
-            cell.backgroundColor = AppDelegate.greyLightBg
-            cell.textLabel?.textColor = AppDelegate.redDarkColor
-        } else {
-            cell.backgroundColor = AppDelegate.greyDarkBg
-            cell.textLabel?.textColor = AppDelegate.textLightColor
-        }
+        cell.backgroundColor = UIColor(named: "cellBgColor")
+        cell.textLabel?.textColor = UIColor(named: "textTitleColor")
     }
     
     //MARK: - NSFetchedResultsControllerDelegate
