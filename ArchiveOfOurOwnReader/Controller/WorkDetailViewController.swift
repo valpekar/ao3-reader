@@ -8,10 +8,10 @@
 
 import UIKit
 import CoreData
-import GoogleMobileAds
 import Alamofire
 import Firebase
 import RxSwift
+import FirebaseCrashlytics
 
 enum ErrorsAF : Error {
     case noResponseData
@@ -155,8 +155,6 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
         
         if (self.fromNotif == true) {
-            Answers.logCustomEvent(withName: "WorkDetail: from notification",
-                                   customAttributes: [:])
             Analytics.logEvent("WorkDetail_from_notification", parameters: [:])
         }
         
@@ -226,9 +224,6 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             workId = downloadedWorkItem.workId ?? "0"
         }
         
-        Answers.logCustomEvent(withName: "WorkDetail: Kudos add",
-                               customAttributes: [
-                                "workId": workId, "origin" : "btn"])
         Analytics.logEvent("WorkDetail_Kudos_add", parameters: ["workId": workId as NSObject, "origin" : "btn" as NSObject])
         
         doLeaveKudos(workId: workId, kudosToken: self.kudosToken).subscribe { (_) in
@@ -360,7 +355,6 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         //print("the string is: \(dta)")
         
         if (workItem == nil) {
-            Answers.logCustomEvent(withName: "WorkDetail: Show Online", customAttributes: ["downloadCurWork" : "is nil"])
             Analytics.logEvent("WorkDetail_Show_Online", parameters: ["downloadCurWork" : "is nil" as NSObject])
             return
         }
@@ -965,13 +959,11 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 if (workItem != nil) {
                     cController.serieId = workItem.serieUrl
                     
-                    Answers.logCustomEvent(withName: "WorkDetail: view serie", customAttributes: ["work" : "online", "id" : cController.serieId ])
                     Analytics.logEvent("WorkDetail_view_serie", parameters: ["work" : "online" as NSObject, "id" : cController.serieId as NSObject])
                     
                 } else if (downloadedWorkItem != nil) {
                     cController.serieId = downloadedWorkItem.serieUrl ?? ""
                     
-                    Answers.logCustomEvent(withName: "WorkDetail: view serie", customAttributes: ["work" : "downloaded", "id" : cController.serieId ])
                     Analytics.logEvent("WorkDetail_view_serie", parameters: ["work" : "downloaded" as NSObject, "id" : cController.serieId as NSObject])
                 }
              }
@@ -1370,7 +1362,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
         let pos = indexPath.row
         
-        CLSLogv("WorkDetail: didSelectRowAt pos=\(pos); section=\(indexPath.section)", getVaList([]))
+        Crashlytics.crashlytics().log(format: "WorkDetail: didSelectRowAt pos=\(pos); section=\(indexPath.section)", arguments: getVaList([]))
         
         self.tagUrl = ""
         
@@ -1386,7 +1378,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                     tagUrl = downloadedFandoms[pos].fandomUrl ?? ""
                 }
                 NSLog("link Tapped = %@", tagUrl)
-                CLSLogv("WorkDetail: link Tapped = %@", getVaList([tagUrl]))
+            Crashlytics.crashlytics().log(format: "WorkDetail: link Tapped = %@", arguments: getVaList([tagUrl]))
                 
                 if (tagUrl.isEmpty == false) {
                     performSegue(withIdentifier: "listSegue", sender: self)
@@ -1396,11 +1388,11 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             if (relationships != nil && relationships.count > pos) {
                 tagUrl = relationships[pos].relationshipUrl
             } else if (downloadedRelationships != nil && downloadedRelationships.count > pos) {
-                CLSLogv("WorkDetail: section=5; downloadedRelationships=\(downloadedRelationships.count)", getVaList([]))
+                Crashlytics.crashlytics().log(format: "WorkDetail: section=5; downloadedRelationships=\(downloadedRelationships.count)", arguments: getVaList([]))
                 tagUrl = downloadedRelationships[pos].relationshipUrl ?? ""
             }
           //  NSLog("link Tapped = \(tagUrl)" )
-            CLSLogv("WorkDetail: link Tapped = %@", getVaList([tagUrl]))
+            Crashlytics.crashlytics().log(format: "WorkDetail: link Tapped = %@", arguments: getVaList([tagUrl]))
             
             if (tagUrl.isEmpty == false) {
                 performSegue(withIdentifier: "listSegue", sender: self)
@@ -1413,7 +1405,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 tagUrl = downloadedCharacters[pos].characterUrl ?? ""
             }
            // NSLog("link Tapped = " + tagUrl)
-            CLSLogv("WorkDetail: link Tapped = %@", getVaList([tagUrl]))
+            Crashlytics.crashlytics().log(format: "WorkDetail: link Tapped = %@", arguments: getVaList([tagUrl]))
                         
             if (tagUrl.isEmpty == false) {
                 performSegue(withIdentifier: "listSegue", sender: self)
@@ -1421,7 +1413,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             
         case 8:
             performSegue(withIdentifier: "showSerie", sender: self)
-            CLSLogv("WorkDetail: showSerie", getVaList([]))
+            Crashlytics.crashlytics().log(format: "WorkDetail: showSerie", arguments: getVaList([]))
             
         default:
             break
@@ -1437,9 +1429,6 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             authorName = downloadedWorkItem.author ?? ""
         }
         
-        Answers.logCustomEvent(withName: "WorkDetail: author touched",
-                               customAttributes: [
-                                "author": authorName])
          Analytics.logEvent("WorkDetail_author_touched", parameters: ["author": authorName as NSObject])
         
         if (authorName.contains(" ") && !authorName.contains(",")) {
@@ -1540,9 +1529,6 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             }
         }
         
-        Answers.logCustomEvent(withName: "WorkDetail: MarkAsRead",
-                               customAttributes: [
-                                "workId": bid])
         Analytics.logEvent("WorkDetail_MarkAsRead", parameters: ["workId": bid as NSObject])
         
         
@@ -1650,9 +1636,6 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             }
         }
         
-        Answers.logCustomEvent(withName: "WorkDetail: MarkForLater add",
-                               customAttributes: [
-                                "workId": bid])
         Analytics.logEvent("WorkDetail_MarkForLater_add", parameters: ["workId": bid as NSObject])
         
         
@@ -1763,9 +1746,6 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             }
         }
         
-        Answers.logCustomEvent(withName: "WorkDetail: Bookmark add",
-                               customAttributes: [
-                                "boomarkableId": bid])
         Analytics.logEvent("WorkDetail_Bookmark_add", parameters: ["boomarkableId": bid as NSObject])
         
         var params:[String:Any] = [String:Any]()
@@ -1858,8 +1838,6 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             }
         }*/
         
-        Answers.logCustomEvent(withName: "WorkDetail: Bookmark delete",
-                               customAttributes: [:])
         Analytics.logEvent("WorkDetail_Bookmark_delete", parameters: [:])
         
         var params:[String:AnyObject] = [String:AnyObject]()
@@ -1934,9 +1912,6 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
         doDownloadWork(wId: wId, isOnline: false, wasSaved: wasSaved)
         
-        Answers.logCustomEvent(withName: "WorkDetail: download",
-                               customAttributes: [
-                                "workId": wId])
         Analytics.logEvent("WorkDetail_download", parameters: ["workId": wId as NSObject])
     }
     
@@ -2009,9 +1984,6 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 
                 let wId = self.downloadedWorkItem.workId ?? "0"
                 
-                Answers.logCustomEvent(withName: "WorkDetail: delete from db",
-                                       customAttributes: [
-                                        "workId": self.downloadedWorkItem.workId ?? "0"])
                 Analytics.logEvent("WorkDetail_delete_from_db", parameters: ["workId": self.downloadedWorkItem.workId ?? "0" as NSObject])
                 
                 guard let appDel:AppDelegate = UIApplication.shared.delegate as? AppDelegate else {
@@ -2220,9 +2192,6 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             workId = downloadedWorkItem.workId ?? "0"
         }
         
-        Answers.logCustomEvent(withName: "WorkDetail: Kudos add",
-                               customAttributes: [
-                                "workId": workId])
         Analytics.logEvent("WorkDetail_Kudos_add", parameters: ["workId": workId as NSObject])
                 
         return doLeaveKudos(workId: workId, kudosToken: self.kudosToken)
@@ -2327,9 +2296,6 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         let finalPath = "https://archiveofourown.org" + downloadUrl
         print("download"+downloadUrl)
         
-        Answers.logCustomEvent(withName: "Work Detail: download file",
-                                       customAttributes: [
-                                        "url": downloadUrl])
         Analytics.logEvent("WorkDetail_download_file", parameters: ["url": downloadUrl as NSObject])
         
         if let url = URL(string: finalPath) {
@@ -2381,9 +2347,6 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             wId = downloadedWorkItem.workId ?? ""
         }
         
-        Answers.logCustomEvent(withName: "WorkDetail: browser open",
-                               customAttributes: [
-                                "workId": wId])
         Analytics.logEvent("WorkDetail_browser_open", parameters: ["workId": wId as NSObject])
         
         UIApplication.shared.open(URL(string: "https://archiveofourown.org/works/\(wId)")!, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([ : ]), completionHandler: { (res) in
@@ -2401,9 +2364,6 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             wId = downloadedWorkItem.workId ?? ""
         }
         
-        Answers.logCustomEvent(withName: "WorkDetail: share",
-                               customAttributes: [
-                                "workId": wId])
         Analytics.logEvent("WorkDetail_share", parameters: ["workId": wId as NSObject])
         
         let url = URL(string: "https://archiveofourown.org/works/\(wId)")!

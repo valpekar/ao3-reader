@@ -52,21 +52,9 @@ class FavoriteAuthorsController : ListViewController, NSFetchedResultsController
         
         self.createDrawerButton()
         
-        if let th = DefaultsManager.getInt(DefaultsManager.THEME_APP) {
-            theme = th
-        } else {
-            theme = DefaultsManager.THEME_DAY
-        }
-        
-        if (theme == DefaultsManager.THEME_NIGHT) {
-            self.view.backgroundColor = AppDelegate.redDarkColor
-            self.tableView.backgroundColor = AppDelegate.greyDarkBg
-            self.messageLabel.textColor = AppDelegate.nightTextColor
-        } else {
-            self.view.backgroundColor = AppDelegate.greyLightBg
-            self.tableView.backgroundColor = AppDelegate.greyLightBg
-            self.messageLabel.textColor = UIColor(named: "global_tint")
-        }
+        self.view.backgroundColor = UIColor(named: "onlyDarkBlue")
+        self.tableView.backgroundColor = UIColor(named: "tableViewBg")
+        self.messageLabel.textColor = UIColor(named: "textColorMedium")
         
         self.sortBy = DefaultsManager.getString(DefaultsManager.SORT_AUTHORS)
         if (self.sortBy.isEmpty) {
@@ -168,15 +156,9 @@ extension FavoriteAuthorsController: UITableViewDelegate, UITableViewDataSource 
         
         cell.worksButton.addTarget(self, action: #selector( FavoriteAuthorsController.worksTouched), for: UIControl.Event.touchUpInside)
         
-        if (theme == DefaultsManager.THEME_DAY) {
-            cell.backgroundColor = AppDelegate.greyLightBg
-            cell.authorNameLabel.textColor = AppDelegate.redDarkColor
-            cell.worksButton.setTitleColor( AppDelegate.purpleLightColor, for: .normal)
-        } else {
-            cell.backgroundColor = AppDelegate.greyDarkBg
-            cell.authorNameLabel.textColor = AppDelegate.textLightColor
-            cell.worksButton.setTitleColor( AppDelegate.purpleLightColor, for: .normal)
-        }
+        cell.backgroundColor = UIColor(named: "tableViewBg")
+        cell.authorNameLabel.textColor = UIColor(named: "textMain")
+        cell.worksButton.setTitleColor( UIColor(named: "global_tint"), for: .normal)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

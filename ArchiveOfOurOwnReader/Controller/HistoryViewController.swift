@@ -17,7 +17,7 @@ class HistoryViewController : ListViewController, UITableViewDataSource, UITable
     @IBOutlet weak var tableView:UITableView!
     @IBOutlet weak var errView:UIView!
     
-    var refreshControl: UIRefreshControl!
+    var refreshControl: RefreshControl!
     
     var authToken = ""
     
@@ -32,8 +32,9 @@ class HistoryViewController : ListViewController, UITableViewDataSource, UITable
         self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.estimatedRowHeight = 200
         
-        self.refreshControl = UIRefreshControl()
+        self.refreshControl = RefreshControl()
         self.refreshControl.attributedTitle = NSAttributedString(string: Localization("PullToRefresh"))
+        refreshControl.backgroundColor = UIColor(named: "tableViewBg")
         self.refreshControl.addTarget(self, action: #selector(HistoryViewController.refresh(_:)), for: UIControl.Event.valueChanged)
         self.tableView.addSubview(self.refreshControl)
         

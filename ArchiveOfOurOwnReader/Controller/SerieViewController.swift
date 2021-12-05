@@ -19,7 +19,7 @@ class SerieViewController: ListViewController, UITableViewDataSource, UITableVie
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var tableView:UITableView!
     @IBOutlet weak var errView:UIView!
-    var refreshControl: UIRefreshControl!
+    var refreshControl: RefreshControl!
     
     var lastAction = ""
     
@@ -36,8 +36,9 @@ class SerieViewController: ListViewController, UITableViewDataSource, UITableVie
         self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.estimatedRowHeight = 200
         
-        self.refreshControl = UIRefreshControl()
+        self.refreshControl = RefreshControl()
         self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshControl.backgroundColor = UIColor(named: "tableViewBg")
         self.refreshControl.addTarget(self, action: #selector(SerieViewController.refresh(_:)), for: UIControl.Event.valueChanged)
         self.tableView.addSubview(self.refreshControl)
         

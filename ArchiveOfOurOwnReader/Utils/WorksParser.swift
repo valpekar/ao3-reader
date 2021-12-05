@@ -52,8 +52,8 @@ class WorksParser {
         }
         
         if let itemsCount: [TFHppleElement] = doc.search(withXPathQuery: "//\(itemsCountHeading)[@class='heading']") as? [TFHppleElement] {
-            if (itemsCount.count > 1) {
-                worksCountStr = itemsCount[1].content.trimmingCharacters(
+            if (itemsCount.count > 0) {
+                worksCountStr = itemsCount[0].content.trimmingCharacters(
                     in: CharacterSet.whitespacesAndNewlines
                 )
                 worksCountStr = worksCountStr.replacingOccurrences(of: "?", with: "")

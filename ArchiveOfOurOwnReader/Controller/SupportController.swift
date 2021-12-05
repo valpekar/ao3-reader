@@ -28,17 +28,11 @@ class SupportController: LoadingViewController, MFMailComposeViewControllerDeleg
         ZDKConfig.instance().userIdentity = anonymousIdentity
         ZDKLogger.enable(true)
          */
-        self.title = Localization("Support")
+        self.title = Localization("SendEmail")
     }
     
     override func applyTheme() {
         super.applyTheme()
-        
-        if (theme == DefaultsManager.THEME_DAY) {
-            self.explainButton.setTitleColor(UIColor.black, for: .normal)
-        } else {
-            self.explainButton.setTitleColor(AppDelegate.textLightColor, for: .normal) 
-        }
     }
     
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
@@ -46,30 +40,6 @@ class SupportController: LoadingViewController, MFMailComposeViewControllerDeleg
         controller.dismiss(animated: true, completion: nil)
     }
     
-//    @IBAction func doneTouched(_ sender: AnyObject) {
-//        guard let text = codeTv.text else {
-//            showNotification(in: self, title: Localization("Error"), subtitle: "Promo code cannot be empty", type: .error)
-//            return
-//        }
-//
-//        if (text == "ZpRzBIRDA2") {
-//            UserDefaults.standard.synchronize()
-//            UserDefaults.standard.set(true, forKey: "donated")
-//            UserDefaults.standard.synchronize()
-//
-//            showNotification(in: self, title: Localization("Success"), subtitle: "Promo Key Accepted!", type: .success)
-//
-//            codeTv.text = ""
-//        } else {
-//            showNotification(in: self, title: Localization("Error"), subtitle: "No Such Promo Key!", type: .error)
-//        }
-//    }
-    
-//    @IBAction func WebLink(_ sender: AnyObject) {
-//        if let url = URL(string: "http://indiefics.com") {
-//            UIApplication.shared.openURL(url)
-//        }
-//    }
     
     
     @IBAction func mailTouched(_ sender:AnyObject) {
@@ -92,6 +62,13 @@ class SupportController: LoadingViewController, MFMailComposeViewControllerDeleg
                     self.present(composeVC, animated: true, completion: nil)
                 }
             }
+        }
+    }
+    
+    @IBAction func supportDevTouched(_ sender:AnyObject) {
+        let supportUrl = "https://www.patreon.com/malipkr"
+        if let url = URL(string: supportUrl) {
+            UIApplication.shared.open(url)
         }
     }
     

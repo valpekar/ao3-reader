@@ -22,7 +22,7 @@ class FavoritesSiteController : ListViewController, UITableViewDataSource, UITab
     
     @IBOutlet weak var searchBar: UISearchBar!
     
-    var refreshControl: UIRefreshControl!
+    var refreshControl: RefreshControl!
     
     var authToken = ""
     
@@ -37,8 +37,9 @@ class FavoritesSiteController : ListViewController, UITableViewDataSource, UITab
         self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.estimatedRowHeight = 200
         
-        self.refreshControl = UIRefreshControl()
+        self.refreshControl = RefreshControl()
         self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshControl.backgroundColor = UIColor(named: "tableViewBg")
         self.refreshControl.addTarget(self, action: #selector(FavoritesSiteController.refresh(_:)), for: UIControl.Event.valueChanged)
         self.tableView.addSubview(self.refreshControl)
         

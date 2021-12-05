@@ -96,7 +96,11 @@ class CommentViewController: LoadingViewController, UITableViewDelegate, UITable
             openLoginController(force: false)
         }
         
-        self.sendBtn.applyGradient(colours: [AppDelegate.redDarkColor, AppDelegate.redLightColor], cornerRadius: AppDelegate.mediumCornerRadius)
+        if let colorDark = UIColor(named: "onlyDarkBlue"),
+        let colorLight = UIColor(named: "onlyLightBlue") {
+            
+            self.sendBtn.applyGradient(colours: [colorDark, colorLight], cornerRadius: AppDelegate.mediumCornerRadius)
+        }
     }
     
     @objc func controllerDidClosedWithLogin() {

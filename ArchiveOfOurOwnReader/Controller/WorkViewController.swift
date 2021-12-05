@@ -1282,7 +1282,7 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
         Answers.logCustomEvent(withName: "Work: Theme Load", customAttributes: ["font_family" : fontFamily,
                                                                                 "font_size" : fontSize])
         
-        var bgColor: UIColor = AppDelegate.greyLightColor
+        var bgColor: UIColor? = AppDelegate.greyLightColor
         var txtColor = UIColor(named: "global_tint")
         
         
@@ -1328,13 +1328,13 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
                 
                 worktext = String(format:"<style>\(fontCss) body, table { color: #e1e1ce; %@; padding:5em 1.5em 4em 1.5em; text-align: left; line-height: 1.5em; overflow-y: scroll; -webkit-overflow-scrolling: touch; word-wrap:break-word; } p {margin-bottom:1.0em} </style>%@", fontStr, work)
             
-                bgColor = AppDelegate.greyDarkBg
+                bgColor = UIColor(named : "onlyDarkBlue")
                 txtColor = AppDelegate.textLightColor
             
                 commentsButton.setImage(UIImage(named: "comments_light"), for: UIControl.State.normal)
                 kudosButton.setImage(UIImage(named: "likes_light"), for: UIControl.State.normal)
             
-                self.view.backgroundColor = AppDelegate.redDarkColor
+            self.view.backgroundColor = UIColor(named: "onlyDarkBlue")
                 
             default:
                 break

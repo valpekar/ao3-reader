@@ -25,15 +25,16 @@ class InboxController : ListViewController  {
     var inboxToken = ""
     var xcsrfToken = ""
     
-    var refreshControl: UIRefreshControl!
+    var refreshControl: RefreshControl!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.title = Localization("Inbox")
         
-        self.refreshControl = UIRefreshControl()
+        self.refreshControl = RefreshControl()
         self.refreshControl.attributedTitle = NSAttributedString(string: Localization("PullToRefresh"))
+        refreshControl.backgroundColor = UIColor(named: "tableViewBg")
         self.refreshControl.addTarget(self, action: #selector(InboxController.refresh(_:)), for: UIControl.Event.valueChanged)
         self.tableView.addSubview(self.refreshControl)
         

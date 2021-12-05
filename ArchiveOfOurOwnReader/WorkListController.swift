@@ -22,7 +22,7 @@ class WorkListController: ListViewController, UITableViewDataSource, UITableView
     var tagUrl = ""
     var tagName = Localization("WorkList")
     
-    var refreshControl: UIRefreshControl!
+    var refreshControl: RefreshControl!
     
     @IBOutlet weak var searchBar: UISearchBar!
     var searched = false
@@ -37,8 +37,9 @@ class WorkListController: ListViewController, UITableViewDataSource, UITableView
         self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.estimatedRowHeight = 200
         
-        self.refreshControl = UIRefreshControl()
+        self.refreshControl = RefreshControl()
         self.refreshControl.attributedTitle = NSAttributedString(string: Localization("PullToRefresh"))
+        refreshControl.backgroundColor = UIColor(named: "tableViewBg")
         self.refreshControl.addTarget(self, action: #selector(WorkListController.refresh(_:)), for: UIControl.Event.valueChanged)
         self.tableView.addSubview(self.refreshControl)
         

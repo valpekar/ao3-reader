@@ -936,7 +936,7 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" red="0.31764705879999999" green="0.20392156859999999" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" name="onlyDarkBlue"/>
                         <constraints>
                             <constraint firstItem="eb4-ON-vEz" firstAttribute="top" secondItem="7bU-sj-Io5" secondAttribute="bottom" id="1FI-BH-QIx"/>
                             <constraint firstAttribute="trailing" secondItem="7bU-sj-Io5" secondAttribute="trailing" id="57s-Bc-h43"/>
@@ -970,12 +970,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1uf-cP-mwU">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="266"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" insetsLayoutMarginsFromSafeArea="NO" image="b0" translatesAutoresizingMaskIntoConstraints="NO" id="1uf-cP-mwU">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="273"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="1080" id="Phm-TZ-SpA"/>
                                     <constraint firstAttribute="height" constant="720" id="rhD-Fq-Qpc"/>
-                                    <constraint firstAttribute="width" secondItem="1uf-cP-mwU" secondAttribute="height" multiplier="14:9" id="vYW-ba-Q13"/>
+                                    <constraint firstAttribute="width" secondItem="1uf-cP-mwU" secondAttribute="height" multiplier="5:3.3" id="vYW-ba-Q13"/>
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
@@ -985,10 +985,10 @@
                                 </variation>
                             </imageView>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JVy-x2-Pai">
-                                <rect key="frame" x="20" y="50" width="374" height="662"/>
+                                <rect key="frame" x="20" y="80" width="374" height="632"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="FbH-Ta-u8Z">
-                                        <rect key="frame" x="0.0" y="0.0" width="374" height="662"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="632"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <inset key="separatorInset" minX="15" minY="0.0" maxX="8" maxY="0.0"/>
                                         <prototypes>
@@ -1310,10 +1310,10 @@
                             <constraint firstItem="JVy-x2-Pai" firstAttribute="top" secondItem="bXi-6T-lyf" secondAttribute="bottom" constant="110" id="M2v-uZ-Hof"/>
                             <constraint firstAttribute="trailing" secondItem="1uf-cP-mwU" secondAttribute="trailing" id="Shx-mM-CDO"/>
                             <constraint firstItem="JVy-x2-Pai" firstAttribute="leading" secondItem="cdF-HD-3HJ" secondAttribute="leadingMargin" id="Y9T-qc-sBI"/>
-                            <constraint firstItem="JVy-x2-Pai" firstAttribute="top" secondItem="bXi-6T-lyf" secondAttribute="bottom" constant="50" id="goK-M9-EBi"/>
+                            <constraint firstItem="1uf-cP-mwU" firstAttribute="top" secondItem="bXi-6T-lyf" secondAttribute="bottom" id="b6G-b3-dHV"/>
+                            <constraint firstItem="JVy-x2-Pai" firstAttribute="top" secondItem="bXi-6T-lyf" secondAttribute="bottom" constant="80" id="goK-M9-EBi"/>
                             <constraint firstItem="BZH-PI-909" firstAttribute="top" secondItem="JVy-x2-Pai" secondAttribute="bottom" constant="10" id="kku-1c-BiP"/>
                             <constraint firstAttribute="trailingMargin" secondItem="JVy-x2-Pai" secondAttribute="trailing" id="lgC-eh-Sk0"/>
-                            <constraint firstItem="1uf-cP-mwU" firstAttribute="top" secondItem="cdF-HD-3HJ" secondAttribute="top" id="luD-mI-pId"/>
                             <constraint firstItem="x4P-wv-ZJ4" firstAttribute="centerY" secondItem="BZH-PI-909" secondAttribute="centerY" id="mPy-wx-Day"/>
                             <constraint firstAttribute="trailingMargin" secondItem="x4P-wv-ZJ4" secondAttribute="trailing" id="qJa-qE-Jas"/>
                             <constraint firstItem="RvI-P4-Jsq" firstAttribute="top" secondItem="BZH-PI-909" secondAttribute="bottom" constant="10" id="xgJ-AP-3JM"/>
@@ -2312,7 +2312,7 @@ Please check your Internet connection and also make sure you are logged into you
                                 </connections>
                             </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="RmA-Nc-iEP">
-                                <rect key="frame" x="0.0" y="681" width="414" height="44"/>
+                                <rect key="frame" x="0.0" y="730" width="414" height="44"/>
                                 <color key="backgroundColor" red="0.92000001669999998" green="0.92000001669999998" blue="0.92000001669999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="K3h-4G-MaI"/>
@@ -2356,7 +2356,7 @@ Please check your Internet connection and also make sure you are logged into you
                                 </connections>
                             </collectionView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="240" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="dVv-Wb-Czg">
-                                <rect key="frame" x="0.0" y="51" width="414" height="630"/>
+                                <rect key="frame" x="0.0" y="51" width="414" height="679"/>
                                 <color key="backgroundColor" red="0.92000001669999998" green="0.92000001669999998" blue="0.92000001669999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="FeedCell1" rowHeight="240" id="3mG-9j-QZh" customClass="FeedTableViewCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
@@ -6654,29 +6654,9 @@ Please check your Internet connection and also make sure you are logged into you
                         <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="wordWrap" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fFg-fh-XVG">
-                                <rect key="frame" x="20" y="256" width="374" height="134"/>
-                                <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <state key="normal">
-                                    <attributedString key="attributedTitle">
-                                        <fragment>
-                                            <string key="content">I am always working on fixing existing bugs but to improve the app's quality I need external testers. If you want to make the app better and are ready to tell me what steps it took to reproduce the bug, please leave me email: </string>
-                                            <attributes>
-                                                <color key="NSColor" red="0.73088812206958609" green="0.88691239940040967" blue="0.94901960784313721" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <font key="NSFont" size="13" name="HelveticaNeue"/>
-                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
-                                            </attributes>
-                                        </fragment>
-                                        <fragment content="riyapekar@gmail.com">
-                                            <attributes>
-                                                <color key="NSColor" red="0.73088812206958609" green="0.88691239940040967" blue="0.94901960784313721" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <font key="NSFont" size="13" name="HelveticaNeue-Bold"/>
-                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
-                                                <integer key="NSUnderline" value="1"/>
-                                            </attributes>
-                                        </fragment>
-                                        <fragment>
-                                            <string key="content"> 
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cMq-gv-yjc">
+                                <rect key="frame" x="20" y="40" width="374" height="426.5"/>
+                                <string key="text">I am always working on fixing existing bugs but to improve the app's quality I need external testers. If you want to make the app better and are ready to tell me what steps it took to reproduce the bug, please leave me email: riyapekar@gmail.com 
 
 Thank you! Latest news here: https://www.patreon.com/malipkr
 
@@ -6684,26 +6664,46 @@ Major Problems:
 1. Cannot view History: Try log in again (AO3 doesn’t have API so maybe your token has expired and you need to renew it). On Me screen check if the selected pseud is the one that has bookmarks.
 2. Search shows 0 Found: try cleaning all the fields on Search Screen and Search again
 3. Downloaded work is not full: Tap Settings icon on Work Details Scree, then Reload Work, wait few minutes for it to download. </string>
-                                            <attributes>
-                                                <color key="NSColor" red="0.73088812206958609" green="0.88691239940040967" blue="0.94901960784313721" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <font key="NSFont" size="13" name="HelveticaNeue"/>
-                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
-                                            </attributes>
-                                        </fragment>
-                                    </attributedString>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" name="textTitleColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m4f-eq-4K1">
+                                <rect key="frame" x="125" y="538.5" width="164" height="34"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Help Development">
+                                    <fontDescription key="titleFontDescription" type="system" weight="semibold" pointSize="16"/>
+                                    <color key="baseForegroundColor" name="greenTitle"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="supportDevTouched:" destination="zkS-sK-Im9" eventType="touchUpInside" id="K9h-xJ-Oc8"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="fFg-fh-XVG">
+                                <rect key="frame" x="20" y="496.5" width="374" height="32"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                                <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="Send Email">
+                                    <color key="titleColor" name="greenTitle"/>
                                 </state>
                                 <connections>
                                     <action selector="mailTouched:" destination="zkS-sK-Im9" eventType="touchUpInside" id="FXS-65-YAB"/>
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" name="onlyDarkBlue"/>
+                        <color key="backgroundColor" name="tableViewBg"/>
                         <constraints>
                             <constraint firstItem="fFg-fh-XVG" firstAttribute="leading" secondItem="WAl-zX-Vrk" secondAttribute="leadingMargin" id="1kh-I8-f4N"/>
-                            <constraint firstItem="fFg-fh-XVG" firstAttribute="centerY" secondItem="WAl-zX-Vrk" secondAttribute="centerY" multiplier="0.8" id="SFt-Ly-bVw"/>
+                            <constraint firstItem="cMq-gv-yjc" firstAttribute="leading" secondItem="WAl-zX-Vrk" secondAttribute="leading" constant="20" id="7vk-Ud-7Se"/>
+                            <constraint firstItem="cMq-gv-yjc" firstAttribute="centerX" secondItem="WAl-zX-Vrk" secondAttribute="centerX" id="H7a-uh-asN"/>
+                            <constraint firstItem="fFg-fh-XVG" firstAttribute="top" secondItem="cMq-gv-yjc" secondAttribute="bottom" constant="30" id="HGP-gD-hwZ"/>
+                            <constraint firstItem="m4f-eq-4K1" firstAttribute="top" secondItem="fFg-fh-XVG" secondAttribute="bottom" constant="10" id="R1b-bJ-mPR"/>
+                            <constraint firstItem="m4f-eq-4K1" firstAttribute="centerX" secondItem="WAl-zX-Vrk" secondAttribute="centerX" id="Y18-li-vyz"/>
                             <constraint firstAttribute="trailingMargin" secondItem="fFg-fh-XVG" secondAttribute="trailing" id="cWp-uz-1f5"/>
+                            <constraint firstAttribute="trailing" secondItem="cMq-gv-yjc" secondAttribute="trailing" constant="20" id="cpX-K7-1Pi"/>
                             <constraint firstItem="fFg-fh-XVG" firstAttribute="top" secondItem="UY8-6w-y2q" secondAttribute="bottom" constant="70" id="hry-W3-GEx"/>
                             <constraint firstItem="fFg-fh-XVG" firstAttribute="centerX" secondItem="WAl-zX-Vrk" secondAttribute="centerX" id="iWY-es-GlC"/>
+                            <constraint firstItem="cMq-gv-yjc" firstAttribute="top" secondItem="UY8-6w-y2q" secondAttribute="bottom" constant="40" id="kpV-PU-3os"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
@@ -6737,14 +6737,14 @@ Major Problems:
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="NWSTokenViewCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="0xr-xQ-WCQ" customClass="NWSTokenViewCell" customModule="ArchiveOfOurOwnReader" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="44.5" width="414" height="43"/>
+                                        <rect key="frame" x="0.0" y="44.5" width="414" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="0xr-xQ-WCQ" id="hw1-MV-SgS">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZhI-LG-9wM">
-                                                    <rect key="frame" x="20" y="11" width="374" height="21"/>
+                                                    <rect key="frame" x="20" y="11" width="374" height="21.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -10688,14 +10688,15 @@ Please check your Internet connection and also make sure you are logged into you
         <segue reference="ic4-Dp-HfH"/>
         <segue reference="243-5y-110"/>
         <segue reference="GYH-Ae-w0j"/>
-        <segue reference="jXE-kt-jek"/>
+        <segue reference="5rQ-gu-17N"/>
         <segue reference="GOa-zO-Fy6"/>
-        <segue reference="6Vy-m9-kwB"/>
+        <segue reference="hCS-wp-Ndf"/>
         <segue reference="aEt-Fa-YHa"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" name="global_tint"/>
     <resources>
         <image name="NotRated" width="38.666667938232422" height="38.666667938232422"/>
+        <image name="b0" width="1666.6666259765625" height="1111.3333740234375"/>
         <image name="bmk" width="32" height="32"/>
         <image name="book_bg" width="375" height="812"/>
         <image name="bookmark" width="32" height="32"/>
@@ -10716,7 +10717,7 @@ Please check your Internet connection and also make sure you are logged into you
         <image name="icon-download" width="32" height="32"/>
         <image name="lang" width="42.666667938232422" height="42.666667938232422"/>
         <image name="likes" width="32" height="32"/>
-        <image name="pref_bg" width="360" height="240"/>
+        <image name="pref_bg" width="1666.6666259765625" height="1111.3333740234375"/>
         <image name="profile" width="42.666667938232422" height="42.666667938232422"/>
         <image name="search_magnifying_glass_adv" width="32" height="32"/>
         <image name="shortstory" width="32" height="32"/>
@@ -10726,6 +10727,9 @@ Please check your Internet connection and also make sure you are logged into you
         <image name="word" width="32" height="32"/>
         <namedColor name="global_tint">
             <color red="0.16862745098039217" green="0.24313725490196078" blue="0.40784313725490196" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="greenTitle">
+            <color red="0.14901960784313725" green="0.61176470588235299" blue="0.058823529411764705" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="onlyDarkBlue">
             <color red="0.16862745098039217" green="0.24313725490196078" blue="0.40784313725490196" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

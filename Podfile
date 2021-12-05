@@ -11,6 +11,7 @@ target 'ArchiveOfOurOwnReader' do
 pod 'Firebase'
 pod 'Firebase/Core'
 pod 'Firebase/Analytics'
+pod 'Firebase/Crashlytics'
 pod 'Alamofire', '~> 4.0'
 pod 'AlamofireImage'
 pod 'Spring', :git => 'https://github.com/MengTo/Spring.git'

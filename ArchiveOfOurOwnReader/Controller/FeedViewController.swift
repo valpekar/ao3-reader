@@ -11,8 +11,6 @@ import CoreData
 import StoreKit
 import CoreLocation
 import Alamofire
-import Crashlytics
-import GoogleMobileAds
 import Firebase
 
 protocol SearchControllerDelegate {
@@ -42,7 +40,7 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
     
     var triedToLogin = 0
     
-    var refreshControl: UIRefreshControl!
+    var refreshControl: RefreshControl!
     
     var openingPrevWork = false
     
@@ -63,8 +61,9 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
         self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.estimatedRowHeight = 200
         
-        self.refreshControl = UIRefreshControl()
+        self.refreshControl = RefreshControl()
         self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshControl.backgroundColor = UIColor(named: "tableViewBg")
         self.refreshControl.addTarget(self, action: #selector(FeedViewController.refresh(_:)), for: UIControl.Event.valueChanged)
         self.tableView.addSubview(self.refreshControl)
         
@@ -180,6 +179,7 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
     override func applyTheme() {
         super.applyTheme()
         
+        self.view.backgroundColor = UIColor(named: "tableViewBg")
         self.tableView.backgroundColor = UIColor(named: "tableViewBg")
         self.collectionView.backgroundColor = UIColor(named: "tableViewBg")
     }
@@ -418,8 +418,6 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
                 searchController.delegate = self
                 searchController.modalDelegate = self
                 
-                Answers.logCustomEvent(withName: "Search: Extended Opened",
-                                       customAttributes: [:])
                 Analytics.logEvent("Search_Extended_Opened", parameters: [:])
             }
         } else if (segue.identifier == "choosePref") {
@@ -532,10 +530,6 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
     }
     
     override func controllerDidClosed() {
-       // if (!purchased && i%2 == 0) {
-       //     showWvInterstitial()
-       // }
-        
         
     }
     
@@ -573,9 +567,6 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
         query.fandom_names = pref
         DefaultsManager.putObject(query, key: DefaultsManager.SEARCH_Q)
         
-        Answers.logCustomEvent(withName: "Fandom Chosen",
-                               customAttributes: [
-                                "pref": pref])
         Analytics.logEvent("Fandom_Chosen", parameters: ["pref": pref as NSObject])
         
         self.searchApplied(self.query, shouldAddKeyword: true)
@@ -598,9 +589,6 @@ extension FeedViewController : UISearchBarDelegate, UISearchResultsUpdating {
             query.quick_tags = txt
             DefaultsManager.putObject(query, key: DefaultsManager.SEARCH_Q)
             
-            Answers.logCustomEvent(withName: "Search: Quick",
-                                   customAttributes: [
-                                    "txt": txt])
             Analytics.logEvent("Search_Quick", parameters: ["txt": txt as NSObject])
             
             searchApplied(query, shouldAddKeyword: false)
@@ -612,9 +600,6 @@ extension FeedViewController : UISearchBarDelegate, UISearchResultsUpdating {
             query.include_tags = "popular"
             DefaultsManager.putObject(query, key: DefaultsManager.SEARCH_Q)
             
-            Answers.logCustomEvent(withName: "Search: Quick",
-                                   customAttributes: [
-                                    "txt": txt])
             Analytics.logEvent("Search_Quick", parameters: ["txt": txt as NSObject])
             
             searchApplied(query, shouldAddKeyword: false)

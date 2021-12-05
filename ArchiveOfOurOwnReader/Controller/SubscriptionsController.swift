@@ -17,7 +17,7 @@ class SubscriptionsViewController: ListViewController, UITableViewDataSource, UI
     @IBOutlet weak var tableView:UITableView!
     @IBOutlet weak var errView:UIView!
     
-    var refreshControl: UIRefreshControl!
+    var refreshControl: RefreshControl!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,8 +26,9 @@ class SubscriptionsViewController: ListViewController, UITableViewDataSource, UI
         
         self.title = Localization("Subscriptions")
         
-        self.refreshControl = UIRefreshControl()
+        self.refreshControl = RefreshControl()
         self.refreshControl.attributedTitle = NSAttributedString(string: Localization("PullToRefresh"))
+        refreshControl.backgroundColor = UIColor(named: "tableViewBg")
         self.refreshControl.addTarget(self, action: #selector(SubscriptionsViewController.refresh(_:)), for: UIControl.Event.valueChanged)
         self.tableView.addSubview(self.refreshControl)
         

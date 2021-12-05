@@ -150,6 +150,7 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
     override func applyTheme() {
         super.applyTheme()
         
+        self.view.backgroundColor = UIColor(named: "tableViewBg")
         self.tableView.backgroundColor = UIColor(named: "tableViewBg")
     }
     

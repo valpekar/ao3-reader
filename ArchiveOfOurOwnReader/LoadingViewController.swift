@@ -11,7 +11,6 @@ import CoreData
 import Alamofire
 import KRProgressHUD
 import CoreTelephony
-import Crashlytics
  import Firebase
  import RxSwift
 
@@ -46,6 +45,14 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         } else {
             theme = DefaultsManager.THEME_DAY
         }
+        
+        
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = UIColor(named: "onlyDarkBlue")
+        appearance.titleTextAttributes = [ NSAttributedString.Key.foregroundColor: UIColor.white ]
+        self.navigationController?.navigationBar.standardAppearance = appearance;
+        self.navigationController?.navigationBar.scrollEdgeAppearance = self.navigationController?.navigationBar.standardAppearance
     }
     
     func checkAuth() {
@@ -1543,9 +1550,6 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
             if let txt = textField?.text {
                 
                 self.addNewFolder(name: txt)
-                Answers.logCustomEvent(withName: "New_folder",
-                                       customAttributes: [
-                                        "name": txt])
                 Analytics.logEvent("New_folder", parameters: ["name": txt as NSObject])
             } else {
                 self.showError(title: Localization("Error"), message: Localization("FolderNameEmpty"))
