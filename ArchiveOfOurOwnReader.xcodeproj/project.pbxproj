@@ -57,7 +57,6 @@
 		28E1C7131B8D9246001E2E5A /* WorkDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28E1C7121B8D9246001E2E5A /* WorkDetailViewController.swift */; };
 		28E1C7151B8D9257001E2E5A /* WorkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28E1C7141B8D9257001E2E5A /* WorkViewController.swift */; };
 		3C00E9C31D9C05FA00B0BBDF /* CustomEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C00E9C21D9C05FA00B0BBDF /* CustomEncoding.swift */; };
-		3C0448FC1C637478005DCE5F /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C0448FB1C637478005DCE5F /* StoreKit.framework */; };
 		3C0449001C639080005DCE5F /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C0448FE1C639080005DCE5F /* Fabric.framework */; };
 		3C0449011C639080005DCE5F /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C0448FF1C639080005DCE5F /* Crashlytics.framework */; };
 		3C0465971F8CBCBA003B6AE7 /* Serie+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C0465951F8CBCBA003B6AE7 /* Serie+CoreDataClass.swift */; };
@@ -293,7 +292,6 @@
 		30E187E4D36CFAF1BB4EAFF8 /* Pods-ArchiveOfOurOwnReaderTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArchiveOfOurOwnReaderTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ArchiveOfOurOwnReaderTests/Pods-ArchiveOfOurOwnReaderTests.release.xcconfig"; sourceTree = "<group>"; };
 		3C00313421E7745A00926432 /* ArchiveOfOurOwnReader 16.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ArchiveOfOurOwnReader 16.xcdatamodel"; sourceTree = "<group>"; };
 		3C00E9C21D9C05FA00B0BBDF /* CustomEncoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomEncoding.swift; sourceTree = "<group>"; };
-		3C0448FB1C637478005DCE5F /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		3C0448FE1C639080005DCE5F /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		3C0448FF1C639080005DCE5F /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		3C0465941F8CBA79003B6AE7 /* ArchiveOfOurOwnReader 8.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ArchiveOfOurOwnReader 8.xcdatamodel"; sourceTree = "<group>"; };
@@ -492,7 +490,6 @@
 				3CCBC0E61CB534F9000207CF /* UIKit.framework in Frameworks */,
 				3C274CC41CE4CCBA00F3AC68 /* libFlurry_7.6.0.a in Frameworks */,
 				3C5813D71C6E010300C3FC12 /* SystemConfiguration.framework in Frameworks */,
-				3C0448FC1C637478005DCE5F /* StoreKit.framework in Frameworks */,
 				3CCBC0E41CB534DE000207CF /* QuartzCore.framework in Frameworks */,
 				3C5813D51C6E00F000C3FC12 /* MediaPlayer.framework in Frameworks */,
 				3C5F2BDF207FBCE6006018AA /* CloudKit.framework in Frameworks */,
@@ -895,7 +892,6 @@
 				3C5813CE1C6E00DB00C3FC12 /* AdSupport.framework */,
 				3C0448FE1C639080005DCE5F /* Fabric.framework */,
 				3C0448FF1C639080005DCE5F /* Crashlytics.framework */,
-				3C0448FB1C637478005DCE5F /* StoreKit.framework */,
 				1D9F2DD51BC423370025FD2C /* iAd.framework */,
 				9E1D849EEED1E11AF03F02B0 /* Pods_ArchiveOfOurOwnReader.framework */,
 				261FBF4E8A62D2F746F44908 /* Pods_ArchiveOfOurOwnReaderTests.framework */,
@@ -959,7 +955,7 @@
 				TargetAttributes = {
 					28B6DC231B4E3F5900F34529 = {
 						CreatedOnToolsVersion = 6.4;
-						DevelopmentTeam = DL7Z77P4W8;
+						DevelopmentTeam = 3RR6Z5M679;
 						LastSwiftMigration = 1030;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
@@ -1490,11 +1486,11 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = ArchiveOfOurOwnReader/ArchiveOfOurOwnReader.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 154;
-				DEVELOPMENT_TEAM = DL7Z77P4W8;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 3RR6Z5M679;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1513,8 +1509,8 @@
 					"$(PROJECT_DIR)/Flurry-iOS-7.6.0/FlurryAds",
 					"$(PROJECT_DIR)/Flurry",
 				);
-				MARKETING_VERSION = 1.105;
-				PRODUCT_BUNDLE_IDENTIFIER = "sergei.pekar.$(PRODUCT_NAME:rfc1034identifier)";
+				MARKETING_VERSION = 1.001;
+				PRODUCT_BUNDLE_IDENTIFIER = ff.stories.reader;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1532,11 +1528,11 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = ArchiveOfOurOwnReader/ArchiveOfOurOwnReader.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 154;
-				DEVELOPMENT_TEAM = DL7Z77P4W8;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 3RR6Z5M679;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1555,8 +1551,8 @@
 					"$(PROJECT_DIR)/Flurry-iOS-7.6.0/FlurryAds",
 					"$(PROJECT_DIR)/Flurry",
 				);
-				MARKETING_VERSION = 1.105;
-				PRODUCT_BUNDLE_IDENTIFIER = "sergei.pekar.$(PRODUCT_NAME:rfc1034identifier)";
+				MARKETING_VERSION = 1.001;
+				PRODUCT_BUNDLE_IDENTIFIER = ff.stories.reader;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
