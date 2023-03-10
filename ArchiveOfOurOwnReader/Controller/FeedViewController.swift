@@ -453,7 +453,7 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
             print(error.localizedDescription)
         }
         
-        if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
+        if ((UIApplication.shared.delegate as? AppDelegate)?.cookies.count ?? 0 > 0) {
             Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: AppDelegate.ao3SiteUrl), mainDocumentURL: nil)
         }
         //Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies([HTTPCookie](), for:  URL(string: AppDelegate.ao3SiteUrl), mainDocumentURL: nil)

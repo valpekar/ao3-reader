@@ -1468,7 +1468,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         let headers: HTTPHeaders = [
             "Referer": "https://archiveofourown.org/works/\(workId)",
             "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-            "content-type": "application/x-www-form-urlencoded"
+            "content-type": "application/x-www-form-urlencoded;charset=UTF-8"
         ]
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {

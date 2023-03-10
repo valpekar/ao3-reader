@@ -123,6 +123,12 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
         var params:[String:Any] = [String:Any]()
         params["utf8"] = "✓" as AnyObject?
         params["authenticity_token"] = token as AnyObject?
+        let loginHeaders: HTTPHeaders = [
+                "Accept" : "*/*",
+                "Connection" : "keep-alive",
+                "Host" : AppDelegate.ao3SiteUrl,
+                "Origin" : AppDelegate.ao3SiteUrl
+            ]
         
         guard let login = loginTextField.text,
             let pass = passTextField.text else {
@@ -141,7 +147,7 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
         
      //   showLoadingView()
         
-        Alamofire.request("https://archiveofourown.org/users/login", method: .post, parameters: params)
+        Alamofire.request("https://archiveofourown.org/users/login", method: .post, parameters: params, headers: loginHeaders)
             .response(completionHandler: { response in
                 #if DEBUG
                 print(response.request ?? "")
@@ -249,10 +255,10 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
             return
         }
         var flashRes: [TFHppleElement] = [TFHppleElement]()
-        if (flashnoticediv != nil) {
-            flashRes = flashnoticediv!
+        if flashnoticediv != nil && flashnoticediv?.count ?? 0 > 0 {
+            flashRes = flashnoticediv ?? []
         } else {
-            flashRes = flashalertdiv!
+            flashRes = flashalertdiv ?? []
         }
         
         if (flashRes.count > 0) {
