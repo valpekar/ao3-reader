@@ -121,13 +121,16 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
     
     func sendLoginRequest() {
         var params:[String:Any] = [String:Any]()
-        params["utf8"] = "✓" as AnyObject?
         params["authenticity_token"] = token as AnyObject?
         let loginHeaders: HTTPHeaders = [
-                "Accept" : "*/*",
-                "Connection" : "keep-alive",
-                "Host" : AppDelegate.ao3SiteUrl,
-                "Origin" : AppDelegate.ao3SiteUrl
+                "Accept" : "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+                "Origin" : AppDelegate.ao3SiteUrl,
+                "Referer": "https://archiveofourown.org/users/login",
+                "content-type": "application/x-www-form-urlencoded",
+                "User-Agent": "iOS Safari",
+                "Accept-Encoding": "gzip, deflate, br",
+                "Accept-Language": "en-GB,en;q=0.9,en-US;q=0.8,ru;q=0.7",
+                "upgrade-insecure-requests": "1"
             ]
         
         guard let login = loginTextField.text,
@@ -147,7 +150,7 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
         
      //   showLoadingView()
         
-        Alamofire.request("https://archiveofourown.org/users/login", method: .post, parameters: params, headers: loginHeaders)
+        Alamofire.request("https://archiveofourown.org/users/login", method: .post, parameters: params, encoding: URLEncoding.httpBody, headers: loginHeaders)
             .response(completionHandler: { response in
                 #if DEBUG
                 print(response.request ?? "")
@@ -160,7 +163,8 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
                     self.dismiss(animated: true, completion: {})
                 } else {
                     
-                    if let d = response.data, response.response?.statusCode == 200 {
+                    if let d = response.data,
+                        Constants.successResponseCodes.contains(response.response?.statusCode ?? 0) {
                         
                         self.parseCookies(response)
                         self.parseResponse(d)

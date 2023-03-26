@@ -200,6 +200,7 @@
 		3CF49D5021F5C86C007C1357 /* PlainTextController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF49D4F21F5C86C007C1357 /* PlainTextController.swift */; };
 		3CFD2A631CB55A0F0072FEC5 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CFD2A621CB55A0F0072FEC5 /* Twitter.framework */; };
 		3CFD2A651CB55A2F0072FEC5 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CFD2A641CB55A2F0072FEC5 /* MessageUI.framework */; };
+		8AB8DCC629C4F4AF001A20C1 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AB8DCC529C4F4AF001A20C1 /* Constants.swift */; };
 		B6277E5735632C3272D520D9 /* Pods_ArchiveOfOurOwnReaderTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 261FBF4E8A62D2F746F44908 /* Pods_ArchiveOfOurOwnReaderTests.framework */; };
 		CEB5D41AC4C555D7BBFB87C1 /* Pods_ArchiveOfOurOwnReader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E1D849EEED1E11AF03F02B0 /* Pods_ArchiveOfOurOwnReader.framework */; };
 /* End PBXBuildFile section */
@@ -476,6 +477,7 @@
 		3CF49D4F21F5C86C007C1357 /* PlainTextController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PlainTextController.swift; path = Controller/PlainTextController.swift; sourceTree = "<group>"; };
 		3CFD2A621CB55A0F0072FEC5 /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
 		3CFD2A641CB55A2F0072FEC5 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		8AB8DCC529C4F4AF001A20C1 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		9E1D849EEED1E11AF03F02B0 /* Pods_ArchiveOfOurOwnReader.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ArchiveOfOurOwnReader.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -800,6 +802,7 @@
 				3C6644EB21A428B600BD85AC /* Localisator.swift */,
 				3CA1EC80229ABEA800B7DFE2 /* Utils.swift */,
 				080691BB23436F8B002E6496 /* UISearchBar+Extensions.swift */,
+				8AB8DCC529C4F4AF001A20C1 /* Constants.swift */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -1185,6 +1188,7 @@
 				3C93ED601FCF140100F1F4D4 /* CategoryCell.swift in Sources */,
 				3C93D4B01F223AB000948D08 /* EditFoldersController.swift in Sources */,
 				3C082A531F20E21100CA717D /* Folder+CoreDataClass.swift in Sources */,
+				8AB8DCC629C4F4AF001A20C1 /* Constants.swift in Sources */,
 				3CB7735F1C847CCD00DC15C4 /* ContainerViewController.swift in Sources */,
 				3CF2ECF22202F57A00481C03 /* AutoCompleteController.swift in Sources */,
 				3C6644E7219AC16900BD85AC /* DBFavAuthor+CoreDataClass.swift in Sources */,
@@ -1502,6 +1506,7 @@
 					/usr/include/libxml2,
 				);
 				INFOPLIST_FILE = ArchiveOfOurOwnReader/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "FF Stories";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1509,7 +1514,7 @@
 					"$(PROJECT_DIR)/Flurry-iOS-7.6.0/FlurryAds",
 					"$(PROJECT_DIR)/Flurry",
 				);
-				MARKETING_VERSION = 1.001;
+				MARKETING_VERSION = 1.005;
 				PRODUCT_BUNDLE_IDENTIFIER = ff.stories.reader;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -1544,6 +1549,7 @@
 					/usr/include/libxml2,
 				);
 				INFOPLIST_FILE = ArchiveOfOurOwnReader/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "FF Stories";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1551,7 +1557,7 @@
 					"$(PROJECT_DIR)/Flurry-iOS-7.6.0/FlurryAds",
 					"$(PROJECT_DIR)/Flurry",
 				);
-				MARKETING_VERSION = 1.001;
+				MARKETING_VERSION = 1.005;
 				PRODUCT_BUNDLE_IDENTIFIER = ff.stories.reader;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

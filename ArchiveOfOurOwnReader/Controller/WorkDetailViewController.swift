@@ -34,7 +34,9 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     @IBOutlet weak var kudosButton: UIButton!
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var tableViewHeight: NSLayoutConstraint!
     @IBOutlet weak var bgView: UIView!
+    @IBOutlet weak var scrollView: UIScrollView!
     
     var downloadedWorkItem: DBWorkItem! = nil
     var downloadedFandoms: [DBFandom]! = nil
@@ -84,16 +86,17 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             DefaultsManager.putBool(true, key: DefaultsManager.ADULT)
         }
         
-        let name = String(format:"b%d", Int(arc4random_uniform(4)))
+        let name = String(format:"b%d", Int(arc4random_uniform(5)))
         bgImage.image = UIImage(named:name)
         
-        self.tableView.tableFooterView = UIView()
-        self.tableView.rowHeight = UITableView.automaticDimension
-        self.tableView.estimatedRowHeight = 64
-        
-//        self.readButton.layer.cornerRadius = AppDelegate.smallCornerRadius
+        tableView.tableFooterView = UIView()
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 64
+        tableView.layoutMargins = .init(top: 0.0, left: 20, bottom: 0.0, right: 20)
+        tableView.separatorInset = tableView.layoutMargins
+        tableView.isScrollEnabled = false
                 
-        self.bgView.layer.cornerRadius = AppDelegate.smallCornerRadius
+        self.bgView.layer.cornerRadius = Constants.smallCornerRadius
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
             Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies((UIApplication.shared.delegate as! AppDelegate).cookies, for:  URL(string: AppDelegate.ao3SiteUrl), mainDocumentURL: nil)
@@ -163,12 +166,6 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
-        if let colorDark = UIColor(named: "onlyDarkBlue"),
-        let colorLight = UIColor(named: "onlyLightBlue") {
-            
-            self.readButton.applyGradient(colours: [colorDark, colorLight], cornerRadius: AppDelegate.mediumCornerRadius)
-        }
 
     }
     
@@ -180,14 +177,14 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.isTranslucent = true
         self.navigationController?.navigationBar.isHidden = false
-        // let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor(red: 99/255, green: 0, blue: 0, alpha: 1)]
-        // self.navigationController?.navigationBar.titleTextAttributes = titleDict as [NSObject : AnyObject]
+
+        //        if (workItem != nil) {
+//            self.title = workItem.workTitle
+//        } else if (downloadedWorkItem != nil) {
+//            self.title = downloadedWorkItem.workTitle ?? ""
+//        }
         
-        if (workItem != nil) {
-            self.title = workItem.workTitle
-        } else if (downloadedWorkItem != nil) {
-            self.title = downloadedWorkItem.workTitle ?? ""
-        }
+        self.title = ""
         
         tableView.backgroundColor = UIColor.clear
         
@@ -288,7 +285,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         let delay1 = 0.7 * Double(NSEC_PER_SEC)
         let time1 = DispatchTime.now() + Double(Int64(delay1)) / Double(NSEC_PER_SEC)
         DispatchQueue.main.asyncAfter(deadline: time1) {
-            self.tableView.flashScrollIndicators()
+            self.scrollView.flashScrollIndicators()
         }
     }
     
@@ -332,8 +329,8 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                     self.downloadCurWork(d)
                     
                     if let wItem = self.workItem {
-                        //send update details to our server
-                        self.sendUpdateWorkRequest(id: wItem.workId, title: wItem.workTitle, published: wItem.published, updated: wItem.updated, chapters: wItem.chaptersCount)
+                        //TODO: - send update details to our server
+                       // self.sendUpdateWorkRequest(id: wItem.workId, title: wItem.workTitle, published: wItem.published, updated: wItem.updated, chapters: wItem.chaptersCount)
                         
                     }
                     
@@ -806,6 +803,16 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             
         }
         
+        if let xTokenEls: [TFHppleElement] = doc.search(withXPathQuery: "//meta[@name='csrf-token']") as? [TFHppleElement] {
+            if (xTokenEls.count > 0) {
+                if let attrs = xTokenEls[0].attributes as NSDictionary? {
+                    if let tokenStr = attrs["content"] as? String, tokenStr.isEmpty == false {
+                        xcsrfToken = tokenStr
+                    }
+                }
+            }
+        }
+        
         self.markedForLater = false
         if let markForLaterEl = doc.search(withXPathQuery: "//ul[@class='work navigation actions']//li[@class='mark']") as? [TFHppleElement] {
             if (markForLaterEl.count > 0) {
@@ -887,10 +894,12 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
     
     func showWork() {
         tableView.reloadData()
+        tableViewHeight.constant = tableView.contentSize.height
+        tableView.layoutIfNeeded()
         
         hideLoadingView()
         
-        tableView.flashScrollIndicators()
+        scrollView.flashScrollIndicators()
         
         if (!DefaultsManager.getString(DefaultsManager.LASTWRKID).isEmpty) {
             performSegue(withIdentifier: "readSegue", sender: nil)
@@ -1088,6 +1097,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
         
         cell.label.textColor = txtColor
         cell.backgroundColor = UIColor.clear
+        cell.contentView.layoutMargins = .init(top: 0.0, left: 20, bottom: 0.0, right: 20)
         
         let cellSection = indexPath.section - (authorSection + 1)
         
@@ -1096,9 +1106,9 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             
             cell.label.textColor = txtColor
             if (UIDevice.current.userInterfaceIdiom == .pad) {
-                cell.label.font = UIFont(name: "Helvetica Neue Light Italic", size: 16.0)
+                cell.label.font = UIFont(name: "Helvetica Neue Light Italic", size: 17.0)
             } else {
-                cell.label.font = UIFont(name: "Helvetica Neue Light Italic", size: 12.0) //.italicSystemFont(ofSize: 12.0)
+                cell.label.font = UIFont(name: "Helvetica Neue Light Italic", size: 13.0) 
             }
             
             if (workItem != nil) {

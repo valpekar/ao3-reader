@@ -31,6 +31,8 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
     
     private var notification: NSObjectProtocol?
     
+    var xcsrfToken = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -1052,8 +1054,8 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         
         let cookiesH: [HTTPCookie] = HTTPCookie.cookies(withResponseHeaderFields: allHeaders, for: URL(string: AppDelegate.ao3SiteUrl)!)
             //let cookies = headers["Set-Cookie"]
-        if (cookiesH.count > 0) {
-            (UIApplication.shared.delegate as! AppDelegate).cookies = cookiesH
+        if cookiesH.count > 0 {
+            (UIApplication.shared.delegate as? AppDelegate)?.cookies = cookiesH
             DefaultsManager.putObject(cookiesH as AnyObject, key: DefaultsManager.COOKIES)
         }
         
@@ -1452,7 +1454,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         //let pseud_id = DefaultsManager.getString(DefaultsManager.PSEUD_ID)
         
         var params:[String:Any] = [String:Any]()
-        params["utf8"] = "✓" as AnyObject?
+     //   params["utf8"] = "✓" as AnyObject?
         params["authenticity_token"] = kudosToken
         
         params["kudo"] = ["commentable_id": workId,
@@ -1462,18 +1464,30 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         
         if let cookies = (UIApplication.shared.delegate as? AppDelegate)?.cookies,
             cookies.count > 0 {
-            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies(cookies, for:  URL(string: AppDelegate.ao3SiteUrl), mainDocumentURL: nil)
+            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookies(cookies,
+                                                                                                 for: URL(string: AppDelegate.ao3SiteUrl),
+                                                                                                 mainDocumentURL: nil)
         }
         
         let headers: HTTPHeaders = [
-            "Referer": "https://archiveofourown.org/works/\(workId)",
-            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-            "content-type": "application/x-www-form-urlencoded;charset=UTF-8"
+            "referer": "https://archiveofourown.org/works/\(workId)",
+            "content-type": "application/x-www-form-urlencoded;charset=UTF-8",
+            "origin": "https://archiveofourown.org",
+            "User-Agent": "iOS Safari",
+            "Host": "archiveofourown.org",
+            "Accept-Encoding": "gzip, deflate, br",
+            "Accept-Language": "en-GB,en;q=0.9",
+            "Accept": "*/*",
+            "X-Requested-With": "XMLHttpRequest",
+            "x-newrelic-id": "VQcCWV9RGwIJVFFRAw==",
+            "x-csrf-token": xcsrfToken
         ]
         
         if ((UIApplication.shared.delegate as! AppDelegate).cookies.count > 0) {
             return Observable.create({ (observer) -> Disposable in
-                Alamofire.request(requestStr, method: .post, parameters: params, encoding:URLEncoding.httpBody /*ParameterEncoding.Custom(encodeParams)*/, headers: headers)
+                Alamofire.request(requestStr, method: .post, parameters: params,
+                                  encoding: URLEncoding.httpBody,
+                                  headers: headers)
                     .response(completionHandler: { response in
                         #if DEBUG
                         print(response.request ?? "")

@@ -23,7 +23,6 @@ class InboxController : ListViewController  {
     var inboxItemsUnread: [InboxItem] = [InboxItem]()
     
     var inboxToken = ""
-    var xcsrfToken = ""
     
     var refreshControl: RefreshControl!
     
