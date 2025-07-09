@@ -17,6 +17,9 @@ DerivedData/
 !default.perspectivev3
 xcuserdata/
 
+# Cocoapods
+Pods/
+
 ## Other
 *.moved-aside
 *.xcuserstate
