@@ -11,8 +11,8 @@ import CoreData
 import Alamofire
 import KRProgressHUD
 import CoreTelephony
- import Firebase
- import RxSwift
+import Firebase
+import RxSwift
 
 class LoadingViewController: CenterViewController, ModalControllerDelegate, AuthProtocol, UIAlertViewDelegate {
     
@@ -153,8 +153,6 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
             hideLoadingView()
         }
         
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        
         /*let screenSize: CGRect = UIScreen.main.bounds
         let screenWidth = screenSize.width
         let screenHeight = screenSize.height*/
@@ -173,7 +171,6 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         #if DEBUG
         print("hide loading view")
             #endif
-        UIApplication.shared.isNetworkActivityIndicatorVisible = false
         
         DispatchQueue.main.async {
         KRProgressHUD.dismiss()
@@ -315,7 +312,7 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
         
         //var dta = NSString(data: data, encoding: NSUTF8StringEncoding)
         // println("the string is: \(dta)")
-        let doc : TFHpple = TFHpple(htmlData: data)
+        let doc: TFHpple = TFHpple(htmlData: data)
         
         if let sorrydiv = doc.search(withXPathQuery: "//div[@class='flash error']") {
         

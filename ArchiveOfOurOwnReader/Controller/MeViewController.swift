@@ -383,11 +383,11 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
     
     
     @IBAction func smallTipTouched(_ sender: AnyObject) {
-        let urlStr = "https://linktr.ee/riyapekar"
+        let urlStr = "https://patreon.com/malipkr"
         
         if let url = URL(string: urlStr) {
             UIApplication.shared.open(url, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: { (res) in
-                print("open url simpleappalliance.blogspot.com")
+                print("open url on blogspot.com")
             })
         }
     }

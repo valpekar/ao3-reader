@@ -253,19 +253,19 @@ class LoginViewController : LoadingViewController, UITextFieldDelegate {
         let flashnoticediv: [TFHppleElement]? = doc.search(withXPathQuery: "//div[@class='flash notice']") as? [TFHppleElement]
         let flashalertdiv: [TFHppleElement]? = doc.search(withXPathQuery: "//div[@class='flash alert']") as? [TFHppleElement]
         
-        if (flashnoticediv == nil || flashalertdiv == nil){
+        if (flashnoticediv == nil || flashalertdiv == nil) {
             showError()
             self.showError()
             return
         }
-        var flashRes: [TFHppleElement] = [TFHppleElement]()
+        var flashRes: [TFHppleElement] = []
         if flashnoticediv != nil && flashnoticediv?.count ?? 0 > 0 {
             flashRes = flashnoticediv ?? []
         } else {
             flashRes = flashalertdiv ?? []
         }
         
-        if (flashRes.count > 0) {
+        if flashRes.count > 0 {
              let noticeTxt = flashRes[0].content as String
              if (noticeTxt.contains("Successfully logged") || noticeTxt.contains("already signed") || noticeTxt.contains("just logged into")) {
         
