@@ -8,7 +8,7 @@
 
 import UIKit
 import Alamofire
-import Crashlytics
+import FirebaseCrashlytics
 import Firebase
 
 class SerieViewController: ListViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -41,10 +41,6 @@ class SerieViewController: ListViewController, UITableViewDataSource, UITableVie
         refreshControl.backgroundColor = UIColor(named: "tableViewBg")
         self.refreshControl.addTarget(self, action: #selector(SerieViewController.refresh(_:)), for: UIControl.Event.valueChanged)
         self.tableView.addSubview(self.refreshControl)
-        
-        Answers.logCustomEvent(withName: "Serie_opened",
-                               customAttributes: [
-                                "serieId": serieId])
         
         requestSerie()
     }
@@ -181,9 +177,6 @@ class SerieViewController: ListViewController, UITableViewDataSource, UITableVie
         
         let requestStr = "https://archiveofourown.org\(serieItem.subscribeActionUrl)"
         
-        Answers.logCustomEvent(withName: "Serie: Subscribe",
-                               customAttributes: [
-                                "serieId": serieItem.serieId])
         Analytics.logEvent("Serie_Subscribe", parameters: ["serieId": serieItem.serieId as NSObject])
         
         var params:[String:Any] = [String:Any]()

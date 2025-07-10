@@ -8,7 +8,7 @@
 
 import UIKit
 import CoreData
-import Crashlytics
+import FirebaseCrashlytics
 import Firebase
 
 class HighlightsController: LoadingViewController, NSFetchedResultsControllerDelegate {
@@ -73,7 +73,6 @@ class HighlightsController: LoadingViewController, NSFetchedResultsControllerDel
         
          self.updateView()
         
-        Answers.logCustomEvent(withName: "Highlights", customAttributes: ["count" : fetchedResultsController?.fetchedObjects?.count ?? 0])
         Analytics.logEvent("Highlights", parameters: ["count" : fetchedResultsController?.fetchedObjects?.count ?? 0 as NSObject])
     }
     
@@ -210,7 +209,6 @@ class HighlightsController: LoadingViewController, NSFetchedResultsControllerDel
         
         let managedContext = appDelegate.persistentContainer.viewContext
         
-        Answers.logCustomEvent(withName: "Highlights", customAttributes: ["deleteAll_count" : fetchedResultsController?.fetchedObjects?.count ?? 0])
         Analytics.logEvent("Highlights_Delete_All", parameters: ["count" : fetchedResultsController?.fetchedObjects?.count ?? 0 as NSObject])
         
         let fetch = NSFetchRequest<NSFetchRequestResult>(entityName: "DBHighlightItem")
@@ -240,7 +238,6 @@ class HighlightsController: LoadingViewController, NSFetchedResultsControllerDel
     func shareHighlight(highlightItem: DBHighlightItem) {
         let textToShare = [ "\(highlightItem.content ?? "") \n- \(highlightItem.author ?? ""), \"\(highlightItem.workName ?? "")\"" ]
         
-        Answers.logCustomEvent(withName: "Highlights: Share", customAttributes: ["text" : textToShare])
         Analytics.logEvent("Highlights_Share", parameters: ["text" : textToShare as NSObject])
         
         let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
@@ -288,7 +285,6 @@ class HighlightsController: LoadingViewController, NSFetchedResultsControllerDel
         self.tableView.reloadData()
 //        self.updateView()
         
-        Answers.logCustomEvent(withName: "Highlights: Sort", customAttributes: ["sortBy" : self.sortBy])
         Analytics.logEvent("Highlights_Sort", parameters: ["sortBy" : self.sortBy as NSObject])
     }
     

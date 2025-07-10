@@ -8,7 +8,7 @@
 
 import UIKit
 import Alamofire
-import Crashlytics
+import FirebaseCrashlytics
 
 class FandomListController: LoadingViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -32,8 +32,6 @@ class FandomListController: LoadingViewController, UITableViewDataSource, UITabl
         self.tableView.estimatedRowHeight = 44
         
         self.title = listName
-        
-        Answers.logCustomEvent(withName: "Fandom list: open", customAttributes: ["name":listName])
         
         if (!listUrl.contains("archiveofourown.org")) {
             listUrl = "https://archiveofourown.org\(listUrl)"
@@ -200,9 +198,7 @@ class FandomListController: LoadingViewController, UITableViewDataSource, UITabl
             if let indexPath = tableView.indexPathForSelectedRow {
                 let curKey = keys[indexPath.section]
                 let curCat: FandomItem = fandomList[curKey]![indexPath.row]
-                
-                Answers.logCustomEvent(withName: "Fandom list: select", customAttributes: ["name":curCat.title])
-                
+                                
                 if let cController: WorkListController = segue.destination as? WorkListController {
                     cController.tagUrl = curCat.url
                 }

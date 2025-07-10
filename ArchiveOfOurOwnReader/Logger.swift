@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import Crashlytics
+import FirebaseCrashlytics
 
 public func debugLog(_ message: String = "", functionName: String = #function, fileName: String = #file, lineNumber: Int = #line) {
     debugLog(message:message, functionName:functionName, fileName:fileName, lineNumber:lineNumber)

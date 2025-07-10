@@ -8,7 +8,7 @@
 
 import UIKit
 import Alamofire
-import Crashlytics
+import FirebaseCrashlytics
 
 class ReplyController: LoadingViewController {
     
@@ -61,9 +61,6 @@ class ReplyController: LoadingViewController {
 //        gestureRec.addTarget(self, action: #selector(ReplyController.viewTapped))
 //        self.view.addGestureRecognizer(gestureRec)
         
-        
-        
-        Answers.logCustomEvent(withName: "Reply: Opened", customAttributes: [:])
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -94,9 +91,7 @@ class ReplyController: LoadingViewController {
     
     @IBAction func replyTouched(_ sender: AnyObject) {
         if let txt: String = textView.text, txt.isEmpty == false, (commentLimit - textView.text.count) >= 0 {
-            
-            Answers.logCustomEvent(withName: "Reply: Reply Touched", customAttributes: ["txtLength":txt.count])
-            
+                        
             self.sendReply(text: txt)
         } else {
             self.showError(title: Localization("Error"), message: Localization("CannotSendComment"))
@@ -259,10 +254,8 @@ class ReplyController: LoadingViewController {
             self.showError(title: Localization("Error"), message: Localization("CouldNotReply"))
             
             let string1 = NSString(data: data, encoding: String.Encoding.utf8.rawValue)
-            Answers.logCustomEvent(withName: "Reply: Reply Error", customAttributes: ["doc":string1 ?? "data empty"])
         }
     }
-    
     
 }
 

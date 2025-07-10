@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 import PopupDialog
-import Crashlytics
+import FirebaseCrashlytics
 
 enum SelectedEntity {
     case fandom
@@ -923,7 +923,6 @@ class SearchViewController: UIViewController, UIBarPositioningDelegate, UITableV
             selectedLang = currentTextField!.text ?? ""
             searchQuery.language_id = langDict[selectedLang] as! String
             
-            Answers.logCustomEvent(withName: "Lang_chosen", customAttributes: ["lang" : selectedLang])
         } else
             if(pickerView == ratingPickerView) {
                 currentTextField?.text = ratingDict.keysSortedByValue(comparator: Utils.compareKeys )[row] as? String
@@ -1088,11 +1087,6 @@ extension SearchViewController {
 
 extension SearchViewController: SelectionProtocol {
     func itemsSelected(items: [FandomObject]) {
-        
-        Answers.logCustomEvent(withName: "SearchViewController SelectionProtocol",
-                               customAttributes: [
-                                "items_count": items.count,
-                                "selectedEntity" : self.selectedEntity])
         
        if (self.selectedEntity == .fandom) {
         self.searchQuery.fandom_names = ""

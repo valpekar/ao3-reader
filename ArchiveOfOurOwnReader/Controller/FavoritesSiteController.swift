@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 import Firebase
-import Crashlytics
+import FirebaseCrashlytics
 
 class FavoritesSiteController : ListViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
@@ -169,7 +169,6 @@ class FavoritesSiteController : ListViewController, UITableViewDataSource, UITab
         
         let urlStr = "https://archiveofourown.org/users/\(login)/pseuds/\(curPseud)/bookmarks" // + pseuds[currentPseud]! + "/bookmarks"
         
-        Answers.logCustomEvent(withName: "Bookmarks: load", customAttributes: ["url" : urlStr])
         Analytics.logEvent("Bookmarks_load", parameters: ["url" : urlStr as NSObject])
        
         
@@ -502,7 +501,6 @@ extension FavoritesSiteController: UISearchBarDelegate {
         
         searched = true
         
-        Answers.logCustomEvent(withName: "Bookmarks: search", customAttributes: ["query" : query])
         Analytics.logEvent("Bookmarks_search", parameters: ["query" : query as NSObject])
         
         if let del = UIApplication.shared.delegate as? AppDelegate {

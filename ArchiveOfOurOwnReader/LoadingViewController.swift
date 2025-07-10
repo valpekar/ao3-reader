@@ -396,9 +396,11 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
                 let f = NSManagedObject(entity: entityf!, insertInto:managedContext)
                 f.setValue(fandomsLiArr[i].content, forKey: "fandomName")
                 firstFandom = fandomsLiArr[i].content
-                let attributes : NSDictionary = (fandomsLiArr[i].search(withXPathQuery: "//a")[0] as AnyObject).attributes as NSDictionary
-                f.setValue((attributes["href"] as? String ?? ""), forKey: "fandomUrl")
-                
+                if let element = fandomsLiArr[i].search(withXPathQuery: "//a").first as? TFHppleElement,
+                   let attributes = element.attributes as? [String: String] {
+                    f.setValue((attributes["href"] as? String ?? ""), forKey: "fandomUrl")
+                }
+                            
                 workFandoms.add(f)
                 
                 let works = f.value(forKeyPath: "workItems") as! NSMutableSet
@@ -424,8 +426,9 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
                 let r = NSManagedObject(entity: entityr!, insertInto:managedContext)
                 r.setValue(relationshipsLiArr[i].content, forKey: "relationshipName")
                 firstRelationship = relationshipsLiArr[i].content
-                let attributes : NSDictionary = (relationshipsLiArr[i].search(withXPathQuery: "//a")[0] as AnyObject).attributes as NSDictionary
-                r.setValue((attributes["href"] as? String ?? ""), forKey: "relationshipUrl")
+                let href = (relationshipsLiArr[i].search(withXPathQuery: "//a").first as? TFHppleElement)?
+                             .attributes["href"] as? String ?? ""
+                r.setValue(href, forKey: "relationshipUrl")
                 
                 workRel.add(r)
                 
@@ -443,8 +446,12 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
                 let entityc =  NSEntityDescription.entity(forEntityName: "DBCharacterItem",  in: managedContext)
                 let c = NSManagedObject(entity: entityc!, insertInto:managedContext)
                 c.setValue(charactersLiArr[i].content, forKey: "characterName")
-                let attributes : NSDictionary = (charactersLiArr[i].search(withXPathQuery: "//a")[0] as AnyObject).attributes as NSDictionary
-                c.setValue((attributes["href"] as? String ?? ""), forKey: "characterUrl")
+                if let aElement = charactersLiArr[i].search(withXPathQuery: "//a").first as? TFHppleElement,
+                   let href = aElement.attributes["href"] as? String {
+                    c.setValue(href, forKey: "characterUrl")
+                } else {
+                    c.setValue("", forKey: "characterUrl") // fallback if href not found
+                }
                 
                 workCharacters.add(c)
                 
@@ -474,12 +481,8 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
                             workItem.serieName = sTxt
                         }
                     
-                        if let attributesEl : [TFHppleElement] = seriesEl[0].search(withXPathQuery: "//a") as? [TFHppleElement] {
-                            if (attributesEl.count > 0) {
-                                let attributes: NSDictionary = (attributesEl[0] as AnyObject).attributes as NSDictionary
-                                workItem.serieUrl = (attributes["href"] as? String ?? "")
-                            }
-                        }
+                        workItem.serieUrl = (seriesEl[0].search(withXPathQuery: "//a").first as? TFHppleElement)?
+                                                .attributes["href"] as? String ?? ""
                     }
                 }
             }
@@ -829,8 +832,8 @@ class LoadingViewController: CenterViewController, ModalControllerDelegate, Auth
                     
                     if let atrs = nxtFirst.search(withXPathQuery: "//a") ,
                         let firstAttribute = atrs.first {
-                            let attributes : NSDictionary = (firstAttribute as AnyObject).attributes as NSDictionary
-                            if let next : String = (attributes["href"] as? String) {
+                        if let element = firstAttribute as? TFHppleElement,
+                           let next = element.attributes["href"] as? String {
                             
                                 if (!next.isEmpty) {
                                     var params:[String:AnyObject] = [String:AnyObject]()

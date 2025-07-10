@@ -9,9 +9,9 @@ target 'ArchiveOfOurOwnReader' do
   # Pods for ArchiveOfOurOwnReader
 
 pod 'Firebase'
-pod 'Firebase/Core'
-pod 'Firebase/Analytics'
-pod 'Firebase/Crashlytics'
+pod 'FirebaseCore'
+pod 'FirebaseAnalytics'
+pod 'FirebaseCrashlytics'
 pod 'Alamofire', '~> 4.0'
 pod 'AlamofireImage'
 pod 'Spring', :git => 'https://github.com/MengTo/Spring.git'
@@ -32,7 +32,6 @@ post_install do |installer|
   installer.pods_project.targets.each do |target|
     target.build_configurations.each do |config|
       
-      config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"
       config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '14.0'
       
     end

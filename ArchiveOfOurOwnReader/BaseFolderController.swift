@@ -8,7 +8,7 @@
 
 import UIKit
 import CoreData
-import Crashlytics
+import FirebaseCrashlytics
 
 class BaseFolderController: LoadingViewController, NSFetchedResultsControllerDelegate {
     

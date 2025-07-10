@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Crashlytics
+import FirebaseCrashlytics
 import Alamofire
 import AlamofireImage
 import ExpandableLabel
@@ -83,10 +83,6 @@ class AuthorViewController: LoadingViewController {
         showLoadingView(msg: Localization("GettingAuthorInfo"))
         
         let urlStr = "\(AppDelegate.ao3SiteUrl)/users/\(authorName)/profile"
-        
-        Answers.logCustomEvent(withName: "Author",
-                               customAttributes: [
-                                "urlStr": urlStr])
         
         Alamofire.request(urlStr) //default is get
             .response(completionHandler: { response in
@@ -201,10 +197,6 @@ class AuthorViewController: LoadingViewController {
     
     func authorWorksTouched(uri: String) {
         
-        Answers.logCustomEvent(withName: "Author: author \(uri) touched",
-                               customAttributes: [
-                                "author": authorName])
-        
         if (authorName.contains(" ") && !authorName.contains(",")) {
             let nameArr = authorName.split{$0 == " "}.map(String.init)
             var an = nameArr[1].replacingOccurrences(of: "(", with: "")
@@ -263,8 +255,6 @@ class AuthorViewController: LoadingViewController {
                 self.showError(title: Localization("Error"), message: "Cannot add to favorites")
             }
         self.setIsFavButton()
-        
-        Answers.logCustomEvent(withName: "Add Favorite Author", customAttributes: ["name" : self.authorName])
     }
     
     func removeAuthorFromFav() {
@@ -293,7 +283,6 @@ class AuthorViewController: LoadingViewController {
         }
         self.setIsFavButton()
         
-        Answers.logCustomEvent(withName: "Delete Favorite Author", customAttributes: ["name" : self.authorName])
     }
     
     @IBAction func addToFavTouched(_ sender: AnyObject) {

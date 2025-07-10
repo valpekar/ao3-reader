@@ -446,8 +446,8 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 var f : Fandom = Fandom()
                 f.fandomName = fandomsLiArr[i].content
                 firstFandom = f.fandomName
-                let attributes : NSDictionary = (fandomsLiArr[i].search(withXPathQuery: "//a")[0] as AnyObject).attributes as NSDictionary
-                f.fandomUrl = (attributes["href"] as? String ?? "")
+                f.fandomUrl = (fandomsLiArr[i].search(withXPathQuery: "//a").first as? TFHppleElement)?
+                                 .attributes["href"] as? String ?? ""
                 fandoms.append(f)
             }
             }
@@ -473,8 +473,8 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 var r : Relationship = Relationship()
                 r.relationshipName = relationshipsLiArr[i].content
                 firstRelationship = r.relationshipName
-                let attributes : NSDictionary = (relationshipsLiArr[i].search(withXPathQuery: "//a")[0] as AnyObject).attributes as NSDictionary
-                r.relationshipUrl = (attributes["href"] as? String ?? "")
+                r.relationshipUrl = (relationshipsLiArr[i].search(withXPathQuery: "//a").first as? TFHppleElement)?
+                    .attributes["href"] as? String ?? ""
                 relationships.append(r)
             }
             
@@ -484,8 +484,8 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             for i in 0..<charactersLiArr.count {
                 var c : CharacterItem = CharacterItem()
                 c.characterName = charactersLiArr[i].content
-                let attributes : NSDictionary = (charactersLiArr[i].search(withXPathQuery: "//a")[0] as AnyObject).attributes as NSDictionary
-                c.characterUrl = (attributes["href"] as? String ?? "")
+                c.characterUrl = (charactersLiArr[i].search(withXPathQuery: "//a").first as? TFHppleElement)?
+                    .attributes["href"] as? String ?? ""
                 characters.append(c)
             }
             
@@ -507,8 +507,7 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 
                 if let attributesEl : [TFHppleElement] = seriesEl[0].search(withXPathQuery: "//a") as? [TFHppleElement] {
                     if (attributesEl.count > 0) {
-                        let attributes: NSDictionary = (attributesEl[0] as AnyObject).attributes as NSDictionary
-                        workItem.serieUrl = (attributes["href"] as? String ?? "")
+                        workItem.serieUrl = attributesEl.first?.attributes["href"] as? String ?? ""
                     }
                 }
             }
@@ -629,8 +628,8 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             if (navigationEl.count > 0) {
                 if let nxt : [TFHppleElement] = navigationEl[0].search(withXPathQuery: "//li[@class='chapter next']") as? [TFHppleElement] {
                     if (nxt.count > 0) {
-                        let attributes : NSDictionary = (nxt[0].search(withXPathQuery: "//a")[0] as AnyObject).attributes as NSDictionary
-                        workItem.nextChapter = (attributes["href"] as? String) ?? ""
+                        workItem.nextChapter = (nxt.first?.search(withXPathQuery: "//a").first as? TFHppleElement)?
+                            .attributes["href"] as? String ?? ""
                     }
                     NSLog("%@", workItem.nextChapter)
                 }
@@ -638,8 +637,8 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
                 if (workItem.workId.isEmpty == true) {
                 if let mark : [TFHppleElement] = navigationEl[0].search(withXPathQuery: "//li[@class='mark']") as? [TFHppleElement] {
                     if (mark.count > 0) {
-                        let attributes : NSDictionary = (mark[0].search(withXPathQuery: "//a")[0] as AnyObject).attributes as NSDictionary
-                        let str = attributes["href"] as? String
+                        let str = (mark.first?.search(withXPathQuery: "//a").first as? TFHppleElement)?
+                                     .attributes["href"] as? String
                         
                         let components = str?.components(separatedBy: CharacterSet.decimalDigits.inverted)
                         if let part = components?.joined() {
@@ -826,9 +825,10 @@ class WorkDetailViewController: LoadingViewController, UITableViewDataSource, UI
             if (downloadEl.count > 0) {
                 if let downloadUl: [TFHppleElement] = downloadEl.first?.search(withXPathQuery: "//li") as? [TFHppleElement] {
                     for i in 0..<downloadUl.count {
-                        let attributes : NSDictionary = (downloadUl[i].search(withXPathQuery: "//a")[0] as AnyObject).attributes as NSDictionary
-                        let key: String = downloadUl[i].content ?? ""
-                        let val: String = attributes["href"] as? String ?? ""
+                        let anchor = downloadUl[i].search(withXPathQuery: "//a").first as? TFHppleElement
+                        let attributes = anchor?.attributes ?? [:]
+                        let key = downloadUl[i].content ?? ""
+                        let val = attributes["href"] as? String ?? ""
                         
                         if (!val.contains("#") && !val.isEmpty) {
                             downloadUrls[key] = val

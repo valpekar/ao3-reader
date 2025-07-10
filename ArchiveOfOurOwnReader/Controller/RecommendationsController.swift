@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 import Alamofire
-import Crashlytics
+import FirebaseCrashlytics
 import UserNotifications
 import Firebase
 
@@ -318,9 +318,6 @@ class RecommendationsController : ListViewController, UITableViewDataSource, UIT
         
         DefaultsManager.putObject(searchQuery, key: DefaultsManager.SEARCH_Q_RECOMMEND)
         
-        Answers.logCustomEvent(withName: "Recs_generated",
-                               customAttributes: [
-                                "query_tag": searchQuery.tag])
         Analytics.logEvent("Recommendations_Generated", parameters: ["query_tag" : searchQuery.tag as NSObject])
         
         applySearch(searchQuery)

@@ -8,7 +8,7 @@
 
 import UIKit
 import CoreData
-import Crashlytics
+import FirebaseCrashlytics
 
 class ViewFoldersController: BaseFolderController {
     
@@ -58,9 +58,7 @@ class ViewFoldersController: BaseFolderController {
         }
         
         self.updateView()
-        
-        Answers.logCustomEvent(withName: "View Folders", customAttributes: ["count" : fetchedResultsController?.fetchedObjects?.count ?? 0])
-   
+           
         setupAccessibility()
     }
     
@@ -214,8 +212,6 @@ class ViewFoldersController: BaseFolderController {
         }
         
         self.tableView.reloadData()
-        
-        Answers.logCustomEvent(withName: "View Folders: Sort", customAttributes: ["sortBy" : self.sortBy])
     }
     
     //MARK: - folders

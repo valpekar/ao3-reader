@@ -8,7 +8,7 @@
 
 import UIKit
 import Alamofire
-import Crashlytics
+import FirebaseCrashlytics
 
 class WorkListController: ListViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
@@ -88,9 +88,7 @@ class WorkListController: ListViewController, UITableViewDataSource, UITableView
         #if DEBUG
         print(tagUrl)
             #endif
-        
-        Answers.logCustomEvent(withName: "Work List Open", customAttributes: ["link" : tagUrl])
-        
+                
         requestWorks()
     }
     
@@ -155,10 +153,6 @@ class WorkListController: ListViewController, UITableViewDataSource, UITableView
         showLoadingView(msg: Localization("GettingWorks"))
         
         let urlStr = tagUrl
-        
-        Answers.logCustomEvent(withName: "WorkList_opened",
-                               customAttributes: [
-                                "urlStr": urlStr])
         
         Alamofire.request(urlStr) //default is get
             .response(completionHandler: { response in
@@ -354,8 +348,6 @@ extension WorkListController: UISearchResultsUpdating, UISearchBarDelegate {
     
     func searchAndFilter(_ text: String) {
         
-        Answers.logCustomEvent(withName: "Work list: select", customAttributes: ["text": text])
-        
         searched = true
         
         self.pages.removeAll()
@@ -394,10 +386,6 @@ extension WorkListController: UISearchResultsUpdating, UISearchBarDelegate {
             params["tag_id"] = strArr[strArr.count - 2].removingPercentEncoding  //tag id goes before /works
         }
         params["commit"] = "Sort and Filter"
-        
-        Answers.logCustomEvent(withName: "WorkList_search",
-                               customAttributes: [
-                                "txt": text])
         
         Alamofire.request("https://archiveofourown.org/works", method: .get, parameters: params) //default is get
             .response(completionHandler: { response in

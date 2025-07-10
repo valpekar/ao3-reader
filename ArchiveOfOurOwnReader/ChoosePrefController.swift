@@ -8,7 +8,7 @@
 
 import UIKit
 import Firebase
-import Crashlytics
+import FirebaseCrashlytics
 
 class ChoosePrefController : LoadingViewController {
     
@@ -59,10 +59,6 @@ class ChoosePrefController : LoadingViewController {
             self.showError(title: Localization("Error"), message: Localization("AtLeastOneFandom"))
             return
         }
-        
-        Answers.logCustomEvent(withName: "prefChosen",
-                               customAttributes: [
-                                "fandom": txt])
         Analytics.logEvent("ChoosePref_Chosen", parameters: ["fandom" : txt as NSObject])
         
         self.dismiss(animated: true) {

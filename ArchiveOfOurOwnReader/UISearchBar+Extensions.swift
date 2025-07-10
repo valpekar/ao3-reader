@@ -6,7 +6,7 @@
 //  Copyright © 2019 Sergei Pekar. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 extension UISearchBar {
 

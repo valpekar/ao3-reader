@@ -22,26 +22,6 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
-	<key>Fabric</key>
-	<dict>
-		<key>APIKey</key>
-		<string>f3d6aa0aca6194181dd40e788db0d0f1b676ca2b</string>
-		<key>Kits</key>
-		<array>
-			<dict>
-				<key>KitInfo</key>
-				<dict/>
-				<key>KitName</key>
-				<string>Crashlytics</string>
-			</dict>
-			<dict>
-				<key>KitInfo</key>
-				<dict/>
-				<key>KitName</key>
-				<string>MoPub</string>
-			</dict>
-		</array>
-	</dict>
 	<key>GADApplicationIdentifier</key>
 	<string>ca-app-pub-8760316520462117~7329426789</string>
 	<key>GADIsAdManagerApp</key>

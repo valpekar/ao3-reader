@@ -9,7 +9,7 @@
 import Foundation
 import StoreKit
 import CoreData
-import Crashlytics
+import FirebaseCrashlytics
 import SwiftMessages
 
 class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewDataSource {
@@ -323,8 +323,6 @@ class MeViewController: LoadingViewController, UITableViewDelegate, UITableViewD
             } else if (indexPath.row == 1) {
                 langID = "English_en"
             }
-            
-            Answers.logCustomEvent(withName: "ME_Lang", customAttributes: ["lang" : langID])
             
             if (SetLanguage(langID) == true) {
                 showSuccess(title: Localization("Language"), message: Localization("LangChanged"))

@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 import AlamofireImage
-import Crashlytics
+import FirebaseCrashlytics
 
 class InboxController : ListViewController  {
     
@@ -41,9 +41,6 @@ class InboxController : ListViewController  {
         self.tableView.estimatedRowHeight = 80
         
         self.tableView.tableFooterView = UIView()
-       
-        
-        Answers.logCustomEvent(withName: "Inbox: Opened", customAttributes: [:])
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -212,9 +209,6 @@ class InboxController : ListViewController  {
             }
         }
         
-        
-        Answers.logCustomEvent(withName: "Inbox: Parse", customAttributes: ["pages_count": pages.count])
-        
     }
     
     func parseItem(_ commentItem: TFHppleElement) {
@@ -332,8 +326,6 @@ class InboxController : ListViewController  {
     }
     
     func markItem(asRead: Bool, commentId: String) {
-        Answers.logCustomEvent(withName: "Inbox: Mark Item", customAttributes: ["asRead":asRead])
-        
         sendMarkItem(asRead, commentId: commentId)
     }
     
@@ -342,7 +334,6 @@ class InboxController : ListViewController  {
     }
     
     func replyToItem(replyUrl: String, commentId: String) {
-        Answers.logCustomEvent(withName: "Inbox: Reply Touched", customAttributes: [:])
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "ReplyController") as! ReplyController
@@ -354,7 +345,6 @@ class InboxController : ListViewController  {
     }
     
     func approveItem(approveUrl: String) {
-        Answers.logCustomEvent(withName: "Inbox: Approve Touched", customAttributes: [:])
         
         sendItemApprove(approveUrl: approveUrl)
     }
@@ -744,9 +734,7 @@ extension InboxController {
         }))
         
         deleteAlert.addAction(UIAlertAction(title: Localization("Yes"), style: .default, handler: { (action: UIAlertAction) in
-            
-            Answers.logCustomEvent(withName: "Inbox: Delete Touched", customAttributes: [:])
-            
+                        
             self.sendDeleteItem(commentId: commentId)
         }))
         

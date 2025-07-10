@@ -8,7 +8,7 @@
 
 import UIKit
 import StoreKit
-import Crashlytics
+import FirebaseCrashlytics
 import Firebase
 
 class UpgradesController: UserMessagesController {

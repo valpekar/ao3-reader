@@ -8,7 +8,7 @@
 
 import UIKit
 import Alamofire
-import Crashlytics
+import FirebaseCrashlytics
 
 class CategoriesController: LoadingViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -26,8 +26,6 @@ class CategoriesController: LoadingViewController, UITableViewDataSource, UITabl
         self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.estimatedRowHeight = 44
         
-        
-        Answers.logCustomEvent(withName: "Categories: open", customAttributes: [:])
         
         requestCategories()
     }
@@ -184,8 +182,6 @@ class CategoriesController: LoadingViewController, UITableViewDataSource, UITabl
         if (segue.identifier == "workListSegue") {
             if let indexPath = tableView.indexPathForSelectedRow {
                 let curCat: CategoryItem = categories[indexPath.row]
-                
-                Answers.logCustomEvent(withName: "Categories: select", customAttributes: ["name":curCat.title])
             
                 if let cController: WorkListController = segue.destination as? WorkListController {
                     cController.tagUrl = curCat.url

@@ -80,7 +80,7 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
             controller.searchBar.backgroundImage = UIImage()
             controller.searchBar.delegate = self
             
-            if let tf = controller.searchBar.textField {
+            if let tf = controller.searchBar.value(forKey: "searchField") as? UITextField {
                 addDoneButtonOnKeyboardTf(tf)
                 
                 tf.textColor = UIColor(named: "textTitleColor")
@@ -205,6 +205,7 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
     }
     
     @IBAction func tryAgainTouched(_ sender: AnyObject) {
+        retryCount = 0
         refresh(tableView)
     }
     
@@ -431,7 +432,7 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
     }
 
     
-    func searchApplied(_ searchQuery:SearchQuery, shouldAddKeyword: Bool) {
+    func searchApplied(_ searchQuery: SearchQuery, shouldAddKeyword: Bool) {
         
         pages = [PageItem]()
         works = [NewsFeedItem]()
@@ -471,6 +472,8 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
         
     }
     
+    private var retryCount = 0
+    
     func onFeedLoaded(_ response: DefaultDataResponse) {
         #if DEBUG
         print(response.request ?? "")
@@ -478,10 +481,11 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
         print(response.error ?? "")
             #endif
         
+        var str = ""
+        
         if let d = response.data {
             self.parseCookies(response)
             let checkItems = self.getDownloadedStats()
-            var str = ""
             (self.pages, self.works, self.foundItems, str) = WorksParser.parseWorks(d, itemsCountHeading: "h3", worksElement: self.worksElement, downloadedCheckItems: checkItems)
             //self.getFeed(d)
         } else {
@@ -491,10 +495,20 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
         
         self.refreshControl.endRefreshing()
         
+        if retryCount == 0 && self.pages.count == 0 {
+            WorksParser.fetchTosPromptAndAccept(authenticityToken: str, completion: { [weak self] in
+                guard let self else { return }
+                self.searchApplied(self.query, shouldAddKeyword: true)
+                self.retryCount += 1
+            })
+            
+        }
+        
         self.showWorks()
     }
     
     override func doneButtonAction() {
+        retryCount = 0
         super.doneButtonAction()
         self.resultSearchController.dismiss(animated: true, completion: nil)
     }
@@ -564,7 +578,7 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
     
     //Mark: - ChoosePrefProtocol
     func prefChosen(pref: String) {
-        query.fandom_names = pref
+        query.include_tags = pref
         DefaultsManager.putObject(query, key: DefaultsManager.SEARCH_Q)
         
         Analytics.logEvent("Fandom_Chosen", parameters: ["pref": pref as NSObject])
@@ -578,6 +592,7 @@ class FeedViewController: ListViewController, UITableViewDataSource, UITableView
 extension FeedViewController : UISearchBarDelegate, UISearchResultsUpdating {
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        retryCount = 0
         guard let txt = searchBar.text else {
             self.showError(title: Localization("Error"), message: Localization("CannotBeEmpty"))
             return

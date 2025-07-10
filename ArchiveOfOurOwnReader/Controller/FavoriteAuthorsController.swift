@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Crashlytics
+import FirebaseCrashlytics
 import Alamofire
 import AlamofireImage
 import CoreData
@@ -73,7 +73,6 @@ class FavoriteAuthorsController : ListViewController, NSFetchedResultsController
         
         self.updateView()
         
-        Answers.logCustomEvent(withName: "Favorite Authors", customAttributes: ["count" : fetchedResultsController?.fetchedObjects?.count ?? 0])
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -87,10 +86,6 @@ class FavoriteAuthorsController : ListViewController, NSFetchedResultsController
         self.messageLabel.isHidden = hasAuthors
         
         self.title = "Favorite Authors (\(fetchedResultsController?.fetchedObjects?.count ?? 0))"
-        
-        Answers.logCustomEvent(withName: "Fav Authors",
-                               customAttributes: [
-                                "count": fetchedResultsController?.fetchedObjects?.count ?? 0])
     }
     
     var selectedRow = 0
@@ -105,17 +100,12 @@ class FavoriteAuthorsController : ListViewController, NSFetchedResultsController
         if (segue.identifier == "listSegue") {
             let item = fetchedResultsController?.object(at: IndexPath(row: selectedRow, section: 0))
             let tagUrl = "https://archiveofourown.org/users/\(item?.name ?? "")/works"
-             CLSLogv("FavAuthors: works Tapped = %@", getVaList([tagUrl]))
-            Answers.logCustomEvent(withName: "Fav Authors: works",
-                                   customAttributes: [
-                                    "urlStr": tagUrl])
             if let cController: WorkListController = segue.destination as? WorkListController {
                 cController.tagUrl = tagUrl
             }
         } else if (segue.identifier == "authorSegue") {
             let item = fetchedResultsController?.object(at: IndexPath(row: selectedRow, section: 0))
             let tagUrl = "https://archiveofourown.org/users/\(item?.name ?? "")"
-            CLSLogv("FavAuthors: author Tapped = %@", getVaList([tagUrl]))
             if let cController: AuthorViewController = segue.destination as? AuthorViewController {
                 cController.authorName = item?.name ?? ""
             }

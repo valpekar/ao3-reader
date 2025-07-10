@@ -8,7 +8,7 @@
 
 import UIKit
 import CoreData
-import Crashlytics
+import FirebaseCrashlytics
 import Firebase
 import AVFoundation
 import UserNotifications
@@ -83,9 +83,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         //let worksToReload = DefaultsManager.getStringArray(DefaultsManager.NOTIF_IDS_ARR)
        // application.applicationIconBadgeNumber = worksToReload.count
-        
-       //  Flurry.startSession("DW87V8SZQC24X83XPSXB")
-        
+                
         if (DefaultsManager.getObject(DefaultsManager.PSEUD_IDS) == nil) {
             let s: [String:String] = [:]
             DefaultsManager.putString("", key: DefaultsManager.LOGIN)

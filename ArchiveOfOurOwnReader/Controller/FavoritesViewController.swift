@@ -8,7 +8,7 @@
 
 import UIKit
 import CoreData
-import Crashlytics
+import FirebaseCrashlytics
 import Firebase
 
 class FavoritesViewController: LoadingViewController, UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating, UISearchBarDelegate, EditFoldersProtocol {
@@ -818,8 +818,6 @@ class FavoritesViewController: LoadingViewController, UITableViewDataSource, UIT
         }
         self.tableView.reloadData()
         
-        Answers.logCustomEvent(withName: "Downloaded: Sort", customAttributes: ["sortBy" : self.sortBy])
-        Analytics.logEvent("Downloaded_Sort", parameters: ["sortBy" : self.sortBy as NSObject])
     }
     
     @IBAction func sortClicked(_ sender: AnyObject) {

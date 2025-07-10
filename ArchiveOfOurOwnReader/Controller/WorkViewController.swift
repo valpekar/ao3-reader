@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 import Alamofire
-import Crashlytics
+import FirebaseCrashlytics
 import WebKit
 import Spring
 import PopupDialog
@@ -779,16 +779,16 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
             
             let chapterNextEl: [TFHppleElement]? = navigationEl[0].search(withXPathQuery: "//li[@class='chapter next']") as? [TFHppleElement]
             if (chapterNextEl?.count ?? 0 > 0) {
-                let attributes : NSDictionary = (chapterNextEl?[0].search(withXPathQuery: "//a")[0] as AnyObject).attributes as NSDictionary
-                nextChapter = (attributes["href"] as? String) ?? ""
+                nextChapter = (chapterNextEl?[0].search(withXPathQuery: "//a").first as? TFHppleElement)?
+                                .attributes["href"] as? String ?? ""
             } else {
                 nextChapter = ""
             }
             
             let chapterPrevEl: [TFHppleElement]? = navigationEl[0].search(withXPathQuery: "//li[@class='chapter previous']") as? [TFHppleElement]
             if(chapterPrevEl?.count ?? 0 > 0) {
-                let attributesp : NSDictionary = (chapterPrevEl?[0].search(withXPathQuery: "//a")[0] as AnyObject).attributes as NSDictionary
-                prevChapter = attributesp["href"] as? String ?? ""
+                prevChapter = (chapterPrevEl?[0].search(withXPathQuery: "//a").first as? TFHppleElement)?
+                                .attributes["href"] as? String ?? ""
             } else {
                 prevChapter = ""
             }
@@ -943,10 +943,6 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
         } else if let downloadedWorkItem = self.downloadedWorkItem {
             workId = downloadedWorkItem.workId ?? "0"
         }
-        
-        Answers.logCustomEvent(withName: "WorkView: Kudos add",
-                               customAttributes: [
-                                "workId": workId])
         Analytics.logEvent("WorkView_Kudos_add", parameters: ["workId": workId as NSObject])
         
         doLeaveKudos(workId: workId, kudosToken: self.kudosToken).subscribe { (_) in
@@ -977,18 +973,11 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
         
         beforeDownloadOffset = NSCoder.string(for: webView.scrollView.contentOffset)
         
-        Answers.logCustomEvent(withName: "WorkView: Download touched",
-                               customAttributes: [
-                                "workId": workId])
-        
         doDownloadWork(wId: workId, isOnline: false, wasSaved: !isOnline)
     }
     
     var commentsForEntireWork = true
     @IBAction func commentButtonTouched() {
-        
-        Answers.logCustomEvent(withName: "WorkView: Comments touched",
-                               customAttributes: [:])
         
         let alert = UIAlertController(title: Localization("Comments"), message: "View Comments For:", preferredStyle: UIAlertController.Style.actionSheet)
         alert.addAction(UIAlertAction(title: "Entire Work", style: UIAlertAction.Style.default, handler: { action in
@@ -1208,15 +1197,15 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
             
             if let chapterNextEl: [TFHppleElement] = navigationEl[0].search(withXPathQuery: "//li[@class='chapter next']") as? [TFHppleElement] {
             if (chapterNextEl.count > 0) {
-                let attributes : NSDictionary = (chapterNextEl[0].search(withXPathQuery: "//a")[0] as AnyObject).attributes as NSDictionary
-                nextChapter = (attributes["href"] as? String ?? "")
+                nextChapter = (chapterNextEl[0].search(withXPathQuery: "//a").first as? TFHppleElement)?
+                                .attributes["href"] as? String ?? ""
             }
             }
             
             if let chapterPrevEl: [TFHppleElement] = navigationEl[0].search(withXPathQuery: "//li[@class='chapter previous']") as? [TFHppleElement] {
             if(chapterPrevEl.count > 0) {
-                let attributesp : NSDictionary = (chapterPrevEl[0].search(withXPathQuery: "//a")[0] as AnyObject).attributes as NSDictionary
-                prevChapter = (attributesp["href"] as? String ?? "")
+                prevChapter = (chapterPrevEl[0].search(withXPathQuery: "//a").first as? TFHppleElement)?
+                                .attributes["href"] as? String ?? ""
             }
             }
         }
@@ -1278,9 +1267,6 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
         }
         
         var worktext: String = work
-        
-        Answers.logCustomEvent(withName: "Work: Theme Load", customAttributes: ["font_family" : fontFamily,
-                                                                                "font_size" : fontSize])
         
         var bgColor: UIColor? = AppDelegate.greyLightColor
         var txtColor = UIColor(named: "global_tint")
@@ -1382,11 +1368,9 @@ class WorkViewController: ListViewController, UIGestureRecognizerDelegate, WKUID
         switch (theme) {
         case DefaultsManager.THEME_DAY :
             DefaultsManager.putInt(DefaultsManager.THEME_NIGHT, key: DefaultsManager.THEME)
-            Answers.logCustomEvent(withName: "Work_Theme", customAttributes: ["theme" : "night"])
             
         case DefaultsManager.THEME_NIGHT :
             DefaultsManager.putInt(DefaultsManager.THEME_DAY, key: DefaultsManager.THEME)
-            Answers.logCustomEvent(withName: "Work_Theme", customAttributes: ["theme" : "day"])
             
         default:
             break
@@ -1994,8 +1978,6 @@ extension WorkViewController {
         nItem.content = text
         nItem.date = NSDate()
         
-        Answers.logCustomEvent(withName: "Work: save highlight", customAttributes: ["workName" : workName, "content": text])
-        
         do {
             try managedContext.save()
         } catch let error as NSError {
@@ -2014,10 +1996,6 @@ extension WorkViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if (searchBar.text?.count ?? 0 > 2) {
-            
-            Answers.logCustomEvent(withName: "WorkView: search",
-                                   customAttributes: [
-                                    "searchText": searchText])
             
             if let path = Bundle.main.path(forResource: "UIWebViewSearch", ofType: "js"), let jsCode = try? String(contentsOfFile:path, encoding:String.Encoding.utf8) {
                 

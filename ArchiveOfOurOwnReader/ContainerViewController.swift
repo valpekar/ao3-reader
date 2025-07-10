@@ -8,7 +8,7 @@
 
 import UIKit
 import QuartzCore
-import Crashlytics
+import FirebaseCrashlytics
 import CoreData
 import Firebase
 
@@ -204,10 +204,6 @@ class ContainerViewController: UserMessagesController, CenterViewControllerDeleg
                 let vc: WorkDetailViewController = storyboard.instantiateViewController(withIdentifier: "WorkDetailViewController") as! WorkDetailViewController
                 vc.downloadedWorkItem = work
                 
-                Answers.logCustomEvent(withName: "Reading Now",
-                                       customAttributes: [
-                                        "workId": work.id ?? 0])
-                
                 Analytics.logEvent("Reading_Now", parameters: ["workId": work.id ?? 0 as NSObject])
                 
                 
@@ -271,7 +267,6 @@ extension ContainerViewController : WorkImportDelegate {
             controller.workUrl = workUrl
             
             if let instcontroller = self.instantiatedControllers[0] {
-                Answers.logCustomEvent(withName: "Import Work Link Pasted", customAttributes: ["url" : workUrl])
                 Analytics.logEvent("Import_Work_Link_Pasted", parameters: ["url": workUrl as NSObject])
                 
                 instcontroller.navigationController?.pushViewController(controller, animated: true)

@@ -8,7 +8,7 @@
 
 import UIKit
 import CoreData
-import Crashlytics
+import FirebaseCrashlytics
 
 class EditFoldersController: BaseFolderController {
     
@@ -40,7 +40,6 @@ class EditFoldersController: BaseFolderController {
             print("An error occurred")
         }
         
-        Answers.logCustomEvent(withName: "Edit Folders", customAttributes: ["folders_count" : self.fetchedResultsController?.fetchedObjects?.count ?? 0])
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -160,10 +159,6 @@ class EditFoldersController: BaseFolderController {
             if let txt = textField?.text {
                 
                 self.doRenameFolder(folder: folder, newName: txt)
-                Answers.logCustomEvent(withName: "Rename_folder",
-                                       customAttributes: [
-                                        "name_new": txt,
-                                        "name_old": folder.name ?? "No Name"])
             } else {
                 self.showError(title: Localization("Error"), message: Localization("FolderNameEmpty"))
             }

@@ -8,7 +8,7 @@
 //
 
 import UIKit
-import Crashlytics
+import FirebaseCrashlytics
 
 class SecuritySettingsController: LoadingViewController {
     
@@ -97,10 +97,6 @@ class SecuritySettingsController: LoadingViewController {
     }
     
     @IBAction func authSwitchChanged(_ sender: UISwitch) {
-        Answers.logCustomEvent(withName: "authSwitchChanged",
-                               customAttributes: [
-                                "state": String(sender.isOn)])
-        
         if (sender.isOn) {
             DefaultsManager.putBool(true, key: DefaultsManager.NEEDS_AUTH)
         } else {
@@ -109,10 +105,6 @@ class SecuritySettingsController: LoadingViewController {
     }
     
     @IBAction func passSwitchChanged(_ sender: UISwitch) {
-        Answers.logCustomEvent(withName: "passSwitchChanged",
-                               customAttributes: [
-                                "state": String(sender.isOn)])
-        
         if (sender.isOn) {
             if (!DefaultsManager.getString(DefaultsManager.USER_PASS).isEmpty) {
                 DefaultsManager.putBool(true, key: DefaultsManager.NEEDS_PASS)

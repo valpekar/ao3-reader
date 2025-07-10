@@ -9,22 +9,44 @@
 import Foundation
 
 
-class WorksParser {
+final class WorksParser {
+    
+    static var authToken = ""
+    
+    static var cookieHeaderValue = "user_session=YOUR_SESSION_COOKIE; other_cookie=VALUE"
+    
+    // URL for TOS prompt page (you may want to adjust this URL)
+    static let tosPromptURL = URL(string: "https://archiveofourown.org/users/ssaria")
+
+    // URL to submit TOS acceptance
+    static let acceptTOSURL = URL(string: "https://archiveofourown.org/users/ssaria/end_tos_prompt")
     
     class func parseWorks(_ data: Data, itemsCountHeading: String, worksElement: String, liWorksElement: String? = "", downloadedCheckItems: [CheckDownloadItem]? = nil) -> ([PageItem], [NewsFeedItem], String, String) {
         var pages : [PageItem] = [PageItem]()
         var works : [NewsFeedItem] = [NewsFeedItem]()
         var worksCountStr = ""
         
-        var authToken = ""
-        
         guard let dta = NSString(data: data, encoding: String.Encoding.utf8.rawValue) else {
             return (pages, works, worksCountStr, authToken)
         }
-        #if DEBUG
-            print(dta)
-        #endif
+#if DEBUG
+        print(dta)
+#endif
         guard let doc : TFHpple = TFHpple(htmlData: data) else {
+            return (pages, works, worksCountStr, authToken)
+        }
+        
+        let tosFormXPath = "//form[contains(@action, '/end_tos_prompt')]"
+        let tosForms = doc.search(withXPathQuery: tosFormXPath)
+        if tosForms?.count ?? 0 > 0 {
+            // TOS form found - extract authenticity_token inside the form
+            let tokenXPath = "//form[contains(@action, '/end_tos_prompt')]//input[@name='authenticity_token']"
+            let tokenElements = doc.search(withXPathQuery: tokenXPath)
+            if let tokenElement = tokenElements?.first as? TFHppleElement,
+               let token = tokenElement.attributes["value"]  {
+                authToken = token as? String ?? ""
+            }
+            
             return (pages, works, worksCountStr, authToken)
         }
         
@@ -53,33 +75,28 @@ class WorksParser {
         
         if let itemsCount: [TFHppleElement] = doc.search(withXPathQuery: "//\(itemsCountHeading)[@class='heading']") as? [TFHppleElement] {
             if (itemsCount.count > 0) {
-                worksCountStr = itemsCount[0].content.trimmingCharacters(
-                    in: CharacterSet.whitespacesAndNewlines
-                )
+                worksCountStr = itemsCount[0].content.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
                 worksCountStr = worksCountStr.replacingOccurrences(of: "?", with: "")
-//                if let idx = worksCountStr.index(of: "d") {
-//                    worksCountStr = String(worksCountStr[..<worksCountStr.index(after: idx)])
-//                }
             }
         }
         if let workGroup = doc.search(withXPathQuery: "//\(olLiteral)[@class='\(worksElement) index group']") as? [TFHppleElement] {
             if (workGroup.count > 0) {
                 
                 var worksList : [TFHppleElement]? = nil
-            //    let txtEl: String = "//li[@class='\(liEl) blurb group']"
+                //    let txtEl: String = "//li[@class='\(liEl) blurb group']"
                 let txtEl: String = "//li[@role='article']"
-
+                
                 if let wList = workGroup[0].search(withXPathQuery: txtEl) as? [TFHppleElement] {
                     worksList = wList
                 } else if let ownList = workGroup[0].search(withXPathQuery: "//li[@class='own \(liEl) blurb group']") as? [TFHppleElement] {
                     worksList = ownList
                 }
                 if let worksList : [TFHppleElement] = worksList {
-                
+                    
                     //sometimes they have extra space " " after group ("group ") >.<
                     if (worksList.count == 1) {
                         if let newList: [TFHppleElement] = workGroup[0].search(withXPathQuery: "//li[@class='\(liEl) blurb group ']") as? [TFHppleElement] {
-                           
+                            
                             for workListItem in newList {
                                 autoreleasepool { [unowned workListItem] in
                                     
@@ -89,10 +106,10 @@ class WorksParser {
                             }
                         }
                     } else {
-                    
+                        
                         for workListItem in worksList {
                             autoreleasepool { [unowned workListItem] in
-                            
+                                
                                 let item: NewsFeedItem = parseWorkItem(workListItem: workListItem, downloadedCheckItems:  downloadedCheckItems)
                                 works.append(item)
                             }
@@ -114,8 +131,81 @@ class WorksParser {
         } else {
             worksCountStr = Localization("0Found")
         }
-        
         return (pages, works, worksCountStr, authToken)
+    }
+    
+    class func fetchTosPromptAndAccept(authenticityToken: String, completion: @escaping () -> Void) {
+        guard let acceptTOSURL = URL(string: "https://archiveofourown.org/users/ssaria/end_tos_prompt") else { return }
+
+        var request = URLRequest(url: acceptTOSURL)
+        request.httpMethod = "POST"
+        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+
+        let postBody = "authenticity_token=\(authenticityToken.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")"
+        request.httpBody = postBody.data(using: .utf8)
+
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let error = error {
+                print("Error submitting TOS acceptance:", error)
+                completion()  // call completion even on error
+                return
+            }
+            if let httpResp = response as? HTTPURLResponse {
+                if httpResp.statusCode == 200 || httpResp.statusCode == 204 {
+                    print("TOS accepted successfully!")
+                } else {
+                    print("Failed to accept TOS. Status code:", httpResp.statusCode)
+                }
+            }
+            completion()
+        }.resume()
+    }
+
+    class func parseAuthenticityToken(from html: String) -> String? {
+        // Regex to find: name="authenticity_token" value="TOKEN_VALUE"
+        let pattern = #"name="authenticity_token" value="([^"]+)""#
+        if let regex = try? NSRegularExpression(pattern: pattern, options: []) {
+            let range = NSRange(html.startIndex..<html.endIndex, in: html)
+            if let match = regex.firstMatch(in: html, options: [], range: range) {
+                if let tokenRange = Range(match.range(at: 1), in: html) {
+                    return String(html[tokenRange])
+                }
+            }
+        }
+        return nil
+    }
+
+    class func acceptTos(withToken token: String, completion: @escaping () -> Void) {
+        guard let acceptTOSURL else { return }
+        var request = URLRequest(url: acceptTOSURL)
+        request.httpMethod = "POST"
+        request.setValue(cookieHeaderValue, forHTTPHeaderField: "Cookie")
+        request.setValue("Mozilla/5.0", forHTTPHeaderField: "User-Agent")
+        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        request.setValue("https://archiveofourown.org/users/ssaria", forHTTPHeaderField: "Referer")
+
+        let postBody = "authenticity_token=\(token.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")"
+        request.httpBody = postBody.data(using: .utf8)
+
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let error = error {
+                print("Error submitting TOS acceptance:", error)
+                return
+            }
+            guard let httpResp = response as? HTTPURLResponse else {
+                print("No HTTP response")
+                return
+            }
+            if httpResp.statusCode == 200 {
+                print("TOS accepted successfully!")
+                completion()
+            } else {
+                print("Failed to accept TOS. Status code:", httpResp.statusCode)
+                if let data = data, let respBody = String(data: data, encoding: .utf8) {
+                    print("Response body:", respBody)
+                }
+            }
+        }.resume()
     }
     
     class func parseSerie(_ data: Data, downloadedCheckItems: [CheckDownloadItem]? = nil) -> ([PageItem], [NewsFeedItem], SerieItem) {

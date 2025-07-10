@@ -57,8 +57,6 @@
 		28E1C7131B8D9246001E2E5A /* WorkDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28E1C7121B8D9246001E2E5A /* WorkDetailViewController.swift */; };
 		28E1C7151B8D9257001E2E5A /* WorkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28E1C7141B8D9257001E2E5A /* WorkViewController.swift */; };
 		3C00E9C31D9C05FA00B0BBDF /* CustomEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C00E9C21D9C05FA00B0BBDF /* CustomEncoding.swift */; };
-		3C0449001C639080005DCE5F /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C0448FE1C639080005DCE5F /* Fabric.framework */; };
-		3C0449011C639080005DCE5F /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C0448FF1C639080005DCE5F /* Crashlytics.framework */; };
 		3C0465971F8CBCBA003B6AE7 /* Serie+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C0465951F8CBCBA003B6AE7 /* Serie+CoreDataClass.swift */; };
 		3C0465981F8CBCBA003B6AE7 /* Serie+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C0465961F8CBCBA003B6AE7 /* Serie+CoreDataProperties.swift */; };
 		3C04659A1F8CBD5D003B6AE7 /* SerieItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C0465991F8CBD5D003B6AE7 /* SerieItem.swift */; };
@@ -83,8 +81,6 @@
 		3C22BBEE1FED2BD60012CBA4 /* PagesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C22BBED1FED2BD60012CBA4 /* PagesController.swift */; };
 		3C230AF720E537D5008B9476 /* RFS_Juan_Casco.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3C230AF620E537CA008B9476 /* RFS_Juan_Casco.ttf */; };
 		3C2548D11E71872D00B872A3 /* WorkListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C2548D01E71872D00B872A3 /* WorkListController.swift */; };
-		3C274CC31CE4CCBA00F3AC68 /* FlurryEmpty.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C274CBF1CE4CCBA00F3AC68 /* FlurryEmpty.m */; };
-		3C274CC41CE4CCBA00F3AC68 /* libFlurry_7.6.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C274CC11CE4CCBA00F3AC68 /* libFlurry_7.6.0.a */; };
 		3C3073391EE7EB6600D1509E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3C30733B1EE7EB6600D1509E /* Localizable.strings */; };
 		3C3105481C7F3D260065256E /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C3105471C7F3D260065256E /* LoginViewController.swift */; };
 		3C31054A1C7F57020065256E /* FavoritesSiteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C3105491C7F57020065256E /* FavoritesSiteController.swift */; };
@@ -293,8 +289,6 @@
 		30E187E4D36CFAF1BB4EAFF8 /* Pods-ArchiveOfOurOwnReaderTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArchiveOfOurOwnReaderTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ArchiveOfOurOwnReaderTests/Pods-ArchiveOfOurOwnReaderTests.release.xcconfig"; sourceTree = "<group>"; };
 		3C00313421E7745A00926432 /* ArchiveOfOurOwnReader 16.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ArchiveOfOurOwnReader 16.xcdatamodel"; sourceTree = "<group>"; };
 		3C00E9C21D9C05FA00B0BBDF /* CustomEncoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomEncoding.swift; sourceTree = "<group>"; };
-		3C0448FE1C639080005DCE5F /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
-		3C0448FF1C639080005DCE5F /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		3C0465941F8CBA79003B6AE7 /* ArchiveOfOurOwnReader 8.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ArchiveOfOurOwnReader 8.xcdatamodel"; sourceTree = "<group>"; };
 		3C0465951F8CBCBA003B6AE7 /* Serie+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Serie+CoreDataClass.swift"; path = "Model/Serie+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3C0465961F8CBCBA003B6AE7 /* Serie+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Serie+CoreDataProperties.swift"; path = "Model/Serie+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -321,10 +315,6 @@
 		3C22BBED1FED2BD60012CBA4 /* PagesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PagesController.swift; path = Controller/PagesController.swift; sourceTree = "<group>"; };
 		3C230AF620E537CA008B9476 /* RFS_Juan_Casco.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = RFS_Juan_Casco.ttf; sourceTree = "<group>"; };
 		3C2548D01E71872D00B872A3 /* WorkListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkListController.swift; sourceTree = "<group>"; };
-		3C274CBE1CE4CCBA00F3AC68 /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
-		3C274CBF1CE4CCBA00F3AC68 /* FlurryEmpty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlurryEmpty.m; sourceTree = "<group>"; };
-		3C274CC01CE4CCBA00F3AC68 /* FlurryWatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlurryWatch.h; sourceTree = "<group>"; };
-		3C274CC11CE4CCBA00F3AC68 /* libFlurry_7.6.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry_7.6.0.a; sourceTree = "<group>"; };
 		3C3073301EE7E8A600D1509E /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
 		3C3073321EE7E8E100D1509E /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Main.strings"; sourceTree = "<group>"; };
 		3C3073341EE7E8E900D1509E /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/Main.strings; sourceTree = "<group>"; };
@@ -490,7 +480,6 @@
 				3CFD2A651CB55A2F0072FEC5 /* MessageUI.framework in Frameworks */,
 				3CFD2A631CB55A0F0072FEC5 /* Twitter.framework in Frameworks */,
 				3CCBC0E61CB534F9000207CF /* UIKit.framework in Frameworks */,
-				3C274CC41CE4CCBA00F3AC68 /* libFlurry_7.6.0.a in Frameworks */,
 				3C5813D71C6E010300C3FC12 /* SystemConfiguration.framework in Frameworks */,
 				3CCBC0E41CB534DE000207CF /* QuartzCore.framework in Frameworks */,
 				3C5813D51C6E00F000C3FC12 /* MediaPlayer.framework in Frameworks */,
@@ -514,10 +503,8 @@
 				3C5813D31C6E00E800C3FC12 /* EventKitUI.framework in Frameworks */,
 				3C5813D11C6E00E300C3FC12 /* EventKit.framework in Frameworks */,
 				3C5813CF1C6E00DB00C3FC12 /* AdSupport.framework in Frameworks */,
-				3C0449011C639080005DCE5F /* Crashlytics.framework in Frameworks */,
 				1D9F2DD61BC423370025FD2C /* iAd.framework in Frameworks */,
 				1D7BDD3A1B5E75870017C346 /* libxml2.2.dylib in Frameworks */,
-				3C0449001C639080005DCE5F /* Fabric.framework in Frameworks */,
 				CEB5D41AC4C555D7BBFB87C1 /* Pods_ArchiveOfOurOwnReader.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -807,17 +794,6 @@
 			name = Utils;
 			sourceTree = "<group>";
 		};
-		3C274CBD1CE4CCBA00F3AC68 /* Flurry */ = {
-			isa = PBXGroup;
-			children = (
-				3C274CBE1CE4CCBA00F3AC68 /* Flurry.h */,
-				3C274CBF1CE4CCBA00F3AC68 /* FlurryEmpty.m */,
-				3C274CC01CE4CCBA00F3AC68 /* FlurryWatch.h */,
-				3C274CC11CE4CCBA00F3AC68 /* libFlurry_7.6.0.a */,
-			);
-			path = Flurry;
-			sourceTree = "<group>";
-		};
 		3CB5072720875C1A004AE0B8 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -866,7 +842,6 @@
 			children = (
 				3C5F2BDE207FBCE6006018AA /* CloudKit.framework */,
 				3CD0F4AB1F87A45400E54046 /* LocalAuthentication.framework */,
-				3C274CBD1CE4CCBA00F3AC68 /* Flurry */,
 				1D7BDD391B5E75870017C346 /* libxml2.2.dylib */,
 				3CFD2A641CB55A2F0072FEC5 /* MessageUI.framework */,
 				3CFD2A621CB55A0F0072FEC5 /* Twitter.framework */,
@@ -893,8 +868,6 @@
 				3C5813D21C6E00E800C3FC12 /* EventKitUI.framework */,
 				3C5813D01C6E00E300C3FC12 /* EventKit.framework */,
 				3C5813CE1C6E00DB00C3FC12 /* AdSupport.framework */,
-				3C0448FE1C639080005DCE5F /* Fabric.framework */,
-				3C0448FF1C639080005DCE5F /* Crashlytics.framework */,
 				1D9F2DD51BC423370025FD2C /* iAd.framework */,
 				9E1D849EEED1E11AF03F02B0 /* Pods_ArchiveOfOurOwnReader.framework */,
 				261FBF4E8A62D2F746F44908 /* Pods_ArchiveOfOurOwnReaderTests.framework */,
@@ -1080,7 +1053,8 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "./Fabric.framework/run f3d6aa0aca6194181dd40e788db0d0f1b676ca2b 57256bb4bbb98587bf0897420c68825d23986517b161379fecabf94a57b86416";
+			shellScript = "
+";
 		};
 		6A9A89A76AA91508F803C27E /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1112,15 +1086,19 @@
 				"${BUILT_PRODUCTS_DIR}/DynamicBlurView/DynamicBlurView.framework",
 				"${BUILT_PRODUCTS_DIR}/ExpandableLabel/ExpandableLabel.framework",
 				"${BUILT_PRODUCTS_DIR}/FirebaseCore/FirebaseCore.framework",
-				"${BUILT_PRODUCTS_DIR}/FirebaseCoreDiagnostics/FirebaseCoreDiagnostics.framework",
+				"${BUILT_PRODUCTS_DIR}/FirebaseCoreExtension/FirebaseCoreExtension.framework",
+				"${BUILT_PRODUCTS_DIR}/FirebaseCoreInternal/FirebaseCoreInternal.framework",
 				"${BUILT_PRODUCTS_DIR}/FirebaseCrashlytics/FirebaseCrashlytics.framework",
 				"${BUILT_PRODUCTS_DIR}/FirebaseInstallations/FirebaseInstallations.framework",
+				"${BUILT_PRODUCTS_DIR}/FirebaseRemoteConfigInterop/FirebaseRemoteConfigInterop.framework",
+				"${BUILT_PRODUCTS_DIR}/FirebaseSessions/FirebaseSessions.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleDataTransport/GoogleDataTransport.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/KRActivityIndicatorView/KRActivityIndicatorView.framework",
 				"${BUILT_PRODUCTS_DIR}/KRProgressHUD/KRProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/PopupDialog/PopupDialog.framework",
 				"${BUILT_PRODUCTS_DIR}/PromisesObjC/FBLPromises.framework",
+				"${BUILT_PRODUCTS_DIR}/PromisesSwift/Promises.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Spring/Spring.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftMessages/SwiftMessages.framework",
@@ -1133,15 +1111,19 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DynamicBlurView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ExpandableLabel.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseCore.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseCoreDiagnostics.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseCoreExtension.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseCoreInternal.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseCrashlytics.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseInstallations.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseRemoteConfigInterop.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseSessions.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleDataTransport.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KRActivityIndicatorView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KRProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PopupDialog.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBLPromises.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Promises.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Spring.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftMessages.framework",
@@ -1169,7 +1151,6 @@
 				3C89958B1E95169B00D511CD /* DBFandom+CoreDataProperties.swift in Sources */,
 				3C684E5D1F8E391500419D69 /* AuthViewController.swift in Sources */,
 				3CB2A74B1F8BB237004A6F76 /* SerieViewController.swift in Sources */,
-				3C274CC31CE4CCBA00F3AC68 /* FlurryEmpty.m in Sources */,
 				3CCA7B3E1EFAA3C600590D12 /* SubsCell.swift in Sources */,
 				1D7BDD381B5E755F0017C346 /* XPathQuery.m in Sources */,
 				28B6DC521B4E429100F34529 /* FeedTableViewCell.swift in Sources */,
@@ -1508,12 +1489,7 @@
 				INFOPLIST_FILE = ArchiveOfOurOwnReader/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "FF Stories";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Flurry-iOS-7.6.0/Flurry",
-					"$(PROJECT_DIR)/Flurry-iOS-7.6.0/FlurryAds",
-					"$(PROJECT_DIR)/Flurry",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MARKETING_VERSION = 1.005;
 				PRODUCT_BUNDLE_IDENTIFIER = ff.stories.reader;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1552,12 +1528,7 @@
 				INFOPLIST_FILE = ArchiveOfOurOwnReader/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "FF Stories";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Flurry-iOS-7.6.0/Flurry",
-					"$(PROJECT_DIR)/Flurry-iOS-7.6.0/FlurryAds",
-					"$(PROJECT_DIR)/Flurry",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MARKETING_VERSION = 1.005;
 				PRODUCT_BUNDLE_IDENTIFIER = ff.stories.reader;
 				PRODUCT_NAME = "$(TARGET_NAME)";
